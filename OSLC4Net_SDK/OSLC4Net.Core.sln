@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core", "OSLC4Net.Core\OSLC4Net.Core.csproj", "{C07B57BD-3356-4AD8-8050-D708B023A8EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRdfProvider", "OSLC4Net.DotNetRdfProvider\DotNetRdfProvider.csproj", "{DFE6E48C-D5B1-4FC6-8D94-C72286080F78}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1B650CF7-24E5-444B-9C9E-91EFAEBAEA29}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		OSLC4Net.Core.vsmdi = OSLC4Net.Core.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.ChangeManagementCommon", "OSLC4Net.ChangeManagement\OSLC4Net.ChangeManagementCommon.csproj", "{7D5575DD-57DB-4727-906B-A5FD1149C6A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRdfProviderTests", "OSLC4Net.DotNetRdfProviderTests\DotNetRdfProviderTests.csproj", "{382EB8FE-ED61-4C3F-92CA-A8214B0D3178}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Client", "OSLC4Net.Client\OSLC4Net.Client.csproj", "{EED02B8F-2C90-4484-B4B6-BB510750B84C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.ChangeManagementTest", "OSLC4Net.ChangeManagementTest\OSLC4Net.ChangeManagementTest.csproj", "{A64566A0-5EDB-48A1-B3E5-7F873169D402}"
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = OSLC4Net.Core.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C07B57BD-3356-4AD8-8050-D708B023A8EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C07B57BD-3356-4AD8-8050-D708B023A8EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C07B57BD-3356-4AD8-8050-D708B023A8EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C07B57BD-3356-4AD8-8050-D708B023A8EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFE6E48C-D5B1-4FC6-8D94-C72286080F78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFE6E48C-D5B1-4FC6-8D94-C72286080F78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFE6E48C-D5B1-4FC6-8D94-C72286080F78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFE6E48C-D5B1-4FC6-8D94-C72286080F78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D5575DD-57DB-4727-906B-A5FD1149C6A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D5575DD-57DB-4727-906B-A5FD1149C6A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D5575DD-57DB-4727-906B-A5FD1149C6A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D5575DD-57DB-4727-906B-A5FD1149C6A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{382EB8FE-ED61-4C3F-92CA-A8214B0D3178}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{382EB8FE-ED61-4C3F-92CA-A8214B0D3178}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{382EB8FE-ED61-4C3F-92CA-A8214B0D3178}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{382EB8FE-ED61-4C3F-92CA-A8214B0D3178}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EED02B8F-2C90-4484-B4B6-BB510750B84C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EED02B8F-2C90-4484-B4B6-BB510750B84C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EED02B8F-2C90-4484-B4B6-BB510750B84C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EED02B8F-2C90-4484-B4B6-BB510750B84C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A64566A0-5EDB-48A1-B3E5-7F873169D402}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A64566A0-5EDB-48A1-B3E5-7F873169D402}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A64566A0-5EDB-48A1-B3E5-7F873169D402}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A64566A0-5EDB-48A1-B3E5-7F873169D402}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
