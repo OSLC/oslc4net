@@ -21,6 +21,7 @@ using System.Text;
 
 namespace OSLC4Net.Core.Model
 {
+
     public abstract class AbstractReifiedResource<T> : IReifiedResource<T>
     {
 	    private T value;
@@ -34,11 +35,19 @@ namespace OSLC4Net.Core.Model
 		    this.value = value;
 	    }
 	
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
 	    public T GetValue()
 	    {
 		    return value;
 	    }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
 	    public void SetValue(T value)
 	    {
 		    this.value = value;

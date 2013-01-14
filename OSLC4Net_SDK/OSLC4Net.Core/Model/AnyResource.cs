@@ -21,10 +21,10 @@ using System.Text;
 
 namespace OSLC4Net.Core.Model
 {
-    /**
-     * Represents a resource of any (unknown) type, usually the object of a
-     * statement in an {@link IExtendedResource}.
-     */
+    /// <summary>
+    /// Represents a resource of any (unknown) type, usually the object of a
+    /// statement in anIExtendedResource.
+    /// </summary>
     public class AnyResource : AbstractResource
     {
         public AnyResource(Uri about) : base(about)

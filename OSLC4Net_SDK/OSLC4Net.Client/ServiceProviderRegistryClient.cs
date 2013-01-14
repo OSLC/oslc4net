@@ -27,12 +27,16 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client
 {
-    /**
-     * This class provides methods to {@link #registerServiceProvider(ServiceProvider) register} and
-     * {@link #deregisterServiceProvider(Uri) deregister} {@link ServiceProvider}'s.
-     *
-     * This class also provides a method to {@link #getServiceProviders() retrieve} the registered {@link ServiceProvider}'s.
-     */
+    
+
+    /// <summary>
+    /// This classs provides methods to register and deregister with an OSLC ServiceProvider Registry (not yet
+    /// implemented in OSLC4Net - see Eclipse Lyo for a Java implementation)
+    /// 
+    /// It also provides methods to get a ServiceProviderCatalog and retrieve the ServiceProviders 
+    /// </summary>
+  
+   
     public sealed class ServiceProviderRegistryClient
     {
         private OslcRestClient client;
@@ -60,9 +64,11 @@ namespace OSLC4Net.Client
         {
         }
 
-        /**
-         * Register a {@link ServiceProvider}.
-         */
+        /// <summary>
+        /// Register a ServiceProvider
+        /// </summary>
+        /// <param name="serviceProviderToRegister"></param>
+        /// <returns></returns>
         public Uri registerServiceProvider(ServiceProvider serviceProviderToRegister)
         {
             Uri typeServiceProviderURI = new Uri(OslcConstants.TYPE_SERVICE_PROVIDER);
@@ -200,9 +206,10 @@ namespace OSLC4Net.Client
                                                     "CreationFactory");
         }
 
-        /**
-         * Remove registration for a {@link ServiceProvider}.
-         */
+        /// <summary>
+        /// Remove registration for a ServiceProvider.
+        /// </summary>
+        /// <param name="serviceProviderURI"></param>
         public void DeregisterServiceProvider(Uri serviceProviderURI)
         {
             HttpResponseMessage clientResponse = new OslcRestClient(client.GetFormatters(), serviceProviderURI).RemoveOslcResourceReturnClientResponse();
@@ -216,28 +223,33 @@ namespace OSLC4Net.Client
             }
         }
 
-        /**
-         * If a {@link ServiceProviderCatalog} is being used, this will return that object.
-         * Otherwise null will be returned.
-         */
+       /// <summary>
+       /// If a {@link ServiceProviderCatalog} is being used, this will return that object.
+       /// Otherwise null will be returned.
+       /// </summary>
+       /// <returns></returns>
         public ServiceProviderCatalog getServiceProviderCatalog()
         {
             return client.GetOslcResource<ServiceProviderCatalog>();
         }
 
-        /**
-         * If a {@link ServiceProvider} is being used as a {@link ServiceProvider} registry without an owning {@link ServiceProviderCatalog},
-         * this will return the {@link ServiceProvider}.
-         * Otherwise null will be returned.
-         */
+
+
+        /// <summary>
+        /// If aServiceProvider is being used as a ServiceProvider registry without an owning ServiceProviderCatalog,
+        /// this will return the ServiceProvider.
+        /// Otherwise null will be returned.
+        /// </summary>
+        /// <returns></returns>
         public ServiceProvider GetServiceProvider()
         {
             return client.GetOslcResource<ServiceProvider>();
         }
 
-        /**
-         * Return the registered {@link ServiceProvider}'s.
-         */
+        /// <summary>
+        /// Return the registered ServiceProvider's.
+        /// </summary>
+        /// <returns></returns>
         public ServiceProvider[] GetServiceProviders()
         {
             // We first try for a ServiceProviderCatalog
@@ -337,6 +349,10 @@ namespace OSLC4Net.Client
             return null;
         }
 
+        /// <summary>
+        /// Get the OslcClient associated with this SerivceProviderRegistryClient
+        /// </summary>
+        /// <returns></returns>
 	    public OslcRestClient getClient() {
 		    return client;
 	    }

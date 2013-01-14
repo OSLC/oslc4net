@@ -41,23 +41,21 @@ namespace OSLC4Net.Core.Model
 		    this.label = label;
 	    }
 
+        /// <summary>
+        /// Gets the link label.
+        /// </summary>
+        /// <returns></returns>
 	    [OslcName("title")]
 	    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
-	    /**
-	     * Gets the link label.
-	     * 
-	     * @return the label
-	     */
 	    public String GetLabel()
 	    {
 		    return label;
 	    }
 
-	    /**
-	     * Sets the link label.
-	     * 
-	     * @param label the label
-	     */
+	    /// <summary>
+        /// Sets the link label.
+	    /// </summary>
+	    /// <param name="label"></param>
 	    public void SetLabel(String label)
 	    {
 		    this.label = label;

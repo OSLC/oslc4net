@@ -37,6 +37,11 @@ using VDS.RDF.Writing;
 
 namespace OSLC4Net.Core.DotNetRdfProvider
 {
+    /// <summary>
+    /// A class to 
+    ///     - read RDF/XML from an input stream and create .NET objects.
+    ///     - write .NET objects to an output stream as RDF/XML
+    /// </summary>
     public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     {
         public RdfXmlMediaTypeFormatter()
@@ -46,6 +51,11 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML_TYPE);
         }
 
+        /// <summary>
+        /// Test the write-ability of a type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public override bool CanWriteType(Type type)
         {
             if (IsSinglton(type))
@@ -56,6 +66,15 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             return GetMemberType(type) != null;
         }
 
+        /// <summary>
+        /// Write a .NET object to an output stream
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="value"></param>
+        /// <param name="writeStream"></param>
+        /// <param name="content"></param>
+        /// <param name="transportContext"></param>
+        /// <returns></returns>
         public override Task  WriteToStreamAsync(
             Type type,
             object value,
@@ -109,6 +128,11 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                 });
         }
 
+        /// <summary>
+        /// Test the readability of a type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public override bool CanReadType(Type type)
         {
             if (IsSinglton(type))
@@ -119,6 +143,14 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             return GetMemberType(type) != null;
         }
 
+        /// <summary>
+        /// Read RDF/XML from an HTTP input stream and convert to .NET objects
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="readStream"></param>
+        /// <param name="content"></param>
+        /// <param name="formatterLogger"></param>
+        /// <returns></returns>
         public override Task<object> ReadFromStreamAsync(
             Type type,
             Stream readStream,

@@ -27,6 +27,9 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client
 {
+    /// <summary>
+    /// A class providing client utilities to query/get, create, update and delete OSLC resources
+    /// </summary>
     public sealed class OslcRestClient
     {
         public const int DEFAULT_READ_TIMEOUT = 60000;
@@ -125,6 +128,11 @@ namespace OSLC4Net.Client
 		    return client;
 	    }
 
+        /// <summary>
+        /// Retrieve an OSLC resource of the specified type.  The type must have an associated .NET class with OSLC4Net annotations.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
 	    public T GetOslcResource<T>() where T : class
         {
             this.client.DefaultRequestHeaders.Clear();
@@ -146,6 +154,11 @@ namespace OSLC4Net.Client
             }
         }
 
+        /// <summary>
+        /// Get an array of OSLC resources of the specified type.  The type must have an associated .NET class with OSLC4Net annotations.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
 	    public T[] GetOslcResources<T>()
 	    {
             this.client.DefaultRequestHeaders.Clear();
@@ -168,6 +181,12 @@ namespace OSLC4Net.Client
             }
 	    }
 
+        /// <summary>
+        /// Create an OSLC resource of the specified type.  The type must have an associated .NET class with OSLC4Net annotations.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="oslcResource"></param>
+        /// <returns></returns>
         public T AddOslcResource<T>(T oslcResource)
 	    {
             this.client.DefaultRequestHeaders.Clear();
@@ -193,6 +212,12 @@ namespace OSLC4Net.Client
                 }).Result.Result.Content.ReadAsAsync<T>(formatters).Result;
             }
 
+        /// <summary>
+        /// Add an OSLC resource of the specified type and return an HttpResponseMessage.
+        /// The type must have an associated .NET class with OSLC4Net annotations.
+        /// </summary>
+        /// <param name="oslcResource"></param>
+        /// <returns></returns>
 	    public HttpResponseMessage AddOslcResourceReturnClientResponse(Object oslcResource)
 	    {
             this.client.DefaultRequestHeaders.Clear();
@@ -218,6 +243,12 @@ namespace OSLC4Net.Client
             }
 	    }
 
+        /// <summary>
+        /// Update an OSLC resource of the specified type and return an HttpResponseMessage.
+        /// The type must have an associated .NET class with OSLC4Net annotations.
+        /// </summary>
+        /// <param name="oslcResource"></param>
+        /// <returns></returns>
         public HttpResponseMessage UpdateOslcResourceReturnClientResponse(Object oslcResource)
         {
             this.client.DefaultRequestHeaders.Clear();
@@ -234,6 +265,11 @@ namespace OSLC4Net.Client
             return response;
         }
 
+        
+        /// <summary>
+        /// Remove an OSLC resource
+        /// </summary>
+        /// <returns></returns>
         public HttpResponseMessage RemoveOslcResourceReturnClientResponse()
         {
             this.client.DefaultRequestHeaders.Clear();

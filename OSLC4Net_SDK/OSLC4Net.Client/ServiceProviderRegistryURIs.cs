@@ -26,25 +26,24 @@ using log4net;
 
 namespace OSLC4Net.Client
 {
+    /// <summary>
+    /// This class calculates and store a ServiceProvider Registry URI.
+    /// </summary>
     public static class ServiceProviderRegistryURIs
     {
         private static readonly ILog LOGGER = LogManager.GetLogger(typeof(ServiceProviderRegistryURIs));
 
         private static readonly String SYSTEM_PROPERTY_NAME_REGISTRY_URI = typeof(ServiceProviderRegistryURIs).Assembly.FullName + ".registryuri";
-        private static readonly String SYSTEM_PROPERTY_NAME_UI_URI = typeof(ServiceProviderRegistryURIs).Assembly.FullName + ".uiuri";
 
         private static String SERVICE_PROVIDER_REGISTRY_URI;
-        private static String UI_URI;
 
         static ServiceProviderRegistryURIs()
         {
             String registryURI = Environment.GetEnvironmentVariable(SYSTEM_PROPERTY_NAME_REGISTRY_URI);
-            String uiURI       = Environment.GetEnvironmentVariable(SYSTEM_PROPERTY_NAME_UI_URI);
 
             String defaultBase = null;
 
-            if ((registryURI == null) ||
-                (uiURI == null))
+            if (registryURI == null)
             {
                 // We need at least one default URI
 
@@ -77,27 +76,17 @@ namespace OSLC4Net.Client
 
                 LOGGER.Warn("System property '" + SYSTEM_PROPERTY_NAME_REGISTRY_URI + "' not set.  Using calculated value '" + SERVICE_PROVIDER_REGISTRY_URI + "'");
             }
-
-            if (uiURI != null)
-            {
-                UI_URI = uiURI;
-            }
-            else
-            {
-                UI_URI = defaultBase + "OSLC4JUI";
-
-                LOGGER.Warn("System property '" + SYSTEM_PROPERTY_NAME_UI_URI + "' not set.  Using calculated value '" + UI_URI + "'");
-            }
+           
         }
 
+        /// <summary>
+        /// Get the ServiceProviderRegistry URI
+        /// </summary>
+        /// <returns></returns>
         public static String getServiceProviderRegistryURI()
         {
             return SERVICE_PROVIDER_REGISTRY_URI;
         }
 
-        public static String getUIURI()
-        {
-            return UI_URI;
-        }
     }
 }

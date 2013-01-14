@@ -20,36 +20,35 @@ using System.Text;
 
 namespace OSLC4Net.Core.Model
 {
-    /**
-     * This interface helps model RDF reified statements in plain old Java objects.
-     * OSLC commonly uses reification to describe metadata on links, such as labels.
-     * The {@link #getValue()} and {@link #setValue(Object)} methods allow you to
-     * set the actual object of the triple. All other properties in implementing
-     * classes are statements about the statement. These additional properties
-     * should have {@link OslcName} and {@link OslcPropertyDefinition} annotations.
-     * See {@link Link} for an example.
-     * <p>
-     * Note: The parameterized type T must be an {@link URI} to serialize to JSON due
-     * to current limitations in the OSLC JSON format.
-     * 
-     * @see AbstractReifiedResource
-     * @see <a href="http://www.w3.org/TR/rdf-mt/#Reif">RDF Semantics: Reification</a>
-     * @see <a href="http://www.w3.org/TR/rdf-primer/#reification">RDF Primer: Reification</a>
-     */
+    /// <summary>
+    /// This interface helps model RDF reified statements in plain old Java objects.
+    /// OSLC commonly uses reification to describe metadata on links, such as labels.
+    /// The  #getValue() and#setValue(Object) methods allow you to
+    /// set the actual object of the triple. All other properties in implementing
+    /// classes are statements about the statement. These additional properties
+    /// should have OslcName and OslcPropertyDefinition annotations.
+    /// See Link for an example.
+    /// 
+    /// Note: The parameterized type T must be an URI to serialize to JSON due
+    /// to current limitations in the OSLC JSON format.
+    ///  
+    /// @see AbstractReifiedResource
+    /// @see <a href="http://www.w3.org/TR/rdf-mt/#Reif">RDF Semantics: Reification</a>
+    /// @see <a href="http://www.w3.org/TR/rdf-primer/#reification">RDF Primer: Reification</a>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IReifiedResource<T>
     {
-        /**
-         * Gets the object of the reified statement.
-         * 
-         * @return the object of the reified statement
-         */
+        /// <summary>
+        /// Gets the object of the reified statement.
+        /// </summary>
+        /// <returns></returns>
         T GetValue();
 
-        /**
-         * Sets the object of the reified statement.
-         * 
-         * @param value the object of the reified statement
-         */
+        /// <summary>
+        /// Sets the object of the reified statement.
+        /// </summary>
+        /// <param name="value"></param>
         void SetValue(T value);
     }
 }

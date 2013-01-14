@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\OSLC4Net.Core.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -60,7 +61,7 @@
     <Compile Include="Exceptions\OslcCoreRelativeURIException.cs" />
     <Compile Include="Exceptions\MessageExtractor.cs" />
     <Compile Include="Exceptions\OslcCoreApplicationException.cs" />
-    <Compile Include="LyoConstants.cs" />
+    <Compile Include="OSLC4NetConstants.cs" />
     <Compile Include="Model\AbstractResource.cs" />
     <Compile Include="Model\AnyResource.cs" />
     <Compile Include="Model\AbstractReifiedResource.cs" />

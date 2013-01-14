@@ -38,6 +38,9 @@ using VDS.RDF.Parsing;
 
 namespace OSLC4Net.Core.DotNetRdfProvider
 {
+    /// <summary>
+    /// A class to assist with serialization and de-serialization of RDF/XML from/to .NET objects
+    /// </summary>
     public static class DotNetRdfHelper
     {
         private const string PROPERTY_TOTAL_COUNT = "totalCount";
@@ -54,6 +57,11 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
         private static ILog logger = LogManager.GetLogger(typeof(DotNetRdfHelper));
 
+        /// <summary>
+        /// Create an RDF graph from a collection of .NET objects
+        /// </summary>
+        /// <param name="objects">A collection of .NET objects</param>
+        /// <returns>The RDF Graph representing the objects</returns>
         public static IGraph CreateDotNetRdfGraph(IEnumerable<object> objects)
         {
             return CreateDotNetRdfGraph(null,
@@ -187,6 +195,12 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             }
         }
 
+        /// <summary>
+        /// Create a .NET object from an RDF Node
+        /// </summary>
+        /// <param name="resource"></param>
+        /// <param name="beanType"></param>
+        /// <returns></returns>
         public static object FromDotNetRdfNode(IUriNode resource,
                                                Type     beanType)
         {
@@ -201,6 +215,12 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             return newInstance;
         }
 
+        /// <summary>
+        /// Create a .NET object from an RDF graph
+        /// </summary>
+        /// <param name="graph"></param>
+        /// <param name="beanType"></param>
+        /// <returns></returns>
         public static object FromDotNetRdfGraph(IGraph    graph,
                                                 Type      beanType)
         {

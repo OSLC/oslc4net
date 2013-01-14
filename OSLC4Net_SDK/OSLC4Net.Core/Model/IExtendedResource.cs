@@ -20,63 +20,52 @@ using System.Text;
 
 namespace OSLC4Net.Core.Model
 {
-    /**
-     * A resource that can hold unknown properties and content. If a setter is not
-     * found for a property when reading a resource, it is added as an extended
-     * property. These extended properties are preserved when writing the resource
-     * back out, for instance on a PUT request. In OSLC, clients MUST preserve
-     * unknown content when performing updates of resources.
-     * 
-     * @see <a href="http://open-services.net/bin/view/Main/OslcCoreSpecification?sortcol=table;up=#Unknown_properties_and_content">OSLC Core 2.0: Unknown properties and content</a>
-     */
+    /// <summary>
+    /// A resource that can hold unknown properties and content. If a setter is not
+    /// found for a property when reading a resource, it is added as an extended
+    /// property. These extended properties are preserved when writing the resource
+    /// back out, for instance on a PUT request. In OSLC, clients MUST preserve
+    /// unknown content when performing updates of resources.
+    /// 
+    /// see <a href="http://open-services.net/bin/view/Main/OslcCoreSpecification?sortcol=table;up=#Unknown_properties_and_content">OSLC Core 2.0: Unknown properties and content</a>
+    
+    /// </summary>
     public interface IExtendedResource : IResource
     {
-        /**
-         * Gets the RDF types of this resource. These types will be added to the
-         * serialization of the resource in addition to the
-         * {@link OslcResourceShape#describes()} annotation.
-         * 
-         * @return the collection of types
-         */
+        /// <summary>
+        /// Gets the RDF types of this resource. These types will be added to the
+        /// serialization of the resource in addition to the
+        /// OslcResourceShape#describes() annotation
+        /// </summary>
+        /// <returns></returns>
         ICollection<Uri> GetTypes();
 
-        /**
-         * Sets the RDF types of this resource. These types will be added to the
-         * serialization of the resource in addition to the
-         * {@link OslcResourceShape#describes()} annotation.
-         * 
-         * @param types
-         *            the collection of types
-         */
+        /// <summary>
+        /// Sets the RDF types of this resource. These types will be added to the
+        /// serialization of the resource in addition to the
+        /// OslcResourceShape#describes() annotation.
+        /// </summary>
+        /// <param name="types"></param>
         void SetTypes(ICollection<Uri> types);
 
-        /**
-         * Adds an RDF type to this resource. These types will be added to the
-         * serialization of the resource in addition to the
-         * {@link OslcResourceShape#describes()} annotation.
-         * 
-         * @param type
-         *            the type URI
-         */
+        /// <summary>
+        /// Adds an RDF type to this resource. These types will be added to the
+        /// serialization of the resource in addition to the
+        /// OslcResourceShape#describes() annotation.
+        /// </summary>
+        /// <param name="type"></param>
         void AddType(Uri type);
 
-	    /**
-	     * Sets extended properties not defined in the bean.
-	     * 
-	     * @param properties
-	     *            a map of properties where the key is the predicate qualified
-	     *            name and the value is the object of the statement. Values are
-	     *            collections if there are multiple statements for a predicate.
-	     */
+	    /// <summary>
+        ///  Sets extended properties not defined in the bean.
+	    /// </summary>
+	    /// <param name="properties"></param>
 	    void SetExtendedProperties(IDictionary<QName, Object> properties);
 	
-	    /**
-	     * Gets back the list of extended properties not defined in this bean.
-	     * 
-	     * @return the extended properties, a map of properties where the key is the
-	     *         predicate qualified name and the value is the object of the
-	     *         statement
-	     */
+	    /// <summary>
+        /// Gets back the list of extended properties not defined in this bean.
+	    /// </summary>
+	    /// <returns></returns>
         IDictionary<QName, Object> GetExtendedProperties();
     }
 }
