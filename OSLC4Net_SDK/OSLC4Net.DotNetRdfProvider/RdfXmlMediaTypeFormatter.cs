@@ -87,7 +87,11 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                 {
                     IGraph graph;
 
-                    if (type.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
+                    if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IEnumerable<>), value.GetType()))
+                    {
+                        graph = DotNetRdfHelper.CreateDotNetRdfGraph(value as IEnumerable<object>);
+                    }
+                    else if (type.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
                     {
                         graph = DotNetRdfHelper.CreateDotNetRdfGraph(new object[] { value });
                     }
@@ -233,7 +237,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
                 foreach (Type interfac in interfaces)
                 {
-                    if (interfac.GetGenericTypeDefinition() == typeof(IEnumerable<object>).GetGenericTypeDefinition())
+                    if (interfac.IsGenericType && interfac.GetGenericTypeDefinition() == typeof(IEnumerable<object>).GetGenericTypeDefinition())
                     {
                         Type memberType = interfac.GetGenericArguments()[0];
 

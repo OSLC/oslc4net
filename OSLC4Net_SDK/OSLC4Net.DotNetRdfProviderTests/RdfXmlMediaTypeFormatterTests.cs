@@ -68,8 +68,8 @@ namespace DotNetRdfProviderTests
             crListOut.Add(changeRequest1);
 
             ChangeRequest changeRequest2 = new ChangeRequest(new Uri("http://com/somewhere/changeRequest2"));
-            changeRequest1.SetFixed(false);
-            changeRequest1.AddAffectedByDefect(new Link(new Uri("http://com/somewhere/changeRequest1"), "Test of links"));
+            changeRequest2.SetFixed(false);
+            changeRequest2.AddAffectedByDefect(new Link(new Uri("http://com/somewhere/changeRequest1"), "Test of links"));
 
             crListOut.Add(changeRequest2);
 
@@ -95,7 +95,7 @@ namespace DotNetRdfProviderTests
                 }
                 else if (crAboutUri.Equals("http://com/somewhere/changeRequest2"))
                 {
-                    Assert.AreEqual(cr.IsFixed(), changeRequest1.IsFixed());
+                    Assert.AreEqual(cr.IsFixed(), changeRequest2.IsFixed());
                     Assert.AreEqual(cr.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
                     Assert.AreEqual(cr.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
                 }
@@ -184,7 +184,7 @@ namespace DotNetRdfProviderTests
 
             stream.Position = 0;
 
-            return formatter.ReadFromStreamAsync(typeof(T), stream, content, null).Result as IEnumerable<T>;
+            return formatter.ReadFromStreamAsync(typeof(List<T>), stream, content, null).Result as IEnumerable<T>;
         }
     }
 }
