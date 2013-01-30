@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attribute\OslcRdfCollectionType.cs" />
     <Compile Include="Exceptions\OslcCoreDeregistrationException.cs" />
     <Compile Include="Exceptions\OslcCoreRegistrationException.cs" />
     <Compile Include="Exceptions\OslcCoreInvalidRepresentationException.cs" />

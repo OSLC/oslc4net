@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
- * Copyright (c) 2012 IBM Corporation.
+ * Copyright (c) 2012, 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -55,6 +56,14 @@ namespace OSLC4Net.Core.DotNetRdfProvider
     
         private const string GENERATED_PREFIX_START = "j.";
 
+        private const string RDF_ALT = "Alt";
+        private const string RDF_BAG = "Bag";
+        private const string RDF_SEQ = "Seq";
+
+        private const string RDF_LIST = "List";
+
+        private const string RDF_NIL = "nil";
+
         private static ILog logger = LogManager.GetLogger(typeof(DotNetRdfHelper));
 
         /// <summary>
@@ -67,6 +76,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             return CreateDotNetRdfGraph(null,
                                         null,
                                         null,
+                                        null,
                                         objects,
                                         null);
         }
@@ -74,6 +84,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
         static IGraph CreateDotNetRdfGraph(string                      descriptionAbout,
                                            string                      responseInfoAbout,
                                            string                      nextPageAbout,
+                                           Int64?                      totalCount,
                                            IEnumerable<object>         objects,
                                            IDictionary<string, object> properties)
         {
@@ -93,7 +104,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                     graph.Assert(new Triple(responseInfoResource, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType)),
                                             graph.CreateUriNode(OslcConstants.TYPE_RESPONSE_INFO)));
                     graph.Assert(new Triple(responseInfoResource, graph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + PROPERTY_TOTAL_COUNT)),
-                                            new StringNode(graph, objects.Count().ToString())));
+                                            new StringNode(graph, (totalCount == null ? objects.Count() : totalCount).ToString())));
                 
                     if (nextPageAbout != null)
                     {
@@ -190,7 +201,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
             if (descriptionResource != null)
             {
-                graph.Assert(new Triple(descriptionResource, graph.CreateUriNode(new Uri(OslcConstants.RDF_NAMESPACE + "member")),
+                graph.Assert(new Triple(descriptionResource, graph.CreateUriNode(new Uri(OslcConstants.RDFS_NAMESPACE + "member")),
                                         mainResource));
             }
         }
@@ -206,11 +217,13 @@ namespace OSLC4Net.Core.DotNetRdfProvider
         {
             object   newInstance = Activator.CreateInstance(beanType);
             IDictionary<Type, IDictionary<string, MethodInfo>> typePropertyDefinitionsToSetMethods = new Dictionary<Type, IDictionary<string, MethodInfo>>();
+            IDictionary<String, Object> visitedResources = new Dictionary<String, Object>();
 
             FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
                               beanType,
                               newInstance,
-                              resource);
+                              resource,
+                              visitedResources);
 
             return newInstance;
         }
@@ -243,11 +256,13 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                     {
                         IUriNode   resource = (IUriNode)triple.Subject;
                         object  newInstance = Activator.CreateInstance(beanType);
+                        IDictionary<String,Object> visitedResources = new Dictionary<String, Object>();
 
                         FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
                                           beanType,
                                           newInstance,
-                                          resource);
+                                          resource,
+                                          visitedResources);
 
                         add.Invoke(results, new object[] { newInstance });
                     }
@@ -260,7 +275,8 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 	    private static void FromDotNetRdfNode(IDictionary<Type, IDictionary<string, MethodInfo>>    typePropertyDefinitionsToSetMethods,
                                               Type                                                  beanType,
                                               object                                                bean,
-                                              INode                                                 resource)
+                                              INode                                                 resource,
+                                              IDictionary<string, Object>                           visitedResources)
         {
             IGraph graph = resource.Graph;
 
@@ -277,6 +293,8 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                 typePropertyDefinitionsToSetMethods.Add(beanType,
                                                         setMethodMap);
             }
+
+            visitedResources.Add(GetVisitedResourceName(resource), bean);
 
             if (bean is IResource)
             {
@@ -357,7 +375,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                 			    prefix = GeneratePrefix(graph, ns);
                 		    }
                 		    QName key = new QName(ns, localPart, prefix);
-                		    object value = HandleExtendedPropertyValue(beanType, obj);
+                		    object value = HandleExtendedPropertyValue(beanType, obj, visitedResources);
                             if (!extendedProperties.ContainsKey(key))
                 		    {
                 			    extendedProperties.Add(key, value);
@@ -398,6 +416,56 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
                         setMethodComponentParameterType = setMethodComponentParameterType.GetGenericArguments()[0];
                     }
+
+                    Uri nil = new Uri(OslcConstants.RDF_NAMESPACE + RDF_NIL);
+                    List<INode> objects;
+
+                    if (multiple && obj is IUriNode && (
+                           (graph.GetTriplesWithSubjectPredicate(obj, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListFirst))).Count() > 0 
+                               && graph.GetTriplesWithSubjectPredicate(obj, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListRest))).Count() > 0)
+                           || nil.Equals((obj as IUriNode).Uri)
+                           || (((IUriNode)obj).IsListRoot(graph))))
+                    {
+                        objects = new List<INode>();
+                        IUriNode listNode = obj as IUriNode;
+
+                        while (listNode != null && ! nil.Equals(listNode.Uri)) 
+                        {
+                            visitedResources.Add(GetVisitedResourceName(listNode), new Object());
+                       
+                            IUriNode o = (IUriNode)graph.GetTriplesWithSubjectPredicate(listNode, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListFirst))).First().Object;
+                            objects.Add(o);
+                       
+                            listNode = (IUriNode)graph.GetTriplesWithSubjectPredicate(listNode, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListRest))).First().Object;
+                        }
+
+                        visitedResources.Add(GetVisitedResourceName(obj as IUriNode), objects);
+                    }
+                    else if (multiple && IsRdfCollectionResource(graph, obj))
+                    {
+                        objects = new List<INode>();
+                        IEnumerable<Triple> trips = graph.GetTriplesWithSubjectPredicate(obj, graph.CreateUriNode(new Uri(OslcConstants.RDF_NAMESPACE + "li")));
+
+                        foreach (Triple trip in trips)
+                        {
+                            INode o = trip.Object;
+                         
+                            if (o is IUriNode)
+                            {
+                                visitedResources.Add(GetVisitedResourceName(o as IUriNode), new Object());
+                            }
+                        
+                            objects.Add(o);
+                        }
+
+                        visitedResources.Add(GetVisitedResourceName(obj as IUriNode), objects);
+                    }
+                    else
+                    {
+                        objects = new List<INode>(); // XXX - Should be immutable; is there a way to do that in .NET?
+
+                        objects.Add(obj);
+                    }
                 
                     Type reifiedType = null;
                     if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IReifiedResource<>), setMethodComponentParameterType))
@@ -412,190 +480,196 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                         setMethodComponentParameterType = setMethodComponentParameterType.GetGenericArguments()[0];
                     }
                 
-                    object parameter = null;
-                    if (obj is ILiteralNode)
+                    foreach (INode o in objects)
                     {
-                        ILiteralNode literal    = obj as ILiteralNode;
-                        string stringValue = literal.Value;
+                        object parameter = null;
+                        if (o is ILiteralNode)
+                        {
+                            ILiteralNode literal    = o as ILiteralNode;
+                            string stringValue = literal.Value;
 
-                        if (typeof(string) == setMethodComponentParameterType)
-                        {
-                            parameter = stringValue;
-                        }
-                        else if ((typeof(bool) == setMethodComponentParameterType) ||
-                                 (typeof(bool?) == setMethodComponentParameterType))
-                        {
-                            // XML supports both 'true' and '1' for a true Boolean.
-                            // Cannot use Boolean.parseBoolean since it supports case-insensitive TRUE.
-                            if (("true".Equals(stringValue)) ||
-                                ("1".Equals(stringValue)))
+                            if (typeof(string) == setMethodComponentParameterType)
                             {
-                                parameter = true;
+                                parameter = stringValue;
                             }
-                            // XML supports both 'false' and '0' for a false Boolean.
-                            else if (("false".Equals(stringValue)) ||
-                                     ("0".Equals(stringValue)))
+                            else if ((typeof(bool) == setMethodComponentParameterType) ||
+                                     (typeof(bool?) == setMethodComponentParameterType))
                             {
-                                parameter = false;
+                                // XML supports both 'true' and '1' for a true Boolean.
+                                // Cannot use Boolean.parseBoolean since it supports case-insensitive TRUE.
+                                if (("true".Equals(stringValue)) ||
+                                    ("1".Equals(stringValue)))
+                                {
+                                    parameter = true;
+                                }
+                                // XML supports both 'false' and '0' for a false Boolean.
+                                else if (("false".Equals(stringValue)) ||
+                                         ("0".Equals(stringValue)))
+                                {
+                                    parameter = false;
+                                }
+                                else
+                                {
+                                    throw new ArgumentException("'" + stringValue + "' has wrong format for Boolean.");
+                                }
+                            }
+                            else if ((typeof(byte) == setMethodComponentParameterType) ||
+                                     (typeof(byte?)== setMethodComponentParameterType))
+                            {
+                                parameter = byte.Parse(stringValue);
+                            }
+                            else if ((typeof(short) == setMethodComponentParameterType) ||
+                                     (typeof(short?) == setMethodComponentParameterType))
+                            {
+                                parameter = short.Parse(stringValue);
+                            }
+                            else if ((typeof(int) == setMethodComponentParameterType) ||
+                                     (typeof(int?) == setMethodComponentParameterType))
+                            {
+                                parameter = int.Parse(stringValue);
+                            }
+                            else if ((typeof(long) == setMethodComponentParameterType) ||
+                                     (typeof(long?) == setMethodComponentParameterType))
+                            {
+                                parameter = long.Parse(stringValue);
+                            }
+                            else if (typeof(BigInteger) == setMethodComponentParameterType)
+                            {
+                                parameter = BigInteger.Parse(stringValue);
+                            }
+                            else if ((typeof(float) == setMethodComponentParameterType) ||
+                                     (typeof(float?) == setMethodComponentParameterType))
+                            {
+                                parameter = float.Parse(stringValue);
+                            }
+                            else if ((typeof(double) == setMethodComponentParameterType) ||
+                                     (typeof(double?) == setMethodComponentParameterType))
+                            {
+                                parameter = double.Parse(stringValue);
+                            }
+                            else if ((typeof(DateTime) == setMethodComponentParameterType) ||
+                                     (typeof(DateTime?) == setMethodComponentParameterType))
+                            {
+                                parameter = DateTime.Parse(stringValue);
+                            }
+                        }
+                        else if (o is IUriNode)
+                        {
+                            IUriNode nestedResource = o as IUriNode;
+
+                            if (typeof(Uri) == setMethodComponentParameterType)
+                            {
+                                string nestedResourceURIString = nestedResource.Uri.ToString();
+
+                                if (nestedResourceURIString != null)
+                                {
+                                    Uri nestedResourceURI =  nestedResource.Uri;
+
+                                    if (!nestedResourceURI.IsAbsoluteUri)
+                         	        {
+                            	        throw new OslcCoreRelativeURIException(beanType,
+                                                                               setMethod.Name,
+                                                                               nestedResourceURI);
+                        	        }
+
+                        	        parameter = nestedResourceURI;
+                                }
                             }
                             else
                             {
-                                throw new ArgumentException("'" + stringValue + "' has wrong format for Boolean.");
+                                object nestedBean = Activator.CreateInstance(setMethodComponentParameterType);
+
+                                FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
+                                                  setMethodComponentParameterType,
+                                                  nestedBean,
+                                                  nestedResource,
+                                                  visitedResources);
+
+                                parameter = nestedBean;
                             }
                         }
-                        else if ((typeof(byte) == setMethodComponentParameterType) ||
-                                 (typeof(byte?)== setMethodComponentParameterType))
+                        else if (o is IBlankNode)
                         {
-                            parameter = byte.Parse(stringValue);
-                        }
-                        else if ((typeof(short) == setMethodComponentParameterType) ||
-                                 (typeof(short?) == setMethodComponentParameterType))
-                        {
-                            parameter = short.Parse(stringValue);
-                        }
-                        else if ((typeof(int) == setMethodComponentParameterType) ||
-                                 (typeof(int?) == setMethodComponentParameterType))
-                        {
-                            parameter = int.Parse(stringValue);
-                        }
-                        else if ((typeof(long) == setMethodComponentParameterType) ||
-                                 (typeof(long?) == setMethodComponentParameterType))
-                        {
-                            parameter = long.Parse(stringValue);
-                        }
-                        else if (typeof(BigInteger) == setMethodComponentParameterType)
-                        {
-                            parameter = BigInteger.Parse(stringValue);
-                        }
-                        else if ((typeof(float) == setMethodComponentParameterType) ||
-                                 (typeof(float?) == setMethodComponentParameterType))
-                        {
-                            parameter = float.Parse(stringValue);
-                        }
-                        else if ((typeof(double) == setMethodComponentParameterType) ||
-                                 (typeof(double?) == setMethodComponentParameterType))
-                        {
-                            parameter = double.Parse(stringValue);
-                        }
-                        else if ((typeof(DateTime) == setMethodComponentParameterType) ||
-                                 (typeof(DateTime?) == setMethodComponentParameterType))
-                        {
-                            parameter = DateTime.Parse(stringValue);
-                        }
-                    }
-                    else if (obj is IUriNode)
-                    {
-                        IUriNode nestedResource = obj as IUriNode;
-
-                        if (typeof(Uri) == setMethodComponentParameterType)
-                        {
-                            string nestedResourceURIString = nestedResource.Uri.ToString();
-
-                            if (nestedResourceURIString != null)
-                            {
-                                Uri nestedResourceURI =  nestedResource.Uri;
-
-                                if (!nestedResourceURI.IsAbsoluteUri)
-                         	    {
-                            	    throw new OslcCoreRelativeURIException(beanType,
-                                                                           setMethod.Name,
-                                                                           nestedResourceURI);
-                        	    }
-
-                        	    parameter = nestedResourceURI;
-                            }
-                        }
-                        else
-                        {
+                            IBlankNode nestedResource = o as IBlankNode;
                             object nestedBean = Activator.CreateInstance(setMethodComponentParameterType);
 
                             FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
                                               setMethodComponentParameterType,
                                               nestedBean,
-                                              nestedResource);
+                                              nestedResource,
+                                              visitedResources);
 
                             parameter = nestedBean;
                         }
-                    }
-                    else if (obj is IBlankNode)
-                    {
-                        IBlankNode nestedResource = obj as IBlankNode;
-                        object nestedBean = Activator.CreateInstance(setMethodComponentParameterType);
 
-                        FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
-                                          setMethodComponentParameterType,
-                                          nestedBean,
-                                          nestedResource);
-
-                        parameter = nestedBean;
-                    }
-
-                    if (parameter != null)
-                    {
-                	    if (reifiedType != null)
-                	    {
-						    // This property supports reified statements. Create the
-						    // new resource to hold the value and any metadata.
-						    object reifiedResource = Activator.CreateInstance(reifiedType);
-						
-						    // Find a setter for the actual value.
-					        foreach (MethodInfo method in reifiedType.GetMethods())
-					        {
-					            if (!"SetValue".Equals(method.Name))
-					            {
-					                continue;
-					            }
-					            ParameterInfo[] parameters = method.GetParameters();
-                                if (parameters.Length == 1 && parameters[0].ParameterType.IsAssignableFrom(setMethodComponentParameterType))
-					            {
-								    method.Invoke(reifiedResource, new object[] { parameter });		
-								    break;
-					            }
-					        }
-
-					        // Fill in any reified statements.
-                            IEnumerable<Triple> reifiedTriples = GetReifiedTriples(triple);
-
-					        foreach (Triple reifiedTriple in reifiedTriples)
-					        {
-						        FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
-						    		              reifiedType,
-	                                              reifiedResource,
-	                                              reifiedTriple.Subject);
-					        }
-					    
-                		    parameter = reifiedResource;
-                	    }
-                	
-                        if (multiple)
+                        if (parameter != null)
                         {
-                            List<object> values;
-                            if (propertyDefinitionsToArrayValues.ContainsKey(uri))
+                            if (reifiedType != null)
                             {
-                                values = propertyDefinitionsToArrayValues[uri];
+                                // This property supports reified statements. Create the
+                                // new resource to hold the value and any metadata.
+                                object reifiedResource = Activator.CreateInstance(reifiedType);
+
+                                // Find a setter for the actual value.
+                                foreach (MethodInfo method in reifiedType.GetMethods())
+                                {
+                                    if (!"SetValue".Equals(method.Name))
+                                    {
+                                        continue;
+                                    }
+                                    ParameterInfo[] parameters = method.GetParameters();
+                                    if (parameters.Length == 1 && parameters[0].ParameterType.IsAssignableFrom(setMethodComponentParameterType))
+                                    {
+                                        method.Invoke(reifiedResource, new object[] { parameter });
+                                        break;
+                                    }
+                                }
+
+                                // Fill in any reified statements.
+                                IEnumerable<Triple> reifiedTriples = GetReifiedTriples(triple);
+
+                                foreach (Triple reifiedTriple in reifiedTriples)
+                                {
+                                    FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
+                                                      reifiedType,
+                                                      reifiedResource,
+                                                      reifiedTriple.Subject,
+                                                      visitedResources);
+                                }
+
+                                parameter = reifiedResource;
+                            }
+
+                            if (multiple)
+                            {
+                                List<object> values;
+                                if (propertyDefinitionsToArrayValues.ContainsKey(uri))
+                                {
+                                    values = propertyDefinitionsToArrayValues[uri];
+                                }
+                                else
+                                {
+                                    values = new List<object>();
+
+                                    propertyDefinitionsToArrayValues.Add(uri,
+                                                                         values);
+                                }
+
+                                values.Add(parameter);
                             }
                             else
                             {
-                                values = new List<object>();
+                                if (singleValueMethodsUsed.Contains(setMethod))
+                                {
+                                    throw new OslcCoreMisusedOccursException(beanType,
+                                                                             setMethod);
+                                }
 
-                                propertyDefinitionsToArrayValues.Add(uri,
-                                                                     values);
+                                setMethod.Invoke(bean,
+                                                 new object[] { parameter });
+
+                                singleValueMethodsUsed.Add(setMethod);
                             }
-
-                            values.Add(parameter);
-                        }
-                        else
-                        {
-                            if (singleValueMethodsUsed.Contains(setMethod))
-                            {
-                                throw new OslcCoreMisusedOccursException(beanType,
-                                                                         setMethod);
-                            }
-
-                            setMethod.Invoke(bean,
-                                             new object[] { parameter });
-
-                            singleValueMethodsUsed.Add(setMethod);
                         }
                     }
                 }
@@ -647,6 +721,22 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                                      new object[] { collection });
                 }
             }
+        }
+
+        private static bool IsRdfCollectionResource(IGraph graph, INode obj)
+        {
+            if (obj is IUriNode)
+            {
+                IUriNode resource = (IUriNode)obj;
+                if (graph.GetTriplesWithSubjectPredicate(resource, graph.CreateUriNode(new Uri(OslcConstants.RDF_NAMESPACE + RDF_ALT))).Count() > 0
+                    || graph.GetTriplesWithSubjectPredicate(resource, graph.CreateUriNode(new Uri(OslcConstants.RDF_NAMESPACE + RDF_BAG))).Count() > 0
+                    || graph.GetTriplesWithSubjectPredicate(resource, graph.CreateUriNode(new Uri(OslcConstants.RDF_NAMESPACE + RDF_SEQ))).Count() > 0)
+                {
+                    return true;
+                }
+            }
+        
+            return false;
         }
 
         // XXX - Not sure if this is how reification works.  Will have to test later.
@@ -728,7 +818,8 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 	    }
 
 	    private static object HandleExtendedPropertyValue(Type beanType,
-												          INode obj)
+                                                          INode obj,
+                                                          IDictionary<String, Object> visitedResources)
 	    {
 		    if (obj is ILiteralNode)
 		    {
@@ -786,7 +877,8 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                 FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
                                   typeof(AnyResource),
                                   any,
-                                  (IBlankNode)obj);
+                                  (IBlankNode)obj,
+                                  visitedResources);
 
                 return any;
 		    }
@@ -1090,7 +1182,8 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 			                        resource, 
 			                        property, 
 			                        nestedProperties,
-			                        onlyNested);
+			                        onlyNested,
+                                    null);
     	    }
     	    else 
     	    {
@@ -1189,6 +1282,23 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             IUriNode attribute = graph.CreateUriNode(new Uri(propertyDefinition));
 
             Type returnType = method.ReturnType;
+            OslcRdfCollectionType collectionType =
+                InheritedMethodAttributeHelper.GetAttribute<OslcRdfCollectionType>(method);
+            List<INode> rdfNodeContainer;
+
+            if (collectionType != null &&
+                    OslcConstants.RDF_NAMESPACE.Equals(collectionType.namespaceURI) &&
+                      (RDF_LIST.Equals(collectionType.collectionType)
+                       || RDF_ALT.Equals(collectionType.collectionType)
+                       || RDF_BAG.Equals(collectionType.collectionType)
+                       || RDF_SEQ.Equals(collectionType.collectionType)))
+            {
+                rdfNodeContainer = new List<INode>();
+            }
+            else
+            {
+                rdfNodeContainer = null;
+            }
 
             if (returnType.IsArray)
             {
@@ -1217,7 +1327,16 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                                         resource,
                                         attribute,
                                         nestedProperties,
-                                        onlyNested);
+                                        onlyNested,
+                                        rdfNodeContainer);
+                }
+
+                if (rdfNodeContainer != null)
+                {
+                    INode container = CreateRdfContainer(collectionType,
+                                                         rdfNodeContainer,
+                                                         graph);
+                    graph.Assert(new Triple(resource, attribute, container));
                 }
             }
             else if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(ICollection<>), returnType))
@@ -1234,7 +1353,16 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                                         resource,
                                         attribute,
                                         nestedProperties,
-                                        onlyNested);
+                                        onlyNested,
+                                        rdfNodeContainer);
+                }
+
+                if (rdfNodeContainer != null)
+                {
+                    INode container = CreateRdfContainer(collectionType,
+                                                         rdfNodeContainer,
+                                                         graph);
+                    graph.Assert(new Triple(resource, attribute, container));
                 }
             }
             else
@@ -1247,8 +1375,70 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                                     resource,
                                     attribute,
                                     nestedProperties,
-                                    onlyNested);
+                                    onlyNested,
+                                    null);
             }
+        }
+
+        private static INode CreateRdfContainer(OslcRdfCollectionType collectionType,
+                                                IList<INode>          rdfNodeContainer,
+                                                IGraph                graph)
+        {
+            if (RDF_LIST.Equals(collectionType.collectionType))
+            {
+                INode root = graph.CreateBlankNode();
+                INode current = root;
+
+                for (int i = 0; i < rdfNodeContainer.Count() - 1; i++)
+                {
+                    INode node = rdfNodeContainer[i];
+
+                    graph.Assert(new Triple(current, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListFirst)), node));
+                    
+                    INode next = graph.CreateBlankNode();
+                    
+                    graph.Assert(new Triple(current, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListRest)), next));
+
+                    current = next;
+                }
+
+                if (rdfNodeContainer.Count() > 0)
+                {
+                    graph.Assert(new Triple(current, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListFirst)),
+                                            rdfNodeContainer[rdfNodeContainer.Count() - 1]));
+                }
+
+                graph.Assert(new Triple(current, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListRest)),
+                                        graph.CreateUriNode(OslcConstants.RDF_NAMESPACE + RDF_NIL)));
+
+                return root;
+            }
+
+            INode container = graph.CreateBlankNode();
+        
+            if (RDF_ALT.Equals(collectionType.collectionType))
+            {
+                graph.Assert(new Triple(container, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType)),
+                                        graph.CreateUriNode(OslcConstants.RDF_NAMESPACE + RDF_ALT)));
+            }
+            else if (RDF_BAG.Equals(collectionType.collectionType))
+            {
+                graph.Assert(new Triple(container, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType)),
+                                        graph.CreateUriNode(OslcConstants.RDF_NAMESPACE + RDF_BAG)));
+            }
+            else
+            {
+                graph.Assert(new Triple(container, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType)),
+                                        graph.CreateUriNode(OslcConstants.RDF_NAMESPACE + RDF_SEQ)));
+            }
+        
+            foreach (INode node in rdfNodeContainer)
+            {
+                graph.Assert(new Triple(container, graph.CreateUriNode(OslcConstants.RDF_NAMESPACE + "li"),
+                                        node));
+            }
+        
+            return container;
         }
 
         private static void HandleLocalResource(Type                        resourceType,
@@ -1259,11 +1449,12 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                                                 INode                       resource,
                                                 IUriNode                    attribute,
                                                 IDictionary<string, object> nestedProperties,
-                                                bool                        onlyNested)
+                                                bool                        onlyNested,
+                                                List<INode>                 rdfNodeContainer)
         {
             Type objType = obj.GetType();
 
-            INode node = null;
+            INode nestedNode = null;
             bool isReifiedResource = InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IReifiedResource<>), obj.GetType());
             object value = (! isReifiedResource) ? obj : obj.GetType().GetMethod("GetValue", Type.EmptyTypes).Invoke(obj, null);
         
@@ -1276,11 +1467,11 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             
         	    if (xmlLiteral)
         	    {
-        		    node = new StringNode(graph, value.ToString(), new Uri(RdfSpecsHelper.RdfXmlLiteral));
+                    nestedNode = new StringNode(graph, value.ToString(), new Uri(RdfSpecsHelper.RdfXmlLiteral));
         	    }
         	    else
         	    {
-        		    node = new StringNode(graph, value.ToString());
+                    nestedNode = new StringNode(graph, value.ToString());
         	    }
             }
             else if ((value is bool) ||
@@ -1301,35 +1492,35 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
                 if (value is bool)
                 {
-                    node = LiteralExtensions.ToLiteral((bool)value, graph);
+                    nestedNode = LiteralExtensions.ToLiteral((bool)value, graph);
                 }
                 else if (value is byte)
                 {
-                    node = LiteralExtensions.ToLiteral((byte)value, graph);
+                    nestedNode = LiteralExtensions.ToLiteral((byte)value, graph);
                 }
                 else if (value is short)
                 {
-                    node = LiteralExtensions.ToLiteral((short)value, graph);
+                    nestedNode = LiteralExtensions.ToLiteral((short)value, graph);
                 }
                 else if (value is int)
                 {
-                    node = LiteralExtensions.ToLiteral((int)value, graph);
+                    nestedNode = LiteralExtensions.ToLiteral((int)value, graph);
                 }
                 else if (value is long)
                 {
-                    node = LiteralExtensions.ToLiteral((long)value, graph);
+                    nestedNode = LiteralExtensions.ToLiteral((long)value, graph);
                 }
                 else if (value is BigInteger)
                 {
-                    node = LiteralExtensions.ToLiteral((long)(BigInteger)value, graph);
+                    nestedNode = LiteralExtensions.ToLiteral((long)(BigInteger)value, graph);
                 }
                 else if (value is float)
                 {
-                    node = LiteralExtensions.ToLiteral((float)value, graph);
+                    nestedNode = LiteralExtensions.ToLiteral((float)value, graph);
                 }
                 else if (value is double)
                 {
-                    node = LiteralExtensions.ToLiteral((double)value, graph);
+                    nestedNode = LiteralExtensions.ToLiteral((double)value, graph);
                 }
             }
             else if (value is Uri)
@@ -1349,7 +1540,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                 }
 
                 // URIs represent references to other resources identified by their IDs, so they need to be managed as such
-                node = graph.CreateUriNode(uri);
+                nestedNode = graph.CreateUriNode(uri);
             }
             else if (value is DateTime)
             {
@@ -1357,8 +1548,8 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                 {
                     return;
                 }
-            
-                node = new DateTimeNode(graph, ((DateTime)value).ToUniversalTime());
+
+                nestedNode = new DateTimeNode(graph, ((DateTime)value).ToUniversalTime());
             }
             else if (objType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
             {
@@ -1397,21 +1588,37 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                               nestedResource,
                               nestedProperties);
 
-                 node = nestedResource;
+                nestedNode = nestedResource;
             }
 
-            if (node != null)
+            if (nestedNode != null)
             {
-                Triple triple = new Triple(resource, attribute, node);
+                if (rdfNodeContainer != null)
+                {
+                    if (isReifiedResource)
+                    {
+                        // Reified resource is not supported for rdf collection resources
+                        throw new OslcCoreInvalidPropertyDefinitionException(resourceType,
+                                                                             method,
+                                                                             null);
+                    }
 
-        	    if (isReifiedResource &&
-        	        nestedProperties != OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON)
-        	    {
-        		    AddReifiedStatements(graph, triple, obj, nestedProperties);
-        	    }
+                    // Instead of adding a nested node to model, add it to a list
+                    rdfNodeContainer.Add(nestedNode);
+                }
+                else
+                {
+                    Triple triple = new Triple(resource, attribute, nestedNode);
 
-        	    // Finally, add the triple to the graph.
-        	    graph.Assert(triple);
+                    if (isReifiedResource &&
+                        nestedProperties != OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON)
+                    {
+                        AddReifiedStatements(graph, triple, obj, nestedProperties);
+                    }
+
+                    // Finally, add the triple to the graph.
+                    graph.Assert(triple);
+                }
             }
         }
 
@@ -1443,7 +1650,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
             // We want the name to start with a lower-case letter
             string lowercasedFirstCharacter = methodName.Substring(startingIndex,
-                                                                   1).ToLower();
+                                                                   1).ToLower(CultureInfo.GetCultureInfo("en"));
 
             if (methodName.Length == endingIndex)
             {
@@ -1529,5 +1736,21 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                 }
             }
         }
+
+        private static String GetVisitedResourceName(INode resource)
+        {
+    	    string visitedResourceName = null;
+    	
+    	    if (resource is IUriNode)
+    	    {
+    		    visitedResourceName = (resource as IUriNode).Uri.ToString();
+    	    }
+    	    else
+    	    {
+                visitedResourceName = (resource as IBlankNode).InternalID.ToString();
+    	    }
+    	
+    	    return visitedResourceName;
+        }    
     }
 }
