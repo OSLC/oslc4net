@@ -58,6 +58,56 @@ namespace DotNetRdfProviderTests
         }
 
         [TestMethod]
+        public void TestRdfXmlCollectionSerialization()
+        {
+            List<ChangeRequest> crListOut = new List<ChangeRequest>();
+            ChangeRequest changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeRequest1"));
+            changeRequest1.SetFixed(true);
+            changeRequest1.AddAffectedByDefect(new Link(new Uri("http://com/somewhere/changeRequest2"), "Test of links"));
+
+            crListOut.Add(changeRequest1);
+
+            ChangeRequest changeRequest2 = new ChangeRequest(new Uri("http://com/somewhere/changeRequest2"));
+            changeRequest1.SetFixed(false);
+            changeRequest1.AddAffectedByDefect(new Link(new Uri("http://com/somewhere/changeRequest1"), "Test of links"));
+
+            crListOut.Add(changeRequest2);
+
+            RdfXmlMediaTypeFormatter formatter = new RdfXmlMediaTypeFormatter();
+
+            string rdfXml = SerializeCollection<ChangeRequest>(formatter, crListOut, OslcMediaType.APPLICATION_RDF_XML_TYPE);
+
+            Debug.WriteLine(rdfXml);
+
+            List<ChangeRequest> crListIn = DeserializeCollection<ChangeRequest>(formatter, rdfXml, OslcMediaType.APPLICATION_RDF_XML_TYPE).ToList();
+            Assert.AreEqual(crListOut.Count, crListIn.Count);
+
+            //No guarantees of order in a collection, use the "about" attribute to identify individual ChangeRequests
+            foreach (ChangeRequest cr in crListOut) 
+            {
+                string crAboutUri = cr.GetAbout().AbsoluteUri;
+
+                if (crAboutUri.Equals("http://com/somewhere/changeRequest1"))
+                {
+                    Assert.AreEqual(cr.IsFixed(), changeRequest1.IsFixed());
+                    Assert.AreEqual(cr.GetAffectedByDefects()[0].GetValue(), changeRequest1.GetAffectedByDefects()[0].GetValue());
+                    Assert.AreEqual(cr.GetAffectedByDefects()[0].GetLabel(), changeRequest1.GetAffectedByDefects()[0].GetLabel());
+                }
+                else if (crAboutUri.Equals("http://com/somewhere/changeRequest2"))
+                {
+                    Assert.AreEqual(cr.IsFixed(), changeRequest1.IsFixed());
+                    Assert.AreEqual(cr.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
+                    Assert.AreEqual(cr.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
+                }
+                else
+                {
+                    Assert.Fail("Deserialized ChangeRequest about attribute not recognized: " + crAboutUri);
+                }
+            }
+
+        }
+
+        [TestMethod]
         public void TestXmlSerialization()
         {
             ChangeRequest changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeReuest"));
@@ -92,6 +142,19 @@ namespace DotNetRdfProviderTests
             return content.ReadAsStringAsync().Result;
         }
 
+        private string SerializeCollection<T>(MediaTypeFormatter formatter, IEnumerable<T> value, MediaTypeHeaderValue mediaType)
+        {
+            Stream stream = new MemoryStream();
+            HttpContent content = new StreamContent(stream);
+
+            content.Headers.ContentType = mediaType;
+
+            formatter.WriteToStreamAsync(typeof(T), value, stream, content, null).Wait();
+            stream.Position = 0;
+
+            return content.ReadAsStringAsync().Result;
+        }
+
         private T Deserialize<T>(MediaTypeFormatter formatter, string str, MediaTypeHeaderValue mediaType) where T : class
         {
             Stream stream = new MemoryStream();
@@ -106,6 +169,22 @@ namespace DotNetRdfProviderTests
             stream.Position = 0;
 
             return formatter.ReadFromStreamAsync(typeof(T), stream, content, null).Result as T;
+        }
+
+        private IEnumerable<T> DeserializeCollection<T>(MediaTypeFormatter formatter, string str, MediaTypeHeaderValue mediaType) where T : class
+        {
+            Stream stream = new MemoryStream();
+            StreamWriter writer = new StreamWriter(stream);
+            HttpContent content = new StreamContent(stream);
+
+            content.Headers.ContentType = mediaType;
+
+            writer.Write(str);
+            writer.Flush();
+
+            stream.Position = 0;
+
+            return formatter.ReadFromStreamAsync(typeof(T), stream, content, null).Result as IEnumerable<T>;
         }
     }
 }
