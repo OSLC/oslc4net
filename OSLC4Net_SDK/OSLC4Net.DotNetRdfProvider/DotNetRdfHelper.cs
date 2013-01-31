@@ -81,7 +81,17 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                                         null);
         }
 
-        static IGraph CreateDotNetRdfGraph(string                      descriptionAbout,
+        /// <summary>
+        /// Create an RDF Graph from a collection of .NET objects
+        /// </summary>
+        /// <param name="descriptionAbout"></param>
+        /// <param name="responseInfoAbout"></param>
+        /// <param name="nextPageAbout"></param>
+        /// <param name="totalCount"></param>
+        /// <param name="objects"></param>
+        /// <param name="properties"></param>
+        /// <returns></returns>
+        public static IGraph CreateDotNetRdfGraph(string               descriptionAbout,
                                            string                      responseInfoAbout,
                                            string                      nextPageAbout,
                                            Int64?                      totalCount,
@@ -100,9 +110,10 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                 if (responseInfoAbout != null)
                 {
                     IUriNode responseInfoResource = graph.CreateUriNode(new Uri(responseInfoAbout));
-                    
+
                     graph.Assert(new Triple(responseInfoResource, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType)),
-                                            graph.CreateUriNode(OslcConstants.TYPE_RESPONSE_INFO)));
+                                            graph.CreateUriNode(new Uri(OslcConstants.TYPE_RESPONSE_INFO))));
+
                     graph.Assert(new Triple(responseInfoResource, graph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + PROPERTY_TOTAL_COUNT)),
                                             new StringNode(graph, (totalCount == null ? objects.Count() : totalCount).ToString())));
                 

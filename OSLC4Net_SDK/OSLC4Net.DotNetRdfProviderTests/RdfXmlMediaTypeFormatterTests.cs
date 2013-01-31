@@ -23,12 +23,15 @@ using System.IO;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using OSLC4Net.ChangeManagement;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
+
+using VDS.RDF;
 
 namespace DotNetRdfProviderTests
 {
@@ -73,7 +76,13 @@ namespace DotNetRdfProviderTests
 
             crListOut.Add(changeRequest2);
 
-            RdfXmlMediaTypeFormatter formatter = new RdfXmlMediaTypeFormatter();
+            IGraph rdfGraph = DotNetRdfHelper.CreateDotNetRdfGraph("http://com/somewhere/changerequests",
+                                                                    "http://com/somewhere/changerequests?page=20",
+                                                                    "http://com/somewhere/changerequests?page=21",
+                                                                    null,
+                                                                    crListOut,
+                                                                    null);
+            RdfXmlMediaTypeFormatter formatter = new RdfXmlMediaTypeFormatter(rdfGraph);
 
             string rdfXml = SerializeCollection<ChangeRequest>(formatter, crListOut, OslcMediaType.APPLICATION_RDF_XML_TYPE);
 
@@ -83,7 +92,7 @@ namespace DotNetRdfProviderTests
             Assert.AreEqual(crListOut.Count, crListIn.Count);
 
             //No guarantees of order in a collection, use the "about" attribute to identify individual ChangeRequests
-            foreach (ChangeRequest cr in crListOut) 
+            foreach (ChangeRequest cr in crListOut)
             {
                 string crAboutUri = cr.GetAbout().AbsoluteUri;
 

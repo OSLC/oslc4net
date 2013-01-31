@@ -19,8 +19,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using OSLC4Net.Core.Attribute;
+
 namespace OSLC4Net.Core.Model
 {
+    [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
+    [OslcResourceShape(title = "OSLC ResponseInfo Resource Shape", describes = new string[] { OslcConstants.TYPE_RESPONSE_INFO })]
     public class ResponseInfo<T> : FilteredResource<T>
     {
         /**
