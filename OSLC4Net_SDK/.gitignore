@@ -4,6 +4,7 @@ TestResults/**
 *.obj
 *.dll
 *.pdb
+*.suo
 TraceAndTestImpact.testsettings
 *~
 *.bak
