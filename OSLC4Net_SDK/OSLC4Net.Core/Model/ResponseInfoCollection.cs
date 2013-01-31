@@ -19,36 +19,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using OSLC4Net.Core.Model;
-
-namespace OSLC4Net.Core.Attribute
+namespace OSLC4Net.Core.Model
 {
-    [System.AttributeUsage(System.AttributeTargets.Method)
-    ]
-    public class OslcResponseInfoArray<T> : OslcResponseInfo<T[]>
+    public class ResponseInfoCollection<T> : ResponseInfo<IEnumerable<T>>
     {
         /**
-         * Array of resources
+         * Collection of resources
          */
-        public readonly T[] array() { return resource; }
+        public readonly IEnumerable<T> collection() { return resource; }
 
         public
-        OslcResponseInfoArray(
-            T[] array,
+        ResponseInfoCollection(
+            IEnumerable<T> collection,
             IDictionary<String, Object> properties,
             int totalCount,
             String nextPage
-        ) : base(array, properties, totalCount, nextPage)
+        ) : base(collection, properties, totalCount, nextPage)
         {
         }
     
         public
-        OslcResponseInfoArray(
-            T[] array,
+        ResponseInfoCollection(
+            IEnumerable<T> collection,
             IDictionary<String, Object> properties,
             int totalCount,
             Uri nextPage
-        ) : this(array, properties, totalCount, nextPage.ToString())
+        ) : this(collection, properties, totalCount, nextPage.ToString())
         {
         }
     }

@@ -47,10 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attribute\OslcResponseInfoCollection.cs" />
-    <Compile Include="Attribute\OslcResponseInfoArray.cs" />
-    <Compile Include="Attribute\OslcResponseInfo.cs" />
-    <Compile Include="Attribute\OslcFilteredResource.cs" />
+    <Compile Include="Model\ResponseInfoCollection.cs" />
+    <Compile Include="Model\ResponseInfoArray.cs" />
+    <Compile Include="Model\ResponseInfo.cs" />
+    <Compile Include="Model\FilteredResource.cs" />
     <Compile Include="Attribute\OslcRdfCollectionType.cs" />
     <Compile Include="Exceptions\OslcCoreDeregistrationException.cs" />
     <Compile Include="Exceptions\OslcCoreRegistrationException.cs" />

@@ -19,13 +19,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using OSLC4Net.Core.Model;
 
-namespace OSLC4Net.Core.Attribute
+namespace OSLC4Net.Core.Model
 {
-    [System.AttributeUsage(System.AttributeTargets.Method)
-    ]
-    public class OslcFilteredResource<T> : System.Attribute
+   public class FilteredResource<T>
     {
         /**
          * Resource.
@@ -37,7 +34,7 @@ namespace OSLC4Net.Core.Attribute
          */
         public readonly IDictionary<String, Object> properties;
 
-        public OslcFilteredResource(
+        public FilteredResource(
             T resource,
             IDictionary<String, Object> properties
         )

@@ -19,36 +19,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using OSLC4Net.Core.Model;
-
-namespace OSLC4Net.Core.Attribute
+namespace OSLC4Net.Core.Model
 {
-    [System.AttributeUsage(System.AttributeTargets.Method)
-    ]
-    public class OslcResponseInfoCollection<T> : OslcResponseInfo<IEnumerable<T>>
+    public class ResponseInfo<T> : FilteredResource<T>
     {
         /**
-         * Collection of resources
+         * Total count of resource
          */
-        public readonly IEnumerable<T> collection() { return resource; }
+        public readonly int totalCount;
+
+        /**
+         * Next page in paged output
+         */
+        public readonly String nextPage;
 
         public
-        OslcResponseInfoCollection(
-            IEnumerable<T> collection,
+        ResponseInfo(
+            T resource,
             IDictionary<String, Object> properties,
             int totalCount,
             String nextPage
-        ) : base(collection, properties, totalCount, nextPage)
+        ) : base(resource, properties)
         {
+            this.totalCount = totalCount;
+            this.nextPage = nextPage;
         }
     
         public
-        OslcResponseInfoCollection(
-            IEnumerable<T> collection,
+        ResponseInfo(
+            T resource,
             IDictionary<String, Object> properties,
             int totalCount,
             Uri nextPage
-        ) : this(collection, properties, totalCount, nextPage.ToString())
+        ) : this(resource, properties, totalCount,
+                 nextPage == null ? null : nextPage.ToString())
         {
         }
     }
