@@ -107,22 +107,27 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             {
                 descriptionResource = graph.CreateUriNode(new Uri(descriptionAbout));
 
-                if (responseInfoAbout != null)
+                IUriNode responseInfoResource = null;
+
+                if ((responseInfoAbout != null) && (!responseInfoAbout.Equals(descriptionAbout)))
                 {
-                    IUriNode responseInfoResource = graph.CreateUriNode(new Uri(responseInfoAbout));
-
-                    graph.Assert(new Triple(responseInfoResource, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType)),
-                                            graph.CreateUriNode(new Uri(OslcConstants.TYPE_RESPONSE_INFO))));
-
-                    graph.Assert(new Triple(responseInfoResource, graph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + PROPERTY_TOTAL_COUNT)),
-                                            new StringNode(graph, (totalCount == null ? objects.Count() : totalCount).ToString())));
-                
-                    if (nextPageAbout != null)
-                    {
-                        graph.Assert(new Triple(responseInfoResource, graph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + PROPERTY_NEXT_PAGE)),
-                                                graph.CreateUriNode(new Uri(nextPageAbout))));
-                    }
+                    responseInfoResource = graph.CreateUriNode(new Uri(responseInfoAbout));
+                } else {
+                    responseInfoResource = descriptionResource;
                 }
+
+                graph.Assert(new Triple(responseInfoResource, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType)),
+                                        graph.CreateUriNode(new Uri(OslcConstants.TYPE_RESPONSE_INFO))));
+
+                graph.Assert(new Triple(responseInfoResource, graph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + PROPERTY_TOTAL_COUNT)),
+                                        new StringNode(graph, (totalCount == null ? objects.Count() : totalCount).ToString())));
+                
+                if (nextPageAbout != null)
+                {
+                    graph.Assert(new Triple(responseInfoResource, graph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + PROPERTY_NEXT_PAGE)),
+                                            graph.CreateUriNode(new Uri(nextPageAbout))));
+                }
+                
             }
 
             foreach (object obj in objects)
