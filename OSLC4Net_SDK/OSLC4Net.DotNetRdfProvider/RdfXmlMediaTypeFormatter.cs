@@ -44,11 +44,20 @@ namespace OSLC4Net.Core.DotNetRdfProvider
     /// </summary>
     public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     {
+
+        public IGraph Graph { get; set; }
+
         public RdfXmlMediaTypeFormatter()
         {
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_RDF_XML_TYPE);
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_XML_TYPE);
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML_TYPE);
+        }
+
+        public RdfXmlMediaTypeFormatter(IGraph graph)
+            : this()
+        {
+            this.Graph = graph;
         }
 
         /// <summary>
@@ -85,19 +94,22 @@ namespace OSLC4Net.Core.DotNetRdfProvider
         {
             return Task.Factory.StartNew(() =>
                 {
-                    IGraph graph;
 
-                    if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IEnumerable<>), value.GetType()))
+                    if ((Graph == null) || (Graph.IsEmpty))
                     {
-                        graph = DotNetRdfHelper.CreateDotNetRdfGraph(value as IEnumerable<object>);
-                    }
-                    else if (type.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
-                    {
-                        graph = DotNetRdfHelper.CreateDotNetRdfGraph(new object[] { value });
-                    }
-                    else
-                    {
-                        graph = DotNetRdfHelper.CreateDotNetRdfGraph(new EnumerableWrapper(value));
+
+                        if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IEnumerable<>), value.GetType()))
+                        {
+                            Graph = DotNetRdfHelper.CreateDotNetRdfGraph(value as IEnumerable<object>);
+                        }
+                        else if (type.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
+                        {
+                            Graph = DotNetRdfHelper.CreateDotNetRdfGraph(new object[] { value });
+                        }
+                        else
+                        {
+                            Graph = DotNetRdfHelper.CreateDotNetRdfGraph(new EnumerableWrapper(value));
+                        }
                     }
 
                     IRdfWriter xmlWriter;
@@ -128,7 +140,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                     
                     StreamWriter streamWriter = new NonClosingStreamWriter(writeStream);
 
-                    xmlWriter.Save(graph, streamWriter);
+                    xmlWriter.Save(Graph, streamWriter);
                 });
         }
 
