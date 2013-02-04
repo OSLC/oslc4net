@@ -91,12 +91,12 @@ namespace OSLC4Net.Core.DotNetRdfProvider
         /// <param name="objects"></param>
         /// <param name="properties"></param>
         /// <returns></returns>
-        public static IGraph CreateDotNetRdfGraph(string               descriptionAbout,
-                                           string                      responseInfoAbout,
-                                           string                      nextPageAbout,
-                                           Int64?                      totalCount,
-                                           IEnumerable<object>         objects,
-                                           IDictionary<string, object> properties)
+        public static IGraph CreateDotNetRdfGraph(string                      descriptionAbout,
+                                                  string                      responseInfoAbout,
+                                                  string                      nextPageAbout,
+                                                  Int64?                      totalCount,
+                                                  IEnumerable<object>         objects,
+                                                  IDictionary<string, object> properties)
         {
             IGraph              graph             = new Graph();
             INamespaceMapper    namespaceMappings = graph.NamespaceMap;
