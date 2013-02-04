@@ -1,0 +1,10 @@
+TestResults/**
+**/obj/**/*
+**/bin/**/*
+*.obj
+*.dll
+*.pdb
+TraceAndTestImpact.testsettings
+*~
+*.bak
+Local.testsettings
