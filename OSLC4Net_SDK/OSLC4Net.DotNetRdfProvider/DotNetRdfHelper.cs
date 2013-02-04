@@ -107,6 +107,11 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             {
                 descriptionResource = graph.CreateUriNode(new Uri(descriptionAbout));
 
+                //The responseInfo can have the same subject URI as the overall collection, especially when paging
+                //or query parameters are not included in the request to the QueryCapability.   If a responseInfoAbout 
+                //URI is not provided, or if it is the same as the descriptionAbout URI, the descriptionResource should be
+                //used for RespionseInfo predicates such as totalCount.
+
                 IUriNode responseInfoResource = null;
 
                 if ((responseInfoAbout != null) && (!responseInfoAbout.Equals(descriptionAbout)))
