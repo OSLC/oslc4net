@@ -24,6 +24,9 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.ChangeManagement
 {
+    /// <summary>
+    /// OSLC Change Management resource
+    /// </summary>
     [OslcNamespace(Constants.CHANGE_MANAGEMENT_NAMESPACE)]
     [OslcResourceShape(title = "Change Request Resource Shape", describes = new string[] { Constants.TYPE_CHANGE_REQUEST })]
     public class ChangeRequest : AbstractResource

@@ -23,6 +23,10 @@ using OSLC4Net.Core.Attribute;
 
 namespace OSLC4Net.Core.Model
 {
+    /// <summary>
+    /// An OSLC ResponseInfo resource containg a single member resource
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
     [OslcResourceShape(title = "OSLC ResponseInfo Resource Shape", describes = new string[] { OslcConstants.TYPE_RESPONSE_INFO })]
     public class ResponseInfo<T> : FilteredResource<T>
@@ -37,6 +41,13 @@ namespace OSLC4Net.Core.Model
          */
         public readonly String nextPage;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="resource"></param>
+        /// <param name="properties"></param>
+        /// <param name="totalCount"></param>
+        /// <param name="nextPage"></param>
         public
         ResponseInfo(
             T resource,
@@ -49,6 +60,13 @@ namespace OSLC4Net.Core.Model
             this.nextPage = nextPage;
         }
     
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="resource"></param>
+        /// <param name="properties"></param>
+        /// <param name="totalCount"></param>
+        /// <param name="nextPage"></param>
         public
         ResponseInfo(
             T resource,

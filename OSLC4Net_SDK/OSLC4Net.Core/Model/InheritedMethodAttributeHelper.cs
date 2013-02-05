@@ -26,6 +26,12 @@ namespace OSLC4Net.Core.Model
 {
     public static class InheritedMethodAttributeHelper
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="method"></param>
+        /// <returns></returns>
         public static T GetAttribute<T>(MethodInfo method) where T : System.Attribute
         {
             T[] attributes = (T[])method.GetCustomAttributes(typeof(T), true);

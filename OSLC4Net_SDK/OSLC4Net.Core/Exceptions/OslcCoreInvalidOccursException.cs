@@ -26,6 +26,12 @@ namespace OSLC4Net.Core.Exceptions
 {
     public class OslcCoreInvalidOccursException : OslcCoreApplicationException
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="resourceType"></param>
+        /// <param name="method"></param>
+        /// <param name="oslcOccurs"></param>
         public OslcCoreInvalidOccursException(Type resourceType, MethodInfo method, OslcOccurs oslcOccurs) :
             base(MESSAGE_KEY, new Object[] {resourceType.Name, method.Name, OccursExtension.ToString(oslcOccurs.value)})
         {

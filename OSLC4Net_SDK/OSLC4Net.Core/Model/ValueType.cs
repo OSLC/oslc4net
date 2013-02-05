@@ -20,6 +20,10 @@ using System.Text;
 
 namespace OSLC4Net.Core.Model
 {
+    /// <summary>
+    /// OSLC ValueType attribute
+    /// </summary>
+    /// <remarks>see http://open-services.net/bin/view/Main/OslcCoreSpecification#OSLC_Defined_Resources</remarks>
     public enum ValueType
     {
         [URI(OslcConstants.XML_NAMESPACE + "boolean")]

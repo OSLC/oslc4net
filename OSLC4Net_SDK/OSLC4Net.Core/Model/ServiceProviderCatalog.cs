@@ -23,6 +23,9 @@ using OSLC4Net.Core.Attribute;
 
 namespace OSLC4Net.Core.Model
 {
+    /// <summary>
+    /// OSLC Service Provider Catalog resource 
+    /// </summary>
     [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
     [OslcResourceShape(title = "OSLC Service Provider Catalog Resource Shape", describes = new string[] { OslcConstants.TYPE_SERVICE_PROVIDER_CATALOG })]
     public class ServiceProviderCatalog : AbstractResource 

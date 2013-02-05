@@ -47,6 +47,9 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
         public IGraph Graph { get; set; }
 
+        /// <summary>
+        /// Defauld RdfXml formatter
+        /// </summary>
         public RdfXmlMediaTypeFormatter()
         {
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_RDF_XML_TYPE);
@@ -54,6 +57,10 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML_TYPE);
         }
 
+        /// <summary>
+        /// RdfXml formatter which accepts a pre-build RDF Graph 
+        /// </summary>
+        /// <param name="graph"></param>
         public RdfXmlMediaTypeFormatter(IGraph graph)
             : this()
         {

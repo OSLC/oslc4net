@@ -26,6 +26,9 @@ using OSLC4Net.Core.Exceptions;
 
 namespace OSLC4Net.Core.Model
 {
+    /// <summary>
+    /// Factory for creating ResourceShape resources
+    /// </summary>
     public sealed class ResourceShapeFactory
     {
         private static readonly string METHOD_NAME_START_GET = "Get";
@@ -60,6 +63,14 @@ namespace OSLC4Net.Core.Model
         {
         }
 
+        /// <summary>
+        /// Create an OSLC ResourceShape resource
+        /// </summary>
+        /// <param name="baseURI"></param>
+        /// <param name="resourceShapesPath"></param>
+        /// <param name="resourceShapePath"></param>
+        /// <param name="resourceType"></param>
+        /// <returns></returns>
         public static ResourceShape CreateResourceShape(string baseURI,
                                                         string resourceShapesPath,
                                                         string resourceShapePath,

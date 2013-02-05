@@ -23,6 +23,9 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Core.Attribute
 {
+    /// <summary>
+    /// OSLC ValueType attribue
+    /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Method)
     ]
     public class OslcValueType : System.Attribute

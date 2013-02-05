@@ -23,6 +23,9 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Core.Exceptions
 {
+    /// <summary>
+    /// Exception thrown for a service provider registration failure
+    /// </summary>
     public class OslcCoreRegistrationException : OslcCoreApplicationException
     {
         public OslcCoreRegistrationException(ServiceProvider serviceProvider, int statusCode, String responseMessage) :

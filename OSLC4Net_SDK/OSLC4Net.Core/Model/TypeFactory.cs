@@ -23,8 +23,12 @@ using OSLC4Net.Core.Attribute;
 
 namespace OSLC4Net.Core.Model
 {
+    /// <summary>
+    /// Static utilities to return the qualified name of a type
+    /// </summary>
     public static class TypeFactory
     {
+
         public static String GetQualifiedName(Type objectType)
         {
             return GetNamespace(objectType) +

@@ -23,6 +23,10 @@ using OSLC4Net.Core.Attribute;
 
 namespace OSLC4Net.Core.Model
 {
+    /// <summary>
+    /// An OSLC ResponseInfo resource containg an IEnumerable collection of member resources
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
     [OslcResourceShape(title = "OSLC ResponseInfo Resource Shape", describes = new string[] { OslcConstants.TYPE_RESPONSE_INFO })]
     public class ResponseInfoCollection<T> : ResponseInfo<IEnumerable<T>>
@@ -32,6 +36,13 @@ namespace OSLC4Net.Core.Model
          */
         public IEnumerable<T> collection() { return resource; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="properties"></param>
+        /// <param name="totalCount"></param>
+        /// <param name="nextPage"></param>
         public
         ResponseInfoCollection(
             IEnumerable<T> collection,
@@ -42,6 +53,13 @@ namespace OSLC4Net.Core.Model
         {
         }
     
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="properties"></param>
+        /// <param name="totalCount"></param>
+        /// <param name="nextPage"></param>
         public
         ResponseInfoCollection(
             IEnumerable<T> collection,

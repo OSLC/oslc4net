@@ -21,7 +21,10 @@ using System.Text;
 
 namespace OSLC4Net.Core.Model
 {
-
+    /// <summary>
+    /// An OSLC reified resource
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public abstract class AbstractReifiedResource<T> : IReifiedResource<T>
     {
 	    private T value;

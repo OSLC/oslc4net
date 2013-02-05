@@ -23,6 +23,9 @@ using OSLC4Net.Core.Attribute;
 
 namespace OSLC4Net.Core.Model
 {
+    /// <summary>
+    /// OSLC PrefixDefinition resource
+    /// </summary>
     [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
     [OslcResourceShape(title = "OSLC Prefix Definition Resource Shape", describes = new string[] { OslcConstants.TYPE_PREFIX_DEFINITION })]
     public class PrefixDefinition : AbstractResource 

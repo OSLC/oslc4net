@@ -21,8 +21,17 @@ using System.Text;
 
 namespace OSLC4Net.Core.Exceptions
 {
+    /// <summary>
+    /// Exception thrown for an incorrect use of the OSLC Occurs attribute
+    /// </summary>
     public class OslcCoreMisusedOccursException : OslcCoreApplicationException
     {
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="resourceType"></param>
+        /// <param name="method"></param>
         public OslcCoreMisusedOccursException(Type resourceType, MethodInfo method) :
             base(MESSAGE_KEY, new object[] {resourceType.Name, method.Name})
         {

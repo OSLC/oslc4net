@@ -22,6 +22,9 @@ using OSLC4Net.Core.Attribute;
 
 namespace OSLC4Net.Core.Model
 {
+    /// <summary>
+    /// An OSLC link - inculdes a Uri and a label.
+    /// </summary>
     public class Link : AbstractReifiedResource<Uri>
     {
 	    private String label;

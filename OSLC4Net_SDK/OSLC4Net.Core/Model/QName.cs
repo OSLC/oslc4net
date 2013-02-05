@@ -21,13 +21,25 @@ using System.Xml.Linq;
 
 namespace OSLC4Net.Core.Model
 {
+    /// <summary>
+    /// Class representing namespace-qualified names
+    /// </summary>
     public class QName
     {
+        /// <summary>
+        /// Constructor with local part only
+        /// </summary>
+        /// <param name="localPart"></param>
         public QName(string localPart)
         {
             this.localPart = localPart;
         }
 
+        /// <summary>
+        /// Constructior with namespace and local part
+        /// </summary>
+        /// <param name="namespaceURI"></param>
+        /// <param name="localPart"></param>
         public QName(
             string namespaceURI,
             string localPart
@@ -37,6 +49,12 @@ namespace OSLC4Net.Core.Model
             this.localPart = localPart;
         }
 
+        /// <summary>
+        /// Constructor with namespace, local part and prefix/alias
+        /// </summary>
+        /// <param name="namespaceURI"></param>
+        /// <param name="localPart"></param>
+        /// <param name="prefix"></param>
         public QName(
             string namespaceURI,
             string localPart,

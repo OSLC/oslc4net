@@ -21,8 +21,17 @@ using System.Text;
 
 namespace OSLC4Net.Core.Exceptions
 {
+    /// <summary>
+    /// Exception thrown for beans without required setters
+    /// </summary>
     public class OslcCoreMissingSetMethodException : OslcCoreApplicationException
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="resourceType"></param>
+        /// <param name="getMethod"></param>
+        /// <param name="exception"></param>
         public OslcCoreMissingSetMethodException(Type resourceType, MethodInfo getMethod, Exception exception) :
             base(MESSAGE_KEY, new object[] { resourceType.Name, getMethod.Name, exception })
         {
@@ -30,6 +39,11 @@ namespace OSLC4Net.Core.Exceptions
             this.resourceType = resourceType;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="resourceType"></param>
+        /// <param name="getMethod"></param>
         public OslcCoreMissingSetMethodException(Type resourceType, MethodInfo getMethod) :
             base(MESSAGE_KEY, new object[] { resourceType.Name, getMethod.Name, null })
         {

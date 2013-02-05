@@ -26,6 +26,12 @@ namespace OSLC4Net.Core.Exceptions
 {
     public class OslcCoreInvalidRepresentationException : OslcCoreApplicationException
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="resourceType"></param>
+        /// <param name="method"></param>
+        /// <param name="representation"></param>
         public OslcCoreInvalidRepresentationException(Type resourceType, MethodInfo method, Representation representation) :
             base(MESSAGE_KEY, new Object[] {resourceType.Name, method.Name, RepresentationExtension.ToString(representation)})
         {

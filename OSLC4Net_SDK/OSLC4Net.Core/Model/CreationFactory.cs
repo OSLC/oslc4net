@@ -23,6 +23,9 @@ using OSLC4Net.Core.Attribute;
 
 namespace OSLC4Net.Core.Model
 {
+    /// <summary>
+    /// OSLC Resource Shape resource
+    /// </summary>
     [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
     [OslcResourceShape(title = "OSLC Creation Factory Resource Shape", describes = new string[] { OslcConstants.TYPE_CREATION_FACTORY })]
     public class CreationFactory : AbstractResource 

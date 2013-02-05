@@ -20,6 +20,9 @@ using System.Text;
 
 namespace OSLC4Net.Core.Model
 {
+    /// <summary>
+    /// A wrapper for a URI
+    /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Field)
     ]
     public class URI : System.Attribute

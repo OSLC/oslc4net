@@ -22,6 +22,11 @@ using System.Text;
 
 namespace OSLC4Net.Core.Model
 {
+    /// <summary>
+    /// Class representing a filtered OSLC resource.  That is, a representation of resource where some of the
+    /// attributes are not present (filtered using oslc.select or oslc.properties)
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
    public class FilteredResource<T>
     {
         /**

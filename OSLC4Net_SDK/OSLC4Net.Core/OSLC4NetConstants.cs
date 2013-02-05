@@ -20,6 +20,10 @@ using System.Text;
 
 namespace OSLC4Net.Core
 {
+    /// <summary>
+    /// Constants specific to OSLC4Net
+    /// </summary>
+    /// <seealso cref="Oslc4Net.Core.OslcConstants"/>
     public static class OSLC4NetConstants
     {
         public static readonly IDictionary<string, Object> OSLC4NET_PROPERTY_SINGLETON =

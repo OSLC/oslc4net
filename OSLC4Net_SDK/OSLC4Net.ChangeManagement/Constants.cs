@@ -23,6 +23,9 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.ChangeManagement
 {
+    /// <summary>
+    /// OSLC ChangeManagement specific constants
+    /// </summary>
     public static class Constants
     {
         public const string CHANGE_MANAGEMENT_DOMAIN                    = "http://open-services.net/ns/cm#";

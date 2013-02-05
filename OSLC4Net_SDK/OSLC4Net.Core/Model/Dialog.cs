@@ -23,6 +23,9 @@ using OSLC4Net.Core.Attribute;
 
 namespace OSLC4Net.Core.Model
 {
+    /// <summary>
+    /// OSLC Dialog resource
+    /// </summary>
     [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
     [OslcResourceShape(title = "OSLC Dialog Resource Shape", describes = new string[] { OslcConstants.TYPE_DIALOG })]
     public class Dialog : AbstractResource 

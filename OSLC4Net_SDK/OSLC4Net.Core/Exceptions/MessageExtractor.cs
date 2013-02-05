@@ -24,12 +24,21 @@ using log4net;
 using OSLC4Net.Core.Properties;
 
 namespace OSLC4Net.Core.Exceptions
-{
+{   
+    /// <summary>
+    /// Utility methods for retrieving messages
+    /// </summary>
     public static class MessageExtractor
     {
         private static ResourceManager rm = Resources.ResourceManager;
         private static readonly ILog logger = LogManager.GetLogger(typeof(MessageExtractor));
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static String GetMessage(String key, Object[] args)
         {
 

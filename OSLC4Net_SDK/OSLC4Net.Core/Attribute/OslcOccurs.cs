@@ -23,6 +23,9 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Core.Attribute
 {
+    /// <summary>
+    /// OSLC Occurs attribute
+    /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Method)
     ]
     public class OslcOccurs : System.Attribute

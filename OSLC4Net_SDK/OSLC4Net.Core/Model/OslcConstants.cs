@@ -20,6 +20,9 @@ using System.Text;
 
 namespace OSLC4Net.Core.Model
 {
+    /// <summary>
+    /// General purpose OSLC constants
+    /// </summary>
     public static class OslcConstants
     {
         public const string OSLC_CORE_DOMAIN = "http://open-services.net/ns/core#";

@@ -23,6 +23,10 @@ using OSLC4Net.Core.Attribute;
 
 namespace OSLC4Net.Core.Model
 {
+    /// <summary>
+    /// OSLC Property attributes
+    /// </summary>
+    /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
     public sealed class Property : AbstractResource, IComparable<Property>
     {
 	    private IList<string> allowedValues = new List<string>();

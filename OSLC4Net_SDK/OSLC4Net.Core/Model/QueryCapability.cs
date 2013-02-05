@@ -23,6 +23,9 @@ using OSLC4Net.Core.Attribute;
 
 namespace OSLC4Net.Core.Model
 {
+    /// <summary>
+    /// OSLC QueryCapability resource
+    /// </summary>
     [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
     [OslcResourceShape(title = "OSLC Query Capability Resource Shape", describes = new string[] { OslcConstants.TYPE_QUERY_CAPABILITY })]
     public class QueryCapability : AbstractResource 
@@ -35,10 +38,18 @@ namespace OSLC4Net.Core.Model
         private Uri resourceShape;
 	    private String title;
 
+        /// <summary>
+        /// 
+        /// </summary>
 	    public QueryCapability() : base()
         {
 	    }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="queryBase"></param>
 	    public QueryCapability(String title, Uri queryBase) : this()
         {
 		    this.title = title;

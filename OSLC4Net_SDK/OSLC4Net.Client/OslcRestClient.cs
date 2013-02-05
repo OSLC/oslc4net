@@ -40,6 +40,13 @@ namespace OSLC4Net.Client
         private readonly String                     mediaType;
         private readonly int                        readTimeout;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="formatters"></param>
+        /// <param name="uri"></param>
+        /// <param name="mediaType"></param>
+        /// <param name="readTimeout"></param>
 	    public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
 	                          String                    uri,
 	                          String                    mediaType,
@@ -55,6 +62,12 @@ namespace OSLC4Net.Client
             this.client.Timeout = new TimeSpan(TimeSpan.TicksPerMillisecond * readTimeout);
 	    }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="formatters"></param>
+        /// <param name="uri"></param>
+        /// <param name="mediaType"></param>
 	    public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
                               String                    uri,
                               String                    mediaType) :
@@ -62,6 +75,12 @@ namespace OSLC4Net.Client
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="formatters"></param>
+        /// <param name="uri"></param>
+        /// <param name="timeout"></param>
         public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
                               String                    uri,
                               int                       timeout) :
@@ -69,12 +88,24 @@ namespace OSLC4Net.Client
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="formatters"></param>
+        /// <param name="uri"></param>
         public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
                               String                    uri) :
             this(formatters, uri, OslcMediaType.APPLICATION_RDF_XML, DEFAULT_READ_TIMEOUT)
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="formatters"></param>
+        /// <param name="uri"></param>
+        /// <param name="mediaType"></param>
+        /// <param name="readTimeout"></param>
         public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
                               Uri                       uri,
                               String                    mediaType,
@@ -83,6 +114,12 @@ namespace OSLC4Net.Client
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="formatters"></param>
+        /// <param name="uri"></param>
+        /// <param name="mediaType"></param>
 	    public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
                               Uri                       uri,
                               String                    mediaType) :
@@ -90,6 +127,12 @@ namespace OSLC4Net.Client
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="formatters"></param>
+        /// <param name="uri"></param>
+        /// <param name="timeout"></param>
         public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
                               Uri                       uri,
                               int                       timeout) :
@@ -97,12 +140,21 @@ namespace OSLC4Net.Client
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="formatters"></param>
+        /// <param name="uri"></param>
 	    public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
                               Uri                       uri) :
             this(formatters, uri.ToString(), OslcMediaType.APPLICATION_RDF_XML, DEFAULT_READ_TIMEOUT)
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
 	    public ISet<MediaTypeFormatter> GetFormatters()
 	    {
 	        return formatters;

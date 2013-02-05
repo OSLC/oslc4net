@@ -26,6 +26,12 @@ namespace OSLC4Net.Core.Exceptions
 {
     public class OslcCoreInvalidValueTypeException : OslcCoreApplicationException
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="resourceType"></param>
+        /// <param name="method"></param>
+        /// <param name="valueType"></param>
         public OslcCoreInvalidValueTypeException(Type resourceType, MethodInfo method, Model.ValueType valueType) :
             base(MESSAGE_KEY, new Object[] { resourceType.Name, method.Name, ValueTypeExtension.ToString(valueType) })
         {

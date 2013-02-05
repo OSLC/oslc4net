@@ -21,6 +21,9 @@ using System.Text;
 
 namespace OSLC4Net.Core.Attribute
 {
+    /// <summary>
+    /// OSLC Service attribute
+    /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Method)
     ]
     public class OslcService : System.Attribute

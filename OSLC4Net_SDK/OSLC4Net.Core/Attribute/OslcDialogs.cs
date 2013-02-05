@@ -21,6 +21,9 @@ using System.Text;
 
 namespace OSLC4Net.Core.Attribute
 {
+    /// <summary>
+    /// OSLC Dialogs attribute
+    /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Method)
     ]
     public class OslcDialogs : System.Attribute

@@ -21,6 +21,10 @@ using System.Text;
 
 namespace OSLC4Net.Core.Attribute
 {
+    /// <summary>
+    /// OSLC AllowedValue attribute
+    /// </summary>
+    /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
     [System.AttributeUsage(System.AttributeTargets.Method)
     ]
     public class OslcAllowedValue : System.Attribute

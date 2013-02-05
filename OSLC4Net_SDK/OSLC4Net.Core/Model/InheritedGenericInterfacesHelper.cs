@@ -26,6 +26,12 @@ namespace OSLC4Net.Core.Model
 {
     public static class InheritedGenericInterfacesHelper
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="genericType"></param>
+        /// <param name="typeToTest"></param>
+        /// <returns></returns>
         public static bool ImplementsGenericInterface(Type genericType, Type typeToTest)
         {
             Type[] interfaces = typeToTest.GetInterfaces();

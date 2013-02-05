@@ -21,6 +21,9 @@ using System.Text;
 
 namespace OSLC4Net.Core.Attribute
 {
+    /// <summary>
+    /// The definition of an OSLC namespace attribute
+    /// </summary>
     [Serializable]
     public class OslcNamespaceDefinition
     {

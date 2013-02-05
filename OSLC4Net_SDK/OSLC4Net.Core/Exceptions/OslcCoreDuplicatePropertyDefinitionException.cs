@@ -23,8 +23,16 @@ using OSLC4Net.Core.Attribute;
 
 namespace OSLC4Net.Core.Exceptions
 {
+    /// <summary>
+    /// Exception thrown when a property is defined more than once
+    /// </summary>
     public class OslcCoreDuplicatePropertyDefinitionException : OslcCoreApplicationException
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="resourceType"></param>
+        /// <param name="oslcPropertyDefinition"></param>
         public OslcCoreDuplicatePropertyDefinitionException(Type resourceType, OslcPropertyDefinition oslcPropertyDefinition) :
             base(MESSAGE_KEY, new Object[] {resourceType.Name, oslcPropertyDefinition.value})
         {

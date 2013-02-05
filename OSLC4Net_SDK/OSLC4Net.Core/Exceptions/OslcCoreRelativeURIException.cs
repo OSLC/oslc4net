@@ -20,6 +20,9 @@ using System.Text;
 
 namespace OSLC4Net.Core.Exceptions
 {
+    /// <summary>
+    /// Exception thrown when relative URIs are encountered in an RDF model
+    /// </summary>
     public class OslcCoreRelativeURIException : OslcCoreApplicationException
     {
         public OslcCoreRelativeURIException(Type resourceType, String methodName, Uri relativeURI) :

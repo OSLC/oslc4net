@@ -23,6 +23,9 @@ using OSLC4Net.Core.Attribute;
 
 namespace OSLC4Net.Core.Model
 {
+    /// <summary>
+    /// Predefined OSLC namespaces
+    /// </summary>
     public static class XmlNamespace
     {
         private static readonly OslcNamespaceDefinition[] namespaces = new OslcNamespaceDefinition[]
@@ -33,6 +36,10 @@ namespace OSLC4Net.Core.Model
                  new OslcNamespaceDefinition(prefix: OslcConstants.RDFS_NAMESPACE_PREFIX, namespaceURI: OslcConstants.RDFS_NAMESPACE)
         };
 
+        /// <summary>
+        /// Get common OSLC namespace definitions
+        /// </summary>
+        /// <returns></returns>
         public static OslcNamespaceDefinition[] GetNamespaces() { return namespaces; }
     }
 }

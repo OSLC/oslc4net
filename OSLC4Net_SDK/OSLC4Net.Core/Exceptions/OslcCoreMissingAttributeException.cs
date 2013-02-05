@@ -21,8 +21,16 @@ using System.Text;
 
 namespace OSLC4Net.Core.Exceptions
 {
+    /// <summary>
+    /// Exception thrown when a required OSLC attribute definition is missing.
+    /// </summary>
     public class OslcCoreMissingAttributeException : OslcCoreApplicationException
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="resourceType"></param>
+        /// <param name="annotationType"></param>
         public OslcCoreMissingAttributeException(Type resourceType, Type annotationType) :
             base(MESSAGE_KEY, new object[] { resourceType.Name, annotationType.Name })
         {
@@ -30,10 +38,18 @@ namespace OSLC4Net.Core.Exceptions
             this.resourceType = resourceType;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
 	    public Type GetAnnotationType() {
 		    return annotationType;
 	    }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Type GetResourceType()
         {
 		    return resourceType;

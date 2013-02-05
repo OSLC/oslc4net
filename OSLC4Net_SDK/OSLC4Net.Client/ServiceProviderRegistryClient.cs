@@ -41,6 +41,12 @@ namespace OSLC4Net.Client
     {
         private OslcRestClient client;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="formatters"></param>
+        /// <param name="mediaType"></param>
+        /// <param name="uri"></param>
         public ServiceProviderRegistryClient(ISet<MediaTypeFormatter>   formatters,
 			                                 String                     mediaType,
 			                                 String                     uri) 
@@ -50,15 +56,21 @@ namespace OSLC4Net.Client
     									     mediaType);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="formatters"></param>
+        /// <param name="mediaType"></param>
         public ServiceProviderRegistryClient(ISet<MediaTypeFormatter>   formatters,
                                              String                     mediaType) :
             this(formatters, mediaType, ServiceProviderRegistryURIs.getServiceProviderRegistryURI())
         {
         }
 
-        /**
-         * Construct a client to assist with registering and deregistering {@link ServiceProvider}'s.
-         */
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="formatters"></param>
         public ServiceProviderRegistryClient(ISet<MediaTypeFormatter> formatters) :
             this (formatters, OslcMediaType.APPLICATION_RDF_XML)
         {

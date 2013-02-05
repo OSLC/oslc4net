@@ -23,8 +23,17 @@ using OSLC4Net.Core.Attribute;
 
 namespace OSLC4Net.Core.Exceptions
 {
+    /// <summary>
+    /// Exception thrown for an invalid property type
+    /// </summary>
     public class OslcCoreInvalidPropertyTypeException : OslcCoreApplicationException
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="resourceType"></param>
+        /// <param name="method"></param>
+        /// <param name="returnType"></param>
         public OslcCoreInvalidPropertyTypeException(Type resourceType, MethodInfo method, Type returnType) :
             base(MESSAGE_KEY, new Object[] { resourceType.Name, method.Name, returnType.Name })
         {

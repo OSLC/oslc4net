@@ -25,6 +25,12 @@ namespace OSLC4Net.Core.Exceptions
 {
     public class OslcCoreDeregistrationException : OslcCoreApplicationException
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="serviceProviderURI"></param>
+        /// <param name="statusCode"></param>
+        /// <param name="responseMessage"></param>
         public OslcCoreDeregistrationException(Uri serviceProviderURI, int statusCode, String responseMessage) :
             base(MESSAGE_KEY, new object[] { serviceProviderURI.ToString(), statusCode, responseMessage })
         {

@@ -20,6 +20,10 @@ using System.Text;
 
 namespace OSLC4Net.Core.Model
 {
+    /// <summary>
+    /// OSLC Representation attribute
+    /// </summary>
+    /// <remarks>see http://open-services.net/bin/view/Main/OslcCoreSpecification#OSLC_Defined_Resources</remarks>
     public enum Representation
     {
         [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Reference")]
