@@ -82,15 +82,15 @@ namespace OSLC4Net.Core.DotNetRdfProvider
         }
 
         /// <summary>
-        /// Create an RDF Graph from a collection of .NET objects
+        /// Create an RDF Graph from a collection of objects
         /// </summary>
-        /// <param name="descriptionAbout"></param>
-        /// <param name="responseInfoAbout"></param>
-        /// <param name="nextPageAbout"></param>
-        /// <param name="totalCount"></param>
-        /// <param name="objects"></param>
-        /// <param name="properties"></param>
-        /// <returns></returns>
+        /// <param name="descriptionAbout">URL for entire collection</param>
+        /// <param name="responseInfoAbout">URL for current page of collection</param>
+        /// <param name="nextPageAbout">optional URL for next page in collection</param>
+        /// <param name="totalCount">optional total count of member across all pages; if null will use count of passed in members</param>
+        /// <param name="objects">members from this page</param>
+        /// <param name="properties">filtering list of properties for each member</param>
+        /// <returns>RDF graph of collection</returns>
         public static IGraph CreateDotNetRdfGraph(string                      descriptionAbout,
                                                   string                      responseInfoAbout,
                                                   string                      nextPageAbout,
