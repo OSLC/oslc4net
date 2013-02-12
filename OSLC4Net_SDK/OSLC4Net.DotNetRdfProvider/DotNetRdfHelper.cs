@@ -558,10 +558,15 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                             {
                                 parameter = BigInteger.Parse(stringValue);
                             }
-                            else if ((typeof(float) == setMethodComponentParameterType) ||
+                            else if ((typeof(float) == setMethodComponentParameterType)  ||
                                      (typeof(float?) == setMethodComponentParameterType))
                             {
                                 parameter = float.Parse(stringValue);
+                            }
+                            else if ((typeof(decimal) == setMethodComponentParameterType) ||
+                                     (typeof(decimal?) == setMethodComponentParameterType))
+                            {
+                                parameter = decimal.Parse(stringValue);
                             }
                             else if ((typeof(double) == setMethodComponentParameterType) ||
                                      (typeof(double?) == setMethodComponentParameterType))
@@ -868,18 +873,22 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 				{
 					return ((FloatNode)obj).AsFloat();
 				}
-				else if (obj is LongNode)
-				{
-					return ((LongNode)obj).AsInteger();
-				}
-				else if (obj is SignedByteNode)
-				{
-					return (byte)((SignedByteNode)obj).AsInteger();
-				}
-				else if (obj is StringNode)
-				{
-					return ((StringNode)obj).AsString();
-				}
+                else if (obj is DecimalNode)
+                {
+                    return ((DecimalNode)obj).AsDecimal();
+                }
+                else if (obj is LongNode)
+                {
+                    return ((LongNode)obj).AsInteger();
+                }
+                else if (obj is SignedByteNode)
+                {
+                    return (byte)((SignedByteNode)obj).AsInteger();
+                }
+                else if (obj is StringNode)
+                {
+                    return ((StringNode)obj).AsString();
+                }
                 else if (obj is UnsignedLongNode)
                 {
                     return ((UnsignedLongNode)obj).AsInteger();
@@ -1248,6 +1257,10 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                 {
                     literal = LiteralExtensions.ToLiteral((float)value, graph);
                 }
+                else if (typeof(decimal) == valueType)
+                {
+                    literal = LiteralExtensions.ToLiteral((decimal)value, graph);
+                }
                 else if (typeof(double) == valueType)
                 {
                     literal = LiteralExtensions.ToLiteral((double)value, graph);
@@ -1502,6 +1515,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                      (value is long) ||
                      (value is BigInteger) ||
                      (value is float) ||
+                     (value is decimal) ||
                      (value is double))
             {
                 if (onlyNested)
@@ -1538,6 +1552,10 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                 else if (value is float)
                 {
                     nestedNode = LiteralExtensions.ToLiteral((float)value, graph);
+                }
+                else if (value is decimal)
+                {
+                    nestedNode = LiteralExtensions.ToLiteral((decimal)value, graph);
                 }
                 else if (value is double)
                 {
