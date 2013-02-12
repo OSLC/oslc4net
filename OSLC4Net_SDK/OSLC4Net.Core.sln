@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Client", "OSLC4Net
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.ChangeManagementTest", "OSLC4Net.ChangeManagementTest\OSLC4Net.ChangeManagementTest.csproj", "{A64566A0-5EDB-48A1-B3E5-7F873169D402}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.StockQuoteSample", "OSLC4Net.StockQuoteSample\OSLC4Net.StockQuoteSample.csproj", "{43F10792-1747-45DB-90A8-4908C353BDE0}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = OSLC4Net.Core.vsmdi
@@ -53,6 +55,10 @@ Global
 		{A64566A0-5EDB-48A1-B3E5-7F873169D402}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A64566A0-5EDB-48A1-B3E5-7F873169D402}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A64566A0-5EDB-48A1-B3E5-7F873169D402}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43F10792-1747-45DB-90A8-4908C353BDE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43F10792-1747-45DB-90A8-4908C353BDE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43F10792-1747-45DB-90A8-4908C353BDE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43F10792-1747-45DB-90A8-4908C353BDE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

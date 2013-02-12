@@ -1,6 +1,7 @@
 TestResults/**
 **/obj/**/*
 **/bin/**/*
+**/bin/*
 *.obj
 *.dll
 *.pdb
