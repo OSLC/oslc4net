@@ -23,6 +23,7 @@ using OSLC4Net.Core.Model;
 namespace OSLC4Net.StockQuoteSample.Models
 {
     [OslcNamespace(Constants.STOCK_QUOTE_NAMESPACE)]
+    [OslcName(Constants.TYPE_STOCK_QUOTE)]
     [OslcResourceShape(title = "Stock Quote Resource Shape", describes = new string[] {Constants.TYPE_STOCK_QUOTE})]
     public class StockQuote : AbstractResource
     {
@@ -32,7 +33,7 @@ namespace OSLC4Net.StockQuoteSample.Models
         private decimal    high52WeekPrice;
         private decimal    highPrice;
         private string   identifier;
-        private DateTime lastTradedDate;
+        private string lastTradedDate;
         private decimal    lastTradedPrice;
         private decimal    low52WeekPrice;
         private decimal    lowPrice;
@@ -117,7 +118,7 @@ namespace OSLC4Net.StockQuoteSample.Models
         [OslcPropertyDefinition(Constants.STOCK_QUOTE_NAMESPACE + "lastTradedDate")]
         [OslcReadOnly]
         [OslcTitle("Last Traded Date")]
-        public DateTime GetLastTradedDate()
+        public string GetLastTradedDate()
         {
             return lastTradedDate;
         }
@@ -226,7 +227,7 @@ namespace OSLC4Net.StockQuoteSample.Models
             this.identifier = identifier;
         }
 
-        public void SetLastTradedDate( DateTime lastTradedDate)
+        public void SetLastTradedDate( string lastTradedDate)
         {
             this.lastTradedDate = lastTradedDate;
         }

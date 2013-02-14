@@ -19,6 +19,9 @@ using System.Text;
 
 namespace OSLC4Net.StockQuoteSample.Models
 {
+    /// <summary>
+    /// Interface to store, retrieve, update and delete StockQuote objects
+    /// </summary>
     interface IStockQuotePersistence
     {
         IEnumerable<StockQuote> GetAll();

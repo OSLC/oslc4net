@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
- * Copyright (c) 2012 IBM Corporation.
+ * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,7 +10,7 @@
  * http://www.eclipse.org/org/documents/edl-v10.php.
  *
  * Contributors:
- *     Steve Pitschke  - initial API and implementation
+ *     Michael Fiedler  - initial API and implementation
  *******************************************************************************/
 
 using System;
@@ -30,8 +30,10 @@ namespace OSLC4Net.StockQuoteSample.Models
         public const string STOCK_QUOTE_NAMESPACE = "http://yourcompany.com/ns/stockquote#";
         public const string STOCK_QUOTE_NAMESPACE_PREFIX = "stockquote";
 
-        public const string TYPE_STOCK_QUOTE = STOCK_QUOTE_NAMESPACE + "StockQuote";
+        public const string STOCK_QUOTE = "StockQuote";
+        public const string TYPE_STOCK_QUOTE = STOCK_QUOTE_NAMESPACE + STOCK_QUOTE ;
 
         public const string PATH_STOCK_QUOTE = "stockquote";
+        public const string PATH_STOCK_QUOTE_SHAPE = "getShape=true";
     }
 }

@@ -30,26 +30,41 @@ using OSLC4Net.StockQuoteSample.Models;
 
 namespace OSLC4Net.StockQuoteSample.Controllers
 {
+    /// <summary>
+    /// ASP.NET Controller for the ServiceProvider resource.  Initializes a ServiceProvider for
+    /// StockQuote resources and returns a ServiceProvider resource when requested.
+    /// 
+    /// There is no real persistence for the StockQuotes - a memory store is used.
+    /// 
+    /// See http://www.asp.net/web-api/overview/web-api-routing-and-actions/routing-in-aspnet-web-api
+    /// for information on how routing words in ASP.NET MVC 4
+    /// </summary>
+
     public class ServiceProviderController : ApiController
     {
-        public static Uri About { get; set; }
-        public static Uri ServiceProviderUri { get; set; }
+        public static string BaseUri { get; set; }            //URI (as string) of the webapps root context
+        public static Uri About { get; set; }                //URI for the StockQuote service
+        public static Uri ServiceProviderUri { get; set; }   //URI for the ServiceProvider service
 
-        private static ServiceProvider serviceProvider;
+        public static ServiceProvider serviceProvider;      
         private const string SERVICE_PROVIDER_PATH = "serviceprovider";
 
-        public static void init(string baseUrl)
+        public static void init(string baseUri)
         {
+            //Remove the ASP.NET default XML formatter and replace it with the OSLC4Net version
             HttpConfiguration config = GlobalConfiguration.Configuration;
             config.Formatters.Remove(config.Formatters.XmlFormatter);
             config.Formatters.Add(new RdfXmlMediaTypeFormatter());
 
-            serviceProvider = ServiceProviderFactory.CreateServiceProvider(baseUrl,
+            BaseUri = baseUri;
+
+            serviceProvider = ServiceProviderFactory.CreateServiceProvider(BaseUri,
                                                                      "StockQuote Service Provider",
                                                                      "Sample OSLC Service Provider for a Stock Quote service",
                                                                      new Publisher("Codeplex OSLC4Net", "urn:codeplex:oslc4net"),
                                                                      new Type[] {typeof(StockQuoteController)});
 
+            //Register prefix definitions this service will use
             PrefixDefinition[] prefixDefinitions =
             {
                 new PrefixDefinition(OslcConstants.DCTERMS_NAMESPACE_PREFIX,   new Uri(OslcConstants.DCTERMS_NAMESPACE)),
@@ -61,10 +76,10 @@ namespace OSLC4Net.StockQuoteSample.Controllers
 
             serviceProvider.SetPrefixDefinitions(prefixDefinitions);
 
-            About = new Uri(baseUrl + "/" + Constants.PATH_STOCK_QUOTE);
+            About = new Uri(BaseUri + "/" + Constants.PATH_STOCK_QUOTE);
             serviceProvider.SetAbout(About);
 
-            ServiceProviderUri = new Uri(baseUrl + "/" + SERVICE_PROVIDER_PATH);
+            ServiceProviderUri = new Uri(BaseUri + "/" + SERVICE_PROVIDER_PATH);
 
         }
 

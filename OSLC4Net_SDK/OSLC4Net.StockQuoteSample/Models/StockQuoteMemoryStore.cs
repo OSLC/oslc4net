@@ -21,6 +21,9 @@ using System.Net;
 
 namespace OSLC4Net.StockQuoteSample.Models
 {
+    /// <summary>
+    /// Simple memory persistence for StockQuotes.  Initialized with some seed objects.
+    /// </summary>
     public class StockQuoteMemoryStore : IStockQuotePersistence
     {
         private List<StockQuote> stockQuotes = new List<StockQuote>();
