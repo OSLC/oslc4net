@@ -50,6 +50,7 @@ namespace OSLC4Net.Core.Model
             TYPE_TO_VALUE_TYPE[typeof(int)]     = ValueType.Integer;
             TYPE_TO_VALUE_TYPE[typeof(long)]    = ValueType.Integer;
             TYPE_TO_VALUE_TYPE[typeof(float)]   = ValueType.Float;
+            TYPE_TO_VALUE_TYPE[typeof(decimal)] = ValueType.Float;
             TYPE_TO_VALUE_TYPE[typeof(double)]  = ValueType.Double;
             TYPE_TO_VALUE_TYPE[typeof(string)]  = ValueType.String;
  
@@ -88,7 +89,7 @@ namespace OSLC4Net.Core.Model
                                                          Type resourceType,
                                                          ISet<Type> verifiedTypes) {
             OslcResourceShape[] resourceShapeAttribute = (OslcResourceShape[])resourceType.GetCustomAttributes(typeof(OslcResourceShape), false);
-            if (resourceShapeAttribute.Length > 0) {
+            if (resourceShapeAttribute == null || resourceShapeAttribute.Length == 0) {
                 throw new OslcCoreMissingAttributeException(resourceType, typeof(OslcResourceShape));
             }
 
@@ -272,15 +273,14 @@ namespace OSLC4Net.Core.Model
 	    private static string GetDefaultPropertyName(MethodInfo method) {
 		    string methodName    = method.Name;
 		    int    startingIndex = methodName.StartsWith(METHOD_NAME_START_GET) ? METHOD_NAME_START_GET_LENGTH : METHOD_NAME_START_IS_LENGTH;
-		    int    endingIndex   = startingIndex + 1;
 
             // We want the name to start with a lower-case letter
-		    string lowercasedFirstCharacter = methodName.Substring(startingIndex, endingIndex).ToLower();
-		    if (methodName.Length == endingIndex) {
+		    string lowercasedFirstCharacter = methodName.Substring(startingIndex, 1).ToLower();
+		    if (methodName.Length == 1) {
 		        return lowercasedFirstCharacter;
 		    }
 
-		    return lowercasedFirstCharacter + methodName.Substring(endingIndex);
+		    return lowercasedFirstCharacter + methodName.Substring(startingIndex+1);
 	    }
 
 	    private static ValueType GetDefaultValueType(Type resourceType, MethodInfo method, Type componentType)  {
