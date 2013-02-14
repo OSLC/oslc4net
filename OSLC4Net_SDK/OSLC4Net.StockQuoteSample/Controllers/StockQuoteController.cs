@@ -26,10 +26,13 @@ using System.Web.Script.Serialization;
 using OSLC4Net.StockQuoteSample.Models;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
+using OSLC4Net.Core.Attribute;
+
 
 
 namespace OSLC4Net.StockQuoteSample.Controllers
 {
+    [OslcService(Constants.STOCK_QUOTE_DOMAIN)] 
     public class StockQuoteController : ApiController
     {
         static readonly IStockQuotePersistence stockQuoteStore = new StockQuoteMemoryStore();
@@ -42,10 +45,35 @@ namespace OSLC4Net.StockQuoteSample.Controllers
 
         }
 
+        [OslcDialog(    
+            title = "Stock Quote Selection Dialog",
+            label = "Stock Quote Selection Dialog",
+            uri = "selection",
+            hintWidth = "1000px",
+            hintHeight = "600px",
+            resourceTypes = new string [] {Constants.TYPE_STOCK_QUOTE},
+            usages = new string [] {OslcConstants.OSLC_USAGE_DEFAULT}
+        )]
+
+        [OslcQueryCapability
+        (
+            title = "Stock Quote Query Capability",
+            label = "Stock Quote Catalog Query",
+            resourceShape = OslcConstants.PATH_RESOURCE_SHAPES + "/" + Constants.PATH_STOCK_QUOTE,
+            resourceTypes = new string [] {Constants.TYPE_STOCK_QUOTE},
+            usages = new string [] {OslcConstants.OSLC_USAGE_DEFAULT}
+        )]
         public ResponseInfoCollection<StockQuote> GetStockQuotes()
         {
             List<StockQuote> stockQuoteCollection = stockQuoteStore.GetAll().ToList<StockQuote>();
+
             retrieveStockQuoteInfo(stockQuoteCollection.ToArray<StockQuote>());
+
+            foreach (StockQuote stockQuote in stockQuoteCollection)
+            {
+                stockQuote.SetAbout(ServiceProviderController.About);
+                stockQuote.SetServiceProvider(ServiceProviderController.ServiceProviderUri);
+            }
 
             ResponseInfoCollection<StockQuote> responseInfo = 
                 new ResponseInfoCollection<StockQuote>(stockQuoteCollection,
@@ -59,14 +87,26 @@ namespace OSLC4Net.StockQuoteSample.Controllers
         public StockQuote GetStockQuote(string id)
         {
             //following will throw an exception if id is bad
-            StockQuote requestedStock = stockQuoteStore.Get(id);
-            retrieveStockQuoteInfo(requestedStock);
-            return requestedStock; 
+            StockQuote requestedStockQuote = stockQuoteStore.Get(id);
+            requestedStockQuote.SetAbout(ServiceProviderController.About);
+            requestedStockQuote.SetServiceProvider(ServiceProviderController.ServiceProviderUri);
+            retrieveStockQuoteInfo(requestedStockQuote);
+            return requestedStockQuote; 
         }
 
+        [OslcCreationFactory
+        (
+             title = "Stock Quote Creation Factory",
+             label = "Stock Quote Creation",
+             resourceShapes = new string[] {OslcConstants.PATH_RESOURCE_SHAPES + "/" + Constants.PATH_STOCK_QUOTE},
+             resourceTypes = new string[] {Constants.TYPE_STOCK_QUOTE},
+             usages = new string[] {OslcConstants.OSLC_USAGE_DEFAULT}
+        )]
         public HttpResponseMessage PostStockQuote(StockQuote stockQuote)
         {
             StockQuote newStockQuote = stockQuoteStore.Add(stockQuote);
+            newStockQuote.SetAbout(ServiceProviderController.About);
+            newStockQuote.SetServiceProvider(ServiceProviderController.ServiceProviderUri);
             var response = Request.CreateResponse<StockQuote>(HttpStatusCode.Created, newStockQuote);
 
             string uri = Url.Link("DefaultApi", new { id = stockQuote.GetIdentifier() });

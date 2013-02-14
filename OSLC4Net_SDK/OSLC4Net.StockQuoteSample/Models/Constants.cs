@@ -32,6 +32,6 @@ namespace OSLC4Net.StockQuoteSample.Models
 
         public const string TYPE_STOCK_QUOTE = STOCK_QUOTE_NAMESPACE + "StockQuote";
 
-        public const string PATH_STOCK_QUOTE = "stockQuote";
+        public const string PATH_STOCK_QUOTE = "stockquote";
     }
 }

@@ -31,31 +31,27 @@ namespace OSLC4Net.Core.Attribute
 	    /**
 	     * Title string that could be used for display
 	     */
-	    public readonly string title;
+	    public string title;
 
 	    /**
 	     * Very short label for use in menu items
 	     */
-        public readonly string label = "";
+        public string label = "";
 
 	    /**
 	     * Resource shapes
 	     */
-        public readonly string[] resourceShapes = { };
+        public string[] resourceShapes = { };
 
 	    /**
 	     * Resource types
 	     */
-        public readonly string[] resourceTypes = { };
+        public string[] resourceTypes = { };
 
 	    /**
 	     * Usages
 	     */
-        public readonly string[] usages = { };
+        public string[] usages = { };
 
-        public OslcCreationFactory(string title)
-        {
-            this.title = title;
-        }
     }
 }

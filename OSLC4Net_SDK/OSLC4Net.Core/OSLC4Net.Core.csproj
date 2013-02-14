@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\OslcCoreInvalidAttributeException.cs" />
     <Compile Include="Model\ResponseInfoCollection.cs" />
     <Compile Include="Model\ResponseInfoArray.cs" />
     <Compile Include="Model\ResponseInfo.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Exceptions\OslcCoreRelativeURIException.cs" />
     <Compile Include="Exceptions\MessageExtractor.cs" />
     <Compile Include="Exceptions\OslcCoreApplicationException.cs" />
+    <Compile Include="Model\ServiceProviderFactory.cs" />
     <Compile Include="OSLC4NetConstants.cs" />
     <Compile Include="Model\AbstractResource.cs" />
     <Compile Include="Model\AnyResource.cs" />

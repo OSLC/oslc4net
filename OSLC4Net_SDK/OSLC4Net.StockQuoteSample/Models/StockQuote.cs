@@ -24,7 +24,6 @@ namespace OSLC4Net.StockQuoteSample.Models
 {
     [OslcNamespace(Constants.STOCK_QUOTE_NAMESPACE)]
     [OslcResourceShape(title = "Stock Quote Resource Shape", describes = new string[] {Constants.TYPE_STOCK_QUOTE})]
-
     public class StockQuote : AbstractResource
     {
         private decimal    changePrice;
@@ -38,7 +37,7 @@ namespace OSLC4Net.StockQuoteSample.Models
         private decimal    low52WeekPrice;
         private decimal    lowPrice;
         private decimal    openPrice;
-        private URI      serviceProvider;
+        private Uri      serviceProvider;
         private string   symbol;
         private string   title;
         private readonly ISet<Uri> rdfTypes = new HashSet<Uri>();
@@ -165,7 +164,7 @@ namespace OSLC4Net.StockQuoteSample.Models
         [OslcRange(OslcConstants.TYPE_SERVICE_PROVIDER)]
         [OslcReadOnly]
         [OslcTitle("Service Provider")]
-        public URI GetServiceProvider()
+        public Uri GetServiceProvider()
         {
             return serviceProvider;
         }
@@ -252,7 +251,7 @@ namespace OSLC4Net.StockQuoteSample.Models
             this.openPrice = openPrice;
         }
 
-        public void SetServiceProvider( URI serviceProvider)
+        public void SetServiceProvider( Uri serviceProvider)
         {
             this.serviceProvider = serviceProvider;
         }
