@@ -144,7 +144,13 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                         if (ImplementsGenericType(typeof(FilteredResource<>), type))
                         {
                             PropertyInfo resourceProp = value.GetType().GetProperty("Resource");
+
+                            // XXX - This reference to BaseType works for ResponseInfo<> subclasses of
+                            // FilteredResource<>, but no direct uses of FilteredResource<> - Need to
+                            // figure this out
+
                             Type[] actualTypeArguments = type.BaseType.GetGenericArguments();
+
                             object objects = resourceProp.GetValue(value, null);
                             PropertyInfo propertiesProp = value.GetType().GetProperty("Properties");
 
@@ -357,6 +363,10 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             {
                 return false;
             }
+
+            // XXX - This reference to BaseType works for ResponseInfo<> subclasses of
+            // FilteredResource<>, but no direct uses of FilteredResource<> - Need to
+            // figure this out
 
             Type realizedGenericType = genericType.MakeGenericType(typeToTest.BaseType.GetGenericArguments());
 
