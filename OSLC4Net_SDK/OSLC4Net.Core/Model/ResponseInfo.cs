@@ -27,19 +27,17 @@ namespace OSLC4Net.Core.Model
     /// An OSLC ResponseInfo resource containg a single member resource
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-    [OslcResourceShape(title = "OSLC ResponseInfo Resource Shape", describes = new string[] { OslcConstants.TYPE_RESPONSE_INFO })]
-    public class ResponseInfo<T> : FilteredResource<T>
+   public abstract class ResponseInfo<T> : FilteredResource<T>
     {
         /**
          * Total count of resource
          */
-        public readonly int totalCount;
+        public int TotalCount { get; private set;  }
 
         /**
          * Next page in paged output
          */
-        public readonly String nextPage;
+        public String NextPage { get; private set; }
 
         /// <summary>
         /// 
@@ -56,8 +54,8 @@ namespace OSLC4Net.Core.Model
             String nextPage
         ) : base(resource, properties)
         {
-            this.totalCount = totalCount;
-            this.nextPage = nextPage;
+            this.TotalCount = totalCount;
+            this.NextPage = nextPage;
         }
     
         /// <summary>

@@ -32,20 +32,20 @@ namespace OSLC4Net.Core.Model
         /**
          * Resource.
          */
-        public readonly T resource;
+       public T Resource { get; private set; }
 
         /**
          * properties
          */
-        public readonly IDictionary<String, Object> properties;
+       public IDictionary<String, Object> Properties { get; private set; }
 
         public FilteredResource(
             T resource,
             IDictionary<String, Object> properties
         )
         {
-            this.resource = resource;
-            this.properties = properties;
+            this.Resource = resource;
+            this.Properties = properties;
         }
     }
 }

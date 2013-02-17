@@ -27,14 +27,12 @@ namespace OSLC4Net.Core.Model
     /// An OSLC ResponseInfo resource containg an IEnumerable collection of member resources
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-    [OslcResourceShape(title = "OSLC ResponseInfo Resource Shape", describes = new string[] { OslcConstants.TYPE_RESPONSE_INFO })]
-    public class ResponseInfoCollection<T> : ResponseInfo<IEnumerable<T>>
+    public class ResponseInfoCollection<T> : ResponseInfo<ICollection<T>>
     {
         /**
          * Collection of resources
          */
-        public IEnumerable<T> collection() { return resource; }
+        public ICollection<T> Collection() { return Resource; }
 
         /// <summary>
         /// 
@@ -45,7 +43,7 @@ namespace OSLC4Net.Core.Model
         /// <param name="nextPage"></param>
         public
         ResponseInfoCollection(
-            IEnumerable<T> collection,
+            ICollection<T> collection,
             IDictionary<String, Object> properties,
             int totalCount,
             String nextPage
@@ -62,11 +60,11 @@ namespace OSLC4Net.Core.Model
         /// <param name="nextPage"></param>
         public
         ResponseInfoCollection(
-            IEnumerable<T> collection,
+            ICollection<T> collection,
             IDictionary<String, Object> properties,
             int totalCount,
             Uri nextPage
-        ) : this(collection, properties, totalCount, nextPage.ToString())
+        ) : base(collection, properties, totalCount, nextPage)
         {
         }
     }

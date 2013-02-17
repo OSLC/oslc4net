@@ -27,14 +27,12 @@ namespace OSLC4Net.Core.Model
     /// An OSLC ResponseInfo resource containing an array of member resources
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-    [OslcResourceShape(title = "OSLC ResponseInfo Resource Shape", describes = new string[] { OslcConstants.TYPE_RESPONSE_INFO })]
     public class ResponseInfoArray<T> : ResponseInfo<T[]>
     {
         /**
          * Array of resources
          */
-        public T[] array() { return resource; }
+        public T[] Array() { return Resource; }
 
         /// <summary>
         /// 
@@ -66,7 +64,7 @@ namespace OSLC4Net.Core.Model
             IDictionary<String, Object> properties,
             int totalCount,
             Uri nextPage
-        ) : this(array, properties, totalCount, nextPage.ToString())
+        ) : base(array, properties, totalCount, nextPage)
         {
         }
     }

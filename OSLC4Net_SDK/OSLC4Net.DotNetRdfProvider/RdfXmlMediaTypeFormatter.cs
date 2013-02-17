@@ -46,6 +46,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
     {
 
         public IGraph Graph { get; set; }
+        public bool RebuildGraph { get; set; }
 
         /// <summary>
         /// Defauld RdfXml formatter
@@ -61,10 +62,13 @@ namespace OSLC4Net.Core.DotNetRdfProvider
         /// RdfXml formatter which accepts a pre-build RDF Graph 
         /// </summary>
         /// <param name="graph"></param>
-        public RdfXmlMediaTypeFormatter(IGraph graph)
-            : this()
+        public RdfXmlMediaTypeFormatter(
+            IGraph graph,
+            bool rebuildgraph = true
+        ) : this()
         {
             this.Graph = graph;
+            this.RebuildGraph = rebuildgraph;
         }
 
         /// <summary>
@@ -74,7 +78,39 @@ namespace OSLC4Net.Core.DotNetRdfProvider
         /// <returns></returns>
         public override bool CanWriteType(Type type)
         {
-            if (IsSinglton(type))
+            Type actualType;
+
+            if (ImplementsGenericType(typeof(FilteredResource<>), type))
+            {
+                Type[] actualTypeArguments = type.BaseType.GetGenericArguments();
+            
+                if (actualTypeArguments.Count() != 1)
+                {
+                    return false;
+                }
+
+                if (actualTypeArguments[0].IsGenericType && typeof(ICollection<>) == actualTypeArguments[0].GetGenericTypeDefinition())
+                {
+                    actualTypeArguments = actualTypeArguments[0].GetGenericArguments();
+                
+                    if (actualTypeArguments.Count() != 1)
+                    {
+                        return false;
+                    }
+                
+                    actualType = actualTypeArguments[0];
+                }
+                else
+                {
+                    actualType = actualTypeArguments[0];
+                }
+            }
+            else
+            {
+                actualType = type;
+            }
+        
+            if (IsSinglton(actualType))
             {
                 return true;
             }
@@ -102,10 +138,39 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             return Task.Factory.StartNew(() =>
                 {
 
-                    if ((Graph == null) || (Graph.IsEmpty))
+                    if ((Graph == null) || (Graph.IsEmpty) || RebuildGraph)
                     {
 
-                        if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IEnumerable<>), value.GetType()))
+                        if (ImplementsGenericType(typeof(FilteredResource<>), type))
+                        {
+                            PropertyInfo resourceProp = value.GetType().GetProperty("Resource");
+                            Type[] actualTypeArguments = type.BaseType.GetGenericArguments();
+                            object objects = resourceProp.GetValue(value, null);
+                            PropertyInfo propertiesProp = value.GetType().GetProperty("Properties");
+
+                            if (! actualTypeArguments[0].IsGenericType && typeof(ICollection<>) == actualTypeArguments[0].GetGenericTypeDefinition())
+                            {
+                                objects = new EnumerableWrapper(objects);
+                            }
+
+                            if (ImplementsGenericType(typeof(ResponseInfo<>), type))
+                            {
+                                PropertyInfo totalCountProp = value.GetType().GetProperty("TotalCount");
+                                PropertyInfo nextPageProp = value.GetType().GetProperty("NextPage");
+
+                                Graph = DotNetRdfHelper.CreateDotNetRdfGraph(null, null, (string)nextPageProp.GetValue(value, null),
+                                                                             (int)totalCountProp.GetValue(value, null),
+                                                                             objects as IEnumerable<object>,
+                                                                             (IDictionary<string, object>)propertiesProp.GetValue(value, null));
+                            }
+                            else
+                            {
+                                Graph = DotNetRdfHelper.CreateDotNetRdfGraph(null, null, null, objects.AsEnumerable<object>().Count(),
+                                                                             objects as IEnumerable<object>,
+                                                                             (IDictionary<string, object>)propertiesProp.GetValue(value, null));
+                            }
+                        }
+                        else if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IEnumerable<>), value.GetType()))
                         {
                             Graph = DotNetRdfHelper.CreateDotNetRdfGraph(value as IEnumerable<object>);
                         }
@@ -284,6 +349,18 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             {
                // Don't let dotNetRDF writer close the file.
             }
+        }
+
+        private static bool ImplementsGenericType(Type genericType, Type typeToTest)
+        {
+            if (! typeToTest.IsGenericType)
+            {
+                return false;
+            }
+
+            Type realizedGenericType = genericType.MakeGenericType(typeToTest.BaseType.GetGenericArguments());
+
+            return typeToTest.IsSubclassOf(realizedGenericType);
         }
     }
 }
