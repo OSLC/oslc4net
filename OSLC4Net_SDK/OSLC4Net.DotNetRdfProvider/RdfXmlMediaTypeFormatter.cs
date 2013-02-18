@@ -47,6 +47,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
         public IGraph Graph { get; set; }
         public bool RebuildGraph { get; set; }
+        private HttpRequestMessage httpRequest;
 
         /// <summary>
         /// Defauld RdfXml formatter
@@ -69,6 +70,19 @@ namespace OSLC4Net.Core.DotNetRdfProvider
         {
             this.Graph = graph;
             this.RebuildGraph = rebuildgraph;
+        }
+
+        /// <summary>
+        /// Save the HttpRequestMessage locally for use during serialization.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="request"></param>
+        /// <param name="mediaType"></param>
+        /// <returns></returns>
+        public override MediaTypeFormatter GetPerRequestFormatterInstance(Type type, HttpRequestMessage request, MediaTypeHeaderValue mediaType)
+        {
+            this.httpRequest = request;
+            return base.GetPerRequestFormatterInstance(type, request, mediaType);
         }
 
         /// <summary>
@@ -148,6 +162,27 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                             object objects = resourceProp.GetValue(value, null);
                             PropertyInfo propertiesProp = value.GetType().GetProperty("Properties");
 
+                            //Subject URI for the collection is the query capability
+                            //TODO:  should this be set by the app based on service provider info
+                            int portNum = httpRequest.RequestUri.Port;
+                            string portString = null;
+                            if (portNum == 80 || portNum == 443)
+                            {
+                                portString = "";
+                            }
+                            else
+                            {
+                                portString = ":" + portNum.ToString();
+                            }
+
+                            string descriptionAbout = httpRequest.RequestUri.Scheme + "://" +
+                                                      httpRequest.RequestUri.Host +
+                                                      portString +
+                                                      httpRequest.RequestUri.LocalPath;
+
+                            //Subject URI for the responseInfo is the full request URI
+                            string responseInfoAbout = httpRequest.RequestUri.ToString();
+
                             if (! ImplementsICollection(actualTypeArguments[0]))
                             {
                                 objects = new EnumerableWrapper(objects);
@@ -158,7 +193,8 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                                 PropertyInfo totalCountProp = value.GetType().GetProperty("TotalCount");
                                 PropertyInfo nextPageProp = value.GetType().GetProperty("NextPage");
 
-                                Graph = DotNetRdfHelper.CreateDotNetRdfGraph(null, null, (string)nextPageProp.GetValue(value, null),
+                                Graph = DotNetRdfHelper.CreateDotNetRdfGraph(descriptionAbout, responseInfoAbout, 
+                                                                             (string)nextPageProp.GetValue(value, null),
                                                                              (int)totalCountProp.GetValue(value, null),
                                                                              objects as IEnumerable<object>,
                                                                              (IDictionary<string, object>)propertiesProp.GetValue(value, null));
