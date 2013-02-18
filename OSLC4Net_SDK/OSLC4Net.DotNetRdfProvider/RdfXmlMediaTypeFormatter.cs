@@ -82,14 +82,14 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
             if (ImplementsGenericType(typeof(FilteredResource<>), type))
             {
-                Type[] actualTypeArguments = type.BaseType.GetGenericArguments();
+                Type[] actualTypeArguments = GetChildClassParameterArguments(typeof(FilteredResource<>), type);
             
                 if (actualTypeArguments.Count() != 1)
                 {
                     return false;
                 }
 
-                if (actualTypeArguments[0].IsGenericType && typeof(ICollection<>) == actualTypeArguments[0].GetGenericTypeDefinition())
+                if (ImplementsICollection(actualTypeArguments[0]))
                 {
                     actualTypeArguments = actualTypeArguments[0].GetGenericArguments();
                 
@@ -144,17 +144,11 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                         if (ImplementsGenericType(typeof(FilteredResource<>), type))
                         {
                             PropertyInfo resourceProp = value.GetType().GetProperty("Resource");
-
-                            // XXX - This reference to BaseType works for ResponseInfo<> subclasses of
-                            // FilteredResource<>, but no direct uses of FilteredResource<> - Need to
-                            // figure this out
-
-                            Type[] actualTypeArguments = type.BaseType.GetGenericArguments();
-
+                            Type[] actualTypeArguments = GetChildClassParameterArguments(typeof(FilteredResource<>), type);
                             object objects = resourceProp.GetValue(value, null);
                             PropertyInfo propertiesProp = value.GetType().GetProperty("Properties");
 
-                            if (! actualTypeArguments[0].IsGenericType && typeof(ICollection<>) == actualTypeArguments[0].GetGenericTypeDefinition())
+                            if (! ImplementsICollection(actualTypeArguments[0]))
                             {
                                 objects = new EnumerableWrapper(objects);
                             }
@@ -359,18 +353,49 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
         private static bool ImplementsGenericType(Type genericType, Type typeToTest)
         {
-            if (! typeToTest.IsGenericType)
+            bool isParentGeneric = genericType.IsGenericType;
+
+            return ImplementsGenericType(genericType, typeToTest, isParentGeneric);
+        }
+
+        private static bool ImplementsGenericType(Type genericType, Type typeToTest, bool isParentGeneric)
+        {
+            if (typeToTest == null)
             {
                 return false;
             }
 
-            // XXX - This reference to BaseType works for ResponseInfo<> subclasses of
-            // FilteredResource<>, but no direct uses of FilteredResource<> - Need to
-            // figure this out
+            typeToTest = isParentGeneric && typeToTest.IsGenericType ? typeToTest.GetGenericTypeDefinition() : typeToTest;
 
-            Type realizedGenericType = genericType.MakeGenericType(typeToTest.BaseType.GetGenericArguments());
+            if (typeToTest == genericType)
+            {
+                return true;
+            }
 
-            return typeToTest.IsSubclassOf(realizedGenericType);
+            return ImplementsGenericType(genericType, typeToTest.BaseType, isParentGeneric);
+        }
+
+        private static Type[] GetChildClassParameterArguments(Type genericType, Type typeToTest)
+        {
+            bool isParentGeneric = genericType.IsGenericType;
+
+            while (true)
+            {
+                Type parentType = typeToTest.BaseType;
+                Type parentToTest = isParentGeneric && parentType.IsGenericType ? parentType.GetGenericTypeDefinition() : parentType;
+
+                if (parentToTest == genericType)
+                {
+                    return typeToTest.GetGenericArguments();
+                }
+
+                typeToTest = parentType;
+            }
+        }
+
+        private static bool ImplementsICollection(Type type)
+        {
+            return type.IsGenericType && typeof(ICollection<>) == type.GetGenericTypeDefinition();
         }
     }
 }
