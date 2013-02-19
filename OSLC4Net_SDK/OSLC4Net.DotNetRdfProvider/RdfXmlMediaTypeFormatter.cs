@@ -46,7 +46,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
     {
 
         public IGraph Graph { get; set; }
-        public bool RebuildGraph { get; set; }
+        public bool RebuildGraph { get; set; } 
         private HttpRequestMessage httpRequest;
 
         /// <summary>
@@ -54,18 +54,19 @@ namespace OSLC4Net.Core.DotNetRdfProvider
         /// </summary>
         public RdfXmlMediaTypeFormatter()
         {
+            RebuildGraph = true;
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_RDF_XML_TYPE);
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_XML_TYPE);
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML_TYPE);
         }
 
         /// <summary>
-        /// RdfXml formatter which accepts a pre-build RDF Graph 
+        /// RdfXml formatter which accepts a pre-built RDF Graph 
         /// </summary>
         /// <param name="graph"></param>
         public RdfXmlMediaTypeFormatter(
             IGraph graph,
-            bool rebuildgraph = true
+            bool rebuildgraph = false
         ) : this()
         {
             this.Graph = graph;
@@ -79,6 +80,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
         /// <param name="request"></param>
         /// <param name="mediaType"></param>
         /// <returns></returns>
+        ///
         public override MediaTypeFormatter GetPerRequestFormatterInstance(Type type, HttpRequestMessage request, MediaTypeHeaderValue mediaType)
         {
             this.httpRequest = request;

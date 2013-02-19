@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -275,7 +276,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
                     foreach (Triple triple in triples)
                     {
-                        IUriNode   resource = (IUriNode)triple.Subject;
+                        INode   resource = (INode)triple.Subject;
                         object  newInstance = Activator.CreateInstance(beanType);
                         IDictionary<String,Object> visitedResources = new Dictionary<String, Object>();
 
