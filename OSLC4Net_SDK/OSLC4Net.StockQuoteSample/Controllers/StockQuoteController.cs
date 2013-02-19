@@ -24,6 +24,7 @@ using System.Web.Http;
 using System.Web.Script.Serialization;
 
 using OSLC4Net.StockQuoteSample.Models;
+using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
 using OSLC4Net.Core.Attribute;
 
@@ -253,17 +254,36 @@ namespace OSLC4Net.StockQuoteSample.Controllers
 
                 stockQuote.SetChangePrice(decimal.Parse(stockEntry["c"]));
                 stockQuote.SetChangePricePercentage(decimal.Parse(stockEntry["cp"]));
-                stockQuote.SetHighPrice(decimal.Parse(stockEntry["hi"]));
+
+                String hi = stockEntry["hi"];
+
+                if (hi.Length != 0)
+                {
+                    stockQuote.SetHighPrice(decimal.Parse(hi));
+                }
+
                 stockQuote.SetHigh52WeekPrice(decimal.Parse(stockEntry["hi52"]));
                 stockQuote.SetLastTradedPrice(decimal.Parse(stockEntry["l"]));
                 stockQuote.SetLastTradedDate(stockEntry["lt"]);
-                stockQuote.SetLowPrice(decimal.Parse(stockEntry["lo"]));
-                stockQuote.SetLow52WeekPrice(decimal.Parse(stockEntry["lo52"]));
-                stockQuote.SetOpenPrice(decimal.Parse(stockEntry["op"]));
-                stockQuote.SetTitle(stockEntry["name"]);
 
-            }
-                
+                String lo = stockEntry["lo"];
+
+                if (lo.Length != 0)
+                {
+                    stockQuote.SetLowPrice(decimal.Parse(lo));
+                }
+
+                stockQuote.SetLow52WeekPrice(decimal.Parse(stockEntry["lo52"]));
+
+                String op = stockEntry["op"];
+
+                if (op.Length != 0)
+                {
+                    stockQuote.SetOpenPrice(decimal.Parse(op));
+                }
+
+               stockQuote.SetTitle(stockEntry["name"]);
+            }                
         }
     }
 }

@@ -164,6 +164,13 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                             object objects = resourceProp.GetValue(value, null);
                             PropertyInfo propertiesProp = value.GetType().GetProperty("Properties");
 
+                            if (! ImplementsICollection(actualTypeArguments[0]))
+                            {
+                                objects = new EnumerableWrapper(objects);
+                            }
+
+                            if (ImplementsGenericType(typeof(ResponseInfo<>), type))
+                            {
                             //Subject URI for the collection is the query capability
                             //TODO:  should this be set by the app based on service provider info
                             int portNum = httpRequest.RequestUri.Port;
@@ -185,13 +192,6 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                             //Subject URI for the responseInfo is the full request URI
                             string responseInfoAbout = httpRequest.RequestUri.ToString();
 
-                            if (! ImplementsICollection(actualTypeArguments[0]))
-                            {
-                                objects = new EnumerableWrapper(objects);
-                            }
-
-                            if (ImplementsGenericType(typeof(ResponseInfo<>), type))
-                            {
                                 PropertyInfo totalCountProp = value.GetType().GetProperty("TotalCount");
                                 PropertyInfo nextPageProp = value.GetType().GetProperty("NextPage");
 
