@@ -68,11 +68,20 @@ namespace OSLC4Net.StockQuoteSample.Models
 
         public StockQuote Add(StockQuote stockQuote)
         {
+
             if (stockQuote == null)
             {
                 throw new ArgumentNullException("Null stockQuote received for Add");
             }
 
+            string id = Utilities.CreateStockQuoteIdentifier(stockQuote);
+            StockQuote existingStockQuote = stockQuotes.Find((sq) => sq.GetIdentifier() == id);
+
+            if (existingStockQuote != null)
+            {
+                stockQuotes.Remove(existingStockQuote);
+            }
+            
             stockQuotes.Add(stockQuote);
             return stockQuote;
         }

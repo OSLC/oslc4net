@@ -24,7 +24,6 @@ using System.Web.Http;
 using System.Web.Script.Serialization;
 
 using OSLC4Net.StockQuoteSample.Models;
-using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
 using OSLC4Net.Core.Attribute;
 
@@ -46,15 +45,8 @@ namespace OSLC4Net.StockQuoteSample.Controllers
     {
         static readonly IStockQuotePersistence stockQuoteStore = new StockQuoteMemoryStore();
 
-        /// <summary>
-        /// Replace the default ASP.NET XML formatter with the OSLC4Net formatter
-        /// </summary>
         static StockQuoteController()
         {
-            HttpConfiguration config = GlobalConfiguration.Configuration;
-            config.Formatters.Remove(config.Formatters.XmlFormatter);
-            config.Formatters.Add(new RdfXmlMediaTypeFormatter());
-
         }
 
         /// <summary>
@@ -92,7 +84,7 @@ namespace OSLC4Net.StockQuoteSample.Controllers
             //Update the resource with runtime subject and ServiceProvider URIs
             foreach (StockQuote stockQuote in stockQuoteCollection)
             {
-                stockQuote.SetAbout(ServiceProviderController.About);
+                stockQuote.SetAbout(new Uri(ServiceProviderController.About.ToString() + "/"+ stockQuote.GetIdentifier()));
                 stockQuote.SetServiceProvider(ServiceProviderController.ServiceProviderUri);
             }
 
@@ -119,7 +111,7 @@ namespace OSLC4Net.StockQuoteSample.Controllers
             retrieveStockQuoteInfo(requestedStockQuote);
 
             //Update the resource with runtime subject and ServiceProvider URIs
-            requestedStockQuote.SetAbout(ServiceProviderController.About);
+            requestedStockQuote.SetAbout(new Uri(ServiceProviderController.About.ToString() + "/" + requestedStockQuote.GetIdentifier()));
             requestedStockQuote.SetServiceProvider(ServiceProviderController.ServiceProviderUri);
             return requestedStockQuote; 
         }
@@ -143,13 +135,14 @@ namespace OSLC4Net.StockQuoteSample.Controllers
         )]
         public HttpResponseMessage PostStockQuote(StockQuote stockQuote)
         {
+            stockQuote.SetIdentifier(Utilities.CreateStockQuoteIdentifier(stockQuote));
             StockQuote newStockQuote = stockQuoteStore.Add(stockQuote);
 
             //Get realtime stock quote
             retrieveStockQuoteInfo(newStockQuote);
 
             //Update the resource with runtime subject and ServiceProvider URIs
-            newStockQuote.SetAbout(ServiceProviderController.About);
+            newStockQuote.SetAbout(new Uri(ServiceProviderController.About.ToString() + "/" + stockQuote.GetIdentifier()));
             newStockQuote.SetServiceProvider(ServiceProviderController.ServiceProviderUri);
 
             //Create a response containing the new resource + a Location header

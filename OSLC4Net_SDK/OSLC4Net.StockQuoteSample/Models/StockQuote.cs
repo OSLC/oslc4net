@@ -23,7 +23,7 @@ using OSLC4Net.Core.Model;
 namespace OSLC4Net.StockQuoteSample.Models
 {
     [OslcNamespace(Constants.STOCK_QUOTE_NAMESPACE)]
-    [OslcName(Constants.TYPE_STOCK_QUOTE)]
+    [OslcName(Constants.STOCK_QUOTE)]
     [OslcResourceShape(title = "Stock Quote Resource Shape", describes = new string[] {Constants.TYPE_STOCK_QUOTE})]
     public class StockQuote : AbstractResource
     {

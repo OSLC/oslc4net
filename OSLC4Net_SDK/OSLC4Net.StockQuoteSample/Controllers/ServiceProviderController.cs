@@ -51,11 +51,6 @@ namespace OSLC4Net.StockQuoteSample.Controllers
 
         public static void init(string baseUri)
         {
-            //Remove the ASP.NET default XML formatter and replace it with the OSLC4Net version
-            HttpConfiguration config = GlobalConfiguration.Configuration;
-            config.Formatters.Remove(config.Formatters.XmlFormatter);
-            config.Formatters.Add(new RdfXmlMediaTypeFormatter());
-
             BaseUri = baseUri;
 
             serviceProvider = ServiceProviderFactory.CreateServiceProvider(BaseUri,
