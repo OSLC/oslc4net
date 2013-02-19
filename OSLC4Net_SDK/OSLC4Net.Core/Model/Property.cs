@@ -27,6 +27,9 @@ namespace OSLC4Net.Core.Model
     /// OSLC Property attributes
     /// </summary>
     /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
+    /// 
+    [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
+    [OslcResourceShape(title = "OSLC Property Resource Shape", describes = new string[] { OslcConstants.TYPE_PROPERTY })]
     public sealed class Property : AbstractResource, IComparable<Property>
     {
 	    private IList<string> allowedValues = new List<string>();
@@ -177,9 +180,9 @@ namespace OSLC4Net.Core.Model
 	    [OslcReadOnly]
         [OslcTitle("Representation")]
 	    public Uri GetRepresentation() {
-	        if (representation != Representation.Unknown) {
+	        if (representation != null) {
 	            try {
-	                return new Uri(representation.ToString());
+	                return new Uri(RepresentationExtension.ToString(representation));
 	            } catch (UriFormatException exception) {
 	                // This should never happen since we control the possible values of the Representation enum.
 	                throw new SystemException(exception.Message, exception);
