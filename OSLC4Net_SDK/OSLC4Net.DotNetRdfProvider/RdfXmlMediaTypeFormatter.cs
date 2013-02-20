@@ -156,7 +156,6 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
                     if ((Graph == null) || (Graph.IsEmpty) || RebuildGraph)
                     {
-
                         if (ImplementsGenericType(typeof(FilteredResource<>), type))
                         {
                             PropertyInfo resourceProp = value.GetType().GetProperty("Resource");

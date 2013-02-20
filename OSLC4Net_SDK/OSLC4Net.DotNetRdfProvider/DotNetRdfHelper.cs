@@ -271,6 +271,8 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
                 if (triples.Count() > 0)
                 {
+                    triples = new List<Triple>(triples);
+
                     MethodInfo add = results.GetType().GetMethod("Add", types);
                     IDictionary<Type, IDictionary<string, MethodInfo>> typePropertyDefinitionsToSetMethods = new Dictionary<Type, IDictionary<string, MethodInfo>>();
 
@@ -361,8 +363,8 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             {
                 IUriNode    predicate = (IUriNode)triple.Predicate;
                 INode       obj       = triple.Object;
+                string      uri       = predicate.Uri.ToString();
 
-                string uri           = predicate.Uri.ToString();
                 if (! setMethodMap.ContainsKey(uri))
                 {
                     if (RdfSpecsHelper.RdfType.Equals(uri))

@@ -52,9 +52,10 @@ namespace OSLC4Net.Core.JsonProvider
         private const string JSON_PROPERTY_SUFFIX_BAG           = "Bag";
         private const string JSON_PROPERTY_SUFFIX_SEQ           = "Seq";
 
-        private const string RDF_ABOUT_URI = OslcConstants.RDF_NAMESPACE + JSON_PROPERTY_SUFFIX_ABOUT;
-        private const string RDF_TYPE_URI  = OslcConstants.RDF_NAMESPACE + JSON_PROPERTY_SUFFIX_TYPE;
-        private const string RDF_NIL_URI   = OslcConstants.RDF_NAMESPACE + JSON_PROPERTY_SUFFIX_NIL;
+        private const string RDF_ABOUT_URI    = OslcConstants.RDF_NAMESPACE + JSON_PROPERTY_SUFFIX_ABOUT;
+        private const string RDF_TYPE_URI     = OslcConstants.RDF_NAMESPACE + JSON_PROPERTY_SUFFIX_TYPE;
+        private const string RDF_NIL_URI      = OslcConstants.RDF_NAMESPACE + JSON_PROPERTY_SUFFIX_NIL;
+        private const string RDF_RESOURCE_URI = OslcConstants.RDF_NAMESPACE + JSON_PROPERTY_SUFFIX_RESOURCE;
     
         private const string METHOD_NAME_START_GET = "Get";
         private const string METHOD_NAME_START_IS  = "Is";
@@ -190,8 +191,8 @@ namespace OSLC4Net.Core.JsonProvider
             return resultJsonObject;
         }
 
-        public static object[] FromJson(JsonObject  jsonObject,
-                                        Type        beanType)
+        public static object FromJson(JsonObject  jsonObject,
+                                      Type        beanType)
         {
             List<object>                beans                    = new List<object>();
             IDictionary<String, String> namespaceMappings        = new Dictionary<String, String>();
@@ -206,26 +207,23 @@ namespace OSLC4Net.Core.JsonProvider
 
                 foreach (string prefix in prefixesJsonObject.Keys)
                 {
-                    object ns        = prefixesJsonObject[prefix];
+                    string ns = (string)prefixesJsonObject[prefix];
 
-                    if (ns is String)
-                    {
-                        namespaceMappings.Add(prefix,
-                                              ns.ToString());
+                    namespaceMappings.Add(prefix,
+                                          ns);
 
-                        reverseNamespaceMappings.Add(ns.ToString(),
-                                                     prefix.ToString());
-                    }
+                    reverseNamespaceMappings.Add(ns,
+                                                 prefix);
                 }
             }
 
             // We have to know the reverse mapping for the rdf namespace
-            string rdfPrefix = reverseNamespaceMappings[OslcConstants.RDF_NAMESPACE];
-
-            if (rdfPrefix == null)
+            if (! reverseNamespaceMappings.ContainsKey(OslcConstants.RDF_NAMESPACE))
             {
                 throw new OslcCoreMissingNamespaceDeclarationException(OslcConstants.RDF_NAMESPACE);
             }
+
+            string rdfPrefix = reverseNamespaceMappings[OslcConstants.RDF_NAMESPACE];
 
             IDictionary<Type, IDictionary<String, MethodInfo>> classPropertyDefinitionsToSetMethods = new Dictionary<Type, IDictionary<String, MethodInfo>>();
 
@@ -300,17 +298,16 @@ namespace OSLC4Net.Core.JsonProvider
             // To support primitive arrays, we have to use Array reflection to
             // set individual elements. We cannot use Collection.toArray.
             // Array.set will unwrap objects to their corresponding primitives.
-            Array array = Array.CreateInstance(beanType,
-                                               beans.Count);
+            Type[] types = { beanType };
+            object list = Activator.CreateInstance(typeof(List<>).MakeGenericType(types));
+            MethodInfo add = list.GetType().GetMethod("Add", types);
 
-            int index = 0;
             foreach (object bean in beans)
             {
-                array.SetValue(bean,
-                               index++);
+                add.Invoke(list, new object[] { bean });
             }
 
-            return (object[])array;
+            return list;
         }
 
         private static void BuildAttributeResource(IDictionary<String, String>      namespaceMappings,
@@ -404,7 +401,7 @@ namespace OSLC4Net.Core.JsonProvider
                 } 
                 else 
                 {
-                    if (jsonArray.Count() > 0)
+                    if (jsonArray.Count > 0)
                     {
                         localResourceValue = jsonArray;
                     }
@@ -443,7 +440,7 @@ namespace OSLC4Net.Core.JsonProvider
                 } 
                 else 
                 {
-                    if (jsonArray.Count() > 0)
+                    if (jsonArray.Count > 0)
                     {
                         localResourceValue = jsonArray;
                     }
@@ -499,7 +496,7 @@ namespace OSLC4Net.Core.JsonProvider
                 listObject.Add(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE,
                                OslcConstants.RDF_NAMESPACE + JSON_PROPERTY_SUFFIX_NIL);
            
-                for (int i = jsonArray.Count() - 1; i >= 0; i --)
+                for (int i = jsonArray.Count - 1; i >= 0; i --)
                 {
                     JsonValue o = jsonArray[i];
                
@@ -578,6 +575,13 @@ namespace OSLC4Net.Core.JsonProvider
             	    }
                 }
             
+                // The sub-class of IExtendedResource could have added an explicit rdf:type property
+
+                if (jsonObject.ContainsKey(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_TYPE))
+                {
+                    jsonObject.Remove(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_TYPE);
+                }
+
                 jsonObject.Add(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_TYPE,
                                rdfTypesJsonArray);
             }
@@ -794,7 +798,7 @@ namespace OSLC4Net.Core.JsonProvider
                     return null;
                 }
             
-			    return obj as JsonValue;
+			    return obj.ToString();
 		    }
 		    else if (obj is Uri)
 		    {
@@ -837,7 +841,7 @@ namespace OSLC4Net.Core.JsonProvider
 
             // We want the name to start with a lower-case letter
             string lowercasedFirstCharacter = methodName.Substring(startingIndex,
-                                                                   endingIndex).ToLower(CultureInfo.GetCultureInfo("en"));
+                                                                   1).ToLower(CultureInfo.GetCultureInfo("en"));
 
             if (methodName.Length == endingIndex)
             {
@@ -856,22 +860,22 @@ namespace OSLC4Net.Core.JsonProvider
                                                      IDictionary<String, object>   nestedProperties,
                                                      bool                          onlyNested)
         {
-            if ((obj is String)  ||
+            if ((obj is String) ||
                 (obj is Boolean) ||
-				(obj is Byte) ||
-				(obj is Double) ||
-				(obj is Decimal) ||
-				(obj is Int16) ||
-				(obj is Int32) ||
-				(obj is Int64) ||
-				(obj is DateTime))
+                (obj is Byte) ||
+                (obj is Double) ||
+                (obj is Decimal) ||
+                (obj is Int16) ||
+                (obj is Int32) ||
+                (obj is Int64) ||
+                (obj is DateTime))
             {
                 if (onlyNested)
                 {
                     return null;
                 }
-            
-                return obj as JsonValue;
+
+                return obj.ToString();
             }
             else if (obj is Uri)
             {
@@ -879,21 +883,21 @@ namespace OSLC4Net.Core.JsonProvider
                 {
                     return null;
                 }
-            
+
                 return HandleResourceReference(namespaceMappings,
-            		                           reverseNamespaceMappings,
-            		                           resourceType,
-            		                           method,
-            		                           (Uri) obj);
+                                               reverseNamespaceMappings,
+                                               resourceType,
+                                               method,
+                                               (Uri)obj);
             }
             else if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IReifiedResource<>), obj.GetType()))
             {
-        	    return HandleReifiedResource(namespaceMappings,
-					                         reverseNamespaceMappings,
-					                         obj.GetType(),
-					                         method,
-					                         obj,
-					                         nestedProperties);
+                return HandleReifiedResource(namespaceMappings,
+                                             reverseNamespaceMappings,
+                                             obj.GetType(),
+                                             method,
+                                             obj,
+                                             nestedProperties);
             }
 
             IDictionary<object, JsonObject> visitedObjects = new Dictionary<object,JsonObject>();
@@ -1101,6 +1105,12 @@ namespace OSLC4Net.Core.JsonProvider
                 foreach (OslcNamespaceDefinition oslcNamespaceDefinitionAnnotation in oslcNamespaceDefinitionAnnotations)
                 {
                     string prefix       = oslcNamespaceDefinitionAnnotation.prefix;
+
+                    if (namespaceMappings.ContainsKey(prefix))
+                    {
+                        continue;
+                    }
+
                     string namespaceURI = oslcNamespaceDefinitionAnnotation.namespaceURI;
 
                     namespaceMappings.Add(prefix,
@@ -1138,24 +1148,30 @@ namespace OSLC4Net.Core.JsonProvider
                                      Type                                               beanType,
                                      object                                             bean)
         {
-            IDictionary<String, MethodInfo> setMethodMap = classPropertyDefinitionsToSetMethods[beanType];
+            IDictionary<String, MethodInfo> setMethodMap;
 
-            if (setMethodMap == null)
+            if (! classPropertyDefinitionsToSetMethods.ContainsKey(beanType))
             {
                 setMethodMap = CreatePropertyDefinitionToSetMethods(beanType);
 
                 classPropertyDefinitionsToSetMethods.Add(beanType,
                                                          setMethodMap);
             }
+            else
+            {
+                setMethodMap = classPropertyDefinitionsToSetMethods[beanType];
+            }
+
+            bool isIReifiedResource = false;
 
             if (bean is IResource)
             {
-                object aboutURIObject = jsonObject.ContainsKey(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_ABOUT) ?
-                    jsonObject[rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_ABOUT] : null;
+                string aboutURIObject = jsonObject.ContainsKey(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_ABOUT) ?
+                    (string)jsonObject[rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_ABOUT] : null;
 
-                if (aboutURIObject is String)
+                if (aboutURIObject != null)
                 {
-                    Uri aboutURI = new Uri(aboutURIObject.ToString());
+                    Uri aboutURI = new Uri(aboutURIObject);
 
                     if (!aboutURI.IsAbsoluteUri)
                     {
@@ -1169,9 +1185,9 @@ namespace OSLC4Net.Core.JsonProvider
             }
             else if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IReifiedResource<>), beanType))
     	    {
-    		    String resourceReference;
+                isIReifiedResource = true;
 
-    		    resourceReference = (string)jsonObject[rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE];
+    		    String resourceReference = (string)jsonObject[rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE];
 
     		    beanType.GetMethod("SetValue",  new Type[] { typeof(Uri) }).Invoke(bean, new object[] { new Uri(resourceReference) });
     	    }	
@@ -1193,9 +1209,8 @@ namespace OSLC4Net.Core.JsonProvider
         
             foreach (string prefixedName in jsonObject.Keys)
             {
-               object jsonValue    = jsonObject[prefixedName];
-
-                string[] split = prefixedName.Split(JSON_PROPERTY_DELIMITER_ARRAY);
+                object jsonValue    = jsonObject[prefixedName];
+                string[] split      = prefixedName.Split(JSON_PROPERTY_DELIMITER_ARRAY);
 
                 if (split.Length != 2)
                 {
@@ -1208,23 +1223,23 @@ namespace OSLC4Net.Core.JsonProvider
                 {
                     string namespacePrefix = split[0];
                     string name            = split[1];
-
-                    string ns = jsonNamespaceMappings[namespacePrefix];
+                    string ns              = jsonNamespaceMappings[namespacePrefix];
 
                     if (ns == null)
                     {
                         throw new OslcCoreMissingNamespacePrefixException(namespacePrefix);
                     }
 
-                    string propertyDefinition = ns +
-                                                      name;
-                
-                    MethodInfo setMethod = setMethodMap[propertyDefinition];
-                    if (setMethod == null)
+                    string propertyDefinition = ns + name;                
+                    MethodInfo setMethod;
+
+                    if (! setMethodMap.ContainsKey(propertyDefinition))
                     {
-                        if (RDF_ABOUT_URI.Equals(propertyDefinition))
+                        if (RDF_ABOUT_URI.Equals(propertyDefinition) ||
+                            (isIReifiedResource && RDF_RESOURCE_URI.Equals(propertyDefinition)))
                         {
-                            // Ignore missing property definitions for rdf:about and rdf:types.
+                            // Ignore missing property definitions for rdf:about, rdf:types and
+                            // rdf:resource for IReifiedResources.
                         }
                         else if (RDF_TYPE_URI.Equals(propertyDefinition))
                         {
@@ -1234,31 +1249,33 @@ namespace OSLC4Net.Core.JsonProvider
                     	    }
                     	    // Otherwise ignore missing propertyDefinition for rdf:type.
                         }
-                        else
+                       else
                         {
-                    	    if (extendedProperties == null)
-                    	    {
-                    		    logger.Info("Set method not found for object type:  " +
-                    				    beanType.Name +
-                    				    ", propertyDefinition:  " +
-                    				    propertyDefinition);
-                    	    }
-                    	    else
-                    	    {
-                    		    object value = FromExtendedJSONValue(jsonValue,
-                    			                                     rdfPrefix,
-                    			                                     jsonNamespaceMappings,
-                    			                                     beanType);
-                    		    QName qName = new QName(ns,
-                    			                              name,
-                    			                              namespacePrefix);
-                    		
-                    		    extendedProperties.Add(qName, value);
-                    	    }
+                            if (extendedProperties == null)
+                            {
+                                logger.Info("Set method not found for object type:  " +
+                                        beanType.Name +
+                                        ", propertyDefinition:  " +
+                                        propertyDefinition);
+                            }
+                            else
+                            {
+                                object value = FromExtendedJSONValue(jsonValue,
+                                                                     rdfPrefix,
+                                                                     jsonNamespaceMappings,
+                                                                     beanType);
+                                QName qName = new QName(ns,
+                                                              name,
+                                                              namespacePrefix);
+
+                                extendedProperties.Add(qName, value);
+                            }
                         }
                     }
                     else
                     {
+                        setMethod = setMethodMap[propertyDefinition];
+
                         Type setMethodParameterType = setMethod.GetParameters()[0].ParameterType;
                         Type setMethodComponentParameterType = setMethodParameterType;
 
@@ -1370,7 +1387,9 @@ namespace OSLC4Net.Core.JsonProvider
 
 		    if (jsonObject.ContainsKey(typeProperty))
 		    {
-				foreach (JsonValue typeObj in jsonObject[typeProperty])
+                JsonArray types = (JsonArray)jsonObject[typeProperty];
+
+				foreach (JsonValue typeObj in types)
 				{
 					resource.AddType(new Uri((String)typeObj[rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE]));
 				}
@@ -1408,6 +1427,7 @@ namespace OSLC4Net.Core.JsonProvider
             }
        
             string setMethodName = setMethod.Name;
+
             if (setMethodName.StartsWith(METHOD_NAME_START_SET))
             {
                 String getMethodName = METHOD_NAME_START_GET + setMethodName.Substring(METHOD_NAME_START_GET_LENGTH);
@@ -1487,12 +1507,12 @@ namespace OSLC4Net.Core.JsonProvider
                 if (! InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IReifiedResource<>), setMethodComponentParameterType))
                 {
             	    // If this is the special case for an rdf:resource?
-            	    JsonValue uriObject = nestedJsonObject.ContainsKey(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE) ?
-                        nestedJsonObject[rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE] : null;
+            	    string uriObject = nestedJsonObject.ContainsKey(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE) ?
+                        (string) nestedJsonObject[rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE] : null;
 
-            	    if (uriObject is String)
+            	    if (uriObject != null)
             	    {
-            		    Uri uri = new Uri(uriObject.ToString());
+            		    Uri uri = new Uri(uriObject);
 
             		    if (!uri.IsAbsoluteUri)
             		    {
@@ -1574,8 +1594,7 @@ namespace OSLC4Net.Core.JsonProvider
                     // To support primitive arrays, we have to use Array reflection to set individual elements.  We cannot use Collection.toArray.
                     // Array.set will unwrap objects to their corresponding primitives.
                     Array array = Array.CreateInstance(setMethodComponentParameterType,
-                                                        jsonArray.Count());
-
+                                                       jsonArray.Count());
                     int index = 0;
 
                     foreach (object parameterArrayObject in tempList)
@@ -1607,7 +1626,7 @@ namespace OSLC4Net.Core.JsonProvider
             }
             else
             {
-                string stringValue = jsonValue.ToString();
+                string stringValue = (string)(JsonValue)jsonValue;
 
                 if (typeof(string) == setMethodComponentParameterType)
                 {

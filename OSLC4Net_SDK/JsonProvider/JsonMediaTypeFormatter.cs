@@ -41,6 +41,8 @@ namespace OSLC4Net.Core.JsonProvider
     public class JsonMediaTypeFormatter : MediaTypeFormatter
     {
 
+        public JsonObject Json { get; set; }
+        public bool RebuildJson { get; set; }
         private HttpRequestMessage httpRequest;
 
         /// <summary>
@@ -49,6 +51,19 @@ namespace OSLC4Net.Core.JsonProvider
         public JsonMediaTypeFormatter()
         {
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_JSON_TYPE);
+        }
+
+        /// <summary>
+        /// RdfXml formatter which accepts a pre-built RDF Graph 
+        /// </summary>
+        /// <param name="graph"></param>
+        public JsonMediaTypeFormatter(
+            JsonObject json,
+            bool rebuildJson = false
+        ) : this()
+        {
+            this.Json = json;
+            this.RebuildJson = rebuildJson;
         }
 
         /// <summary>
@@ -131,72 +146,73 @@ namespace OSLC4Net.Core.JsonProvider
         {
             return Task.Factory.StartNew(() =>
                 {
-                    JsonObject jsonObject;
-
-                    if (ImplementsGenericType(typeof(FilteredResource<>), type))
+                    if ((Json == null) || (Json.Count() == 0) || RebuildJson)
                     {
-                        PropertyInfo resourceProp = value.GetType().GetProperty("Resource");
-                        Type[] actualTypeArguments = GetChildClassParameterArguments(typeof(FilteredResource<>), type);
-                        object objects = resourceProp.GetValue(value, null);
-                        PropertyInfo propertiesProp = value.GetType().GetProperty("Properties");
-
-                        if (! ImplementsICollection(actualTypeArguments[0]))
+                        if (ImplementsGenericType(typeof(FilteredResource<>), type))
                         {
-                            objects = new EnumerableWrapper(objects);
-                        }
+                            PropertyInfo resourceProp = value.GetType().GetProperty("Resource");
+                            Type[] actualTypeArguments = GetChildClassParameterArguments(typeof(FilteredResource<>), type);
+                            object objects = resourceProp.GetValue(value, null);
+                            PropertyInfo propertiesProp = value.GetType().GetProperty("Properties");
 
-                        if (ImplementsGenericType(typeof(ResponseInfo<>), type))
-                        {
-                            //Subject URI for the collection is the query capability
-                            //TODO:  should this be set by the app based on service provider info
-                            int portNum = httpRequest.RequestUri.Port;
-                            string portString = null;
-                            if (portNum == 80 || portNum == 443)
+                            if (!ImplementsICollection(actualTypeArguments[0]))
                             {
-                                portString = "";
+                                objects = new EnumerableWrapper(objects);
+                            }
+
+                            if (ImplementsGenericType(typeof(ResponseInfo<>), type))
+                            {
+                                //Subject URI for the collection is the query capability
+                                //TODO:  should this be set by the app based on service provider info
+                                int portNum = httpRequest.RequestUri.Port;
+                                string portString = null;
+                                if (portNum == 80 || portNum == 443)
+                                {
+                                    portString = "";
+                                }
+                                else
+                                {
+                                    portString = ":" + portNum.ToString();
+                                }
+
+                                string descriptionAbout = httpRequest.RequestUri.Scheme + "://" +
+                                                          httpRequest.RequestUri.Host +
+                                                          portString +
+                                                          httpRequest.RequestUri.LocalPath;
+
+                                //Subject URI for the responseInfo is the full request URI
+                                string responseInfoAbout = httpRequest.RequestUri.ToString();
+
+                                PropertyInfo totalCountProp = value.GetType().GetProperty("TotalCount");
+                                PropertyInfo nextPageProp = value.GetType().GetProperty("NextPage");
+
+                                Json = JsonHelper.CreateJson(descriptionAbout, responseInfoAbout,
+                                                                   (string)nextPageProp.GetValue(value, null),
+                                                                   (int)totalCountProp.GetValue(value, null),
+                                                                   objects as IEnumerable<object>,
+                                                                   (IDictionary<string, object>)propertiesProp.GetValue(value, null));
                             }
                             else
                             {
-                                portString = ":" + portNum.ToString();
+                                Json = JsonHelper.CreateJson(null, null, null, null, objects as IEnumerable<object>,
+                                                                   (IDictionary<string, object>)propertiesProp.GetValue(value, null));
                             }
-
-                            string descriptionAbout = httpRequest.RequestUri.Scheme + "://" +
-                                                      httpRequest.RequestUri.Host +
-                                                      portString +
-                                                      httpRequest.RequestUri.LocalPath;
-
-                            //Subject URI for the responseInfo is the full request URI
-                            string responseInfoAbout = httpRequest.RequestUri.ToString();
-
-                            PropertyInfo totalCountProp = value.GetType().GetProperty("TotalCount");
-                            PropertyInfo nextPageProp = value.GetType().GetProperty("NextPage");
-
-                            jsonObject = JsonHelper.CreateJson(descriptionAbout, responseInfoAbout, 
-                                                               (string)nextPageProp.GetValue(value, null),
-                                                               (int)totalCountProp.GetValue(value, null),
-                                                               objects as IEnumerable<object>,
-                                                               (IDictionary<string, object>)propertiesProp.GetValue(value, null));
+                        }
+                        else if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IEnumerable<>), value.GetType()))
+                        {
+                            Json = JsonHelper.CreateJson(value as IEnumerable<object>);
+                        }
+                        else if (type.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
+                        {
+                            Json = JsonHelper.CreateJson(new object[] { value });
                         }
                         else
                         {
-                            jsonObject = JsonHelper.CreateJson(null, null, null, null, objects as IEnumerable<object>,
-                                                               (IDictionary<string, object>)propertiesProp.GetValue(value, null));
+                            Json = JsonHelper.CreateJson(new EnumerableWrapper(value));
                         }
                     }
-                    else if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IEnumerable<>), value.GetType()))
-                    {
-                        jsonObject = JsonHelper.CreateJson(value as IEnumerable<object>);
-                    }
-                    else if (type.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
-                    {
-                        jsonObject = JsonHelper.CreateJson(new object[] { value });
-                    }
-                    else
-                    {
-                        jsonObject = JsonHelper.CreateJson(new EnumerableWrapper(value));
-                    }
 
-                    jsonObject.Save(writeStream);
+                    Json.Save(writeStream);
                 });
         }
 
