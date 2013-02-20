@@ -5,6 +5,7 @@ using System.Web.Http;
 using System.Web;
 using OSLC4Net.StockQuoteSample.Controllers;
 using OSLC4Net.Core.DotNetRdfProvider;
+using OSLC4Net.Core.JsonProvider;
 
 namespace OSLC4Net.StockQuoteSample
 {
@@ -20,7 +21,8 @@ namespace OSLC4Net.StockQuoteSample
 
             //Custom initialization
             config.Formatters.Clear();
-            config.Formatters.Insert(0, new RdfXmlMediaTypeFormatter());
+            config.Formatters.Add(new RdfXmlMediaTypeFormatter());
+            config.Formatters.Add(new JsonMediaTypeFormatter());
 
             HttpContext context = HttpContext.Current;
             string baseUrl = context.Request.Url.Scheme + "://" + context.Request.Url.Authority + context.Request.ApplicationPath.TrimEnd('/') + "/api";
