@@ -203,8 +203,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                             }
                             else
                             {
-                                Graph = DotNetRdfHelper.CreateDotNetRdfGraph(null, null, null, objects.AsEnumerable<object>().Count(),
-                                                                             objects as IEnumerable<object>,
+                                Graph = DotNetRdfHelper.CreateDotNetRdfGraph(null, null, null, null, objects as IEnumerable<object>,
                                                                              (IDictionary<string, object>)propertiesProp.GetValue(value, null));
                             }
                         }

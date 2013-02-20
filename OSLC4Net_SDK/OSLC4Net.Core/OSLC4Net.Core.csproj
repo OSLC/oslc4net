@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\OslcCoreMissingNamespacePrefixException.cs" />
+    <Compile Include="Exceptions\OslcCoreMissingNamespaceDeclarationException.cs" />
     <Compile Include="Exceptions\OslcCoreInvalidAttributeException.cs" />
     <Compile Include="Model\ResponseInfoCollection.cs" />
     <Compile Include="Model\ResponseInfoArray.cs" />
