@@ -466,12 +466,12 @@ namespace OSLC4Net.Core.JsonProvider
                 string ns = propertyDefinition.Substring(0,
                                                          propertyDefinition.Length - name.Length);
 
-                string prefix = reverseNamespaceMappings[ns];
-
-                if (prefix == null)
+                if (! reverseNamespaceMappings.ContainsKey(ns))
                 {
                     throw new OslcCoreMissingNamespaceDeclarationException(ns);
                 }
+
+                string prefix = reverseNamespaceMappings[ns];
 
                 jsonObject.Add(prefix + JSON_PROPERTY_DELIMITER + name,
                                localResourceValue);

@@ -46,7 +46,7 @@ namespace OSLC4Net.Core.JsonProvider
         private HttpRequestMessage httpRequest;
 
         /// <summary>
-        /// Defauld RdfXml formatter
+        /// Defauld JSON formatter
         /// </summary>
         public JsonMediaTypeFormatter()
         {
@@ -54,9 +54,10 @@ namespace OSLC4Net.Core.JsonProvider
         }
 
         /// <summary>
-        /// RdfXml formatter which accepts a pre-built RDF Graph 
+        /// JSON formatter which accepts a pre-built JSON object 
         /// </summary>
-        /// <param name="graph"></param>
+        /// <param name="json"></param>
+        /// <param name="rebuildJson"></param>
         public JsonMediaTypeFormatter(
             JsonObject json,
             bool rebuildJson = false
