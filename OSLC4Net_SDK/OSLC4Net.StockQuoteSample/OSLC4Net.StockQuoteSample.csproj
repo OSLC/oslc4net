@@ -245,6 +245,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\JsonProvider\JsonProvider.csproj">
+      <Project>{469BA948-728B-4B8C-80E9-7EC06CED8196}</Project>
+      <Name>JsonProvider</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OSLC4Net.Core\OSLC4Net.Core.csproj">
       <Project>{C07B57BD-3356-4AD8-8050-D708B023A8EC}</Project>
       <Name>OSLC4Net.Core</Name>
