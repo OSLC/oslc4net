@@ -61,6 +61,11 @@ namespace OSLC4Net.Core.JsonProvider
         private const string METHOD_NAME_START_IS  = "Is";
         private const string METHOD_NAME_START_SET = "Set";
 
+        private const string TRUE  = "true";
+        private const string FALSE = "false";
+
+        private const string UTC_DATE_TIME_FORMAT = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'Z'";
+
         private static readonly int METHOD_NAME_START_GET_LENGTH = METHOD_NAME_START_GET.Length;
         private static readonly int METHOD_NAME_START_IS_LENGTH = METHOD_NAME_START_IS.Length;
 
@@ -230,10 +235,9 @@ namespace OSLC4Net.Core.JsonProvider
             JsonArray jsonArray = null;
 
             // Look for rdfs:member
-            string rdfsPrefix = reverseNamespaceMappings[OslcConstants.RDFS_NAMESPACE];
-
-            if (rdfsPrefix != null)
+            if (reverseNamespaceMappings.ContainsKey(OslcConstants.RDFS_NAMESPACE))
             {
+                string rdfsPrefix = reverseNamespaceMappings[OslcConstants.RDFS_NAMESPACE];
                 object members = jsonObject.ContainsKey(rdfsPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_MEMBER) ?
                     jsonObject[rdfsPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_MEMBER] : null;
 
@@ -784,14 +788,12 @@ namespace OSLC4Net.Core.JsonProvider
 			    return jsonArray;
 		    }
 		    else if ((obj is String)  ||
-				     (obj is Boolean) ||
 				     (obj is Byte) ||
 				     (obj is Double) ||
 				     (obj is Decimal) ||
 				     (obj is Int16) ||
 				     (obj is Int32) ||
-				     (obj is Int64) ||
-				     (obj is DateTime))
+				     (obj is Int64))
 		    {
                 if (onlyNested)
                 {
@@ -800,7 +802,25 @@ namespace OSLC4Net.Core.JsonProvider
             
 			    return obj.ToString();
 		    }
-		    else if (obj is Uri)
+            else if (obj is Boolean)
+            {
+                if (onlyNested)
+                {
+                    return null;
+                }
+
+                return ((bool)obj) ? TRUE : FALSE;
+            }
+            else if (obj is DateTime)
+            {
+                if (onlyNested)
+                {
+                    return null;
+                }
+
+                return ((DateTime)obj).ToUniversalTime().ToString(UTC_DATE_TIME_FORMAT);
+            }
+            else if (obj is Uri)
 		    {
                 if (onlyNested)
                 {
@@ -861,14 +881,12 @@ namespace OSLC4Net.Core.JsonProvider
                                                      bool                          onlyNested)
         {
             if ((obj is String) ||
-                (obj is Boolean) ||
                 (obj is Byte) ||
                 (obj is Double) ||
                 (obj is Decimal) ||
                 (obj is Int16) ||
                 (obj is Int32) ||
-                (obj is Int64) ||
-                (obj is DateTime))
+                (obj is Int64))
             {
                 if (onlyNested)
                 {
@@ -876,6 +894,24 @@ namespace OSLC4Net.Core.JsonProvider
                 }
 
                 return obj.ToString();
+            }
+            else if (obj is Boolean)
+            {
+                if (onlyNested)
+                {
+                    return null;
+                }
+
+                return ((bool)obj) ? TRUE : FALSE;
+            }
+            else if (obj is DateTime)
+            {
+                if (onlyNested)
+                {
+                    return null;
+                }
+
+                return ((DateTime)obj).ToUniversalTime().ToString(UTC_DATE_TIME_FORMAT);
             }
             else if (obj is Uri)
             {
@@ -1635,11 +1671,11 @@ namespace OSLC4Net.Core.JsonProvider
                 else if (typeof(bool) == setMethodComponentParameterType || typeof(bool?) == setMethodComponentParameterType)
                 {
                     // Cannot use Boolean.parseBoolean since it supports case-insensitive TRUE.
-                    if (bool.TrueString.Equals(stringValue))
+                    if (bool.TrueString.ToUpper().Equals(stringValue.ToUpper()))
                     {
                         return true;
                     }
-                    else if (bool.FalseString.Equals(stringValue))
+                    else if (bool.FalseString.ToUpper().Equals(stringValue.ToUpper()))
                     {
                         return false;
                     }
@@ -1676,7 +1712,7 @@ namespace OSLC4Net.Core.JsonProvider
                 {
                     return double.Parse(stringValue);
                 }
-                else if (typeof(DateTime) == setMethodComponentParameterType)
+                else if (typeof(DateTime) == setMethodComponentParameterType || typeof(DateTime?) == setMethodComponentParameterType)
                 {
                     return DateTime.Parse(stringValue);
                 }

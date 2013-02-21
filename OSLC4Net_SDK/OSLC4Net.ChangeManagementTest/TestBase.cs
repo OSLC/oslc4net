@@ -26,6 +26,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OSLC4Net.ChangeManagement;
 using OSLC4Net.Client;
 using OSLC4Net.Core.DotNetRdfProvider;
+using OSLC4Net.Core.JsonProvider;
 using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.ChangeManagementTest
@@ -38,6 +39,7 @@ namespace OSLC4Net.ChangeManagementTest
         static TestBase()
         {
             FORMATTERS.Add(new RdfXmlMediaTypeFormatter());
+            FORMATTERS.Add(new OSLC4Net.Core.JsonProvider.JsonMediaTypeFormatter());
         }
 
         private static Uri CREATED_CHANGE_REQUEST_URI;

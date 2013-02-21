@@ -52,9 +52,11 @@ namespace OSLC4Net.Core.DotNetRdfProvider
         /// <summary>
         /// Defauld RdfXml formatter
         /// </summary>
-        public RdfXmlMediaTypeFormatter()
+        /// <param name="graph"></param>
+        public RdfXmlMediaTypeFormatter(bool rebuildgraph = true)
         {
-            RebuildGraph = true;
+            RebuildGraph = rebuildgraph;
+
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_RDF_XML_TYPE);
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_XML_TYPE);
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML_TYPE);
@@ -66,11 +68,10 @@ namespace OSLC4Net.Core.DotNetRdfProvider
         /// <param name="graph"></param>
         public RdfXmlMediaTypeFormatter(
             IGraph graph,
-            bool rebuildgraph = false
-        ) : this()
+            bool rebuildgraph = true
+        ) : this(rebuildgraph)
         {
             this.Graph = graph;
-            this.RebuildGraph = rebuildgraph;
         }
 
         /// <summary>

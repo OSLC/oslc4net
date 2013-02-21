@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Json;
 using System.Linq;
@@ -48,8 +49,11 @@ namespace OSLC4Net.Core.JsonProvider
         /// <summary>
         /// Defauld JSON formatter
         /// </summary>
-        public JsonMediaTypeFormatter()
+        /// <param name="rebuildJson"></param>
+        public JsonMediaTypeFormatter(bool rebuildJson = true)
         {
+            this.RebuildJson = rebuildJson;
+
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_JSON_TYPE);
         }
 
@@ -60,11 +64,10 @@ namespace OSLC4Net.Core.JsonProvider
         /// <param name="rebuildJson"></param>
         public JsonMediaTypeFormatter(
             JsonObject json,
-            bool rebuildJson = false
-        ) : this()
+            bool rebuildJson = true
+        ) : this(rebuildJson)
         {
             this.Json = json;
-            this.RebuildJson = rebuildJson;
         }
 
         /// <summary>
@@ -211,6 +214,8 @@ namespace OSLC4Net.Core.JsonProvider
                         {
                             Json = JsonHelper.CreateJson(new EnumerableWrapper(value));
                         }
+
+                        Debug.WriteLine("JsonMediaTypeFormatter.WriteToStreamAsync(): Generated JSON: " + Json);
                     }
 
                     Json.Save(writeStream);
@@ -254,6 +259,9 @@ namespace OSLC4Net.Core.JsonProvider
             try
             {
                 JsonObject jsonObject = (JsonObject)JsonObject.Load(readStream);
+
+                Debug.WriteLine("JsonMediaTypeFormatter.ReadFromStreamAsync(): Loaded JSON: " + jsonObject);
+
                 bool isSingleton = IsSinglton(type);
                 object output = JsonHelper.FromJson(jsonObject, isSingleton ? type : GetMemberType(type));
 
