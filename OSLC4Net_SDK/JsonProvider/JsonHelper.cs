@@ -196,7 +196,7 @@ namespace OSLC4Net.Core.JsonProvider
             return resultJsonObject;
         }
 
-        public static object FromJson(JsonObject  jsonObject,
+        public static object FromJson(JsonValue   json,
                                       Type        beanType)
         {
             List<object>                beans                    = new List<object>();
@@ -204,7 +204,7 @@ namespace OSLC4Net.Core.JsonProvider
             IDictionary<String, String> reverseNamespaceMappings = new Dictionary<String, String>();
 
             // First read the prefixes and set up maps so we can create full property definition values later
-            object prefixes = jsonObject.ContainsKey(JSON_PROPERTY_PREFIXES) ? jsonObject[JSON_PROPERTY_PREFIXES] : null;
+            object prefixes = json.ContainsKey(JSON_PROPERTY_PREFIXES) ? json[JSON_PROPERTY_PREFIXES] : null;
 
             if (prefixes is JsonObject)
             {
@@ -238,8 +238,8 @@ namespace OSLC4Net.Core.JsonProvider
             if (reverseNamespaceMappings.ContainsKey(OslcConstants.RDFS_NAMESPACE))
             {
                 string rdfsPrefix = reverseNamespaceMappings[OslcConstants.RDFS_NAMESPACE];
-                object members = jsonObject.ContainsKey(rdfsPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_MEMBER) ?
-                    jsonObject[rdfsPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_MEMBER] : null;
+                object members = json.ContainsKey(rdfsPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_MEMBER) ?
+                    json[rdfsPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_MEMBER] : null;
 
                 if (members is JsonArray)
                 {
@@ -254,8 +254,8 @@ namespace OSLC4Net.Core.JsonProvider
 
                 if (oslcPrefix != null)
                 {
-                    object results = jsonObject.ContainsKey(oslcPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESULTS) ?
-                        jsonObject[oslcPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESULTS] : null;
+                    object results = json.ContainsKey(oslcPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESULTS) ?
+                        json[oslcPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESULTS] : null;
 
                     if (results is JsonArray)
                     {
@@ -285,18 +285,34 @@ namespace OSLC4Net.Core.JsonProvider
                     }
                 }
             }
-            else
+            else if (json is JsonObject)
             {
                 object bean = Activator.CreateInstance(beanType);
 
                 FromJSON(rdfPrefix,
                          namespaceMappings,
                          classPropertyDefinitionsToSetMethods,
-                         jsonObject,
+                         json as JsonObject,
                          beanType,
                          bean);
 
                 beans.Add(bean);
+            }
+            else
+            {
+                foreach (JsonObject jsonObject in json as JsonArray)
+                {
+                    object bean = Activator.CreateInstance(beanType);
+
+                    FromJSON(rdfPrefix,
+                             namespaceMappings,
+                             classPropertyDefinitionsToSetMethods,
+                             jsonObject,
+                             beanType,
+                             bean);
+
+                    beans.Add(bean);
+                }
             }
 
             // To support primitive arrays, we have to use Array reflection to

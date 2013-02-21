@@ -77,19 +77,17 @@ namespace JsonProviderTests
 
             crListOut.Add(changeRequest2);
 
-            JsonObject jsonObject = JsonHelper.CreateJson("http://com/somewhere/changerequests",
-                                                          "http://com/somewhere/changerequests?page=20",
-                                                          "http://com/somewhere/changerequests?page=21",
-                                                          null,
-                                                          crListOut,
-                                                          null);
-            OSLC4Net.Core.JsonProvider.JsonMediaTypeFormatter formatter = new OSLC4Net.Core.JsonProvider.JsonMediaTypeFormatter(jsonObject);
+            JsonValue json = JsonHelper.CreateJson("http://com/somewhere/changerequests",
+                                                   "http://com/somewhere/changerequests?page=20",
+                                                   "http://com/somewhere/changerequests?page=21",
+                                                   null,
+                                                   crListOut,
+                                                   null);
+            OSLC4Net.Core.JsonProvider.JsonMediaTypeFormatter formatter = new OSLC4Net.Core.JsonProvider.JsonMediaTypeFormatter(json, false);
 
-            string rdfXml = SerializeCollection<ChangeRequest>(formatter, crListOut, OslcMediaType.APPLICATION_JSON_TYPE);
+            string jsonString = SerializeCollection<ChangeRequest>(formatter, crListOut, OslcMediaType.APPLICATION_JSON_TYPE);
 
-            Debug.WriteLine(rdfXml);
-
-            List<ChangeRequest> crListIn = DeserializeCollection<ChangeRequest>(formatter, rdfXml, OslcMediaType.APPLICATION_JSON_TYPE).ToList();
+            List<ChangeRequest> crListIn = DeserializeCollection<ChangeRequest>(formatter, jsonString, OslcMediaType.APPLICATION_JSON_TYPE).ToList();
             Assert.AreEqual(crListOut.Count, crListIn.Count);
 
             //No guarantees of order in a collection, use the "about" attribute to identify individual ChangeRequests

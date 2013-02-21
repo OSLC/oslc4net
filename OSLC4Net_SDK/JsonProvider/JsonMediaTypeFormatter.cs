@@ -42,7 +42,7 @@ namespace OSLC4Net.Core.JsonProvider
     public class JsonMediaTypeFormatter : MediaTypeFormatter
     {
 
-        public JsonObject Json { get; set; }
+        public JsonValue Json { get; set; }
         public bool RebuildJson { get; set; }
         private HttpRequestMessage httpRequest;
 
@@ -63,7 +63,7 @@ namespace OSLC4Net.Core.JsonProvider
         /// <param name="json"></param>
         /// <param name="rebuildJson"></param>
         public JsonMediaTypeFormatter(
-            JsonObject json,
+            JsonValue json,
             bool rebuildJson = true
         ) : this(rebuildJson)
         {
