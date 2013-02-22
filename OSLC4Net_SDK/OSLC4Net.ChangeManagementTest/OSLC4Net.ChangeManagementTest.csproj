@@ -54,13 +54,13 @@
     <Compile Include="TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\JsonProvider\JsonProvider.csproj">
+    <ProjectReference Include="..\JsonProvider\OSLC4Net.Core.JsonProvider.csproj">
       <Project>{469BA948-728B-4B8C-80E9-7EC06CED8196}</Project>
-      <Name>JsonProvider</Name>
+      <Name>OSLC4Net.Core.JsonProvider</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OSLC4Net.DotNetRdfProvider\DotNetRdfProvider.csproj">
+    <ProjectReference Include="..\OSLC4Net.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj">
       <Project>{DFE6E48C-D5B1-4FC6-8D94-C72286080F78}</Project>
-      <Name>DotNetRdfProvider</Name>
+      <Name>OSLC4Net.Core.DotNetRdfProvider</Name>
     </ProjectReference>
     <ProjectReference Include="..\OSLC4Net.ChangeManagement\OSLC4Net.ChangeManagementCommon.csproj">
       <Project>{7D5575DD-57DB-4727-906B-A5FD1149C6A4}</Project>

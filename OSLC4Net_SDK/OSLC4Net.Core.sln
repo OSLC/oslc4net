@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core", "OSLC4Net.Core\OSLC4Net.Core.csproj", "{C07B57BD-3356-4AD8-8050-D708B023A8EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRdfProvider", "OSLC4Net.DotNetRdfProvider\DotNetRdfProvider.csproj", "{DFE6E48C-D5B1-4FC6-8D94-C72286080F78}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.DotNetRdfProvider", "OSLC4Net.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj", "{DFE6E48C-D5B1-4FC6-8D94-C72286080F78}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1B650CF7-24E5-444B-9C9E-91EFAEBAEA29}"
 	ProjectSection(SolutionItems) = preProject
@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.ChangeManagementCommon", "OSLC4Net.ChangeManagement\OSLC4Net.ChangeManagementCommon.csproj", "{7D5575DD-57DB-4727-906B-A5FD1149C6A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRdfProviderTests", "OSLC4Net.DotNetRdfProviderTests\DotNetRdfProviderTests.csproj", "{382EB8FE-ED61-4C3F-92CA-A8214B0D3178}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.DotNetRdfProviderTests", "OSLC4Net.DotNetRdfProviderTests\OSLC4Net.Core.DotNetRdfProviderTests.csproj", "{382EB8FE-ED61-4C3F-92CA-A8214B0D3178}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Client", "OSLC4Net.Client\OSLC4Net.Client.csproj", "{EED02B8F-2C90-4484-B4B6-BB510750B84C}"
 EndProject
@@ -22,9 +22,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.ChangeManagementTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.StockQuoteSample", "OSLC4Net.StockQuoteSample\OSLC4Net.StockQuoteSample.csproj", "{43F10792-1747-45DB-90A8-4908C353BDE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonProvider", "JsonProvider\JsonProvider.csproj", "{469BA948-728B-4B8C-80E9-7EC06CED8196}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.JsonProvider", "JsonProvider\OSLC4Net.Core.JsonProvider.csproj", "{469BA948-728B-4B8C-80E9-7EC06CED8196}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonProviderTests", "JsonProviderTests\JsonProviderTests.csproj", "{1D393679-17ED-4D61-9121-99D942605466}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.JsonProviderTests", "JsonProviderTests\OSLC4Net.Core.JsonProviderTests.csproj", "{1D393679-17ED-4D61-9121-99D942605466}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.Query", "Query\OSLC4Net.Core.Query.csproj", "{B7EC82FE-64D2-4271-8D04-3044046360FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.QueryTests", "OSLC4Net.Core.QueryTests\OSLC4Net.Core.QueryTests.csproj", "{3A431EAB-9E35-480B-B6ED-E2EA83DF58D0}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -71,6 +75,14 @@ Global
 		{1D393679-17ED-4D61-9121-99D942605466}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D393679-17ED-4D61-9121-99D942605466}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D393679-17ED-4D61-9121-99D942605466}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7EC82FE-64D2-4271-8D04-3044046360FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7EC82FE-64D2-4271-8D04-3044046360FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7EC82FE-64D2-4271-8D04-3044046360FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7EC82FE-64D2-4271-8D04-3044046360FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A431EAB-9E35-480B-B6ED-E2EA83DF58D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A431EAB-9E35-480B-B6ED-E2EA83DF58D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A431EAB-9E35-480B-B6ED-E2EA83DF58D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A431EAB-9E35-480B-B6ED-E2EA83DF58D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
