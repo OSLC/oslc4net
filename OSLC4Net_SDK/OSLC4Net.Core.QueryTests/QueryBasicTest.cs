@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using OSLC4Net.Core.Query;
+using ParseException = OSLC4Net.Core.Query.ParseException;
 
 namespace OSLC4Net.Core.QueryTests
 {
@@ -24,19 +25,23 @@ namespace OSLC4Net.Core.QueryTests
                                  "XXX>",
                               false)
                 };
-        
-            foreach (Trial trial in trials) {
-        
-                try {
-                
+
+            foreach (Trial trial in trials)
+            {
+
+                try
+                {
+
                     IDictionary<String, String> prefixMap =
                         QueryUtils.parsePrefixes(trial.Expression);
 
                     Debug.WriteLine(prefixMap.ToString());
-                
+
                     Assert.IsTrue(trial.ShouldSucceed);
 
-                } catch (ParseException e) {
+                }
+                catch (ParseException e)
+                {
 
                     Debug.WriteLine(e.StackTrace);
 

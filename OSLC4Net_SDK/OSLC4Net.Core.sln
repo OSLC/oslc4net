@@ -26,9 +26,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.JsonProvider"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.JsonProviderTests", "JsonProviderTests\OSLC4Net.Core.JsonProviderTests.csproj", "{1D393679-17ED-4D61-9121-99D942605466}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.Query", "Query\OSLC4Net.Core.Query.csproj", "{B7EC82FE-64D2-4271-8D04-3044046360FA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.QueryTests", "OSLC4Net.Core.QueryTests\OSLC4Net.Core.QueryTests.csproj", "{3A431EAB-9E35-480B-B6ED-E2EA83DF58D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.Query", "OSLC4Net.Core.Query\OSLC4Net.Core.Query.csproj", "{B7EC82FE-64D2-4271-8D04-3044046360FA}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -75,14 +75,14 @@ Global
 		{1D393679-17ED-4D61-9121-99D942605466}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D393679-17ED-4D61-9121-99D942605466}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D393679-17ED-4D61-9121-99D942605466}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B7EC82FE-64D2-4271-8D04-3044046360FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7EC82FE-64D2-4271-8D04-3044046360FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B7EC82FE-64D2-4271-8D04-3044046360FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B7EC82FE-64D2-4271-8D04-3044046360FA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3A431EAB-9E35-480B-B6ED-E2EA83DF58D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3A431EAB-9E35-480B-B6ED-E2EA83DF58D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A431EAB-9E35-480B-B6ED-E2EA83DF58D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A431EAB-9E35-480B-B6ED-E2EA83DF58D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7EC82FE-64D2-4271-8D04-3044046360FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7EC82FE-64D2-4271-8D04-3044046360FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7EC82FE-64D2-4271-8D04-3044046360FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7EC82FE-64D2-4271-8D04-3044046360FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

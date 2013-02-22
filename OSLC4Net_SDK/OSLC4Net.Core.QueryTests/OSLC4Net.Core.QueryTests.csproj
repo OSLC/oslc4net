@@ -49,7 +49,7 @@
     <Compile Include="QueryBasicTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Query\OSLC4Net.Core.Query.csproj">
+    <ProjectReference Include="..\OSLC4Net.Core.Query\OSLC4Net.Core.Query.csproj">
       <Project>{B7EC82FE-64D2-4271-8D04-3044046360FA}</Project>
       <Name>OSLC4Net.Core.Query</Name>
     </ProjectReference>
