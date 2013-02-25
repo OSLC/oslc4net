@@ -839,10 +839,15 @@ public partial class OslcPrefixLexer : Lexer
 			this.special = DFA5_special;
 			this.transition = DFA5_transition;
 		}
-		public override string GetDescription()
-		{
-			return "1:0: Tokens : ( PREFIX | PREFIX_LIST | T__21 | WS | PN_PREFIX | IRI_REF | COMMA | DOT | MINUS | OPEN_CURLY_BRACE | CLOSE_CURLY_BRACE | LESS | GREATER );";
-		}
+
+        public override string Description
+        {
+            get
+            {
+                return "1:0: Tokens : ( PREFIX | PREFIX_LIST | T__21 | WS | PN_PREFIX | IRI_REF | COMMA | DOT | MINUS | OPEN_CURLY_BRACE | CLOSE_CURLY_BRACE | LESS | GREATER );";
+            }
+        }
+
 	}
 
  

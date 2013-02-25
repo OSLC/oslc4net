@@ -105,10 +105,10 @@ public partial class OslcPrefixParser : Parser
 
 
 	#region Rules
-	public class oslc_prefixes_return : ParserRuleReturnScope
+        public class oslc_prefixes_return : ParserRuleReturnScope<IToken>, IAstRuleReturnScope<object>
 	{
 		internal object tree;
-		public override object Tree { get { return tree; } }
+		public object Tree { get { return tree; } }
 	}
 
 	// $ANTLR start "oslc_prefixes"
@@ -116,7 +116,7 @@ public partial class OslcPrefixParser : Parser
 	private OslcPrefixParser.oslc_prefixes_return oslc_prefixes(  )
 	{
 		OslcPrefixParser.oslc_prefixes_return retval = new OslcPrefixParser.oslc_prefixes_return();
-		retval.start = input.LT(1);
+		retval.Start = input.LT(1);
 
 		object root_0 = null;
 
@@ -217,17 +217,17 @@ public partial class OslcPrefixParser : Parser
 
 			}
 
-			retval.stop = input.LT(-1);
+			retval.Stop = input.LT(-1);
 
 			retval.tree = (object)adaptor.RulePostProcessing(root_0);
-			adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
+			adaptor.SetTokenBoundaries(retval.tree, retval.Start, retval.Stop);
 
 		}
 		catch ( RecognitionException re )
 		{
 			ReportError(re);
 			Recover(input,re);
-		retval.tree = (object)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
+		retval.tree = (object)adaptor.ErrorNode(input, retval.Start, input.LT(-1), re);
 
 		}
 		finally
@@ -237,10 +237,10 @@ public partial class OslcPrefixParser : Parser
 	}
 	// $ANTLR end "oslc_prefixes"
 
-	public class prefix_binding_return : ParserRuleReturnScope
+    public class prefix_binding_return : ParserRuleReturnScope<IToken>, IAstRuleReturnScope<object>
 	{
 		internal object tree;
-		public override object Tree { get { return tree; } }
+		public object Tree { get { return tree; } }
 	}
 
 	// $ANTLR start "prefix_binding"
@@ -248,7 +248,7 @@ public partial class OslcPrefixParser : Parser
 	private OslcPrefixParser.prefix_binding_return prefix_binding(  )
 	{
 		OslcPrefixParser.prefix_binding_return retval = new OslcPrefixParser.prefix_binding_return();
-		retval.start = input.LT(1);
+		retval.Start = input.LT(1);
 
 		object root_0 = null;
 
@@ -311,17 +311,17 @@ public partial class OslcPrefixParser : Parser
 
 			}
 
-			retval.stop = input.LT(-1);
+			retval.Stop = input.LT(-1);
 
 			retval.tree = (object)adaptor.RulePostProcessing(root_0);
-			adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
+			adaptor.SetTokenBoundaries(retval.tree, retval.Start, retval.Stop);
 
 		}
 		catch ( RecognitionException re )
 		{
 			ReportError(re);
 			Recover(input,re);
-		retval.tree = (object)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
+		retval.tree = (object)adaptor.ErrorNode(input, retval.Start, input.LT(-1), re);
 
 		}
 		finally
