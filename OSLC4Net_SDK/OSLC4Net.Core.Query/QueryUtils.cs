@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -29,7 +30,7 @@ namespace OSLC4Net.Core.Query
 {
     public class QueryUtils
     {
-       /**
+        /**
          * Parse a oslc.prefix clause into a map between prefixes
          * and corresponding URIs
          * 
@@ -43,7 +44,7 @@ namespace OSLC4Net.Core.Query
          * @throws ParseException
          */
         public static IDictionary<String, String>
-        parsePrefixes(
+        ParsePrefixes(
             String prefixExpression
         )
         {
@@ -53,28 +54,62 @@ namespace OSLC4Net.Core.Query
         
             OslcPrefixParser parser = new OslcPrefixParser(prefixExpression);
             CommonTree rawTree = (CommonTree)parser.Result;        
-
+ 
             IList<ITree> rawPrefixes = rawTree.Children;
             PrefixMap prefixMap =
                 new PrefixMap(rawPrefixes.Count);
-            
-            foreach (CommonTree rawPrefix in rawPrefixes) {
+           
+             foreach (CommonTree rawPrefix in rawPrefixes) {
+
+                 if (rawPrefix.token == Tokens.Invalid || rawPrefix is CommonErrorNode) {
+                     throw new ParseException(rawPrefix.ToString());
+                 }            
                 
-                if (rawPrefix.token == Tokens.Invalid || rawPrefix is CommonErrorNode) {
-                    throw new ParseException(rawPrefix.ToString());
-                }
-                
-                String pn = rawPrefix.GetChild(0).Text;
-                String uri = rawPrefix.GetChild(1).Text;
-                
-                uri = uri.Substring(1, uri.Length - 2);
-                
-                prefixMap.Add(pn, uri);
-            }
-            
+                 String pn = rawPrefix.GetChild(0).Text;
+                 String uri = rawPrefix.GetChild(1).Text;
+                 
+                 uri = uri.Substring(1, uri.Length - 2);
+                 
+                 prefixMap.Add(pn, uri);
+             }
+             
             return prefixMap;
         }
 
+        /**
+         * Parse a oslc.orderBy expression
+         *  
+         * @param orderByExpression contents of an oslc.orderBy HTTP query
+         * parameter
+         * @param prefixMap map between XML namespace prefixes and
+         * associated URLs
+         * 
+         * @return the parsed order by clause
+         * 
+         * @throws ParseException
+         */
+        public static OrderByClause
+        ParseOrderBy(
+            String orderByExpression,
+            IDictionary<String, String> prefixMap
+        )
+        {
+            try {
+            
+                CommonTree rawTree = null;        
+                ITree child = rawTree.GetChild(0);
+            
+                if (child is CommonErrorNode) {
+                    throw new ParseException(child.ToString());
+                }
+
+                return (OrderByClause)new SortTermsImpl(rawTree, prefixMap);
+            
+            } catch (RecognitionException e) {
+                throw new ParseException(e);
+            }
+        }
+    
         /**
          * 
          * Implementation of a Map<String, String> prefixMap
