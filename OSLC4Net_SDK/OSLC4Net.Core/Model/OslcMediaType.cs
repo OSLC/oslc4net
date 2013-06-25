@@ -39,7 +39,10 @@ namespace OSLC4Net.Core.Model
         public const String APPLICATION_XML = APPLICATION + "/" + "xml";
         public static readonly MediaTypeHeaderValue APPLICATION_XML_TYPE = new MediaTypeHeaderValue(APPLICATION_XML);
 
-	    public const String X_OSLC_COMPACT_XML = "x-oslc-compact+xml";
+        public const String TEXT_XML = "text" + "/" + "xml";
+        public static readonly MediaTypeHeaderValue TEXT_XML_TYPE = new MediaTypeHeaderValue(TEXT_XML);
+
+        public const String X_OSLC_COMPACT_XML = "x-oslc-compact+xml";
         public const String APPLICATION_X_OSLC_COMPACT_XML = APPLICATION + "/" + X_OSLC_COMPACT_XML;
         public static readonly MediaTypeHeaderValue APPLICATION_X_OSLC_COMPACT_XML_TYPE = new MediaTypeHeaderValue(APPLICATION_X_OSLC_COMPACT_XML);
 

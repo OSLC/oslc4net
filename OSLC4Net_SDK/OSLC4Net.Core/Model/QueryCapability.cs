@@ -30,8 +30,8 @@ namespace OSLC4Net.Core.Model
     [OslcResourceShape(title = "OSLC Query Capability Resource Shape", describes = new string[] { OslcConstants.TYPE_QUERY_CAPABILITY })]
     public class QueryCapability : AbstractResource 
     {
-        private readonly SortedSet<Uri> resourceTypes = new SortedSet<Uri>();
-        private readonly SortedSet<Uri> usages = new SortedSet<Uri>();
+        private readonly SortedSet<Uri> resourceTypes = new SortedUriSet();
+        private readonly SortedSet<Uri> usages = new SortedUriSet();
 
         private String label;
 	    private Uri queryBase;

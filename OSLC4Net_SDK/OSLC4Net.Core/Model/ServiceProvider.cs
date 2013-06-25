@@ -30,7 +30,7 @@ namespace OSLC4Net.Core.Model
     [OslcResourceShape(title = "OSLC Service Provider Resource Shape", describes = new string[] { OslcConstants.TYPE_SERVICE_PROVIDER })]
     public class ServiceProvider : AbstractResource 
     {
-        private readonly SortedSet<Uri> details = new SortedSet<Uri>();
+        private readonly SortedSet<Uri> details = new SortedUriSet();
         private readonly IList<PrefixDefinition> prefixDefinitions = new List<PrefixDefinition>();
         private readonly IList<Service> services = new List<Service>();
 

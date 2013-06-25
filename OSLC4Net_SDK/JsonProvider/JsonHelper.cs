@@ -98,7 +98,7 @@ namespace OSLC4Net.Core.JsonProvider
 
                 foreach (object obj in objects)
                 {
-            	    Dictionary<object,JsonObject> visitedObjects = new Dictionary<object,JsonObject>();
+            	    Dictionary<object,JsonObject> visitedObjects = new DictionaryWithReplacement<object,JsonObject>();
                     JsonObject jsonObject = HandleSingleResource(obj,
                                                                  new JsonObject(),
                                                                  namespaceMappings,
@@ -170,7 +170,7 @@ namespace OSLC4Net.Core.JsonProvider
             }
             else if (objects.Count() == 1)
             {
-        	    Dictionary<object,JsonObject> visitedObjects = new Dictionary<object,JsonObject>();
+        	    Dictionary<object,JsonObject> visitedObjects = new DictionaryWithReplacement<object,JsonObject>();
                 HandleSingleResource(objects.First(),
                                      resultJsonObject,
                                      namespaceMappings,
@@ -1250,7 +1250,7 @@ namespace OSLC4Net.Core.JsonProvider
             if (bean is IExtendedResource)
             {
         	    extendedResource = (IExtendedResource) bean;
-        	    extendedProperties = new Dictionary<QName, object>();
+        	    extendedProperties = new DictionaryWithReplacement<QName, object>();
         	    extendedResource.SetExtendedProperties(extendedProperties);
             }
             else
@@ -1577,7 +1577,20 @@ namespace OSLC4Net.Core.JsonProvider
             	    }
                 }
 
-                object nestedBean = Activator.CreateInstance(setMethodComponentParameterType);
+                object nestedBean;
+
+                if (setMethodComponentParameterType == typeof(String))
+                {
+                    nestedBean = "";
+                }
+                else if (setMethodComponentParameterType == typeof(Uri))
+                {
+                    nestedBean = new Uri("http://localhost/");
+                }
+                else
+                {
+                    nestedBean = Activator.CreateInstance(setMethodComponentParameterType);
+                }
 
                 FromJSON(rdfPrefix,
                          jsonNamespaceMappings,
@@ -1789,6 +1802,24 @@ namespace OSLC4Net.Core.JsonProvider
             }
 
             return result;
+        }
+
+        private class DictionaryWithReplacement<TKey, TValue> : Dictionary<TKey, TValue>, IDictionary<TKey, TValue>
+        {
+            public DictionaryWithReplacement()
+                : base()
+            {
+            }
+
+            public void Add(TKey key, TValue value)
+            {
+                if (ContainsKey(key))
+                {
+                    Remove(key);
+                }
+
+                base.Add(key, value);
+            }
         }
     }
 }

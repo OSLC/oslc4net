@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
- * Copyright (c) 2012 IBM Corporation.
+ * Copyright (c) 2012, 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -43,10 +43,8 @@ namespace OSLC4Net.Core.Model
         public QName(
             string namespaceURI,
             string localPart
-        )
+        ) : this(namespaceURI, localPart, null)
         {
-            this.namespaceURI = namespaceURI;
-            this.localPart = localPart;
         }
 
         /// <summary>
@@ -61,6 +59,11 @@ namespace OSLC4Net.Core.Model
             string prefix
         ) 
         {
+            if (namespaceURI == null || localPart == null)
+            {
+                throw new ArgumentException();
+            }
+
             this.namespaceURI = namespaceURI;
             this.localPart = localPart;
             this.prefix = prefix;
@@ -89,6 +92,22 @@ namespace OSLC4Net.Core.Model
             }
 
             return '{' + namespaceURI + '}' + localPart;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (! (obj is QName))
+            {
+                return false;
+            }
+
+            return namespaceURI.Equals(((QName)obj).namespaceURI) &&
+                localPart.Equals(((QName)obj).localPart);
+        }
+
+        public override int GetHashCode()
+        {
+            return namespaceURI.GetHashCode() * 31 + localPart.GetHashCode();
         }
 
         private string namespaceURI;

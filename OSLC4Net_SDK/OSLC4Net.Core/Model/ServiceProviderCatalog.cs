@@ -30,8 +30,8 @@ namespace OSLC4Net.Core.Model
     [OslcResourceShape(title = "OSLC Service Provider Catalog Resource Shape", describes = new string[] { OslcConstants.TYPE_SERVICE_PROVIDER_CATALOG })]
     public class ServiceProviderCatalog : AbstractResource 
     {
-        private readonly SortedSet<Uri> domains = new SortedSet<Uri>(new CompareByString<Uri>());
-        private readonly SortedSet<Uri> referencedServiceProviderCatalogs = new SortedSet<Uri>();
+        private readonly SortedSet<Uri> domains = new SortedUriSet();
+        private readonly SortedSet<Uri> referencedServiceProviderCatalogs = new SortedUriSet();
         private readonly IList<ServiceProvider> serviceProviders = new List<ServiceProvider>();
 
         private String description;
@@ -182,13 +182,5 @@ namespace OSLC4Net.Core.Model
         public void SetTitle(String title) {
 		    this.title = title;
 	    }
-
-        protected class CompareByString<T> : IComparer<T> where T : class
-        {
-            public int Compare(T x, T y)
-            {
-                return x.ToString().CompareTo(y.ToString());
-            }
-        }
     }
 }

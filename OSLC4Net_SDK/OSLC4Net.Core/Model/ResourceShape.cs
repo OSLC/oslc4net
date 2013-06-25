@@ -30,7 +30,7 @@ namespace OSLC4Net.Core.Model
     [OslcResourceShape(title = "OSLC Resource Shape Resource Shape", describes = new string[] { OslcConstants.TYPE_RESOURCE_SHAPE })]
     public class ResourceShape : AbstractResource 
     {
-        private SortedSet<Uri> describes = new SortedSet<Uri>();
+        private SortedSet<Uri> describes = new SortedUriSet();
         private SortedSet<Property> properties = new SortedSet<Property>();
 
 	    private string title;

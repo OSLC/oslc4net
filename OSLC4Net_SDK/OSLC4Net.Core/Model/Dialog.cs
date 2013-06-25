@@ -30,8 +30,8 @@ namespace OSLC4Net.Core.Model
     [OslcResourceShape(title = "OSLC Dialog Resource Shape", describes = new string[] { OslcConstants.TYPE_DIALOG })]
     public class Dialog : AbstractResource 
     {
-        private SortedSet<Uri> resourceTypes = new SortedSet<Uri>();
-        private SortedSet<Uri> usages = new SortedSet<Uri>();
+        private SortedSet<Uri> resourceTypes = new SortedUriSet();
+        private SortedSet<Uri> usages = new SortedUriSet();
 
         private Uri dialog;
 	    private String hintHeight;

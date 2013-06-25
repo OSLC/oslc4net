@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
- * Copyright (c) 2012 IBM Corporation.
+ * Copyright (c) 2012, 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -59,6 +59,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_RDF_XML_TYPE);
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_XML_TYPE);
+            SupportedMediaTypes.Add(OslcMediaType.TEXT_XML_TYPE);
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML_TYPE);
         }
 
@@ -131,8 +132,15 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             {
                 return true;
             }
-            
-            return GetMemberType(type) != null;
+
+            Type memberType = GetMemberType(type);
+
+            if (memberType == null)
+            {
+                return false;
+            }
+
+            return memberType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0;
         }
 
         /// <summary>
@@ -154,7 +162,6 @@ namespace OSLC4Net.Core.DotNetRdfProvider
         {
             return Task.Factory.StartNew(() =>
                 {
-
                     if ((Graph == null) || (Graph.IsEmpty) || RebuildGraph)
                     {
                         if (ImplementsGenericType(typeof(FilteredResource<>), type))
@@ -171,26 +178,26 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
                             if (ImplementsGenericType(typeof(ResponseInfo<>), type))
                             {
-                            //Subject URI for the collection is the query capability
-                            //TODO:  should this be set by the app based on service provider info
-                            int portNum = httpRequest.RequestUri.Port;
-                            string portString = null;
-                            if (portNum == 80 || portNum == 443)
-                            {
-                                portString = "";
-                            }
-                            else
-                            {
-                                portString = ":" + portNum.ToString();
-                            }
+                                //Subject URI for the collection is the query capability
+                                //TODO:  should this be set by the app based on service provider info
+                                int portNum = httpRequest.RequestUri.Port;
+                                string portString = null;
+                                if (portNum == 80 || portNum == 443)
+                                {
+                                    portString = "";
+                                }
+                                else
+                                {
+                                    portString = ":" + portNum.ToString();
+                                }
 
-                            string descriptionAbout = httpRequest.RequestUri.Scheme + "://" +
-                                                      httpRequest.RequestUri.Host +
-                                                      portString +
-                                                      httpRequest.RequestUri.LocalPath;
+                                string descriptionAbout = httpRequest.RequestUri.Scheme + "://" +
+                                                          httpRequest.RequestUri.Host +
+                                                          portString +
+                                                          httpRequest.RequestUri.LocalPath;
 
-                            //Subject URI for the responseInfo is the full request URI
-                            string responseInfoAbout = httpRequest.RequestUri.ToString();
+                                //Subject URI for the responseInfo is the full request URI
+                                string responseInfoAbout = httpRequest.RequestUri.ToString();
 
                                 PropertyInfo totalCountProp = value.GetType().GetProperty("TotalCount");
                                 PropertyInfo nextPageProp = value.GetType().GetProperty("NextPage");
@@ -265,7 +272,14 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                 return true;
             }
 
-            return GetMemberType(type) != null;
+            Type memberType = GetMemberType(type);
+
+            if (memberType == null)
+            {
+                return false;
+            }
+
+            return memberType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0;
         }
 
         /// <summary>

@@ -27,6 +27,7 @@ using System.Numerics;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Exceptions;
@@ -37,6 +38,7 @@ using log4net;
 using VDS.RDF;
 using VDS.RDF.Nodes;
 using VDS.RDF.Parsing;
+using System.Xml.Linq;
 
 namespace OSLC4Net.Core.DotNetRdfProvider
 {
@@ -239,7 +241,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
         {
             object   newInstance = Activator.CreateInstance(beanType);
             IDictionary<Type, IDictionary<string, MethodInfo>> typePropertyDefinitionsToSetMethods = new Dictionary<Type, IDictionary<string, MethodInfo>>();
-            IDictionary<String, Object> visitedResources = new Dictionary<String, Object>();
+            IDictionary<String, Object> visitedResources = new DictionaryWithReplacement<String, Object>();
 
             FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
                               beanType,
@@ -280,7 +282,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                     {
                         INode   resource = (INode)triple.Subject;
                         object  newInstance = Activator.CreateInstance(beanType);
-                        IDictionary<String,Object> visitedResources = new Dictionary<String, Object>();
+                        IDictionary<String, Object> visitedResources = new DictionaryWithReplacement<String, Object>();
 
                         FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
                                           beanType,
@@ -350,7 +352,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             if (bean is IExtendedResource)
             {
         	    extendedResource = (IExtendedResource) bean;
-        	    extendedProperties = new Dictionary<QName, object>();
+        	    extendedProperties = new DictionaryWithReplacement<QName, object>();
         	    extendedResource.SetExtendedProperties(extendedProperties);
             }
             else
@@ -388,16 +390,32 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                 	    else
                 	    {
                             string predicateUri = predicate.Uri.ToString();
-                            int hash = predicateUri.LastIndexOf('#');
-                            int slash = predicateUri.LastIndexOf('/');
-                            int idx = hash > slash ? hash : slash;
-                            string localPart = predicateUri.Substring(idx + 1);
-                            string ns = predicateUri.Substring(0, idx + 1);
-                		    string prefix = graph.NamespaceMap.GetPrefix(new Uri(ns));
-                		    if (prefix == null)
-                		    {
-                			    prefix = GeneratePrefix(graph, ns);
-                		    }
+                            string prefix;
+                            string localPart;
+                            string ns;
+                            String qname;
+
+                            if (graph.NamespaceMap.ReduceToQName(predicateUri, out qname))
+                            {
+                                int colon = qname.IndexOf(':');
+                                prefix = qname.Substring(0, colon);
+                                localPart = qname.Substring(colon + 1);
+                                ns = predicateUri.Substring(0, predicateUri.Length - localPart.Length);
+                            }
+                            else
+                            {
+                                int hash = predicateUri.LastIndexOf('#');
+                                int slash = predicateUri.LastIndexOf('/');
+                                int idx = hash > slash ? hash : slash;
+                                
+                                localPart = predicateUri.Substring(idx + 1);
+                                ns = predicateUri.Substring(0, idx + 1);
+                                prefix = graph.NamespaceMap.GetPrefix(new Uri(ns));
+                                if (prefix == null)
+                                {
+                                    prefix = GeneratePrefix(graph, ns);
+                                }
+                            }
                 		    QName key = new QName(ns, localPart, prefix);
                 		    object value = HandleExtendedPropertyValue(beanType, obj, visitedResources);
                             if (!extendedProperties.ContainsKey(key))
@@ -606,7 +624,20 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                             }
                             else
                             {
-                                object nestedBean = Activator.CreateInstance(setMethodComponentParameterType);
+                                object nestedBean;
+
+                                if (setMethodComponentParameterType == typeof(String))
+                                {
+                                    nestedBean = "";
+                                }
+                                else if (setMethodComponentParameterType == typeof(Uri))
+                                {
+                                    nestedBean = new Uri("http://localhost/");
+                                }
+                                else
+                                {
+                                    nestedBean = Activator.CreateInstance(setMethodComponentParameterType);
+                                }
 
                                 FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
                                                   setMethodComponentParameterType,
@@ -620,7 +651,20 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                         else if (o is IBlankNode)
                         {
                             IBlankNode nestedResource = o as IBlankNode;
-                            object nestedBean = Activator.CreateInstance(setMethodComponentParameterType);
+                            object nestedBean;
+
+                            if (setMethodComponentParameterType == typeof(String))
+                            {
+                                nestedBean = "";
+                            }
+                            else if (setMethodComponentParameterType == typeof(Uri))
+                            {
+                                nestedBean = new Uri("http://localhost/");
+                            }
+                            else
+                            {
+                                nestedBean = Activator.CreateInstance(setMethodComponentParameterType);
+                            }
 
                             FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
                                               setMethodComponentParameterType,
@@ -902,31 +946,39 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                 }
 		    }
 		
-		    // Is this an inline resource?
-		    if (obj is IBlankNode)
+            IUriNode nestedResource = obj as IUriNode;
+
+		    // Is this an inline resource? AND we have not visited it yet?
+		    if ((obj is IBlankNode || nestedResource.Graph.GetTriplesWithSubject(nestedResource).Count() > 0) && 
+		        (!visitedResources.ContainsKey(GetVisitedResourceName(obj))))
 		    {
 			    AbstractResource any = new AnyResource();
                 IDictionary<Type, IDictionary<string, MethodInfo>> typePropertyDefinitionsToSetMethods = new Dictionary<Type, IDictionary<string, MethodInfo>>();
                 FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
                                   typeof(AnyResource),
                                   any,
-                                  (IBlankNode)obj,
+                                  obj,
                                   visitedResources);
 
                 return any;
 		    }
 
-		    IUriNode nestedResource = (IUriNode)obj;
-		
-		    // It's a resource reference.
-		    Uri nestedResourceURI = nestedResource.Uri;
-		    if (!nestedResourceURI.IsAbsoluteUri)
-		    {
-			    throw new OslcCoreRelativeURIException(beanType, "<none>",
-					    nestedResourceURI);
-		    }
+            if (obj is IBlankNode || nestedResource.Graph.GetTriplesWithSubject(nestedResource).Count() > 0)
+            {
+                return visitedResources[GetVisitedResourceName(nestedResource)];
+            }
+            else
+            {
+                // It's a resource reference.
+                Uri nestedResourceURI = nestedResource.Uri;
+                if (!nestedResourceURI.IsAbsoluteUri)
+                {
+                    throw new OslcCoreRelativeURIException(beanType, "<none>",
+                                                           nestedResourceURI);
+                }
 
-		    return nestedResourceURI;
+                return nestedResourceURI;
+            }
 	    }
     
         private static IDictionary<string, MethodInfo> CreatePropertyDefinitionToSetMethods(Type beanType)
@@ -1272,6 +1324,10 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                 {
                     literal = LiteralExtensions.ToLiteral(((DateTime)value).ToUniversalTime(), graph);
                 }
+                else if (typeof(XElement) == valueType)
+                {
+                    literal = graph.CreateLiteralNode(((XElement)value).ToString(SaveOptions.None), new Uri(RdfSpecsHelper.RdfXmlLiteral));
+                }
                 else
                 {
                     throw new InvalidOperationException("Unkown type: " + valueType);
@@ -1279,8 +1335,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
                 graph.Assert(new Triple(resource, property, literal));
     	    }
-        }    
- 
+        }
 
        private static void BuildAttributeResource(Type                          resourceType,
                                                   MethodInfo                    method,
@@ -1793,6 +1848,23 @@ namespace OSLC4Net.Core.DotNetRdfProvider
     	    }
     	
     	    return visitedResourceName;
-        }    
+        }
+
+        private class DictionaryWithReplacement<TKey, TValue> : Dictionary<TKey, TValue>, IDictionary<TKey, TValue>
+        {
+            public DictionaryWithReplacement() : base()
+            {
+            }
+
+            public void Add(TKey key, TValue value)
+            {
+                if (ContainsKey(key))
+                {
+                    Remove(key);
+                }
+                
+                base.Add(key, value);
+            }
+        }
     }
 }

@@ -73,7 +73,7 @@ namespace OSLC4Net.Core.Model
                 }
             }
 
-	        throw new ArgumentException();
+            return ValueType.Unknown; // XXX - Java code does return null;
 	    }
 	
 	    public static ValueType FromURI(URI uri)

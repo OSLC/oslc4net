@@ -70,6 +70,7 @@
     <Compile Include="Exceptions\MessageExtractor.cs" />
     <Compile Include="Exceptions\OslcCoreApplicationException.cs" />
     <Compile Include="Model\ServiceProviderFactory.cs" />
+    <Compile Include="Model\SortedUriSet.cs" />
     <Compile Include="OSLC4NetConstants.cs" />
     <Compile Include="Model\AbstractResource.cs" />
     <Compile Include="Model\AnyResource.cs" />
@@ -194,7 +195,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

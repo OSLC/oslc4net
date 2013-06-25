@@ -30,9 +30,9 @@ namespace OSLC4Net.Core.Model
     [OslcResourceShape(title = "OSLC Creation Factory Resource Shape", describes = new string[] { OslcConstants.TYPE_CREATION_FACTORY })]
     public class CreationFactory : AbstractResource 
     {
-        private readonly SortedSet<Uri> resourceShapes = new SortedSet<Uri>();
-        private readonly SortedSet<Uri> resourceTypes = new SortedSet<Uri>();
-        private readonly SortedSet<Uri> usages = new SortedSet<Uri>();
+        private readonly SortedSet<Uri> resourceShapes = new SortedUriSet();
+        private readonly SortedSet<Uri> resourceTypes = new SortedUriSet();
+        private readonly SortedSet<Uri> usages = new SortedUriSet();
 
         private Uri creation;
 	    private String label;

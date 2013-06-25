@@ -2394,7 +2394,7 @@
             <summary>
             Start the Handling of RDF
             </summary>
-            <exception cref="!:RdfParseException">May be thrown if the Handler is already in use and the implementation is not thread-safe</exception>
+            <exception cref="T:VDS.RDF.Parsing.RdfParseException">May be thrown if the Handler is already in use and the implementation is not thread-safe</exception>
         </member>
         <member name="M:VDS.RDF.IRdfHandler.EndRdf(System.Boolean)">
             <summary>
@@ -3178,7 +3178,7 @@
             <para>
             This template generates a Sesame repository config graph like the following, depending on exact options the graph may differ:
             </para>
-            <pre>
+            <code>
             @prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;.
             @prefix rep: &lt;http://www.openrdf.org/config/repository#&gt;.
             @prefix sr: &lt;http://www.openrdf.org/config/repository/sail#&gt;.
@@ -3196,7 +3196,7 @@
                      ms:syncDelay {this.SyncDelay}
                   ]
               ].
-            </pre>
+            </code>
             <para>
             The placeholders of the form <strong>{this.Property}</strong> represent properties of this class whose values will be inserted into the repository config graph and used to create a new store in Sesame.
             </para>
@@ -3481,6 +3481,16 @@
             Gets/Sets whether Tokeniser Tracing is used
             </summary>
         </member>
+        <member name="T:VDS.RDF.Parsing.ITokenisingParser">
+            <summary>
+            Interface for parsers that use token based parsing
+            </summary>
+        </member>
+        <member name="P:VDS.RDF.Parsing.ITokenisingParser.TokenQueueMode">
+            <summary>
+            Gets/Sets the token queue mode used
+            </summary>
+        </member>
         <member name="M:VDS.RDF.Parsing.TriGParser.#ctor">
             <summary>
             Creates a TriG Parser than uses the default syntax
@@ -3558,6 +3568,11 @@
             Gets/Sets the TriG syntax used
             </summary>
         </member>
+        <member name="P:VDS.RDF.Parsing.TriGParser.TokenQueueMode">
+            <summary>
+            Gets/Sets the token queue mode used
+            </summary>
+        </member>
         <member name="E:VDS.RDF.Parsing.TriGParser.Warning">
             <summary>
             Event which Readers can raise when they notice syntax that is ambigious/deprecated etc which can still be parsed
@@ -3576,12 +3591,9 @@
         </member>
         <member name="T:VDS.RDF.TreeIndexedTripleCollection">
             <summary>
-            An indexed triple collection that uses our <see cref="!:MultiDictionary"/> and <see cref="!:BinaryTree"/> implementations under the hood for the index structures
+            An indexed triple collection that uses our <see cref="T:VDS.Common.Collections.MultiDictionary`2"/> and <see cref="T:VDS.Common.Trees.BinaryTree`3"/> implementations under the hood for the index structures
             </summary>
             <remarks>
-            <para>
-            While the index structures may seem marginally more complex than our <see cref="!:HashTable"/> based <see cref="!:IndexedTripleCollection"/> in testing they actually perform faster, they also have the benefit of guaranteeing that index lookups never return irrelevant triples which is possible with the <see cref="!:IndexedTripleCollection"/> due to the way <see cref="!:HashTable"/> handles key collisions.
-            </para>
             </remarks>
         </member>
         <member name="T:VDS.RDF.BaseTripleCollection">
@@ -3734,6 +3746,18 @@
             <summary>
             Creates a new Tree Indexed triple collection
             </summary>
+            <param name="compoundIndexMode">Mode to use for compound indexes</param>
+        </member>
+        <member name="M:VDS.RDF.TreeIndexedTripleCollection.#ctor(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,VDS.Common.Collections.MultiDictionaryMode)">
+            <summary>
+            Creates a new Tree Indexed triple collection with the given Indexing options
+            </summary>
+            <param name="subjIndex">Whether to create a subject index</param>
+            <param name="predIndex">Whether to create a predicate index</param>
+            <param name="objIndex">Whether to create an object index</param>
+            <param name="subjPredIndex">Whether to create a subject predicate index</param>
+            <param name="subjObjIndex">Whether to create a subject object index</param>
+            <param name="predObjIndex">Whether to create a predicate object index</param>
             <param name="compoundIndexMode">Mode to use for compound indexes</param>
         </member>
         <member name="M:VDS.RDF.TreeIndexedTripleCollection.Index(VDS.RDF.Triple)">
@@ -3920,7 +3944,7 @@
         </member>
         <member name="P:VDS.RDF.Options.LiteralEqualityMode">
             <summary>
-            Gets/Sets the Mode used to compute Literal Equality (Default is <see cref="!:LiteralEqualityMode.Strict">Strict</see> which enforces the W3C RDF Specification)
+            Gets/Sets the Mode used to compute Literal Equality (Default is <see cref="F:VDS.RDF.LiteralEqualityMode.Strict">Strict</see> which enforces the W3C RDF Specification)
             </summary>
         </member>
         <member name="P:VDS.RDF.Options.LiteralValueNormalization">
@@ -3969,7 +3993,7 @@
         </member>
         <member name="P:VDS.RDF.Options.QueryAllowUnknownFunctions">
             <summary>
-            Gets/Sets whether functions that can't be parsed into Expressions should be represented by the <see cref="!:NullExpression">NullExpression</see>
+            Gets/Sets whether functions that can't be parsed into Expressions should be represented by the <see cref="T:VDS.RDF.Query.Expressions.Functions.UnknownFunction">UnknownFunction</see>
             </summary>
             <remarks>When set to false a Parser Error will be thrown if the Function cannot be parsed into an Expression</remarks>
         </member>
@@ -4019,14 +4043,14 @@
         </member>
         <member name="P:VDS.RDF.Options.FullTripleIndexing">
             <summary>
-            Controls whether the <see cref="!:IndexedTripleCollection">IndexedTripleCollection</see> will create full indexes for the Triples inserted into it
+            Controls whether the indexed triple collections will create full indexes for the Triples inserted into it
             </summary>
             <remarks>
             <para>
-            By default the <see cref="!:IndexedTripleCollection">IndexedTripleCollection</see> creates indexes on Triples based upon Subjects, Predicates and Objects alone.  When full indexing is enabled it also creates indexes based on Subject-Predicate, Predicate-Object and Subject-Object pairs which may improve query speed but will use additional memory.
+            By default indexes triple collections creates indexes on Triples based upon Subjects, Predicates and Objects alone.  When full indexing is enabled it also creates indexes based on Subject-Predicate, Predicate-Object and Subject-Object pairs which may improve query speed but will use additional memory.
             </para>
             <para>
-            Default setting for Full Indexing is enabled, enabling/disabling it only has an effect on <see cref="!:IndexedTripleCollection">IndexedTripleCollection</see> instances instantiated after full indexing was enabled/disabled i.e. existing Graphs in memory using the <see cref="!:IndexedTripleCollection">IndexedTripleCollection</see> continue to use the full indexing setting that was present when they were instantiated.
+            Default setting for Full Indexing is enabled, enabling/disabling it only has an effect on indexed triple collection instances instantiated after full indexing was enabled/disabled i.e. existing Graphs in memory using the indexed triple collections continue to use the full indexing setting that was present when they were instantiated.
             </para>
             </remarks>
         </member>
@@ -4044,6 +4068,14 @@
             <summary>
             Gets/Sets whether a UTF-8 BOM is used for UTF-8 Streams created by dotNetRDF (this does not affect Streams passed directly to methods as open streams cannot have their encoding changed)
             </summary>
+        </member>
+        <member name="P:VDS.RDF.Options.ValidateIris">
+            <summary>
+            Gets/Sets whether IRIs are validated by parsers which support this functionality
+            </summary>
+            <remarks>
+            When enabled certain parsers will validate all IRIs they see to ensure that they are valid and throw a parser error if they are not.  Since there is a performance penalty associated with this and many older RDF standards were written pre-IRIs (thus enforcing IRI validity would reject data considered valid by those specifications) this feature is disabled by default.
+            </remarks>
         </member>
         <member name="P:VDS.RDF.Options.ForceBlockingIO">
             <summary>
@@ -4084,25 +4116,20 @@
             Gets/Sets whether the library will attempt to intern URIs to reduce memory usage
             </summary>
         </member>
+        <member name="P:VDS.RDF.Options.DefaultTokenQueueMode">
+            <summary>
+            Gets/Sets the default token queue mode used for tokeniser based parsers
+            </summary>
+        </member>
         <member name="P:VDS.RDF.Options.HttpDebugging">
             <summary>
             Gets/Sets whether HTTP Request and Response Information should be output to the Console Standard Out for Debugging purposes
             </summary>
-            <remarks>
-            <strong>Only available in Debug builds</strong>
-            <br /><br />
-            This does not guarentee that this information is output to the Console Standard Out, most code that makes HTTP requests should do this but it may vary depending on the Library build and the exact classes used.
-            </remarks>
         </member>
         <member name="P:VDS.RDF.Options.HttpFullDebugging">
             <summary>
             Gets/Sets whether the HTTP Response Stream should be output to the Console Standard Output for Debugging purposes
             </summary>
-            <remarks>
-            <strong>Only available in Debug builds</strong>
-            <br/><br/>
-            Only applies if <see cref="P:VDS.RDF.Options.HttpDebugging">HttpDebugging</see> is enabled
-            </remarks>
         </member>
         <member name="T:VDS.RDF.ISparqlResultsWriter">
             <summary>
@@ -4350,6 +4377,14 @@
             <param name="result">Boolean Result</param>
             <returns></returns>
         </member>
+        <member name="M:VDS.RDF.Writing.Formatting.BaseFormatter.Escape(System.String,System.Collections.Generic.List{System.String[]})">
+            <summary>
+            Applies escapes to the given value
+            </summary>
+            <param name="value">Value</param>
+            <param name="escapes">Escapes</param>
+            <returns>Escaped string</returns>
+        </member>
         <member name="M:VDS.RDF.Writing.Formatting.BaseFormatter.ToString">
             <summary>
             Gets the Name of the Format this Format uses
@@ -4411,7 +4446,7 @@
             </summary>
             <remarks>
             <para>
-            This is a fast writer based on the fast writing technique used in the other non-RDF/XML Writers.  While it is faster than the <see cref="!:FastRdfXmlWriter">FastRdfXmlWriter</see> achieving a speed of around 42,000 Triples/second the syntax produced is not as compressed in some cases as that writer.  The main advantage of this writer is that it is entirely streaming so it uses much less memory than the <see cref="!:FastRdfXmlWriter">FastRdfXmlWriter</see> which has to build the entire XML DOM in-memory prior to serialization.
+            This is a fast writer based on the fast writing technique used in the other non-RDF/XML Writers.
             </para>
             <para>
             <strong>Note:</strong> If the Graph to be serialized makes heavy use of collections it may result in a StackOverflowException.  To address this set the <see cref="P:VDS.RDF.Writing.RdfXmlWriter.CompressionLevel">CompressionLevel</see> property to &lt; 5
@@ -5027,7 +5062,7 @@
             </summary>
             <param name="context">HTTP Context</param>
             <remarks>
-            Implemented by making a call to <see cref="M:VDS.RDF.Storage.IStorageProvider.LoadGraph(VDS.RDF.IGraph,System.Uri)">LoadGraph()</see> on the underlying <see cref="T:VDS.RDF.Storage.IStorageProvider">IStorageProvider</see>
+            Implemented by making a call to <see cref="!:IStorageProvider.LoadGraph(Uri)">LoadGraph()</see> on the underlying <see cref="T:VDS.RDF.Storage.IStorageProvider">IStorageProvider</see>
             </remarks>
         </member>
         <member name="M:VDS.RDF.Update.Protocol.GenericProtocolProcessor.ProcessPost(VDS.RDF.Web.IHttpContext)">
@@ -5942,6 +5977,12 @@
             </summary>
             <param name="variable">Variable</param>
         </member>
+        <member name="M:VDS.RDF.Query.Algebra.BaseMultiset.SetVariableOrder(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Sets the variable ordering for the multiset
+            </summary>
+            <param name="variables">Variable Ordering</param>
+        </member>
         <member name="M:VDS.RDF.Query.Algebra.BaseMultiset.Remove(System.Int32)">
             <summary>
             Removes a Set (by ID) from the Multiset
@@ -5964,6 +6005,12 @@
             Trims the Multiset by removing all Values for the given Variable
             </summary>
             <param name="variable">Variable</param>
+        </member>
+        <member name="M:VDS.RDF.Query.Algebra.BaseMultiset.ToString">
+            <summary>
+            Gets the string representation of the multiset (intended for debugging only)
+            </summary>
+            <returns></returns>
         </member>
         <member name="P:VDS.RDF.Query.Algebra.BaseMultiset.IsEmpty">
             <summary>
@@ -6078,6 +6125,12 @@
             </summary>
             <param name="variable">Variable</param>
             <exception cref="T:VDS.RDF.Query.RdfQueryException">Thrown since this operation is invalid on an Identity Multiset</exception>
+        </member>
+        <member name="M:VDS.RDF.Query.Algebra.IdentityMultiset.SetVariableOrder(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Sets the variable ordering for the multiset
+            </summary>
+            <param name="variables">Variable Ordering</param>
         </member>
         <member name="M:VDS.RDF.Query.Algebra.IdentityMultiset.Remove(System.Int32)">
             <summary>
@@ -6205,6 +6258,25 @@
             </summary>
             <param name="context">Parser Context</param>
             <param name="t">Token to resolve</param>
+            <returns></returns>
+        </member>
+        <member name="M:VDS.RDF.Parsing.ParserHelper.TryResolveUri(VDS.RDF.Parsing.Contexts.IParserContext,VDS.RDF.Parsing.Tokens.IToken,System.Boolean)">
+            <summary>
+            Attempts to resolve a QName or URI Token into a URI Node and produces appropriate error messages if this fails
+            </summary>
+            <param name="context">Parser Context</param>
+            <param name="t">Token to resolve</param>
+            <param name="allowDefaultPrefixFallback">Whether when the default prefix is used but not defined it can fallback to the Base URI</param>
+            <returns></returns>
+        </member>
+        <member name="M:VDS.RDF.Parsing.ParserHelper.TryResolveUri(VDS.RDF.Parsing.Contexts.IParserContext,VDS.RDF.Parsing.Tokens.IToken,System.Boolean,System.Func{System.String,System.String})">
+            <summary>
+            Attempts to resolve a QName or URI Token into a URI Node and produces appropriate error messages if this fails
+            </summary>
+            <param name="context">Parser Context</param>
+            <param name="t">Token to resolve</param>
+            <param name="allowDefaultPrefixFallback">Whether when the default prefix is used but not defined it can fallback to the Base URI</param>
+            <param name="qnameUnescape">QName unescaping function</param>
             <returns></returns>
         </member>
         <member name="M:VDS.RDF.Parsing.ParserHelper.TryResolveUri(VDS.RDF.Parsing.Contexts.IStoreParserContext,VDS.RDF.Parsing.Tokens.IToken)">
@@ -8846,44 +8918,7 @@
             <param name="mapping">Mapping of Blank Nodes iff the Graphs are equal and contain some Blank Nodes</param>
             <returns></returns>
             <remarks>
-            <para>
-            The algorithm used to determine Graph equality is based in part on a Iterative Vertex Classification Algorithm described in a Technical Report from HP by Jeremy J Carroll - <a href="http://www.hpl.hp.com/techreports/2001/HPL-2001-293.html">Matching RDF Graphs</a>
-            </para>
-            <para>
-            Graph Equality is determined according to the following algorithm:
-            </para>
-            <ol>
-            <li>If the given Graph is null Graphs are not equal</li>
-            <li>If the given Graph is this Graph (as determined by Reference Equality) then Graphs are equal</li>
-            <li>If the Graphs have a different number of Triples they are not equal</li>
-            <li>Declare a list of Triples which are the Triples of the given Graph called <em>OtherTriples</em></li>
-            <li>Declare two dictionaries of Nodes to Integers which are called <em>LocalClassification</em> and <em>OtherClassification</em></li>
-            <li>For Each Triple in this Graph
-                <ol>
-                <li>If it is a Ground Triple and cannot be found and removed from <em>OtherTriples</em> then Graphs are not equal since the Triple does not exist in both Graphs</li>
-                <li>If it contains Blank Nodes track the number of usages of this Blank Node in <em>LocalClassification</em></li>
-                </ol>
-            </li> 
-            <li>If there are any Triples remaining in <em>OtherTriples</em> which are Ground Triples then Graphs are not equal since this Graph does not contain them</li>
-            <li>If all the Triples from both Graphs were Ground Triples and there were no Blank Nodes then the Graphs are equal</li>
-            <li>Iterate over the remaining Triples in <em>OtherTriples</em> and populate the <em>OtherClassification</em></li>
-            <li>If the count of the two classifications is different the Graphs are not equal since there are differing numbers of Blank Nodes in the Graph</li>
-            <li>Now build two additional dictionaries of Integers to Integers which are called <em>LocalDegreeClassification</em> and <em>OtherDegreeClassification</em>.  Iterate over <em>LocalClassification</em> and <em>OtherClassification</em> such that the corresponding degree classifications contain a mapping of the number of Blank Nodes with a given degree</li>
-            <li>If the count of the two degree classifications is different the Graphs are not equal since there are not the same range of Blank Node degrees in both Graphs</li>
-            <li>For All classifications in <em>LocalDegreeClassification</em> there must be a matching classification in <em>OtherDegreeClassification</em> else the Graphs are not equal</li>
-            <li>Then build a possible mapping using the following rules:
-                <ol>
-                <li>Any Blank Node used only once should be mapped to an equivalent Blank Node in the other Graph.  If this is not possible then the Graphs are not equal</li>
-                <li>Any Blank Node with a unique degree should be mapped to an equivalent Blank Node in the other Graph.  If this is not possible then the Graphs are not equal</li>
-                <li>Keep a copy of the mapping up to this point as a Base Mapping for use as a fallback in later steps</li>
-                <li>Build up lists of dependent pairs of Blank Nodes for both Graphs</li>
-                <li>Use these lists to determine if there are any independent nodes not yet mapped.  These should be mapped to equivalent Blank Nodes in the other Graph, if this is not possible the Graphs are not equal</li>
-                <li>Use the Dependencies and existing mappings to generate a possible mapping</li>
-                <li>If a Complete Possible Mapping (there is a Mapping for each Blank Node from this Graph to the Other Graph) then test this mapping.  If it succeeds then the Graphs are equal</li>
-                <li>Otherwise we now fallback to the Base Mapping and use it as a basis for Brute Forcing the possible solution space and testing every possibility until either a mapping works or we find the Graphs to be non-equal</li>
-                </ol>
-            </li>
-            </ol>
+            See <see cref="T:VDS.RDF.GraphMatcher"/> for documentation of the equality algorithm used.
             </remarks>
         </member>
         <member name="M:VDS.RDF.BaseGraph.IsSubGraphOf(VDS.RDF.IGraph)">
@@ -9508,14 +9543,11 @@
         </member>
         <member name="T:VDS.RDF.SubTreeIndexedTripleCollection">
             <summary>
-            An indexed triple collection that uses our <see cref="!:MultiDictionary"/> and <see cref="!:BinaryTree"/> implementations under the hood for the index structures
+            An indexed triple collection that uses our <see cref="T:VDS.Common.Collections.MultiDictionary`2"/> and <see cref="T:VDS.Common.Trees.BinaryTree`3"/> implementations under the hood for the index structures
             </summary>
             <remarks>
             <para>
-            A variation on <see cref="T:VDS.RDF.TreeIndexedTripleCollection"/> which structures the indexes slightly differently to reduce memory usage.
-            </para>
-            <para>
-            While the index structures may seem marginally more complex than our <see cref="!:HashTable"/> based <see cref="!:IndexedTripleCollection"/> in testing they actually perform faster, they also have the benefit of guaranteeing that index lookups never return irrelevant triples which is possible with the <see cref="!:IndexedTripleCollection"/> due to the way <see cref="!:HashTable"/> handles key collisions.
+            A variation on <see cref="T:VDS.RDF.TreeIndexedTripleCollection"/> which structures the indexes slightly differently, this may give differing performance and reduced memory usage in some scenarios.
             </para>
             </remarks>
         </member>
@@ -9694,7 +9726,7 @@
             <summary>
             Disposes of the Graph Collection
             </summary>
-            <remarks>Invokes the <see cref="!:IGraph.Dipose">Dispose()</see> method of all Graphs contained in the Collection</remarks>
+            <remarks>Invokes the <see cref="!:IGraph.Dispose()">Dispose()</see> method of all Graphs contained in the Collection</remarks>
         </member>
         <member name="M:VDS.RDF.BaseGraphCollection.GetEnumerator">
             <summary>
@@ -10222,7 +10254,7 @@
         </member>
         <member name="T:VDS.RDF.Storage.BaseAsyncHttpConnector">
             <summary>
-            Abstract Base Class for HTTP Based <see cref="!:IAsyncStorageProivder">IAsyncStorageProvider</see> implementations
+            Abstract Base Class for HTTP Based <see cref="T:VDS.RDF.Storage.IAsyncStorageProvider">IAsyncStorageProvider</see> implementations
             </summary>
             <remarks>
             <para>
@@ -10327,7 +10359,7 @@
             Gets whether the connection with the underlying Store is read-only
             </summary>
             <remarks>
-            Any Manager which indicates it is read-only should also return false for the <see cref="!:IStorageCapbilities.UpdateSupported">UpdatedSupported</see> property and should throw a <see cref="T:VDS.RDF.Storage.RdfStorageException">RdfStorageException</see> if the <strong>SaveGraph()</strong> or <strong>UpdateGraph()</strong> methods are called
+            Any Manager which indicates it is read-only should also return false for the <see cref="P:VDS.RDF.Storage.IStorageCapabilities.UpdateSupported">UpdatedSupported</see> property and should throw a <see cref="T:VDS.RDF.Storage.RdfStorageException">RdfStorageException</see> if the <strong>SaveGraph()</strong> or <strong>UpdateGraph()</strong> methods are called
             </remarks>
         </member>
         <member name="P:VDS.RDF.Storage.IStorageCapabilities.IOBehaviour">
@@ -10650,10 +10682,10 @@
             <param name="sparqlQuery">SPARQL Query</param>
             <param name="callback">Callback</param>
             <param name="state">State to pass to the callback</param>
-            <exception cref="!:RdfQueryException">Thrown if an error occurs performing the query</exception>
+            <exception cref="T:VDS.RDF.Query.RdfQueryException">Thrown if an error occurs performing the query</exception>
             <exception cref="T:VDS.RDF.Storage.RdfStorageException">Thrown if an error occurs performing the query</exception>
-            <exception cref="!:RdfParseException">Thrown if the query is invalid when validated by dotNetRDF prior to passing the query request to the store or if the request succeeds but the store returns malformed results</exception>
-            <exception cref="!:RdfParserSelectionException">Thrown if the store returns results in a format dotNetRDF does not understand</exception>
+            <exception cref="T:VDS.RDF.Parsing.RdfParseException">Thrown if the query is invalid when validated by dotNetRDF prior to passing the query request to the store or if the request succeeds but the store returns malformed results</exception>
+            <exception cref="T:VDS.RDF.Parsing.RdfParserSelectionException">Thrown if the store returns results in a format dotNetRDF does not understand</exception>
         </member>
         <member name="M:VDS.RDF.Storage.IAsyncQueryableStorage.Query(VDS.RDF.IRdfHandler,VDS.RDF.ISparqlResultsHandler,System.String,VDS.RDF.Storage.AsyncStorageCallback,System.Object)">
             <summary>
@@ -10664,10 +10696,10 @@
             <param name="resultsHandler">Results Handler</param>
             <param name="callback">Callback</param>
             <param name="state">State to pass to the callback</param>
-            <exception cref="!:RdfQueryException">Thrown if an error occurs performing the query</exception>
+            <exception cref="T:VDS.RDF.Query.RdfQueryException">Thrown if an error occurs performing the query</exception>
             <exception cref="T:VDS.RDF.Storage.RdfStorageException">Thrown if an error occurs performing the query</exception>
-            <exception cref="!:RdfParseException">Thrown if the query is invalid when validated by dotNetRDF prior to passing the query request to the store or if the request succeeds but the store returns malformed results</exception>
-            <exception cref="!:RdfParserSelectionException">Thrown if the store returns results in a format dotNetRDF does not understand</exception>
+            <exception cref="T:VDS.RDF.Parsing.RdfParseException">Thrown if the query is invalid when validated by dotNetRDF prior to passing the query request to the store or if the request succeeds but the store returns malformed results</exception>
+            <exception cref="T:VDS.RDF.Parsing.RdfParserSelectionException">Thrown if the store returns results in a format dotNetRDF does not understand</exception>
         </member>
         <member name="T:VDS.RDF.Storage.IQueryableStorage">
             <summary>
@@ -10841,11 +10873,11 @@
             Makes a SPARQL Query against the underlying store
             </summary>
             <param name="sparqlQuery">SPARQL Query</param>
-            <returns><see cref="!:SparqlResultSet">SparqlResultSet</see> or a <see cref="T:VDS.RDF.Graph">Graph</see> depending on the Sparql Query</returns>
-            <exception cref="!:RdfQueryException">Thrown if an error occurs performing the query</exception>
+            <returns><see cref="T:VDS.RDF.Query.SparqlResultSet">SparqlResultSet</see> or a <see cref="T:VDS.RDF.Graph">Graph</see> depending on the Sparql Query</returns>
+            <exception cref="T:VDS.RDF.Query.RdfQueryException">Thrown if an error occurs performing the query</exception>
             <exception cref="T:VDS.RDF.Storage.RdfStorageException">Thrown if an error occurs performing the query</exception>
-            <exception cref="!:RdfParseException">Thrown if the query is invalid when validated by dotNetRDF prior to passing the query request to the store or if the request succeeds but the store returns malformed results</exception>
-            <exception cref="!:RdfParserSelectionException">Thrown if the store returns results in a format dotNetRDF does not understand</exception>
+            <exception cref="T:VDS.RDF.Parsing.RdfParseException">Thrown if the query is invalid when validated by dotNetRDF prior to passing the query request to the store or if the request succeeds but the store returns malformed results</exception>
+            <exception cref="T:VDS.RDF.Parsing.RdfParserSelectionException">Thrown if the store returns results in a format dotNetRDF does not understand</exception>
         </member>
         <member name="M:VDS.RDF.Storage.IQueryableStorage.Query(VDS.RDF.IRdfHandler,VDS.RDF.ISparqlResultsHandler,System.String)">
             <summary>
@@ -10854,10 +10886,10 @@
             <param name="rdfHandler">RDF Handler</param>
             <param name="resultsHandler">SPARQL Results Handler</param>
             <param name="sparqlQuery">SPARQL Query</param>
-            <exception cref="!:RdfQueryException">Thrown if an error occurs performing the query</exception>
+            <exception cref="T:VDS.RDF.Query.RdfQueryException">Thrown if an error occurs performing the query</exception>
             <exception cref="T:VDS.RDF.Storage.RdfStorageException">Thrown if an error occurs performing the query</exception>
-            <exception cref="!:RdfParseException">Thrown if the query is invalid when validated by dotNetRDF prior to passing the query request to the store or if the request succeeds but the store returns malformed results</exception>
-            <exception cref="!:RdfParserSelectionException">Thrown if the store returns results in a format dotNetRDF does not understand</exception>
+            <exception cref="T:VDS.RDF.Parsing.RdfParseException">Thrown if the query is invalid when validated by dotNetRDF prior to passing the query request to the store or if the request succeeds but the store returns malformed results</exception>
+            <exception cref="T:VDS.RDF.Parsing.RdfParserSelectionException">Thrown if the store returns results in a format dotNetRDF does not understand</exception>
         </member>
         <member name="F:VDS.RDF.Storage.BaseSesameHttpProtocolConnector._baseUri">
             <summary>
@@ -12861,7 +12893,7 @@
             Implemented by getting the Hash Code of the result of ToString for a Node prefixed with its Node Type, this is pre-computed for efficiency when a Node is created since Nodes are immutable.  See remarks on ToString for more detail.
             </para>
             <para>
-            Since Hash Codes are based on a String representation there is no guarantee of uniqueness though the same Triple will always give the same Hash Code (on a given Platform - see the MSDN Documentation for <see cref="M:System.String.GetHashCode">string.GetHashCode()</see> for further details)
+            Since Hash Codes are based on a String representation there is no guarantee of uniqueness though the same Node will always give the same Hash Code (on a given Platform - see the MSDN Documentation for <see cref="M:System.String.GetHashCode">string.GetHashCode()</see> for further details)
             </para>
             </remarks>
         </member>
@@ -13425,42 +13457,42 @@
             Gets the Long value of the Node
             </summary>
             <returns></returns>
-            <exception cref="!:RdfQueryException">Thrown if the Node cannot be converted to a Long</exception>
+            <exception cref="T:VDS.RDF.Query.RdfQueryException">Thrown if the Node cannot be converted to a Long</exception>
         </member>
         <member name="M:VDS.RDF.Nodes.IValuedNode.AsDecimal">
             <summary>
             Gets the Decimal value of the Node
             </summary>
             <returns></returns>
-            <exception cref="!:RdfQueryException">Thrown if the Node cannot be converted to a Decimal</exception>
+            <exception cref="T:VDS.RDF.Query.RdfQueryException">Thrown if the Node cannot be converted to a Decimal</exception>
         </member>
         <member name="M:VDS.RDF.Nodes.IValuedNode.AsFloat">
             <summary>
             Gets the Float value of the Node
             </summary>
             <returns></returns>
-            <exception cref="!:RdfQueryException">Thrown if the Node cannot be converted to a Float</exception>
+            <exception cref="T:VDS.RDF.Query.RdfQueryException">Thrown if the Node cannot be converted to a Float</exception>
         </member>
         <member name="M:VDS.RDF.Nodes.IValuedNode.AsDouble">
             <summary>
             Gets the Double value of the Node
             </summary>
             <returns></returns>
-            <exception cref="!:RdfQueryException">Thrown if the Node cannot be converted to a Double</exception>
+            <exception cref="T:VDS.RDF.Query.RdfQueryException">Thrown if the Node cannot be converted to a Double</exception>
         </member>
         <member name="M:VDS.RDF.Nodes.IValuedNode.AsBoolean">
             <summary>
             Gets the Boolean value of the Node
             </summary>
             <returns></returns>
-            <exception cref="!:RdfQueryException">Thrown if the Node cannot be converted to a Boolean</exception>
+            <exception cref="T:VDS.RDF.Query.RdfQueryException">Thrown if the Node cannot be converted to a Boolean</exception>
         </member>
         <member name="M:VDS.RDF.Nodes.IValuedNode.AsDateTime">
             <summary>
             Gets the Date Time value of the Node
             </summary>
             <returns></returns>
-            <exception cref="!:RdfQueryException">Thrown if the Node cannot be converted to a Date Time</exception>
+            <exception cref="T:VDS.RDF.Query.RdfQueryException">Thrown if the Node cannot be converted to a Date Time</exception>
         </member>
         <member name="M:VDS.RDF.Nodes.IValuedNode.AsTimeSpan">
             <summary>
@@ -14697,6 +14729,12 @@
             </summary>
             <param name="variable">Variable</param>
         </member>
+        <member name="M:VDS.RDF.Query.Algebra.Multiset.SetVariableOrder(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Sets the variable ordering for the multiset
+            </summary>
+            <param name="variables">Variable Ordering</param>
+        </member>
         <member name="M:VDS.RDF.Query.Algebra.Multiset.Remove(System.Int32)">
             <summary>
             Removes a Set from the Multiset
@@ -15453,12 +15491,31 @@
             </summary>
             <param name="store">Triple Store</param>
         </member>
+        <member name="M:VDS.RDF.Parsing.Handlers.StoreHandler.HandleNamespaceInternal(System.String,System.Uri)">
+            <summary>
+            Handles namespaces by adding them to each graph
+            </summary>
+            <param name="prefix">Namespace Prefix</param>
+            <param name="namespaceUri">Namespace URI</param>
+            <returns></returns>
+        </member>
         <member name="M:VDS.RDF.Parsing.Handlers.StoreHandler.HandleTripleInternal(VDS.RDF.Triple)">
             <summary>
             Handles Triples by asserting them into the appropriate Graph creating the Graph if necessary
             </summary>
             <param name="t">Triple</param>
             <returns></returns>
+        </member>
+        <member name="M:VDS.RDF.Parsing.Handlers.StoreHandler.StartRdfInternal">
+            <summary>
+            Starts handling RDF
+            </summary>
+        </member>
+        <member name="M:VDS.RDF.Parsing.Handlers.StoreHandler.EndRdfInternal(System.Boolean)">
+            <summary>
+            Ends RDF handling and propogates all discovered namespaces to all discovered graphs
+            </summary>
+            <param name="ok">Whether parsing completed successfully</param>
         </member>
         <member name="P:VDS.RDF.Parsing.Handlers.StoreHandler.Store">
             <summary>
@@ -16504,6 +16561,12 @@
             </summary>
             <param name="writer">Writer</param>
         </member>
+        <member name="M:VDS.RDF.MimeTypesHelper.ApplyParserOptions(System.Object)">
+            <summary>
+            Applies global options to a parser
+            </summary>
+            <param name="parser">Parser</param>
+        </member>
         <member name="M:VDS.RDF.MimeTypesHelper.GetWriter(System.Collections.Generic.IEnumerable{System.String})">
             <summary>
             Selects an appropriate <see cref="T:VDS.RDF.IRdfWriter">IRdfWriter</see> based on the given MIME Types
@@ -16827,7 +16890,7 @@
             <returns></returns>
             <remarks>
             <para>
-            This is an alternative to using <see cref="!:Path.GetExtension()"/> which is designed to take into account known extensions which are used in conjunction with other extensions and mask the true extension, for example <strong>.gz</strong>
+            This is an alternative to using <see cref="M:System.IO.Path.GetExtension(System.String)"/> which is designed to take into account known extensions which are used in conjunction with other extensions and mask the true extension, for example <strong>.gz</strong>
             </para>
             <para>
             Consider the filename <strong>example.ttl.gz</strong>, obtaining the extension the standard way gives only <strong>.gz</strong> which is unhelpful since it doesn't actually tell us the underlying format of the data only that it is GZipped and if it is GZipped we almost certainly want to stream the data rather than read all into memory and heuristically detect the actual format.  Instead we'd like to get <strong>.ttl.gz</strong> as the file extension which is much more useful and this is what this function does.
@@ -18333,7 +18396,7 @@
             <summary>
             Internal method which evaluates the Graph Pattern
             </summary>
-            <param name="context">Evaluation Context</param>
+            <param name="origContext">Evaluation Context</param>
             <remarks>
             We only ever need to evaluate the Graph Pattern once to get the Results
             </remarks>
@@ -18376,82 +18439,20 @@
             Gets the Arguments of the Expression
             </summary>
         </member>
-        <member name="T:VDS.RDF.Query.Algebra.Project">
-            <summary>
-            Represents the Projection step of Query Evaluation
-            </summary>
-        </member>
-        <member name="M:VDS.RDF.Query.Algebra.Project.#ctor(VDS.RDF.Query.Algebra.ISparqlAlgebra,System.Collections.Generic.IEnumerable{VDS.RDF.Query.SparqlVariable})">
-            <summary>
-            Creates a new Projection
-            </summary>
-            <param name="pattern">Inner pattern</param>
-            <param name="variables">Variables that should be Projected</param>
-        </member>
-        <member name="M:VDS.RDF.Query.Algebra.Project.Evaluate(VDS.RDF.Query.SparqlEvaluationContext)">
-            <summary>
-            Applies the Projection to the results of Evaluating the Inner Pattern
-            </summary>
-            <param name="context">Evaluation Context</param>
-            <returns></returns>
-        </member>
-        <member name="M:VDS.RDF.Query.Algebra.Project.ToString">
-            <summary>
-            Gets the String representation of the Projection
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:VDS.RDF.Query.Algebra.Project.ToQuery">
-            <summary>
-            Converts the Algebra back to a SPARQL Query
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:VDS.RDF.Query.Algebra.Project.ToGraphPattern">
-            <summary>
-            Converts the Algebra to a Graph Pattern
-            </summary>
-            <returns></returns>
-            <exception cref="T:System.NotSupportedException">Thrown as this Algebra cannot be converted to a Graph Pattern</exception>
-        </member>
-        <member name="M:VDS.RDF.Query.Algebra.Project.Transform(VDS.RDF.Query.Optimisation.IAlgebraOptimiser)">
-            <summary>
-            Transforms the Inner Algebra using the given Optimiser
-            </summary>
-            <param name="optimiser">Optimiser</param>
-            <returns></returns>
-        </member>
-        <member name="P:VDS.RDF.Query.Algebra.Project.Variables">
-            <summary>
-            Gets the Variables used in the Algebra
-            </summary>
-        </member>
-        <member name="P:VDS.RDF.Query.Algebra.Project.InnerAlgebra">
-            <summary>
-            Gets the Inner Algebra
-            </summary>
-        </member>
-        <member name="P:VDS.RDF.Query.Algebra.Project.SparqlVariables">
-            <summary>
-            Gets the SPARQL Variables used
-            </summary>
-            <remarks>
-            If the Query supplied in the <see cref="T:VDS.RDF.Query.SparqlEvaluationContext">SparqlEvaluationContext</see> is non-null then it's Variables are used rather than these
-            </remarks>
-        </member>
         <member name="T:VDS.RDF.Query.Algebra.Select">
             <summary>
             Represents the Selection step of Query Evaluation
             </summary>
             <remarks>
-            Selection trims variables from the Multiset that are not needed in the final output.  This is separate from <see cref="T:VDS.RDF.Query.Algebra.Project">Project</see> so that all Variables are available for Ordering and Having clauses
+            Selection trims variables from the Multiset that are not needed in the final output.  This is separate from <see cref="!:Project">Project</see> so that all Variables are available for Ordering and Having clauses
             </remarks>
         </member>
-        <member name="M:VDS.RDF.Query.Algebra.Select.#ctor(VDS.RDF.Query.Algebra.ISparqlAlgebra,System.Collections.Generic.IEnumerable{VDS.RDF.Query.SparqlVariable})">
+        <member name="M:VDS.RDF.Query.Algebra.Select.#ctor(VDS.RDF.Query.Algebra.ISparqlAlgebra,System.Boolean,System.Collections.Generic.IEnumerable{VDS.RDF.Query.SparqlVariable})">
             <summary>
             Creates a new Select
             </summary>
             <param name="pattern">Inner Pattern</param>
+            <param name="selectAll">Whether we are selecting all variables</param>
             <param name="variables">Variables to Select</param>
         </member>
         <member name="M:VDS.RDF.Query.Algebra.Select.Evaluate(VDS.RDF.Query.SparqlEvaluationContext)">
@@ -18486,6 +18487,11 @@
             </summary>
             <param name="optimiser">Optimiser</param>
             <returns></returns>
+        </member>
+        <member name="P:VDS.RDF.Query.Algebra.Select.IsSelectAll">
+            <summary>
+            Does this operator select all variables?
+            </summary>
         </member>
         <member name="P:VDS.RDF.Query.Algebra.Select.InnerAlgebra">
             <summary>
@@ -19163,7 +19169,7 @@
             <returns></returns>
             <remarks>
             <para>
-            For In-Memory datasets the Graph returned from this property is no different from the Graph returned by the <see cref="!:InMemoryDataset.GetModifiableGraph">GetModifiableGraph()</see> method
+            For In-Memory datasets the Graph returned from this property is no different from the Graph returned by the <see cref="M:VDS.RDF.Query.Datasets.InMemoryDataset.GetModifiableGraphInternal(System.Uri)">GetModifiableGraphInternal()</see> method
             </para>
             </remarks>
         </member>
@@ -19722,6 +19728,11 @@
         <member name="P:VDS.RDF.Parsing.TurtleParser.TraceTokeniser">
             <summary>
             Gets/Sets whether Tokeniser Trace is written to the Console
+            </summary>
+        </member>
+        <member name="P:VDS.RDF.Parsing.TurtleParser.TokenQueueMode">
+            <summary>
+            Gets/Sets the token queue mode used
             </summary>
         </member>
         <member name="E:VDS.RDF.Parsing.TurtleParser.Warning">
@@ -21262,12 +21273,12 @@
             Handles the standard escapes supported in all the  UTF-8 based RDF serializations
             </summary>
         </member>
-        <member name="M:VDS.RDF.Parsing.Tokens.BaseTokeniser.HandleSparqlLocalNameEscapes">
+        <member name="M:VDS.RDF.Parsing.Tokens.BaseTokeniser.HandleComplexLocalNameEscapes">
             <summary>
-            Handles the special SPARQL escapes that can occur in a local name
+            Handles the complex escapes that can occur in a local name
             </summary>
             <remarks>
-            Unlike <see cref="!:BaseTokeniser.HandleEscapes()">HandleEscapes()</see> this only unescapes unicode escapes, other escapes are simply validated and passed through for later unescaping
+            Unlike <see cref="M:VDS.RDF.Parsing.Tokens.BaseTokeniser.HandleEscapes(VDS.RDF.Parsing.Tokens.TokeniserEscapeMode)">HandleEscapes()</see> this only unescapes unicode escapes, other escapes are simply validated and passed through for later unescaping
             </remarks>
         </member>
         <member name="M:VDS.RDF.Parsing.Tokens.BaseTokeniser.IsHexDigit(System.Char)">
@@ -22103,10 +22114,10 @@
             <strong>Note:</strong> This is a transactional implementation - this means that changes made are not persisted until you either call <see cref="M:VDS.RDF.PersistentTripleStore.Flush">Flush()</see> or you dispose of the instance.  Alternatively you may invoke the <see cref="M:VDS.RDF.PersistentTripleStore.Discard">Discard()</see> method to throw away changes made to the in-memory state.
             </para>
             <para>
-            The actual level of persistence provided will vary according to the <see cref="T:VDS.RDF.Storage.IStorageProvider">IStorageProvider</see> instance you use.  For example if the <see cref="!:IStorageProvider.DeleteGraph()">DeleteGraph()</see> method is not supported then Graph removals won't persist in the underlying store.  Similarily an instance which is read-only will allow you to pull out existing graphs from the store but won't persist any changes.
+            The actual level of persistence provided will vary according to the <see cref="T:VDS.RDF.Storage.IStorageProvider">IStorageProvider</see> instance you use.  For example if the <see cref="M:VDS.RDF.Storage.IStorageProvider.DeleteGraph(System.Uri)">DeleteGraph()</see> method is not supported then Graph removals won't persist in the underlying store.  Similarily an instance which is read-only will allow you to pull out existing graphs from the store but won't persist any changes.
             </para>
             <para>
-            The Contains() method of the underlying <see cref="T:VDS.RDF.BaseGraphCollection">BaseGraphCollection</see> has been overridden so that invoking Contains causes the Graph from the underlying store to be loaded if it exists, this means that operations like <see cref="!:PersistentTripleStore.HasGraph()">HasGraph()</see> may be slower than expected or cause applications to stop while they wait to load data from the store.
+            The Contains() method of the underlying <see cref="T:VDS.RDF.BaseGraphCollection">BaseGraphCollection</see> has been overridden so that invoking Contains causes the Graph from the underlying store to be loaded if it exists, this means that operations like <see cref="M:VDS.RDF.BaseTripleStore.HasGraph(System.Uri)">HasGraph()</see> may be slower than expected or cause applications to stop while they wait to load data from the store.
             </para>
             <h3>SPARQL Query Behaviour</h3>
             <para>
@@ -22667,7 +22678,7 @@
             <summary>
             Disposes of the Graph Collection
             </summary>
-            <remarks>Invokes the <see cref="!:IGraph.Dipose">Dispose()</see> method of all Graphs contained in the Collection</remarks>
+            <remarks>Invokes the <strong>Dispose()</strong> method of all Graphs contained in the Collection</remarks>
         </member>
         <member name="P:VDS.RDF.GraphCollection.Count">
             <summary>
@@ -22878,6 +22889,11 @@
             Gets the File Extensions associated with this Syntax
             </summary>
         </member>
+        <member name="P:VDS.RDF.MimeTypeDefinition.HasFileExtensions">
+            <summary>
+            Gets whether any file extensions are associated with this syntax
+            </summary>
+        </member>
         <member name="P:VDS.RDF.MimeTypeDefinition.CanonicalFileExtension">
             <summary>
             Gets/Sets the Canonical File Extension for this Syntax
@@ -23067,6 +23083,26 @@
             Helper Class which defines some Test Functions for testing the Unicode Category of Characters
             </summary>
         </member>
+        <member name="F:VDS.RDF.Parsing.UnicodeSpecsHelper.HighSurrogateStart">
+            <summary>
+            Start of high surrogate range
+            </summary>
+        </member>
+        <member name="F:VDS.RDF.Parsing.UnicodeSpecsHelper.HighSurrogateEnd">
+            <summary>
+            End of high surrogate range
+            </summary>
+        </member>
+        <member name="F:VDS.RDF.Parsing.UnicodeSpecsHelper.LowSurrogateStart">
+            <summary>
+            Start of low surrogate range
+            </summary>
+        </member>
+        <member name="F:VDS.RDF.Parsing.UnicodeSpecsHelper.LowSurrogateEnd">
+            <summary>
+            End of low surrogate range
+            </summary>
+        </member>
         <member name="M:VDS.RDF.Parsing.UnicodeSpecsHelper.IsLetter(System.Char)">
             <summary>
             Checks whether a given Character is considered a Letter
@@ -23095,11 +23131,51 @@
             <param name="c">Character to Test</param>
             <returns></returns>
         </member>
+        <member name="M:VDS.RDF.Parsing.UnicodeSpecsHelper.IsHighSurrogate(System.Char)">
+            <summary>
+            Indicates whether the specified <see cref="T:System.Char"/> object is a high surrogate.
+            </summary>
+            
+            <returns>
+            true if the numeric value of the <paramref name="c"/> parameter ranges from U+D800 through U+DBFF; otherwise, false.
+            </returns>
+            <param name="c">The Unicode character to evaluate. </param><filterpriority>1</filterpriority>
+        </member>
+        <member name="M:VDS.RDF.Parsing.UnicodeSpecsHelper.IsLowSurrogate(System.Char)">
+            <summary>
+            Indicates whether the specified <see cref="T:System.Char"/> object is a low surrogate.
+            </summary>
+            
+            <returns>
+            true if the numeric value of the <paramref name="c"/> parameter ranges from U+DC00 through U+DFFF; otherwise, false.
+            </returns>
+            <param name="c">The character to evaluate. </param><filterpriority>1</filterpriority>
+        </member>
+        <member name="M:VDS.RDF.Parsing.UnicodeSpecsHelper.ConvertToUtf32(System.Char,System.Char)">
+            <summary>
+            Converts the value of a UTF-16 encoded surrogate pair into a Unicode code point.
+            </summary>
+            
+            <returns>
+            The 21-bit Unicode code point represented by the <paramref name="highSurrogate"/> and <paramref name="lowSurrogate"/> parameters.
+            </returns>
+            <param name="highSurrogate">A high surrogate code point (that is, a code point ranging from U+D800 through U+DBFF). </param>
+            <param name="lowSurrogate">A low surrogate code point (that is, a code point ranging from U+DC00 through U+DFFF). </param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="highSurrogate"/> is not in the range U+D800 through U+DBFF, or <paramref name="lowSurrogate"/> is not in the range U+DC00 through U+DFFF. </exception>
+            <filterpriority>1</filterpriority>
+        </member>
         <member name="M:VDS.RDF.Parsing.UnicodeSpecsHelper.ConvertToChar(System.String)">
             <summary>
             Converts a Hex Escape into the relevant Unicode Character
             </summary>
             <param name="hex">Hex code</param>
+            <returns></returns>
+        </member>
+        <member name="M:VDS.RDF.Parsing.UnicodeSpecsHelper.ConvertToChars(System.String)">
+            <summary>
+            Converts a Hex Escape into the relevant UTF-16 codepoints
+            </summary>
+            <param name="hex"></param>
             <returns></returns>
         </member>
         <member name="T:VDS.RDF.Writing.TriGWriter">
@@ -23111,7 +23187,7 @@
             For efficiency the TriG Writer splits it's writing over several threads (currently 4), these threads share a reference to a Context object which gives Global writing context eg. the target <see cref="T:System.IO.TextWriter">TextWriter</see> being written to.  Each thread generates temporary local writing contexts as it goes along, each of these is scoped to writing a specific Graph.  Graphs are written to a <see cref="T:VDS.RDF.Writing.StringWriter">StringWriter</see> so the output for each Graph is built completely and then written in one go to the <see cref="T:System.IO.TextWriter">TextWriter</see> specified as the target of the writing in the global context.
             </para>
             </remarks>
-            <threadsafety instance="true">Designed to be Thread Safe - should be able to call <see cref="M:VDS.RDF.Writing.TriGWriter.Save(VDS.RDF.ITripleStore,System.String)">Save()</see> from several threads with no issue.  See Remarks for potential performance impact of this.</threadsafety>
+            <threadsafety instance="true">Designed to be Thread Safe - should be able to call <see cref="M:VDS.RDF.Writing.TriGWriter.Save(VDS.RDF.ITripleStore,System.IO.TextWriter)">Save()</see> from several threads with no issue.  See Remarks for potential performance impact of this.</threadsafety>
         </member>
         <member name="T:VDS.RDF.Writing.IHighSpeedWriter">
             <summary>
@@ -23229,15 +23305,10 @@
             </summary>
             <param name="globalContext">Context for writing the Store</param>
         </member>
-        <member name="T:VDS.Common.NamespaceDoc">
-            <summary>
-            Top Level Namespace for common data structures that are using throughout the dotNetRDF library but are not necessarily RDF specific
-            </summary>
-        </member>
         <member name="T:VDS.RDF.NamespaceDoc">
             <summary>
             <para>
-            Top Level Namespace for the <strong>dotNetRDF Library</strong> which embodies a simple but powerful API for manipulating RDF.   
+            Top Level Namespace for the <strong>dotNetRDF Library</strong> which embodies a simple but powerful API for working with RDF and SPARQL.   
             </para>
             <para>
             Specific Namespaces within the Hierarchy provide <see cref="N:VDS.RDF.Parsing">Parsing</see> and <see cref="N:VDS.RDF.Writing">Serialization</see> functionality along with a host of related classes to support these functions.
@@ -23255,16 +23326,12 @@
                 <li>Dydra</li>
                 <li>4store</li>
                 <li>Fuseki</li>
-                <li>Joseki</li>
                 <li>Any Sesame HTTP Protocol compliant store e.g. Sesame, OWLIM</li>
                 <li>Any SPARQL Graph Store HTTP Protocol for RDF Graph Management compliant stores</li>
+                <li>Any SPARQL store that exposes a Query and/or Update endpoint</li>
                 <li>Stardog</li>
                 <li>Virtuoso</li>
             </ul>
-            </para>
-            <h4>SQL Storage</h4>
-            <para>
-            <strong>Warning:</strong> The SQL Storage feature is now deprecated and no longer included in the release, please transition to one of the aforementioned 3rd party triple stores which are far more performant and all use the same <see cref="!:IStorageProvider">IStorageProvider</see> interface.  Do not use this support for any new development
             </para>
             <h3>ASP.Net Integration</h3>
             <para>
@@ -23280,32 +23347,7 @@
             </para>
             <h3>Notes</h3>
             <para>
-            dotNetRDF is now in Beta, this means it should be relatively stable for production scenarios but that the API is subject to changes in subsequent releases should we feel it necessary.  As it is a Beta release users should be aware that the software will not be bug free.  While we continually work to improve the quality of this library and to eliminate bugs as we find them we are at the same time attempting to enhance the library by adding more functionality so it is inevitable that some bugs will persist.  Please help us improve this library by emailing us when you find a bug, you can use the <a href="mailto:dotnetrdf-bugs@lists.sourceforge.net">Bug Reports list</a> to report bugs, the <a href="mailto:dotnetrdf-support@lists.sourceforge.net">Support list</a> to ask questions and the <a href="mailto:dotnetrdf-develop@lists.sourceforge.net">Developer list</a> to request new features or discuss development plans (all these are SourceForge mailing lists which require subscription).
-            </para>
-            <para>
-            Be aware that the SPARQL support <em>in particular</em> represents our efforts to match the latest editors drafts of the SPARQL 1.1 specifications.  These specifications are changing all the time and the SPARQL support in this release will not necessarily reflect the very latest features at your time of reading until SPARQL 1.1 becomes fully standardised.
-            </para>
-            <h4>Breaking Changes</h4>
-            <h5>0.7.x vs 0.6.x API</h5>
-            <para>
-            The 0.7.x release makes some substantial changes to the API though we have tried to make these backwards compatible as far as possible.  The key breaking changes are the removal of several obsoleted APIs around selection and node collections, rather than providing an explicit node collection graphs now simply allow you to obtain an enumerable over the Nodes of the Graph.
-            </para>
-            <para>
-            The more noticeable but mostly backwards compatible change is the reorganisation of the <see cref="N:VDS.RDF.Storage"/> namespace, the interfaces in that namespace have been renamed to have more descriptive and consistent naming and we have introduced new interfaces for asynchronous access to storage.  The old interfaces remain as marker interfaces which inherit from the new interfaces so existing code will not need to be changed but will result in compiler warnings reminding you to upgrade to the new interface names.  The following table summarizes the old and new interface names:
-            </para>
-            <table class="dtTABLE" cellspacing="0">
-                <tr><th>Old Name</th><th>New Name</th></tr>
-                <tr><td><see cref="!:IGenericIOManager"/></td><td><see cref="!:IStorageProvider"/></td></tr>
-                <tr><td><see cref="!:IQueryableGenericIOManager"/></td><td><see cref="!:IQueryableStorage"/></td></tr>
-                <tr><td><see cref="!:IUpdateableGenericIOManager"/></td><td><see cref="!:IUpdateableStorage"/></td></tr>
-                <tr><td><see cref="!:IMultiStoreGenericIOManager"/></td><td><see cref="!:IStorageServer"/></td></tr>
-            </table>
-            <para>
-            There are also some improvements to the <see cref="T:VDS.RDF.IStoreReader"/> and <see cref="T:VDS.RDF.IStoreWriter"/> interfaces such that they can now be used to read/write directly from files and streams.  The old <see cref="!:IStorageParams"/> APIs are marked as obsolete and will be removed in future releases, please update your code to use the newer methods which are more user friendly.
-            </para>
-            <h5>0.6.x vs 0.5.x API</h5>
-            <para>
-            The 0.6.x release has limited breaking changes and these are primarily in the internals of the SPARQL engine and so should only affect advanced users of the API.  Specifically the <see cref="!:VDS.RDF.Query.Dataset.ISparqlDataset"/> interface was updated and the <see cref="T:VDS.RDF.Query.Expressions.ISparqlExpression"/> interface refactored in terms of the new <see cref="!:IValuedNode"/> interface.  A variety of methods and classes previously marked obsolete are not either removed or marked obsolete unusable.
+            dotNetRDF 1.0.0 is now considered a stable release, this means it should be stable for production scenarios.  However it is open source software and despite our best efforts there may still be bugs.  Please help us improve this library by emailing us when you find a bug, you can use the <a href="mailto:dotnetrdf-bugs@lists.sourceforge.net">Bug Reports list</a> to report bugs, the <a href="mailto:dotnetrdf-support@lists.sourceforge.net">Support list</a> to ask questions and the <a href="mailto:dotnetrdf-develop@lists.sourceforge.net">Developer list</a> to request new features or discuss development plans (all these are SourceForge mailing lists which require subscription).
             </para>
             <h4>Alternative Builds</h4>
             <h5>Mono Build</h5>
@@ -23354,29 +23396,29 @@
         </member>
         <member name="T:VDS.RDF.Nodes.NamespaceDoc">
             <summary>
-            Namespace for specialised node implementations and the <see cref="T:VDS.RDF.Nodes.IValuedNode"/> interface, these implementations are primarily used internally in the SPARQL engine.  These all derive from the standard Node implementations so can be used interchangeably with those if desired.
+            Namespace for specialised node implementations and the <see cref="T:VDS.RDF.Nodes.IValuedNode"/> interface, this is an extension of the <see cref="T:VDS.RDF.INode"/> interface that provides strongly typed access to the value of a node.
+            <para>
+            These implementations are primarily used internally in the SPARQL engine, however as these all derive from the standard <see cref="T:VDS.RDF.INode"/> implementations they can be used interchangeably with those if desired.
+            </para>
             </summary>
         </member>
         <member name="T:VDS.RDF.Ontology.NamespaceDoc">
             <summary>
             <para>
-            The Ontology Namespace is based upon <a href="http://jena.sourceforge.net/ontology/">Jena's Ontology API</a> and is an experimental part of the library.  It allows for a more resource-centric way of manipulating RDF graphs within the dotNetRDF API.
+            The Ontology Namespace is based upon <a href="http://jena.sourceforge.net/ontology/">Jena's Ontology API</a>.  It allows for a more ontology-centric way of manipulating RDF graphs within the dotNetRDF API.
             </para>
             <para>
             The <see cref="T:VDS.RDF.Ontology.OntologyResource">OntologyResource</see> is the base class of resources and allows for the retrieval and manipulation of various common properties of a resource.  More specialised classes like <see cref="T:VDS.RDF.Ontology.OntologyClass">OntologyClass</see> and <see cref="T:VDS.RDF.Ontology.OntologyProperty">OntologyProperty</see> are used to work with classes and properties etc.
-            </para>
-            <para>
-            One key feature of this part of the API is the <see cref="T:VDS.RDF.Ontology.ReasonerGraph">ReasonerGraph</see> which allows you to wrap an existing Graph with a reasoner to get a unified view over the original Triples and materialised inferences without modifying your original Graph.
             </para>
             </summary>
         </member>
         <member name="T:VDS.RDF.Parsing.NamespaceDoc">
             <summary>
             <para>
-            Namespace for Parsing Classes and variety of supporting Classes.
+            Namespace for Parsing classes and variety of supporting Classes.
             </para>
             <para>
-            Classes here are primarily implementations of <see cref="!:ITokeniser">ITokeniser</see> and <see cref="T:VDS.RDF.IRdfReader">IRdfReader</see> with some implementations of <see cref="T:VDS.RDF.IStoreReader">IStoreReader</see> and a few other specialised classes.
+            Classes here are primarily implementations of <see cref="T:VDS.RDF.IRdfReader">IRdfReader</see> with some implementations of <see cref="T:VDS.RDF.IStoreReader">IStoreReader</see> and a few other specialised classes.
             </para>
             <para>
             Has child namespaces <see cref="N:VDS.RDF.Parsing.Events">Events</see> and <see cref="N:VDS.RDF.Parsing.Tokens">Tokens</see> for supporting Event and Token based Parsing.
@@ -23401,7 +23443,7 @@
             Namespace for RDF and SPARQL Results Handlers
             </para>
             <para>
-            Handlers are part of a major parser subsystem rewrite introduced in the 0.4.1 release.  They allow you to parse RDF, RDF Datasets and SPARQL Results in such a way that you can both take arbitrary actions with the data and choose to end parsing early.
+            Handlers are a powerful low level part of the parsers API, they allow you to parse RDF, RDF Datasets and SPARQL Results in such a way that you can take arbitrary actions with the data and choose to end parsing as soon as desired.
             </para>
             </summary>
         </member>
@@ -23422,7 +23464,7 @@
         <member name="T:VDS.RDF.Query.NamespaceDoc">
             <summary>
             <para>
-            Namespace for Query Classes which provide Querying capabilities on RDF Graphs
+            Namespace for Query Classes which provide querying capabilities on RDF.
             </para>
             <para>
             Query capabilities are centered around support for the SPARQL standard.  You can execute full SPARQL 1.1 queries over in-memory data or submit queries to remote SPARQL endpoints.
@@ -23636,7 +23678,7 @@
             Namespace which provides a client for interacting with a Pellet Server
             </para>
             <para>
-            Due to Pellet Server being a relatively new product it is currently only possible to reason over external knowledge bases on a Pellet Server and not to use Pellet to reason over in-memory data.  As Pellet Server is updated in the future this client will be updated to take advantage of those updates and to eventually provide for in-memory reasoning.  You may also want to consider using the <see cref="!:StardogConnector"/> which is the triple store from the same people who developed Pellet and which integrates some Pellet capabilities.
+            Due to Pellet Server being a relatively new product it is currently only possible to reason over external knowledge bases on a Pellet Server and not to use Pellet to reason over in-memory data.  As Pellet Server is updated in the future this client will be updated to take advantage of those updates and to eventually provide for in-memory reasoning.  You may also want to consider using the <see cref="T:VDS.RDF.Storage.StardogConnector"/> which is the triple store from the same people who developed Pellet and which integrates some Pellet capabilities.
             </para>
             </summary>
         </member>
@@ -23707,16 +23749,6 @@
             <para>
             Storage is managed via the <see cref="T:VDS.RDF.Storage.IStorageProvider">IStorageProvider</see> interface, see the <a href="http://www.dotnetrdf.org/content.asp?pageID=Triple%20Store%20Integration">Triple Store Integration</a> documentation on the main website for more detail.
             </para>
-            <para>
-            Note that this is the new name for the old <see cref="!:IGenericIOManager"/> interface, the following table summarizes name changes to the interfaces in this API which were made in the 0.7.x releases.  Note that in the 0.7.x initial release the old interface names were preserved as marker interfaces to enable backwards compatibility with existing code.
-            </para>
-            <table class="dtTABLE" cellspacing="0">
-                <tr><th>Old Name</th><th>New Name</th></tr>
-                <tr><td><see cref="!:IGenericIOManager"/></td><td><see cref="T:VDS.RDF.Storage.IStorageProvider"/></td></tr>
-                <tr><td><see cref="!:IQueryableGenericIOManager"/></td><td><see cref="T:VDS.RDF.Storage.IQueryableStorage"/></td></tr>
-                <tr><td><see cref="!:IUpdateableGenericIOManager"/></td><td><see cref="T:VDS.RDF.Storage.IUpdateableStorage"/></td></tr>
-                <tr><td><see cref="!:IMultiStoreGenericIOManager"/></td><td><see cref="!:IStorageServer"/></td></tr>
-            </table>
             <h3>Data Provider Libraries</h3>
             <para>
             From the 0.5.0 release onwards any triple store integration that requires additional dependencies are provided with their own library to reduce dependencies in the Core library and allow that functionality to be optional.  The following stores are currently provided in separate libraries:
@@ -23749,14 +23781,14 @@
         <member name="T:VDS.RDF.Storage.Management.Provisioning.Sesame.NamespaceDoc">
             <summary>
             <para>
-            Namespace containing implementations of <see cref="!:IStorageTemplate"/> which provide templates for creating new stores on Sesame servers
+            Namespace containing implementations of <see cref="T:VDS.RDF.Storage.Management.Provisioning.IStoreTemplate"/> which provide templates for creating new stores on Sesame servers
             </para>
             </summary>
         </member>
         <member name="T:VDS.RDF.Storage.Management.Provisioning.Stardog.NamespaceDoc">
             <summary>
             <para>
-            Namespace containing implementations of <see cref="!:IStorageTemplate"/> which provide templates for creating new stores on Stardog servers
+            Namespace containing implementations of <see cref="T:VDS.RDF.Storage.Management.Provisioning.IStoreTemplate"/> which provide templates for creating new stores on Stardog servers
             </para>
             </summary>
         </member>
@@ -24440,6 +24472,37 @@
             Gets the operator type
             </summary>
         </member>
+        <member name="T:VDS.RDF.Query.Algebra.SetDistinctnessComparer">
+            <summary>
+            Comparer for checking whether sets are distinct, check may either be using the entire set or by using only a subset of variables
+            </summary>
+        </member>
+        <member name="M:VDS.RDF.Query.Algebra.SetDistinctnessComparer.#ctor">
+            <summary>
+            Creates a new comparer that compares across all variables
+            </summary>
+        </member>
+        <member name="M:VDS.RDF.Query.Algebra.SetDistinctnessComparer.#ctor(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new comparer that compare only on the specific variables
+            </summary>
+            <param name="variables">Variables</param>
+        </member>
+        <member name="M:VDS.RDF.Query.Algebra.SetDistinctnessComparer.Equals(VDS.RDF.Query.Algebra.ISet,VDS.RDF.Query.Algebra.ISet)">
+            <summary>
+            Determines whether the given sets are equal
+            </summary>
+            <param name="x">First Set</param>
+            <param name="y">Second Set</param>
+            <returns>True if sets are equal, false otherwise</returns>
+        </member>
+        <member name="M:VDS.RDF.Query.Algebra.SetDistinctnessComparer.GetHashCode(VDS.RDF.Query.Algebra.ISet)">
+            <summary>
+            Gets the hash code for a set
+            </summary>
+            <param name="obj">Set</param>
+            <returns>Hash Code</returns>
+        </member>
         <member name="T:VDS.RDF.Query.Algebra.PartitionedMultiset">
             <summary>
             Implementation of a multiset which is suitable for multiple threads to write to in parallel, useful for parallelizing certain operations
@@ -24501,6 +24564,12 @@
             Adds a Variable to the multiset
             </summary>
             <param name="variable">Variable</param>
+        </member>
+        <member name="M:VDS.RDF.Query.Algebra.PartitionedMultiset.SetVariableOrder(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Sets the variable ordering for the multiset
+            </summary>
+            <param name="variables">Variable Ordering</param>
         </member>
         <member name="M:VDS.RDF.Query.Algebra.PartitionedMultiset.Remove(System.Int32)">
             <summary>
@@ -27618,7 +27687,7 @@
             </summary>
             <param name="attr">Attribute to Test</param>
             <returns>True if is an rdf:ID attribute</returns>
-            <remarks>Does some validation on ID value but other validation occurs in the <see cref="!:ValidateID()">ValidateID</see> method which is called at other points in the Parsing</remarks>
+            <remarks>Does some validation on ID value but other validation occurs at other points in the Parsing</remarks>
         </member>
         <member name="M:VDS.RDF.Parsing.RdfXmlSpecsHelper.IsNodeIDAttribute(VDS.RDF.Parsing.Events.RdfXml.AttributeEvent)">
             <summary>
@@ -27626,7 +27695,7 @@
             </summary>
             <param name="attr">Attribute to Test</param>
             <returns>True if is an rdf:nodeID attribute</returns>
-            <remarks>Does some validation on ID value but other validation occurs in the <see cref="!:ValidateID()">ValidateID</see> method which is called at other points in the Parsing</remarks>
+            <remarks>Does some validation on ID value but other validation occurs at other points in the Parsing</remarks>
         </member>
         <member name="M:VDS.RDF.Parsing.RdfXmlSpecsHelper.IsAboutAttribute(VDS.RDF.Parsing.Events.RdfXml.AttributeEvent)">
             <summary>
@@ -27662,7 +27731,6 @@
             </summary>
             <param name="value">ID Value to Test</param>
             <returns>True if the ID is valid</returns>
-            <remarks>Actual Validation conditions on IDs are stricter than this and this is handled separately by the <see cref="!:ValidateID()">ValidateID</see> method</remarks>
         </member>
         <member name="M:VDS.RDF.Parsing.RdfXmlSpecsHelper.IsRdfUriReference(System.String)">
             <summary>
@@ -28737,7 +28805,7 @@
             </summary>
             <remarks>
             <para>
-            Allows for users of the Library to implement and register Custom Expression Factories which can generate Expressions for their own Extension functions which they wish to use in their SPARQL queries.   Custom factories may be globally scoped by registering them with the <see cref="M:VDS.RDF.Query.Expressions.SparqlExpressionFactory.AddCustomFactory(VDS.RDF.Query.Expressions.ISparqlCustomExpressionFactory)">AddCustomFactory()</see> method or locally by passing them to the three argument constructor of the <see cref="M:VDS.RDF.Query.Expressions.SparqlExpressionFactory.CreateExpression(System.Uri,System.Collections.Generic.List{VDS.RDF.Query.Expressions.ISparqlExpression})">CreateExpression()</see> method.
+            Allows for users of the Library to implement and register Custom Expression Factories which can generate Expressions for their own Extension functions which they wish to use in their SPARQL queries.   Custom factories may be globally scoped by registering them with the <see cref="M:VDS.RDF.Query.Expressions.SparqlExpressionFactory.AddCustomFactory(VDS.RDF.Query.Expressions.ISparqlCustomExpressionFactory)">AddCustomFactory()</see> method or locally by passing them to the three argument constructor of the <see cref="M:VDS.RDF.Query.Expressions.SparqlExpressionFactory.CreateExpression(System.Uri,System.Collections.Generic.List{VDS.RDF.Query.Expressions.ISparqlExpression},System.Collections.Generic.IEnumerable{VDS.RDF.Query.Expressions.ISparqlCustomExpressionFactory})">CreateExpression()</see> method.
             </para>
             </remarks>
         </member>
@@ -29080,7 +29148,7 @@
             <param name="n">Node to copy</param>
             <param name="target">Target Graph</param>
             <returns></returns>
-            <remarks>Shorthand for the <see cref="M:VDS.RDF.Tools.CopyNode(VDS.RDF.INode,VDS.RDF.IGraph,System.Boolean)">Tools.CopyNode()</see> method</remarks>
+            <remarks>Shorthand for the <see cref="M:VDS.RDF.Tools.CopyNode(VDS.RDF.INode,VDS.RDF.IGraph)">Tools.CopyNode()</see> method</remarks>
         </member>
         <member name="M:VDS.RDF.Extensions.CopyNode(VDS.RDF.INode,VDS.RDF.IGraph,System.Boolean)">
             <summary>
@@ -29109,7 +29177,7 @@
             <param name="target">Target Graph</param>
             <param name="keepOriginalGraphUri">Indicates whether Nodes should preserve the Graph Uri of the Graph they originated from</param>
             <returns></returns>
-            <remarks>Shorthand for the <see cref="M:VDS.RDF.Tools.CopyTriple(VDS.RDF.Triple,VDS.RDF.IGraph)">Tools.CopyTriple()</see> method</remarks>
+            <remarks>Shorthand for the <see cref="M:VDS.RDF.Tools.CopyTriple(VDS.RDF.Triple,VDS.RDF.IGraph,System.Boolean)">Tools.CopyTriple()</see> method</remarks>
         </member>
         <member name="M:VDS.RDF.Extensions.MapTriple(VDS.RDF.Triple,VDS.RDF.IGraph,System.Collections.Generic.Dictionary{VDS.RDF.INode,VDS.RDF.INode})">
             <summary>
@@ -32435,6 +32503,11 @@
             Controls whether Parser progress will be traced by writing output to the Console
             </summary>
         </member>
+        <member name="P:VDS.RDF.Parsing.NTriplesParser.TokenQueueMode">
+            <summary>
+            Gets/Sets the token queue mode used
+            </summary>
+        </member>
         <member name="E:VDS.RDF.Parsing.NTriplesParser.Warning">
             <summary>
             Event which is raised when there is a non-fatal issue with the NTriples being parsed
@@ -32651,7 +32724,7 @@
         </member>
         <member name="P:VDS.RDF.Storage.Management.Provisioning.Stardog.BaseStardogTemplate.PersistIndexesSynchronously">
             <summary>
-            Gets/Sets whether to
+            Gets/Sets whether to persist indexes synchronously
             </summary>
         </member>
         <member name="P:VDS.RDF.Storage.Management.Provisioning.Stardog.BaseStardogTemplate.AutoUpdateStatistics">
@@ -33656,24 +33729,6 @@
             <param name="errorMsg">Error Message</param>
             <param name="cause">Exception which caused this Exception</param>
         </member>
-        <member name="T:VDS.RDF.Storage.TalisException">
-            <summary>
-            Class of exceptions that may occur when interacting with the Talis Platform
-            </summary>
-        </member>
-        <member name="M:VDS.RDF.Storage.TalisException.#ctor(System.String)">
-            <summary>
-            Creates a new Talis Exception
-            </summary>
-            <param name="message">Error Message</param>
-        </member>
-        <member name="M:VDS.RDF.Storage.TalisException.#ctor(System.String,System.Exception)">
-            <summary>
-            Creates a new Talis Exception
-            </summary>
-            <param name="message">Error Message</param>
-            <param name="cause">Exception that caused this exception to be thrown</param>
-        </member>
         <member name="T:VDS.RDF.Update.SparqlUpdateException">
             <summary>
             Class of exceptions that may occur when performing SPARQL Updates
@@ -33726,7 +33781,7 @@
             Class for representing malformed SPARQL Updates
             </summary>
             <remarks>
-            This is distinct from a <see cref="!:RdfParseException">RdfParseException</see> as it is possible for an update to be syntactically valid but semantically malformed
+            This is distinct from a <see cref="T:VDS.RDF.Parsing.RdfParseException">RdfParseException</see> as it is possible for an update to be syntactically valid but semantically malformed
             </remarks>
         </member>
         <member name="M:VDS.RDF.Update.SparqlUpdateMalformedException.#ctor(System.String)">
@@ -33855,7 +33910,7 @@
             </summary>
             <remarks>
             <para>
-            This is a fast writer based on the fast writing technique used in the other non-RDF/XML Writers.  While it is faster than the <see cref="!:FastRdfXmlWriter">FastRdfXmlWriter</see> achieving a speed of around 42,000 Triples/second the syntax produced is not as compressed in some cases as that writer.  The main advantage of this writer is that it is entirely streaming so it uses much less memory than the <see cref="!:FastRdfXmlWriter">FastRdfXmlWriter</see> which has to build the entire XML DOM in-memory prior to serialization.
+            This is a fast writer based on the fast writing technique used in the other non-RDF/XML Writers.
             </para>
             <para>
             <strong>Note:</strong> If the Graph to be serialized makes heavy use of collections it may result in a StackOverflowException.  To address this set the <see cref="P:VDS.RDF.Writing.RdfXmlWriter.CompressionLevel">CompressionLevel</see> property to &lt; 5
@@ -34301,6 +34356,12 @@
             <param name="callback">Callback to invoke when the update completes</param>
             <param name="state">State to pass to the callback</param>
         </member>
+        <member name="M:VDS.RDF.Update.SparqlRemoteUpdateEndpoint.SerializeConfiguration(VDS.RDF.Configuration.ConfigurationSerializationContext)">
+            <summary>
+            Serializes configuration for the endpoint
+            </summary>
+            <param name="context">Serialization Context</param>
+        </member>
         <member name="P:VDS.RDF.Update.SparqlRemoteUpdateEndpoint.HttpMode">
             <summary>
             Gets/Sets the HTTP Method used for requests
@@ -34673,7 +34734,7 @@
             </summary>
             <remarks>
             <para>
-            Unlike Query Optimisation multiple Algebra Optimisations may apply.  Algebra optimisers may also be specified and apply locally by the use of the relevant properties on the <see cref="!:SparqlQueryParser">SparqlQueryParser</see> and <see cref="T:VDS.RDF.Query.SparqlQuery">SparqlQuery</see> classes.  Those specified on a parser will automatically be passed through to all queries parsed by the parser.  Locally specified optimisers apply prior to globally specified ones.
+            Unlike Query Optimisation multiple Algebra Optimisations may apply.  Algebra optimisers may also be specified and apply locally by the use of the relevant properties on the <see cref="T:VDS.RDF.Parsing.SparqlQueryParser">SparqlQueryParser</see> and <see cref="T:VDS.RDF.Query.SparqlQuery">SparqlQuery</see> classes.  Those specified on a parser will automatically be passed through to all queries parsed by the parser.  Locally specified optimisers apply prior to globally specified ones.
             </para>
             </remarks>
         </member>
@@ -35187,6 +35248,17 @@
             </para>
             </remarks>
         </member>
+        <member name="M:VDS.RDF.Parsing.NQuadsParser.#ctor">
+            <summary>
+            Creates a new NQuads parser
+            </summary>
+        </member>
+        <member name="M:VDS.RDF.Parsing.NQuadsParser.#ctor(VDS.RDF.Parsing.Tokens.TokenQueueMode)">
+            <summary>
+            Creates a new NQuads parser
+            </summary>
+            <param name="queueMode">Token Queue Mode</param>
+        </member>
         <member name="M:VDS.RDF.Parsing.NQuadsParser.Load(VDS.RDF.ITripleStore,System.String)">
             <summary>
             Loads a RDF Dataset from the NQuads input into the given Triple Store
@@ -35230,6 +35302,11 @@
         <member name="P:VDS.RDF.Parsing.NQuadsParser.TraceTokeniser">
             <summary>
             Gets/Sets whether Tokeniser Tracing is used
+            </summary>
+        </member>
+        <member name="P:VDS.RDF.Parsing.NQuadsParser.TokenQueueMode">
+            <summary>
+            Gets/Sets the token queue mode used
             </summary>
         </member>
         <member name="E:VDS.RDF.Parsing.NQuadsParser.Warning">
@@ -35324,10 +35401,10 @@
             </summary>
             <remarks>
             <para>
-            An in memory Triple Store will typically load most of the Graphs and consequently Triples contained within it into Memory as the in memory SPARQL implementation only operates over the part of the Triple Store loaded in memory.  This being said there is no reason why an in memory store can't provide a Snapshot view of an underlying store to allow only the relevant parts of Store to be loaded and queried (the <see cref="!:OnDemandTripleStore">OnDemandTripleStore</see> does just this)
+            An in memory Triple Store will typically load most of the Graphs and consequently Triples contained within it into Memory as the in memory SPARQL implementation only operates over the part of the Triple Store loaded in memory.  This being said there is no reason why an in memory store can't provide a Snapshot view of an underlying store to allow only the relevant parts of Store to be loaded and queried.
             </para>
             <para>
-            All the Selection Methods which do not specify a subset of Graphs on such a Triple Store <strong>should</strong> operate over the <see cref="!:IInMemoryQueryableStore.QueryTriples">QueryTriples</see> enumerable
+            All the Selection Methods which do not specify a subset of Graphs on such a Triple Store <strong>should</strong> operate over the entire store
             </para>
             </remarks>
         </member>
@@ -35488,6 +35565,14 @@
             </summary>
             <param name="query">SPARQL Query as an unparsed string</param>
             <returns></returns>
+            <remarks>
+            <para>
+            This method of making queries often leads to no results because of misconceptions about what data is being queries.  dotNetRDF's SPARQL engine only queries the default unnamed graph of the triple store (the graph added with a null URI) by default unless your query uses FROM clauses to change the default graph or you use GRAPH clauses to access named graphs in the store.  Therefore a common mistake is to add a single graph to the store and then query the store which typically results in no results because usually the added graph is named and so is not queried.
+            </para>
+            <para>
+            We recommend using a <see cref="T:VDS.RDF.Query.ISparqlQueryProcessor"/> instead for making queries over in-memory data since using our standard implementation (<see cref="T:VDS.RDF.Query.LeviathanQueryProcessor"/>) affords you much more explicit control over which graphs are queried.
+            </para>
+            </remarks>
         </member>
         <member name="M:VDS.RDF.IInMemoryQueryableStore.ExecuteQuery(VDS.RDF.Query.SparqlQuery)">
             <summary>
@@ -35495,6 +35580,14 @@
             </summary>
             <param name="query">SPARQL Query as a <see cref="T:VDS.RDF.Query.SparqlQuery">SparqlQuery</see> instance</param>
             <returns></returns>
+            <remarks>
+            <para>
+            This method of making queries often leads to no results because of misconceptions about what data is being queries.  dotNetRDF's SPARQL engine only queries the default unnamed graph of the triple store (the graph added with a null URI) by default unless your query uses FROM clauses to change the default graph or you use GRAPH clauses to access named graphs in the store.  Therefore a common mistake is to add a single graph to the store and then query the store which typically results in no results because usually the added graph is named and so is not queried.
+            </para>
+            <para>
+            We recommend using a <see cref="T:VDS.RDF.Query.ISparqlQueryProcessor"/> instead for making queries over in-memory data since using our standard implementation (<see cref="T:VDS.RDF.Query.LeviathanQueryProcessor"/>) affords you much more explicit control over which graphs are queried.
+            </para>
+            </remarks>
         </member>
         <member name="M:VDS.RDF.IInMemoryQueryableStore.ExecuteQuery(VDS.RDF.IRdfHandler,VDS.RDF.ISparqlResultsHandler,System.String)">
             <summary>
@@ -35504,6 +35597,14 @@
             <param name="resultsHandler">Results Handler</param>
             <param name="query">SPARQL Query as an unparsed string</param>
             <returns></returns>
+            <remarks>
+            <para>
+            This method of making queries often leads to no results because of misconceptions about what data is being queries.  dotNetRDF's SPARQL engine only queries the default unnamed graph of the triple store (the graph added with a null URI) by default unless your query uses FROM clauses to change the default graph or you use GRAPH clauses to access named graphs in the store.  Therefore a common mistake is to add a single graph to the store and then query the store which typically results in no results because usually the added graph is named and so is not queried.
+            </para>
+            <para>
+            We recommend using a <see cref="T:VDS.RDF.Query.ISparqlQueryProcessor"/> instead for making queries over in-memory data since using our standard implementation (<see cref="T:VDS.RDF.Query.LeviathanQueryProcessor"/>) affords you much more explicit control over which graphs are queried.
+            </para>
+            </remarks>
         </member>
         <member name="M:VDS.RDF.IInMemoryQueryableStore.ExecuteQuery(VDS.RDF.IRdfHandler,VDS.RDF.ISparqlResultsHandler,VDS.RDF.Query.SparqlQuery)">
             <summary>
@@ -35513,10 +35614,18 @@
             <param name="resultsHandler">Results Handler</param>
             <param name="query">Parsed SPARQL Query</param>
             <returns></returns>
+            <remarks>
+            <para>
+            This method of making queries often leads to no results because of misconceptions about what data is being queries.  dotNetRDF's SPARQL engine only queries the default unnamed graph of the triple store (the graph added with a null URI) by default unless your query uses FROM clauses to change the default graph or you use GRAPH clauses to access named graphs in the store.  Therefore a common mistake is to add a single graph to the store and then query the store which typically results in no results because usually the added graph is named and so is not queried.
+            </para>
+            <para>
+            We recommend using a <see cref="T:VDS.RDF.Query.ISparqlQueryProcessor"/> instead for making queries over in-memory data since using our standard implementation (<see cref="T:VDS.RDF.Query.LeviathanQueryProcessor"/>) affords you much more explicit control over which graphs are queried.
+            </para>
+            </remarks>
         </member>
         <member name="T:VDS.RDF.IInferencingTripleStore">
             <summary>
-            Interface for Triple Stores which can have a <see cref="!:InferenceEngine">InferenceEngine</see> attached to them
+            Interface for Triple Stores which can have a <see cref="T:VDS.RDF.Query.Inference.IInferenceEngine">IInferenceEngine</see> attached to them
             </summary>
         </member>
         <member name="M:VDS.RDF.IInferencingTripleStore.AddInferenceEngine(VDS.RDF.Query.Inference.IInferenceEngine)">
@@ -35728,6 +35837,14 @@
             </summary>
             <param name="query">SPARQL Query as unparsed String</param>
             <returns></returns>
+            <remarks>
+            <para>
+            This method of making queries often leads to no results because of misconceptions about what data is being queries.  dotNetRDF's SPARQL engine only queries the default unnamed graph of the triple store (the graph added with a null URI) by default unless your query uses FROM clauses to change the default graph or you use GRAPH clauses to access named graphs in the store.  Therefore a common mistake is to add a single graph to the store and then query the store which typically results in no results because usually the added graph is named and so is not queried.
+            </para>
+            <para>
+            We recommend using a <see cref="T:VDS.RDF.Query.ISparqlQueryProcessor"/> instead for making queries over in-memory data since using our standard implementation (<see cref="T:VDS.RDF.Query.LeviathanQueryProcessor"/>) affords you much more explicit control over which graphs are queried.
+            </para>
+            </remarks>
         </member>
         <member name="M:VDS.RDF.TripleStore.ExecuteQuery(VDS.RDF.Query.SparqlQuery)">
             <summary>
@@ -35735,6 +35852,14 @@
             </summary>
             <param name="query">SPARQL Query as a <see cref="T:VDS.RDF.Query.SparqlQuery">SparqlQuery</see> instance</param>
             <returns></returns>
+            <remarks>
+            <para>
+            This method of making queries often leads to no results because of misconceptions about what data is being queries.  dotNetRDF's SPARQL engine only queries the default unnamed graph of the triple store (the graph added with a null URI) by default unless your query uses FROM clauses to change the default graph or you use GRAPH clauses to access named graphs in the store.  Therefore a common mistake is to add a single graph to the store and then query the store which typically results in no results because usually the added graph is named and so is not queried.
+            </para>
+            <para>
+            We recommend using a <see cref="T:VDS.RDF.Query.ISparqlQueryProcessor"/> instead for making queries over in-memory data since using our standard implementation (<see cref="T:VDS.RDF.Query.LeviathanQueryProcessor"/>) affords you much more explicit control over which graphs are queried.
+            </para>
+            </remarks>
         </member>
         <member name="M:VDS.RDF.TripleStore.ExecuteQuery(VDS.RDF.IRdfHandler,VDS.RDF.ISparqlResultsHandler,System.String)">
             <summary>
@@ -35743,6 +35868,14 @@
             <param name="rdfHandler">RDF Handler</param>
             <param name="resultsHandler">Results Handler</param>
             <param name="query">SPARQL Query as unparsed String</param>
+            <remarks>
+            <para>
+            This method of making queries often leads to no results because of misconceptions about what data is being queries.  dotNetRDF's SPARQL engine only queries the default unnamed graph of the triple store (the graph added with a null URI) by default unless your query uses FROM clauses to change the default graph or you use GRAPH clauses to access named graphs in the store.  Therefore a common mistake is to add a single graph to the store and then query the store which typically results in no results because usually the added graph is named and so is not queried.
+            </para>
+            <para>
+            We recommend using a <see cref="T:VDS.RDF.Query.ISparqlQueryProcessor"/> instead for making queries over in-memory data since using our standard implementation (<see cref="T:VDS.RDF.Query.LeviathanQueryProcessor"/>) affords you much more explicit control over which graphs are queried.
+            </para>
+            </remarks>
         </member>
         <member name="M:VDS.RDF.TripleStore.ExecuteQuery(VDS.RDF.IRdfHandler,VDS.RDF.ISparqlResultsHandler,VDS.RDF.Query.SparqlQuery)">
             <summary>
@@ -35751,6 +35884,14 @@
             <param name="rdfHandler">RDF Handler</param>
             <param name="resultsHandler">Results Handler</param>
             <param name="query">SPARQL Query as unparsed String</param>
+            <remarks>
+            <para>
+            This method of making queries often leads to no results because of misconceptions about what data is being queries.  dotNetRDF's SPARQL engine only queries the default unnamed graph of the triple store (the graph added with a null URI) by default unless your query uses FROM clauses to change the default graph or you use GRAPH clauses to access named graphs in the store.  Therefore a common mistake is to add a single graph to the store and then query the store which typically results in no results because usually the added graph is named and so is not queried.
+            </para>
+            <para>
+            We recommend using a <see cref="T:VDS.RDF.Query.ISparqlQueryProcessor"/> instead for making queries over in-memory data since using our standard implementation (<see cref="T:VDS.RDF.Query.LeviathanQueryProcessor"/>) affords you much more explicit control over which graphs are queried.
+            </para>
+            </remarks>
         </member>
         <member name="M:VDS.RDF.TripleStore.ApplyInference(VDS.RDF.IGraph)">
             <summary>
@@ -36857,6 +36998,26 @@
             </para>
             </remarks>
         </member>
+        <member name="F:VDS.RDF.Storage.SparqlConnector._endpoint">
+            <summary>
+            Underlying SPARQL query endpoint
+            </summary>
+        </member>
+        <member name="F:VDS.RDF.Storage.SparqlConnector._mode">
+            <summary>
+            Method for loading graphs
+            </summary>
+        </member>
+        <member name="F:VDS.RDF.Storage.SparqlConnector._skipLocalParsing">
+            <summary>
+            Whether to skip local parsing
+            </summary>
+        </member>
+        <member name="F:VDS.RDF.Storage.SparqlConnector._timeout">
+            <summary>
+            Timeout for endpoints
+            </summary>
+        </member>
         <member name="M:VDS.RDF.Storage.SparqlConnector.#ctor(VDS.RDF.Query.SparqlRemoteEndpoint)">
             <summary>
             Creates a new SPARQL Connector which uses the given SPARQL Endpoint
@@ -37038,6 +37199,131 @@
         <member name="P:VDS.RDF.Storage.SparqlConnector.IsReadOnly">
             <summary>
             Returns that the Connection is read-only
+            </summary>
+        </member>
+        <member name="T:VDS.RDF.Storage.ReadWriteSparqlConnector">
+            <summary>
+            Class for connecting to any SPARQL server that provides both a query and update endpoint
+            </summary>
+            <remarks>
+            <para>
+            This class is a wrapper around a <see cref="T:VDS.RDF.Query.SparqlRemoteEndpoint"/> and a <see cref="T:VDS.RDF.Update.SparqlRemoteUpdateEndpoint"/>.  The former is used for the query functionality while the latter is used for the update functionality.  As updates happen via SPARQL the behaviour with respects to adding and removing blank nodes will be somewhat up to the underlying SPARQL implementation.  This connector is <strong>not</strong> able to carry out <see cref="M:VDS.RDF.Storage.IStorageProvider.UpdateGraph(System.Uri,System.Collections.Generic.IEnumerable{VDS.RDF.Triple},System.Collections.Generic.IEnumerable{VDS.RDF.Triple})"/> operations which attempt to delete blank nodes and cannot guarantee that added blank nodes bear any relation to existing blank nodes in the store.
+            </para>
+            <para>
+            Unlike other HTTP based connectors this connector does not derive from <see cref="T:VDS.RDF.Storage.BaseAsyncHttpConnector">BaseHttpConnector</see> - if you need to specify proxy information you should do so on the SPARQL Endpoint you are wrapping either by providing endpoint instance pre-configured with the proxy settings or by accessing the endpoint via the <see cref="!:ReadWriteSparqlConnector.Endpoint">Endpoint</see> and <see cref="P:VDS.RDF.Storage.ReadWriteSparqlConnector.UpdateEndpoint">UpdateEndpoint</see> properties and programmatically adding the settings.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:VDS.RDF.Storage.ReadWriteSparqlConnector.#ctor(VDS.RDF.Query.SparqlRemoteEndpoint,VDS.RDF.Update.SparqlRemoteUpdateEndpoint,VDS.RDF.Storage.SparqlConnectorLoadMethod)">
+            <summary>
+            Creates a new connection
+            </summary>
+            <param name="queryEndpoint">Query Endpoint</param>
+            <param name="updateEndpoint">Update Endpoint</param>
+            <param name="mode">Method for loading graphs</param>
+        </member>
+        <member name="M:VDS.RDF.Storage.ReadWriteSparqlConnector.#ctor(VDS.RDF.Query.SparqlRemoteEndpoint,VDS.RDF.Update.SparqlRemoteUpdateEndpoint)">
+            <summary>
+            Creates a new connection
+            </summary>
+            <param name="queryEndpoint">Query Endpoint</param>
+            <param name="updateEndpoint">Update Endpoint</param>
+        </member>
+        <member name="M:VDS.RDF.Storage.ReadWriteSparqlConnector.#ctor(System.Uri,System.Uri,VDS.RDF.Storage.SparqlConnectorLoadMethod)">
+            <summary>
+            Creates a new connection
+            </summary>
+            <param name="queryEndpoint">Query Endpoint</param>
+            <param name="updateEndpoint">Update Endpoint</param>
+            <param name="mode">Method for loading graphs</param>
+        </member>
+        <member name="M:VDS.RDF.Storage.ReadWriteSparqlConnector.#ctor(System.Uri,System.Uri)">
+            <summary>
+            Creates a new connection
+            </summary>
+            <param name="queryEndpoint">Query Endpoint</param>
+            <param name="updateEndpoint">Update Endpoint</param>
+        </member>
+        <member name="M:VDS.RDF.Storage.ReadWriteSparqlConnector.DeleteGraph(System.String)">
+            <summary>
+            Deletes a graph from the store
+            </summary>
+            <param name="graphUri">URI of the graph to delete</param>
+        </member>
+        <member name="M:VDS.RDF.Storage.ReadWriteSparqlConnector.DeleteGraph(System.Uri)">
+            <summary>
+            Deletes a graph from the store
+            </summary>
+            <param name="graphUri">URI of the graph to delete</param>
+        </member>
+        <member name="M:VDS.RDF.Storage.ReadWriteSparqlConnector.SaveGraph(VDS.RDF.IGraph)">
+            <summary>
+            Saves a graph to the store
+            </summary>
+            <param name="g">Graph to save</param>
+        </member>
+        <member name="M:VDS.RDF.Storage.ReadWriteSparqlConnector.UpdateGraph(System.String,System.Collections.Generic.IEnumerable{VDS.RDF.Triple},System.Collections.Generic.IEnumerable{VDS.RDF.Triple})">
+            <summary>
+            Updates a graph in the store
+            </summary>
+            <param name="graphUri">URI of the graph to update</param>
+            <param name="additions">Triples to add</param>
+            <param name="removals">Triples to remove</param>
+        </member>
+        <member name="M:VDS.RDF.Storage.ReadWriteSparqlConnector.UpdateGraph(System.Uri,System.Collections.Generic.IEnumerable{VDS.RDF.Triple},System.Collections.Generic.IEnumerable{VDS.RDF.Triple})">
+            <summary>
+            Updates a graph in the store
+            </summary>
+            <param name="graphUri">URI of the graph to update</param>
+            <param name="additions">Triples to add</param>
+            <param name="removals">Triples to remove</param>
+        </member>
+        <member name="M:VDS.RDF.Storage.ReadWriteSparqlConnector.Update(System.String)">
+            <summary>
+            Makes a SPARQL Update against the store
+            </summary>
+            <param name="sparqlUpdate">SPARQL Update</param>
+        </member>
+        <member name="M:VDS.RDF.Storage.ReadWriteSparqlConnector.ToString">
+            <summary>
+            Gets a String which gives details of the Connection
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:VDS.RDF.Storage.ReadWriteSparqlConnector.SerializeConfiguration(VDS.RDF.Configuration.ConfigurationSerializationContext)">
+            <summary>
+            Serializes the connection's configuration
+            </summary>
+            <param name="context">Configuration Serialization Context</param>
+        </member>
+        <member name="P:VDS.RDF.Storage.ReadWriteSparqlConnector.UpdateEndpoint">
+            <summary>
+            Gets the underlying <see cref="T:VDS.RDF.Update.SparqlRemoteUpdateEndpoint">SparqlRemoteUpdateEndpoint</see> which this class is a wrapper around
+            </summary>
+        </member>
+        <member name="P:VDS.RDF.Storage.ReadWriteSparqlConnector.Timeout">
+            <summary>
+            Gets/Sets the HTTP Timeout used for communicating with the SPARQL Endpoint
+            </summary>
+        </member>
+        <member name="P:VDS.RDF.Storage.ReadWriteSparqlConnector.DeleteSupported">
+            <summary>
+            Gets that deleting graphs is supported
+            </summary>
+        </member>
+        <member name="P:VDS.RDF.Storage.ReadWriteSparqlConnector.IsReadOnly">
+            <summary>
+            Gets that the store is not read-only
+            </summary>
+        </member>
+        <member name="P:VDS.RDF.Storage.ReadWriteSparqlConnector.IOBehaviour">
+            <summary>
+            Gets the IO behaviour for the store
+            </summary>
+        </member>
+        <member name="P:VDS.RDF.Storage.ReadWriteSparqlConnector.UpdateSupported">
+            <summary>
+            Gets that triple level updates are supported, see the remarks section of the <see cref="T:VDS.RDF.Storage.ReadWriteSparqlConnector"/> for exactly what is and isn't supported
             </summary>
         </member>
         <member name="T:VDS.RDF.Query.Patterns.SubQueryPattern">
@@ -38357,10 +38643,10 @@
             </summary>
             <param name="u">URI</param>
             <returns></returns>
-            <exception cref="!:KeyNotFoundException">Thrown if there is no ETag for the given URI</exception>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">Thrown if there is no ETag for the given URI</exception>
             <remarks>
             <para>
-            Calling code <strong>MUST</strong> always use the <see cref="!:IUriLoaderCache.HasETag()">HasETag()</see> method prior to using this method so it should be safe to throw the <see cref="!:KeyNotFoundException">KeyNotFoundException</see> if there is no ETag for the given URI
+            Calling code <strong>MUST</strong> always use the <see cref="M:VDS.RDF.Parsing.IUriLoaderCache.HasETag(System.Uri)">HasETag()</see> method prior to using this method so it should be safe to throw the <see cref="T:System.Collections.Generic.KeyNotFoundException">KeyNotFoundException</see> if there is no ETag for the given URI
             </para>
             </remarks>
         </member>
@@ -38802,7 +39088,7 @@
             Gets all OWL Object properties defined in the graph
             </summary>
         </member>
-        <member name="P:VDS.RDF.Ontology.OntologyGraph.OwlDataProperties">
+        <member name="P:VDS.RDF.Ontology.OntologyGraph.OwlDatatypeProperties">
             <summary>
             Gets all OWL Data properties defined in the graph
             </summary>
@@ -38810,6 +39096,11 @@
         <member name="P:VDS.RDF.Ontology.OntologyGraph.OwlAnnotationProperties">
             <summary>
             Gets all OWL Annotation properties defined in the graph
+            </summary>
+        </member>
+        <member name="P:VDS.RDF.Ontology.OntologyGraph.OwlProperties">
+            <summary>
+            Gets all properties defined in the graph using any of the standard OWL property types (owl:AnnotationProperty, owl:DataProperty, owl:ObjectProperty)
             </summary>
         </member>
         <member name="P:VDS.RDF.Ontology.OntologyGraph.AllProperties">
@@ -39175,6 +39466,16 @@
             <param name="baseUri">Base Uri to resolve against</param>
             <returns></returns>
         </member>
+        <member name="M:VDS.RDF.Tools.ResolveQName(System.String,VDS.RDF.INamespaceMapper,System.Uri,System.Boolean)">
+            <summary>
+            Resolves a QName into a Uri using the Namespace Mapper and Base Uri provided
+            </summary>
+            <param name="qname">QName to resolve</param>
+            <param name="nsmap">Namespace Map to resolve against</param>
+            <param name="baseUri">Base Uri to resolve against</param>
+            <param name="allowDefaultPrefixFallback">Whether when the default prefix is used but not defined it can fallback to Base URI</param>
+            <returns></returns>
+        </member>
         <member name="M:VDS.RDF.Tools.ResolveUriOrQName(VDS.RDF.Parsing.Tokens.IToken,VDS.RDF.INamespaceMapper,System.Uri)">
             <summary>
             Resolves a QName/Uri into a Uri using the Namespace Mapper and Base Uri provided
@@ -39257,18 +39558,6 @@
             </summary>
             <param name="httpResponse">HTTP Web Response</param>
             <remarks><strong>Only available in Debug builds</strong></remarks>
-        </member>
-        <member name="T:VDS.RDF.Writing.InternalXmlWriter">
-            <summary>
-            Internal Writer class which is used by <see cref="!:RdfXmlTreeWriter">RdfXmlTreeWriter</see> to output the produced XML DOM Tree without having Namespace attributes on every node
-            </summary>
-        </member>
-        <member name="M:VDS.RDF.Writing.InternalXmlWriter.Save(System.IO.TextWriter,System.Xml.XmlDocument)">
-            <summary>
-            Saves an XMLDocument to a given Stream
-            </summary>
-            <param name="output">Stream to save to</param>
-            <param name="doc">XML Document to save</param>
         </member>
         <member name="T:VDS.RDF.BaseBlankNode">
             <summary>
@@ -39582,6 +39871,20 @@
             </summary>
             <param name="s">Set</param>
         </member>
+        <member name="M:VDS.RDF.Query.SparqlResult.#ctor(VDS.RDF.Query.Algebra.ISet,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new SPARQL Result from the given Set which contains only the given variables in the given order
+            </summary>
+            <param name="s">Set</param>
+            <param name="variables">Variables</param>
+        </member>
+        <member name="M:VDS.RDF.Query.SparqlResult.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Deserialization only constructor
+            </summary>
+            <param name="info">Serialization Info</param>
+            <param name="context">Streaming Context</param>
+        </member>
         <member name="M:VDS.RDF.Query.SparqlResult.Value(System.String)">
             <summary>
             Gets the Value that is bound to the given Variable
@@ -39613,13 +39916,19 @@
             <param name="variable">Variable Name</param>
             <param name="value">Value bound to the Variable</param>
         </member>
+        <member name="M:VDS.RDF.Query.SparqlResult.SetVariableOrdering(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Sets the variable ordering for the result
+            </summary>
+            <param name="variables"></param>
+        </member>
         <member name="M:VDS.RDF.Query.SparqlResult.HasValue(System.String)">
             <summary>
             Checks whether a given Variable has a value (which may be null) for this result
             </summary>
             <param name="variable">Variable Name</param>
             <returns>True if the variable is present, false otherwise</returns>
-            <remarks>Returns true even if the value is null, use <see cref="!:SparqlResult.HashBoundValue"/> instead to see whether a non-null value is present for a variable.</remarks>
+            <remarks>Returns true even if the value is null, use <see cref="M:VDS.RDF.Query.SparqlResult.HasBoundValue(System.String)"/> instead to see whether a non-null value is present for a variable.</remarks>
         </member>
         <member name="M:VDS.RDF.Query.SparqlResult.HasBoundValue(System.String)">
             <summary>
@@ -39666,6 +39975,9 @@
             Enumerates the Bindings of Variable Names to Values in this Result
             </summary>
             <returns></returns>
+            <remarks>
+            Does not respect the ordering of the variables (if any)
+            </remarks>
         </member>
         <member name="M:VDS.RDF.Query.SparqlResult.System#Collections#IEnumerable#GetEnumerator">
             <summary>
@@ -39713,7 +40025,7 @@
             <param name="index">Index whose Value you wish to retrieve</param>
             <returns></returns>
             <remarks>
-            The order of variables in a Result is not guaranteed in any way
+            As of 1.0.0 the order of variables in a result may/may not vary depending on the original query.  If a specific variable list was declared dotNetRDF tries to preserve that order but this may not always happen depending on how results are received.
             </remarks>
             <exception cref="T:System.IndexOutOfRangeException">Thrown if there is nothing bound at the given Index</exception>
         </member>
@@ -39950,7 +40262,7 @@
             Gets whether Optimisation has been applied to this query
             </summary>
             <remarks>
-            This only indicates that an Optimiser has been applied to the Pattern.  You can always reoptimise by calling the <see cref="!:SparqlQuert.Optimise">Optimise()</see> method with an optimiser of your choice on the query to which this Pattern belongs
+            This only indicates that an Optimiser has been applied to the Pattern.  You can always reoptimise by calling the <see cref="M:VDS.RDF.Query.SparqlQuery.Optimise">Optimise()</see> method with an optimiser of your choice on the query to which this Pattern belongs
             </remarks>
         </member>
         <member name="P:VDS.RDF.Query.Patterns.GraphPattern.IsSilent">
@@ -43967,7 +44279,7 @@
         </member>
         <member name="M:VDS.RDF.Query.SparqlSpecsHelper.UnescapeQName(System.String)">
             <summary>
-            Unescapes SPARQL 1.1 QNames
+            Unescapes local name escapes from QNames
             </summary>
             <param name="value">Value to unescape</param>
             <returns></returns>
@@ -44248,13 +44560,13 @@
             </summary>
             <remarks>
             <para>
-            If the Compression Level is set to <see cref="!:WriterCompressionLevels.None">None</see> then High Speed mode will always be used regardless of the input Graph and the <see cref="P:VDS.RDF.Writing.CompressingTurtleWriter.HighSpeedModePermitted">HighSpeedMorePermitted</see> property.
+            If the Compression Level is set to <see cref="F:VDS.RDF.Writing.WriterCompressionLevel.None">None</see> then High Speed mode will always be used regardless of the input Graph and the <see cref="P:VDS.RDF.Writing.CompressingTurtleWriter.HighSpeedModePermitted">HighSpeedMorePermitted</see> property.
             </para>
             <para>
-            If the Compression Level is set to <see cref="!:WriterCompressionLevels.Minimal">Minimal</see> or above then full Predicate Object lists will be used for Triples.
+            If the Compression Level is set to <see cref="F:VDS.RDF.Writing.WriterCompressionLevel.Minimal">Minimal</see> or above then full Predicate Object lists will be used for Triples.
             </para>
             <para>
-            If the Compression Level is set to <see cref="!:WriterCompressionLevels.More">More</see> or above then Blank Node Collections and Collection syntax will be used if the Graph contains Triples that can be compressed in that way.</para>
+            If the Compression Level is set to <see cref="F:VDS.RDF.Writing.WriterCompressionLevel.More">More</see> or above then Blank Node Collections and Collection syntax will be used if the Graph contains Triples that can be compressed in that way.</para>
             </remarks>
         </member>
         <member name="P:VDS.RDF.Writing.CompressingTurtleWriter.DefaultNamespaces">
@@ -44414,7 +44726,7 @@
         </member>
         <member name="M:VDS.RDF.Parsing.StringParser.GetParser(System.String)">
             <summary>
-            Uses the rules described in the remarks for the <see cref="M:VDS.RDF.Parsing.StringParser.Parse(VDS.RDF.IGraph,System.String,VDS.RDF.IRdfReader)">Parse()</see> to return the most likely Parser
+            Uses the rules described in the remarks for the <see cref="M:VDS.RDF.Parsing.StringParser.Parse(VDS.RDF.IGraph,System.String)">Parse()</see> to return the most likely Parser
             </summary>
             <param name="data">Raw RDF String</param>
         </member>
@@ -44548,11 +44860,6 @@
         <member name="T:VDS.RDF.Writing.Formatting.NTriplesFormatter">
             <summary>
             Formatter for formatting as NTriples
-            </summary>
-        </member>
-        <member name="F:VDS.RDF.Writing.Formatting.NTriplesFormatter._validEscapes">
-            <summary>
-            Set of characters that may follow a backslash and are legal escapes
             </summary>
         </member>
         <member name="F:VDS.RDF.Writing.Formatting.NTriplesFormatter._litEscapes">
@@ -46406,7 +46713,7 @@
             <returns></returns>
             <remarks>
             <para>
-            For In-Memory datasets the Graph returned from this property is no different from the Graph returned by the <see cref="!:InMemoryDataset.GetModifiableGraph">GetModifiableGraph()</see> method
+            For In-Memory datasets the Graph returned from this property is no different from the Graph returned by the <see cref="M:VDS.RDF.Query.Datasets.InMemoryDataset.GetModifiableGraphInternal(System.Uri)">GetModifiableGraphInternal()</see> method
             </para>
             </remarks>
         </member>
@@ -46477,7 +46784,7 @@
         </member>
         <member name="M:VDS.RDF.Query.Datasets.InMemoryDataset.FlushInternal">
             <summary>
-            If there have been changes made to the Dataset and the underlying in-memory store is a <see cref="!:IFlushableStore">IFlushableStore</see> ensures the underlying store is notified to flush those changes
+            If there have been changes made to the Dataset and the underlying in-memory store is a <see cref="T:VDS.RDF.ITransactionalStore">ITransactionalStore</see> ensures the underlying store is notified to flush those changes
             </summary>
         </member>
         <member name="P:VDS.RDF.Query.Datasets.InMemoryDataset.Lock">
@@ -47278,7 +47585,7 @@
             </summary>
             <remarks>
             <para>
-            Intended for usage in scenarios where the user of the factory does not care about the values returned, for example it is used internally in the <see cref="!:CountHandler">CountHandler</see> to speed up processing
+            Intended for usage in scenarios where the user of the factory does not care about the values returned, for example it is used internally in the <see cref="T:VDS.RDF.Parsing.Handlers.CountHandler">CountHandler</see> to speed up processing
             </para>
             </remarks>
         </member>
@@ -47875,7 +48182,7 @@
             <param name="writer">Writer to use to generate the concrete RDF Syntax</param>
             <returns></returns>
             <remarks>
-            Since the API allows for any <see cref="T:System.IO.TextWriter">TextWriter</see> to be passed to the <see cref="M:VDS.RDF.IRdfWriter.Save(VDS.RDF.IGraph,System.String)">Save()</see> method of a <see cref="T:VDS.RDF.IRdfWriter">IRdfWriter</see> you can just pass in a <see cref="T:VDS.RDF.Writing.StringWriter">StringWriter</see> to the Save() method to get the output as a String.  This method simply provides a wrapper to doing just that.
+            Since the API allows for any <see cref="T:System.IO.TextWriter">TextWriter</see> to be passed to the <see cref="M:VDS.RDF.IRdfWriter.Save(VDS.RDF.IGraph,System.IO.TextWriter)">Save()</see> method of a <see cref="T:VDS.RDF.IRdfWriter">IRdfWriter</see> you can just pass in a <see cref="T:VDS.RDF.Writing.StringWriter">StringWriter</see> to the Save() method to get the output as a String.  This method simply provides a wrapper to doing just that.
             </remarks>
         </member>
         <member name="M:VDS.RDF.Writing.StringWriter.Write(VDS.RDF.ITripleStore,VDS.RDF.IStoreWriter)">
@@ -48124,6 +48431,9 @@
             <summary>
             Gets the Variables used in the Result Set
             </summary>
+            <remarks>
+            As of 1.0 where possible dotNetRDF tries to preserve the ordering of variables however this may not be possible depending on where the result set originates from or how it is populated
+            </remarks>
         </member>
         <member name="T:VDS.RDF.Parsing.Tokens.Notation3Tokeniser">
             <summary>
@@ -48614,7 +48924,12 @@
         </member>
         <member name="F:VDS.RDF.Parsing.Tokens.TokeniserEscapeMode.Uri">
             <summary>
-            Escaping for URIs (every escape but \" is valid)
+            Escaping for URIs (only \u and \U escapes are valid)
+            </summary>
+        </member>
+        <member name="F:VDS.RDF.Parsing.Tokens.TokeniserEscapeMode.PermissiveUri">
+            <summary>
+            Permissive escaping for URIs (only \" is invalid)
             </summary>
         </member>
         <member name="F:VDS.RDF.Parsing.Tokens.TokeniserEscapeMode.QuotedLiterals">
@@ -49258,7 +49573,7 @@
         </member>
         <member name="T:VDS.RDF.Configuration.ConfigurationLoader">
             <summary>
-            The Configuration Loader is responsible for the loading of Configuration information and objects based upon information encoded in a Graph but more generally may be used for the loading of any type of object whose configuration has been loaded in a Graph and for which a relevant <see cref="!:IObjectLoader">IObjectLoader</see> is available.
+            The Configuration Loader is responsible for the loading of Configuration information and objects based upon information encoded in a Graph but more generally may be used for the loading of any type of object whose configuration has been loaded in a Graph and for which a relevant <see cref="T:VDS.RDF.Configuration.IObjectFactory">IObjectFactory</see> is available.
             </summary>
             <remarks>
             <para></para>
@@ -49475,6 +49790,26 @@
             </summary>
         </member>
         <member name="F:VDS.RDF.Configuration.ConfigurationLoader.PropertyEndpointUri">
+            <summary>
+            URI Constants for configuration properties
+            </summary>
+        </member>
+        <member name="F:VDS.RDF.Configuration.ConfigurationLoader.PropertyQueryEndpointUri">
+            <summary>
+            URI Constants for configuration properties
+            </summary>
+        </member>
+        <member name="F:VDS.RDF.Configuration.ConfigurationLoader.PropertyUpdateEndpointUri">
+            <summary>
+            URI Constants for configuration properties
+            </summary>
+        </member>
+        <member name="F:VDS.RDF.Configuration.ConfigurationLoader.PropertyQueryEndpoint">
+            <summary>
+            URI Constants for configuration properties
+            </summary>
+        </member>
+        <member name="F:VDS.RDF.Configuration.ConfigurationLoader.PropertyUpdateEndpoint">
             <summary>
             URI Constants for configuration properties
             </summary>
@@ -49720,6 +50055,16 @@
             </summary>
         </member>
         <member name="F:VDS.RDF.Configuration.ConfigurationLoader.ClassSparqlEndpoint">
+            <summary>
+            URI Constants for configuration classes
+            </summary>
+        </member>
+        <member name="F:VDS.RDF.Configuration.ConfigurationLoader.ClassSparqlQueryEndpoint">
+            <summary>
+            URI Constants for configuration classes
+            </summary>
+        </member>
+        <member name="F:VDS.RDF.Configuration.ConfigurationLoader.ClassSparqlUpdateEndpoint">
             <summary>
             URI Constants for configuration classes
             </summary>
@@ -50105,7 +50450,7 @@
             String value of the first instance of the first property or a null if no values or not a literal value
             </para>
             <para>
-            If you want the String value regardless of Node type then use the <see cref="M:VDS.RDF.Configuration.ConfigurationLoader.GetConfigurationValue(VDS.RDF.IGraph,VDS.RDF.INode,VDS.RDF.INode)">GetConfigurationValue</see> function instead
+            If you want the String value regardless of Node type then use the <see cref="M:VDS.RDF.Configuration.ConfigurationLoader.GetConfigurationValue(VDS.RDF.IGraph,VDS.RDF.INode,System.Collections.Generic.IEnumerable{VDS.RDF.INode})">GetConfigurationValue</see> function instead
             </para>
             </returns>
         </member>
@@ -50233,7 +50578,7 @@
             <returns></returns>
             <remarks>
             <para>
-            Callers of this method should be careful to check that the Object returned is of a usable type to them.  The Target Type parameter does not guarantee that the return value is of that type it is only used to determine which registered instances of <see cref="!:IObjectLoader">IObjectLoader</see> are potentially capable of creating the desired Object
+            Callers of this method should be careful to check that the Object returned is of a usable type to them.  The Target Type parameter does not guarantee that the return value is of that type it is only used to determine which registered instances of <see cref="T:VDS.RDF.Configuration.IObjectFactory">IObjectFactory</see> are potentially capable of creating the desired Object
             </para>
             <para>
             Callers should also take care that any Objects returned from this method are disposed of when the caller no longer has a use for them as otherwise the reference kept in the cache here will cause the Object to remain in-memory consuming resources
@@ -50287,6 +50632,58 @@
             <para>
             <strong>Warning: </strong> This feature is not supported in the Silverlight build 
             </para>
+            </remarks>
+        </member>
+        <member name="M:VDS.RDF.Configuration.ConfigurationLoader.#ctor(VDS.RDF.IGraph)">
+            <summary>
+            Creates a new instance of <see cref="T:VDS.RDF.Configuration.ConfigurationLoader"/>, which
+            loads an existing configuration graph and applies auto-configuration
+            </summary>
+        </member>
+        <member name="M:VDS.RDF.Configuration.ConfigurationLoader.#ctor(VDS.RDF.IGraph,System.Boolean)">
+            <summary>
+            Creates a new instance of <see cref="T:VDS.RDF.Configuration.ConfigurationLoader"/>, which
+            loads an existing configuration graph and optionally applies auto-configuration
+            </summary>
+        </member>
+        <member name="M:VDS.RDF.Configuration.ConfigurationLoader.#ctor(System.String)">
+            <summary>
+            Creates a new instance of <see cref="T:VDS.RDF.Configuration.ConfigurationLoader"/>, which
+            loads an existing configuration graph and applies auto-configuration
+            </summary>
+        </member>
+        <member name="M:VDS.RDF.Configuration.ConfigurationLoader.#ctor(System.String,System.Boolean)">
+            <summary>
+            Creates a new instance of <see cref="T:VDS.RDF.Configuration.ConfigurationLoader"/>, which
+            loads an existing configuration graph and optionally applies auto-configuration
+            </summary>
+        </member>
+        <member name="M:VDS.RDF.Configuration.ConfigurationLoader.#ctor(System.Uri)">
+            <summary>
+            Creates a new instance of <see cref="T:VDS.RDF.Configuration.ConfigurationLoader"/>, which
+            loads an existing configuration graph from file and applies auto-configuration
+            </summary>
+        </member>
+        <member name="M:VDS.RDF.Configuration.ConfigurationLoader.#ctor(System.Uri,System.Boolean)">
+            <summary>
+            Creates a new instance of <see cref="T:VDS.RDF.Configuration.ConfigurationLoader"/>, which
+            loads an existing configuration graph and optionally applies auto-configuration
+            </summary>
+        </member>
+        <member name="M:VDS.RDF.Configuration.ConfigurationLoader.LoadObject``1(System.String)">
+            <summary>
+            Loads the Object identified by the given blank node identifier as an object of the given type based on information from the Configuration Graph
+            </summary>
+            <remarks>
+            See remarks under <see cref="M:VDS.RDF.Configuration.ConfigurationLoader.LoadObject(VDS.RDF.IGraph,VDS.RDF.INode)"/> 
+            </remarks>
+        </member>
+        <member name="M:VDS.RDF.Configuration.ConfigurationLoader.LoadObject``1(System.Uri)">
+            <summary>
+            Loads the Object identified by the given URI as an object of the given type based on information from the Configuration Graph
+            </summary>
+            <remarks>
+            See remarks under <see cref="M:VDS.RDF.Configuration.ConfigurationLoader.LoadObject(VDS.RDF.IGraph,VDS.RDF.INode)"/> 
             </remarks>
         </member>
         <member name="M:VDS.RDF.Configuration.ConfigurationLoader.AddObjectFactory(VDS.RDF.Configuration.IObjectFactory)">
@@ -53285,7 +53682,7 @@
             <para>
             This template generates a Sesame repository config graph like the following, depending on exact options the graph may differ:
             </para>
-            <pre>
+            <code>
             @prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;.
             @prefix rep: &lt;http://www.openrdf.org/config/repository#&gt;.
             @prefix sr: &lt;http://www.openrdf.org/config/repository/sail#&gt;.
@@ -53302,11 +53699,23 @@
                      ns:tripleIndexes "{this.IndexMode}"
                   ]
                ].
-            </pre>
+            </code>
             <para>
             The placeholders of the form <strong>{this.Property}</strong> represent properties of this class whose values will be inserted into the repository config graph and used to create a new store in Sesame.
             </para>
             </remarks>
+        </member>
+        <member name="M:VDS.RDF.Storage.Management.Provisioning.Sesame.SesameNativeTemplate.#ctor(System.String)">
+            <summary>
+            Creates a Sesame Native store template
+            </summary>
+            <param name="id">Store ID</param>
+        </member>
+        <member name="M:VDS.RDF.Storage.Management.Provisioning.Sesame.SesameNativeTemplate.GetTemplateGraph">
+            <summary>
+            Gets the template graph used to specify the configuration of a Sesame repository
+            </summary>
+            <returns>Template Graph</returns>
         </member>
         <member name="P:VDS.RDF.Storage.Management.Provisioning.Sesame.SesameNativeTemplate.IndexMode">
             <summary>
@@ -53457,11 +53866,6 @@
         <member name="P:VDS.RDF.Query.Patterns.TriplePattern.HasNoBlankVariables">
             <summary>
             Gets whether the Pattern contains no Explicit Variables (i.e. Blank Node Variables are ignored)
-            </summary>
-        </member>
-        <member name="T:VDS.RDF.Query.Patterns.SetDistinctnessComparer">
-            <summary>
-            Comparer for checking whether sets are distinct, check may either be using the entire set or by using only a subset of variables
             </summary>
         </member>
         <member name="T:VDS.RDF.Query.Patterns.PropertyFunctionPattern">
@@ -53775,11 +54179,6 @@
             <param name="prefix">Namespace Prefix</param>
             <param name="namespaceUri">Namespace URI</param>
             <returns></returns>
-        </member>
-        <member name="F:VDS.RDF.Writing.Formatting.TurtleFormatter._validEscapes">
-            <summary>
-            Set of characters which are valid as escapes when preceded by a backslash
-            </summary>
         </member>
         <member name="F:VDS.RDF.Writing.Formatting.TurtleFormatter._longLitMustEscape">
             <summary>
@@ -56877,7 +57276,7 @@
         </member>
         <member name="T:VDS.RDF.Parsing.Events.StreamingEventQueue`1">
             <summary>
-            Represents a Queue of events which are streamed from an instance of a <see cref="!:IJitEventGenerator">IJitEventGenerator</see> for use by an event based parser
+            Represents a Queue of events which are streamed from an instance of a <see cref="T:VDS.RDF.Parsing.Events.IJitEventGenerator`1">IJitEventGenerator</see> for use by an event based parser
             </summary>
         </member>
         <member name="M:VDS.RDF.Parsing.Events.StreamingEventQueue`1.#ctor(VDS.RDF.Parsing.Events.IJitEventGenerator{`0})">
@@ -56962,7 +57361,7 @@
             </summary>
             <remarks>
             <para>
-            This essentially reflexive implementation allows for defining additional <see cref="T:VDS.RDF.Configuration.IObjectFactory">IObjectFactory</see> instances that can load custom/user defined types based on user definable Configuration.  If your Configuration Graphs contain custom object factory definitions then you should call <see cref="!:ConfigurationLoader.AutoDetectObjectFactories">ConfigurationLoader.AutoDetectObjectFactories()</see> before attempting to load any Configuration.
+            This essentially reflexive implementation allows for defining additional <see cref="T:VDS.RDF.Configuration.IObjectFactory">IObjectFactory</see> instances that can load custom/user defined types based on user definable Configuration.  If your Configuration Graphs contain custom object factory definitions then you should call <see cref="M:VDS.RDF.Configuration.ConfigurationLoader.AutoConfigureObjectFactories(VDS.RDF.IGraph)">ConfigurationLoader.AutoConfigureObjectFactories()</see> before attempting to load any Configuration.
             </para>
             </remarks>
         </member>
@@ -57457,7 +57856,7 @@
             <summary>
             Disposes of the Graph Collection
             </summary>
-            <remarks>Invokes the <see cref="!:IGraph.Dipose">Dispose()</see> method of all Graphs contained in the Collection</remarks>
+            <remarks>Invokes the <strong>Dispose()</strong> method of all Graphs contained in the Collection</remarks>
         </member>
         <member name="P:VDS.RDF.ThreadSafeGraphCollection.Count">
             <summary>
@@ -57651,6 +58050,53 @@
             <param name="value">QName</param>
             <returns></returns>
         </member>
+        <member name="M:VDS.RDF.Parsing.TurtleSpecsHelper.IsValidPrefix(System.String,VDS.RDF.Parsing.TurtleSyntax)">
+            <summary>
+            Gets whether the given value is a valid prefix in Turtle
+            </summary>
+            <param name="value">Value</param>
+            <param name="syntax">Turtle Syntax</param>
+            <returns></returns>
+        </member>
+        <member name="M:VDS.RDF.Parsing.TurtleSpecsHelper.IsPNPrefix(System.String,VDS.RDF.Parsing.TurtleSyntax)">
+            <summary>
+            Gets whether the given value is the valid prefix portion of a prefixed name in Turtle
+            </summary>
+            <param name="value">Value</param>
+            <param name="syntax">Turtle Syntax</param>
+            <returns></returns>
+        </member>
+        <member name="M:VDS.RDF.Parsing.TurtleSpecsHelper.IsValidLocalName(System.String,VDS.RDF.Parsing.TurtleSyntax)">
+            <summary>
+            Gets whether the given value is the valid local name portion of a prefixed name in Turtle
+            </summary>
+            <param name="value">Value</param>
+            <param name="syntax">Turtle Syntax</param>
+            <returns></returns>
+        </member>
+        <member name="M:VDS.RDF.Parsing.TurtleSpecsHelper.IsPNLocal(System.String)">
+            <summary>
+            Gets whether the given value matches the PN_LOCAL rule from the Turtle specification
+            </summary>
+            <param name="value">Value</param>
+            <returns></returns>
+        </member>
+        <member name="M:VDS.RDF.Parsing.TurtleSpecsHelper.IsPLX(System.Char[],System.Int32,System.Int32@)">
+            <summary>
+            Checks whether a given String matches the PLX rule from the Turtle W3C Specification
+            </summary>
+            <param name="cs">String as character array</param>
+            <param name="startIndex">Start Index</param>
+            <param name="endIndex">Resulting End Index</param>
+            <returns></returns>
+        </member>
+        <member name="M:VDS.RDF.Parsing.TurtleSpecsHelper.IsHex(System.Char)">
+            <summary>
+            Gets whether a character is a Hex character
+            </summary>
+            <param name="c">Character</param>
+            <returns></returns>
+        </member>
         <member name="M:VDS.RDF.Parsing.TurtleSpecsHelper.IsValidQName(System.String,VDS.RDF.Parsing.TurtleSyntax)">
             <summary>
             Determines whether a given String is a valid QName
@@ -57658,6 +58104,13 @@
             <param name="value">String to test</param>
             <param name="syntax">Turtle Syntax</param>
             <returns></returns>
+        </member>
+        <member name="M:VDS.RDF.Parsing.TurtleSpecsHelper.UnescapeQName(System.String)">
+            <summary>
+            Unescapes local name escapes in a QName
+            </summary>
+            <param name="value">QName</param>
+            <returns>Unescaped QName</returns>
         </member>
         <member name="M:VDS.RDF.Parsing.TurtleSpecsHelper.IsLongLiteral(System.String)">
             <summary>
@@ -57681,6 +58134,14 @@
             <param name="c">Character</param>
             <returns></returns>
         </member>
+        <member name="M:VDS.RDF.Parsing.TurtleSpecsHelper.IsPNCharsBase(System.Char,System.Char)">
+            <summary>
+            Gets whether a surrogate pair matches the PN_CHARS_BASE production from the Turtle specifications
+            </summary>
+            <param name="c">High surrogate</param>
+            <param name="d">Low surrogate</param>
+            <returns></returns>
+        </member>
         <member name="M:VDS.RDF.Parsing.TurtleSpecsHelper.IsPNChars(System.Char)">
             <summary>
             Gets whether a character matches the PN_CHARS production from the Turtle specification
@@ -57688,11 +58149,57 @@
             <param name="c">Character</param>
             <returns></returns>
         </member>
+        <member name="M:VDS.RDF.Parsing.TurtleSpecsHelper.IsPNChars(System.Char,System.Char)">
+            <summary>
+            Gets whether a surrogate pair matches the PN_CHARS production from the Turtle specification
+            </summary>
+            <param name="c">High surrogate</param>
+            <param name="d">Low surrogate</param>
+            <returns></returns>
+        </member>
         <member name="M:VDS.RDF.Parsing.TurtleSpecsHelper.IsPNCharsU(System.Char)">
             <summary>
             Gets whether a character matches the PN_CHARS_U production from the Turtle specification
             </summary>
-            <param name="c"></param>
+            <param name="c">Character</param>
+            <returns></returns>
+        </member>
+        <member name="M:VDS.RDF.Parsing.TurtleSpecsHelper.IsPNCharsU(System.Char,System.Char)">
+            <summary>
+            Gets whether a surrogate pair matches the PN_CHARS_U production from the Turtle specification
+            </summary>
+            <param name="c">High surrogate</param>
+            <param name="d">Low surrogate</param>
+            <returns></returns>
+        </member>
+        <member name="M:VDS.RDF.Parsing.TurtleSpecsHelper.IsNameStartChar(System.Char)">
+            <summary>
+            Gets whether a character matches the nameStartChar production from the Turtle specification
+            </summary>
+            <param name="c">Character</param>
+            <returns></returns>
+        </member>
+        <member name="M:VDS.RDF.Parsing.TurtleSpecsHelper.IsNameStartChar(System.Char,System.Char)">
+            <summary>
+            Gets whether a surrogate pair matches the nameStartChar production from the Turtle specification
+            </summary>
+            <param name="c">High surrogate</param>
+            <param name="d">Low surrogate</param>
+            <returns></returns>
+        </member>
+        <member name="M:VDS.RDF.Parsing.TurtleSpecsHelper.IsNameChar(System.Char)">
+            <summary>
+            Gets whether a character matches the nameChar production from the Turtle specification
+            </summary>
+            <param name="c">Character</param>
+            <returns></returns>
+        </member>
+        <member name="M:VDS.RDF.Parsing.TurtleSpecsHelper.IsNameChar(System.Char,System.Char)">
+            <summary>
+            Gets whether a surrogate pair matches the nameChar production from the Turtle specification
+            </summary>
+            <param name="c">High surrogate</param>
+            <param name="d">Low surrogate</param>
             <returns></returns>
         </member>
         <member name="T:VDS.RDF.Parsing.SparqlXmlParser">
@@ -57978,6 +58485,20 @@
             <param name="username">Username for connecting to the Store</param>
             <param name="password">Password for connecting to the Store</param>
             <param name="proxy">Proxy Server</param>
+        </member>
+        <member name="M:VDS.RDF.Storage.AllegroGraphConnector.Update(System.String)">
+            <summary>
+            Makes a SPARQL Update request to the Allegro Graph server
+            </summary>
+            <param name="sparqlUpdate">SPARQL Update</param>
+        </member>
+        <member name="M:VDS.RDF.Storage.AllegroGraphConnector.Update(System.String,VDS.RDF.Storage.AsyncStorageCallback,System.Object)">
+            <summary>
+            Makes a SPARQL Update request to the Allegro Graph server
+            </summary>
+            <param name="sparqlUpdate">SPARQL Update</param>
+            <param name="callback">Callback</param>
+            <param name="state">State to pass to the callback</param>
         </member>
         <member name="M:VDS.RDF.Storage.AllegroGraphConnector.EscapeQuery(System.String)">
             <summary>
@@ -59585,6 +60106,11 @@
             Gets/Sets whether Tokeniser Trace is written to the Console
             </summary>
         </member>
+        <member name="P:VDS.RDF.Parsing.Notation3Parser.TokenQueueMode">
+            <summary>
+            Gets/Sets the token queue mode used
+            </summary>
+        </member>
         <member name="E:VDS.RDF.Parsing.Notation3Parser.Warning">
             <summary>
             Event which is raised when the parser detects issues with the input which are non-fatal
@@ -61120,13 +61646,13 @@
             </summary>
             <remarks>
             <para>
-            If the Compression Level is set to <see cref="!:WriterCompressionLevels.None">None</see> then High Speed mode will always be used regardless of the input Graph and the <see cref="P:VDS.RDF.Writing.Notation3Writer.HighSpeedModePermitted">HighSpeedMorePermitted</see> property.
+            If the Compression Level is set to <see cref="F:VDS.RDF.Writing.WriterCompressionLevel.None">None</see> then High Speed mode will always be used regardless of the input Graph and the <see cref="P:VDS.RDF.Writing.Notation3Writer.HighSpeedModePermitted">HighSpeedMorePermitted</see> property.
             </para>
             <para>
-            If the Compression Level is set to <see cref="!:WriterCompressionLevels.Minimal">Minimal</see> or above then full Predicate Object lists will be used for Triples.
+            If the Compression Level is set to <see cref="F:VDS.RDF.Writing.WriterCompressionLevel.Minimal">Minimal</see> or above then full Predicate Object lists will be used for Triples.
             </para>
             <para>
-            If the Compression Level is set to <see cref="!:WriterCompressionLevels.More">More</see> or above then Blank Node Collections and Collection syntax will be used if the Graph contains Triples that can be compressed in that way.</para>
+            If the Compression Level is set to <see cref="F:VDS.RDF.Writing.WriterCompressionLevel.More">More</see> or above then Blank Node Collections and Collection syntax will be used if the Graph contains Triples that can be compressed in that way.</para>
             </remarks>
         </member>
         <member name="P:VDS.RDF.Writing.Notation3Writer.DefaultNamespaces">
@@ -62067,6 +62593,12 @@
             <param name="variable">Variable</param>
             <exception cref="T:VDS.RDF.Query.RdfQueryException">Thrown since the operation is invalid on a Null Multiset</exception>
         </member>
+        <member name="M:VDS.RDF.Query.Algebra.NullMultiset.SetVariableOrder(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Sets the variable ordering for the multiset
+            </summary>
+            <param name="variables">Variable Ordering</param>
+        </member>
         <member name="M:VDS.RDF.Query.Algebra.NullMultiset.Remove(System.Int32)">
             <summary>
             Removes a Set from a Multiset
@@ -62939,7 +63471,7 @@
             Constants for URIs for classes in Ontologies
             </summary>
         </member>
-        <member name="F:VDS.RDF.Ontology.OntologyHelper.OwlDataProperty">
+        <member name="F:VDS.RDF.Ontology.OntologyHelper.OwlDatatypeProperty">
             <summary>
             Constants for URIs for classes in Ontologies
             </summary>
@@ -63514,6 +64046,11 @@
         <member name="P:VDS.RDF.Parsing.Contexts.TurtleParserContext.Syntax">
             <summary>
             Gets the Turtle Syntax being used
+            </summary>
+        </member>
+        <member name="P:VDS.RDF.Parsing.Contexts.TurtleParserContext.QNameUnescapeFunction">
+            <summary>
+            Function for unescaping QNames
             </summary>
         </member>
         <member name="T:VDS.RDF.Parsing.BaseGZipResultsParser">
@@ -65187,6 +65724,14 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:VDS.RDF.Query.Aggregates.Sparql.GroupConcatAggregate.ValueInternal(VDS.RDF.Query.SparqlEvaluationContext,System.Int32)">
+            <summary>
+            Gets the value of the aggregate for the given binding
+            </summary>
+            <param name="context">Evaluation Context</param>
+            <param name="bindingID">Binding ID</param>
+            <returns></returns>
+        </member>
         <member name="P:VDS.RDF.Query.Aggregates.Sparql.GroupConcatAggregate.Functor">
             <summary>
             Gets the Functor of the Aggregate
@@ -65524,7 +66069,6 @@
             <summary>
             Basic Token Queue which provides no Buffering except in the sense that it queues all possible Tokens when the InitialiseBuffer method is called
             </summary>
-            <remarks>This is the recommended Token Queue and the one used by default in the Parser implementations</remarks>
         </member>
         <member name="F:VDS.RDF.Parsing.Tokens.TokenQueue._tokens">
             <summary>
@@ -67604,6 +68148,61 @@
             <summary>
             Implements a Graph Isomorphism Algorithm
             </summary>
+            <remarks>
+            <para>
+            The algorithm used to determine Graph equality is based in part on a Iterative Vertex Classification Algorithm described in a Technical Report from HP by Jeremy J Carroll - <a href="http://www.hpl.hp.com/techreports/2001/HPL-2001-293.html">Matching RDF Graphs</a> but has been expanded upon significantly to use a variety of techniques.
+            </para>
+            <para>
+            Graph Equality is determined according to the following algorithm, we refer to the first graph as the <em>Source Graph</em> and the second graph as the <em>Target Graph</em>:
+            </para>
+            <ol>
+            <li>If both graphs are null they are considered equal</li>
+            <li>If only one of the given graph is null then they are not equal</li>
+            <li>If the given graphs are reference equal then they are equal</li>
+            <li>If the given graphs have a different number of Triples they are not equal</li>
+            <li>Declare a list of triples which are the triples of the second graph called <em>TargetTriples</em></li>
+            <li>Declare two dictionaries of Nodes to Integers which are called <em>SourceClassification</em> and <em>TargetClassification</em></li>
+            <li>For Each Triple in the Source Graph
+                <ol>
+                <li>If it is a ground triple and cannot be found and removed from <em>TargetTriples</em> then graphs are not equal since the triple does not exist in both graphs</li>
+                <li>If it contains blank nodes track the number of usages of this blank node in <em>SourceClassification</em></li>
+                </ol>
+            </li> 
+            <li>If there are any triples remaining in <em>TargetTriples</em> which are ground triples then graphs are not equal since the Source Graph does not contain them</li>
+            <li>If all the triples from both graphs were ground triples (i.e. there were no blank nodes) then the graphs are equal</li>
+            <li>Iterate over the remaining triples in <em>TargetTriples</em> and populate the <em>TargetClassification</em></li>
+            <li>If the count of the two classifications is different the graphs are not equal since there are differing numbers of blank nodes in the Graph</li>
+            <li>Now build two additional dictionaries of Integers to Integers which are called <em>SourceDegreeClassification</em> and <em>TargetDegreeClassification</em>.  Iterate over <em>SourceClassification</em> and <em>TargetClassification</em> such that the corresponding degree classifications contain a mapping of the number of blank nodes with a given degree</li>
+            <li>If the count of the two degree classifications is different the graphs are not equal since there are not the same range of blank node degrees in both graphs</li>
+            <li>For All classifications in <em>SourceDegreeClassification</em> there must be a matching classification in <em>TargetDegreeClassification</em> else the graphs are not equal</li>
+            <li>Then build a possible mapping using the following rules:
+                <ol>
+                <li>Any blank bode used only once (single-use) in the Source Graph should be mapped to an equivalent blank bode in the Target Graph.  If this is not possible then the graphs are not equal</li>
+                <li>Any blank node with a unique degree in the Source Graph should be mapped to an equivalent blank node in the Target Graph.  If this is not possible then the graphs are not equal</li>
+                <li>Any blank node used with unique constants (two other ground terms in a triple) in the Source Graph should be mapped to an equivalent blank bode in the Target Graph.  If this is not possible then the graphs are not equal.</li>
+                <li>Build up lists of dependent pairs of blank Nodes for both graphs</li>
+                <li>Use these lists to determine if there are any independent nodes not yet mapped in the Source Graph.  These should be mapped to equivalent blank nodes in the Target Graph, if this is not possible the graphs are not equal</li>
+                <li><strong>Important:</strong> Keep a copy of the mapping up to this point as a <em>Base Mapping</em> for use as a fallback in later steps</li>
+                <li>Use the dependency information and existing mappings to generate a possible mapping</li>
+                <li>If a complete possible mapping (there is a mapping for each blank node from the Source Graph to the Target Graph) then test this mapping.  If it succeeds then the graphs are equal</li>
+                </ol>
+            </li>
+            <li>If we don't yet have a mapping take a divide and conquer approach:
+                <ol>
+                <li>Take the not yet mapped blank nodes for each graph and sub-divide them into their isolated sub-graphs</li>
+                <li>If there are at least 2 isolated sub-graphs proceed to divide and conquer</li>
+                <li>For Each Isolated Sub-Graph from the Source Graph
+                    <ol>
+                    <li>Consider each possible isolated sub-graph of the same size from the target graph, if there are none then graphs are not equal.  If there is a single possible equal isolated sub-graph add the mappings for all involved blank nodes.</li>
+                    </ol>
+                </li>
+                <li>If we now have a complete possible mapping (there is a mapping for each blank node from the Source Graph to the Target Graph) then test the mapping.  Return success/failure depending on whether the mapping is valid.</li>
+                <li><strong>Important:</strong> Keep a copy of the mapping up to this point as a <em>Base Mapping</em> for use as a base for the brute force step</li>
+                </ol> 
+            </li>
+            <li>If we still don't have a complete mapping we now fallback to the <em>Base Mapping</em> and use it as a basis for brute forcing the possible solution space and testing every possibility until either a mapping works or we find the graphs to be non-equal</li>
+            </ol>
+            </remarks>
         </member>
         <member name="M:VDS.RDF.GraphMatcher.Equals(VDS.RDF.IGraph,VDS.RDF.IGraph)">
             <summary>
@@ -67625,6 +68224,18 @@
             <param name="hDegrees">2nd Graph Degree classification</param>
             <returns></returns>
         </member>
+        <member name="M:VDS.RDF.GraphMatcher.TryDivideAndConquerMapping(VDS.RDF.IGraph,VDS.RDF.IGraph,System.Collections.Generic.Dictionary{VDS.RDF.INode,System.Int32},System.Collections.Generic.Dictionary{VDS.RDF.INode,System.Int32},System.Collections.Generic.List{VDS.RDF.MappingPair},System.Collections.Generic.List{VDS.RDF.MappingPair})">
+            <summary>
+            Uses a divide and conquer based approach to generate a mapping without the need for brute force guessing
+            </summary>
+            <param name="g">1st Graph</param>
+            <param name="h">2nd Graph</param>
+            <param name="gNodes">1st Graph Node classification</param>
+            <param name="hNodes">2nd Graph Node classification</param>
+            <param name="sourceDependencies">Dependencies in the 1st Graph</param>
+            <param name="targetDependencies">Dependencies in the 2nd Graph</param>
+            <returns></returns>
+        </member>
         <member name="M:VDS.RDF.GraphMatcher.TryBruteForceMapping(VDS.RDF.IGraph,VDS.RDF.IGraph,System.Collections.Generic.Dictionary{VDS.RDF.INode,System.Int32},System.Collections.Generic.Dictionary{VDS.RDF.INode,System.Int32},System.Collections.Generic.List{VDS.RDF.MappingPair},System.Collections.Generic.List{VDS.RDF.MappingPair})">
             <summary>
             Generates and Tests all possibilities in a brute force manner
@@ -67637,19 +68248,32 @@
             <param name="targetDependencies">Dependencies in the 2nd Graph</param>
             <returns></returns>
         </member>
-        <member name="M:VDS.RDF.GraphMatcher.GenerateMappings(System.Collections.Generic.Dictionary{VDS.RDF.INode,System.Collections.Generic.List{VDS.RDF.INode}},System.Collections.Generic.List{VDS.RDF.MappingPair},System.Collections.Generic.List{VDS.RDF.MappingPair},VDS.RDF.IGraph)">
+        <member name="M:VDS.RDF.GraphMatcher.GenerateMappings(System.Collections.Generic.Dictionary{VDS.RDF.INode,VDS.RDF.INode},System.Collections.Generic.Dictionary{VDS.RDF.INode,System.Collections.Generic.List{VDS.RDF.INode}})">
             <summary>
             Helper method for brute forcing the possible mappings
             </summary>
+            <param name="baseMapping">Base Mapping</param>
             <param name="possibleMappings">Possible Mappings</param>
-            <param name="sourceDependencies">Dependencies in the 1st Graph</param>
-            <param name="targetDependencies">Dependencies in the 2nd Graph</param>
-            <param name="target">Target Graph (2nd Graph)</param>
             <returns></returns>
+            <remarks>
+            The base mapping at the time of the initial call shoudl contain known good mappings
+            </remarks>
+        </member>
+        <member name="M:VDS.RDF.GraphMatcher.GenerateMappingsInternal(System.Collections.Generic.Dictionary{VDS.RDF.INode,VDS.RDF.INode},System.Collections.Generic.Dictionary{VDS.RDF.INode,System.Collections.Generic.List{VDS.RDF.INode}},VDS.RDF.INode)">
+            <summary>
+            Helper method for brute forcing the possible mappings
+            </summary>
+            <param name="baseMapping">Base Mapping</param>
+            <param name="possibleMappings">Possible Mappings</param>
+            <param name="x">Node to consider for mapping</param>
+            <returns></returns>
+            <remarks>
+            The base mapping contains known good mappings
+            </remarks>
         </member>
         <member name="P:VDS.RDF.GraphMatcher.Mapping">
             <summary>
-            Gets the Blank Node Mapping found between the Graphs
+            Gets the Blank Node Mapping found between the Graphs (if one was found)
             </summary>
         </member>
         <member name="T:VDS.RDF.MappingPair">
@@ -69164,10 +69788,10 @@
             </summary>
             <remarks>
             <para>
-            If the provided manager also implements the <see cref="T:VDS.RDF.Storage.IUpdateableStorage">IUpdateableStorage</see> interface then the managers native SPARQL Update implementation will be used for the non-type specific calls i.e. <see cref="M:VDS.RDF.Update.GenericUpdateProcessor.ProcessCommand(VDS.RDF.Update.SparqlUpdateCommand)">ProcessCommand()</see> and <see cref="M:VDS.RDF.Update.GenericUpdateProcessor.ProcessCommandSet(VDS.RDF.Update.SparqlUpdateCommandSet)">ProcessCommandSet()</see>.  At all other times the SPARQL Update commands will be processed by approximating their behaviour through calls to <see cref="M:VDS.RDF.Storage.IStorageProvider.SaveGraph(VDS.RDF.IGraph)">SaveGraph()</see>, <see cref="M:VDS.RDF.Storage.IStorageProvider.LoadGraph(VDS.RDF.IGraph,System.Uri)">LoadGraph()</see> and <see cref="M:VDS.RDF.Storage.IStorageProvider.UpdateGraph(System.Uri,System.Collections.Generic.IEnumerable{VDS.RDF.Triple},System.Collections.Generic.IEnumerable{VDS.RDF.Triple})">UpdateGraph()</see> in addition to local in-memory manipulation of the data.  Some commands such as INSERT and DELETE can only be processed when the manager is also a <see cref="T:VDS.RDF.Storage.IQueryableStorage">IQueryableStorage</see> since they rely on making a query and performing actions based on the results of that query.
+            If the provided manager also implements the <see cref="T:VDS.RDF.Storage.IUpdateableStorage">IUpdateableStorage</see> interface then the managers native SPARQL Update implementation will be used for the non-type specific calls i.e. <see cref="M:VDS.RDF.Update.GenericUpdateProcessor.ProcessCommand(VDS.RDF.Update.SparqlUpdateCommand)">ProcessCommand()</see> and <see cref="M:VDS.RDF.Update.GenericUpdateProcessor.ProcessCommandSet(VDS.RDF.Update.SparqlUpdateCommandSet)">ProcessCommandSet()</see>.  At all other times the SPARQL Update commands will be processed by approximating their behaviour through calls to <see cref="M:VDS.RDF.Storage.IStorageProvider.SaveGraph(VDS.RDF.IGraph)">SaveGraph()</see>, <see cref="!:IStorageProvider.LoadGraph(Uri)">LoadGraph()</see> and <see cref="M:VDS.RDF.Storage.IStorageProvider.UpdateGraph(System.Uri,System.Collections.Generic.IEnumerable{VDS.RDF.Triple},System.Collections.Generic.IEnumerable{VDS.RDF.Triple})">UpdateGraph()</see> in addition to local in-memory manipulation of the data.  Some commands such as INSERT and DELETE can only be processed when the manager is also a <see cref="T:VDS.RDF.Storage.IQueryableStorage">IQueryableStorage</see> since they rely on making a query and performing actions based on the results of that query.
             </para>
             <para>
-            The performance of this processor is somewhat dependent on the underlying <see cref="T:VDS.RDF.Storage.IStorageProvider">IStorageProvider</see>.  If the underlying manager supports triple level updates as indicated by the <see cref="!:IStorageProvider.UpdateSupported">UpdateSupported</see> property then operations can be performed quite efficiently, if this is not the case then any operation which modifies a Graph will need to load the existing Graph from the store, make the modifications locally in-memory and then save the resulting Graph back to the Store
+            The performance of this processor is somewhat dependent on the underlying <see cref="T:VDS.RDF.Storage.IStorageProvider">IStorageProvider</see>.  If the underlying manager supports triple level updates as indicated by the <see cref="P:VDS.RDF.Storage.IStorageCapabilities.UpdateSupported">UpdateSupported</see> property then operations can be performed quite efficiently, if this is not the case then any operation which modifies a Graph will need to load the existing Graph from the store, make the modifications locally in-memory and then save the resulting Graph back to the Store
             </para>
             </remarks>
         </member>
@@ -70917,7 +71541,7 @@
             <para>
             This template generates a Sesame repository config graph like the following, depending on exact options the graph may differ:
             </para>
-            <pre>
+            <code>
             @prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;.
             @prefix rep: &lt;http://www.openrdf.org/config/repository#&gt;.
             @prefix hr: &lt;http://www.openrdf.org/config/repository/http#&gt;.
@@ -70929,7 +71553,7 @@
                ];
                rep:repositoryID "{this.ID}" ;
                rdfs:label "{this.Label}" .
-            </pre>
+            </code>
             <para>
             The placeholders of the form <strong>{this.Property}</strong> represent properties of this class whose values will be inserted into the repository config graph and used to create a new store in Sesame.
             </para>
@@ -71353,6 +71977,40 @@
             <remarks>
             Equivalent to ANDing all the Chained Filters expressions
             </remarks>
+        </member>
+        <member name="T:VDS.RDF.Query.Optimisation.OrderByDistinctOptimiser">
+            <summary>
+            An optimizer that handles a special case for ORDER BY + DISTINCT combinations which can significantly improve performance by eliminating duplicates prior to sorting when the default SPARQL behaviour is to do a potentially costly sort over many duplicates and then eliminate distincts.
+            </summary>
+            <remarks>
+            Only applies to queries which meet the following criteria:
+            <ul>
+            <li>Has an ORDER BY and a DISTNCT on the same level of the query</li>
+            <li>Selects a fixed list of variables i.e. not a SELECT DISTINCT *</li>
+            <li>All variables used in the ORDER BY expressions also occur in the project list</li>
+            </ul>
+            </remarks>
+        </member>
+        <member name="M:VDS.RDF.Query.Optimisation.OrderByDistinctOptimiser.Optimise(VDS.RDF.Query.Algebra.ISparqlAlgebra)">
+            <summary>
+            Optimizes the given algebra
+            </summary>
+            <param name="algebra">Algebra</param>
+            <returns>Optimized algebra</returns>
+        </member>
+        <member name="M:VDS.RDF.Query.Optimisation.OrderByDistinctOptimiser.IsApplicable(VDS.RDF.Query.SparqlQuery)">
+            <summary>
+            Returns true if the query is a SELECT DISTINCT or SELECT REDUCED and has an ORDER BY
+            </summary>
+            <param name="q">Query</param>
+            <returns></returns>
+        </member>
+        <member name="M:VDS.RDF.Query.Optimisation.OrderByDistinctOptimiser.IsApplicable(VDS.RDF.Update.SparqlUpdateCommandSet)">
+            <summary>
+            Returns that this is not applicable to updates
+            </summary>
+            <param name="cmds">Update commands</param>
+            <returns></returns>
         </member>
         <member name="T:VDS.RDF.Query.Operators.DateTime.DateTimeAddition">
             <summary>

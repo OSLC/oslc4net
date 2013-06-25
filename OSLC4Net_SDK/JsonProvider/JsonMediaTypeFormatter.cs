@@ -127,8 +127,15 @@ namespace OSLC4Net.Core.JsonProvider
             {
                 return true;
             }
-            
-            return GetMemberType(type) != null;
+
+            Type memberType = GetMemberType(type);
+
+            if (memberType == null)
+            {
+                return false;
+            }
+
+            return memberType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0;
         }
 
         /// <summary>
@@ -234,7 +241,14 @@ namespace OSLC4Net.Core.JsonProvider
                 return true;
             }
 
-            return GetMemberType(type) != null;
+            Type memberType = GetMemberType(type);
+
+            if (memberType == null)
+            {
+                return false;
+            }
+
+            return memberType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0;
         }
 
         /// <summary>
