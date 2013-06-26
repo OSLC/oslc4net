@@ -1,4 +1,19 @@
-﻿using System;
+﻿/*******************************************************************************
+ * Copyright (c) 2013 IBM Corporation.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
+ *  
+ * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
+ * and the Eclipse Distribution License is available at
+ * http://www.eclipse.org/org/documents/edl-v10.php.
+ *
+ * Contributors:
+ *     Steve Pitschke  - initial API and implementation
+ *******************************************************************************/
+
+using System;
 using System.Diagnostics;
 using System.Text;
 using System.Collections.Generic;
@@ -107,6 +122,46 @@ namespace OSLC4Net.Core.QueryTests
                 catch (ParseException e)
                 {
                     Debug.WriteLine(e.StackTrace);
+
+                    Assert.IsFalse(trial.ShouldSucceed);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void BasicSelectTest()
+        {
+            String prefixes = "qm=<http://qm.example.com/ns>," +
+                "oslc=<http://open-services.net/ns/core#>";
+            IDictionary<String, String> prefixMap = QueryUtils.ParsePrefixes(prefixes);
+
+            Trial[] trials = {
+                    new Trial("*{*}", true),
+                    new Trial("qm:testcase", true),
+                    new Trial("*", true),
+                    new Trial("oslc:create,qm:verified,oslc:create,qm:verified", true),
+                    new Trial("qm:state{oslc:verified_by{oslc:owner,qm:duration}}", true),
+                    new Trial("qm:submitted{*}", true),
+                    new Trial("qm:testcase,*", true),
+                    new Trial("*,qm:state{*}", true),
+                    new Trial("XXX", false)
+                };
+
+            foreach (Trial trial in trials)
+            {
+                try
+                {
+                    SelectClause selectClause =
+                        QueryUtils.ParseSelect(trial.Expression, prefixMap);
+
+                    Debug.WriteLine(selectClause);
+
+                    Assert.IsTrue(trial.ShouldSucceed);
+
+                }
+                catch (ParseException e)
+                {
+                    Debug.WriteLine(e.Message + ":\n" + e.StackTrace);
 
                     Assert.IsFalse(trial.ShouldSucceed);
                 }

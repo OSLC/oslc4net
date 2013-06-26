@@ -48,16 +48,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Impl\PropertiesClauseImpl.cs" />
+    <Compile Include="Impl\NestedPropertyImpl.cs" />
     <Compile Include="Impl\OslcOrderByLexer.cs" />
     <Compile Include="Impl\OslcOrderByParser.cs" />
     <Compile Include="Impl\OslcPrefixLexer.cs" />
     <Compile Include="Impl\OslcPrefixParser.cs" />
     <Compile Include="Impl\OslcSearchTermsLexer.cs" />
     <Compile Include="Impl\OslcSearchTermsParser.cs" />
+    <Compile Include="Impl\OslcSelectLexer.cs" />
+    <Compile Include="Impl\OslcSelectParser.cs" />
+    <Compile Include="Impl\PropertiesImpl.cs" />
+    <Compile Include="Impl\PropertyImpl.cs" />
     <Compile Include="Impl\ScopedSortTermImpl.cs" />
+    <Compile Include="Impl\SelectClauseImpl.cs" />
     <Compile Include="Impl\SimpleSortTermImpl.cs" />
     <Compile Include="Impl\SortTermImpl.cs" />
     <Compile Include="Impl\SortTermsImpl.cs" />
+    <Compile Include="Impl\WildcardImpl.cs" />
+    <Compile Include="NestedProperty.cs" />
+    <Compile Include="Properties.cs" />
+    <Compile Include="PropertiesClause.cs" />
+    <Compile Include="Property.cs" />
     <Compile Include="ScopedSortTerm.cs" />
     <Compile Include="OrderByClause.cs" />
     <Compile Include="ParseException.cs" />
@@ -65,20 +77,24 @@
     <Compile Include="QueryUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchTermsClause.cs" />
+    <Compile Include="SelectClause.cs" />
     <Compile Include="SimpleSortTerm.cs" />
     <Compile Include="SortTerm.cs" />
     <Compile Include="SortTerms.cs" />
+    <Compile Include="Wildcard.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Impl\GeneratingParsers.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Grammars\OslcSelect.g" />
     <None Include="Grammars\OslcSearchTerms.g" />
     <None Include="Grammars\OslcOrderBy.g" />
     <None Include="Grammars\OslcPrefix.g" />
     <None Include="Impl\OslcOrderBy.tokens" />
     <None Include="Impl\OslcPrefix.tokens" />
     <None Include="Impl\OslcSearchTerms.tokens" />
+    <None Include="Impl\OslcSelect.tokens" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

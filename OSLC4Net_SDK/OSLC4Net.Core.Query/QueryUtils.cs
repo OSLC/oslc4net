@@ -72,6 +72,72 @@ namespace OSLC4Net.Core.Query
         }
 
         /// <summary>
+        /// Parse a oslc.select expression
+        /// </summary>
+        /// <param name="selectExpression">contents of an oslc.select HTTP query
+        /// parameter</param>
+        /// <param name="prefixMap">map between XML namespace prefixes and
+        /// associated URLs</param>
+        /// <returns>the parsed select clause</returns>
+        public static SelectClause
+        ParseSelect(
+            String selectExpression,
+            IDictionary<String, String> prefixMap
+        )
+        {
+            try
+            {
+                OslcSelectParser parser = new OslcSelectParser(selectExpression);        
+                CommonTree rawTree = (CommonTree)parser.Result;
+                ITree child = rawTree.GetChild(0);
+
+                if (child is CommonErrorNode)
+                {
+                    throw new ParseException(child.ToString());
+                }
+
+                return new SelectClauseImpl(rawTree, prefixMap);
+            
+            } catch (RecognitionException e) {
+                throw new ParseException(e);
+            }
+        }
+    
+        /// <summary>
+        /// Parse a oslc.properties expression
+        /// </summary>
+        /// <param name="propertiesExpression">contents of an oslc.properties HTTP query
+        /// parameter</param>
+        /// <param name="prefixMap"map between XML namespace prefixes and
+        ///associated URLs></param>
+        /// <returns>the parsed properties clause</returns>
+        public static PropertiesClause
+        parseProperties(
+            String propertiesExpression,
+            IDictionary<String, String> prefixMap
+        )
+        {
+            try
+            {
+                OslcSelectParser parser = new OslcSelectParser(propertiesExpression);
+                CommonTree rawTree = (CommonTree)parser.Result;
+                ITree child = rawTree.GetChild(0);
+
+                if (child is CommonErrorNode)
+                {
+                    throw new ParseException(child.ToString());
+                }
+
+                return new PropertiesClauseImpl(rawTree, prefixMap);
+
+            }
+            catch (RecognitionException e)
+            {
+                throw new ParseException(e);
+            }
+        }
+    
+        /// <summary>
         /// Parse a oslc.orderBy expression
         /// </summary>
         /// <param name="orderByExpression">contents of an oslc.orderBy HTTP query
@@ -101,20 +167,16 @@ namespace OSLC4Net.Core.Query
                 throw new ParseException(e);
             }
         }
-    
-        /**
-         * Parse a oslc.searchTerms expression
-         * 
-         * <p><b>Note</b>: {@link Object#toString()} of result has been overridden to
-         * return input expression.
-         *  
-         * @param searchTermsExpression contents of an oslc.searchTerms HTTP query
-         * parameter
-         * 
-         * @return the parsed search terms clause
-         * 
-         * @throws ParseException
-         */
+
+        /// <summary>
+        /// Parse a oslc.searchTerms expression
+        /// 
+        /// <p><b>Note</b>: {@link Object#toString()} of result has been overridden to
+        /// return input expression.
+        /// </summary>
+        /// <param name="searchTermsExpression">contents of an oslc.searchTerms HTTP query
+        /// parameter</param>
+        /// <returns>the parsed search terms clause</returns>
         public static SearchTermsClause
         ParseSearchTerms(
             String searchTermsExpression
@@ -148,7 +210,7 @@ namespace OSLC4Net.Core.Query
         }
     
         /// <summary>
-        /// Implementation of a Map<String, String> prefixMap
+        /// Implementation of a IDictionary<String, String> prefixMap
         /// </summary>
         private class PrefixMap : Dictionary<String, String>
         {
