@@ -8,3 +8,4 @@ TraceAndTestImpact.testsettings
 *~
 *.bak
 Local.testsettings
+OSLC4Net_SDK/packages/

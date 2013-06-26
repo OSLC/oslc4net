@@ -61,7 +61,7 @@ namespace OSLC4Net.Core.Query
            
              foreach (CommonTree rawPrefix in rawPrefixes) {
 
-                 if (rawPrefix.token == Tokens.Invalid || rawPrefix is CommonErrorNode) {
+                if (rawPrefix.Token == Tokens.Skip || rawPrefix is CommonErrorNode) {
                      throw new ParseException(rawPrefix.ToString());
                  }            
                 
