@@ -1,0 +1,4 @@
+﻿cd into Impl directory
+execute a command similar to this
+	c:\ANTLR3.5\bin\antlrgen.bat -o . ../Grammars/OslcOrderBy.g
+ignoring all the warnings

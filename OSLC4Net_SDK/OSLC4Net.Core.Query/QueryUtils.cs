@@ -95,8 +95,9 @@ namespace OSLC4Net.Core.Query
         )
         {
             try {
-            
-                CommonTree rawTree = null;        
+
+                OslcOrderByParser parser = new OslcOrderByParser(orderByExpression);
+                CommonTree rawTree = (CommonTree)parser.Result;
                 ITree child = rawTree.GetChild(0);
             
                 if (child is CommonErrorNode) {

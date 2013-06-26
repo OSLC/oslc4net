@@ -48,12 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Impl\Prefix\analysis.cs" />
-    <Compile Include="Impl\Prefix\lexer.cs" />
-    <Compile Include="Impl\Prefix\nodes.cs" />
-    <Compile Include="Impl\Prefix\parser.cs" />
-    <Compile Include="Impl\Prefix\prods.cs" />
-    <Compile Include="Impl\Prefix\tokens.cs" />
+    <Compile Include="Impl\OslcOrderByLexer.cs" />
+    <Compile Include="Impl\OslcOrderByParser.cs" />
+    <Compile Include="Impl\OslcPrefixLexer.cs" />
+    <Compile Include="Impl\OslcPrefixParser.cs" />
     <Compile Include="Impl\ScopedSortTermImpl.cs" />
     <Compile Include="Impl\SimpleSortTermImpl.cs" />
     <Compile Include="Impl\SortTermImpl.cs" />
@@ -68,10 +66,14 @@
     <Compile Include="SortTerm.cs" />
     <Compile Include="SortTerms.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Impl\GeneratingParsers.txt" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Grammars\OslcOrderBy.g" />
     <None Include="Grammars\OslcPrefix.g" />
+    <None Include="Impl\OslcOrderBy.tokens" />
+    <None Include="Impl\OslcPrefix.tokens" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

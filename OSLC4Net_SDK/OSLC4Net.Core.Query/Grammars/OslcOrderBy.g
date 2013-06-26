@@ -21,20 +21,16 @@ options {
 }
 
 tokens {
-	OSLC_ORDER_BY = 'oslc_order_by';
-	SORT_TERMS = 'sort_terms';
-	SORT_TERM = 'sort_term';
-	SCOPED_SORT_TERM = 'scoped_sort_term';
-	IDENTIFIER = 'identifier';
-	PREFIXED_NAME = 'prefixed_name';
-	NAMESPACE = 'ns';
+	TERMS = 'terms';
+	SCOPED_TERM = 'scoped_term';
+	SIMPLE_TERM = 'simple_term';
 }
 
 @namespace { OSLC4Net.Core.Query.Impl }
 
 @members {
     public OslcOrderByParser(string orderBy) :
-		this(new CommonTokenStream(new OslcPrefixLexer(new ANTLRStringStream(orderBy))))
+		this(new CommonTokenStream(new OslcOrderByLexer(new ANTLRStringStream(orderBy))))
     {
     }
 	
@@ -47,32 +43,39 @@ tokens {
 oslc_order_by : sort_terms 
 	;
 
-sort_terms  : sort_term ( ',' sort_term )* 
+sort_terms  : sort_term ( ',' sort_term )*  -> ^( 'terms' sort_term (sort_term)* )
 	; 
 
-sort_term   : ( DIRECTION identifier ) | scoped_sort_term
+sort_term   : scoped_sort_term | DIRECTION identifier -> ^( 'simple_term' identifier DIRECTION )
 	;
 
-scoped_sort_term : identifier '{' sort_terms '}'
+scoped_sort_term : identifier '{' sort_terms '}' -> ^( 'scoped_term' identifier sort_terms )
     ;
 
-identifier    : prefixedName | ns;
+identifier    : prefixedName ;
 
 prefixedName
-    : PN_PREFIX? ':' PN_LOCAL
-    ;
-
-ns
-    : PN_PREFIX? ':'
+    : PNAME_LN
+    | PNAME_NS
     ;
 
 // $>
 
 // $<Lexer
 
+
 WS
-    : (' '| '\t'| EOL)+ {  Skip(); }
+    : (' '| '\t'| EOL)+ { $channel=Hidden; }
     ;
+
+PNAME_NS
+    : p=PN_PREFIX? ':'
+    ;
+
+PNAME_LN
+    : PNAME_NS PN_LOCAL
+    ;
+
 
 DIRECTION       
     : PLUS
@@ -94,10 +97,12 @@ PN_CHARS
     | '\u203F'..'\u2040'
     ;
 
+fragment
 PN_PREFIX
     : PN_CHARS_BASE ((PN_CHARS|DOT)* PN_CHARS)?
     ;
 
+fragment
 PN_LOCAL
     : ( PN_CHARS_U | DIGIT ) ((PN_CHARS|DOT)* PN_CHARS)?
     ;
@@ -134,6 +139,14 @@ EOL
     : '\n' | '\r'
     ;
 
+OPEN_CURLY_BRACE
+    : '{'
+    ;
+
+CLOSE_CURLY_BRACE
+    : '}'
+    ;
+
 fragment
 PLUS
     : '+'
@@ -146,6 +159,10 @@ MINUS
 
 ASTERISK
     : '*'
+    ;
+
+COMMA
+    : ','
     ;
 
 // $>

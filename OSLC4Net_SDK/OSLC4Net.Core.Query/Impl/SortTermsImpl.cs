@@ -47,9 +47,9 @@ namespace OSLC4Net.Core.Query.Impl
                 
                         Object simpleTerm;
                 
-                        switch(child.token.Type) {
+                        switch(child.Token.Type) {
                         default:
-                            throw new InvalidOperationException("unimplemented type of sort term: " + child.token.Text);
+                            throw new InvalidOperationException("unimplemented type of sort term: " + child.Token.Text);
                         }
                 
                         children.Add((SortTerm)simpleTerm);
