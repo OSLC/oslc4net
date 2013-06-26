@@ -30,19 +30,14 @@ namespace OSLC4Net.Core.Query
 {
     public class QueryUtils
     {
-        /**
-         * Parse a oslc.prefix clause into a map between prefixes
-         * and corresponding URIs
-         * 
-         * <p><b>Note</b>: {@link Object#toString()} of result has been overridden to
-         * return input expression.
-         * 
-         * @param prefixExpression the oslc.prefix expression
-         * 
-         * @return the prefix map
-         * 
-         * @throws ParseException
-         */
+        /// <summary>
+        ///  Parse a oslc.prefix clause into a map between prefixes
+        /// and corresponding URIs 
+        /// <p><b>Note</b>: {@link Object#toString()} of result has been overridden to
+        /// return input expression.
+        /// </summary>
+        /// <param name="prefixExpression">the oslc.prefix expression</param>
+        /// <returns>the prefix map</returns>
         public static IDictionary<String, String>
         ParsePrefixes(
             String prefixExpression
@@ -76,18 +71,14 @@ namespace OSLC4Net.Core.Query
             return prefixMap;
         }
 
-        /**
-         * Parse a oslc.orderBy expression
-         *  
-         * @param orderByExpression contents of an oslc.orderBy HTTP query
-         * parameter
-         * @param prefixMap map between XML namespace prefixes and
-         * associated URLs
-         * 
-         * @return the parsed order by clause
-         * 
-         * @throws ParseException
-         */
+        /// <summary>
+        /// Parse a oslc.orderBy expression
+        /// </summary>
+        /// <param name="orderByExpression">contents of an oslc.orderBy HTTP query
+        /// parameter</param>
+        /// <param name="prefixMap">map between XML namespace prefixes and
+        /// associated URLs</param>
+        /// <returns></returns>
         public static OrderByClause
         ParseOrderBy(
             String orderByExpression,
@@ -112,9 +103,53 @@ namespace OSLC4Net.Core.Query
         }
     
         /**
+         * Parse a oslc.searchTerms expression
          * 
-         * Implementation of a Map<String, String> prefixMap
+         * <p><b>Note</b>: {@link Object#toString()} of result has been overridden to
+         * return input expression.
+         *  
+         * @param searchTermsExpression contents of an oslc.searchTerms HTTP query
+         * parameter
+         * 
+         * @return the parsed search terms clause
+         * 
+         * @throws ParseException
          */
+        public static SearchTermsClause
+        ParseSearchTerms(
+            String searchTermsExpression
+        )
+        {
+            try {
+            
+                OslcSearchTermsParser parser = new OslcSearchTermsParser(searchTermsExpression);
+                CommonTree rawTree = (CommonTree)parser.Result;
+                CommonTree child = (CommonTree)rawTree.GetChild(0);
+            
+                if (child is CommonErrorNode) {
+                    throw ((CommonErrorNode)child).trappedException;
+                }
+
+                IList<ITree> rawList = rawTree.Children;
+                StringList stringList = new StringList(rawList.Count);
+            
+                foreach (CommonTree str in rawList) {
+                
+                    String rawString = str.Text;
+                
+                    stringList.Add(rawString.Substring(1, rawString.Length-2));
+                }
+            
+                return stringList;
+            
+            } catch (RecognitionException e) {
+                throw new ParseException(e);
+            }
+        }
+    
+        /// <summary>
+        /// Implementation of a Map<String, String> prefixMap
+        /// </summary>
         private class PrefixMap : Dictionary<String, String>
         {
             public
@@ -152,6 +187,39 @@ namespace OSLC4Net.Core.Query
             }
         }
 
+        /// <summary>
+        /// Implementation of a SearchTermsClause interface
+        /// </summary>
+        private class StringList : List<string>, SearchTermsClause
+        {
+            public
+            StringList(int size) : base(size)
+            {
+            }
+
+            public override string
+            ToString()
+            {
+                StringBuilder buffer = new StringBuilder();
+                bool first = true;
+            
+                foreach (String str in this) {
+                
+                    if (first) {
+                        first = false;
+                    } else {
+                        buffer.Append(',');
+                    }
+
+                    buffer.Append('"');
+                    buffer.Append(str);
+                    buffer.Append('"');
+                }
+            
+                return buffer.ToString();
+            }
+        }
+
         /**
          * Check list of errors from parsing some expression, generating
          * @{link {@link ParseException} if there are any.
@@ -161,7 +229,7 @@ namespace OSLC4Net.Core.Query
          * @throws ParseException
          */
         private static void
-        checkErrors(Parser parser)
+        CheckErrors(Parser parser)
         {
             if (! parser.Failed) {
                 return;

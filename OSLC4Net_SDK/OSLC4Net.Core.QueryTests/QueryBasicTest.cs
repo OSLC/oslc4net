@@ -65,12 +65,41 @@ namespace OSLC4Net.Core.QueryTests
             foreach (Trial trial in trials)
             {        
                 try
-                {
-                
+                {                
                     OrderByClause orderByClause =
                         QueryUtils.ParseOrderBy(trial.Expression, prefixMap);
                 
                     Debug.WriteLine(orderByClause);                
+
+                    Assert.IsTrue(trial.ShouldSucceed);
+
+                }
+                catch (ParseException e)
+                {
+                    Debug.WriteLine(e.StackTrace);
+
+                    Assert.IsFalse(trial.ShouldSucceed);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void BasicSearchTermsTest()
+        {
+            Trial[] trials = {
+                    new Trial("\"foobar\"", true),
+                    new Trial("\"foobar\",\"whatsis\",\"yousa\"", true),
+                    new Trial("", false)
+                };
+        
+            foreach (Trial trial in trials)
+            {        
+                try
+                {                
+                    SearchTermsClause searchTermsClause =
+                        QueryUtils.ParseSearchTerms(trial.Expression);
+
+                    Debug.WriteLine(searchTermsClause);                
 
                     Assert.IsTrue(trial.ShouldSucceed);
 

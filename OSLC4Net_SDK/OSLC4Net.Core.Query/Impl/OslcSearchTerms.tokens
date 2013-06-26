@@ -1,0 +1,8 @@
+COMMA=4
+ECHAR=5
+EOL=6
+STRING_LIST=7
+STRING_LITERAL=8
+WS=9
+','=4
+'string_list'=7
