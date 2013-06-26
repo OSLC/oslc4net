@@ -102,7 +102,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
 			    logger.Fatal("Jazz rootservices only supports CM, RM, QM, and Automation catalogs");
 		    }
 				
-		    processRootServices();
+		    ProcessRootServices();
 	    }
 	
         /// <summary>
@@ -150,13 +150,13 @@ namespace OSLC4Net.Client.Oslc.Jazz
 	    /// application base URL for RQM and RTC and is the JTS application URL for fronting
 	    /// applications like RRC and DM.</param>
         /// <returns></returns>
-	    public JazzFormAuthClient initFormClient(String userid, String password, String authUrl)
+	    public JazzFormAuthClient InitFormClient(String userid, String password, String authUrl)
 	    {
 		    return new JazzFormAuthClient(baseUrl, authUrl, userid, password);
 		
 	    }
 	
-	    private void processRootServices()
+	    private void ProcessRootServices()
 	    {
 		    try {
 			    OslcClient rootServicesClient = new OslcClient();

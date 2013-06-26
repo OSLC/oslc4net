@@ -74,7 +74,7 @@ namespace OSLC4Net.Client.Samples
 			
 			    //This is a bit of a hack for readability.  It is assuming RRC is at context /rm.  Could use a regex or UriBuilder instead.
 			    String authUrl = webContextUrl.Replace("/rm","/jts"); // XXX - should be ReplaceFirst(), if it existed
-			    JazzFormAuthClient client = helper.initFormClient(user, passwd, authUrl);
+			    JazzFormAuthClient client = helper.InitFormClient(user, passwd, authUrl);
 			
 			    //STEP 3: Login in to Jazz Server
 			    if (client.FormLogin() == HttpStatusCode.OK) {
