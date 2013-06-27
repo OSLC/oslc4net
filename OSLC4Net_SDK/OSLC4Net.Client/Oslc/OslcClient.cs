@@ -15,21 +15,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
-using System.Text;
-
-using OSLC4Net.Core.DotNetRdfProvider;
-using OSLC4Net.Core.JsonProvider;
 using System.Net.Http.Headers;
-using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 
 using OSLC4Net.Client.Exceptions;
+using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
-using OSLC4Net.Client.Oslc.Resources;
 
 namespace OSLC4Net.Client.Oslc
 {
@@ -44,22 +39,43 @@ namespace OSLC4Net.Client.Oslc
         /// <summary>
         /// Initialize a new OslcClient, accepting all SSL certificates. 
         /// </summary>
-        public OslcClient() :
-            this(null)
+        public OslcClient() : this(null)
         {
         }
 
         /// <summary>
         /// Initialize a new OslcClient.
         /// </summary>
-        /// <param name="certCallback">control SSL certificate management</param>
-        public OslcClient(RemoteCertificateValidationCallback certCallback)
+        /// <param name="certCallback">optionally control SSL certificate management</param>
+        public OslcClient(RemoteCertificateValidationCallback certCallback) : this(certCallback, null)
+        {
+        }
+
+        /// <summary>
+        /// Initialize a new OslcClient
+        /// </summary>
+        /// <param name="certCallback">optionally control SSL certificate management</param>
+        /// <param name="oauthHandler">optionally use OAuth</param>
+        protected OslcClient(RemoteCertificateValidationCallback certCallback,
+                             HttpMessageHandler oauthHandler)
         {
             this.formatters = new HashSet<MediaTypeFormatter>();
 
             formatters.Add(new RdfXmlMediaTypeFormatter());
             formatters.Add(new OSLC4Net.Core.JsonProvider.JsonMediaTypeFormatter());
 
+            this.client = oauthHandler == null ?
+                HttpClientFactory.Create(CreateSSLHandler(certCallback)) :
+                HttpClientFactory.Create(oauthHandler);
+        }
+        
+        /// <summary>
+        /// Create an SSL Web Request Handler
+        /// </summary>
+        /// <param name="certCallback">optionally control SSL certificate management</param>
+        /// <returns></returns>
+        public static WebRequestHandler CreateSSLHandler(RemoteCertificateValidationCallback certCallback = null)
+        {
             WebRequestHandler webRequestHandler = new WebRequestHandler();
 
             webRequestHandler.AllowAutoRedirect = false;
@@ -67,7 +83,7 @@ namespace OSLC4Net.Client.Oslc
                 certCallback :
                 new RemoteCertificateValidationCallback(AcceptAllServerCertificates);
 
-            this.client = new HttpClient(webRequestHandler);
+            return webRequestHandler;
         }
 
         /// <summary>
@@ -473,7 +489,7 @@ namespace OSLC4Net.Client.Oslc
         /// <param name="chain"></param>
         /// <param name="errors"></param>
         /// <returns></returns>
-        private static bool AcceptAllServerCertificates(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
+        public static bool AcceptAllServerCertificates(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
         {
             return true;
         }

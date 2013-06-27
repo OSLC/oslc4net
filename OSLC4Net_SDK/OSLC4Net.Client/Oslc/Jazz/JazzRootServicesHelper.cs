@@ -113,22 +113,29 @@ namespace OSLC4Net.Client.Oslc.Jazz
 	    {
 		    return catalogUrl;
 	    }
-	
-	    /**
-	     * 
-	     * @param consumerKey
-	     * @param secret
-	     * @return
-	    public OslcOAuthClient initOAuthClient(String consumerKey, String secret) {
-		    return new OslcOAuthClient (
+
+        /// <summary>
+        /// Create an OAuth client
+        /// </summary>
+        /// <param name="consumerKey"></param>
+        /// <param name="secret"></param>
+        /// <param name="user"></param>
+        /// <param name="passwd"></param>
+        /// <param name="authUrl"></param>
+        /// <returns></returns>
+        public JazzOAuthClient InitOAuthClient(String consumerKey, String secret, String user, String passwd, String authUrl)
+        {
+		    return new JazzOAuthClient (
 								    requestTokenUrl,
 								    authorizationTokenUrl,
 								    accessTokenUrl,
 								    consumerKey,
 								    secret,
-								    authorizationRealm );		
+								    authorizationRealm,
+                                    user,
+                                    passwd,
+                                    authUrl );		
 	    }
-	     */
 	
         /// <summary>
         /// 

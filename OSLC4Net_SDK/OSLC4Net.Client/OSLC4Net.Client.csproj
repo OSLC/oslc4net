@@ -34,6 +34,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNetOpenAuth.Core">
+      <HintPath>..\packages\DotNetOpenAuth.Core.4.3.1.13153\lib\net40-full\DotNetOpenAuth.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.3.1.13153\lib\net40-full\DotNetOpenAuth.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Common">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Common.4.3.1.13153\lib\net40-full\DotNetOpenAuth.OAuth.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Consumer.4.3.1.13153\lib\net40-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+    </Reference>
     <Reference Include="dotNetRDF, Version=1.0.0.2473, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\dotNetRDF.1.0.0.2473\lib\net40\dotNetRDF.dll</HintPath>
@@ -57,17 +69,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Oslc\Exceptions\JazzAuthFailedException.cs" />
-    <Compile Include="Oslc\Exceptions\MessageExtractor.cs" />
-    <Compile Include="Oslc\Exceptions\OslcClientApplicationException.cs" />
-    <Compile Include="Oslc\Exceptions\ResourceNotFoundException.cs" />
-    <Compile Include="Oslc\Exceptions\RootServicesException.cs" />
+    <Compile Include="Exceptions\JazzAuthFailedException.cs" />
+    <Compile Include="Exceptions\MessageExtractor.cs" />
+    <Compile Include="Exceptions\OslcClientApplicationException.cs" />
+    <Compile Include="Exceptions\ResourceNotFoundException.cs" />
+    <Compile Include="Exceptions\RootServicesException.cs" />
     <Compile Include="Oslc\Jazz\JazzFormAuthClient.cs" />
     <Compile Include="Oslc\Jazz\JazzRootServicesConstants.cs" />
     <Compile Include="Oslc\Jazz\JazzRootServicesHelper.cs" />
     <Compile Include="Oslc\OslcClient.cs" />
     <Compile Include="Oslc\OSLCConstants.cs" />
     <Compile Include="Oslc\Jazz\JazzConstants.cs" />
+    <Compile Include="Oslc\Jazz\JazzOAuthClient.cs" />
     <Compile Include="Oslc\Resources\ArchitectureConstants.cs" />
     <Compile Include="Oslc\Resources\ArchitectureLinkType.cs" />
     <Compile Include="Oslc\Resources\ArchitectureResource.cs" />
@@ -92,7 +105,7 @@
     <Compile Include="Oslc\Resources\TestPlan.cs" />
     <Compile Include="Oslc\Resources\TestResult.cs" />
     <Compile Include="Oslc\Resources\TestScript.cs" />
-    <Compile Include="Oslc\Exceptions\JazzAuthErrorException.cs" />
+    <Compile Include="Exceptions\JazzAuthErrorException.cs" />
     <Compile Include="ServiceProviderRegistryClient.cs" />
     <Compile Include="ServiceProviderRegistryURIs.cs" />
     <Compile Include="OslcRestClient.cs" />
@@ -124,7 +137,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -460,7 +461,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                     }
 
                     Uri nil = new Uri(OslcConstants.RDF_NAMESPACE + RDF_NIL);
-                    List<INode> objects;
+                    IList<INode> objects;
 
                     if (multiple && obj is IUriNode && (
                            (graph.GetTriplesWithSubjectPredicate(obj, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListFirst))).Count() > 0 
@@ -504,9 +505,11 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                     }
                     else
                     {
-                        objects = new List<INode>(); // XXX - Should be immutable; is there a way to do that in .NET?
+                        objects = new List<INode>(); 
 
                         objects.Add(obj);
+
+                        objects = new ReadOnlyCollection<INode>(objects);
                     }
                 
                     Type reifiedType = null;
