@@ -56,7 +56,7 @@ namespace OSLC4Net.Core.QueryTests
                 }
                 catch (ParseException e)
                 {
-                    Debug.WriteLine(e.StackTrace);
+                    Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
                     Assert.IsFalse(trial.ShouldSucceed);
                 }
@@ -91,7 +91,7 @@ namespace OSLC4Net.Core.QueryTests
                 }
                 catch (ParseException e)
                 {
-                    Debug.WriteLine(e.StackTrace);
+                    Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
                     Assert.IsFalse(trial.ShouldSucceed);
                 }
@@ -121,7 +121,7 @@ namespace OSLC4Net.Core.QueryTests
                 }
                 catch (ParseException e)
                 {
-                    Debug.WriteLine(e.StackTrace);
+                    Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
                     Assert.IsFalse(trial.ShouldSucceed);
                 }
@@ -161,7 +161,47 @@ namespace OSLC4Net.Core.QueryTests
                 }
                 catch (ParseException e)
                 {
-                    Debug.WriteLine(e.Message + ":\n" + e.StackTrace);
+                    Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
+
+                    Assert.IsFalse(trial.ShouldSucceed);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void BasicWhereTest()
+        {
+            String prefixes = "qm=<http://qm.example.com/ns>," +
+                "oslc=<http://open-services.net/ns/core#>," +
+                "xs=<http://www.w3.org/2001/XMLSchema>";
+            IDictionary<String, String> prefixMap = QueryUtils.ParsePrefixes(prefixes);
+
+            Trial[] trials = {
+                    new Trial("qm:testcase=<http://example.com/tests/31459>", true),
+                    new Trial("qm:duration>=10.4", true),
+                    new Trial("oslc:create!=\"Bob\" and qm:verified!=true", true),
+                    new Trial("qm:state in [\"Done\",\"Open\"]", true),
+                    new Trial("oslc:verified_by{oslc:owner=\"Steve\" and qm:duration=-47.0} and oslc:description=\"very hairy expression\"", true),
+                    new Trial("qm:submitted<\"2011-10-10T07:00:00Z\"^^xs:dateTime", true),
+                    new Trial("oslc:label>\"The End\"@en-US", true),
+                    new Trial("XXX", false)
+                };
+
+            foreach (Trial trial in trials)
+            {
+                try
+                {
+                    WhereClause whereClause =
+                        QueryUtils.ParseWhere(trial.Expression, prefixMap);
+
+                    Debug.WriteLine(whereClause);
+
+                    Assert.IsTrue(trial.ShouldSucceed);
+
+                }
+                catch (ParseException e)
+                {
+                    Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
                     Assert.IsFalse(trial.ShouldSucceed);
                 }

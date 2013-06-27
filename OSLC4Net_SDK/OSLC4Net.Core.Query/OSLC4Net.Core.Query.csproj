@@ -48,6 +48,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BooleanValue.cs" />
+    <Compile Include="ComparisonTerm.cs" />
+    <Compile Include="CompoundTerm.cs" />
+    <Compile Include="DecimalValue.cs" />
+    <Compile Include="Impl\BooleanValueImpl.cs" />
+    <Compile Include="Impl\ComparisonTermImpl.cs" />
+    <Compile Include="Impl\CompoundTermImpl.cs" />
+    <Compile Include="Impl\DecimalValueImpl.cs" />
+    <Compile Include="Impl\InTermImpl.cs" />
+    <Compile Include="Impl\LangedStringValueImpl.cs" />
+    <Compile Include="Impl\OslcWhereLexer.cs" />
+    <Compile Include="Impl\OslcWhereParser.cs" />
     <Compile Include="Impl\PropertiesClauseImpl.cs" />
     <Compile Include="Impl\NestedPropertyImpl.cs" />
     <Compile Include="Impl\OslcOrderByLexer.cs" />
@@ -63,9 +75,16 @@
     <Compile Include="Impl\ScopedSortTermImpl.cs" />
     <Compile Include="Impl\SelectClauseImpl.cs" />
     <Compile Include="Impl\SimpleSortTermImpl.cs" />
+    <Compile Include="Impl\SimpleTermImpl.cs" />
     <Compile Include="Impl\SortTermImpl.cs" />
     <Compile Include="Impl\SortTermsImpl.cs" />
+    <Compile Include="Impl\StringValueImpl.cs" />
+    <Compile Include="Impl\UriRefValueImpl.cs" />
+    <Compile Include="Impl\ValueImpl.cs" />
+    <Compile Include="Impl\WhereClauseImpl.cs" />
     <Compile Include="Impl\WildcardImpl.cs" />
+    <Compile Include="InvalidOperationException.cs" />
+    <Compile Include="LangedStringValue.cs" />
     <Compile Include="NestedProperty.cs" />
     <Compile Include="Properties.cs" />
     <Compile Include="PropertiesClause.cs" />
@@ -79,14 +98,22 @@
     <Compile Include="SearchTermsClause.cs" />
     <Compile Include="SelectClause.cs" />
     <Compile Include="SimpleSortTerm.cs" />
+    <Compile Include="SimpleTerm.cs" />
     <Compile Include="SortTerm.cs" />
     <Compile Include="SortTerms.cs" />
+    <Compile Include="StringValue.cs" />
+    <Compile Include="TypedValue.cs" />
+    <Compile Include="Impl\TypedValueImpl.cs" />
+    <Compile Include="UriRefValue.cs" />
+    <Compile Include="Value.cs" />
+    <Compile Include="WhereClause.cs" />
     <Compile Include="Wildcard.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Impl\GeneratingParsers.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Grammars\OslcWhere.g" />
     <None Include="Grammars\OslcSelect.g" />
     <None Include="Grammars\OslcSearchTerms.g" />
     <None Include="Grammars\OslcOrderBy.g" />
@@ -95,6 +122,7 @@
     <None Include="Impl\OslcPrefix.tokens" />
     <None Include="Impl\OslcSearchTerms.tokens" />
     <None Include="Impl\OslcSelect.tokens" />
+    <None Include="Impl\OslcWhere.tokens" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

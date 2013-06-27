@@ -72,6 +72,38 @@ namespace OSLC4Net.Core.Query
         }
 
         /// <summary>
+        /// Parse a oslc.where expression
+        /// </summary>
+        /// <param name="whereExpression"contents of an oslc.where HTTP query
+        /// parameter></param>
+        /// <param name="prefixMap">map between XML namespace prefixes and
+        /// associated URLs</param>
+        /// <returns>the parsed where clause</returns>
+        public static WhereClause
+        ParseWhere(
+            String whereExpression,
+            IDictionary<String, String> prefixMap
+        )
+        {
+            try
+            {
+                OslcWhereParser parser = new OslcWhereParser(whereExpression);
+                CommonTree rawTree = (CommonTree)parser.Result;
+                ITree child = rawTree.GetChild(0);
+
+                if (child is CommonErrorNode)
+                {
+                    throw new ParseException(child.ToString());
+                }
+            
+                return (WhereClause) new WhereClauseImpl(rawTree, prefixMap);
+            
+            } catch (RecognitionException e) {
+                throw new ParseException(e);
+            }
+        }
+    
+        /// <summary>
         /// Parse a oslc.select expression
         /// </summary>
         /// <param name="selectExpression">contents of an oslc.select HTTP query
