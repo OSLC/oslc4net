@@ -127,6 +127,10 @@
       <Project>{469BA948-728B-4B8C-80E9-7EC06CED8196}</Project>
       <Name>OSLC4Net.Core.JsonProvider</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OSLC4Net.Core.Query\OSLC4Net.Core.Query.csproj">
+      <Project>{B7EC82FE-64D2-4271-8D04-3044046360FA}</Project>
+      <Name>OSLC4Net.Core.Query</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OSLC4Net.Core\OSLC4Net.Core.csproj">
       <Project>{C07B57BD-3356-4AD8-8050-D708B023A8EC}</Project>
       <Name>OSLC4Net.Core</Name>

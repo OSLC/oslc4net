@@ -171,10 +171,14 @@ namespace OSLC4Net.Client.Oslc.Jazz
 
                 resp = client.GetAsync(authorizationTokenURL + "?oauth_token=" + tokenManager.GetRequestToken() +
                                                             "&oauth_callback=" + Uri.EscapeUriString(callback).Replace("#", "%23").Replace("/", "%2F").Replace(":", "%3A")).Result;
+                statusCode = resp.StatusCode;
 
-                location = resp.Headers.Location.AbsoluteUri;
-                resp.ConsumeContent();
-                statusCode = FollowRedirects(client, resp.StatusCode, location);
+                if (statusCode == HttpStatusCode.Found)
+                {
+                    location = resp.Headers.Location.AbsoluteUri;
+                    resp.ConsumeContent();
+                    statusCode = FollowRedirects(client, statusCode, location);
+                }
 
                 String securityCheckUrl = "j_username=" + user + "&j_password=" + passwd;
                 StringContent content = new StringContent(securityCheckUrl, System.Text.Encoding.UTF8);

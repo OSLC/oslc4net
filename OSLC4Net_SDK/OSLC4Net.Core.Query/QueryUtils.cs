@@ -200,6 +200,125 @@ namespace OSLC4Net.Core.Query
             }
         }
 
+
+        /// <summary>
+        /// Create a map representation of the Properties returned
+        /// from parsing oslc.properties or olsc.select URL query
+        /// parameters suitable for generating a property result from an
+        /// HTTP GET request.<p/>
+        /// 
+        /// The map keys are the property names; i.e. the local name of the
+        /// property concatenated to the XML namespace of the property.  The
+        /// values of the map are:<p/>
+        /// 
+        /// <ul>
+        /// <li> OSLC4NetConstants.OSLC4NET_PROPERTY_WILDCARD - if all
+        /// properties at this level are to be output.  No recursion
+        /// below this level is to be done.</li>
+        /// <li> OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON - if only
+        /// the named property is to be output, without recursion</li>
+        /// <li> a nested property list to recurse through</li>
+        /// </ul>
+        /// </summary>
+        /// <param name="properties"></param>
+        /// <returns>the property map</returns>
+        public static IDictionary<String, Object>
+        InvertSelectedProperties(Properties properties)
+        {
+            IList<Property> children = properties.Children;
+            IDictionary<String, Object> result = new Dictionary<String, Object>(children.Count);
+        
+            foreach (Property property in children) {
+            
+                PName pname = null;
+                String propertyName = null;
+            
+                if (! property.IsWildcard) {
+                    pname = property.Identifier;
+                    propertyName = pname.ns + pname.local;
+                }
+            
+                switch (property.Type) {
+                case PropertyType.IDENTIFIER:
+                    if (property.IsWildcard) {
+                    
+                        if (result is SingletonWildcardProperties) {
+                            break;
+                        }
+                    
+                        if (result is NestedWildcardProperties) {
+                            result = new BothWildcardPropertiesImpl(
+                                    (NestedWildcardPropertiesImpl)result);
+                        } else {
+                            result = new SingletonWildcardPropertiesImpl();
+                        }
+                    
+                        break;
+                    
+                    } else {
+                    
+                        if (result is SingletonWildcardProperties) {
+                            break;
+                        }
+                    }
+                
+                    result.Add(propertyName,
+                               OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON);
+                
+                    break;
+                
+                case PropertyType.NESTED_PROPERTY:
+                    if (property.IsWildcard) {
+                    
+                        if (! (result is NestedWildcardProperties)) {                        
+                            if (result is SingletonWildcardProperties) {
+                                result = new BothWildcardPropertiesImpl();
+                            } else {
+                                result = new NestedWildcardPropertiesImpl(result);
+                            }
+                        
+                            ((NestedWildcardPropertiesImpl)result).commonNestedProperties =
+                                InvertSelectedProperties((NestedProperty)property);
+                        
+                       } else {
+                            MergePropertyMaps(
+                                ((NestedWildcardProperties)result).CommonNestedProperties(),
+                                InvertSelectedProperties((NestedProperty)property));
+                       }
+                    
+                        break;
+                    }
+                
+                    result.Add(propertyName,
+                               InvertSelectedProperties(
+                                       (NestedProperty)property));
+                
+                    break;
+                }
+            }
+        
+            if (! (result is NestedWildcardProperties)) {
+                return result;
+            }
+        
+            IDictionary<String, Object> commonNestedProperties =
+                ((NestedWildcardProperties)result).CommonNestedProperties();
+        
+            foreach (string propertyName in result.Keys) {
+            
+                IDictionary<String, Object> nestedProperties =
+                    (IDictionary<String, Object>)result[propertyName];
+            
+                if (nestedProperties == OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON) {
+                    result.Add(propertyName, commonNestedProperties);
+                } else {
+                    MergePropertyMaps(nestedProperties, commonNestedProperties);
+                }
+            }
+        
+            return result;
+        }
+    
         /// <summary>
         /// Parse a oslc.searchTerms expression
         /// 
@@ -314,14 +433,108 @@ namespace OSLC4Net.Core.Query
             }
         }
 
-        /**
-         * Check list of errors from parsing some expression, generating
-         * @{link {@link ParseException} if there are any.
-         * 
-         * @param errors list of errors, hopefully empty
-         * 
-         * @throws ParseException
-         */
+        /// <summary>
+        /// Implementation of SingletonWildcardProperties
+        /// </summary>
+        private class SingletonWildcardPropertiesImpl :
+            Dictionary<String, Object>,
+            SingletonWildcardProperties
+        {
+            public
+            SingletonWildcardPropertiesImpl() : base(0)
+            {
+            }
+       }
+
+        /// <summary>
+        /// Implementation of NestedWildcardProperties
+        /// </summary>
+       private class NestedWildcardPropertiesImpl :
+            Dictionary<String, Object>,
+            NestedWildcardProperties
+        {
+            public
+            NestedWildcardPropertiesImpl(IDictionary<String, Object> accumulated) : base(accumulated)
+            {
+            }
+        
+            protected
+            NestedWildcardPropertiesImpl()
+            {
+            }
+        
+            public IDictionary<String, Object>
+            CommonNestedProperties()
+            {
+                return commonNestedProperties;
+            }
+        
+            internal IDictionary<String, Object> commonNestedProperties =
+                new Dictionary<String, Object>();
+        }
+
+        /// <summary>
+        /// Implementation of both SingletonWildcardProperties and
+        /// NestedWildcardProperties
+        /// </summary>
+        private class BothWildcardPropertiesImpl :
+            NestedWildcardPropertiesImpl,
+            SingletonWildcardProperties
+        {
+            public
+            BothWildcardPropertiesImpl()
+            {
+            }
+        
+            public
+            BothWildcardPropertiesImpl(NestedWildcardPropertiesImpl accumulated) : this()
+            {
+                commonNestedProperties = accumulated.CommonNestedProperties();
+            }
+        }
+
+        /// <summary>
+        /// Merge into lhs properties those of rhs property
+        /// map, merging any common, nested property maps
+        /// </summary>
+        /// <param name="lhs">target of property map merge</param>
+        /// <param name="rhs">source of property map merge</param>
+        private static void
+        MergePropertyMaps(
+            IDictionary<String, Object> lhs,
+            IDictionary<String, Object> rhs
+        )
+        {
+            ICollection<String> propertyNames = rhs.Keys;
+        
+            foreach (string propertyName in propertyNames) {
+            
+                IDictionary<String, Object> lhsNestedProperties =
+                    (IDictionary<String, Object>)lhs[propertyName];
+                IDictionary<String, Object> rhsNestedProperties =
+                    (IDictionary<String, Object>)rhs[propertyName];
+            
+                if (lhsNestedProperties == rhsNestedProperties) {
+                    continue;
+                }
+            
+                if (lhsNestedProperties == null ||
+                    lhsNestedProperties == OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON) {
+                
+                    lhs.Add(propertyName, rhsNestedProperties);
+                
+                    continue;
+                }
+            
+                MergePropertyMaps(lhsNestedProperties, rhsNestedProperties);
+            }
+        }
+
+        /// <summary>
+        /// Check list of errors from parsing some expression, generating
+        /// @{link {@link ParseException} if there are any.
+        /// </summary>
+        /// <param name="parser"></param>
         private static void
         CheckErrors(Parser parser)
         {

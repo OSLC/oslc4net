@@ -32,11 +32,11 @@ namespace OSLC4Net.Core.QueryTests
         public void BasicPrefixesTest()
         {
             Trial[] trials = {
-                    new Trial("qm=<http://qm.example.com/ns>," +
+                    new Trial("qm=<http://qm.example.com/ns/>," +
                                 "olsc=<http://open-services.net/ns/core#>," +
                                 "xs=<http://www.w3.org/2001/XMLSchema>",
                               true),
-                    new Trial("qm=<http://qm.example.com/ns>," +
+                    new Trial("qm=<http://qm.example.com/ns/>," +
                                  "XXX>",
                               false)
                 };
@@ -66,7 +66,7 @@ namespace OSLC4Net.Core.QueryTests
         [TestMethod]
         public void BasicOrderByTest()
         {
-            String prefixes = "qm=<http://qm.example.com/ns>," +
+            String prefixes = "qm=<http://qm.example.com/ns/>," +
                 "oslc=<http://open-services.net/ns/core#>";
                    IDictionary<String, String> prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
@@ -131,7 +131,7 @@ namespace OSLC4Net.Core.QueryTests
         [TestMethod]
         public void BasicSelectTest()
         {
-            String prefixes = "qm=<http://qm.example.com/ns>," +
+            String prefixes = "qm=<http://qm.example.com/ns/>," +
                 "oslc=<http://open-services.net/ns/core#>";
             IDictionary<String, String> prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
@@ -139,7 +139,7 @@ namespace OSLC4Net.Core.QueryTests
                     new Trial("*{*}", true),
                     new Trial("qm:testcase", true),
                     new Trial("*", true),
-                    new Trial("oslc:create,qm:verified,oslc:create,qm:verified", true),
+                    new Trial("oslc:create,qm:verified", true),
                     new Trial("qm:state{oslc:verified_by{oslc:owner,qm:duration}}", true),
                     new Trial("qm:submitted{*}", true),
                     new Trial("qm:testcase,*", true),
@@ -171,7 +171,7 @@ namespace OSLC4Net.Core.QueryTests
         [TestMethod]
         public void BasicWhereTest()
         {
-            String prefixes = "qm=<http://qm.example.com/ns>," +
+            String prefixes = "qm=<http://qm.example.com/ns/>," +
                 "oslc=<http://open-services.net/ns/core#>," +
                 "xs=<http://www.w3.org/2001/XMLSchema>";
             IDictionary<String, String> prefixMap = QueryUtils.ParsePrefixes(prefixes);
@@ -198,6 +198,46 @@ namespace OSLC4Net.Core.QueryTests
 
                     Assert.IsTrue(trial.ShouldSucceed);
 
+                }
+                catch (ParseException e)
+                {
+                    Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
+
+                    Assert.IsFalse(trial.ShouldSucceed);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void BasicInvertTest()
+        {
+            String prefixes = "qm=<http://qm.example.com/ns/>," +
+                "oslc=<http://open-services.net/ns/core#>";
+            IDictionary<String, String> prefixMap = QueryUtils.ParsePrefixes(prefixes);
+
+            Trial[] trials = {
+                    new Trial("*{*}", true),
+                    new Trial("qm:testcase", true),
+                    new Trial("*", true),
+                    new Trial("oslc:create,qm:verified", true),
+                    new Trial("qm:state{oslc:verified_by{oslc:owner,qm:duration}}", true),
+                    new Trial("qm:submitted{*}", true),
+                    new Trial("qm:testcase,*", true),
+                    new Trial("*,qm:state{*}", true),
+                };
+
+            foreach (Trial trial in trials)
+            {
+                try
+                {
+                    SelectClause selectClause =
+                        QueryUtils.ParseSelect(trial.Expression, prefixMap);
+
+                    Debug.WriteLine(selectClause);
+
+                    Assert.IsTrue(trial.ShouldSucceed);
+
+                    IDictionary<String, object> invertedProperties = QueryUtils.InvertSelectedProperties(selectClause);
                 }
                 catch (ParseException e)
                 {

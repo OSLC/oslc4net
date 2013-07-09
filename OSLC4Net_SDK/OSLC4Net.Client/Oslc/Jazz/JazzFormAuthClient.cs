@@ -119,9 +119,13 @@ namespace OSLC4Net.Client.Oslc.Jazz
 			
                 resp = client.GetAsync(this.authUrl + "/authenticated/identity").Result;
 			    statusCode = resp.StatusCode;
-			    location = resp.Headers.Location.AbsoluteUri;
-                resp.ConsumeContent();
-			    statusCode = FollowRedirects(statusCode, location);			
+
+                if (statusCode == HttpStatusCode.Found)
+                {
+                    location = resp.Headers.Location.AbsoluteUri;
+                    resp.ConsumeContent();
+                    statusCode = FollowRedirects(statusCode, location);
+                }
 			
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
