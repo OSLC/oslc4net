@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
- * Copyright (c) 2012 IBM Corporation.
+ * Copyright (c) 2012, 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -131,6 +131,28 @@ namespace DotNetRdfProviderTests
             Debug.WriteLine(rdfXml);
 
             ChangeRequest changeRequest2 = Deserialize<ChangeRequest>(formatter, rdfXml, OslcMediaType.APPLICATION_XML_TYPE);
+
+            Assert.AreEqual(changeRequest1.GetAbout(), changeRequest2.GetAbout());
+            Assert.AreEqual(changeRequest1.IsFixed(), changeRequest2.IsFixed());
+            Assert.AreEqual(changeRequest1.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
+            Assert.AreEqual(changeRequest1.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
+        }
+
+        [TestMethod]
+        public void TestTurtleSerialization()
+        {
+            ChangeRequest changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeReuest"));
+
+            changeRequest1.SetFixed(true);
+            changeRequest1.AddAffectedByDefect(new Link(new Uri("http://com/somewhere/changeRequest2"), "Test of links"));
+
+            RdfXmlMediaTypeFormatter formatter = new RdfXmlMediaTypeFormatter();
+
+            string turtle = Serialize<ChangeRequest>(formatter, changeRequest1, OslcMediaType.TEXT_TURTLE_TYPE);
+
+            Debug.WriteLine(turtle);
+
+            ChangeRequest changeRequest2 = Deserialize<ChangeRequest>(formatter, turtle, OslcMediaType.TEXT_TURTLE_TYPE);
 
             Assert.AreEqual(changeRequest1.GetAbout(), changeRequest2.GetAbout());
             Assert.AreEqual(changeRequest1.IsFixed(), changeRequest2.IsFixed());

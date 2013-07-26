@@ -55,6 +55,7 @@ namespace OSLC4Net.Core.JsonProvider
             this.RebuildJson = rebuildJson;
 
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_JSON_TYPE);
+            SupportedMediaTypes.Add(OslcMediaType.APPLICATION_X_OSLC_COMPACT_JSON_TYPE);
         }
 
         /// <summary>

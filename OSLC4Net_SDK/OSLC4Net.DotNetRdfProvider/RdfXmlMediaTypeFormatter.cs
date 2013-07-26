@@ -61,6 +61,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_XML_TYPE);
             SupportedMediaTypes.Add(OslcMediaType.TEXT_XML_TYPE);
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML_TYPE);
+            SupportedMediaTypes.Add(OslcMediaType.TEXT_TURTLE_TYPE);
         }
 
         /// <summary>
@@ -228,7 +229,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                         }
                     }
 
-                    IRdfWriter xmlWriter;
+                    IRdfWriter rdfWriter;
                     
                     if (content == null || content.Headers == null || content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_RDF_XML)) 
                     {
@@ -237,26 +238,34 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                         rdfXmlWriter.UseDtd = false;
                         rdfXmlWriter.PrettyPrintMode = false;
                         rdfXmlWriter.CompressionLevel = 20;
-                        //rdfXmlWriter.UseTypedNodes = false;
+                        //turtlelWriter.UseTypedNodes = false;
 
-                        xmlWriter = rdfXmlWriter;
+                        rdfWriter = rdfXmlWriter;
                     }
-                     
+                    else if (content.Headers.ContentType.MediaType.Equals(OslcMediaType.TEXT_TURTLE))
+                    {
+                        TurtleWriter turtlelWriter = new TurtleWriter(TurtleSyntax.W3C);
+
+                        turtlelWriter.PrettyPrintMode = false;
+
+                        rdfWriter = turtlelWriter;
+                    }                     
                     else
                     {
                         //For now, use the dotNetRDF RdfXmlWriter for application/xml
                         //OslcXmlWriter oslcXmlWriter = new OslcXmlWriter();
                         RdfXmlWriter oslcXmlWriter = new RdfXmlWriter();
 
+                        oslcXmlWriter.UseDtd = false;
                         oslcXmlWriter.PrettyPrintMode = false;
                         oslcXmlWriter.CompressionLevel = 20;
 
-                        xmlWriter = oslcXmlWriter;
+                        rdfWriter = oslcXmlWriter;
                     }
-                    
+
                     StreamWriter streamWriter = new NonClosingStreamWriter(writeStream);
 
-                    xmlWriter.Save(Graph, streamWriter);
+                    rdfWriter.Save(Graph, streamWriter);
                 });
         }
 
@@ -303,17 +312,21 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
             try
             {
-                IRdfReader parser;
+                IRdfReader rdfParser;
                     
                 if (content == null || content.Headers == null || content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_RDF_XML)) 
                 {
-                    parser = new RdfXmlParser();
+                    rdfParser = new RdfXmlParser();
+                }
+                else if (content.Headers.ContentType.MediaType.Equals(OslcMediaType.TEXT_TURTLE))
+                {
+                    rdfParser = new TurtleParser(TurtleSyntax.W3C);
                 }
                 else
                 {
                     //For now, use the dotNetRDF RdfXmlParser() for application/xml.  This could change
-                    //parser = new OslcXmlParser();
-                    parser = new RdfXmlParser();
+                    //rdfParser = new OslcXmlParser();
+                    rdfParser = new RdfXmlParser();
                 }
 
                 IGraph graph = new Graph();
@@ -321,7 +334,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
                 using (streamReader)
                 {
-                    parser.Load(graph, streamReader);
+                    rdfParser.Load(graph, streamReader);
 
                     bool isSingleton = IsSinglton(type);
                     object output = DotNetRdfHelper.FromDotNetRdfGraph(graph, isSingleton ? type : GetMemberType(type));
@@ -398,7 +411,8 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
             public override void Close()
             {
-               // Don't let dotNetRDF writer close the file.
+                // Don't let dotNetRDF writer close the file, but need to flush output.
+                Flush();
             }
         }
 
