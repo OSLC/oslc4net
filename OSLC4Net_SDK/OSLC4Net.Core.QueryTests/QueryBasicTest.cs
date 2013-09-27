@@ -28,6 +28,10 @@ namespace OSLC4Net.Core.QueryTests
     [TestClass]
     public class QueryBasicTest
     {
+	    static String PREFIXES = "qm=<http://qm.example.com/ns/>," +
+			    "olsc=<http://open-services.net/ns/core#>," +
+			    "xs=<http://www.w3.org/2001/XMLSchema>";
+
         [TestMethod]
         public void BasicPrefixesTest()
         {
@@ -68,7 +72,7 @@ namespace OSLC4Net.Core.QueryTests
         {
             String prefixes = "qm=<http://qm.example.com/ns/>," +
                 "oslc=<http://open-services.net/ns/core#>";
-                   IDictionary<String, String> prefixMap = QueryUtils.ParsePrefixes(prefixes);
+            IDictionary<String, String> prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
             Trial[] trials = {
                     new Trial("-qm:priority", true),
@@ -76,15 +80,15 @@ namespace OSLC4Net.Core.QueryTests
                     new Trial("qm:tested_by{+oslc:description}", true),
                     new Trial("?qm:blah", false)
                 };
-        
+
             foreach (Trial trial in trials)
-            {        
+            {
                 try
-                {                
+                {
                     OrderByClause orderByClause =
                         QueryUtils.ParseOrderBy(trial.Expression, prefixMap);
-                
-                    Debug.WriteLine(orderByClause);                
+
+                    Debug.WriteLine(orderByClause);
 
                     Assert.IsTrue(trial.ShouldSucceed);
 
@@ -106,15 +110,15 @@ namespace OSLC4Net.Core.QueryTests
                     new Trial("\"foobar\",\"whatsis\",\"yousa\"", true),
                     new Trial("", false)
                 };
-        
+
             foreach (Trial trial in trials)
-            {        
+            {
                 try
-                {                
+                {
                     SearchTermsClause searchTermsClause =
                         QueryUtils.ParseSearchTerms(trial.Expression);
 
-                    Debug.WriteLine(searchTermsClause);                
+                    Debug.WriteLine(searchTermsClause);
 
                     Assert.IsTrue(trial.ShouldSucceed);
 
@@ -247,6 +251,31 @@ namespace OSLC4Net.Core.QueryTests
                 }
             }
         }
+	
+        [TestMethod]
+	    public void TestUriRef()
+        {
+		    IDictionary<String, String> prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
+		    WhereClause where = QueryUtils.ParseWhere(
+				    "qm:testCase=<http://example.org/tests/24>", prefixMap);
+		
+		    IList<SimpleTerm> children = where.Children;
+		    Assert.AreEqual(1, children.Count, "Where clause should only have one term");
+		
+		    SimpleTerm simpleTerm = children[0];
+		    PName prop = simpleTerm.Property;
+            Assert.AreEqual(prop.ns + prop.local, "http://qm.example.com/ns/testCase");
+		    Assert.IsTrue(simpleTerm is ComparisonTerm);
+	
+		    ComparisonTerm comparison = (ComparisonTerm) simpleTerm;
+            Assert.AreEqual(comparison.Operator, Operator.EQUALS);
+		
+		    Value v = comparison.Operand;
+		    Assert.IsTrue(v is UriRefValue);
+		
+		    UriRefValue uriRef = (UriRefValue) v;
+            Assert.AreEqual("http://example.org/tests/24", uriRef.Value);
+	    }
     }
 
     public class Trial
