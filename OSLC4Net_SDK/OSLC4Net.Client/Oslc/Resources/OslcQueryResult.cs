@@ -16,7 +16,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using VDS.RDF;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
@@ -24,6 +23,7 @@ using System.IO;
 using VDS.RDF.Parsing;
 using OSLC4Net.Core.Model;
 using System.Collections;
+using OSLC4Net.Core.DotNetRdfProvider;
 
 namespace OSLC4Net.Client.Oslc.Resources
 {
@@ -103,7 +103,7 @@ namespace OSLC4Net.Client.Oslc.Resources
 		    return nextPageUrl;
 	    }
 
-       /// <summary>
+        /// <summary>
         /// 
         /// </summary>
         /// <returns>whether there is another page of results after this</returns>
@@ -184,5 +184,85 @@ namespace OSLC4Net.Client.Oslc.Resources
 
 		    return membersUrls.ToArray();
 	    }
+
+        /// <summary>
+        /// Return the enumeration of queried results from this page
+        /// </summary>
+        /// <returns>member triples from current page</returns>
+        public IEnumerable<T> GetMembers<T>()
+        {
+            InitializeRdf();
+
+            IUriNode membersResource = rdfGraph.CreateUriNode(new Uri(query.GetCapabilityUrl()));
+            IEnumerable<Triple> triples = rdfGraph.GetTriplesWithSubject(membersResource);
+            IEnumerable<T> result = new TripleEnumerableWrapper<T>(triples);
+
+            return result;
+        }
+
+        private class TripleEnumerableWrapper<T> : IEnumerable<T>
+        {
+            public TripleEnumerableWrapper(IEnumerable<Triple> triples)
+            {
+                this.triples = triples;
+            }
+
+            IEnumerator
+            IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
+
+            public IEnumerator<T>
+            GetEnumerator()
+            {
+                return new TripleEnumeratorWrapper<T>(triples.GetEnumerator());
+            }
+
+            private class TripleEnumeratorWrapper<T> : IEnumerator<T>
+            {
+                public TripleEnumeratorWrapper(IEnumerator<Triple> triples)
+                {
+                    this.triples = triples;
+                }
+
+                object IEnumerator.Current
+                {
+                    get
+                    {
+                        return Current;
+                    }
+                }
+
+                public T Current
+                {
+                    get
+                    {
+                        Triple member = triples.Current;
+
+                        return (T)DotNetRdfHelper.FromDotNetRdfNode((IUriNode)member.Object, typeof(T));
+                    }
+                }
+
+                public void Dispose()
+                {
+                    triples.Dispose();
+                }
+
+                public bool MoveNext()
+                {
+                    return triples.MoveNext();
+                }
+
+                public void Reset()
+                {
+                    triples.Reset();
+                }
+
+                private IEnumerator<Triple> triples;
+            }
+
+            IEnumerable<Triple> triples;
+        }
     }
 }

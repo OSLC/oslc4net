@@ -27,6 +27,8 @@ using System.Net.Http;
 using OSLC4Net.Core.Model;
 using OSLC4Net.Client.Exceptions;
 using System.IO;
+using VDS.RDF;
+using OSLC4Net.Core.DotNetRdfProvider;
 
 namespace OSLC4Net.Client.Samples
 {
@@ -91,7 +93,8 @@ namespace OSLC4Net.Client.Samples
 				    //page turned on and list the members of the result
 				    OslcQueryParameters queryParams = new OslcQueryParameters();
 				    queryParams.SetWhere("oslc_cm:closed=false");
-				    OslcQuery query = new OslcQuery(client, queryCapability, 10, queryParams);
+                    queryParams.SetSelect("dcterms:identifier,dcterms:title,oslc_cm:status");
+                    OslcQuery query = new OslcQuery(client, queryCapability, 10, queryParams);
 				
 				    OslcQueryResult result = query.Submit();
 				
@@ -185,35 +188,12 @@ namespace OSLC4Net.Client.Samples
 		    } while(true);
 	    }
 	
-	    private static void processCurrentPage(OslcQueryResult result, OslcClient client, bool asDotNetObjects) {
-		
-		    foreach (String resultsUrl in result.GetMembersUrls()) {
-			    Console.WriteLine(resultsUrl);
-			
-			    HttpResponseMessage response = null;
-			    try {
-				
-				    //Get a single artifact by its URL 
-				    response = client.GetResource(resultsUrl, OSLCConstants.CT_RDF);
-		
-				    if (response != null) {
-					    //De-serialize it as a .NET object 
-					    if (asDotNetObjects) {
-						       ChangeRequest cr = response.Content.ReadAsAsync<ChangeRequest>(client.GetFormatters()).Result;
-						       PrintChangeRequestInfo(cr);   //print a few attributes
-					    } else {
-						
-						    //Just print the raw RDF/XML (or process the XML as desired)
-						    ProcessRawResponse(response);
-						
-					    }
-				    }
-			    } catch (Exception e) {
-				    logger.Error( "Unable to process artfiact at url: " + resultsUrl, e);
-			    }
-			
-		    }
-		
+	    private static void processCurrentPage(OslcQueryResult result, OslcClient client, bool asDotNetObjects)
+        {
+            foreach (ChangeRequest cr in result.GetMembers<ChangeRequest>())
+            {
+			    Console.WriteLine("id: " + cr.GetIdentifier() + ", title: " + cr.GetTitle() + ", status: " + cr.GetStatus());			
+		    }		
 	    }
 	
 	    private static void ProcessRawResponse(HttpResponseMessage response)
