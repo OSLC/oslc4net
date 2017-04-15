@@ -1,5 +1,9 @@
 # Welcome to the OSLC4Net project
 
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/OSLC)
+[![StackExchange](https://img.shields.io/stackexchange/stackoverflow/t/oslc.svg)](http://stackoverflow.com/questions/tagged/oslc)
+[![Twitter Follow](https://img.shields.io/twitter/follow/oslcNews.svg?style=social&label=Follow)](https://twitter.com/oslcNews)
+
 ## What is OSLC4NET?
 
 **OSLC4Net** is an SDK and sample applications to help the .NET community to adopt [OSLC](http://open-services.net) (Open Services for Lifecycle Collaboration) and build OSLC-compliant tools.  
