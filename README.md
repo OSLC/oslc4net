@@ -31,7 +31,7 @@ You'll see a web page created - that is currently just a skeleton provided by AS
 * http://localhost:7077/api/stockquote?getShape=true - returns the StockQuote OSLC resource shape
 * http://localhost:7077/api/stockquote/nasdaq_goog - returns an individual StockQuote
 
-A request to the first URL using Fiddler should like this:
+A request to the first URL using Fiddler should have the following response:
 
 ![](doc/stockquote.png)
 
