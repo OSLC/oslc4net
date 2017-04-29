@@ -25,7 +25,10 @@ namespace OSLC4Net.StockQuoteSample
             config.Formatters.Add(new JsonMediaTypeFormatter());
 
             HttpContext context = HttpContext.Current;
-            string baseUrl = context.Request.Url.Scheme + "://" + context.Request.Url.Authority + context.Request.ApplicationPath.TrimEnd('/') + "/api";
+            // see https://github.com/OSLC/oslc4net/issues/12
+            // string applicationBase = context.Request.Url.Scheme + "://" + context.Request.Url.Authority + context.Request.ApplicationPath.TrimEnd('/');
+            string applicationBase = "http://localhost:7077";
+            string baseUrl = applicationBase + "/api";
             ServiceProviderController.init(baseUrl);
         }
    
