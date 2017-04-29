@@ -14,20 +14,27 @@ The ASP.NET MVC 4 library can be used to assist with creating consumer REST requ
 
 The project currently contains the SDK and a sample OSLC Change Management client. A sample provider using the SDK is one of the top priorities for the project.  
 
-### More information on OSLC
+## Getting started
+
+If you do not have a .NET development environment, start by downloading [Visual Studio 2017 Community](https://www.visualstudio.com/vs/community/) and [SQL Server 2016 Express](https://www.microsoft.com/en-us/sql-server/sql-server-downloads). Make sure to install ASP.NET-related options for Visual Studio and LocalDB for SQL Server.
+
+### Running the sample StockQuote provider
+
+`OSLC4Net.StockQuoteSample` is a sample OSLC provider which implements one resource type, a StockQuote. This resource is not defined by an OSLC specification, it shows how OSLC4Net can be used to create an experimental OSLC provider.
+
+1. Build the `OSLC4Net_SDK\OSLC4Net.Core.sln` solution
+1. Right click the `OSLC4Net.StockQuoteSample` project and run it via _Debug->Start new instance_
+
+You'll see a web page created - that is currently just a skeleton provided by ASP.NET. You can close it. Try performing a GET request on the follwing URLs in a tool like Poster or Advanced REST Client (make sure to set the `Accept` header to `application/rdf+xml`:
+
+* http://localhost:7077/api/stockquote - returns all StockQuotes
+* http://localhost:7077/api/stockquote?getShape=true - returns the StockQuote OSLC resource shape
+* http://localhost:7077/api/stockquote/nasdaq_goog - returns an individual StockQuote
+
+## More information on OSLC
 
 *   See the [OSLC](http://open-services.net/) site for more details on OSLC specifications and community activities.
 *   See the [Eclipse Lyo](http://eclipse.org/lyo) site for information on OSLC SDKs and samples for other technologies.
-
-## Pre-requisites
-
-**OSLC4Net** depends on the following libraries  
-
-*   [ASP.NET MVC 4](http://www.asp.net/whitepapers/mvc4-release-notes)
-*   [dotNetRDF](https://dotnetrdf.codeplex.com/)
-*   [HTML Agility Pack](https://htmlagilitypack.codeplex.com/)
-*   [JSON.Net](http://json.codeplex.com/)
-*   [DotNetOpenAuth](http://dotnetopenauth.net/)
 
 ## OSLC4Net License
 
