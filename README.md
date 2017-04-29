@@ -31,6 +31,10 @@ You'll see a web page created - that is currently just a skeleton provided by AS
 * http://localhost:7077/api/stockquote?getShape=true - returns the StockQuote OSLC resource shape
 * http://localhost:7077/api/stockquote/nasdaq_goog - returns an individual StockQuote
 
+A request to the first URL using Fiddler should like this:
+
+![](doc/stockquote.png)
+
 ## More information on OSLC
 
 *   See the [OSLC](http://open-services.net/) site for more details on OSLC specifications and community activities.
