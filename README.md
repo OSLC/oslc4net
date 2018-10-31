@@ -1,7 +1,8 @@
 # Welcome to the OSLC4Net project
 
 [![Build status](https://ci.appveyor.com/api/projects/status/1d5u49mres43mkhw/branch/master?svg=true)](https://ci.appveyor.com/project/berezovskyi/oslc4net/branch/master)
-[![](https://img.shields.io/badge/discuss%20on-zulip-1E8F54.svg)](https://oslc.zulipchat.com/#narrow/stream/114268-github/topic/oslc4net)
+[![Discourse status](https://img.shields.io/discourse/https/meta.discourse.org/status.svg)](https://forum.open-services.net/)
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/OSLC/chat)
 
 ## What is OSLC4NET?
 
