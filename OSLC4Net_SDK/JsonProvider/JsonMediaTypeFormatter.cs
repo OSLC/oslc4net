@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -35,13 +35,12 @@ using log4net;
 namespace OSLC4Net.Core.JsonProvider
 {
     /// <summary>
-    /// A class to 
+    /// A class to
     ///     - read RDF/XML from an input stream and create .NET objects.
     ///     - write .NET objects to an output stream as RDF/XML
     /// </summary>
     public class JsonMediaTypeFormatter : MediaTypeFormatter
     {
-
         public JsonValue Json { get; set; }
         public bool RebuildJson { get; set; }
         private HttpRequestMessage httpRequest;
@@ -59,7 +58,7 @@ namespace OSLC4Net.Core.JsonProvider
         }
 
         /// <summary>
-        /// JSON formatter which accepts a pre-built JSON object 
+        /// JSON formatter which accepts a pre-built JSON object
         /// </summary>
         /// <param name="json"></param>
         /// <param name="rebuildJson"></param>
@@ -97,7 +96,7 @@ namespace OSLC4Net.Core.JsonProvider
             if (ImplementsGenericType(typeof(FilteredResource<>), type))
             {
                 Type[] actualTypeArguments = GetChildClassParameterArguments(typeof(FilteredResource<>), type);
-            
+
                 if (actualTypeArguments.Count() != 1)
                 {
                     return false;
@@ -106,12 +105,12 @@ namespace OSLC4Net.Core.JsonProvider
                 if (ImplementsICollection(actualTypeArguments[0]))
                 {
                     actualTypeArguments = actualTypeArguments[0].GetGenericArguments();
-                
+
                     if (actualTypeArguments.Count() != 1)
                     {
                         return false;
                     }
-                
+
                     actualType = actualTypeArguments[0];
                 }
                 else
@@ -123,7 +122,7 @@ namespace OSLC4Net.Core.JsonProvider
             {
                 actualType = type;
             }
-        
+
             if (IsSinglton(actualType))
             {
                 return true;
@@ -148,7 +147,7 @@ namespace OSLC4Net.Core.JsonProvider
         /// <param name="content"></param>
         /// <param name="transportContext"></param>
         /// <returns></returns>
-        public override Task  WriteToStreamAsync(
+        public override Task WriteToStreamAsync(
             Type type,
             object value,
             Stream writeStream,
@@ -158,7 +157,7 @@ namespace OSLC4Net.Core.JsonProvider
         {
             return Task.Factory.StartNew(() =>
                 {
-                    if ((Json == null) || (Json.Count() == 0) || RebuildJson)
+                    if ((Json == null) || (Json.Count == 0) || RebuildJson)
                     {
                         if (ImplementsGenericType(typeof(FilteredResource<>), type))
                         {
@@ -223,7 +222,7 @@ namespace OSLC4Net.Core.JsonProvider
                             Json = JsonHelper.CreateJson(new EnumerableWrapper(value));
                         }
 
-                        Debug.WriteLine("JsonMediaTypeFormatter.WriteToStreamAsync(): Generated JSON: " + Json);
+                        Debug.WriteLine("JsonMediaTypeFormatter.WriteToStreamAsync(): Generated JSON: " + Json.ToString());
                     }
 
                     Json.Save(writeStream);
@@ -284,7 +283,7 @@ namespace OSLC4Net.Core.JsonProvider
                 {
                     bool haveOne = (int)output.GetType().GetProperty("Count").GetValue(output, null) > 0;
 
-                    tcs.SetResult(haveOne ? output.GetType().GetProperty("Item").GetValue(output, new object[] { 0 }): null);
+                    tcs.SetResult(haveOne ? output.GetType().GetProperty("Item").GetValue(output, new object[] { 0 }) : null);
                 }
                 else if (type.IsArray)
                 {
