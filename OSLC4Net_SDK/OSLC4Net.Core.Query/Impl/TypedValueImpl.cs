@@ -24,7 +24,7 @@ namespace OSLC4Net.Core.Query.Impl
     /// <summary>
     /// Implementation of TypedValue interface
     /// </summary>
-    internal class TypedValueImpl : ValueImpl, TypedValue
+    internal class TypedValueImpl : ValueImpl, ITypedValue
     {
         public
         TypedValueImpl(

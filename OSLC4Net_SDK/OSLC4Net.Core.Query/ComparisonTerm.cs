@@ -37,6 +37,6 @@ namespace OSLC4Net.Core.Query
     {
         Operator Operator { get; }
 
-        Value Operand { get; }
+        IValue Operand { get; }
     }
 }

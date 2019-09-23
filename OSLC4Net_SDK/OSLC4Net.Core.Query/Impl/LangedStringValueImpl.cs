@@ -24,7 +24,7 @@ namespace OSLC4Net.Core.Query.Impl
     /// <summary>
     /// Implementation of LangedStringValue interface
     /// </summary>
-    internal class LangedStringValueImpl : ValueImpl, LangedStringValue
+    internal class LangedStringValueImpl : ValueImpl, ILangedStringValue
     {
         public
         LangedStringValueImpl(CommonTree tree) : base(tree, ValueType.LANGED_STRING)

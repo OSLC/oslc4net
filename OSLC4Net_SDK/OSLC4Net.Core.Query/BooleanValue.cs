@@ -23,7 +23,7 @@ namespace OSLC4Net.Core.Query
     /// <summary>
     /// Boolean literal operand from olsc.where clause
     /// </summary>
-    public interface BooleanValue : Value
+    public interface IBooleanValue : IValue
     {
         bool Value { get; }
     }

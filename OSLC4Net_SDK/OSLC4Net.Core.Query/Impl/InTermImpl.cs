@@ -34,7 +34,7 @@ namespace OSLC4Net.Core.Query.Impl
         {
         }
 
-        public IList<Value> Values
+        public IList<IValue> Values
         {
             get
             {
@@ -42,11 +42,11 @@ namespace OSLC4Net.Core.Query.Impl
                 {
                     IList<ITree> treeValues =  ((CommonTree)tree.GetChild(1)).Children;
 
-                    values = new List<Value>(treeValues.Count - 1);
+                    values = new List<IValue>(treeValues.Count - 1);
             
                     foreach (CommonTree treeValue in treeValues) {
                 
-                        Value value =
+                        IValue value =
                             ComparisonTermImpl.CreateValue(
                                     treeValue, "unspported literal value type",
                                     prefixMap);
@@ -68,7 +68,7 @@ namespace OSLC4Net.Core.Query.Impl
         
             bool first = true;
         
-            foreach (Value value in Values) {
+            foreach (IValue value in Values) {
             
                 if (first) {
                     first = false;
@@ -84,6 +84,6 @@ namespace OSLC4Net.Core.Query.Impl
             return buffer.ToString();
         }
 
-        private List<Value> values = null;
+        private List<IValue> values = null;
     }
 }

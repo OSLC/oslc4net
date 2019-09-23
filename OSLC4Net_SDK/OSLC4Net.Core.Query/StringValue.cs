@@ -23,7 +23,7 @@ namespace OSLC4Net.Core.Query
     /// <summary>
     /// String literal operand from olsc.where clause
     /// </summary>
-    interface StringValue
+    interface IStringValue
     {
         string Value { get; }
     }

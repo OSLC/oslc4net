@@ -270,10 +270,10 @@ namespace OSLC4Net.Core.QueryTests
 		    ComparisonTerm comparison = (ComparisonTerm) simpleTerm;
             Assert.AreEqual(comparison.Operator, Operator.EQUALS);
 		
-		    Value v = comparison.Operand;
-		    Assert.IsTrue(v is UriRefValue);
+		    IValue v = comparison.Operand;
+		    Assert.IsTrue(v is IUriRefValue);
 		
-		    UriRefValue uriRef = (UriRefValue) v;
+		    IUriRefValue uriRef = (IUriRefValue) v;
             Assert.AreEqual("http://example.org/tests/24", uriRef.Value);
 	    }
     }

@@ -27,7 +27,7 @@ namespace OSLC4Net.Core.Query
     /// interface can convert to native DB field values without losing
     /// precision.
     /// </summary>
-    public interface DecimalValue : Value
+    public interface IDecimalValue : IValue
     {
         string Value { get; }
     }

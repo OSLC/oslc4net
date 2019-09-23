@@ -24,7 +24,7 @@ namespace OSLC4Net.Core.Query.Impl
     /// <summary>
     /// Implementation of DecimalValue interface
     /// </summary>
-    internal class DecimalValueImpl : ValueImpl, DecimalValue
+    internal class DecimalValueImpl : ValueImpl, IDecimalValue
     {
         public
         DecimalValueImpl(CommonTree tree) : base(tree, ValueType.DECIMAL)

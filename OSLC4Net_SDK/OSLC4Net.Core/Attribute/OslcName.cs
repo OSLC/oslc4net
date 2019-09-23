@@ -15,18 +15,16 @@
  *******************************************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace OSLC4Net.Core.Attribute
 {
     /// <summary>
     /// OSLC Name attribute
     /// </summary>
-    [System.AttributeUsage(System.AttributeTargets.Method|
-                           System.AttributeTargets.Class|
-                           System.AttributeTargets.Interface)
+    [AttributeUsage(AttributeTargets.Method |
+                           AttributeTargets.Property |
+                           AttributeTargets.Class |
+                           AttributeTargets.Interface)
     ]
     public class OslcName : System.Attribute
     {

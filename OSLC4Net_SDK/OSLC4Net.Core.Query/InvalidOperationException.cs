@@ -25,6 +25,6 @@ namespace OSLC4Net.Core.Query
     /// </summary>
     public interface InTerm : SimpleTerm
     {
-        IList<Value> Values { get; }
+        IList<IValue> Values { get; }
     }
 }

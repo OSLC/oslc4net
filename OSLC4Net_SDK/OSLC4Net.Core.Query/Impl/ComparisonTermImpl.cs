@@ -63,7 +63,7 @@ namespace OSLC4Net.Core.Query.Impl
             }
         }
 
-        public Value Operand
+        public IValue Operand
         {
             get
             {
@@ -84,7 +84,7 @@ namespace OSLC4Net.Core.Query.Impl
             return Property.ToString() + OperatorExtension.ToString(op) + Operand.ToString();
         }
     
-        static internal Value
+        static internal IValue
         CreateValue(
             CommonTree treeOperand,
             String errorPrefix,
@@ -112,7 +112,7 @@ namespace OSLC4Net.Core.Query.Impl
         }
     
         private readonly Operator op;
-        private Value operand = null;
+        private IValue operand = null;
     }
 
     internal static class OperatorExtension

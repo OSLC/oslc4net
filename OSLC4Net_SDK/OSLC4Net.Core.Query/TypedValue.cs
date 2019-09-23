@@ -23,7 +23,7 @@ namespace OSLC4Net.Core.Query
     /// <summary>
     /// yped value operand from oslc.where clause
     /// </summary>
-    public interface TypedValue : Value
+    public interface ITypedValue : IValue
     {
         string Value { get; }
 

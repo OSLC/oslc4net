@@ -34,7 +34,7 @@ namespace OSLC4Net.Core.Query
     /// Operand from ComparisonTerm or InTerm
     /// impleTerm from olsc.where clause
     /// </summary>
-    public interface Value
+    public interface IValue
     {
         ValueType Type { get; }
     }

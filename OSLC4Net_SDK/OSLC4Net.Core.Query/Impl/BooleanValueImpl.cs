@@ -24,7 +24,7 @@ namespace OSLC4Net.Core.Query.Impl
     /// <summary>
     /// Implementation of BooleanValue interface
     /// </summary>
-    internal class BooleanValueImpl : ValueImpl, BooleanValue
+    internal class BooleanValueImpl : ValueImpl, IBooleanValue
     {
         public
         BooleanValueImpl(CommonTree tree) : base(tree, ValueType.BOOLEAN)

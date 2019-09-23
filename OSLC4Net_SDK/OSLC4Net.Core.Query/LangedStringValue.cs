@@ -23,7 +23,7 @@ namespace OSLC4Net.Core.Query
     /// <summary>
     /// Language specified string value operand from oslc.where clause
     /// </summary>
-    public interface LangedStringValue : Value
+    public interface ILangedStringValue : IValue
     {
         string Value { get; }
 

@@ -23,7 +23,7 @@ namespace OSLC4Net.Core.Query
     /// <summary>
     /// URI_REF operand from oslc.where clause
     /// </summary>
-    public interface UriRefValue : Value
+    public interface IUriRefValue : IValue
     {
         string Value { get; }
     }

@@ -24,7 +24,7 @@ namespace OSLC4Net.Core.Query.Impl
     /// <summary>
     /// Implementation of Value interface
     /// </summary>
-    internal class ValueImpl : Value
+    internal class ValueImpl : IValue
     {
         protected
         ValueImpl(
