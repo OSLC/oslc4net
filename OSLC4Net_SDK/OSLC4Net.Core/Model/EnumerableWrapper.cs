@@ -31,14 +31,14 @@ namespace OSLC4Net.Core.Model
 
         public IEnumerator<object> GetEnumerator()
         {
-            MethodInfo method = opaqueObj.GetType().GetMethod("GetEnumerator", Type.EmptyTypes);
+            var method = opaqueObj.GetType().GetMethod("GetEnumerator", Type.EmptyTypes);
 
             method = method.MakeGenericMethod();
 
             return new EnumeratorWrapper(method.Invoke(opaqueObj, null));
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }

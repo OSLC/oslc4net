@@ -133,7 +133,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
                 client.DefaultRequestHeaders.Add("OSLC-Core-Version", "2.0");
 
                 String securityCheckUrl = "j_username=" + this.user + "&j_password=" + this.password;
-                StringContent content = new StringContent(securityCheckUrl, System.Text.Encoding.UTF8);
+                StringContent content = new StringContent(securityCheckUrl, Encoding.UTF8);
 
                 MediaTypeHeaderValue mediaTypeValue = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
 

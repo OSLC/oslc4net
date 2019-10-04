@@ -201,7 +201,7 @@ namespace OSLC4Net.Client.Samples
 	    private static void ProcessRawResponse(HttpResponseMessage response)
         {
 		    Stream inStream = response.Content.ReadAsStreamAsync().Result;
-		    StreamReader streamReader = new StreamReader(new BufferedStream(inStream), System.Text.Encoding.UTF8);
+		    StreamReader streamReader = new StreamReader(new BufferedStream(inStream), Encoding.UTF8);
 		
 		    String line = null;
             while ((line = streamReader.ReadLine()) != null)

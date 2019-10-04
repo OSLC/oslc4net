@@ -24,7 +24,7 @@ namespace OSLC4Net.Core.Model
     /// <summary>
     /// Constant strings and static MediaTypeHeaderValue representing OSLC media types
     /// </summary>
-    /// <seealso cref="System.Net.Http.Headers.MediaTypeHeaderValue"/>
+    /// <seealso cref="MediaTypeHeaderValue"/>
     public class OslcMediaType
     {
 	    public const String APPLICATION = "application";

@@ -272,7 +272,7 @@ namespace OSLC4Net.Core.JsonProvider
 
             try
             {
-                JsonObject jsonObject = (JsonObject)JsonObject.Load(readStream);
+                JsonObject jsonObject = (JsonObject)JsonValue.Load(readStream);
 
                 Debug.WriteLine("JsonMediaTypeFormatter.ReadFromStreamAsync(): Loaded JSON: " + jsonObject);
 

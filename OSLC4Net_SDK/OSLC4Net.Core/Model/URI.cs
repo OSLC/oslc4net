@@ -23,7 +23,7 @@ namespace OSLC4Net.Core.Model
     /// <summary>
     /// A wrapper for a URI
     /// </summary>
-    [System.AttributeUsage(System.AttributeTargets.Field)
+    [AttributeUsage(AttributeTargets.Field)
     ]
     public class URI : System.Attribute
     {

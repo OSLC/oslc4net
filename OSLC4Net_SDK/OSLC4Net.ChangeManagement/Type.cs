@@ -62,7 +62,7 @@ namespace OSLC4Net.ChangeManagement
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Field)
+    [System.AttributeUsage(AttributeTargets.Field)
     ]
     class Description : System.Attribute
     {

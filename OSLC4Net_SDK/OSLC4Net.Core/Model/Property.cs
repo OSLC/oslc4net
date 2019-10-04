@@ -325,7 +325,7 @@ namespace OSLC4Net.Core.Model
 	    public void SetRange(Uri[] ranges) {
 	        this.range.Clear();
 	        if (ranges != null) {
-                foreach (Uri value in ranges) {
+                foreach (var value in ranges) {
 	                this.range.Add(value);
                 }
 	        }

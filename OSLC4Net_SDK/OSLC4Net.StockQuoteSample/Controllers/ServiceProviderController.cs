@@ -80,7 +80,7 @@ namespace OSLC4Net.StockQuoteSample.Controllers
 
         public ServiceProvider GetServiceProvider()
         {
-            return ServiceProviderController.serviceProvider;
+            return serviceProvider;
         }
 
     }

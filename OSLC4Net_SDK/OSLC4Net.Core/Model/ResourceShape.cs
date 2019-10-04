@@ -82,7 +82,7 @@ namespace OSLC4Net.Core.Model
 	    public void SetDescribes(Uri[] describes) {
 	        this.describes.Clear();
 	        if (describes != null) {
-                foreach (Uri desc in describes) {
+                foreach (var desc in describes) {
 	                this.describes.Add(desc);
                 }
 	        }
@@ -91,7 +91,7 @@ namespace OSLC4Net.Core.Model
 	    public void SetProperties(Property[] properties) {
 	        this.properties.Clear();
 	        if (properties != null) {
-                foreach (Property prop in properties) {
+                foreach (var prop in properties) {
 	                this.properties.Add(prop);
                 }
 	        }

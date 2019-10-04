@@ -24,7 +24,7 @@ namespace OSLC4Net.Core.Attribute
     /// <summary>
     /// OSLC Resource Shape attribute
     /// </summary>
-    [System.AttributeUsage(System.AttributeTargets.Class)
+    [AttributeUsage(AttributeTargets.Class)
     ]
     public class OslcResourceShape : System.Attribute
     {

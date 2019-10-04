@@ -36,7 +36,7 @@ namespace OSLC4Net.Core.Model
         {
             Type[] interfaces = typeToTest.GetInterfaces();
 
-            foreach (Type interfac in interfaces) {
+            foreach (var interfac in interfaces) {
                 if (interfac.IsGenericType && genericType == interfac.GetGenericTypeDefinition())
                 {
                     return true;

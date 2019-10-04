@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Oniqys.OSLC4Net</id>
+    <title>OSLC4Net (eliminated)</title>
+    <version>0.1.0</version>
+    <authors>Reki Yamamoto</authors>
+    <owners>Reki Yamamoto</owners>
+    <license type="expression">Eclipse Public License 1.0</license>
+    <projectUrl>https://github.com/nenaaki/oslc4net</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Oniqys OSLC4Net (eliminated)</description>
+    <releaseNotes>OSLC4Net (eliminated)</releaseNotes>
+    <tags>OSLC</tags>
+  </metadata>
+</package>

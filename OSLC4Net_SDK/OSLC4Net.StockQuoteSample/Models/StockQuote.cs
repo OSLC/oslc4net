@@ -182,7 +182,7 @@ namespace OSLC4Net.StockQuoteSample.Models
         [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
         [OslcTitle("Title")]
-        [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
+        [OslcValueType(Core.Model.ValueType.XMLLiteral)]
         public string GetTitle()
         {
             return title;

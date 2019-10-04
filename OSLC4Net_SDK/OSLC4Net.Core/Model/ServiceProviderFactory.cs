@@ -49,9 +49,9 @@ namespace OSLC4Net.Core.Model
 		    serviceProvider.SetDescription(description);
 		    serviceProvider.SetPublisher(publisher);
 
-	        Dictionary<string, Service> serviceMap = new Dictionary<string, Service>();
+            var serviceMap = new Dictionary<string, Service>();
 
-		    foreach (Type resourceType in resourceTypes) 
+		    foreach (var resourceType in resourceTypes) 
             {
 		        OslcService[] serviceAttribute = (OslcService[]) resourceType.GetCustomAttributes(typeof(OslcService),false);
 
@@ -76,7 +76,7 @@ namespace OSLC4Net.Core.Model
 		    }
 
 		    // add the services to the provider
-		    foreach (Service service in serviceMap.Values)
+		    foreach (var service in serviceMap.Values)
             {
 		        serviceProvider.AddService(service);
 		    }
@@ -95,7 +95,7 @@ namespace OSLC4Net.Core.Model
 	    private static void HandleResourceType(string baseURI, Type resourceType,
 			    Service service, Dictionary<string,object> pathParameterValues) 
         {
-		    foreach (MethodInfo method in resourceType.GetMethods()) 
+		    foreach (var method in resourceType.GetMethods()) 
             {
 			   
 			    if (method.Name.StartsWith("Get")) 
@@ -115,7 +115,7 @@ namespace OSLC4Net.Core.Model
 				    if (dialogsAttribute != null && dialogsAttribute.Length > 0) 
                     {
 				        OslcDialog [] dialogs = dialogsAttribute[0].value;
-				        foreach (OslcDialog dialog in dialogs) 
+				        foreach (var dialog in dialogs) 
                         {
 				            if (dialog != null) {
 				                service.AddSelectionDialog(CreateSelectionDialog(baseURI, method, dialog, resourceShapes, pathParameterValues));
@@ -143,7 +143,7 @@ namespace OSLC4Net.Core.Model
 	                    if (dialogsAttribute != null && dialogsAttribute.Length > 0) 
                         {
 	                        OslcDialog[] dialogs = dialogsAttribute[0].value;
-	                        foreach (OslcDialog dialog in dialogs) 
+	                        foreach (var dialog in dialogs) 
                             {
 	                            if (dialog != null) 
                                 {

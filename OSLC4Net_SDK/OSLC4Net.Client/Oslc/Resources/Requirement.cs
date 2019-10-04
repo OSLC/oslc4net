@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -23,114 +23,114 @@ using OSLC4Net.Core.Attribute;
 namespace OSLC4Net.Client.Oslc.Resources
 {
     [OslcNamespace(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE)]
-    [OslcResourceShape(title = "Requirement Resource Shape", describes = new string[] {RmConstants.TYPE_REQUIREMENT})]
+    [OslcResourceShape(title = "Requirement Resource Shape", describes = new string[] { RmConstants.TYPE_REQUIREMENT })]
     public class Requirement : AbstractResource
     {
-	    private String title;
-	    private String description;
-	    private String identifier;
-        private String   shortTitle;
-        private readonly ISet<String>   subjects                    = new HashSet<String>(); // XXX - TreeSet<> in Java
-        private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-        private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-	    private DateTime? created;
+        private String title;
+        private String description;
+        private String identifier;
+        private String shortTitle;
+        private readonly ISet<String> subjects = new HashSet<String>(); // XXX - TreeSet<> in Java
+        private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+        private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+        private DateTime? created;
         private DateTime? modified;
-        private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-	    private Uri      serviceProvider;
-	    private Uri      instanceShape;
-    
-    
-        // OSLC Links
-        private readonly ISet<Link>     elaboratedBy	            = new HashSet<Link>();
-        private readonly ISet<Link>     elaborates         			= new HashSet<Link>();
-    
-        private readonly ISet<Link>     specifiedBy           		= new HashSet<Link>();
-        private readonly ISet<Link>     specifies  					= new HashSet<Link>();
-    
-        private readonly ISet<Link>     affectedBy		        	= new HashSet<Link>();
-    
-        private readonly ISet<Link>     trackedBy		      	  	= new HashSet<Link>();
-    
-        private readonly ISet<Link>     implementedBy		        = new HashSet<Link>();
-    
-        private readonly ISet<Link>     validatedBy		        	= new HashSet<Link>();
-    
-        private readonly ISet<Link>     satisfiedBy		        	= new HashSet<Link>();
-        private readonly ISet<Link>     satisfies		        	= new HashSet<Link>();
-    
-        private readonly ISet<Link>     decomposedBy		        = new HashSet<Link>();
-        private readonly ISet<Link>     decomposes		        	= new HashSet<Link>();
-    
-        private readonly ISet<Link>     constrainedBy		        = new HashSet<Link>();
-        private readonly ISet<Link>     constrains		        	= new HashSet<Link>();
+        private readonly ISet<Uri> rdfTypes = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+        private Uri serviceProvider;
+        private Uri instanceShape;
 
+        // OSLC Links
+        private readonly ISet<Link> elaboratedBy = new HashSet<Link>();
+        private readonly ISet<Link> elaborates = new HashSet<Link>();
+
+        private readonly ISet<Link> specifiedBy = new HashSet<Link>();
+        private readonly ISet<Link> specifies = new HashSet<Link>();
+
+        private readonly ISet<Link> affectedBy = new HashSet<Link>();
+
+        private readonly ISet<Link> trackedBy = new HashSet<Link>();
+
+        private readonly ISet<Link> implementedBy = new HashSet<Link>();
+
+        private readonly ISet<Link> validatedBy = new HashSet<Link>();
+
+        private readonly ISet<Link> satisfiedBy = new HashSet<Link>();
+        private readonly ISet<Link> satisfies = new HashSet<Link>();
+
+        private readonly ISet<Link> decomposedBy = new HashSet<Link>();
+        private readonly ISet<Link> decomposes = new HashSet<Link>();
+
+        private readonly ISet<Link> constrainedBy = new HashSet<Link>();
+        private readonly ISet<Link> constrains = new HashSet<Link>();
 
         public Requirement() : base()
         {
             // Only Add the type if Requirement is the created object
-            if ( ! ( this is RequirementCollection ) ) {
-        	    rdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
+            if (!(this is RequirementCollection))
+            {
+                rdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
             }
         }
 
         public Requirement(Uri about) : base(about)
         {
             // Only Add the type if Requirement is the created object
-            if ( ! ( this is RequirementCollection ) ) {
-        	    rdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
+            if (!(this is RequirementCollection))
+            {
+                rdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
             }
         }
-    
+
         public void AddSubject(String subject)
         {
             this.subjects.Add(subject);
         }
-    
+
         public void AddConstrains(Link constrains)
         {
             this.constrains.Add(constrains);
         }
-    
+
         public void AddConstrainedBy(Link constrainedBy)
         {
             this.constrainedBy.Add(constrainedBy);
         }
-    
+
         public void AddDecomposes(Link decomposes)
         {
             this.decomposes.Add(decomposes);
         }
-    
+
         public void AddDecomposedBy(Link decomposedBy)
         {
             this.decomposedBy.Add(decomposedBy);
         }
-    
+
         public void AddSatisfies(Link satisfies)
         {
             this.satisfies.Add(satisfies);
         }
-    
+
         public void AddSatisfiedBy(Link satisfiedBy)
         {
             this.satisfiedBy.Add(satisfiedBy);
         }
-    
+
         public void AddValidatedBy(Link validatedBy)
         {
             this.validatedBy.Add(validatedBy);
         }
-    
+
         public void AddTrackedBy(Link trackedBy)
         {
             this.trackedBy.Add(trackedBy);
         }
-    
+
         public void AddImplementedBy(Link implementedBy)
         {
             this.implementedBy.Add(implementedBy);
         }
-    
+
         public void AddAffectedBy(Link affectedBy)
         {
             this.affectedBy.Add(affectedBy);
@@ -202,7 +202,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return elaborates.ToArray();
         }
-    
+
         [OslcDescription("The subject is specified by the object.")]
         [OslcName("specifiedBy")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "specifiedBy")]
@@ -224,8 +224,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return specifies.ToArray();
         }
-    
-    
+
         [OslcDescription("Resource, such as a change request, which implements this requirement.")]
         [OslcName("implementedBy")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "implementedBy")]
@@ -236,7 +235,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return implementedBy.ToArray();
         }
-    
+
         [OslcDescription("Requirement is affected by a resource, such as a defect or issue.")]
         [OslcName("affectedBy")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "affectedBy")]
@@ -247,7 +246,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return affectedBy.ToArray();
         }
-    
+
         [OslcDescription("Resource, such as a change request, which tracks this requirement.")]
         [OslcName("trackedBy")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "trackedBy")]
@@ -258,7 +257,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return trackedBy.ToArray();
         }
-    
+
         [OslcDescription("Resource, such as a test case, which validates this requirement.")]
         [OslcName("validatedBy")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "validatedBy")]
@@ -269,7 +268,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return validatedBy.ToArray();
         }
-    
+
         [OslcDescription("The subject is satisfied by the object.")]
         [OslcName("satisfiedBy")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "satisfiedBy")]
@@ -280,7 +279,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return satisfiedBy.ToArray();
         }
-    
+
         [OslcDescription("The object is satisfied by the subject.")]
         [OslcName("satisfies")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "satisfies")]
@@ -291,7 +290,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return satisfies.ToArray();
         }
-    
+
         [OslcDescription("The subject is decomposed by the object.")]
         [OslcName("decomposedBy")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "decomposedBy")]
@@ -302,7 +301,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return decomposedBy.ToArray();
         }
-    
+
         [OslcDescription("The object is decomposed by the subject.")]
         [OslcName("decomposes")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "decomposes")]
@@ -313,7 +312,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return decomposes.ToArray();
         }
-    
+
         [OslcDescription("The subject is constrained by the object.")]
         [OslcName("constrainedBy")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "constrainedBy")]
@@ -324,7 +323,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return constrainedBy.ToArray();
         }
-    
+
         [OslcDescription("The object is constrained by the subject.")]
         [OslcName("constrains")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "constrains")]
@@ -335,7 +334,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return constrains.ToArray();
         }
-    
+
         [OslcDescription("The person(s) who are responsible for the work needed to complete the change request.")]
         [OslcName("contributor")]
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "contributor")]
@@ -365,16 +364,14 @@ namespace OSLC4Net.Client.Oslc.Resources
             return creators.ToArray();
         }
 
-
         [OslcDescription("Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
         [OslcTitle("Description")]
-        [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
+        [OslcValueType(Core.Model.ValueType.XMLLiteral)]
         public String GetDescription()
         {
             return description;
         }
-
 
         [OslcDescription("A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
         [OslcOccurs(Occurs.ExactlyOne)]
@@ -385,7 +382,6 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return identifier;
         }
-
 
         [OslcDescription("Resource Shape that provides hints as to resource property value-types and allowed values. ")]
         [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "instanceShape")]
@@ -414,7 +410,6 @@ namespace OSLC4Net.Client.Oslc.Resources
             return rdfTypes.ToArray();
         }
 
-
         [OslcDescription("The scope of a resource is a Uri for the resource's OSLC Service Provider.")]
         [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "serviceProvider")]
         [OslcRange(OslcConstants.TYPE_SERVICE_PROVIDER)]
@@ -427,23 +422,22 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcDescription("Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users.")]
         [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "shortTitle")]
         [OslcTitle("Short Title")]
-        [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
+        [OslcValueType(Core.Model.ValueType.XMLLiteral)]
         public String GetShortTitle()
         {
             return shortTitle;
         }
 
-    
         [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
         [OslcOccurs(Occurs.ExactlyOne)]
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
         [OslcTitle("Title")]
-        [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
+        [OslcValueType(Core.Model.ValueType.XMLLiteral)]
         public String GetTitle()
         {
             return title;
         }
-    
+
         public void SetConstrains(Link[] constrains)
         {
             this.constrains.Clear();
@@ -453,7 +447,7 @@ namespace OSLC4Net.Client.Oslc.Resources
                 this.constrains.AddAll(constrains);
             }
         }
-    
+
         public void SetConstrainedBy(Link[] constrainedBy)
         {
             this.constrainedBy.Clear();
@@ -463,7 +457,7 @@ namespace OSLC4Net.Client.Oslc.Resources
                 this.constrainedBy.AddAll(constrainedBy);
             }
         }
-    
+
         public void SetDecomposes(Link[] decomposes)
         {
             this.affectedBy.Clear();
@@ -473,7 +467,7 @@ namespace OSLC4Net.Client.Oslc.Resources
                 this.decomposes.AddAll(decomposes);
             }
         }
-    
+
         public void SetDecomposedBy(Link[] decomposedBy)
         {
             this.decomposedBy.Clear();
@@ -483,7 +477,7 @@ namespace OSLC4Net.Client.Oslc.Resources
                 this.decomposedBy.AddAll(decomposedBy);
             }
         }
-    
+
         public void SetSatisfies(Link[] satisfies)
         {
             this.satisfies.Clear();
@@ -493,7 +487,7 @@ namespace OSLC4Net.Client.Oslc.Resources
                 this.satisfies.AddAll(satisfies);
             }
         }
-    
+
         public void SetSatisfiedBy(Link[] satisfiedBy)
         {
             this.satisfiedBy.Clear();
@@ -503,7 +497,7 @@ namespace OSLC4Net.Client.Oslc.Resources
                 this.satisfiedBy.AddAll(satisfiedBy);
             }
         }
-    
+
         public void SetValidatedBy(Link[] validatedBy)
         {
             this.validatedBy.Clear();
@@ -513,7 +507,7 @@ namespace OSLC4Net.Client.Oslc.Resources
                 this.validatedBy.AddAll(validatedBy);
             }
         }
-    
+
         public void SetTrackedBy(Link[] trackedBy)
         {
             this.trackedBy.Clear();
@@ -523,7 +517,7 @@ namespace OSLC4Net.Client.Oslc.Resources
                 this.trackedBy.AddAll(trackedBy);
             }
         }
-    
+
         public void SetAffectedBy(Link[] affectedBy)
         {
             this.affectedBy.Clear();
@@ -574,7 +568,6 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-
         public void SetSpecifies(Link[] specifies)
         {
             this.specifies.Clear();
@@ -610,18 +603,15 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-
         public void SetDescription(String description)
         {
             this.description = description;
         }
 
-
         public void SetIdentifier(String identifier)
         {
             this.identifier = identifier;
         }
-
 
         public void SetInstanceShape(Uri instanceShape)
         {
@@ -643,24 +633,21 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-
         public void SetServiceProvider(Uri serviceProvider)
         {
             this.serviceProvider = serviceProvider;
         }
-    
+
         public void SetShortTitle(String shortTitle)
         {
             this.shortTitle = shortTitle;
         }
-
 
         public void SetTitle(String title)
         {
             this.title = title;
         }
 
-   
         public void SetSubjects(String[] subjects)
         {
             this.subjects.Clear();
