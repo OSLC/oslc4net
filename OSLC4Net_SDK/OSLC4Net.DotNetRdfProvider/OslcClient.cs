@@ -22,11 +22,11 @@ using System.Net.Http.Headers;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 
+using OSLC4Net.Client.Exceptions;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
-using OSLC4Net.Client.Exceptions;
 
-namespace OSLC4Net.Client.Oslc
+namespace OSLC4Net.Core
 {
     /// <summary>
     /// An OSLC Client.

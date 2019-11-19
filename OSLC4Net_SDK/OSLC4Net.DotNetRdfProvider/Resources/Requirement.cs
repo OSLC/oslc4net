@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -13,162 +13,165 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OSLC4Net.Core.Model;
-using OSLC4Net.Core.Attribute;
-
-namespace OSLC4Net.Client.Oslc.Resources
+namespace OSLC4Net.Core.Resources
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using OSLC4Net.Core.Attribute;
+    using OSLC4Net.Core.Model;
+
     [OslcNamespace(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE)]
-    [OslcResourceShape(title = "Requirement Resource Shape", describes = new string[] {RmConstants.TYPE_REQUIREMENT})]
+    [OslcResourceShape(title = "Requirement Resource Shape", describes = new string[] { RmConstants.TYPE_REQUIREMENT })]
     public class Requirement : AbstractResource
     {
-	    private String title;
-	    private String description;
-	    private String identifier;
-        private String   shortTitle;
-        private readonly ISet<String>   subjects                    = new HashSet<String>(); // XXX - TreeSet<> in Java
-        private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-        private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-	    private DateTime? created;
-        private DateTime? modified;
-        private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-	    private Uri      serviceProvider;
-	    private Uri      instanceShape;
-    
-    
-        // OSLC Links
-        private readonly ISet<Link>     elaboratedBy	            = new HashSet<Link>();
-        private readonly ISet<Link>     elaborates         			= new HashSet<Link>();
-    
-        private readonly ISet<Link>     specifiedBy           		= new HashSet<Link>();
-        private readonly ISet<Link>     specifies  					= new HashSet<Link>();
-    
-        private readonly ISet<Link>     affectedBy		        	= new HashSet<Link>();
-    
-        private readonly ISet<Link>     trackedBy		      	  	= new HashSet<Link>();
-    
-        private readonly ISet<Link>     implementedBy		        = new HashSet<Link>();
-    
-        private readonly ISet<Link>     validatedBy		        	= new HashSet<Link>();
-    
-        private readonly ISet<Link>     satisfiedBy		        	= new HashSet<Link>();
-        private readonly ISet<Link>     satisfies		        	= new HashSet<Link>();
-    
-        private readonly ISet<Link>     decomposedBy		        = new HashSet<Link>();
-        private readonly ISet<Link>     decomposes		        	= new HashSet<Link>();
-    
-        private readonly ISet<Link>     constrainedBy		        = new HashSet<Link>();
-        private readonly ISet<Link>     constrains		        	= new HashSet<Link>();
+        private readonly ISet<string> _subjects = new HashSet<string>(); // XXX - TreeSet<> in Java
+        private readonly ISet<Uri> _creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+        private readonly ISet<Uri> _contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+        private readonly ISet<Uri> _rdfTypes = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
+        // OSLC Links
+        private readonly ISet<Link> _elaboratedBy = new HashSet<Link>();
+
+        private readonly ISet<Link> _elaborates = new HashSet<Link>();
+
+        private readonly ISet<Link> _specifiedBy = new HashSet<Link>();
+        private readonly ISet<Link> _specifies = new HashSet<Link>();
+
+        private readonly ISet<Link> _affectedBy = new HashSet<Link>();
+
+        private readonly ISet<Link> _trackedBy = new HashSet<Link>();
+
+        private readonly ISet<Link> _implementedBy = new HashSet<Link>();
+
+        private readonly ISet<Link> _validatedBy = new HashSet<Link>();
+
+        private readonly ISet<Link> _satisfiedBy = new HashSet<Link>();
+        private readonly ISet<Link> _satisfies = new HashSet<Link>();
+
+        private readonly ISet<Link> _decomposedBy = new HashSet<Link>();
+        private readonly ISet<Link> _decomposes = new HashSet<Link>();
+
+        private readonly ISet<Link> _constrainedBy = new HashSet<Link>();
+        private readonly ISet<Link> _constrains = new HashSet<Link>();
+
+        private string _title;
+        private string _description;
+        private string _identifier;
+        private string _shortTitle;
+
+        private DateTime? _created;
+        private DateTime? _modified;
+        private Uri _serviceProvider;
+        private Uri _instanceShape;
 
         public Requirement() : base()
         {
             // Only Add the type if Requirement is the created object
-            if ( ! ( this is RequirementCollection ) ) {
-        	    rdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
+            if (!(this is RequirementCollection))
+            {
+                this._rdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
             }
         }
 
         public Requirement(Uri about) : base(about)
         {
             // Only Add the type if Requirement is the created object
-            if ( ! ( this is RequirementCollection ) ) {
-        	    rdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
+            if (!(this is RequirementCollection))
+            {
+                this._rdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
             }
         }
-    
-        public void AddSubject(String subject)
+
+        public void AddSubject(string subject)
         {
-            this.subjects.Add(subject);
+            this._subjects.Add(subject);
         }
-    
+
         public void AddConstrains(Link constrains)
         {
-            this.constrains.Add(constrains);
+            this._constrains.Add(constrains);
         }
-    
+
         public void AddConstrainedBy(Link constrainedBy)
         {
-            this.constrainedBy.Add(constrainedBy);
+            this._constrainedBy.Add(constrainedBy);
         }
-    
+
         public void AddDecomposes(Link decomposes)
         {
-            this.decomposes.Add(decomposes);
+            this._decomposes.Add(decomposes);
         }
-    
+
         public void AddDecomposedBy(Link decomposedBy)
         {
-            this.decomposedBy.Add(decomposedBy);
+            this._decomposedBy.Add(decomposedBy);
         }
-    
+
         public void AddSatisfies(Link satisfies)
         {
-            this.satisfies.Add(satisfies);
+            this._satisfies.Add(satisfies);
         }
-    
+
         public void AddSatisfiedBy(Link satisfiedBy)
         {
-            this.satisfiedBy.Add(satisfiedBy);
+            this._satisfiedBy.Add(satisfiedBy);
         }
-    
+
         public void AddValidatedBy(Link validatedBy)
         {
-            this.validatedBy.Add(validatedBy);
+            this._validatedBy.Add(validatedBy);
         }
-    
+
         public void AddTrackedBy(Link trackedBy)
         {
-            this.trackedBy.Add(trackedBy);
+            this._trackedBy.Add(trackedBy);
         }
-    
+
         public void AddImplementedBy(Link implementedBy)
         {
-            this.implementedBy.Add(implementedBy);
+            this._implementedBy.Add(implementedBy);
         }
-    
+
         public void AddAffectedBy(Link affectedBy)
         {
-            this.affectedBy.Add(affectedBy);
+            this._affectedBy.Add(affectedBy);
         }
 
         public void AddElaboratedBy(Link elaboratedBy)
         {
-            this.elaboratedBy.Add(elaboratedBy);
+            this._elaboratedBy.Add(elaboratedBy);
         }
 
         public void AddElaborates(Link elaborates)
         {
-            this.elaborates.Add(elaborates);
+            this._elaborates.Add(elaborates);
         }
 
         public void AddSpecifiedBy(Link specifiedBy)
         {
-            this.specifiedBy.Add(specifiedBy);
+            this._specifiedBy.Add(specifiedBy);
         }
 
         public void AddSpecifies(Link specifies)
         {
-            this.specifies.Add(specifies);
+            this._specifies.Add(specifies);
         }
 
         public void AddContributor(Uri contributor)
         {
-            this.contributors.Add(contributor);
+            this._contributors.Add(contributor);
         }
 
         public void AddCreator(Uri creator)
         {
-            this.creators.Add(creator);
+            this._creators.Add(creator);
         }
 
         public void AddRdfType(Uri rdfType)
         {
-            this.rdfTypes.Add(rdfType);
+            this._rdfTypes.Add(rdfType);
         }
 
         [OslcDescription("Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
@@ -176,9 +179,9 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "subject")]
         [OslcReadOnly(false)]
         [OslcTitle("Subjects")]
-        public String[] GetSubjects()
+        public string[] GetSubjects()
         {
-            return subjects.ToArray();
+            return this._subjects.ToArray();
         }
 
         [OslcDescription("The subject is elaborated by the object.")]
@@ -189,7 +192,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Elaborated By")]
         public Link[] GetElaboratedBy()
         {
-            return elaboratedBy.ToArray();
+            return this._elaboratedBy.ToArray();
         }
 
         [OslcDescription("The object is elaborated by the subject.")]
@@ -200,9 +203,9 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Elaborates")]
         public Link[] GetElaborates()
         {
-            return elaborates.ToArray();
+            return this._elaborates.ToArray();
         }
-    
+
         [OslcDescription("The subject is specified by the object.")]
         [OslcName("specifiedBy")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "specifiedBy")]
@@ -211,7 +214,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Specified By")]
         public Link[] GetSpecifiedBy()
         {
-            return specifiedBy.ToArray();
+            return this._specifiedBy.ToArray();
         }
 
         [OslcDescription("The object is specified by the subject.")]
@@ -222,10 +225,9 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Specifies")]
         public Link[] GetSpecifies()
         {
-            return specifies.ToArray();
+            return this._specifies.ToArray();
         }
-    
-    
+
         [OslcDescription("Resource, such as a change request, which implements this requirement.")]
         [OslcName("implementedBy")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "implementedBy")]
@@ -234,9 +236,9 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Implemented By")]
         public Link[] GetImplementedBy()
         {
-            return implementedBy.ToArray();
+            return this._implementedBy.ToArray();
         }
-    
+
         [OslcDescription("Requirement is affected by a resource, such as a defect or issue.")]
         [OslcName("affectedBy")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "affectedBy")]
@@ -245,9 +247,9 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Affected By")]
         public Link[] GetAffectedBy()
         {
-            return affectedBy.ToArray();
+            return this._affectedBy.ToArray();
         }
-    
+
         [OslcDescription("Resource, such as a change request, which tracks this requirement.")]
         [OslcName("trackedBy")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "trackedBy")]
@@ -256,9 +258,9 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("tracked By")]
         public Link[] GetTrackedBy()
         {
-            return trackedBy.ToArray();
+            return this._trackedBy.ToArray();
         }
-    
+
         [OslcDescription("Resource, such as a test case, which validates this requirement.")]
         [OslcName("validatedBy")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "validatedBy")]
@@ -267,9 +269,9 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Validated By")]
         public Link[] GetValidatedBy()
         {
-            return validatedBy.ToArray();
+            return this._validatedBy.ToArray();
         }
-    
+
         [OslcDescription("The subject is satisfied by the object.")]
         [OslcName("satisfiedBy")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "satisfiedBy")]
@@ -278,9 +280,9 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Satisfied By")]
         public Link[] GetSatisfiedBy()
         {
-            return satisfiedBy.ToArray();
+            return this._satisfiedBy.ToArray();
         }
-    
+
         [OslcDescription("The object is satisfied by the subject.")]
         [OslcName("satisfies")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "satisfies")]
@@ -289,9 +291,9 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Satisfies")]
         public Link[] GetSatisfies()
         {
-            return satisfies.ToArray();
+            return this._satisfies.ToArray();
         }
-    
+
         [OslcDescription("The subject is decomposed by the object.")]
         [OslcName("decomposedBy")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "decomposedBy")]
@@ -300,9 +302,9 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("DecomposedBy")]
         public Link[] GetDecomposedBy()
         {
-            return decomposedBy.ToArray();
+            return this._decomposedBy.ToArray();
         }
-    
+
         [OslcDescription("The object is decomposed by the subject.")]
         [OslcName("decomposes")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "decomposes")]
@@ -311,9 +313,9 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Decomposes")]
         public Link[] GetDecomposes()
         {
-            return decomposes.ToArray();
+            return this._decomposes.ToArray();
         }
-    
+
         [OslcDescription("The subject is constrained by the object.")]
         [OslcName("constrainedBy")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "constrainedBy")]
@@ -322,9 +324,9 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("ConstrainedBy")]
         public Link[] GetConstrainedBy()
         {
-            return constrainedBy.ToArray();
+            return this._constrainedBy.ToArray();
         }
-    
+
         [OslcDescription("The object is constrained by the subject.")]
         [OslcName("constrains")]
         [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "constrains")]
@@ -333,9 +335,9 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Constrains")]
         public Link[] GetConstrains()
         {
-            return constrains.ToArray();
+            return this._constrains.ToArray();
         }
-    
+
         [OslcDescription("The person(s) who are responsible for the work needed to complete the change request.")]
         [OslcName("contributor")]
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "contributor")]
@@ -343,7 +345,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Contributors")]
         public Uri[] GetContributors()
         {
-            return contributors.ToArray();
+            return this._contributors.ToArray();
         }
 
         [OslcDescription("Timestamp of resource creation.")]
@@ -352,7 +354,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Created")]
         public DateTime? GetCreated()
         {
-            return created;
+            return this._created;
         }
 
         [OslcDescription("Creator or creators of resource.")]
@@ -362,30 +364,27 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Creators")]
         public Uri[] GetCreators()
         {
-            return creators.ToArray();
+            return this._creators.ToArray();
         }
-
 
         [OslcDescription("Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
         [OslcTitle("Description")]
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
-        public String GetDescription()
+        public string GetDescription()
         {
-            return description;
+            return this._description;
         }
-
 
         [OslcDescription("A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
         [OslcOccurs(Occurs.ExactlyOne)]
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
         [OslcReadOnly]
         [OslcTitle("Identifier")]
-        public String GetIdentifier()
+        public string GetIdentifier()
         {
-            return identifier;
+            return this._identifier;
         }
-
 
         [OslcDescription("Resource Shape that provides hints as to resource property value-types and allowed values. ")]
         [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "instanceShape")]
@@ -393,7 +392,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Instance Shape")]
         public Uri GetInstanceShape()
         {
-            return instanceShape;
+            return this._instanceShape;
         }
 
         [OslcDescription("Timestamp last latest resource modification.")]
@@ -402,7 +401,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Modified")]
         public DateTime? GetModified()
         {
-            return modified;
+            return this._modified;
         }
 
         [OslcDescription("The resource type URIs.")]
@@ -411,9 +410,8 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Types")]
         public Uri[] GetRdfTypes()
         {
-            return rdfTypes.ToArray();
+            return this._rdfTypes.ToArray();
         }
-
 
         [OslcDescription("The scope of a resource is a Uri for the resource's OSLC Service Provider.")]
         [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "serviceProvider")]
@@ -421,253 +419,245 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Service Provider")]
         public Uri GetServiceProvider()
         {
-            return serviceProvider;
+            return this._serviceProvider;
         }
 
         [OslcDescription("Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users.")]
         [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "shortTitle")]
         [OslcTitle("Short Title")]
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
-        public String GetShortTitle()
+        public string GetShortTitle()
         {
-            return shortTitle;
+            return this._shortTitle;
         }
 
-    
         [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
         [OslcOccurs(Occurs.ExactlyOne)]
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
         [OslcTitle("Title")]
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
-        public String GetTitle()
+        public string GetTitle()
         {
-            return title;
+            return this._title;
         }
-    
+
         public void SetConstrains(Link[] constrains)
         {
-            this.constrains.Clear();
+            this._constrains.Clear();
 
             if (constrains != null)
             {
-                this.constrains.AddAll(constrains);
+                this._constrains.AddAll(constrains);
             }
         }
-    
+
         public void SetConstrainedBy(Link[] constrainedBy)
         {
-            this.constrainedBy.Clear();
+            this._constrainedBy.Clear();
 
             if (constrainedBy != null)
             {
-                this.constrainedBy.AddAll(constrainedBy);
+                this._constrainedBy.AddAll(constrainedBy);
             }
         }
-    
+
         public void SetDecomposes(Link[] decomposes)
         {
-            this.affectedBy.Clear();
+            this._affectedBy.Clear();
 
             if (decomposes != null)
             {
-                this.decomposes.AddAll(decomposes);
+                this._decomposes.AddAll(decomposes);
             }
         }
-    
+
         public void SetDecomposedBy(Link[] decomposedBy)
         {
-            this.decomposedBy.Clear();
+            this._decomposedBy.Clear();
 
             if (decomposedBy != null)
             {
-                this.decomposedBy.AddAll(decomposedBy);
+                this._decomposedBy.AddAll(decomposedBy);
             }
         }
-    
+
         public void SetSatisfies(Link[] satisfies)
         {
-            this.satisfies.Clear();
+            this._satisfies.Clear();
 
             if (satisfies != null)
             {
-                this.satisfies.AddAll(satisfies);
+                this._satisfies.AddAll(satisfies);
             }
         }
-    
+
         public void SetSatisfiedBy(Link[] satisfiedBy)
         {
-            this.satisfiedBy.Clear();
+            this._satisfiedBy.Clear();
 
             if (satisfiedBy != null)
             {
-                this.satisfiedBy.AddAll(satisfiedBy);
+                this._satisfiedBy.AddAll(satisfiedBy);
             }
         }
-    
+
         public void SetValidatedBy(Link[] validatedBy)
         {
-            this.validatedBy.Clear();
+            this._validatedBy.Clear();
 
             if (validatedBy != null)
             {
-                this.validatedBy.AddAll(validatedBy);
+                this._validatedBy.AddAll(validatedBy);
             }
         }
-    
+
         public void SetTrackedBy(Link[] trackedBy)
         {
-            this.trackedBy.Clear();
+            this._trackedBy.Clear();
 
             if (trackedBy != null)
             {
-                this.trackedBy.AddAll(trackedBy);
+                this._trackedBy.AddAll(trackedBy);
             }
         }
-    
+
         public void SetAffectedBy(Link[] affectedBy)
         {
-            this.affectedBy.Clear();
+            this._affectedBy.Clear();
 
             if (affectedBy != null)
             {
-                this.affectedBy.AddAll(affectedBy);
+                this._affectedBy.AddAll(affectedBy);
             }
         }
 
         public void SetImplementedBy(Link[] implementedBy)
         {
-            this.implementedBy.Clear();
+            this._implementedBy.Clear();
 
             if (implementedBy != null)
             {
-                this.implementedBy.AddAll(implementedBy);
+                this._implementedBy.AddAll(implementedBy);
             }
         }
 
         public void SetElaboratedBy(Link[] elaboratedBy)
         {
-            this.elaboratedBy.Clear();
+            this._elaboratedBy.Clear();
 
             if (elaboratedBy != null)
             {
-                this.elaboratedBy.AddAll(elaboratedBy);
+                this._elaboratedBy.AddAll(elaboratedBy);
             }
         }
 
         public void SetElaborates(Link[] elaborates)
         {
-            this.elaborates.Clear();
+            this._elaborates.Clear();
 
             if (elaborates != null)
             {
-                this.elaborates.AddAll(elaborates);
+                this._elaborates.AddAll(elaborates);
             }
         }
 
         public void SetSpecifiedBy(Link[] specifiedBy)
         {
-            this.specifiedBy.Clear();
+            this._specifiedBy.Clear();
 
             if (specifiedBy != null)
             {
-                this.specifiedBy.AddAll(specifiedBy);
+                this._specifiedBy.AddAll(specifiedBy);
             }
         }
 
-
         public void SetSpecifies(Link[] specifies)
         {
-            this.specifies.Clear();
+            this._specifies.Clear();
 
             if (specifies != null)
             {
-                this.specifies.AddAll(specifies);
+                this._specifies.AddAll(specifies);
             }
         }
 
         public void SetContributors(Uri[] contributors)
         {
-            this.contributors.Clear();
+            this._contributors.Clear();
 
             if (contributors != null)
             {
-                this.contributors.AddAll(contributors);
+                this._contributors.AddAll(contributors);
             }
         }
 
         public void SetCreated(DateTime? created)
         {
-            this.created = created;
+            this._created = created;
         }
 
         public void SetCreators(Uri[] creators)
         {
-            this.creators.Clear();
+            this._creators.Clear();
 
             if (creators != null)
             {
-                this.creators.AddAll(creators);
+                this._creators.AddAll(creators);
             }
         }
 
-
-        public void SetDescription(String description)
+        public void SetDescription(string description)
         {
-            this.description = description;
+            this._description = description;
         }
 
-
-        public void SetIdentifier(String identifier)
+        public void SetIdentifier(string identifier)
         {
-            this.identifier = identifier;
+            this._identifier = identifier;
         }
-
 
         public void SetInstanceShape(Uri instanceShape)
         {
-            this.instanceShape = instanceShape;
+            this._instanceShape = instanceShape;
         }
 
         public void SetModified(DateTime? modified)
         {
-            this.modified = modified;
+            this._modified = modified;
         }
 
         public void SetRdfTypes(Uri[] rdfTypes)
         {
-            this.rdfTypes.Clear();
+            this._rdfTypes.Clear();
 
             if (rdfTypes != null)
             {
-                this.rdfTypes.AddAll(rdfTypes);
+                this._rdfTypes.AddAll(rdfTypes);
             }
         }
 
-
         public void SetServiceProvider(Uri serviceProvider)
         {
-            this.serviceProvider = serviceProvider;
-        }
-    
-        public void SetShortTitle(String shortTitle)
-        {
-            this.shortTitle = shortTitle;
+            this._serviceProvider = serviceProvider;
         }
 
-
-        public void SetTitle(String title)
+        public void SetShortTitle(string shortTitle)
         {
-            this.title = title;
+            this._shortTitle = shortTitle;
         }
 
-   
-        public void SetSubjects(String[] subjects)
+        public void SetTitle(string title)
         {
-            this.subjects.Clear();
+            this._title = title;
+        }
+
+        public void SetSubjects(string[] subjects)
+        {
+            this._subjects.Clear();
 
             if (subjects != null)
             {
-                this.subjects.AddAll(subjects);
+                this._subjects.AddAll(subjects);
             }
         }
     }

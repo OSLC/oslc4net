@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -20,33 +20,33 @@ using System.Text;
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
 
-namespace OSLC4Net.Client.Oslc.Resources
+namespace OSLC4Net.Core.Resources
 {
-    [OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] {QmConstants.TYPE_TEST_EXECUTION_RECORD})]
+    [OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] { QmConstants.TYPE_TEST_EXECUTION_RECORD })]
     [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
     /// <summary>
     /// http://open-services.net/bin/view/Main/QmSpecificationV2#Resource_TestExecutionRecord
     /// </summary>
     public class TestExecutionRecord : QmResource
     {
-        private readonly ISet<Link>     blockedByChangeRequests     = new HashSet<Link>();
-        private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-        private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-        private readonly ISet<Link>     relatedChangeRequests       = new HashSet<Link>();
+        private readonly ISet<Link> blockedByChangeRequests = new HashSet<Link>();
+        private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+        private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+        private readonly ISet<Link> relatedChangeRequests = new HashSet<Link>();
 
-        private Link     reportsOnTestPlan;
-        private Uri      runsOnTestEnvironment;
-        private Link     runsTestCase;
+        private Link reportsOnTestPlan;
+        private Uri runsOnTestEnvironment;
+        private Link runsTestCase;
 
         public TestExecutionRecord() : base()
         {
         }
-    
+
         protected override Uri GetRdfType()
         {
-    	    return new Uri(QmConstants.TYPE_TEST_EXECUTION_RECORD);
+            return new Uri(QmConstants.TYPE_TEST_EXECUTION_RECORD);
         }
-    
+
         public void AddBlockedByChangeRequest(Link blockingChangeRequest)
         {
             this.blockedByChangeRequests.Add(blockingChangeRequest);
@@ -97,7 +97,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return blockedByChangeRequests.ToArray();
         }
-    
+
         [OslcDescription("This relationship is loosely coupled and has no specific meaning.")]
         [OslcName("relatedChangeRequest")]
         [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "relatedChangeRequest")]
@@ -119,7 +119,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return reportsOnTestPlan;
         }
-    
+
         [OslcDescription("Indicates the environment details of the test case for this execution record.")]
         [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "runsOnTestEnvironment")]
         [OslcTitle("Runs On Test Environment")]
@@ -127,7 +127,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return runsOnTestEnvironment;
         }
-    
+
         [OslcDescription("Test Case run by the Test Execution Record.")]
         [OslcName("runsTestCase")]
         [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "runsTestCase")]
@@ -138,7 +138,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return runsTestCase;
         }
-    
+
         public void SetBlockedByChangeRequests(Link[] blockedByChangeRequests)
         {
             this.blockedByChangeRequests.Clear();
@@ -148,7 +148,7 @@ namespace OSLC4Net.Client.Oslc.Resources
                 this.blockedByChangeRequests.AddAll(blockedByChangeRequests);
             }
         }
-    
+
         public void SetContributors(Uri[] contributors)
         {
             this.contributors.Clear();
@@ -183,7 +183,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             this.reportsOnTestPlan = reportsOnTestPlan;
         }
-    
+
         public void SetRunsOnTestEnvironment(Uri runsOnTestEnvironment)
         {
             this.runsOnTestEnvironment = runsOnTestEnvironment;

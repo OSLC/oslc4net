@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -16,28 +16,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
 
-namespace OSLC4Net.Client.Oslc.Resources
+namespace OSLC4Net.Core.Resources
 {
-    [OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] {QmConstants.TYPE_TEST_CASE})]
+    [OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] { QmConstants.TYPE_TEST_CASE })]
     [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
     /// <summary>
     /// http://open-services.net/bin/view/Main/QmSpecificationV2#Resource_TestCase
     /// </summary>
     public class TestCase : QmResource
     {
-        private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-        private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-        private readonly ISet<Link>     relatedChangeRequests       = new HashSet<Link>();
-        private readonly ISet<String>   subjects                    = new HashSet<String>(); // XXX - TreeSet<> in Java
-        private readonly ISet<Link>     testsChangeRequests         = new HashSet<Link>();
-        private readonly ISet<Link>     usesTestScripts             = new HashSet<Link>();
-        private readonly ISet<Link>     validatesRequirements       = new HashSet<Link>();
+        private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+        private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+        private readonly ISet<Link> relatedChangeRequests = new HashSet<Link>();
+        private readonly ISet<String> subjects = new HashSet<String>(); // XXX - TreeSet<> in Java
+        private readonly ISet<Link> testsChangeRequests = new HashSet<Link>();
+        private readonly ISet<Link> usesTestScripts = new HashSet<Link>();
+        private readonly ISet<Link> validatesRequirements = new HashSet<Link>();
 
-        private String   description;
+        private String description;
 
         public TestCase() : base()
         {
@@ -45,9 +45,9 @@ namespace OSLC4Net.Client.Oslc.Resources
 
         protected override Uri GetRdfType()
         {
-    	    return new Uri(QmConstants.TYPE_TEST_CASE);
+            return new Uri(QmConstants.TYPE_TEST_CASE);
         }
-    
+
         public void AddContributor(Uri contributor)
         {
             this.contributors.Add(contributor);
@@ -72,7 +72,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             this.testsChangeRequests.Add(changeRequest);
         }
-    
+
         public void AddUsesTestScript(Link testscript)
         {
             this.usesTestScripts.Add(testscript);
@@ -82,7 +82,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             this.validatesRequirements.Add(requirement);
         }
-    
+
         [OslcDescription("The person(s) who are responsible for the work needed to complete the test case.")]
         [OslcName("contributor")]
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "contributor")]
@@ -143,7 +143,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return testsChangeRequests.ToArray();
         }
-    
+
         [OslcDescription("Test Script used by the Test Case.")]
         [OslcName("usesTestScript")]
         [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "usesTestScript")]
@@ -154,7 +154,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return usesTestScripts.ToArray();
         }
- 
+
         [OslcDescription("Requirement that is validated by the Test Case.")]
         [OslcName("validatesRequirement")]
         [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "validatesRequirement")]
@@ -198,7 +198,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             if (relatedChangeRequests != null)
             {
                 this.relatedChangeRequests.AddAll(relatedChangeRequests);
-           }
+            }
         }
 
         public void SetSubjects(String[] subjects)
@@ -220,7 +220,7 @@ namespace OSLC4Net.Client.Oslc.Resources
                 this.testsChangeRequests.AddAll(testsChangeRequests);
             }
         }
-    
+
         public void SetUsesTestScripts(Link[] usesTestScripts)
         {
             this.usesTestScripts.Clear();
