@@ -13,20 +13,22 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using VDS.RDF;
-using System.Net.Http;
-using System.Runtime.CompilerServices;
-using System.IO;
-using VDS.RDF.Parsing;
-using OSLC4Net.Core.Model;
-using System.Collections;
-using OSLC4Net.Core.DotNetRdfProvider;
-
-namespace OSLC4Net.Client.Oslc.Resources
+namespace OSLC4Net.Core.Resources
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Runtime.CompilerServices;
+
+    using OSLC4Net.Core.DotNetRdfProvider;
+    using OSLC4Net.Core.Model;
+
+    using VDS.RDF;
+    using VDS.RDF.Parsing;
+
     /// <summary>
     /// The results of an OSLC query. If the query was paged, subsequent pages can be retrieved using the Iterator interface.
     ///
@@ -34,95 +36,34 @@ namespace OSLC4Net.Client.Oslc.Resources
     /// </summary>
     public class OslcQueryResult : IEnumerator<OslcQueryResult>
     {
-        private readonly OslcQuery query;
+        private readonly OslcQuery _query;
 
-        private readonly HttpResponseMessage response;
+        private readonly HttpResponseMessage _response;
 
-        private readonly int pageNumber;
+        private readonly int _pageNumber;
 
-        private IGraph rdfGraph;
+        private IGraph _rdfGraph;
 
-        private IUriNode rdfType, infoResource;
+        private IUriNode _rdfType, _infoResource;
 
-        private String nextPageUrl = "";
+        private string _nextPageUrl = string.Empty;
 
-        private bool rdfInitialized = false;
+        private bool _rdfInitialized = false;
 
         public OslcQueryResult(OslcQuery query, HttpResponseMessage response)
         {
-            this.query = query;
-            this.response = response;
+            this._query = query;
+            this._response = response;
 
-            this.pageNumber = 1;
+            this._pageNumber = 1;
         }
 
         private OslcQueryResult(OslcQueryResult prev)
         {
-            this.query = new OslcQuery(prev);
-            this.response = this.query.GetResponse();
+            this._query = new OslcQuery(prev);
+            this._response = this._query.GetResponse();
 
-            this.pageNumber = prev.pageNumber + 1;
-        }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        private void InitializeRdf()
-        {
-            if (!rdfInitialized)
-            {
-                rdfInitialized = true;
-                rdfGraph = new Graph();
-                Stream stream = response.Content.ReadAsStreamAsync().Result;
-                IRdfReader parser = new RdfXmlParser();
-                StreamReader streamReader = new StreamReader(stream);
-
-                using (streamReader)
-                {
-                    parser.Load(rdfGraph, streamReader);
-
-                    //Find a resource with rdf:type of oslc:ResourceInfo
-                    rdfType = rdfGraph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
-                    IUriNode responseInfo = rdfGraph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + "ResponseInfo"));
-                    IEnumerable<Triple> triples = rdfGraph.GetTriplesWithPredicateObject(rdfType, responseInfo);
-
-                    //There should only be one - take the first
-                    infoResource = triples.Count() == 0 ? null : (triples.First().Subject as IUriNode);
-                }
-            }
-        }
-
-        internal String GetNextPageUrl()
-        {
-            InitializeRdf();
-
-            if ((nextPageUrl == null || nextPageUrl.Length == 0) && infoResource != null)
-            {
-                IUriNode predicate = rdfGraph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + "nextPage"));
-                IEnumerable<Triple> triples = rdfGraph.GetTriplesWithSubjectPredicate(infoResource, predicate);
-                if (triples.Count() == 1 && triples.First().Object is IUriNode)
-                {
-                    nextPageUrl = (triples.First().Object as IUriNode).Uri.OriginalString;
-                }
-                else
-                {
-                    nextPageUrl = "";
-                }
-            }
-
-            return nextPageUrl;
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns>whether there is another page of results after this</returns>
-        public bool MoveNext()
-        {
-            if (GetNextPageUrl().Length == 0)
-            {
-                return false;
-            }
-
-            return true;
+            this._pageNumber = prev._pageNumber + 1;
         }
 
         /// <summary>
@@ -132,7 +73,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             get
             {
-                if (!MoveNext())
+                if (!this.MoveNext())
                 {
                     throw new InvalidOperationException();
                 }
@@ -142,7 +83,21 @@ namespace OSLC4Net.Client.Oslc.Resources
 
         object IEnumerator.Current
         {
-            get { return Current; }
+            get { return this.Current; }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>whether there is another page of results after this</returns>
+        public bool MoveNext()
+        {
+            if (this.GetNextPageUrl().Length == 0)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         void IDisposable.Dispose()
@@ -156,7 +111,7 @@ namespace OSLC4Net.Client.Oslc.Resources
 
         public OslcQuery GetQuery()
         {
-            return query;
+            return this._query;
         }
 
         /// <summary>
@@ -169,7 +124,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         /// <returns></returns>
         public HttpResponseMessage GetRawResponse()
         {
-            return response;
+            return this._response;
         }
 
         /// <summary>
@@ -180,13 +135,13 @@ namespace OSLC4Net.Client.Oslc.Resources
         /// which examine the response unavailable (Example: GetRawResponse().
         /// </summary>
         /// <returns></returns>
-        public String[] GetMembersUrls()
+        public string[] GetMembersUrls()
         {
             InitializeRdf();
 
-            IList<String> membersUrls = new List<String>();
-            IUriNode membersResource = rdfGraph.CreateUriNode(new Uri(query.GetCapabilityUrl()));
-            IEnumerable<Triple> triples = rdfGraph.GetTriplesWithSubject(membersResource);
+            IList<string> membersUrls = new List<string>();
+            IUriNode membersResource = this._rdfGraph.CreateUriNode(new Uri(this._query.GetCapabilityUrl()));
+            IEnumerable<Triple> triples = this._rdfGraph.GetTriplesWithSubject(membersResource);
 
             foreach (Triple triple in triples)
             {
@@ -212,44 +167,95 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             InitializeRdf();
 
-            IUriNode membersResource = rdfGraph.CreateUriNode(new Uri(query.GetCapabilityUrl()));
-            IEnumerable<Triple> triples = rdfGraph.GetTriplesWithSubject(membersResource);
+            IUriNode membersResource = this._rdfGraph.CreateUriNode(new Uri(this._query.GetCapabilityUrl()));
+            IEnumerable<Triple> triples = this._rdfGraph.GetTriplesWithSubject(membersResource);
             IEnumerable<T> result = new TripleEnumerableWrapper<T>(triples);
 
             return result;
         }
 
+        internal string GetNextPageUrl()
+        {
+            this.InitializeRdf();
+
+            if ((this._nextPageUrl == null || this._nextPageUrl.Length == 0) && this._infoResource != null)
+            {
+                IUriNode predicate = this._rdfGraph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + "nextPage"));
+                IEnumerable<Triple> triples = this._rdfGraph.GetTriplesWithSubjectPredicate(this._infoResource, predicate);
+                if (triples.Count() == 1 && triples.First().Object is IUriNode)
+                {
+                    this._nextPageUrl = (triples.First().Object as IUriNode).Uri.OriginalString;
+                }
+                else
+                {
+                    this._nextPageUrl = string.Empty;
+                }
+            }
+
+            return this._nextPageUrl;
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        private void InitializeRdf()
+        {
+            if (!this._rdfInitialized)
+            {
+                this._rdfInitialized = true;
+                this._rdfGraph = new Graph();
+                Stream stream = this._response.Content.ReadAsStreamAsync().Result;
+                IRdfReader parser = new RdfXmlParser();
+                StreamReader streamReader = new StreamReader(stream);
+
+                using (streamReader)
+                {
+                    parser.Load(this._rdfGraph, streamReader);
+
+                    // Find a resource with rdf:type of oslc:ResourceInfo
+                    this._rdfType = this._rdfGraph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
+                    IUriNode responseInfo = this._rdfGraph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + "ResponseInfo"));
+                    IEnumerable<Triple> triples = this._rdfGraph.GetTriplesWithPredicateObject(this._rdfType, responseInfo);
+
+                    // There should only be one - take the first
+                    this._infoResource = triples.Count() == 0 ? null : (triples.First().Subject as IUriNode);
+                }
+            }
+        }
+
         private class TripleEnumerableWrapper<T> : IEnumerable<T>
         {
+            private IEnumerable<Triple> _triples;
+
             public TripleEnumerableWrapper(IEnumerable<Triple> triples)
             {
-                this.triples = triples;
+                this._triples = triples;
             }
 
             IEnumerator
             IEnumerable.GetEnumerator()
             {
-                return GetEnumerator();
+                return this.GetEnumerator();
             }
 
             public IEnumerator<T>
             GetEnumerator()
             {
-                return new TripleEnumeratorWrapper<T>(triples.GetEnumerator());
+                return new TripleEnumeratorWrapper<T>(this._triples.GetEnumerator());
             }
 
             private class TripleEnumeratorWrapper<T> : IEnumerator<T>
             {
+                private IEnumerator<Triple> _triples;
+
                 public TripleEnumeratorWrapper(IEnumerator<Triple> triples)
                 {
-                    this.triples = triples;
+                    this._triples = triples;
                 }
 
                 object IEnumerator.Current
                 {
                     get
                     {
-                        return Current;
+                        return this.Current;
                     }
                 }
 
@@ -257,7 +263,7 @@ namespace OSLC4Net.Client.Oslc.Resources
                 {
                     get
                     {
-                        Triple member = triples.Current;
+                        Triple member = this._triples.Current;
 
                         return (T)DotNetRdfHelper.FromDotNetRdfNode((IUriNode)member.Object, typeof(T));
                     }
@@ -265,23 +271,19 @@ namespace OSLC4Net.Client.Oslc.Resources
 
                 public void Dispose()
                 {
-                    triples.Dispose();
+                    this._triples.Dispose();
                 }
 
                 public bool MoveNext()
                 {
-                    return triples.MoveNext();
+                    return this._triples.MoveNext();
                 }
 
                 public void Reset()
                 {
-                    triples.Reset();
+                    this._triples.Reset();
                 }
-
-                private IEnumerator<Triple> triples;
             }
-
-            private IEnumerable<Triple> triples;
         }
     }
 }
