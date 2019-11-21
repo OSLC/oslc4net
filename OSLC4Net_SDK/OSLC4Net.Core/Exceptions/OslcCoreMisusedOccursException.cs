@@ -13,43 +13,42 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
 namespace OSLC4Net.Core.Exceptions
 {
+    using System;
+    using System.Reflection;
+
     /// <summary>
     /// Exception thrown for an incorrect use of the OSLC Occurs attribute
     /// </summary>
     public class OslcCoreMisusedOccursException : OslcCoreApplicationException
     {
+        private static readonly string MESSAGE_KEY = "MisusedOccursException";
+
+        private MethodInfo _method;
+
+        private Type _resourceType;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="resourceType"></param>
         /// <param name="method"></param>
-        public OslcCoreMisusedOccursException(Type resourceType, MethodInfo method) :
-            base(MESSAGE_KEY, new object[] {resourceType.Name, method.Name})
+        public OslcCoreMisusedOccursException(Type resourceType, MethodInfo method)
+            : base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name })
         {
-            this.method        = method;
-            this.resourceType = resourceType;
+            this._method = method;
+            this._resourceType = resourceType;
         }
 
-	    public MethodInfo GetMethod() {
-            return method;
+        public MethodInfo GetMethod()
+        {
+            return this._method;
         }
 
-        public Type GetResourceType() {
-            return resourceType;
+        public Type GetResourceType()
+        {
+            return this._resourceType;
         }
-
-        private static readonly string MESSAGE_KEY = "MisusedOccursException";
-
-        private MethodInfo     method;
-        private Type   resourceType;
     }
 }

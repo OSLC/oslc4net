@@ -13,12 +13,6 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
 namespace OSLC4Net.Core.Exceptions
 {
     /// <summary>
@@ -26,27 +20,28 @@ namespace OSLC4Net.Core.Exceptions
     /// </summary>
     public class OslcCoreMissingNamespacePrefixException : OslcCoreApplicationException
     {
+        private static readonly string MESSAGE_KEY = "MissingNamespacePrefixException";
+
+        private string _prefix;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="prefix"></param>
         /// <param name="annotationType"></param>
-        public OslcCoreMissingNamespacePrefixException(String prefix) :
-            base(MESSAGE_KEY, new object[] { prefix })
+        public OslcCoreMissingNamespacePrefixException(string prefix)
+            : base(MESSAGE_KEY, new object[] { prefix })
         {
-            this.prefix = prefix;
-         }
+            this._prefix = prefix;
+        }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-	    public String GetPrefix() {
-            return prefix;
-	    }
-
-        private static readonly String MESSAGE_KEY = "MissingNamespacePrefixException";
-
-	    private String prefix;
+        public string GetPrefix()
+        {
+            return this._prefix;
+        }
     }
 }

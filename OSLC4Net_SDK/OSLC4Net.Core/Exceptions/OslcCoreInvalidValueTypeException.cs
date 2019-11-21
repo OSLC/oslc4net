@@ -13,50 +13,52 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
-using OSLC4Net.Core.Attribute;
-using OSLC4Net.Core.Model;
-
 namespace OSLC4Net.Core.Exceptions
 {
+    using System;
+    using System.Reflection;
+
+    using OSLC4Net.Core.Model;
+
+    using ValueType = OSLC4Net.Core.Model.ValueType;
+
     public class OslcCoreInvalidValueTypeException : OslcCoreApplicationException
     {
+        private static readonly string MESSAGE_KEY = "InvalidValueTypeException";
+
+        private MethodInfo _method;
+
+        private Type _resourceType;
+
+        private ValueType _valueType;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="resourceType"></param>
         /// <param name="method"></param>
         /// <param name="valueType"></param>
-        public OslcCoreInvalidValueTypeException(Type resourceType, MethodInfo method, Model.ValueType valueType) :
-            base(MESSAGE_KEY, new Object[] { resourceType.Name, method.Name, ValueTypeExtension.ToString(valueType) })
+        public OslcCoreInvalidValueTypeException(Type resourceType, MethodInfo method, ValueType valueType)
+            : base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name, ValueTypeExtension.ToString(valueType) })
         {
-            this.method         = method;
-            this.valueType      = valueType;
-            this.resourceType   = resourceType;
+            this._method = method;
+            this._valueType = valueType;
+            this._resourceType = resourceType;
         }
 
-	    public MethodInfo GetMethod() {
-            return method;
-        }
-
-        public Model.ValueType GetValueType()
+        public MethodInfo GetMethod()
         {
-            return valueType;
-	    }
-
-        public Type GetResourceType() {
-            return resourceType;
+            return this._method;
         }
 
-        private static readonly String MESSAGE_KEY = "InvalidValueTypeException";
+        public Type GetResourceType()
+        {
+            return this._resourceType;
+        }
 
-        private MethodInfo      method;
-        private Type            resourceType;
-        private Model.ValueType valueType;
+        public ValueType GetValueType()
+        {
+            return this._valueType;
+        }
     }
 }

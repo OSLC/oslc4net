@@ -13,12 +13,6 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
 namespace OSLC4Net.Core.Exceptions
 {
     /// <summary>
@@ -26,27 +20,28 @@ namespace OSLC4Net.Core.Exceptions
     /// </summary>
     public class OslcCoreMissingNamespaceDeclarationException : OslcCoreApplicationException
     {
+        private static readonly string MESSAGE_KEY = "MissingNamespaceDeclarationException";
+
+        private string _ns;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="ns"></param>
         /// <param name="annotationType"></param>
-        public OslcCoreMissingNamespaceDeclarationException(String ns) :
-            base(MESSAGE_KEY, new object[] { ns })
+        public OslcCoreMissingNamespaceDeclarationException(string ns)
+            : base(MESSAGE_KEY, new object[] { ns })
         {
-            this.ns = ns;
-         }
+            this._ns = ns;
+        }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-	    public String GetNamespace() {
-            return ns;
-	    }
-
-        private static readonly String MESSAGE_KEY = "MissingNamespaceDeclarationException";
-
-	    private String ns;
+        public string GetNamespace()
+        {
+            return this._ns;
+        }
     }
 }

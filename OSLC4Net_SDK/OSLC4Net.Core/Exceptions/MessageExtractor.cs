@@ -13,25 +13,23 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Resources;
-using System.Text;
-
-using log4net;
-
-using OSLC4Net.Core.Properties;
-
 namespace OSLC4Net.Core.Exceptions
-{   
+{
+    using System;
+    using System.Resources;
+
+    using log4net;
+
+    using OSLC4Net.Core.Properties;
+
     /// <summary>
     /// Utility methods for retrieving messages
     /// </summary>
     public static class MessageExtractor
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(MessageExtractor));
         private static ResourceManager rm = Resources.ResourceManager;
-        private static readonly ILog logger = LogManager.GetLogger(typeof(MessageExtractor));
+
 
         /// <summary>
         /// 
@@ -39,14 +37,17 @@ namespace OSLC4Net.Core.Exceptions
         /// <param name="key"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static String GetMessage(String key, Object[] args)
+        public static string GetMessage(string key, object[] args)
         {
 
-            try {
-                String message = rm.GetString( key );
-                return String.Format(message, args);
-            } catch (Exception missingResourceException ) {
-                logger.Fatal(missingResourceException.Message, missingResourceException);
+            try
+            {
+                string message = rm.GetString(key);
+                return string.Format(message, args);
+            }
+            catch (Exception missingResourceException)
+            {
+                Logger.Fatal(missingResourceException.Message, missingResourceException);
                 return "???" + key + "???";
             }
         }
