@@ -13,30 +13,33 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
 namespace OSLC4Net.Core.Exceptions
 {
+    using System;
+    using System.Reflection;
+
     /// <summary>
     /// Exception thrown for beans without required setters
     /// </summary>
     public class OslcCoreMissingSetMethodException : OslcCoreApplicationException
     {
+        private static readonly string MESSAGE_KEY = "MissingSetMethodException";
+
+        private MethodInfo _getMethod;
+
+        private Type _resourceType;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="resourceType"></param>
         /// <param name="getMethod"></param>
         /// <param name="exception"></param>
-        public OslcCoreMissingSetMethodException(Type resourceType, MethodInfo getMethod, Exception exception) :
-            base(MESSAGE_KEY, new object[] { resourceType.Name, getMethod.Name, exception })
+        public OslcCoreMissingSetMethodException(Type resourceType, MethodInfo getMethod, Exception exception)
+            : base(MESSAGE_KEY, new object[] { resourceType.Name, getMethod.Name, exception })
         {
-            this.getMethod = getMethod;
-            this.resourceType = resourceType;
+            this._getMethod = getMethod;
+            this._resourceType = resourceType;
         }
 
         /// <summary>
@@ -44,16 +47,11 @@ namespace OSLC4Net.Core.Exceptions
         /// </summary>
         /// <param name="resourceType"></param>
         /// <param name="getMethod"></param>
-        public OslcCoreMissingSetMethodException(Type resourceType, MethodInfo getMethod) :
-            base(MESSAGE_KEY, new object[] { resourceType.Name, getMethod.Name, null })
+        public OslcCoreMissingSetMethodException(Type resourceType, MethodInfo getMethod)
+            : base(MESSAGE_KEY, new object[] { resourceType.Name, getMethod.Name, null })
         {
-            this.getMethod = getMethod;
-            this.resourceType = resourceType;
+            this._getMethod = getMethod;
+            this._resourceType = resourceType;
         }
-
-        private static readonly String MESSAGE_KEY = "MissingSetMethodException";
-
-        private Type        resourceType;
-        private MethodInfo  getMethod;
     }
 }

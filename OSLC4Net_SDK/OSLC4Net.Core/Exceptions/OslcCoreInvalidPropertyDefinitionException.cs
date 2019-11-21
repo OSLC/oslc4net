@@ -13,36 +13,45 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Reflection;
-
-using OSLC4Net.Core.Attribute;
-
 namespace OSLC4Net.Core.Exceptions
 {
+    using System;
+    using System.Reflection;
+
+    using OSLC4Net.Core.Attribute;
+
     public class OslcCoreInvalidPropertyDefinitionException : OslcCoreApplicationException
     {
-        public OslcCoreInvalidPropertyDefinitionException(Type resourceType, MethodInfo method, OslcPropertyDefinition oslcPropertyDefinition) :
-            base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name, oslcPropertyDefinition.value })
-        {
-            _method = method;
-            _oslcPropertyDefinition = oslcPropertyDefinition;
-            _resourceType = resourceType;
-        }
-
-        public OslcCoreInvalidPropertyDefinitionException(Type resourceType, PropertyInfo property, OslcPropertyDefinition oslcPropertyDefinition) :
-            base(MESSAGE_KEY, new object[] { resourceType.Name, property.Name, oslcPropertyDefinition.value })
-        {
-            _property = property;
-            _oslcPropertyDefinition = oslcPropertyDefinition;
-            _resourceType = resourceType;
-        }
-
         private const string MESSAGE_KEY = "InvalidPropertyDefinitionException";
 
-        private readonly PropertyInfo _property;
         private readonly MethodInfo _method;
+
         private readonly OslcPropertyDefinition _oslcPropertyDefinition;
+
+        private readonly PropertyInfo _property;
+
         private readonly Type _resourceType;
+
+        public OslcCoreInvalidPropertyDefinitionException(
+            Type resourceType,
+            MethodInfo method,
+            OslcPropertyDefinition oslcPropertyDefinition)
+            : base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name, oslcPropertyDefinition.value })
+        {
+            this._method = method;
+            this._oslcPropertyDefinition = oslcPropertyDefinition;
+            this._resourceType = resourceType;
+        }
+
+        public OslcCoreInvalidPropertyDefinitionException(
+            Type resourceType,
+            PropertyInfo property,
+            OslcPropertyDefinition oslcPropertyDefinition)
+            : base(MESSAGE_KEY, new object[] { resourceType.Name, property.Name, oslcPropertyDefinition.value })
+        {
+            this._property = property;
+            this._oslcPropertyDefinition = oslcPropertyDefinition;
+            this._resourceType = resourceType;
+        }
     }
 }

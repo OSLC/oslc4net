@@ -13,49 +13,55 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
-using OSLC4Net.Core.Attribute;
-using OSLC4Net.Core.Model;
-
 namespace OSLC4Net.Core.Exceptions
 {
+    using System;
+    using System.Reflection;
+
+    using OSLC4Net.Core.Model;
+
     public class OslcCoreInvalidRepresentationException : OslcCoreApplicationException
     {
+        private static readonly string MESSAGE_KEY = "InvalidRepresentationException";
+
+        private MethodInfo _method;
+
+        private Representation _representation;
+
+        private Type _resourceType;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="resourceType"></param>
         /// <param name="method"></param>
         /// <param name="representation"></param>
-        public OslcCoreInvalidRepresentationException(Type resourceType, MethodInfo method, Representation representation) :
-            base(MESSAGE_KEY, new Object[] {resourceType.Name, method.Name, RepresentationExtension.ToString(representation)})
+        public OslcCoreInvalidRepresentationException(
+            Type resourceType,
+            MethodInfo method,
+            Representation representation)
+            : base(
+                MESSAGE_KEY,
+                new object[] { resourceType.Name, method.Name, RepresentationExtension.ToString(representation) })
         {
-            this.method         = method;
-            this.representation = representation;
-            this.resourceType   = resourceType;
+            this._method = method;
+            this._representation = representation;
+            this._resourceType = resourceType;
         }
 
-	    public MethodInfo GetMethod() {
-            return method;
+        public MethodInfo GetMethod()
+        {
+            return this._method;
         }
 
-        public Representation GetRepresentation() {
-		    return representation;
-	    }
-
-        public Type GetResourceType() {
-            return resourceType;
+        public Representation GetRepresentation()
+        {
+            return this._representation;
         }
 
-        private static readonly string MESSAGE_KEY = "InvalidRepresentationException";
-
-        private MethodInfo      method;
-	    private Representation  representation;
-        private Type            resourceType;
+        public Type GetResourceType()
+        {
+            return this._resourceType;
+        }
     }
 }

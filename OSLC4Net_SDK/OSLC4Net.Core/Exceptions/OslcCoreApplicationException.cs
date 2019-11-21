@@ -13,20 +13,17 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace OSLC4Net.Core.Exceptions
 {
+    using System;
+
     /// <summary>
     /// OSLC4Net Core exception
     /// </summary>
     public class OslcCoreApplicationException : Exception
     {
-        public OslcCoreApplicationException(string messageKey, object[] args) :
-            base(MessageExtractor.GetMessage(messageKey, args))
+        public OslcCoreApplicationException(string messageKey, object[] args)
+            : base(MessageExtractor.GetMessage(messageKey, args))
         {
         }
     }

@@ -13,17 +13,17 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
 namespace OSLC4Net.Core.Model
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Reflection;
+
     public class EnumerableWrapper : IEnumerable<object>
     {
+        private object opaqueObj;
+
         public EnumerableWrapper(object opaqueObj)
         {
             this.opaqueObj = opaqueObj;
@@ -31,55 +31,51 @@ namespace OSLC4Net.Core.Model
 
         public IEnumerator<object> GetEnumerator()
         {
-            var method = opaqueObj.GetType().GetMethod("GetEnumerator", Type.EmptyTypes);
+            var method = this.opaqueObj.GetType().GetMethod("GetEnumerator", Type.EmptyTypes);
 
             method = method.MakeGenericMethod();
 
-            return new EnumeratorWrapper(method.Invoke(opaqueObj, null));
+            return new EnumeratorWrapper(method.Invoke(this.opaqueObj, null));
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return this.GetEnumerator();
         }
 
         private class EnumeratorWrapper : IEnumerator<object>
         {
+            private PropertyInfo currentInfo;
+
+            private MethodInfo moveNext;
+
+            private object opaqueEnumerator;
+
             public EnumeratorWrapper(object opaqueEnumerator)
             {
                 this.opaqueEnumerator = opaqueEnumerator;
-                currentInfo = opaqueEnumerator.GetType().GetProperty("Current");
-                moveNext = opaqueEnumerator.GetType().GetMethod("MoveNext", Type.EmptyTypes);
+                this.currentInfo = opaqueEnumerator.GetType().GetProperty("Current");
+                this.moveNext = opaqueEnumerator.GetType().GetMethod("MoveNext", Type.EmptyTypes);
             }
 
-            public object Current
-            {
-                get
-                {
-                    return currentInfo.GetValue(opaqueEnumerator, null);
-                }
-            }
+            public object Current => this.currentInfo.GetValue(this.opaqueEnumerator, null);
 
             public void Dispose()
             {
-                opaqueEnumerator.GetType().GetMethod("Dispose", Type.EmptyTypes).Invoke(opaqueEnumerator, Type.EmptyTypes);
+                this.opaqueEnumerator.GetType().GetMethod("Dispose", Type.EmptyTypes)
+                    .Invoke(this.opaqueEnumerator, Type.EmptyTypes);
             }
 
             public bool MoveNext()
             {
-                return (bool)moveNext.Invoke(opaqueEnumerator, Type.EmptyTypes);
+                return (bool)this.moveNext.Invoke(this.opaqueEnumerator, Type.EmptyTypes);
             }
 
             public void Reset()
             {
-                opaqueEnumerator.GetType().GetMethod("Reset", Type.EmptyTypes).Invoke(opaqueEnumerator, Type.EmptyTypes);
+                this.opaqueEnumerator.GetType().GetMethod("Reset", Type.EmptyTypes)
+                    .Invoke(this.opaqueEnumerator, Type.EmptyTypes);
             }
-
-            private object opaqueEnumerator;
-            private PropertyInfo currentInfo;
-            private MethodInfo moveNext;
         }
-
-        private object opaqueObj;
     }
 }

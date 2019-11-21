@@ -13,146 +13,171 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using OSLC4Net.Core.Attribute;
-
 namespace OSLC4Net.Core.Model
 {
+    #region
+
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using OSLC4Net.Core.Attribute;
+
+    #endregion
+
     /// <summary>
     /// OSLC Service attribute
     /// </summary>
     [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-    [OslcResourceShape(title = "OSLC Service Resource Shape", describes = new String[] { OslcConstants.TYPE_SERVICE })]
-    public class Service : AbstractResource 
+    [OslcResourceShape(title = "OSLC Service Resource Shape", describes = new string[] { OslcConstants.TYPE_SERVICE })]
+    public class Service : AbstractResource
     {
-	    private IList<Dialog> creationDialogs = new List<Dialog>();
-	    private IList<CreationFactory> creationFactories = new List<CreationFactory>();
-	    private IList<QueryCapability> queryCapabilities = new List<QueryCapability>();
-        private IList<Dialog> selectionDialogs = new List<Dialog>();
+        private IList<Dialog> creationDialogs = new List<Dialog>();
+
+        private IList<CreationFactory> creationFactories = new List<CreationFactory>();
 
         private Uri domain;
 
-	    public Service() : base()
-        {
-	    }
+        private IList<QueryCapability> queryCapabilities = new List<QueryCapability>();
 
-	    public Service(Uri domain) : this()
-        {
-		    this.domain = domain;
-	    }
+        private IList<Dialog> selectionDialogs = new List<Dialog>();
 
-        public void AddCreationDialog(Dialog dialog) {
+        public Service()
+            : base()
+        {
+        }
+
+        public Service(Uri domain)
+            : this()
+        {
+            this.domain = domain;
+        }
+
+        public void AddCreationDialog(Dialog dialog)
+        {
             this.creationDialogs.Add(dialog);
         }
 
-	    public void AddCreationFactory(CreationFactory creationFactory) {
-		    this.creationFactories.Add(creationFactory);
-	    }
+        public void AddCreationFactory(CreationFactory creationFactory)
+        {
+            this.creationFactories.Add(creationFactory);
+        }
 
-	    public void AddQueryCapability(QueryCapability queryCapability) {
-		    this.queryCapabilities.Add(queryCapability);
-	    }
+        public void AddQueryCapability(QueryCapability queryCapability)
+        {
+            this.queryCapabilities.Add(queryCapability);
+        }
 
-        public void AddSelectionDialog(Dialog dialog) {
+        public void AddSelectionDialog(Dialog dialog)
+        {
             this.selectionDialogs.Add(dialog);
         }
 
-	    [OslcDescription("Enables clients to create a resource via UI")]
-	    [OslcName("creationDialog")]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "creationDialog")]
-	    [OslcRange(OslcConstants.TYPE_DIALOG)]
+        [OslcDescription("Enables clients to create a resource via UI")]
+        [OslcName("creationDialog")]
+        [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "creationDialog")]
+        [OslcRange(OslcConstants.TYPE_DIALOG)]
         [OslcReadOnly]
         [OslcRepresentation(Representation.Inline)]
         [OslcTitle("Creation Dialogs")]
         [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_DIALOG)]
         [OslcValueType(ValueType.LocalResource)]
-        public Dialog[] GetCreationDialogs() {
-		    return creationDialogs.ToArray();
-	    }
+        public Dialog[] GetCreationDialogs()
+        {
+            return this.creationDialogs.ToArray();
+        }
 
-	    [OslcDescription("Enables clients to create new resources")]
-	    [OslcName("creationFactory")]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "creationFactory")]
-	    [OslcRange(OslcConstants.TYPE_CREATION_FACTORY)]
-	    [OslcReadOnly]
+        [OslcDescription("Enables clients to create new resources")]
+        [OslcName("creationFactory")]
+        [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "creationFactory")]
+        [OslcRange(OslcConstants.TYPE_CREATION_FACTORY)]
+        [OslcReadOnly]
         [OslcRepresentation(Representation.Inline)]
-	    [OslcTitle("Creation Factories")]
-	    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_CREATION_FACTORY)]
+        [OslcTitle("Creation Factories")]
+        [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_CREATION_FACTORY)]
         [OslcValueType(ValueType.LocalResource)]
-        public CreationFactory[] GetCreationFactories() {
-		    return creationFactories.ToArray();
-	    }
+        public CreationFactory[] GetCreationFactories()
+        {
+            return this.creationFactories.ToArray();
+        }
 
-	    [OslcDescription("Namespace Uri of the OSLC domain specification that is implemented by this service")]
-	    [OslcOccurs(Occurs.ExactlyOne)]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "domain")]
-	    [OslcReadOnly]
+        [OslcDescription("Namespace Uri of the OSLC domain specification that is implemented by this service")]
+        [OslcOccurs(Occurs.ExactlyOne)]
+        [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "domain")]
+        [OslcReadOnly]
         [OslcTitle("Domain")]
-	    public Uri GetDomain() {
-		    return domain;
-	    }
+        public Uri GetDomain()
+        {
+            return this.domain;
+        }
 
-	    [OslcDescription("Enables clients query across a collection of resources")]
+        [OslcDescription("Enables clients query across a collection of resources")]
         [OslcName("queryCapability")]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "queryCapability")]
-	    [OslcRange(OslcConstants.TYPE_QUERY_CAPABILITY)]
+        [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "queryCapability")]
+        [OslcRange(OslcConstants.TYPE_QUERY_CAPABILITY)]
         [OslcReadOnly]
         [OslcRepresentation(Representation.Inline)]
         [OslcTitle("Query Capabilities")]
         [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_QUERY_CAPABILITY)]
         [OslcValueType(ValueType.LocalResource)]
-        public QueryCapability[] GetQueryCapabilities() {
-		    return queryCapabilities.ToArray();
-	    }
+        public QueryCapability[] GetQueryCapabilities()
+        {
+            return this.queryCapabilities.ToArray();
+        }
 
-	    [OslcDescription("Enables clients to select a resource via UI")]
-	    [OslcName("selectionDialog")]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "selectionDialog")]
-	    [OslcRange(OslcConstants.TYPE_DIALOG)]
+        [OslcDescription("Enables clients to select a resource via UI")]
+        [OslcName("selectionDialog")]
+        [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "selectionDialog")]
+        [OslcRange(OslcConstants.TYPE_DIALOG)]
         [OslcReadOnly]
         [OslcRepresentation(Representation.Inline)]
         [OslcTitle("Selection Dialogs")]
         [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_DIALOG)]
         [OslcValueType(ValueType.LocalResource)]
-	    public Dialog[] GetSelectionDialogs() {
-		    return selectionDialogs.ToArray();
-	    }
+        public Dialog[] GetSelectionDialogs()
+        {
+            return this.selectionDialogs.ToArray();
+        }
 
-	    public void SetCreationDialogs(Dialog[] creationDialogs) {
-		    this.creationDialogs.Clear();
-		    if (creationDialogs != null) {
+        public void SetCreationDialogs(Dialog[] creationDialogs)
+        {
+            this.creationDialogs.Clear();
+            if (creationDialogs != null)
+            {
                 this.creationDialogs.AddAll(creationDialogs);
             }
-	    }
+        }
 
-	    public void SetCreationFactories(CreationFactory[] creationFactories) {
-	        this.creationFactories.Clear();
-	        if (creationFactories != null) {
+        public void SetCreationFactories(CreationFactory[] creationFactories)
+        {
+            this.creationFactories.Clear();
+            if (creationFactories != null)
+            {
                 this.creationFactories.AddAll(creationFactories);
             }
-	    }
+        }
 
-	    public void SetDomain(Uri domain) {
-	        this.domain = domain;
-	    }
+        public void SetDomain(Uri domain)
+        {
+            this.domain = domain;
+        }
 
-	    public void SetQueryCapabilities(QueryCapability[] queryCapabilities) {
-	        this.queryCapabilities.Clear();
-	        if (queryCapabilities != null) {
+        public void SetQueryCapabilities(QueryCapability[] queryCapabilities)
+        {
+            this.queryCapabilities.Clear();
+            if (queryCapabilities != null)
+            {
                 this.queryCapabilities.AddAll(queryCapabilities);
             }
-	    }
+        }
 
-	    public void SetSelectionDialogs(Dialog[] selectionDialogs) {
-	        this.selectionDialogs.Clear();
-	        if (selectionDialogs != null) {
+        public void SetSelectionDialogs(Dialog[] selectionDialogs)
+        {
+            this.selectionDialogs.Clear();
+            if (selectionDialogs != null)
+            {
                 this.selectionDialogs.AddAll(selectionDialogs);
             }
-	    }
+        }
     }
 }

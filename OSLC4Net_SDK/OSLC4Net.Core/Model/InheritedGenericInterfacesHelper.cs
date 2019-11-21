@@ -13,17 +13,14 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
-using OSLC4Net.Core.Attribute;
-
 namespace OSLC4Net.Core.Model
 {
+    #region
+
+    using System;
+
+    #endregion
+
     public static class InheritedGenericInterfacesHelper
     {
         /// <summary>
@@ -34,15 +31,15 @@ namespace OSLC4Net.Core.Model
         /// <returns></returns>
         public static bool ImplementsGenericInterface(Type genericType, Type typeToTest)
         {
-            Type[] interfaces = typeToTest.GetInterfaces();
+            var interfaces = typeToTest.GetInterfaces();
 
-            foreach (var interfac in interfaces) {
+            foreach (var interfac in interfaces)
+            {
                 if (interfac.IsGenericType && genericType == interfac.GetGenericTypeDefinition())
                 {
                     return true;
                 }
             }
-
             return false;
         }
     }

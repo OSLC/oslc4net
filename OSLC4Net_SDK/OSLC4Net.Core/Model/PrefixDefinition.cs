@@ -13,59 +13,68 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using OSLC4Net.Core.Attribute;
-
 namespace OSLC4Net.Core.Model
 {
+    #region
+
+    using System;
+
+    using OSLC4Net.Core.Attribute;
+
+    #endregion
+
     /// <summary>
     /// OSLC PrefixDefinition resource
     /// </summary>
     [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-    [OslcResourceShape(title = "OSLC Prefix Definition Resource Shape", describes = new string[] { OslcConstants.TYPE_PREFIX_DEFINITION })]
-    public class PrefixDefinition : AbstractResource 
+    [OslcResourceShape(
+        title = "OSLC Prefix Definition Resource Shape",
+        describes = new string[] { OslcConstants.TYPE_PREFIX_DEFINITION })]
+    public class PrefixDefinition : AbstractResource
     {
-	    private String prefix;
-	    private Uri prefixBase;
+        private string _prefix;
 
-	    public PrefixDefinition() : base()
+        private Uri _prefixBase;
+
+        public PrefixDefinition()
+            : base()
         {
-	    }
+        }
 
-	    public PrefixDefinition(String prefix, Uri prefixBase) : this()
+        public PrefixDefinition(string prefix, Uri prefixBase)
+            : this()
         {
-		    this.prefix = prefix;
-		    this.prefixBase = prefixBase;
-	    }
+            this._prefix = prefix;
+            this._prefixBase = prefixBase;
+        }
 
-	    [OslcDescription("Namespace prefix to be used for this namespace")]
-	    [OslcOccurs(Occurs.ExactlyOne)]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "prefix")]
-	    [OslcReadOnly]
+        [OslcDescription("Namespace prefix to be used for this namespace")]
+        [OslcOccurs(Occurs.ExactlyOne)]
+        [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "prefix")]
+        [OslcReadOnly]
         [OslcTitle("Prefix")]
-	    public String GetPrefix() {
-		    return prefix;
-	    }
+        public string GetPrefix()
+        {
+            return this._prefix;
+        }
 
-	    [OslcDescription("The base Uri of the namespace")]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "prefixBase")]
-	    [OslcReadOnly]
+        [OslcDescription("The base Uri of the namespace")]
+        [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "prefixBase")]
+        [OslcReadOnly]
         [OslcTitle("Prefix Base")]
-	    public Uri GetPrefixBase() {
-	        return prefixBase;
-	    }
+        public Uri GetPrefixBase()
+        {
+            return this._prefixBase;
+        }
 
-	    public void SetPrefix(String prefix) {
-		    this.prefix = prefix;
-	    }
+        public void SetPrefix(string prefix)
+        {
+            this._prefix = prefix;
+        }
 
-	    public void SetPrefixBase(Uri prefixBase) {
-	        this.prefixBase = prefixBase;
-	    }
+        public void SetPrefixBase(Uri prefixBase)
+        {
+            this._prefixBase = prefixBase;
+        }
     }
 }

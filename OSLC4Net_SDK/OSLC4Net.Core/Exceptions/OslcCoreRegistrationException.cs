@@ -13,48 +13,44 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
-using OSLC4Net.Core.Model;
-
 namespace OSLC4Net.Core.Exceptions
 {
+    using OSLC4Net.Core.Model;
+
     /// <summary>
     /// Exception thrown for a service provider registration failure
     /// </summary>
     public class OslcCoreRegistrationException : OslcCoreApplicationException
     {
-        public OslcCoreRegistrationException(ServiceProvider serviceProvider, int statusCode, String responseMessage) :
-            base(MESSAGE_KEY, new object[] { serviceProvider.GetTitle(), statusCode, responseMessage })
+        private static readonly string MESSAGE_KEY = "RegistrationException";
+
+        private string responseMessage;
+
+        private ServiceProvider serviceProvider;
+
+        private int statusCode;
+
+        public OslcCoreRegistrationException(ServiceProvider serviceProvider, int statusCode, string responseMessage)
+            : base(MESSAGE_KEY, new object[] { serviceProvider.GetTitle(), statusCode, responseMessage })
         {
             this.responseMessage = responseMessage;
             this.serviceProvider = serviceProvider;
             this.statusCode = statusCode;
         }
 
-        public String getResponseMessage()
+        public string GetResponseMessage()
         {
-            return responseMessage;
+            return this.responseMessage;
         }
 
-        public ServiceProvider getServiceProvider()
+        public ServiceProvider GetServiceProvider()
         {
-            return serviceProvider;
+            return this.serviceProvider;
         }
 
-        public int getStatusCode()
+        public int GetStatusCode()
         {
-            return statusCode;
+            return this.statusCode;
         }
-
-        private static readonly String MESSAGE_KEY = "RegistrationException";
-
-        private String          responseMessage;
-	    private ServiceProvider serviceProvider;
-	    private int             statusCode;
     }
 }

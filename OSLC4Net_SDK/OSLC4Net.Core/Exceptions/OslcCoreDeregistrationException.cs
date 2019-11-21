@@ -13,51 +13,47 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
-using OSLC4Net.Core.Model;
-
 namespace OSLC4Net.Core.Exceptions
 {
+    using System;
+
     public class OslcCoreDeregistrationException : OslcCoreApplicationException
     {
+        private static readonly string MESSAGE_KEY = "DeregistrationException";
+
+        private string responseMessage;
+
+        private Uri serviceProviderURI;
+
+        private int statusCode;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="serviceProviderURI"></param>
         /// <param name="statusCode"></param>
         /// <param name="responseMessage"></param>
-        public OslcCoreDeregistrationException(Uri serviceProviderURI, int statusCode, String responseMessage) :
-            base(MESSAGE_KEY, new object[] { serviceProviderURI.ToString(), statusCode, responseMessage })
+        public OslcCoreDeregistrationException(Uri serviceProviderURI, int statusCode, string responseMessage)
+            : base(MESSAGE_KEY, new object[] { serviceProviderURI.ToString(), statusCode, responseMessage })
         {
             this.responseMessage = responseMessage;
             this.serviceProviderURI = serviceProviderURI;
             this.statusCode = statusCode;
         }
 
-        public String getResponseMessage()
+        public string GetResponseMessage()
         {
-            return responseMessage;
+            return this.responseMessage;
         }
 
-        public Uri getServiceProviderURI()
+        public Uri GetServiceProviderURI()
         {
-            return serviceProviderURI;
+            return this.serviceProviderURI;
         }
 
-        public int getStatusCode()
+        public int GetStatusCode()
         {
-            return statusCode;
+            return this.statusCode;
         }
-
-        private static readonly String MESSAGE_KEY = "DeregistrationException";
-
-        private String          responseMessage;
-        private Uri             serviceProviderURI;
-	    private int             statusCode;
     }
 }

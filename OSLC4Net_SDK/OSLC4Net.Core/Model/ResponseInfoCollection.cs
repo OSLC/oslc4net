@@ -14,25 +14,36 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using OSLC4Net.Core.Attribute;
-
 namespace OSLC4Net.Core.Model
 {
+    #region
+
+    using System;
+    using System.Collections.Generic;
+
+    #endregion
+
     /// <summary>
     /// An OSLC ResponseInfo resource containg an IEnumerable collection of member resources
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class ResponseInfoCollection<T> : ResponseInfo<ICollection<T>>
     {
-        /**
-         * Collection of resources
-         */
-        public ICollection<T> Collection() { return Resource; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="properties"></param>
+        /// <param name="totalCount"></param>
+        /// <param name="nextPage"></param>
+        public ResponseInfoCollection(
+            ICollection<T> collection,
+            IDictionary<string, object> properties,
+            int totalCount,
+            string nextPage)
+            : base(collection, properties, totalCount, nextPage)
+        {
+        }
 
         /// <summary>
         /// 
@@ -41,31 +52,21 @@ namespace OSLC4Net.Core.Model
         /// <param name="properties"></param>
         /// <param name="totalCount"></param>
         /// <param name="nextPage"></param>
-        public
-        ResponseInfoCollection(
+        public ResponseInfoCollection(
             ICollection<T> collection,
-            IDictionary<String, Object> properties,
+            IDictionary<string, object> properties,
             int totalCount,
-            String nextPage
-        ) : base(collection, properties, totalCount, nextPage)
+            Uri nextPage)
+            : base(collection, properties, totalCount, nextPage)
         {
         }
-    
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="collection"></param>
-        /// <param name="properties"></param>
-        /// <param name="totalCount"></param>
-        /// <param name="nextPage"></param>
-        public
-        ResponseInfoCollection(
-            ICollection<T> collection,
-            IDictionary<String, Object> properties,
-            int totalCount,
-            Uri nextPage
-        ) : base(collection, properties, totalCount, nextPage)
+
+        /**
+         * Collection of resources
+         */
+        public ICollection<T> Collection()
         {
+            return this.Resource;
         }
     }
 }

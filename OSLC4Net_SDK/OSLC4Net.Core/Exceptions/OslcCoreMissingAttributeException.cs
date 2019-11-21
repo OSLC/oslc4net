@@ -13,38 +13,41 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
 namespace OSLC4Net.Core.Exceptions
 {
+    using System;
+
     /// <summary>
     /// Exception thrown when a required OSLC attribute definition is missing.
     /// </summary>
     public class OslcCoreMissingAttributeException : OslcCoreApplicationException
     {
+        private static readonly string MESSAGE_KEY = "MissingAnnotationException";
+
+        private Type _annotationType;
+
+        private Type _resourceType;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="resourceType"></param>
         /// <param name="annotationType"></param>
-        public OslcCoreMissingAttributeException(Type resourceType, Type annotationType) :
-            base(MESSAGE_KEY, new object[] { resourceType.Name, annotationType.Name })
+        public OslcCoreMissingAttributeException(Type resourceType, Type annotationType)
+            : base(MESSAGE_KEY, new object[] { resourceType.Name, annotationType.Name })
         {
-            this.annotationType = annotationType;
-            this.resourceType = resourceType;
+            this._annotationType = annotationType;
+            this._resourceType = resourceType;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-	    public Type GetAnnotationType() {
-		    return annotationType;
-	    }
+        public Type GetAnnotationType()
+        {
+            return this._annotationType;
+        }
 
         /// <summary>
         /// 
@@ -52,12 +55,7 @@ namespace OSLC4Net.Core.Exceptions
         /// <returns></returns>
         public Type GetResourceType()
         {
-		    return resourceType;
+            return this._resourceType;
         }
-
-        private static readonly String MESSAGE_KEY = "MissingAnnotationException";
-
-	    private Type annotationType;
-        private Type resourceType;
     }
 }

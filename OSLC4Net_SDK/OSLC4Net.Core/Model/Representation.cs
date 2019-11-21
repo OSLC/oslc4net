@@ -13,13 +13,14 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace OSLC4Net.Core.Model
 {
+    #region
+
+    using System;
+
+    #endregion
+
     /// <summary>
     /// OSLC Representation attribute
     /// </summary>
@@ -27,27 +28,22 @@ namespace OSLC4Net.Core.Model
     public enum Representation
     {
         [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Reference")]
-	    Reference,
+        Reference,
+
         [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Inline")]
         Inline,
+
         [URI("")]
         Unknown
     }
 
     public static class RepresentationExtension
     {
-        public static string ToString(Representation representation)
+        public static Representation FromString(string value)
         {
-            URI[] attributes = (URI[])representation.GetType().GetField(representation.ToString()).GetCustomAttributes(typeof(URI), false);
-
-            return attributes.Length > 0 ? attributes[0].uri : string.Empty;
-	    }
-
-	    public static Representation FromString(string value)
-        {
-	        foreach (Representation representation in Enum.GetValues(typeof(Representation)))
+            foreach (Representation representation in Enum.GetValues(typeof(Representation)))
             {
-                string uri = ToString(representation);
+                var uri = ToString(representation);
 
                 if (uri.Equals(value))
                 {
@@ -55,12 +51,20 @@ namespace OSLC4Net.Core.Model
                 }
             }
 
-	        throw new ArgumentException();
-	    }
-	
-	    public static Representation FromURI(URI uri)
+            throw new ArgumentException();
+        }
+
+        public static Representation FromURI(URI uri)
         {
-		    return FromString(uri.ToString());
-	    }
+            return FromString(uri.ToString());
+        }
+
+        public static string ToString(Representation representation)
+        {
+            var attributes = (URI[])representation.GetType().GetField(representation.ToString())
+                .GetCustomAttributes(typeof(URI), false);
+
+            return attributes.Length > 0 ? attributes[0].uri : string.Empty;
+        }
     }
 }

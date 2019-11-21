@@ -13,52 +13,62 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using OSLC4Net.Core.Attribute;
-
 namespace OSLC4Net.Core.Model
 {
+    #region
+
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using OSLC4Net.Core.Attribute;
+
+    #endregion
+
     /// <summary>
     /// OSLC Service Provider Catalog resource
     /// </summary>
     [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-    [OslcResourceShape(title = "OSLC Service Provider Catalog Resource Shape", describes = new string[] { OslcConstants.TYPE_SERVICE_PROVIDER_CATALOG })]
+    [OslcResourceShape(
+        title = "OSLC Service Provider Catalog Resource Shape",
+        describes = new string[] { OslcConstants.TYPE_SERVICE_PROVIDER_CATALOG })]
     public class ServiceProviderCatalog : AbstractResource
     {
-        private readonly SortedSet<Uri> domains = new SortedUriSet();
-        private readonly SortedSet<Uri> referencedServiceProviderCatalogs = new SortedUriSet();
-        private readonly IList<ServiceProvider> serviceProviders = new List<ServiceProvider>();
+        private readonly SortedSet<Uri> _domains = new SortedUriSet();
 
-        private String description;
-        private OAuthConfiguration oauthConfiguration;
-        private Publisher publisher;
-        private String title;
+        private readonly SortedSet<Uri> _referencedServiceProviderCatalogs = new SortedUriSet();
 
-        public ServiceProviderCatalog() : base()
+        private readonly IList<ServiceProvider> _serviceProviders = new List<ServiceProvider>();
+
+        private string _description;
+
+        private OAuthConfiguration _oauthConfiguration;
+
+        private Publisher _publisher;
+
+        private string _title;
+
+        public ServiceProviderCatalog()
+            : base()
         {
         }
 
         public void AddDomain(Uri domain)
         {
-            this.domains.Add(domain);
+            this._domains.Add(domain);
         }
 
         public void AddDomains(ICollection<Uri> domains)
         {
             foreach (var domain in domains)
             {
-                AddDomain(domain);
+                this.AddDomain(domain);
             }
         }
 
         public void AddServiceProvider(ServiceProvider serviceProvider)
         {
-            this.serviceProviders.Add(serviceProvider);
+            this._serviceProviders.Add(serviceProvider);
         }
 
         [OslcDescription("Description of the service provider catalog")]
@@ -66,9 +76,9 @@ namespace OSLC4Net.Core.Model
         [OslcReadOnly]
         [OslcTitle("Description")]
         [OslcValueType(ValueType.XMLLiteral)]
-        public String GetDescription()
+        public string GetDescription()
         {
-            return description;
+            return this._description;
         }
 
         [OslcDescription("URIs of the OSLC domain specifications that may be implemented by referenced services")]
@@ -78,7 +88,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Domains")]
         public Uri[] GetDomains()
         {
-            return domains.ToArray();
+            return this._domains.ToArray();
         }
 
         [OslcDescription("Defines the three OAuth URIs required for a client to act as an OAuth consumer")]
@@ -91,7 +101,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.LocalResource)]
         public OAuthConfiguration GetOauthConfiguration()
         {
-            return oauthConfiguration;
+            return this._oauthConfiguration;
         }
 
         [OslcDescription("Describes the software product that provides the implementation")]
@@ -104,7 +114,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.LocalResource)]
         public Publisher GetPublisher()
         {
-            return publisher;
+            return this._publisher;
         }
 
         [OslcDescription("Additional service provider catalogs")]
@@ -116,7 +126,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_SERVICE_PROVIDER_CATALOG)]
         public Uri[] GetReferencedServiceProviderCatalogs()
         {
-            return referencedServiceProviderCatalogs.ToArray();
+            return this._referencedServiceProviderCatalogs.ToArray();
         }
 
         [OslcDescription("Service providers")]
@@ -130,7 +140,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.LocalResource)]
         public ServiceProvider[] GetServiceProviders()
         {
-            return serviceProviders.ToArray();
+            return this._serviceProviders.ToArray();
         }
 
         [OslcDescription("Title of the service provider catalog")]
@@ -138,74 +148,74 @@ namespace OSLC4Net.Core.Model
         [OslcReadOnly]
         [OslcTitle("Title")]
         [OslcValueType(ValueType.XMLLiteral)]
-        public String GetTitle()
+        public string GetTitle()
         {
-            return title;
+            return this._title;
         }
 
         public void RemoveDomain(Uri domain)
         {
-            domains.Remove(domain);
+            this._domains.Remove(domain);
         }
 
         public void RemoveDomains(ICollection<Uri> domains)
         {
             foreach (var domain in domains)
             {
-                RemoveDomain(domain);
+                this.RemoveDomain(domain);
             }
         }
 
         public void RemoveServiceProvider(ServiceProvider serviceProvider)
         {
-            serviceProviders.Remove(serviceProvider);
+            this._serviceProviders.Remove(serviceProvider);
         }
 
-        public void SetDescription(String description)
+        public void SetDescription(string description)
         {
-            this.description = description;
+            this._description = description;
         }
 
         public void SetDomains(Uri[] domains)
         {
-            this.domains.Clear();
+            this._domains.Clear();
             if (domains != null)
             {
-                this.domains.AddAll(domains);
+                this._domains.AddAll(domains);
             }
         }
 
         public void SetOauthConfiguration(OAuthConfiguration oauthConfiguration)
         {
-            this.oauthConfiguration = oauthConfiguration;
+            this._oauthConfiguration = oauthConfiguration;
         }
 
         public void SetPublisher(Publisher publisher)
         {
-            this.publisher = publisher;
+            this._publisher = publisher;
         }
 
         public void SetReferencedServiceProviderCatalogs(Uri[] referencedServiceProviderCatalogs)
         {
-            this.referencedServiceProviderCatalogs.Clear();
+            this._referencedServiceProviderCatalogs.Clear();
             if (referencedServiceProviderCatalogs != null)
             {
-                this.referencedServiceProviderCatalogs.AddAll(referencedServiceProviderCatalogs);
+                this._referencedServiceProviderCatalogs.AddAll(referencedServiceProviderCatalogs);
             }
         }
 
         public void SetServiceProviders(ServiceProvider[] serviceProviders)
         {
-            this.serviceProviders.Clear();
+            this._serviceProviders.Clear();
             if (serviceProviders != null)
             {
-                this.serviceProviders.AddAll(serviceProviders);
+                this._serviceProviders.AddAll(serviceProviders);
             }
         }
 
-        public void SetTitle(String title)
+        public void SetTitle(string title)
         {
-            this.title = title;
+            this._title = title;
         }
     }
 }

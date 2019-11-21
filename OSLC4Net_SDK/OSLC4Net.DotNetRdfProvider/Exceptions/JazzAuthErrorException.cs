@@ -13,37 +13,38 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net;
-
-namespace OSLC4Net.Client.Exceptions
+namespace OSLC4Net.Core.Exceptions
 {
+
+    using System;
+    using System.Net;
+
     /// <summary>
     /// Exceptions indicating a Jazz authentication or credentials problem
     /// </summary>
     public class JazzAuthErrorException : OslcClientApplicationException
     {
-	    private const String MESSAGE_KEY = "JazzAuthErrorException";
-	
-	    private readonly HttpStatusCode status;
-        private readonly String jazzUrl;
-	
-	    public JazzAuthErrorException(HttpStatusCode status, string jazzUrl) :
-		    base(MESSAGE_KEY, new Object[] {status.ToString(), jazzUrl})
+        private const string MESSAGE_KEY = "JazzAuthErrorException";
+
+        private readonly HttpStatusCode _status;
+        private readonly string _jazzUrl;
+
+
+        public JazzAuthErrorException(HttpStatusCode status, string jazzUrl) :
+            base(MESSAGE_KEY, new Object[] { status.ToString(), jazzUrl })
         {
-		    this.status = status;
-		    this.jazzUrl = jazzUrl;
-	    }
-	
-	    public HttpStatusCode getStatus() {
-		    return status;
-	    }
-	
-	    public String getJazzUrl() {
-		    return jazzUrl;
-	    }
+            this._status = status;
+            this._jazzUrl = jazzUrl;
+        }
+
+        public HttpStatusCode GetStatus()
+        {
+            return this._status;
+        }
+
+        public string GetJazzUrl()
+        {
+            return this._jazzUrl;
+        }
     }
 }

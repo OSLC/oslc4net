@@ -13,82 +13,30 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace OSLC4Net.Core.Model
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// This class represents and abstract OSLC resource.  It is normally the parent class for concrete OSLC resource types.
     /// See the ChangeMangement.cs objec in the ChangeManagementCommon project
     /// </summary>
     public abstract class AbstractResource : IExtendedResource
     {
-        private Uri about;
-        private ICollection<Uri> types = (ICollection<Uri>)new List<Uri>();
-        private IDictionary<QName, Object> extendedProperties = new Dictionary<QName, Object>();
+        private Uri _about;
+
+        private IDictionary<QName, object> _extendedProperties = new Dictionary<QName, object>();
+
+        private ICollection<Uri> _types = (ICollection<Uri>)new List<Uri>();
 
         protected AbstractResource(Uri about)
         {
-            this.about = about;
+            this._about = about;
         }
 
         protected AbstractResource()
         {
-        }
-
-        /// <summary>
-        /// Get the subject URI
-        /// </summary>
-        /// <returns></returns>
-        public Uri GetAbout()
-        {
-		    return about;
-	    }
-
-        /// <summary>
-        /// Set the subject URI
-        /// </summary>
-        /// <param name="about"></param>
-        public void SetAbout(Uri about)
-        {
-		    this.about = about;
-	    }
-    
-        /// <param name="properties"></param>
-	    public void SetExtendedProperties(IDictionary<QName, Object> properties)
-	    {
-		    this.extendedProperties = properties;
-	    }
-
-        /// <summary>
-        /// Get all extended properties
-        /// </summary>
-        /// <returns></returns>
-	    public IDictionary<QName, Object> GetExtendedProperties()
-	    {
-		    return extendedProperties;
-	    }
-
-        /// <summary>
-        /// Get the RDF types
-        /// </summary>
-        /// <returns></returns>
-        public ICollection<Uri> GetTypes()
-        {
-    	    return types;
-        }
-
-        /// <summary>
-        /// Set the RDF types
-        /// </summary>
-        /// <param name="types"></param>
-        public void SetTypes(ICollection<Uri> types)
-        {
-    	    this.types = types;
         }
 
         /// <summary>
@@ -97,7 +45,58 @@ namespace OSLC4Net.Core.Model
         /// <param name="type"></param>
         public void AddType(Uri type)
         {
-    	    this.types.Add(type);
+            this._types.Add(type);
+        }
+
+        /// <summary>
+        /// Get the subject URI
+        /// </summary>
+        /// <returns></returns>
+        public Uri GetAbout()
+        {
+            return this._about;
+        }
+
+        /// <summary>
+        /// Get all extended properties
+        /// </summary>
+        /// <returns></returns>
+        public IDictionary<QName, object> GetExtendedProperties()
+        {
+            return this._extendedProperties;
+        }
+
+        /// <summary>
+        /// Get the RDF types
+        /// </summary>
+        /// <returns></returns>
+        public ICollection<Uri> GetTypes()
+        {
+            return this._types;
+        }
+
+        /// <summary>
+        /// Set the subject URI
+        /// </summary>
+        /// <param name="about"></param>
+        public void SetAbout(Uri about)
+        {
+            this._about = about;
+        }
+
+        /// <param name="properties"></param>
+        public void SetExtendedProperties(IDictionary<QName, object> properties)
+        {
+            this._extendedProperties = properties;
+        }
+
+        /// <summary>
+        /// Set the RDF types
+        /// </summary>
+        /// <param name="types"></param>
+        public void SetTypes(ICollection<Uri> types)
+        {
+            this._types = types;
         }
     }
 }

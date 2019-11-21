@@ -13,49 +13,46 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
-using OSLC4Net.Core.Attribute;
-
 namespace OSLC4Net.Core.Exceptions
 {
+    using System;
+    using System.Reflection;
+
     /// <summary>
     /// Exception thrown for an invalid property type
     /// </summary>
     public class OslcCoreInvalidPropertyTypeException : OslcCoreApplicationException
     {
+        private static readonly string MESSAGE_KEY = "InvalidPropertyTypeException";
+
+        private MethodInfo _method;
+
+        private Type _resourceType;
+
+        private Type _returnType;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="resourceType"></param>
         /// <param name="method"></param>
         /// <param name="returnType"></param>
-        public OslcCoreInvalidPropertyTypeException(Type resourceType, MethodInfo method, Type returnType) :
-            base(MESSAGE_KEY, new Object[] { resourceType.Name, method.Name, returnType.Name })
+        public OslcCoreInvalidPropertyTypeException(Type resourceType, MethodInfo method, Type returnType)
+            : base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name, returnType.Name })
         {
-            this.method = method;
-            this.resourceType = resourceType;
-            this.returnType = returnType;
+            this._method = method;
+            this._resourceType = resourceType;
+            this._returnType = returnType;
         }
 
         public MethodInfo GetMethod()
         {
-            return method;
+            return this._method;
         }
 
         public Type GetResourceClass()
         {
-            return resourceType;
+            return this._resourceType;
         }
-
-        private static readonly String MESSAGE_KEY = "InvalidPropertyTypeException";
-
-        private MethodInfo method;
-        private Type resourceType;
-        private Type returnType;
     }
 }

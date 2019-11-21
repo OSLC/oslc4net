@@ -13,143 +13,174 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using OSLC4Net.Core.Attribute;
-
 namespace OSLC4Net.Core.Model
 {
+    #region
+
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using OSLC4Net.Core.Attribute;
+
+    #endregion
+
     /// <summary>
     /// OSLC Dialog resource
     /// </summary>
     [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
     [OslcResourceShape(title = "OSLC Dialog Resource Shape", describes = new string[] { OslcConstants.TYPE_DIALOG })]
-    public class Dialog : AbstractResource 
+    public class Dialog : AbstractResource
     {
         private SortedSet<Uri> resourceTypes = new SortedUriSet();
+
         private SortedSet<Uri> usages = new SortedUriSet();
 
         private Uri dialog;
-	    private String hintHeight;
-	    private String hintWidth;
-	    private String label;
-	    private String title;
 
-	    public Dialog() : base()
+        private string hintHeight;
+
+        private string hintWidth;
+
+        private string label;
+
+        private string title;
+
+        public Dialog()
+            : base()
         {
-	    }
+        }
 
-	    public Dialog(String title, Uri dialog) : this()
+        public Dialog(string title, Uri dialog)
+            : this()
         {
-		    this.title = title;
-		    this.dialog = dialog;
-	    }
+            this.title = title;
+            this.dialog = dialog;
+        }
 
-        public void AddResourceType(Uri resourceType) {
+        public void AddResourceType(Uri resourceType)
+        {
             this.resourceTypes.Add(resourceType);
         }
 
-        public void AddUsage(Uri usage) {
+        public void AddUsage(Uri usage)
+        {
             this.usages.Add(usage);
         }
 
-	    [OslcDescription("The Uri of the dialog")]
-	    [OslcOccurs(Occurs.ExactlyOne)]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "dialog")]
-	    [OslcReadOnly]
+        [OslcDescription("The Uri of the dialog")]
+        [OslcOccurs(Occurs.ExactlyOne)]
+        [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "dialog")]
+        [OslcReadOnly]
         [OslcTitle("Dialog")]
-	    public Uri GetDialog() {
-	        return dialog;
-	    }
+        public Uri GetDialog()
+        {
+            return this.dialog;
+        }
 
-	    [OslcDescription("Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1) Em and ex units are interpreted relative to the default system font (at 100% size)")]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintHeight")]
-	    [OslcReadOnly]
+        [OslcDescription(
+            "Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1) Em and ex units are interpreted relative to the default system font (at 100% size)")]
+        [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintHeight")]
+        [OslcReadOnly]
         [OslcTitle("Hint Height")]
-	    public String GetHintHeight() {
-		    return hintHeight;
-	    }
+        public string GetHintHeight()
+        {
+            return this.hintHeight;
+        }
 
-	    [OslcDescription("Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1) Em and ex units are interpreted relative to the default system font (at 100% size)")]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintWidth")]
-	    [OslcReadOnly]
+        [OslcDescription(
+            "Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1) Em and ex units are interpreted relative to the default system font (at 100% size)")]
+        [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintWidth")]
+        [OslcReadOnly]
         [OslcTitle("Hint Width")]
-	    public String GetHintWidth() {
-		    return hintWidth;
-	    }
+        public string GetHintWidth()
+        {
+            return this.hintWidth;
+        }
 
-	    [OslcDescription("Very short label for use in menu items")]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "label")]
-	    [OslcReadOnly]
+        [OslcDescription("Very short label for use in menu items")]
+        [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "label")]
+        [OslcReadOnly]
         [OslcTitle("Label")]
-	    public String GetLabel() {
-		    return label;
-	    }
+        public string GetLabel()
+        {
+            return this.label;
+        }
 
-	    [OslcDescription("The expected resource type Uri for the resources that will be returned when using this dialog. These would be the Uris found in the result resource's rdf:type property")]
-	    [OslcName("resourceType")]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "resourceType")]
-	    [OslcReadOnly]
+        [OslcDescription(
+            "The expected resource type Uri for the resources that will be returned when using this dialog. These would be the Uris found in the result resource's rdf:type property")]
+        [OslcName("resourceType")]
+        [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "resourceType")]
+        [OslcReadOnly]
         [OslcTitle("Resource Types")]
-	    public Uri[] GetResourceTypes() {
-	        return resourceTypes.ToArray();
-	    }
+        public Uri[] GetResourceTypes()
+        {
+            return this.resourceTypes.ToArray();
+        }
 
-	    [OslcDescription("Title string that could be used for display")]
-	    [OslcOccurs(Occurs.ExactlyOne)]
-	    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
-	    [OslcReadOnly]
+        [OslcDescription("Title string that could be used for display")]
+        [OslcOccurs(Occurs.ExactlyOne)]
+        [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
+        [OslcReadOnly]
         [OslcTitle("Title")]
         [OslcValueType(ValueType.XMLLiteral)]
-	    public String GetTitle() {
-		    return title;
-	    }
+        public string GetTitle()
+        {
+            return this.title;
+        }
 
-	    [OslcDescription("An identifier Uri for the domain specified usage of this dialog. If a service provides multiple selection or creation dialogs, it may designate the primary or default one that should be used with a property value of http://open-services/ns/core#default")]
-	    [OslcName("usage")]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "usage")]
-	    [OslcReadOnly]
+        [OslcDescription(
+            "An identifier Uri for the domain specified usage of this dialog. If a service provides multiple selection or creation dialogs, it may designate the primary or default one that should be used with a property value of http://open-services/ns/core#default")]
+        [OslcName("usage")]
+        [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "usage")]
+        [OslcReadOnly]
         [OslcTitle("Usages")]
-	    public Uri[] GetUsages() {
-	        return usages.ToArray();
-	    }
+        public Uri[] GetUsages()
+        {
+            return this.usages.ToArray();
+        }
 
-	    public void SetDialog(Uri dialog) {
-	        this.dialog = dialog;
-	    }
+        public void SetDialog(Uri dialog)
+        {
+            this.dialog = dialog;
+        }
 
-	    public void SetHintHeight(String hintHeight) {
-		    this.hintHeight = hintHeight;
-	    }
+        public void SetHintHeight(string hintHeight)
+        {
+            this.hintHeight = hintHeight;
+        }
 
-	    public void SetHintWidth(String hintWidth) {
-		    this.hintWidth = hintWidth;
-	    }
+        public void SetHintWidth(string hintWidth)
+        {
+            this.hintWidth = hintWidth;
+        }
 
-	    public void SetLabel(String label) {
-		    this.label = label;
-	    }
+        public void SetLabel(string label)
+        {
+            this.label = label;
+        }
 
-	    public void SetResourceTypes(Uri[] resourceTypes) {
-	        this.resourceTypes.Clear();
-	        if (resourceTypes != null) {
+        public void SetResourceTypes(Uri[] resourceTypes)
+        {
+            this.resourceTypes.Clear();
+            if (resourceTypes != null)
+            {
                 this.resourceTypes.AddAll(resourceTypes);
             }
-	    }
+        }
 
-	    public void SetTitle(String title) {
-		    this.title = title;
-	    }
+        public void SetTitle(string title)
+        {
+            this.title = title;
+        }
 
-	    public void SetUsages(Uri[] usages) {
-	        this.usages.Clear();
-	        if (usages != null) {
+        public void SetUsages(Uri[] usages)
+        {
+            this.usages.Clear();
+            if (usages != null)
+            {
                 this.usages.AddAll(usages);
             }
-	    }
+        }
     }
 }

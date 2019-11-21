@@ -13,13 +13,14 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace OSLC4Net.Core.Model
 {
+    #region
+
+    using System;
+
+    #endregion
+
     /// <summary>
     /// OSLC Occurs attribute
     /// </summary>
@@ -27,13 +28,17 @@ namespace OSLC4Net.Core.Model
     public enum Occurs
     {
         [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Exactly-one")]
-	    ExactlyOne,
+        ExactlyOne,
+
         [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Zero-or-one")]
-	    ZeroOrOne,
+        ZeroOrOne,
+
         [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Zero-or-many")]
-	    ZeroOrMany,
+        ZeroOrMany,
+
         [URI(OslcConstants.OSLC_CORE_NAMESPACE + "One-or-many")]
-	    OneOrMany,
+        OneOrMany,
+
         [URI("")]
         Unknown
     }
@@ -42,16 +47,17 @@ namespace OSLC4Net.Core.Model
     {
         public static string ToString(Occurs occurs)
         {
-            URI[] attributes = (URI[])occurs.GetType().GetField(occurs.ToString()).GetCustomAttributes(typeof(URI), false);
+            var attributes =
+                (URI[])occurs.GetType().GetField(occurs.ToString()).GetCustomAttributes(typeof(URI), false);
 
             return attributes.Length > 0 ? attributes[0].uri : string.Empty;
-	    }
+        }
 
-	    public static Occurs FromString(string value)
+        public static Occurs FromString(string value)
         {
-	        foreach (Occurs occurs in Enum.GetValues(typeof(Occurs)))
+            foreach (Occurs occurs in Enum.GetValues(typeof(Occurs)))
             {
-                string uri = ToString(occurs);
+                var uri = ToString(occurs);
 
                 if (uri.Equals(value))
                 {
@@ -59,12 +65,12 @@ namespace OSLC4Net.Core.Model
                 }
             }
 
-	        throw new ArgumentException();
-	    }
-	
-	    public static Occurs FromURI(URI uri)
+            throw new ArgumentException();
+        }
+
+        public static Occurs FromURI(URI uri)
         {
-		    return FromString(uri.ToString());
-	    }
+            return FromString(uri.ToString());
+        }
     }
 }

@@ -13,33 +13,34 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-
-using OSLC4Net.Core.Attribute;
-
 namespace OSLC4Net.Core.Model
 {
+    #region
+
+    using OSLC4Net.Core.Attribute;
+
+    #endregion
+
     /// <summary>
     /// Predefined OSLC namespaces
     /// </summary>
     public static class XmlNamespace
     {
-        private static readonly OslcNamespaceDefinition[] namespaces = new OslcNamespaceDefinition[]
-        {
-                 new OslcNamespaceDefinition(prefix: OslcConstants.DCTERMS_NAMESPACE_PREFIX, namespaceURI: OslcConstants.DCTERMS_NAMESPACE),
-                 new OslcNamespaceDefinition(prefix: OslcConstants.OSLC_CORE_NAMESPACE_PREFIX, namespaceURI: OslcConstants.OSLC_CORE_NAMESPACE),
-                 new OslcNamespaceDefinition(prefix: OslcConstants.RDF_NAMESPACE_PREFIX, namespaceURI: OslcConstants.RDF_NAMESPACE),
-                 new OslcNamespaceDefinition(prefix: OslcConstants.RDFS_NAMESPACE_PREFIX, namespaceURI: OslcConstants.RDFS_NAMESPACE)
+        private static readonly OslcNamespaceDefinition[] namespaces = new OslcNamespaceDefinition[] 
+        { 
+            new OslcNamespaceDefinition(prefix: OslcConstants.DCTERMS_NAMESPACE_PREFIX, namespaceURI: OslcConstants.DCTERMS_NAMESPACE), 
+            new OslcNamespaceDefinition(prefix: OslcConstants.OSLC_CORE_NAMESPACE_PREFIX,namespaceURI: OslcConstants.OSLC_CORE_NAMESPACE),
+            new OslcNamespaceDefinition(prefix: OslcConstants.RDF_NAMESPACE_PREFIX,namespaceURI: OslcConstants.RDF_NAMESPACE),
+            new OslcNamespaceDefinition(prefix: OslcConstants.RDFS_NAMESPACE_PREFIX,namespaceURI: OslcConstants.RDFS_NAMESPACE)
         };
 
         /// <summary>
         /// Get common OSLC namespace definitions
         /// </summary>
         /// <returns></returns>
-        public static OslcNamespaceDefinition[] GetNamespaces() { return namespaces; }
+        public static OslcNamespaceDefinition[] GetNamespaces()
+        {
+            return namespaces;
+        }
     }
 }
