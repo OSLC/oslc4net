@@ -13,37 +13,36 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net;
 
-namespace OSLC4Net.Client.Exceptions
+namespace OSLC4Net.Core.Exceptions
 {
+    using System;
+
     /// <summary>
     /// Exceptions indicating a Jazz authentication or credentials problem
     /// </summary>
     public class JazzAuthFailedException : OslcClientApplicationException
     {
-	    private const String MESSAGE_KEY = "JazzAuthFailedException";
-	
-	    private readonly String user;
-	    private readonly String jazzUrl;
-	
-	    public JazzAuthFailedException(string user, string jazzUrl) :
-		    base(MESSAGE_KEY, new Object[] {user, jazzUrl})
+        private const String MESSAGE_KEY = "JazzAuthFailedException";
+
+        private readonly string _user;
+        private readonly string _jazzUrl;
+
+        public JazzAuthFailedException(string user, string jazzUrl) :
+            base(MESSAGE_KEY, new object[] { user, jazzUrl })
         {
-		    this.user = user;
-		    this.jazzUrl = jazzUrl;
-	    }
-	
-	    public String GetUser() {
-		    return user;
-	    }
-	
-	    public String GetJazzUrl() {
-		    return jazzUrl;
-	    }
+            this._user = user;
+            this._jazzUrl = jazzUrl;
+        }
+
+        public string GetUser()
+        {
+            return this._user;
+        }
+
+        public string GetJazzUrl()
+        {
+            return this._jazzUrl;
+        }
     }
 }

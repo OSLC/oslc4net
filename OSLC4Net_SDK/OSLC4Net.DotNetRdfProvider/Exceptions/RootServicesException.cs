@@ -13,28 +13,26 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace OSLC4Net.Client.Exceptions
+namespace OSLC4Net.Core.Exceptions
 {
+    using System;
+
     public class RootServicesException : OslcClientApplicationException
     {
-        private const String MESSAGE_KEY = "RootServicesException";
-	
-	    private readonly String jazzUrl;
-	
-	
-	    public RootServicesException(string jazzUrl, Exception exception) :
-		    base(MESSAGE_KEY, new Object[] {jazzUrl}, exception)
+        private const string MESSAGE_KEY = "RootServicesException";
+
+        private readonly string _jazzUrl;
+
+
+        public RootServicesException(string jazzUrl, Exception exception) :
+            base(MESSAGE_KEY, new object[] { jazzUrl }, exception)
         {
-		    this.jazzUrl = jazzUrl;
-	    }	
-	
-	    public String GetJazzUrl() {
-		    return jazzUrl;
-	    }
+            this._jazzUrl = jazzUrl;
+        }
+
+        public string GetJazzUrl()
+        {
+            return this._jazzUrl;
+        }
     }
 }
