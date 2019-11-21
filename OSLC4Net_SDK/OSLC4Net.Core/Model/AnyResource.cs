@@ -13,25 +13,23 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace OSLC4Net.Core.Model
 {
+    using System;
+
     /// <summary>
     /// Represents a resource of any (unknown) type, usually the object of a
     /// statement in anIExtendedResource.
     /// </summary>
     public class AnyResource : AbstractResource
     {
-        public AnyResource(Uri about) : base(about)
+        public AnyResource(Uri about)
+            : base(about)
         {
         }
 
-        public AnyResource() : base()
+        public AnyResource()
+            : base()
         {
         }
     }

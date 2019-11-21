@@ -13,17 +13,10 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
-using OSLC4Net.Core.Attribute;
-
 namespace OSLC4Net.Core.Model
 {
+    using System.Reflection;
+
     public static class InheritedMethodAttributeHelper
     {
         /// <summary>
@@ -32,9 +25,10 @@ namespace OSLC4Net.Core.Model
         /// <typeparam name="T"></typeparam>
         /// <param name="method"></param>
         /// <returns></returns>
-        public static T GetAttribute<T>(MethodInfo method) where T : System.Attribute
+        public static T GetAttribute<T>(MethodInfo method)
+            where T : System.Attribute
         {
-            T[] attributes = (T[])method.GetCustomAttributes(typeof(T), true);
+            var attributes = (T[])method.GetCustomAttributes(typeof(T), true);
 
             if (attributes.Length > 0)
             {

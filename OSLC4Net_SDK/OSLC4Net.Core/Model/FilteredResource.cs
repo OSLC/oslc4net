@@ -14,38 +14,31 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-
 namespace OSLC4Net.Core.Model
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Class representing a filtered OSLC resource.  That is, a representation of resource where some of the
     /// attributes are not present (filtered using oslc.select or oslc.properties)
     /// </summary>
     /// <typeparam name="T"></typeparam>
-   public class FilteredResource<T>
+    public class FilteredResource<T>
     {
-        /**
-         * Resource.
-         */
-       public T Resource { get; private set; }
-
-        /**
-         * properties
-         */
-       public IDictionary<String, Object> Properties { get; private set; }
-
-        public FilteredResource(
-            T resource,
-            IDictionary<String, Object> properties
-        )
+        public FilteredResource(T resource, IDictionary<string, object> properties)
         {
             this.Resource = resource;
             this.Properties = properties;
         }
+
+        /**
+         * properties
+         */
+        public IDictionary<string, object> Properties { get; private set; }
+
+        /**
+         * Resource.
+         */
+        public T Resource { get; private set; }
     }
 }

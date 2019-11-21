@@ -13,87 +13,103 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using OSLC4Net.Core.Attribute;
-
 namespace OSLC4Net.Core.Model
 {
+    #region
+
+    using System;
+
+    using OSLC4Net.Core.Attribute;
+
+    #endregion
+
     /// <summary>
     /// OSLC Publisher resource
     /// </summary>
     [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-    [OslcResourceShape(title = "OSLC Publisher Resource Shape", describes = new string[] { OslcConstants.TYPE_PUBLISHER })]
-    public class Publisher : AbstractResource 
+    [OslcResourceShape(
+        title = "OSLC Publisher Resource Shape",
+        describes = new string[] { OslcConstants.TYPE_PUBLISHER })]
+    public class Publisher : AbstractResource
     {
-	    private Uri    icon;
-	    private String identifier;
-	    private String label;
-	    private String title;
+        private Uri _icon;
 
-	    public Publisher() : base()
+        private string _identifier;
+
+        private string _label;
+
+        private string _title;
+
+        public Publisher()
+            : base()
         {
-	    }
+        }
 
-	    public Publisher(String title, String identifier) : this()
+        public Publisher(string title, string identifier)
+            : this()
         {
-		    this.title = title;
-		    this.identifier = identifier;
-	    }
+            this._title = title;
+            this._identifier = identifier;
+        }
 
-	   [OslcDescription("URL to an icon file that represents the provider. This icon should be a favicon format and 16x16 pixels in size")]
-	   [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "icon")]
-	   [OslcReadOnly]
-       [OslcTitle("Icon")]
-        public Uri GetIcon() {
-	        return icon;
-	    }
+        [OslcDescription(
+            "URL to an icon file that represents the provider. This icon should be a favicon format and 16x16 pixels in size")]
+        [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "icon")]
+        [OslcReadOnly]
+        [OslcTitle("Icon")]
+        public Uri GetIcon()
+        {
+            return this._icon;
+        }
 
-	   [OslcDescription("A URN that uniquely identifies the implementation")]
-	   [OslcOccurs(Occurs.ExactlyOne)]
-	   [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
-	   [OslcReadOnly] // TODO - Marked as unspecified in the spec, but is this correct?
-	   [OslcTitle("Identifier")]
-	    public String GetIdentifier() {
-		    return identifier;
-	    }
+        [OslcDescription("A URN that uniquely identifies the implementation")]
+        [OslcOccurs(Occurs.ExactlyOne)]
+        [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
+        [OslcReadOnly] // TODO - Marked as unspecified in the spec, but is this correct?
+        [OslcTitle("Identifier")]
+        public string GetIdentifier()
+        {
+            return this._identifier;
+        }
 
-	   [OslcDescription("Very short label for use in menu items")]
-	   [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "label")]
-	   [OslcReadOnly]
-       [OslcTitle("Label")]
-	    public String GetLabel() {
-		    return label;
-	    }
+        [OslcDescription("Very short label for use in menu items")]
+        [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "label")]
+        [OslcReadOnly]
+        [OslcTitle("Label")]
+        public string GetLabel()
+        {
+            return this._label;
+        }
 
-	   [OslcDescription("Title string that could be used for display")]
-       [OslcOccurs(Occurs.ExactlyOne)]
-	   [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
-	   [OslcReadOnly]
-       [OslcTitle("Title")]
-       [OslcValueType(ValueType.XMLLiteral)]
-	    public String GetTitle() {
-		    return title;
-	    }
+        [OslcDescription("Title string that could be used for display")]
+        [OslcOccurs(Occurs.ExactlyOne)]
+        [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
+        [OslcReadOnly]
+        [OslcTitle("Title")]
+        [OslcValueType(ValueType.XMLLiteral)]
+        public string GetTitle()
+        {
+            return this._title;
+        }
 
-	    public void SetIcon(Uri icon) {
-	        this.icon = icon;
-	    }
+        public void SetIcon(Uri icon)
+        {
+            this._icon = icon;
+        }
 
-	    public void SetIdentifier(String identifier) {
-		    this.identifier = identifier;
-	    }
+        public void SetIdentifier(string identifier)
+        {
+            this._identifier = identifier;
+        }
 
-	    public void SetLabel(String label) {
-		    this.label = label;
-	    }
+        public void SetLabel(string label)
+        {
+            this._label = label;
+        }
 
-	    public void SetTitle(String title) {
-		    this.title = title;
-	    }
+        public void SetTitle(string title)
+        {
+            this._title = title;
+        }
     }
 }
