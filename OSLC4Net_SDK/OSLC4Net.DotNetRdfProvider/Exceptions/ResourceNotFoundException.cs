@@ -30,18 +30,18 @@ namespace OSLC4Net.Core.Exceptions
         public ResourceNotFoundException(string resource, string value) :
             base(MESSAGE_KEY, new object[] { resource, value })
         {
-            this._resource = resource;
-            this._value = value;
+            _resource = resource;
+            _value = value;
         }
 
         public string GetResource()
         {
-            return this._resource;
+            return _resource;
         }
 
         public string GetValue()
         {
-            return this._value;
+            return _value;
         }
     }
 }

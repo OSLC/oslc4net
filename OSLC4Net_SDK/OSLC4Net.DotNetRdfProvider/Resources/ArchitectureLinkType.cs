@@ -43,27 +43,27 @@ namespace OSLC4Net.Core.Resources
 
         public ArchitectureLinkType() : base()
         {
-            this._rdfTypes.Add(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE));
+            _rdfTypes.Add(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE));
         }
 
         public ArchitectureLinkType(Uri about) : base(about)
         {
-            this._rdfTypes.Add(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE));
+            _rdfTypes.Add(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE));
         }
 
         public void AddContributor(Uri contributor)
         {
-            this._contributors.Add(contributor);
+            _contributors.Add(contributor);
         }
 
         public void AddCreator(Uri creator)
         {
-            this._creators.Add(creator);
+            _creators.Add(creator);
         }
 
         public void AddRdfType(Uri rdfType)
         {
-            this._rdfTypes.Add(rdfType);
+            _rdfTypes.Add(rdfType);
         }
 
         [OslcDescription("The person(s) who are responsible for the work needed to complete the automation plan.")]
@@ -73,7 +73,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Contributors")]
         public Uri[] GetContributors()
         {
-            return this._contributors.ToArray();
+            return _contributors.ToArray();
         }
 
         [OslcDescription("Timestamp of resource creation.")]
@@ -82,7 +82,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Created")]
         public DateTime? GetCreated()
         {
-            return this._created;
+            return _created;
         }
 
         [OslcDescription("Creator or creators of resource.")]
@@ -92,7 +92,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Creators")]
         public Uri[] GetCreators()
         {
-            return this._creators.ToArray();
+            return _creators.ToArray();
         }
 
         [OslcDescription("The human readable name for this link type.")]
@@ -101,7 +101,7 @@ namespace OSLC4Net.Core.Resources
         [OslcOccurs(Occurs.ExactlyOne)]
         public string GetLabel()
         {
-            return this._label;
+            return _label;
         }
 
         [OslcDescription("Descriptive text about link type. ")]
@@ -110,7 +110,7 @@ namespace OSLC4Net.Core.Resources
         [OslcOccurs(Occurs.ZeroOrOne)]
         public string GetComment()
         {
-            return this._comment;
+            return _comment;
         }
 
         [OslcDescription("A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
@@ -120,7 +120,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Identifier")]
         public string GetIdentifier()
         {
-            return this._identifier;
+            return _identifier;
         }
 
         [OslcDescription("Resource Shape that provides hints as to resource property value-types and allowed values. ")]
@@ -129,7 +129,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Instance Shape")]
         public Uri GetInstanceShape()
         {
-            return this._instanceShape;
+            return _instanceShape;
         }
 
         [OslcDescription("Timestamp last latest resource modification.")]
@@ -138,7 +138,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Modified")]
         public DateTime? GetModified()
         {
-            return this._modified;
+            return _modified;
         }
 
         [OslcDescription("The resource type URIs.")]
@@ -147,7 +147,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Types")]
         public Uri[] GetRdfTypes()
         {
-            return this._rdfTypes.ToArray();
+            return _rdfTypes.ToArray();
         }
 
         [OslcDescription("The scope of a resource is a Uri for the resource's OSLC Service Provider.")]
@@ -156,72 +156,72 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Service Provider")]
         public Uri GetServiceProvider()
         {
-            return this._serviceProvider;
+            return _serviceProvider;
         }
 
         public void SetContributors(Uri[] contributors)
         {
-            this._contributors.Clear();
+            _contributors.Clear();
 
             if (contributors != null)
             {
-                this._contributors.AddAll(contributors);
+                _contributors.AddAll(contributors);
             }
         }
 
         public void SetCreated(DateTime? created)
         {
-            this._created = created;
+            _created = created;
         }
 
         public void SetCreators(Uri[] creators)
         {
-            this._creators.Clear();
+            _creators.Clear();
 
             if (creators != null)
             {
-                this._creators.AddAll(creators);
+                _creators.AddAll(creators);
             }
         }
 
         public void SetLabel(string label)
         {
-            this._label = label;
+            _label = label;
         }
 
         public void SetComment(string comment)
         {
-            this._comment = comment;
+            _comment = comment;
         }
 
         public void SetIdentifier(string identifier)
         {
-            this._identifier = identifier;
+            _identifier = identifier;
         }
 
         public void SetInstanceShape(Uri instanceShape)
         {
-            this._instanceShape = instanceShape;
+            _instanceShape = instanceShape;
         }
 
         public void SetModified(DateTime? modified)
         {
-            this._modified = modified;
+            _modified = modified;
         }
 
         public void SetRdfTypes(Uri[] rdfTypes)
         {
-            this._rdfTypes.Clear();
+            _rdfTypes.Clear();
 
             if (rdfTypes != null)
             {
-                this._rdfTypes.AddAll(rdfTypes);
+                _rdfTypes.AddAll(rdfTypes);
             }
         }
 
         public void SetServiceProvider(Uri serviceProvider)
         {
-            this._serviceProvider = serviceProvider;
+            _serviceProvider = serviceProvider;
         }
 
         protected Uri GetRdfType()

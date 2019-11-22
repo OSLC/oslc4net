@@ -32,7 +32,7 @@ namespace OSLC4Net.Core.Model
 
         protected AbstractResource(Uri about)
         {
-            this._about = about;
+            _about = about;
         }
 
         protected AbstractResource()
@@ -45,7 +45,7 @@ namespace OSLC4Net.Core.Model
         /// <param name="type"></param>
         public void AddType(Uri type)
         {
-            this._types.Add(type);
+            _types.Add(type);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace OSLC4Net.Core.Model
         /// <returns></returns>
         public Uri GetAbout()
         {
-            return this._about;
+            return _about;
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace OSLC4Net.Core.Model
         /// <returns></returns>
         public IDictionary<QName, object> GetExtendedProperties()
         {
-            return this._extendedProperties;
+            return _extendedProperties;
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace OSLC4Net.Core.Model
         /// <returns></returns>
         public ICollection<Uri> GetTypes()
         {
-            return this._types;
+            return _types;
         }
 
         /// <summary>
@@ -81,13 +81,13 @@ namespace OSLC4Net.Core.Model
         /// <param name="about"></param>
         public void SetAbout(Uri about)
         {
-            this._about = about;
+            _about = about;
         }
 
         /// <param name="properties"></param>
         public void SetExtendedProperties(IDictionary<QName, object> properties)
         {
-            this._extendedProperties = properties;
+            _extendedProperties = properties;
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace OSLC4Net.Core.Model
         /// <param name="types"></param>
         public void SetTypes(ICollection<Uri> types)
         {
-            this._types = types;
+            _types = types;
         }
     }
 }

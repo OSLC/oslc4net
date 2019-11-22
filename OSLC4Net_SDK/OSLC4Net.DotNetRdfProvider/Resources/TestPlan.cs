@@ -49,32 +49,32 @@ namespace OSLC4Net.Core.Resources
 
         public void AddContributor(Uri contributor)
         {
-            this.contributors.Add(contributor);
+            contributors.Add(contributor);
         }
 
         public void AddCreator(Uri creator)
         {
-            this.creators.Add(creator);
+            creators.Add(creator);
         }
 
         public void AddRelatedChangeRequest(Link relatedChangeRequest)
         {
-            this.relatedChangeRequests.Add(relatedChangeRequest);
+            relatedChangeRequests.Add(relatedChangeRequest);
         }
 
         public void AddSubject(String subject)
         {
-            this.subjects.Add(subject);
+            subjects.Add(subject);
         }
 
         public void AddUsesTestCase(Link testcase)
         {
-            this.usesTestCases.Add(testcase);
+            usesTestCases.Add(testcase);
         }
 
         public void AddValidatesRequirementCollection(Link requirementCollection)
         {
-            this.validatesRequirementCollections.Add(requirementCollection);
+            validatesRequirementCollections.Add(requirementCollection);
         }
 
         [OslcDescription("The person(s) who are responsible for the work needed to complete the change request.")]

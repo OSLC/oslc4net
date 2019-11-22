@@ -38,7 +38,7 @@ namespace OSLC4Net.Core.Model
         /// <param name="localPart"></param>
         public QName(string localPart)
         {
-            this._localPart = localPart;
+            _localPart = localPart;
         }
 
         /// <summary>
@@ -64,9 +64,9 @@ namespace OSLC4Net.Core.Model
                 throw new ArgumentException();
             }
 
-            this._namespaceUri = namespaceURI;
-            this._localPart = localPart;
-            this._prefix = prefix;
+            _namespaceUri = namespaceURI;
+            _localPart = localPart;
+            _prefix = prefix;
         }
 
         public override bool Equals(object obj)
@@ -76,37 +76,37 @@ namespace OSLC4Net.Core.Model
                 return false;
             }
 
-            return this._namespaceUri.Equals(((QName)obj)._namespaceUri) && this._localPart.Equals(((QName)obj)._localPart);
+            return _namespaceUri.Equals(((QName)obj)._namespaceUri) && _localPart.Equals(((QName)obj)._localPart);
         }
 
         public override int GetHashCode()
         {
-            return this._namespaceUri.GetHashCode() * 31 + this._localPart.GetHashCode();
+            return _namespaceUri.GetHashCode() * 31 + _localPart.GetHashCode();
         }
 
         public string GetLocalPart()
         {
-            return this._localPart;
+            return _localPart;
         }
 
         public string GetNamespaceURI()
         {
-            return this._namespaceUri;
+            return _namespaceUri;
         }
 
         public string GetPrefix()
         {
-            return this._prefix;
+            return _prefix;
         }
 
         public override string ToString()
         {
-            if (this._namespaceUri == null)
+            if (_namespaceUri == null)
             {
-                return this._localPart;
+                return _localPart;
             }
 
-            return '{' + this._namespaceUri + '}' + this._localPart;
+            return '{' + _namespaceUri + '}' + _localPart;
         }
     }
 }

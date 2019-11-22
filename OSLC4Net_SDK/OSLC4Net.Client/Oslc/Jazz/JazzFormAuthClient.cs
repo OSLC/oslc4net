@@ -50,7 +50,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
             this()
 	    {
 		    this.url = url;
-		    this.authUrl = url;  //default to base URL
+		    authUrl = url;  //default to base URL
 		    this.user = user;
 		    this.password = password;		
 	    }
@@ -117,7 +117,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
 		    try 
 		    {
 			
-                resp = client.GetAsync(this.authUrl + "/authenticated/identity").Result;
+                resp = client.GetAsync(authUrl + "/authenticated/identity").Result;
 			    statusCode = resp.StatusCode;
 
                 if (statusCode == HttpStatusCode.Found)
@@ -132,7 +132,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
 			    client.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
                 client.DefaultRequestHeaders.Add("OSLC-Core-Version", "2.0");
 
-                String securityCheckUrl = "j_username=" + this.user + "&j_password=" + this.password;
+                String securityCheckUrl = "j_username=" + user + "&j_password=" + password;
                 StringContent content = new StringContent(securityCheckUrl, Encoding.UTF8);
 
                 MediaTypeHeaderValue mediaTypeValue = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
@@ -141,7 +141,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
 
                 content.Headers.ContentType = mediaTypeValue;
 
-                resp = client.PostAsync(this.authUrl + "/j_security_check", content).Result;
+                resp = client.PostAsync(authUrl + "/j_security_check", content).Result;
 		        statusCode = resp.StatusCode;
 		    
 		        String jazzAuthMessage = null;
@@ -154,12 +154,12 @@ namespace OSLC4Net.Client.Oslc.Jazz
 		        if (jazzAuthMessage != null && String.Compare(jazzAuthMessage, JAZZ_AUTH_FAILED, true) == 0)
 		        {
                     resp.ConsumeContent();
-		    	    throw new JazzAuthFailedException(this.user, this.url);
+		    	    throw new JazzAuthFailedException(user, url);
 		        }
                 else if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Found)
 		        {
                     resp.ConsumeContent();
-		    	    throw new JazzAuthErrorException(statusCode, this.url);
+		    	    throw new JazzAuthErrorException(statusCode, url);
 		        }
 		        else //success
 		        {

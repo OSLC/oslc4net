@@ -77,102 +77,102 @@ namespace OSLC4Net.Client.Oslc.Resources
 
         public void AddAffectedByDefect(Link affectedByDefect)
         {
-            this.affectedByDefects.Add(affectedByDefect);
+            affectedByDefects.Add(affectedByDefect);
         }
 
         public void AddAffectsPlanItem(Link affectsPlanItem)
         {
-            this.affectsPlanItems.Add(affectsPlanItem);
+            affectsPlanItems.Add(affectsPlanItem);
         }
 
         public void AddAffectsRequirement(Link affectsRequirement)
         {
-            this.affectsRequirements.Add(affectsRequirement);
+            affectsRequirements.Add(affectsRequirement);
         }
 
         public void AddAffectsTestResult(Link affectsTestResult)
         {
-            this.affectsTestResults.Add(affectsTestResult);
+            affectsTestResults.Add(affectsTestResult);
         }
 
         public void AddBlocksTestExecutionRecord(Link blocksTestExecutionRecord)
         {
-            this.blocksTestExecutionRecords.Add(blocksTestExecutionRecord);
+            blocksTestExecutionRecords.Add(blocksTestExecutionRecord);
         }
 
         public void AddContributor(Uri contributor)
         {
-            this.contributors.Add(contributor);
+            contributors.Add(contributor);
         }
 
         public void AddCreator(Uri creator)
         {
-            this.creators.Add(creator);
+            creators.Add(creator);
         }
 
         public void AddDctermsType(String dctermsType)
         {
-            this.dctermsTypes.Add(dctermsType);
+            dctermsTypes.Add(dctermsType);
         }
 
         public void AddImplementsRequirement(Link implementsRequirement)
         {
-            this.implementsRequirements.Add(implementsRequirement);
+            implementsRequirements.Add(implementsRequirement);
         }
 
         public void AddRdfType(Uri rdfType)
         {
-            this.rdfTypes.Add(rdfType);
+            rdfTypes.Add(rdfType);
         }
 
         public void AddRelatedChangeRequest(Link relatedChangeRequest)
         {
-            this.relatedChangeRequests.Add(relatedChangeRequest);
+            relatedChangeRequests.Add(relatedChangeRequest);
         }
 
         public void AddRelatedResource(Link relatedResource)
         {
-            this.relatedResources.Add(relatedResource);
+            relatedResources.Add(relatedResource);
         }
 
         public void AddRelatedTestCase(Link relatedTestCase)
         {
-            this.relatedTestCases.Add(relatedTestCase);
+            relatedTestCases.Add(relatedTestCase);
         }
 
         public void AddRelatedTestExecutionRecord(Link relatedTestExecutionRecord)
         {
-            this.relatedTestExecutionRecords.Add(relatedTestExecutionRecord);
+            relatedTestExecutionRecords.Add(relatedTestExecutionRecord);
         }
 
         public void AddRelatedTestPlan(Link relatedTestPlan)
         {
-            this.relatedTestPlans.Add(relatedTestPlan);
+            relatedTestPlans.Add(relatedTestPlan);
         }
 
         public void AddRelatedTestScript(Link relatedTestScript)
         {
-            this.relatedTestScripts.Add(relatedTestScript);
+            relatedTestScripts.Add(relatedTestScript);
         }
 
         public void AddSubject(String subject)
         {
-            this.subjects.Add(subject);
+            subjects.Add(subject);
         }
 
         public void AddTestedByTestCase(Link testedByTestCase)
         {
-            this.testedByTestCases.Add(testedByTestCase);
+            testedByTestCases.Add(testedByTestCase);
         }
 
         public void AddTracksChangeSet(Link tracksChangeSet)
         {
-            this.tracksChangeSets.Add(tracksChangeSet);
+            tracksChangeSets.Add(tracksChangeSet);
         }
 
         public void AddTracksRequirement(Link tracksRequirement)
         {
-            this.tracksRequirements.Add(tracksRequirement);
+            tracksRequirements.Add(tracksRequirement);
         }
 
         [OslcDescription("Change request is affected by a reported defect.")]
@@ -654,7 +654,7 @@ namespace OSLC4Net.Client.Oslc.Resources
 
         public void SetFixed(Boolean isFixed)
         {
-            this.isFixedValue = isFixed;
+            isFixedValue = isFixed;
         }
 
         public void SetIdentifier(String identifier)

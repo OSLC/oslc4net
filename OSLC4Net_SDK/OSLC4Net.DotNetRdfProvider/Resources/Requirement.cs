@@ -71,7 +71,7 @@ namespace OSLC4Net.Core.Resources
             // Only Add the type if Requirement is the created object
             if (!(this is RequirementCollection))
             {
-                this._rdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
+                _rdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
             }
         }
 
@@ -80,98 +80,98 @@ namespace OSLC4Net.Core.Resources
             // Only Add the type if Requirement is the created object
             if (!(this is RequirementCollection))
             {
-                this._rdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
+                _rdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
             }
         }
 
         public void AddSubject(string subject)
         {
-            this._subjects.Add(subject);
+            _subjects.Add(subject);
         }
 
         public void AddConstrains(Link constrains)
         {
-            this._constrains.Add(constrains);
+            _constrains.Add(constrains);
         }
 
         public void AddConstrainedBy(Link constrainedBy)
         {
-            this._constrainedBy.Add(constrainedBy);
+            _constrainedBy.Add(constrainedBy);
         }
 
         public void AddDecomposes(Link decomposes)
         {
-            this._decomposes.Add(decomposes);
+            _decomposes.Add(decomposes);
         }
 
         public void AddDecomposedBy(Link decomposedBy)
         {
-            this._decomposedBy.Add(decomposedBy);
+            _decomposedBy.Add(decomposedBy);
         }
 
         public void AddSatisfies(Link satisfies)
         {
-            this._satisfies.Add(satisfies);
+            _satisfies.Add(satisfies);
         }
 
         public void AddSatisfiedBy(Link satisfiedBy)
         {
-            this._satisfiedBy.Add(satisfiedBy);
+            _satisfiedBy.Add(satisfiedBy);
         }
 
         public void AddValidatedBy(Link validatedBy)
         {
-            this._validatedBy.Add(validatedBy);
+            _validatedBy.Add(validatedBy);
         }
 
         public void AddTrackedBy(Link trackedBy)
         {
-            this._trackedBy.Add(trackedBy);
+            _trackedBy.Add(trackedBy);
         }
 
         public void AddImplementedBy(Link implementedBy)
         {
-            this._implementedBy.Add(implementedBy);
+            _implementedBy.Add(implementedBy);
         }
 
         public void AddAffectedBy(Link affectedBy)
         {
-            this._affectedBy.Add(affectedBy);
+            _affectedBy.Add(affectedBy);
         }
 
         public void AddElaboratedBy(Link elaboratedBy)
         {
-            this._elaboratedBy.Add(elaboratedBy);
+            _elaboratedBy.Add(elaboratedBy);
         }
 
         public void AddElaborates(Link elaborates)
         {
-            this._elaborates.Add(elaborates);
+            _elaborates.Add(elaborates);
         }
 
         public void AddSpecifiedBy(Link specifiedBy)
         {
-            this._specifiedBy.Add(specifiedBy);
+            _specifiedBy.Add(specifiedBy);
         }
 
         public void AddSpecifies(Link specifies)
         {
-            this._specifies.Add(specifies);
+            _specifies.Add(specifies);
         }
 
         public void AddContributor(Uri contributor)
         {
-            this._contributors.Add(contributor);
+            _contributors.Add(contributor);
         }
 
         public void AddCreator(Uri creator)
         {
-            this._creators.Add(creator);
+            _creators.Add(creator);
         }
 
         public void AddRdfType(Uri rdfType)
         {
-            this._rdfTypes.Add(rdfType);
+            _rdfTypes.Add(rdfType);
         }
 
         [OslcDescription("Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
@@ -181,7 +181,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Subjects")]
         public string[] GetSubjects()
         {
-            return this._subjects.ToArray();
+            return _subjects.ToArray();
         }
 
         [OslcDescription("The subject is elaborated by the object.")]
@@ -192,7 +192,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Elaborated By")]
         public Link[] GetElaboratedBy()
         {
-            return this._elaboratedBy.ToArray();
+            return _elaboratedBy.ToArray();
         }
 
         [OslcDescription("The object is elaborated by the subject.")]
@@ -203,7 +203,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Elaborates")]
         public Link[] GetElaborates()
         {
-            return this._elaborates.ToArray();
+            return _elaborates.ToArray();
         }
 
         [OslcDescription("The subject is specified by the object.")]
@@ -214,7 +214,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Specified By")]
         public Link[] GetSpecifiedBy()
         {
-            return this._specifiedBy.ToArray();
+            return _specifiedBy.ToArray();
         }
 
         [OslcDescription("The object is specified by the subject.")]
@@ -225,7 +225,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Specifies")]
         public Link[] GetSpecifies()
         {
-            return this._specifies.ToArray();
+            return _specifies.ToArray();
         }
 
         [OslcDescription("Resource, such as a change request, which implements this requirement.")]
@@ -236,7 +236,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Implemented By")]
         public Link[] GetImplementedBy()
         {
-            return this._implementedBy.ToArray();
+            return _implementedBy.ToArray();
         }
 
         [OslcDescription("Requirement is affected by a resource, such as a defect or issue.")]
@@ -247,7 +247,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Affected By")]
         public Link[] GetAffectedBy()
         {
-            return this._affectedBy.ToArray();
+            return _affectedBy.ToArray();
         }
 
         [OslcDescription("Resource, such as a change request, which tracks this requirement.")]
@@ -258,7 +258,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("tracked By")]
         public Link[] GetTrackedBy()
         {
-            return this._trackedBy.ToArray();
+            return _trackedBy.ToArray();
         }
 
         [OslcDescription("Resource, such as a test case, which validates this requirement.")]
@@ -269,7 +269,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Validated By")]
         public Link[] GetValidatedBy()
         {
-            return this._validatedBy.ToArray();
+            return _validatedBy.ToArray();
         }
 
         [OslcDescription("The subject is satisfied by the object.")]
@@ -280,7 +280,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Satisfied By")]
         public Link[] GetSatisfiedBy()
         {
-            return this._satisfiedBy.ToArray();
+            return _satisfiedBy.ToArray();
         }
 
         [OslcDescription("The object is satisfied by the subject.")]
@@ -291,7 +291,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Satisfies")]
         public Link[] GetSatisfies()
         {
-            return this._satisfies.ToArray();
+            return _satisfies.ToArray();
         }
 
         [OslcDescription("The subject is decomposed by the object.")]
@@ -302,7 +302,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("DecomposedBy")]
         public Link[] GetDecomposedBy()
         {
-            return this._decomposedBy.ToArray();
+            return _decomposedBy.ToArray();
         }
 
         [OslcDescription("The object is decomposed by the subject.")]
@@ -313,7 +313,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Decomposes")]
         public Link[] GetDecomposes()
         {
-            return this._decomposes.ToArray();
+            return _decomposes.ToArray();
         }
 
         [OslcDescription("The subject is constrained by the object.")]
@@ -324,7 +324,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("ConstrainedBy")]
         public Link[] GetConstrainedBy()
         {
-            return this._constrainedBy.ToArray();
+            return _constrainedBy.ToArray();
         }
 
         [OslcDescription("The object is constrained by the subject.")]
@@ -335,7 +335,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Constrains")]
         public Link[] GetConstrains()
         {
-            return this._constrains.ToArray();
+            return _constrains.ToArray();
         }
 
         [OslcDescription("The person(s) who are responsible for the work needed to complete the change request.")]
@@ -345,7 +345,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Contributors")]
         public Uri[] GetContributors()
         {
-            return this._contributors.ToArray();
+            return _contributors.ToArray();
         }
 
         [OslcDescription("Timestamp of resource creation.")]
@@ -354,7 +354,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Created")]
         public DateTime? GetCreated()
         {
-            return this._created;
+            return _created;
         }
 
         [OslcDescription("Creator or creators of resource.")]
@@ -364,7 +364,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Creators")]
         public Uri[] GetCreators()
         {
-            return this._creators.ToArray();
+            return _creators.ToArray();
         }
 
         [OslcDescription("Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
@@ -373,7 +373,7 @@ namespace OSLC4Net.Core.Resources
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
         public string GetDescription()
         {
-            return this._description;
+            return _description;
         }
 
         [OslcDescription("A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
@@ -383,7 +383,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Identifier")]
         public string GetIdentifier()
         {
-            return this._identifier;
+            return _identifier;
         }
 
         [OslcDescription("Resource Shape that provides hints as to resource property value-types and allowed values. ")]
@@ -392,7 +392,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Instance Shape")]
         public Uri GetInstanceShape()
         {
-            return this._instanceShape;
+            return _instanceShape;
         }
 
         [OslcDescription("Timestamp last latest resource modification.")]
@@ -401,7 +401,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Modified")]
         public DateTime? GetModified()
         {
-            return this._modified;
+            return _modified;
         }
 
         [OslcDescription("The resource type URIs.")]
@@ -410,7 +410,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Types")]
         public Uri[] GetRdfTypes()
         {
-            return this._rdfTypes.ToArray();
+            return _rdfTypes.ToArray();
         }
 
         [OslcDescription("The scope of a resource is a Uri for the resource's OSLC Service Provider.")]
@@ -419,7 +419,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Service Provider")]
         public Uri GetServiceProvider()
         {
-            return this._serviceProvider;
+            return _serviceProvider;
         }
 
         [OslcDescription("Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users.")]
@@ -428,7 +428,7 @@ namespace OSLC4Net.Core.Resources
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
         public string GetShortTitle()
         {
-            return this._shortTitle;
+            return _shortTitle;
         }
 
         [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
@@ -438,226 +438,226 @@ namespace OSLC4Net.Core.Resources
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
         public string GetTitle()
         {
-            return this._title;
+            return _title;
         }
 
         public void SetConstrains(Link[] constrains)
         {
-            this._constrains.Clear();
+            _constrains.Clear();
 
             if (constrains != null)
             {
-                this._constrains.AddAll(constrains);
+                _constrains.AddAll(constrains);
             }
         }
 
         public void SetConstrainedBy(Link[] constrainedBy)
         {
-            this._constrainedBy.Clear();
+            _constrainedBy.Clear();
 
             if (constrainedBy != null)
             {
-                this._constrainedBy.AddAll(constrainedBy);
+                _constrainedBy.AddAll(constrainedBy);
             }
         }
 
         public void SetDecomposes(Link[] decomposes)
         {
-            this._affectedBy.Clear();
+            _affectedBy.Clear();
 
             if (decomposes != null)
             {
-                this._decomposes.AddAll(decomposes);
+                _decomposes.AddAll(decomposes);
             }
         }
 
         public void SetDecomposedBy(Link[] decomposedBy)
         {
-            this._decomposedBy.Clear();
+            _decomposedBy.Clear();
 
             if (decomposedBy != null)
             {
-                this._decomposedBy.AddAll(decomposedBy);
+                _decomposedBy.AddAll(decomposedBy);
             }
         }
 
         public void SetSatisfies(Link[] satisfies)
         {
-            this._satisfies.Clear();
+            _satisfies.Clear();
 
             if (satisfies != null)
             {
-                this._satisfies.AddAll(satisfies);
+                _satisfies.AddAll(satisfies);
             }
         }
 
         public void SetSatisfiedBy(Link[] satisfiedBy)
         {
-            this._satisfiedBy.Clear();
+            _satisfiedBy.Clear();
 
             if (satisfiedBy != null)
             {
-                this._satisfiedBy.AddAll(satisfiedBy);
+                _satisfiedBy.AddAll(satisfiedBy);
             }
         }
 
         public void SetValidatedBy(Link[] validatedBy)
         {
-            this._validatedBy.Clear();
+            _validatedBy.Clear();
 
             if (validatedBy != null)
             {
-                this._validatedBy.AddAll(validatedBy);
+                _validatedBy.AddAll(validatedBy);
             }
         }
 
         public void SetTrackedBy(Link[] trackedBy)
         {
-            this._trackedBy.Clear();
+            _trackedBy.Clear();
 
             if (trackedBy != null)
             {
-                this._trackedBy.AddAll(trackedBy);
+                _trackedBy.AddAll(trackedBy);
             }
         }
 
         public void SetAffectedBy(Link[] affectedBy)
         {
-            this._affectedBy.Clear();
+            _affectedBy.Clear();
 
             if (affectedBy != null)
             {
-                this._affectedBy.AddAll(affectedBy);
+                _affectedBy.AddAll(affectedBy);
             }
         }
 
         public void SetImplementedBy(Link[] implementedBy)
         {
-            this._implementedBy.Clear();
+            _implementedBy.Clear();
 
             if (implementedBy != null)
             {
-                this._implementedBy.AddAll(implementedBy);
+                _implementedBy.AddAll(implementedBy);
             }
         }
 
         public void SetElaboratedBy(Link[] elaboratedBy)
         {
-            this._elaboratedBy.Clear();
+            _elaboratedBy.Clear();
 
             if (elaboratedBy != null)
             {
-                this._elaboratedBy.AddAll(elaboratedBy);
+                _elaboratedBy.AddAll(elaboratedBy);
             }
         }
 
         public void SetElaborates(Link[] elaborates)
         {
-            this._elaborates.Clear();
+            _elaborates.Clear();
 
             if (elaborates != null)
             {
-                this._elaborates.AddAll(elaborates);
+                _elaborates.AddAll(elaborates);
             }
         }
 
         public void SetSpecifiedBy(Link[] specifiedBy)
         {
-            this._specifiedBy.Clear();
+            _specifiedBy.Clear();
 
             if (specifiedBy != null)
             {
-                this._specifiedBy.AddAll(specifiedBy);
+                _specifiedBy.AddAll(specifiedBy);
             }
         }
 
         public void SetSpecifies(Link[] specifies)
         {
-            this._specifies.Clear();
+            _specifies.Clear();
 
             if (specifies != null)
             {
-                this._specifies.AddAll(specifies);
+                _specifies.AddAll(specifies);
             }
         }
 
         public void SetContributors(Uri[] contributors)
         {
-            this._contributors.Clear();
+            _contributors.Clear();
 
             if (contributors != null)
             {
-                this._contributors.AddAll(contributors);
+                _contributors.AddAll(contributors);
             }
         }
 
         public void SetCreated(DateTime? created)
         {
-            this._created = created;
+            _created = created;
         }
 
         public void SetCreators(Uri[] creators)
         {
-            this._creators.Clear();
+            _creators.Clear();
 
             if (creators != null)
             {
-                this._creators.AddAll(creators);
+                _creators.AddAll(creators);
             }
         }
 
         public void SetDescription(string description)
         {
-            this._description = description;
+            _description = description;
         }
 
         public void SetIdentifier(string identifier)
         {
-            this._identifier = identifier;
+            _identifier = identifier;
         }
 
         public void SetInstanceShape(Uri instanceShape)
         {
-            this._instanceShape = instanceShape;
+            _instanceShape = instanceShape;
         }
 
         public void SetModified(DateTime? modified)
         {
-            this._modified = modified;
+            _modified = modified;
         }
 
         public void SetRdfTypes(Uri[] rdfTypes)
         {
-            this._rdfTypes.Clear();
+            _rdfTypes.Clear();
 
             if (rdfTypes != null)
             {
-                this._rdfTypes.AddAll(rdfTypes);
+                _rdfTypes.AddAll(rdfTypes);
             }
         }
 
         public void SetServiceProvider(Uri serviceProvider)
         {
-            this._serviceProvider = serviceProvider;
+            _serviceProvider = serviceProvider;
         }
 
         public void SetShortTitle(string shortTitle)
         {
-            this._shortTitle = shortTitle;
+            _shortTitle = shortTitle;
         }
 
         public void SetTitle(string title)
         {
-            this._title = title;
+            _title = title;
         }
 
         public void SetSubjects(string[] subjects)
         {
-            this._subjects.Clear();
+            _subjects.Clear();
 
             if (subjects != null)
             {
-                this._subjects.AddAll(subjects);
+                _subjects.AddAll(subjects);
             }
         }
     }

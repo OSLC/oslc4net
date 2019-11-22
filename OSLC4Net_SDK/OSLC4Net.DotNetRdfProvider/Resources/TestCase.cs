@@ -50,37 +50,37 @@ namespace OSLC4Net.Core.Resources
 
         public void AddContributor(Uri contributor)
         {
-            this.contributors.Add(contributor);
+            contributors.Add(contributor);
         }
 
         public void AddCreator(Uri creator)
         {
-            this.creators.Add(creator);
+            creators.Add(creator);
         }
 
         public void AddRelatedChangeRequest(Link relatedChangeRequest)
         {
-            this.relatedChangeRequests.Add(relatedChangeRequest);
+            relatedChangeRequests.Add(relatedChangeRequest);
         }
 
         public void AddSubject(String subject)
         {
-            this.subjects.Add(subject);
+            subjects.Add(subject);
         }
 
         public void AddTestsChangeRequest(Link changeRequest)
         {
-            this.testsChangeRequests.Add(changeRequest);
+            testsChangeRequests.Add(changeRequest);
         }
 
         public void AddUsesTestScript(Link testscript)
         {
-            this.usesTestScripts.Add(testscript);
+            usesTestScripts.Add(testscript);
         }
 
         public void AddValidatesRequirement(Link requirement)
         {
-            this.validatesRequirements.Add(requirement);
+            validatesRequirements.Add(requirement);
         }
 
         [OslcDescription("The person(s) who are responsible for the work needed to complete the test case.")]

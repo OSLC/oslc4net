@@ -39,17 +39,17 @@ namespace OSLC4Net.Core.Resources
 
         public ParameterInstance() : base()
         {
-            this._rdfTypes.Add(new Uri(AutomationConstants.TYPE_PARAMETER_INSTANCE));
+            _rdfTypes.Add(new Uri(AutomationConstants.TYPE_PARAMETER_INSTANCE));
         }
 
         public ParameterInstance(Uri about) : base(about)
         {
-            this._rdfTypes.Add(new Uri(AutomationConstants.TYPE_PARAMETER_INSTANCE));
+            _rdfTypes.Add(new Uri(AutomationConstants.TYPE_PARAMETER_INSTANCE));
         }
 
         public void AddRdfType(Uri rdfType)
         {
-            this._rdfTypes.Add(rdfType);
+            _rdfTypes.Add(rdfType);
         }
 
         [OslcDescription("Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
@@ -58,7 +58,7 @@ namespace OSLC4Net.Core.Resources
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
         public string GetDescription()
         {
-            return this._description;
+            return _description;
         }
 
         [OslcDescription("The name of the parameter instance.")]
@@ -67,7 +67,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Name")]
         public string GetName()
         {
-            return this._name;
+            return _name;
         }
 
         [OslcDescription("The value of the parameter.")]
@@ -76,7 +76,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Value")]
         public string GetValue()
         {
-            return this._value;
+            return _value;
         }
 
         [OslcDescription("Resource Shape that provides hints as to resource property value-types and allowed values. ")]
@@ -85,7 +85,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Instance Shape")]
         public Uri GetInstanceShape()
         {
-            return this._instanceShape;
+            return _instanceShape;
         }
 
         [OslcDescription("The resource type URIs.")]
@@ -94,7 +94,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Types")]
         public Uri[] GetRdfTypes()
         {
-            return this._rdfTypes.ToArray();
+            return _rdfTypes.ToArray();
         }
 
         [OslcDescription("The scope of a resource is a Uri for the resource's OSLC Service Provider.")]
@@ -103,47 +103,47 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Service Provider")]
         public Uri GetServiceProvider()
         {
-            return this._serviceProvider;
+            return _serviceProvider;
         }
 
         public void SetDescription(string description)
         {
-            this._description = description;
+            _description = description;
         }
 
         public void SetName(string name)
         {
-            this._name = name;
+            _name = name;
         }
 
         public void SetValue(string value)
         {
-            this._value = value;
+            _value = value;
         }
 
         public void SetInstanceShape(Uri instanceShape)
         {
-            this._instanceShape = instanceShape;
+            _instanceShape = instanceShape;
         }
 
         public void SetRdfTypes(Uri[] rdfTypes)
         {
-            this._rdfTypes.Clear();
+            _rdfTypes.Clear();
 
             if (rdfTypes != null)
             {
-                this._rdfTypes.AddAll(rdfTypes);
+                _rdfTypes.AddAll(rdfTypes);
             }
         }
 
         public void SetServiceProvider(Uri serviceProvider)
         {
-            this._serviceProvider = serviceProvider;
+            _serviceProvider = serviceProvider;
         }
 
         public int CompareTo(ParameterInstance o)
         {
-            return o.GetName().CompareTo(this._name);
+            return o.GetName().CompareTo(_name);
         }
 
         protected Uri GetRdfType()

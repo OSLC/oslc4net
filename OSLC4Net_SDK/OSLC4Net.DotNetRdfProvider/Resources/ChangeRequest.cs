@@ -67,112 +67,112 @@ namespace OSLC4Net.Core.Resources
 
         public ChangeRequest() : base()
         {
-            this._rdfTypes.Add(new Uri(CmConstants.TYPE_CHANGE_REQUEST));
+            _rdfTypes.Add(new Uri(CmConstants.TYPE_CHANGE_REQUEST));
         }
 
         public ChangeRequest(Uri about) : base(about)
         {
-            this._rdfTypes.Add(new Uri(CmConstants.TYPE_CHANGE_REQUEST));
+            _rdfTypes.Add(new Uri(CmConstants.TYPE_CHANGE_REQUEST));
         }
 
         public void AddAffectedByDefect(Link affectedByDefect)
         {
-            this._affectedByDefects.Add(affectedByDefect);
+            _affectedByDefects.Add(affectedByDefect);
         }
 
         public void AddAffectsPlanItem(Link affectsPlanItem)
         {
-            this._affectsPlanItems.Add(affectsPlanItem);
+            _affectsPlanItems.Add(affectsPlanItem);
         }
 
         public void AddAffectsRequirement(Link affectsRequirement)
         {
-            this._affectsRequirements.Add(affectsRequirement);
+            _affectsRequirements.Add(affectsRequirement);
         }
 
         public void AddAffectsTestResult(Link affectsTestResult)
         {
-            this._affectsTestResults.Add(affectsTestResult);
+            _affectsTestResults.Add(affectsTestResult);
         }
 
         public void AddBlocksTestExecutionRecord(Link blocksTestExecutionRecord)
         {
-            this._blocksTestExecutionRecords.Add(blocksTestExecutionRecord);
+            _blocksTestExecutionRecords.Add(blocksTestExecutionRecord);
         }
 
         public void AddContributor(Uri contributor)
         {
-            this._contributors.Add(contributor);
+            _contributors.Add(contributor);
         }
 
         public void AddCreator(Uri creator)
         {
-            this._creators.Add(creator);
+            _creators.Add(creator);
         }
 
         public void AddDctermsType(string dctermsType)
         {
-            this._dctermsTypes.Add(dctermsType);
+            _dctermsTypes.Add(dctermsType);
         }
 
         public void AddImplementsRequirement(Link implementsRequirement)
         {
-            this._implementsRequirements.Add(implementsRequirement);
+            _implementsRequirements.Add(implementsRequirement);
         }
 
         public void AddRdfType(Uri rdfType)
         {
-            this._rdfTypes.Add(rdfType);
+            _rdfTypes.Add(rdfType);
         }
 
         public void AddRelatedChangeRequest(Link relatedChangeRequest)
         {
-            this._relatedChangeRequests.Add(relatedChangeRequest);
+            _relatedChangeRequests.Add(relatedChangeRequest);
         }
 
         public void AddRelatedResource(Link relatedResource)
         {
-            this._relatedResources.Add(relatedResource);
+            _relatedResources.Add(relatedResource);
         }
 
         public void AddRelatedTestCase(Link relatedTestCase)
         {
-            this._relatedTestCases.Add(relatedTestCase);
+            _relatedTestCases.Add(relatedTestCase);
         }
 
         public void AddRelatedTestExecutionRecord(Link relatedTestExecutionRecord)
         {
-            this._relatedTestExecutionRecords.Add(relatedTestExecutionRecord);
+            _relatedTestExecutionRecords.Add(relatedTestExecutionRecord);
         }
 
         public void AddRelatedTestPlan(Link relatedTestPlan)
         {
-            this._relatedTestPlans.Add(relatedTestPlan);
+            _relatedTestPlans.Add(relatedTestPlan);
         }
 
         public void AddRelatedTestScript(Link relatedTestScript)
         {
-            this._relatedTestScripts.Add(relatedTestScript);
+            _relatedTestScripts.Add(relatedTestScript);
         }
 
         public void AddSubject(string subject)
         {
-            this._subjects.Add(subject);
+            _subjects.Add(subject);
         }
 
         public void AddTestedByTestCase(Link testedByTestCase)
         {
-            this._testedByTestCases.Add(testedByTestCase);
+            _testedByTestCases.Add(testedByTestCase);
         }
 
         public void AddTracksChangeSet(Link tracksChangeSet)
         {
-            this._tracksChangeSets.Add(tracksChangeSet);
+            _tracksChangeSets.Add(tracksChangeSet);
         }
 
         public void AddTracksRequirement(Link tracksRequirement)
         {
-            this._tracksRequirements.Add(tracksRequirement);
+            _tracksRequirements.Add(tracksRequirement);
         }
 
         [OslcDescription("Change request is affected by a reported defect.")]
@@ -183,7 +183,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Affected By Defects")]
         public Link[] GetAffectedByDefects()
         {
-            return this._affectedByDefects.ToArray();
+            return _affectedByDefects.ToArray();
         }
 
         [OslcDescription("Change request affects a plan item. ")]
@@ -194,7 +194,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Affects Plan Items")]
         public Link[] GetAffectsPlanItems()
         {
-            return this._affectsPlanItems.ToArray();
+            return _affectsPlanItems.ToArray();
         }
 
         [OslcDescription("Change request affecting a Requirement.")]
@@ -205,7 +205,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Affects Requirements")]
         public Link[] GetAffectsRequirements()
         {
-            return this._affectsRequirements.ToArray();
+            return _affectsRequirements.ToArray();
         }
 
         [OslcDescription("Associated QM resource that is affected by this Change Request.")]
@@ -216,7 +216,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Affects Test Results")]
         public Link[] GetAffectsTestResults()
         {
-            return this._affectsTestResults.ToArray();
+            return _affectsTestResults.ToArray();
         }
 
         [OslcDescription("Associated QM resource that is blocked by this Change Request.")]
@@ -227,7 +227,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Blocks Test Execution Records")]
         public Link[] GetBlocksTestExecutionRecords()
         {
-            return this._blocksTestExecutionRecords.ToArray();
+            return _blocksTestExecutionRecords.ToArray();
         }
 
         [OslcDescription("The date at which no further activity or work is intended to be conducted. ")]
@@ -236,7 +236,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Close DateTime?")]
         public DateTime? GetCloseDate()
         {
-            return this._closeDate;
+            return _closeDate;
         }
 
         [OslcDescription("The person(s) who are responsible for the work needed to complete the change request.")]
@@ -246,7 +246,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Contributors")]
         public Uri[] GetContributors()
         {
-            return this._contributors.ToArray();
+            return _contributors.ToArray();
         }
 
         [OslcDescription("Timestamp of resource creation.")]
@@ -255,7 +255,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Created")]
         public DateTime? GetCreated()
         {
-            return this._created;
+            return _created;
         }
 
         [OslcDescription("Creator or creators of resource.")]
@@ -265,7 +265,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Creators")]
         public Uri[] GetCreators()
         {
-            return this._creators.ToArray();
+            return _creators.ToArray();
         }
 
         [OslcAllowedValue(new string[] { "Defect", "Task", "Story", "Bug Report", "Feature Request" })]
@@ -275,7 +275,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Types")]
         public string[] GetDctermsTypes()
         {
-            return this._dctermsTypes.ToArray();
+            return _dctermsTypes.ToArray();
         }
 
         [OslcDescription("Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
@@ -284,7 +284,7 @@ namespace OSLC4Net.Core.Resources
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
         public string GetDescription()
         {
-            return this._description;
+            return _description;
         }
 
         [OslcDescription("A series of notes and comments about this change request.")]
@@ -293,7 +293,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Discussed By")]
         public Uri GetDiscussedBy()
         {
-            return this._discussedBy;
+            return _discussedBy;
         }
 
         [OslcDescription("A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
@@ -303,7 +303,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Identifier")]
         public string GetIdentifier()
         {
-            return this._identifier;
+            return _identifier;
         }
 
         [OslcDescription("Implements associated Requirement.")]
@@ -314,7 +314,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Implements Requirements")]
         public Link[] GetImplementsRequirements()
         {
-            return this._implementsRequirements.ToArray();
+            return _implementsRequirements.ToArray();
         }
 
         [OslcDescription("Resource Shape that provides hints as to resource property value-types and allowed values. ")]
@@ -323,7 +323,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Instance Shape")]
         public Uri GetInstanceShape()
         {
-            return this._instanceShape;
+            return _instanceShape;
         }
 
         [OslcDescription("Timestamp last latest resource modification.")]
@@ -332,7 +332,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Modified")]
         public DateTime? GetModified()
         {
-            return this._modified;
+            return _modified;
         }
 
         [OslcDescription("The resource type URIs.")]
@@ -341,7 +341,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Types")]
         public Uri[] GetRdfTypes()
         {
-            return this._rdfTypes.ToArray();
+            return _rdfTypes.ToArray();
         }
 
         [OslcDescription("This relationship is loosely coupled and has no specific meaning.")]
@@ -352,7 +352,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Related Change Requests")]
         public Link[] GetRelatedChangeRequests()
         {
-            return this._relatedChangeRequests.ToArray();
+            return _relatedChangeRequests.ToArray();
         }
 
         [OslcDescription("Related OSLC resources of any type.")]
@@ -361,7 +361,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Related Resources")]
         public Link[] GetRelatedResources()
         {
-            return this._relatedResources.ToArray();
+            return _relatedResources.ToArray();
         }
 
         [OslcDescription("Related QM test case resource.")]
@@ -372,7 +372,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Related Test Cases")]
         public Link[] GetRelatedTestCases()
         {
-            return this._relatedTestCases.ToArray();
+            return _relatedTestCases.ToArray();
         }
 
         [OslcDescription("Related to a QM test execution resource.")]
@@ -383,7 +383,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Related Test Execution Records")]
         public Link[] GetRelatedTestExecutionRecords()
         {
-            return this._relatedTestExecutionRecords.ToArray();
+            return _relatedTestExecutionRecords.ToArray();
         }
 
         [OslcDescription("Related QM test plan resource.")]
@@ -394,7 +394,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Related Test Plans")]
         public Link[] GetRelatedTestPlans()
         {
-            return this._relatedTestPlans.ToArray();
+            return _relatedTestPlans.ToArray();
         }
 
         [OslcDescription("Related QM test script resource.")]
@@ -405,7 +405,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Related Test Scripts")]
         public Link[] GetRelatedTestScripts()
         {
-            return this._relatedTestScripts.ToArray();
+            return _relatedTestScripts.ToArray();
         }
 
         [OslcDescription("The scope of a resource is a Uri for the resource's OSLC Service Provider.")]
@@ -414,7 +414,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Service Provider")]
         public Uri GetServiceProvider()
         {
-            return this._serviceProvider;
+            return _serviceProvider;
         }
 
         [OslcDescription("Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users.")]
@@ -423,7 +423,7 @@ namespace OSLC4Net.Core.Resources
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
         public string GetShortTitle()
         {
-            return this._shortTitle;
+            return _shortTitle;
         }
 
         [OslcDescription("Used to indicate the status of the change request based on values defined by the service provider. Most often a read-only property. Some possible values may include: 'Submitted', 'Done', 'InProgress', etc.")]
@@ -431,7 +431,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Status")]
         public string GetStatus()
         {
-            return this._status;
+            return _status;
         }
 
         [OslcDescription("Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
@@ -441,7 +441,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Subjects")]
         public string[] GetSubjects()
         {
-            return this._subjects.ToArray();
+            return _subjects.ToArray();
         }
 
         [OslcDescription("Test case by which this change request is tested.")]
@@ -452,7 +452,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Tested by Test Cases")]
         public Link[] GetTestedByTestCases()
         {
-            return this._testedByTestCases.ToArray();
+            return _testedByTestCases.ToArray();
         }
 
         [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
@@ -462,7 +462,7 @@ namespace OSLC4Net.Core.Resources
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
         public string GetTitle()
         {
-            return this._title;
+            return _title;
         }
 
         [OslcDescription("Tracks SCM change set resource.")]
@@ -473,7 +473,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Tracks Change Sets")]
         public Link[] GetTracksChangeSets()
         {
-            return this._tracksChangeSets.ToArray();
+            return _tracksChangeSets.ToArray();
         }
 
         [OslcDescription("Tracks the associated Requirement or Requirement ChangeSet resources.")]
@@ -484,7 +484,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Tracks Requirements")]
         public Link[] GetTracksRequirements()
         {
-            return this._tracksRequirements.ToArray();
+            return _tracksRequirements.ToArray();
         }
 
         [OslcDescription("Whether or not the Change Request has been approved.")]
@@ -493,7 +493,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Approved")]
         public bool IsApproved()
         {
-            return this._approved;
+            return _approved;
         }
 
         [OslcDescription("Whether or not the Change Request is completely done, no further fixes or fix verification is needed.")]
@@ -502,7 +502,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Closed")]
         public bool IsClosed()
         {
-            return this._closed;
+            return _closed;
         }
 
         [OslcDescription("Whether or not the Change Request has been fixed.")]
@@ -511,7 +511,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Fixed")]
         public bool IsFixed()
         {
-            return this._isFixedValue;
+            return _isFixedValue;
         }
 
         [OslcDescription("Whether or not the Change Request in a state indicating that active work is occurring. If oslc_cm:inprogress is true, then oslc_cm:fixed and oslc_cm:closed must also be false.")]
@@ -521,7 +521,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("In Progress")]
         public bool IsInProgress()
         {
-            return this._inProgress;
+            return _inProgress;
         }
 
         [OslcDescription("Whether or not the Change Request has been reviewed.")]
@@ -530,7 +530,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Reviewed")]
         public bool IsReviewed()
         {
-            return this._reviewed;
+            return _reviewed;
         }
 
         [OslcDescription("Whether or not the resolution or fix of the Change Request has been verified.")]
@@ -539,292 +539,292 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Verified")]
         public bool IsVerified()
         {
-            return this._verified;
+            return _verified;
         }
 
         public void SetAffectedByDefects(Link[] affectedByDefects)
         {
-            this._affectedByDefects.Clear();
+            _affectedByDefects.Clear();
 
             if (affectedByDefects != null)
             {
-                this._affectedByDefects.AddAll(affectedByDefects);
+                _affectedByDefects.AddAll(affectedByDefects);
             }
         }
 
         public void SetAffectsPlanItems(Link[] affectsPlanItems)
         {
-            this._affectsPlanItems.Clear();
+            _affectsPlanItems.Clear();
 
             if (affectsPlanItems != null)
             {
-                this._affectsPlanItems.AddAll(affectsPlanItems);
+                _affectsPlanItems.AddAll(affectsPlanItems);
             }
         }
 
         public void SetAffectsRequirements(Link[] affectsRequirements)
         {
-            this._affectsRequirements.Clear();
+            _affectsRequirements.Clear();
 
             if (affectsRequirements != null)
             {
-                this._affectsRequirements.AddAll(affectsRequirements);
+                _affectsRequirements.AddAll(affectsRequirements);
             }
         }
 
         public void SetAffectsTestResults(Link[] affectsTestResults)
         {
-            this._affectsTestResults.Clear();
+            _affectsTestResults.Clear();
 
             if (affectsTestResults != null)
             {
-                this._affectsTestResults.AddAll(affectsTestResults);
+                _affectsTestResults.AddAll(affectsTestResults);
             }
         }
 
         public void SetApproved(bool approved)
         {
-            this._approved = approved;
+            _approved = approved;
         }
 
         public void SetBlocksTestExecutionRecords(Link[] blocksTestExecutionRecords)
         {
-            this._blocksTestExecutionRecords.Clear();
+            _blocksTestExecutionRecords.Clear();
 
             if (blocksTestExecutionRecords != null)
             {
-                this._blocksTestExecutionRecords.AddAll(blocksTestExecutionRecords);
+                _blocksTestExecutionRecords.AddAll(blocksTestExecutionRecords);
             }
         }
 
         public void SetClosed(bool closed)
         {
-            this._closed = closed;
+            _closed = closed;
         }
 
         public void SetCloseDate(DateTime? closeDate)
         {
-            this._closeDate = closeDate;
+            _closeDate = closeDate;
         }
 
         public void SetContributors(Uri[] contributors)
         {
-            this._contributors.Clear();
+            _contributors.Clear();
 
             if (contributors != null)
             {
-                this._contributors.AddAll(contributors);
+                _contributors.AddAll(contributors);
             }
         }
 
         public void SetCreated(DateTime? created)
         {
-            this._created = created;
+            _created = created;
         }
 
         public void SetCreators(Uri[] creators)
         {
-            this._creators.Clear();
+            _creators.Clear();
 
             if (creators != null)
             {
-                this._creators.AddAll(creators);
+                _creators.AddAll(creators);
             }
         }
 
         public void SetDctermsTypes(string[] dctermsTypes)
         {
-            this._dctermsTypes.Clear();
+            _dctermsTypes.Clear();
 
             if (dctermsTypes != null)
             {
-                this._dctermsTypes.AddAll(dctermsTypes);
+                _dctermsTypes.AddAll(dctermsTypes);
             }
         }
 
         public void SetDescription(string description)
         {
-            this._description = description;
+            _description = description;
         }
 
         public void SetDiscussedBy(Uri discussedBy)
         {
-            this._discussedBy = discussedBy;
+            _discussedBy = discussedBy;
         }
 
         public void SetFixed(bool isFixed)
         {
-            this._isFixedValue = isFixed;
+            _isFixedValue = isFixed;
         }
 
         public void SetIdentifier(string identifier)
         {
-            this._identifier = identifier;
+            _identifier = identifier;
         }
 
         public void SetImplementsRequirements(Link[] implementsRequirements)
         {
-            this._implementsRequirements.Clear();
+            _implementsRequirements.Clear();
 
             if (implementsRequirements != null)
             {
-                this._implementsRequirements.AddAll(implementsRequirements);
+                _implementsRequirements.AddAll(implementsRequirements);
             }
         }
 
         public void SetInProgress(bool inProgress)
         {
-            this._inProgress = inProgress;
+            _inProgress = inProgress;
         }
 
         public void SetInstanceShape(Uri instanceShape)
         {
-            this._instanceShape = instanceShape;
+            _instanceShape = instanceShape;
         }
 
         public void SetModified(DateTime? modified)
         {
-            this._modified = modified;
+            _modified = modified;
         }
 
         public void SetRdfTypes(Uri[] rdfTypes)
         {
-            this._rdfTypes.Clear();
+            _rdfTypes.Clear();
 
             if (rdfTypes != null)
             {
-                this._rdfTypes.AddAll(rdfTypes);
+                _rdfTypes.AddAll(rdfTypes);
             }
         }
 
         public void SetRelatedChangeRequests(Link[] relatedChangeRequests)
         {
-            this._relatedChangeRequests.Clear();
+            _relatedChangeRequests.Clear();
 
             if (relatedChangeRequests != null)
             {
-                this._relatedChangeRequests.AddAll(relatedChangeRequests);
+                _relatedChangeRequests.AddAll(relatedChangeRequests);
             }
         }
 
         public void SetRelatedResources(Link[] relatedResources)
         {
-            this._relatedResources.Clear();
+            _relatedResources.Clear();
 
             if (relatedResources != null)
             {
-                this._relatedResources.AddAll(relatedResources);
+                _relatedResources.AddAll(relatedResources);
             }
         }
 
         public void SetRelatedTestCases(Link[] relatedTestCases)
         {
-            this._relatedTestCases.Clear();
+            _relatedTestCases.Clear();
 
             if (relatedTestCases != null)
             {
-                this._relatedTestCases.AddAll(relatedTestCases);
+                _relatedTestCases.AddAll(relatedTestCases);
             }
         }
 
         public void SetRelatedTestExecutionRecords(Link[] relatedTestExecutionRecords)
         {
-            this._relatedTestExecutionRecords.Clear();
+            _relatedTestExecutionRecords.Clear();
 
             if (relatedTestExecutionRecords != null)
             {
-                this._relatedTestExecutionRecords.AddAll(relatedTestExecutionRecords);
+                _relatedTestExecutionRecords.AddAll(relatedTestExecutionRecords);
             }
         }
 
         public void SetRelatedTestPlans(Link[] relatedTestPlans)
         {
-            this._relatedTestPlans.Clear();
+            _relatedTestPlans.Clear();
 
             if (relatedTestPlans != null)
             {
-                this._relatedTestPlans.AddAll(relatedTestPlans);
+                _relatedTestPlans.AddAll(relatedTestPlans);
             }
         }
 
         public void SetRelatedTestScripts(Link[] relatedTestScripts)
         {
-            this._relatedTestScripts.Clear();
+            _relatedTestScripts.Clear();
 
             if (relatedTestScripts != null)
             {
-                this._relatedTestScripts.AddAll(relatedTestScripts);
+                _relatedTestScripts.AddAll(relatedTestScripts);
             }
         }
 
         public void SetReviewed(bool reviewed)
         {
-            this._reviewed = reviewed;
+            _reviewed = reviewed;
         }
 
         public void SetServiceProvider(Uri serviceProvider)
         {
-            this._serviceProvider = serviceProvider;
+            _serviceProvider = serviceProvider;
         }
 
         public void SetShortTitle(string shortTitle)
         {
-            this._shortTitle = shortTitle;
+            _shortTitle = shortTitle;
         }
 
         public void SetStatus(string status)
         {
-            this._status = status;
+            _status = status;
         }
 
         public void SetSubjects(string[] subjects)
         {
-            this._subjects.Clear();
+            _subjects.Clear();
 
             if (subjects != null)
             {
-                this._subjects.AddAll(subjects);
+                _subjects.AddAll(subjects);
             }
         }
 
         public void SetTestedByTestCases(Link[] testedByTestCases)
         {
-            this._testedByTestCases.Clear();
+            _testedByTestCases.Clear();
 
             if (testedByTestCases != null)
             {
-                this._testedByTestCases.AddAll(testedByTestCases);
+                _testedByTestCases.AddAll(testedByTestCases);
             }
         }
 
         public void SetTitle(string title)
         {
-            this._title = title;
+            _title = title;
         }
 
         public void SetTracksChangeSets(Link[] tracksChangeSets)
         {
-            this._tracksChangeSets.Clear();
+            _tracksChangeSets.Clear();
 
             if (tracksChangeSets != null)
             {
-                this._tracksChangeSets.AddAll(tracksChangeSets);
+                _tracksChangeSets.AddAll(tracksChangeSets);
             }
         }
 
         public void SetTracksRequirements(Link[] tracksRequirements)
         {
-            this._tracksRequirements.Clear();
+            _tracksRequirements.Clear();
 
             if (tracksRequirements != null)
             {
-                this._tracksRequirements.AddAll(tracksRequirements);
+                _tracksRequirements.AddAll(tracksRequirements);
             }
         }
 
         public void SetVerified(bool verified)
         {
-            this._verified = verified;
+            _verified = verified;
         }
     }
 }

@@ -55,9 +55,9 @@ namespace OSLC4Net.Core.Model
         public OAuthConfiguration(Uri oauthRequestTokenURI, Uri authorizationURI, Uri oauthAccessTokenURI)
             : this()
         {
-            this._oauthRequestTokenUri = oauthRequestTokenURI;
-            this._authorizationUri = authorizationURI;
-            this._oauthAccessTokenUri = oauthAccessTokenURI;
+            _oauthRequestTokenUri = oauthRequestTokenURI;
+            _authorizationUri = authorizationURI;
+            _oauthAccessTokenUri = oauthAccessTokenURI;
         }
 
         [OslcDescription("Uri for obtaining OAuth authorization")]
@@ -67,7 +67,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Authorization Uri")]
         public Uri GetAuthorizationURI()
         {
-            return this._authorizationUri;
+            return _authorizationUri;
         }
 
         [OslcDescription("Uri for obtaining OAuth access token")]
@@ -77,7 +77,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Access Token Uri")]
         public Uri GetOauthAccessTokenURI()
         {
-            return this._oauthAccessTokenUri;
+            return _oauthAccessTokenUri;
         }
 
         [OslcDescription("Uri for obtaining OAuth request token")]
@@ -87,22 +87,22 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Request Token Uri")]
         public Uri GetOauthRequestTokenURI()
         {
-            return this._oauthRequestTokenUri;
+            return _oauthRequestTokenUri;
         }
 
         public void SetAuthorizationURI(Uri authorizationURI)
         {
-            this._authorizationUri = authorizationURI;
+            _authorizationUri = authorizationURI;
         }
 
         public void SetOauthAccessTokenURI(Uri oauthAccessTokenURI)
         {
-            this._oauthAccessTokenUri = oauthAccessTokenURI;
+            _oauthAccessTokenUri = oauthAccessTokenURI;
         }
 
         public void SetOauthRequestTokenURI(Uri oauthRequestTokenURI)
         {
-            this._oauthRequestTokenUri = oauthRequestTokenURI;
+            _oauthRequestTokenUri = oauthRequestTokenURI;
         }
     }
 }

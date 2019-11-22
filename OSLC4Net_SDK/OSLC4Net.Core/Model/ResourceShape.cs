@@ -52,12 +52,12 @@ namespace OSLC4Net.Core.Model
 
         public void AddDescribeItem(Uri describeItem)
         {
-            this.describes.Add(describeItem);
+            describes.Add(describeItem);
         }
 
         public void AddProperty(Property property)
         {
-            this.properties.Add(property);
+            properties.Add(property);
         }
 
         [OslcDescription("Type or types of resource described by this shape")]
@@ -66,7 +66,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Describes")]
         public Uri[] GetDescribes()
         {
-            return this.describes.ToArray();
+            return describes.ToArray();
         }
 
         [OslcDescription("The properties that are allowed or required by this shape")]
@@ -80,7 +80,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.LocalResource)]
         public Property[] GetProperties()
         {
-            return this.properties.ToArray();
+            return properties.ToArray();
         }
 
         [OslcDescription(
@@ -91,7 +91,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.XMLLiteral)]
         public string GetTitle()
         {
-            return this.title;
+            return title;
         }
 
         public void SetDescribes(Uri[] describes)

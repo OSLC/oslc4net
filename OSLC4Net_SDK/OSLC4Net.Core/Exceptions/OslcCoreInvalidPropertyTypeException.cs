@@ -40,19 +40,19 @@ namespace OSLC4Net.Core.Exceptions
         public OslcCoreInvalidPropertyTypeException(Type resourceType, MethodInfo method, Type returnType)
             : base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name, returnType.Name })
         {
-            this._method = method;
-            this._resourceType = resourceType;
-            this._returnType = returnType;
+            _method = method;
+            _resourceType = resourceType;
+            _returnType = returnType;
         }
 
         public MethodInfo GetMethod()
         {
-            return this._method;
+            return _method;
         }
 
         public Type GetResourceClass()
         {
-            return this._resourceType;
+            return _resourceType;
         }
     }
 }

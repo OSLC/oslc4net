@@ -15,7 +15,7 @@
 
 namespace OSLC4Net.Core.Resources
 {
-    using OSLC4Net.Client.Exceptions;
+    using OSLC4Net.Core.Exceptions;
     using OSLC4Net.Core.Model;
 
     using System;

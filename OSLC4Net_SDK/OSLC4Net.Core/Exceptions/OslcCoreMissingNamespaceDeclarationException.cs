@@ -32,7 +32,7 @@ namespace OSLC4Net.Core.Exceptions
         public OslcCoreMissingNamespaceDeclarationException(string ns)
             : base(MESSAGE_KEY, new object[] { ns })
         {
-            this._ns = ns;
+            _ns = ns;
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace OSLC4Net.Core.Exceptions
         /// <returns></returns>
         public string GetNamespace()
         {
-            return this._ns;
+            return _ns;
         }
     }
 }

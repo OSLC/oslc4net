@@ -31,16 +31,16 @@ namespace OSLC4Net.Core.Model
 
         public IEnumerator<object> GetEnumerator()
         {
-            var method = this.opaqueObj.GetType().GetMethod("GetEnumerator", Type.EmptyTypes);
+            var method = opaqueObj.GetType().GetMethod("GetEnumerator", Type.EmptyTypes);
 
             method = method.MakeGenericMethod();
 
-            return new EnumeratorWrapper(method.Invoke(this.opaqueObj, null));
+            return new EnumeratorWrapper(method.Invoke(opaqueObj, null));
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
 
         private class EnumeratorWrapper : IEnumerator<object>
@@ -54,27 +54,27 @@ namespace OSLC4Net.Core.Model
             public EnumeratorWrapper(object opaqueEnumerator)
             {
                 this.opaqueEnumerator = opaqueEnumerator;
-                this.currentInfo = opaqueEnumerator.GetType().GetProperty("Current");
-                this.moveNext = opaqueEnumerator.GetType().GetMethod("MoveNext", Type.EmptyTypes);
+                currentInfo = opaqueEnumerator.GetType().GetProperty("Current");
+                moveNext = opaqueEnumerator.GetType().GetMethod("MoveNext", Type.EmptyTypes);
             }
 
-            public object Current => this.currentInfo.GetValue(this.opaqueEnumerator, null);
+            public object Current => currentInfo.GetValue(opaqueEnumerator, null);
 
             public void Dispose()
             {
-                this.opaqueEnumerator.GetType().GetMethod("Dispose", Type.EmptyTypes)
-                    .Invoke(this.opaqueEnumerator, Type.EmptyTypes);
+                opaqueEnumerator.GetType().GetMethod("Dispose", Type.EmptyTypes)
+                    .Invoke(opaqueEnumerator, Type.EmptyTypes);
             }
 
             public bool MoveNext()
             {
-                return (bool)this.moveNext.Invoke(this.opaqueEnumerator, Type.EmptyTypes);
+                return (bool)moveNext.Invoke(opaqueEnumerator, Type.EmptyTypes);
             }
 
             public void Reset()
             {
-                this.opaqueEnumerator.GetType().GetMethod("Reset", Type.EmptyTypes)
-                    .Invoke(this.opaqueEnumerator, Type.EmptyTypes);
+                opaqueEnumerator.GetType().GetMethod("Reset", Type.EmptyTypes)
+                    .Invoke(opaqueEnumerator, Type.EmptyTypes);
             }
         }
     }

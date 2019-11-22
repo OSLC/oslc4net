@@ -48,7 +48,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Icon")]
         public Uri GetIcon()
         {
-            return this._icon;
+            return _icon;
         }
 
         [OslcDescription("Uri and sizing properties for an HTML document to be used for a large preview.")]
@@ -61,7 +61,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.LocalResource)]
         public Preview GetLargePreview()
         {
-            return this._largePreview;
+            return _largePreview;
         }
 
         [OslcDescription("Abbreviated title which may be used in the display of a link to the resource.")]
@@ -70,7 +70,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Short Title")]
         public string GetShortTitle()
         {
-            return this._shortTitle;
+            return _shortTitle;
         }
 
         [OslcDescription("Uri and sizing properties for an HTML document to be used for a small preview.")]
@@ -83,7 +83,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.LocalResource)]
         public Preview GetSmallPreview()
         {
-            return this._smallPreview;
+            return _smallPreview;
         }
 
         [OslcDescription("Title which may be used in the display of a link to the resource.")]
@@ -94,32 +94,32 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.XMLLiteral)]
         public string GetTitle()
         {
-            return this._title;
+            return _title;
         }
 
         public void SetIcon(Uri icon)
         {
-            this._icon = icon;
+            _icon = icon;
         }
 
         public void SetLargePreview(Preview largePreview)
         {
-            this._largePreview = largePreview;
+            _largePreview = largePreview;
         }
 
         public void SetShortTitle(string shortTitle)
         {
-            this._shortTitle = shortTitle;
+            _shortTitle = shortTitle;
         }
 
         public void SetSmallPreview(Preview smallPreview)
         {
-            this._smallPreview = smallPreview;
+            _smallPreview = smallPreview;
         }
 
         public void SetTitle(string title)
         {
-            this._title = title;
+            _title = title;
         }
     }
 }

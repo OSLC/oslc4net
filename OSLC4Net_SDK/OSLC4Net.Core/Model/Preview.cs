@@ -49,7 +49,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Document")]
         public Uri GetDocument()
         {
-            return this.document;
+            return document;
         }
 
         [OslcDescription(
@@ -59,7 +59,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Hint Height")]
         public string GetHintHeight()
         {
-            return this.hintHeight;
+            return hintHeight;
         }
 
         [OslcDescription(
@@ -69,7 +69,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Hint Width")]
         public string GetHintWidth()
         {
-            return this.hintWidth;
+            return hintWidth;
         }
 
         [OslcDescription(
@@ -79,7 +79,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Initial Height")]
         public string GetInitialHeight()
         {
-            return this.initialHeight;
+            return initialHeight;
         }
 
         public void SetDocument(Uri document)

@@ -95,19 +95,19 @@ namespace OSLC4Net.Client.Oslc.Resources
 		    //make a local copy of any query parameters
 		    if (oslcQueryParams != null)
 		    {
-			    this.where = oslcQueryParams.GetWhere();
-			    this.select = oslcQueryParams.GetSelect();
-			    this.orderBy = oslcQueryParams.GetOrderBy();
-			    this.searchTerms = oslcQueryParams.GetSearchTerms();
-			    this.prefix = oslcQueryParams.GetPrefix();
+			    where = oslcQueryParams.GetWhere();
+			    select = oslcQueryParams.GetSelect();
+			    orderBy = oslcQueryParams.GetOrderBy();
+			    searchTerms = oslcQueryParams.GetSearchTerms();
+			    prefix = oslcQueryParams.GetPrefix();
 		    } else {
-			    this.where = this.select = this.orderBy = this.searchTerms = this.prefix = null;
+			    where = select = orderBy = searchTerms = prefix = null;
 		    }
 
-            this.uriBuilder = new UriBuilder(capabilityUrl);
+            uriBuilder = new UriBuilder(capabilityUrl);
             ApplyPagination();
             ApplyOslcQueryParams();
-            this.queryUrl = this.GetQueryUrl();				
+            queryUrl = GetQueryUrl();				
 	    }
 	
 	    internal OslcQuery(OslcQueryResult previousResult) :
@@ -118,8 +118,8 @@ namespace OSLC4Net.Client.Oslc.Resources
 	    private OslcQuery(OslcQuery previousQuery, String nextPageUrl) :
 		    this(previousQuery.oslcClient, previousQuery.capabilityUrl, previousQuery.pageSize)
         {
-		    this.queryUrl = nextPageUrl;
-		    this.uriBuilder = new UriBuilder(nextPageUrl);
+		    queryUrl = nextPageUrl;
+		    uriBuilder = new UriBuilder(nextPageUrl);
 	    }
 	
 	    private void ApplyPagination() {
@@ -130,23 +130,23 @@ namespace OSLC4Net.Client.Oslc.Resources
 	    }
 	
 	    private void ApplyOslcQueryParams() {
-		    if (this.where != null && this.where.Length != 0) {
-			    QueryParam("oslc.where", this.where);
+		    if (where != null && where.Length != 0) {
+			    QueryParam("oslc.where", where);
 		    }
-            if (this.select != null && this.select.Length != 0)
+            if (select != null && select.Length != 0)
             {
-			    QueryParam("oslc.select", this.select);
+			    QueryParam("oslc.select", select);
 		    }
-		    if (this.orderBy != null && this.orderBy.Length != 0) {
-			    QueryParam("oslc.orderBy", this.orderBy);
+		    if (orderBy != null && orderBy.Length != 0) {
+			    QueryParam("oslc.orderBy", orderBy);
 		    }
-            if (this.searchTerms != null && this.searchTerms.Length != 0)
+            if (searchTerms != null && searchTerms.Length != 0)
             {
-			    QueryParam("oslc.searchTerms", this.searchTerms);
+			    QueryParam("oslc.searchTerms", searchTerms);
 		    }
-            if (this.prefix != null && this.prefix.Length != 0)
+            if (prefix != null && prefix.Length != 0)
             {
-			    QueryParam("oslc.prefix", this.prefix);
+			    QueryParam("oslc.prefix", prefix);
 		    }
 	    }
 

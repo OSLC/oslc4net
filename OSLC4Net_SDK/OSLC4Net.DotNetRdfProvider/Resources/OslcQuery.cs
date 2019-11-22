@@ -85,28 +85,28 @@ namespace OSLC4Net.Core.Resources
         public OslcQuery(OslcClient oslcClient, string capabilityUrl,
                          int pageSize, OslcQueryParameters oslcQueryParams)
         {
-            this._oslcClient = oslcClient;
-            this._capabilityUrl = capabilityUrl;
-            this._pageSize = (pageSize < 1) ? 0 : pageSize;
+            _oslcClient = oslcClient;
+            _capabilityUrl = capabilityUrl;
+            _pageSize = (pageSize < 1) ? 0 : pageSize;
 
             //make a local copy of any query parameters
             if (oslcQueryParams != null)
             {
-                this._where = oslcQueryParams.GetWhere();
-                this._select = oslcQueryParams.GetSelect();
-                this._orderBy = oslcQueryParams.GetOrderBy();
-                this._searchTerms = oslcQueryParams.GetSearchTerms();
-                this._prefix = oslcQueryParams.GetPrefix();
+                _where = oslcQueryParams.GetWhere();
+                _select = oslcQueryParams.GetSelect();
+                _orderBy = oslcQueryParams.GetOrderBy();
+                _searchTerms = oslcQueryParams.GetSearchTerms();
+                _prefix = oslcQueryParams.GetPrefix();
             }
             else
             {
-                this._where = this._select = this._orderBy = this._searchTerms = this._prefix = null;
+                _where = _select = _orderBy = _searchTerms = _prefix = null;
             }
 
-            this._uriBuilder = new UriBuilder(capabilityUrl);
-            this.ApplyPagination();
-            this.ApplyOslcQueryParams();
-            this._queryUrl = this.GetQueryUrl();
+            _uriBuilder = new UriBuilder(capabilityUrl);
+            ApplyPagination();
+            ApplyOslcQueryParams();
+            _queryUrl = GetQueryUrl();
         }
 
         internal OslcQuery(OslcQueryResult previousResult) :
@@ -117,8 +117,8 @@ namespace OSLC4Net.Core.Resources
         private OslcQuery(OslcQuery previousQuery, string nextPageUrl) :
             this(previousQuery._oslcClient, previousQuery._capabilityUrl, previousQuery._pageSize)
         {
-            this._queryUrl = nextPageUrl;
-            this._uriBuilder = new UriBuilder(nextPageUrl);
+            _queryUrl = nextPageUrl;
+            _uriBuilder = new UriBuilder(nextPageUrl);
         }
 
         /**
@@ -128,7 +128,7 @@ namespace OSLC4Net.Core.Resources
 
         public int GetPageSize()
         {
-            return this._pageSize;
+            return _pageSize;
         }
 
         /**
@@ -137,7 +137,7 @@ namespace OSLC4Net.Core.Resources
 
         public string GetCapabilityUrl()
         {
-            return this._capabilityUrl;
+            return _capabilityUrl;
         }
 
         /**
@@ -146,53 +146,53 @@ namespace OSLC4Net.Core.Resources
 
         public string GetQueryUrl()
         {
-            if (this._queryUrl == null)
+            if (_queryUrl == null)
             {
-                this._queryUrl = this._uriBuilder.ToString();
+                _queryUrl = _uriBuilder.ToString();
             }
-            return this._queryUrl;
+            return _queryUrl;
         }
 
         public OslcQueryResult Submit()
         {
-            return new OslcQueryResult(this, this.GetResponse());
+            return new OslcQueryResult(this, GetResponse());
         }
 
         internal HttpResponseMessage GetResponse()
         {
-            return this._oslcClient.GetResource(this.GetQueryUrl(), OSLCConstants.CT_RDF);
+            return _oslcClient.GetResource(GetQueryUrl(), OSLCConstants.CT_RDF);
         }
 
         private void ApplyPagination()
         {
-            if (this._pageSize > 0)
+            if (_pageSize > 0)
             {
                 QueryParam("oslc.paging", "true");
-                QueryParam("oslc.pageSize", this._pageSize.ToString());
+                QueryParam("oslc.pageSize", _pageSize.ToString());
             }
         }
 
         private void ApplyOslcQueryParams()
         {
-            if (this._where != null && this._where.Length != 0)
+            if (_where != null && _where.Length != 0)
             {
-                QueryParam("oslc.where", this._where);
+                QueryParam("oslc.where", _where);
             }
-            if (this._select != null && this._select.Length != 0)
+            if (_select != null && _select.Length != 0)
             {
-                QueryParam("oslc.select", this._select);
+                QueryParam("oslc.select", _select);
             }
-            if (this._orderBy != null && this._orderBy.Length != 0)
+            if (_orderBy != null && _orderBy.Length != 0)
             {
-                QueryParam("oslc.orderBy", this._orderBy);
+                QueryParam("oslc.orderBy", _orderBy);
             }
-            if (this._searchTerms != null && this._searchTerms.Length != 0)
+            if (_searchTerms != null && _searchTerms.Length != 0)
             {
-                QueryParam("oslc.searchTerms", this._searchTerms);
+                QueryParam("oslc.searchTerms", _searchTerms);
             }
-            if (this._prefix != null && this._prefix.Length != 0)
+            if (_prefix != null && _prefix.Length != 0)
             {
-                QueryParam("oslc.prefix", this._prefix);
+                QueryParam("oslc.prefix", _prefix);
             }
         }
 
@@ -200,13 +200,13 @@ namespace OSLC4Net.Core.Resources
         {
             string content = name + '=' + value;
 
-            if (this._uriBuilder.Query != null && this._uriBuilder.Query.Length > 1)
+            if (_uriBuilder.Query != null && _uriBuilder.Query.Length > 1)
             {
-                this._uriBuilder.Query = this._uriBuilder.Query.Substring(1) + '&' + content;
+                _uriBuilder.Query = _uriBuilder.Query.Substring(1) + '&' + content;
             }
             else
             {
-                this._uriBuilder.Query = content;
+                _uriBuilder.Query = content;
             }
         }
     }

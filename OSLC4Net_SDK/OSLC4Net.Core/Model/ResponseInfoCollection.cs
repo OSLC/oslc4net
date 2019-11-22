@@ -66,7 +66,7 @@ namespace OSLC4Net.Core.Model
          */
         public ICollection<T> Collection()
         {
-            return this.Resource;
+            return Resource;
         }
     }
 }

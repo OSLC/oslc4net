@@ -36,8 +36,8 @@ namespace OSLC4Net.Core.Exceptions
         public OslcCoreInvalidAttributeException(Type resourceType, Type annotationType)
             : base(MESSAGE_KEY, new object[] { resourceType.Name, annotationType.Name })
         {
-            this._annotationType = annotationType;
-            this._resourceType = resourceType;
+            _annotationType = annotationType;
+            _resourceType = resourceType;
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace OSLC4Net.Core.Exceptions
         /// <returns></returns>
         public Type GetAnnotationType()
         {
-            return this._annotationType;
+            return _annotationType;
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace OSLC4Net.Core.Exceptions
         /// <returns></returns>
         public Type GetResourceType()
         {
-            return this._resourceType;
+            return _resourceType;
         }
     }
 }

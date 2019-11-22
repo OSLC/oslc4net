@@ -44,8 +44,8 @@ namespace OSLC4Net.Core.Query.Impl
         public
         PropertiesImpl()
         {
-            this.tree = null;
-            this.prefixMap = null;
+            tree = null;
+            prefixMap = null;
         
             children = new List<Property>(1);
         

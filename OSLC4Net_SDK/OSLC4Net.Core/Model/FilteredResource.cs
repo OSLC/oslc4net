@@ -27,8 +27,8 @@ namespace OSLC4Net.Core.Model
     {
         public FilteredResource(T resource, IDictionary<string, object> properties)
         {
-            this.Resource = resource;
-            this.Properties = properties;
+            Resource = resource;
+            Properties = properties;
         }
 
         /**

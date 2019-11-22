@@ -48,8 +48,8 @@ namespace OSLC4Net.Core.Model
         public Publisher(string title, string identifier)
             : this()
         {
-            this._title = title;
-            this._identifier = identifier;
+            _title = title;
+            _identifier = identifier;
         }
 
         [OslcDescription(
@@ -59,7 +59,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Icon")]
         public Uri GetIcon()
         {
-            return this._icon;
+            return _icon;
         }
 
         [OslcDescription("A URN that uniquely identifies the implementation")]
@@ -69,7 +69,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Identifier")]
         public string GetIdentifier()
         {
-            return this._identifier;
+            return _identifier;
         }
 
         [OslcDescription("Very short label for use in menu items")]
@@ -78,7 +78,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Label")]
         public string GetLabel()
         {
-            return this._label;
+            return _label;
         }
 
         [OslcDescription("Title string that could be used for display")]
@@ -89,27 +89,27 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.XMLLiteral)]
         public string GetTitle()
         {
-            return this._title;
+            return _title;
         }
 
         public void SetIcon(Uri icon)
         {
-            this._icon = icon;
+            _icon = icon;
         }
 
         public void SetIdentifier(string identifier)
         {
-            this._identifier = identifier;
+            _identifier = identifier;
         }
 
         public void SetLabel(string label)
         {
-            this._label = label;
+            _label = label;
         }
 
         public void SetTitle(string title)
         {
-            this._title = title;
+            _title = title;
         }
     }
 }

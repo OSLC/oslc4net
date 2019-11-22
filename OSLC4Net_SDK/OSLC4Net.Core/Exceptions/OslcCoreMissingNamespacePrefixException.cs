@@ -32,7 +32,7 @@ namespace OSLC4Net.Core.Exceptions
         public OslcCoreMissingNamespacePrefixException(string prefix)
             : base(MESSAGE_KEY, new object[] { prefix })
         {
-            this._prefix = prefix;
+            _prefix = prefix;
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace OSLC4Net.Core.Exceptions
         /// <returns></returns>
         public string GetPrefix()
         {
-            return this._prefix;
+            return _prefix;
         }
     }
 }

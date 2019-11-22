@@ -39,8 +39,8 @@ namespace OSLC4Net.Core.Model
         public ResponseInfo(T resource, IDictionary<string, object> properties, int totalCount, string nextPage)
             : base(resource, properties)
         {
-            this.TotalCount = totalCount;
-            this.NextPage = nextPage;
+            TotalCount = totalCount;
+            NextPage = nextPage;
         }
 
         /// <summary>

@@ -60,12 +60,12 @@ namespace OSLC4Net.Core.Model
 
         public void AddResourceType(Uri resourceType)
         {
-            this.resourceTypes.Add(resourceType);
+            resourceTypes.Add(resourceType);
         }
 
         public void AddUsage(Uri usage)
         {
-            this.usages.Add(usage);
+            usages.Add(usage);
         }
 
         [OslcDescription("The Uri of the dialog")]
@@ -75,7 +75,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Dialog")]
         public Uri GetDialog()
         {
-            return this.dialog;
+            return dialog;
         }
 
         [OslcDescription(
@@ -85,7 +85,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Hint Height")]
         public string GetHintHeight()
         {
-            return this.hintHeight;
+            return hintHeight;
         }
 
         [OslcDescription(
@@ -95,7 +95,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Hint Width")]
         public string GetHintWidth()
         {
-            return this.hintWidth;
+            return hintWidth;
         }
 
         [OslcDescription("Very short label for use in menu items")]
@@ -104,7 +104,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Label")]
         public string GetLabel()
         {
-            return this.label;
+            return label;
         }
 
         [OslcDescription(
@@ -115,7 +115,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Resource Types")]
         public Uri[] GetResourceTypes()
         {
-            return this.resourceTypes.ToArray();
+            return resourceTypes.ToArray();
         }
 
         [OslcDescription("Title string that could be used for display")]
@@ -126,7 +126,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.XMLLiteral)]
         public string GetTitle()
         {
-            return this.title;
+            return title;
         }
 
         [OslcDescription(
@@ -137,7 +137,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Usages")]
         public Uri[] GetUsages()
         {
-            return this.usages.ToArray();
+            return usages.ToArray();
         }
 
         public void SetDialog(Uri dialog)

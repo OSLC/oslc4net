@@ -52,18 +52,18 @@ namespace OSLC4Net.Core.Resources
 
         public OslcQueryResult(OslcQuery query, HttpResponseMessage response)
         {
-            this._query = query;
-            this._response = response;
+            _query = query;
+            _response = response;
 
-            this._pageNumber = 1;
+            _pageNumber = 1;
         }
 
         private OslcQueryResult(OslcQueryResult prev)
         {
-            this._query = new OslcQuery(prev);
-            this._response = this._query.GetResponse();
+            _query = new OslcQuery(prev);
+            _response = _query.GetResponse();
 
-            this._pageNumber = prev._pageNumber + 1;
+            _pageNumber = prev._pageNumber + 1;
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace OSLC4Net.Core.Resources
         {
             get
             {
-                if (!this.MoveNext())
+                if (!MoveNext())
                 {
                     throw new InvalidOperationException();
                 }
@@ -83,7 +83,7 @@ namespace OSLC4Net.Core.Resources
 
         object IEnumerator.Current
         {
-            get { return this.Current; }
+            get { return Current; }
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace OSLC4Net.Core.Resources
         /// <returns>whether there is another page of results after this</returns>
         public bool MoveNext()
         {
-            if (this.GetNextPageUrl().Length == 0)
+            if (GetNextPageUrl().Length == 0)
             {
                 return false;
             }
@@ -111,7 +111,7 @@ namespace OSLC4Net.Core.Resources
 
         public OslcQuery GetQuery()
         {
-            return this._query;
+            return _query;
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace OSLC4Net.Core.Resources
         /// <returns></returns>
         public HttpResponseMessage GetRawResponse()
         {
-            return this._response;
+            return _response;
         }
 
         /// <summary>
@@ -140,8 +140,8 @@ namespace OSLC4Net.Core.Resources
             InitializeRdf();
 
             IList<string> membersUrls = new List<string>();
-            IUriNode membersResource = this._rdfGraph.CreateUriNode(new Uri(this._query.GetCapabilityUrl()));
-            IEnumerable<Triple> triples = this._rdfGraph.GetTriplesWithSubject(membersResource);
+            IUriNode membersResource = _rdfGraph.CreateUriNode(new Uri(_query.GetCapabilityUrl()));
+            IEnumerable<Triple> triples = _rdfGraph.GetTriplesWithSubject(membersResource);
 
             foreach (Triple triple in triples)
             {
@@ -167,8 +167,8 @@ namespace OSLC4Net.Core.Resources
         {
             InitializeRdf();
 
-            IUriNode membersResource = this._rdfGraph.CreateUriNode(new Uri(this._query.GetCapabilityUrl()));
-            IEnumerable<Triple> triples = this._rdfGraph.GetTriplesWithSubject(membersResource);
+            IUriNode membersResource = _rdfGraph.CreateUriNode(new Uri(_query.GetCapabilityUrl()));
+            IEnumerable<Triple> triples = _rdfGraph.GetTriplesWithSubject(membersResource);
             IEnumerable<T> result = new TripleEnumerableWrapper<T>(triples);
 
             return result;
@@ -176,47 +176,47 @@ namespace OSLC4Net.Core.Resources
 
         internal string GetNextPageUrl()
         {
-            this.InitializeRdf();
+            InitializeRdf();
 
-            if ((this._nextPageUrl == null || this._nextPageUrl.Length == 0) && this._infoResource != null)
+            if ((_nextPageUrl == null || _nextPageUrl.Length == 0) && _infoResource != null)
             {
-                IUriNode predicate = this._rdfGraph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + "nextPage"));
-                IEnumerable<Triple> triples = this._rdfGraph.GetTriplesWithSubjectPredicate(this._infoResource, predicate);
+                IUriNode predicate = _rdfGraph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + "nextPage"));
+                IEnumerable<Triple> triples = _rdfGraph.GetTriplesWithSubjectPredicate(_infoResource, predicate);
                 if (triples.Count() == 1 && triples.First().Object is IUriNode)
                 {
-                    this._nextPageUrl = (triples.First().Object as IUriNode).Uri.OriginalString;
+                    _nextPageUrl = (triples.First().Object as IUriNode).Uri.OriginalString;
                 }
                 else
                 {
-                    this._nextPageUrl = string.Empty;
+                    _nextPageUrl = string.Empty;
                 }
             }
 
-            return this._nextPageUrl;
+            return _nextPageUrl;
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         private void InitializeRdf()
         {
-            if (!this._rdfInitialized)
+            if (!_rdfInitialized)
             {
-                this._rdfInitialized = true;
-                this._rdfGraph = new Graph();
-                Stream stream = this._response.Content.ReadAsStreamAsync().Result;
+                _rdfInitialized = true;
+                _rdfGraph = new Graph();
+                Stream stream = _response.Content.ReadAsStreamAsync().Result;
                 IRdfReader parser = new RdfXmlParser();
                 StreamReader streamReader = new StreamReader(stream);
 
                 using (streamReader)
                 {
-                    parser.Load(this._rdfGraph, streamReader);
+                    parser.Load(_rdfGraph, streamReader);
 
                     // Find a resource with rdf:type of oslc:ResourceInfo
-                    this._rdfType = this._rdfGraph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
-                    IUriNode responseInfo = this._rdfGraph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + "ResponseInfo"));
-                    IEnumerable<Triple> triples = this._rdfGraph.GetTriplesWithPredicateObject(this._rdfType, responseInfo);
+                    _rdfType = _rdfGraph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
+                    IUriNode responseInfo = _rdfGraph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + "ResponseInfo"));
+                    IEnumerable<Triple> triples = _rdfGraph.GetTriplesWithPredicateObject(_rdfType, responseInfo);
 
                     // There should only be one - take the first
-                    this._infoResource = triples.Count() == 0 ? null : (triples.First().Subject as IUriNode);
+                    _infoResource = triples.Count() == 0 ? null : (triples.First().Subject as IUriNode);
                 }
             }
         }
@@ -227,19 +227,19 @@ namespace OSLC4Net.Core.Resources
 
             public TripleEnumerableWrapper(IEnumerable<Triple> triples)
             {
-                this._triples = triples;
+                _triples = triples;
             }
 
             IEnumerator
             IEnumerable.GetEnumerator()
             {
-                return this.GetEnumerator();
+                return GetEnumerator();
             }
 
             public IEnumerator<T>
             GetEnumerator()
             {
-                return new TripleEnumeratorWrapper<T>(this._triples.GetEnumerator());
+                return new TripleEnumeratorWrapper<T>(_triples.GetEnumerator());
             }
 
             private class TripleEnumeratorWrapper<T> : IEnumerator<T>
@@ -248,14 +248,14 @@ namespace OSLC4Net.Core.Resources
 
                 public TripleEnumeratorWrapper(IEnumerator<Triple> triples)
                 {
-                    this._triples = triples;
+                    _triples = triples;
                 }
 
                 object IEnumerator.Current
                 {
                     get
                     {
-                        return this.Current;
+                        return Current;
                     }
                 }
 
@@ -263,7 +263,7 @@ namespace OSLC4Net.Core.Resources
                 {
                     get
                     {
-                        Triple member = this._triples.Current;
+                        Triple member = _triples.Current;
 
                         return (T)DotNetRdfHelper.FromDotNetRdfNode((IUriNode)member.Object, typeof(T));
                     }
@@ -271,17 +271,17 @@ namespace OSLC4Net.Core.Resources
 
                 public void Dispose()
                 {
-                    this._triples.Dispose();
+                    _triples.Dispose();
                 }
 
                 public bool MoveNext()
                 {
-                    return this._triples.MoveNext();
+                    return _triples.MoveNext();
                 }
 
                 public void Reset()
                 {
-                    this._triples.Reset();
+                    _triples.Reset();
                 }
             }
         }

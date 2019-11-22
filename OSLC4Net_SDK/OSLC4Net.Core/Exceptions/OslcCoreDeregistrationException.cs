@@ -43,17 +43,17 @@ namespace OSLC4Net.Core.Exceptions
 
         public string GetResponseMessage()
         {
-            return this.responseMessage;
+            return responseMessage;
         }
 
         public Uri GetServiceProviderURI()
         {
-            return this.serviceProviderURI;
+            return serviceProviderURI;
         }
 
         public int GetStatusCode()
         {
-            return this.statusCode;
+            return statusCode;
         }
     }
 }

@@ -65,47 +65,47 @@ namespace OSLC4Net.Client.Oslc.Resources
     
         public void AddContributor(Uri contributor)
         {
-            this.contributors.Add(contributor);
+            contributors.Add(contributor);
         }
 
         public void AddCreator(Uri creator)
         {
-            this.creators.Add(creator);
+            creators.Add(creator);
         }
     
         public void AddRdfType(Uri rdfType)
         {
-            this.rdfTypes.Add(rdfType);
+            rdfTypes.Add(rdfType);
         }
 
         public void AddSubject(String subject)
         {
-            this.subjects.Add(subject);
+            subjects.Add(subject);
         }
 
         public void AddState(Uri state)
         {
-            this.states.Add(state);
+            states.Add(state);
         }
     
         public void AddVerdict(Uri verdict)
         {
-            this.verdicts.Add(verdict);
+            verdicts.Add(verdict);
         }
     
         public void AddContribution(Uri contribution)
         {
-            this.contributions.Add(contribution);
+            contributions.Add(contribution);
         }
     
         public void AddInputParameter(ParameterInstance parameter)
         {
-            this.inputParameters.Add(parameter);
+            inputParameters.Add(parameter);
         }
     
         public void AddOutputParameter(ParameterInstance parameter)
         {
-            this.outputParameters.Add(parameter);
+            outputParameters.Add(parameter);
         }
     
         [OslcDescription("The person(s) who are responsible for the work needed to complete the automation result.")]
@@ -422,21 +422,21 @@ namespace OSLC4Net.Client.Oslc.Resources
     
         public void setInputParameters(ParameterInstance[] parameters)
         {
-            this.inputParameters.Clear();
+            inputParameters.Clear();
 
             if (parameters != null)
             {
-                this.inputParameters.AddAll(parameters);
+                inputParameters.AddAll(parameters);
             }
         }
     
         public void setOutputParameters(ParameterInstance[] parameters)
         {
-            this.outputParameters.Clear();
+            outputParameters.Clear();
 
             if (parameters != null)
             {
-                this.outputParameters.AddAll(parameters);
+                outputParameters.AddAll(parameters);
             }
         }
     }

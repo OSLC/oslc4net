@@ -51,57 +51,57 @@ namespace OSLC4Net.Core.Resources
 
         public AutomationResult() : base()
         {
-            this._rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_RESULT));
+            _rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_RESULT));
         }
 
         public AutomationResult(Uri about) : base(about)
         {
-            this._rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_RESULT));
+            _rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_RESULT));
         }
 
         public void AddContributor(Uri contributor)
         {
-            this._contributors.Add(contributor);
+            _contributors.Add(contributor);
         }
 
         public void AddCreator(Uri creator)
         {
-            this._creators.Add(creator);
+            _creators.Add(creator);
         }
 
         public void AddRdfType(Uri rdfType)
         {
-            this._rdfTypes.Add(rdfType);
+            _rdfTypes.Add(rdfType);
         }
 
         public void AddSubject(string subject)
         {
-            this._subjects.Add(subject);
+            _subjects.Add(subject);
         }
 
         public void AddState(Uri state)
         {
-            this._states.Add(state);
+            _states.Add(state);
         }
 
         public void AddVerdict(Uri verdict)
         {
-            this._verdicts.Add(verdict);
+            _verdicts.Add(verdict);
         }
 
         public void AddContribution(Uri contribution)
         {
-            this._contributions.Add(contribution);
+            _contributions.Add(contribution);
         }
 
         public void AddInputParameter(ParameterInstance parameter)
         {
-            this._inputParameters.Add(parameter);
+            _inputParameters.Add(parameter);
         }
 
         public void AddOutputParameter(ParameterInstance parameter)
         {
-            this._outputParameters.Add(parameter);
+            _outputParameters.Add(parameter);
         }
 
         [OslcDescription("The person(s) who are responsible for the work needed to complete the automation result.")]
@@ -111,7 +111,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Contributors")]
         public Uri[] GetContributors()
         {
-            return this._contributors.ToArray();
+            return _contributors.ToArray();
         }
 
         [OslcDescription("Timestamp of resource creation.")]
@@ -120,7 +120,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Created")]
         public DateTime? GetCreated()
         {
-            return this._created;
+            return _created;
         }
 
         [OslcDescription("Creator or creators of resource.")]
@@ -130,7 +130,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Creators")]
         public Uri[] GetCreators()
         {
-            return this._creators.ToArray();
+            return _creators.ToArray();
         }
 
         [OslcDescription("A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
@@ -140,7 +140,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Identifier")]
         public string GetIdentifier()
         {
-            return this._identifier;
+            return _identifier;
         }
 
         [OslcDescription("Resource Shape that provides hints as to resource property value-types and allowed values. ")]
@@ -149,7 +149,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Instance Shape")]
         public Uri GetInstanceShape()
         {
-            return this._instanceShape;
+            return _instanceShape;
         }
 
         [OslcDescription("Timestamp last latest resource modification.")]
@@ -158,7 +158,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Modified")]
         public DateTime? GetModified()
         {
-            return this._modified;
+            return _modified;
         }
 
         [OslcDescription("The resource type URIs.")]
@@ -167,7 +167,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Types")]
         public Uri[] GetRdfTypes()
         {
-            return this._rdfTypes.ToArray();
+            return _rdfTypes.ToArray();
         }
 
         [OslcDescription("The scope of a resource is a Uri for the resource's OSLC Service Provider.")]
@@ -176,7 +176,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Service Provider")]
         public Uri GetServiceProvider()
         {
-            return this._serviceProvider;
+            return _serviceProvider;
         }
 
         [OslcDescription("Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
@@ -186,7 +186,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Subjects")]
         public string[] GetSubjects()
         {
-            return this._subjects.ToArray();
+            return _subjects.ToArray();
         }
 
         [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
@@ -196,7 +196,7 @@ namespace OSLC4Net.Core.Resources
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
         public string GetTitle()
         {
-            return this._title;
+            return _title;
         }
 
         [OslcDescription("Used to indicate the state of the automation result based on values defined by the service provider.")]
@@ -214,7 +214,7 @@ namespace OSLC4Net.Core.Resources
             AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_COMPLETE})]
         public Uri[] GetStates()
         {
-            return this._states.ToArray();
+            return _states.ToArray();
         }
 
         [OslcDescription("A result contribution associated with this automation result.")]
@@ -224,7 +224,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Contribution")]
         public Uri[] GetContributions()
         {
-            return this._contributions.ToArray();
+            return _contributions.ToArray();
         }
 
         [OslcDescription("Used to indicate the verdict of the automation result based on values defined by the service provider.")]
@@ -240,7 +240,7 @@ namespace OSLC4Net.Core.Resources
             AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.VERDICT_UNAVAILABLE})]
         public Uri[] GetVerdicts()
         {
-            return this._verdicts.ToArray();
+            return _verdicts.ToArray();
         }
 
         [OslcDescription("Used to indicate the desired state of the Automation Request based on values defined by the service provider.")]
@@ -257,7 +257,7 @@ namespace OSLC4Net.Core.Resources
             AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_COMPLETE})]
         public Uri GetDesiredState()
         {
-            return this._desiredState;
+            return _desiredState;
         }
 
         [OslcDescription("Automation Request which produced the Automation Result.")]
@@ -267,7 +267,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Produced By Automation Request")]
         public Link GetProducedByAutomationRequest()
         {
-            return this._producedByAutomationRequest;
+            return _producedByAutomationRequest;
         }
 
         [OslcDescription("Automation Plan which the Automation Result reports on.")]
@@ -277,7 +277,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Reports On Automation Plan")]
         public Link GetReportsOnAutomationPlan()
         {
-            return this._reportsOnAutomationPlan;
+            return _reportsOnAutomationPlan;
         }
 
         [OslcDescription("A copy of the parameters provided during creation of the Automation Request which produced this Automation Result.")]
@@ -288,7 +288,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Input Parameter")]
         public ParameterInstance[] GetInputParameters()
         {
-            return this._inputParameters.ToArray();
+            return _inputParameters.ToArray();
         }
 
         [OslcDescription("Automation Result output parameters are parameters associated with the automation execution which produced this Result. This includes the value of all parameters used to initiate the execution and any additional parameters which may have been created during automation execution by the service provider or external agents.")]
@@ -298,141 +298,141 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Output Parameter")]
         public ParameterInstance[] GetOutputParameters()
         {
-            return this._outputParameters.ToArray();
+            return _outputParameters.ToArray();
         }
 
         public void SetContributors(Uri[] contributors)
         {
-            this._contributors.Clear();
+            _contributors.Clear();
 
             if (contributors != null)
             {
-                this._contributors.AddAll(contributors);
+                _contributors.AddAll(contributors);
             }
         }
 
         public void SetCreated(DateTime? created)
         {
-            this._created = created;
+            _created = created;
         }
 
         public void SetCreators(Uri[] creators)
         {
-            this._creators.Clear();
+            _creators.Clear();
 
             if (creators != null)
             {
-                this._creators.AddAll(creators);
+                _creators.AddAll(creators);
             }
         }
 
         public void SetIdentifier(string identifier)
         {
-            this._identifier = identifier;
+            _identifier = identifier;
         }
 
         public void SetInstanceShape(Uri instanceShape)
         {
-            this._instanceShape = instanceShape;
+            _instanceShape = instanceShape;
         }
 
         public void SetModified(DateTime? modified)
         {
-            this._modified = modified;
+            _modified = modified;
         }
 
         public void SetRdfTypes(Uri[] rdfTypes)
         {
-            this._rdfTypes.Clear();
+            _rdfTypes.Clear();
 
             if (rdfTypes != null)
             {
-                this._rdfTypes.AddAll(rdfTypes);
+                _rdfTypes.AddAll(rdfTypes);
             }
         }
 
         public void SetServiceProvider(Uri serviceProvider)
         {
-            this._serviceProvider = serviceProvider;
+            _serviceProvider = serviceProvider;
         }
 
         public void SetSubjects(string[] subjects)
         {
-            this._subjects.Clear();
+            _subjects.Clear();
 
             if (subjects != null)
             {
-                this._subjects.AddAll(subjects);
+                _subjects.AddAll(subjects);
             }
         }
 
         public void SetTitle(string title)
         {
-            this._title = title;
+            _title = title;
         }
 
         public void SetStates(Uri[] states)
         {
-            this._states.Clear();
+            _states.Clear();
 
             if (states != null)
             {
-                this._states.AddAll(states);
+                _states.AddAll(states);
             }
         }
 
         public void SetVerdicts(Uri[] verdicts)
         {
-            this._verdicts.Clear();
+            _verdicts.Clear();
 
             if (verdicts != null)
             {
-                this._verdicts.AddAll(verdicts);
+                _verdicts.AddAll(verdicts);
             }
         }
 
         public void SetContributions(Uri[] contributions)
         {
-            this._contributions.Clear();
+            _contributions.Clear();
 
             if (contributions != null)
             {
-                this._contributions.AddAll(contributions);
+                _contributions.AddAll(contributions);
             }
         }
 
         public void SetDesiredState(Uri desiredState)
         {
-            this._desiredState = desiredState;
+            _desiredState = desiredState;
         }
 
         public void SetProducedByAutomationRequest(Link producedByAutomationRequest)
         {
-            this._producedByAutomationRequest = producedByAutomationRequest;
+            _producedByAutomationRequest = producedByAutomationRequest;
         }
 
         public void SetReportsOnAutomationPlan(Link reportsOnAutomationPlan)
         {
-            this._reportsOnAutomationPlan = reportsOnAutomationPlan;
+            _reportsOnAutomationPlan = reportsOnAutomationPlan;
         }
 
         public void SetInputParameters(ParameterInstance[] parameters)
         {
-            this._inputParameters.Clear();
+            _inputParameters.Clear();
 
             if (parameters != null)
             {
-                this._inputParameters.AddAll(parameters);
+                _inputParameters.AddAll(parameters);
             }
         }
 
         public void SetOutputParameters(ParameterInstance[] parameters)
         {
-            this._outputParameters.Clear();
+            _outputParameters.Clear();
 
             if (parameters != null)
             {
-                this._outputParameters.AddAll(parameters);
+                _outputParameters.AddAll(parameters);
             }
         }
 

@@ -50,7 +50,7 @@ namespace OSLC4Net.Client.Oslc.Resources
 
         public void AddRdfType(Uri rdfType)
         {
-            this.rdfTypes.Add(rdfType);
+            rdfTypes.Add(rdfType);
         }
 
         [OslcDescription("Timestamp of resource creation.")]

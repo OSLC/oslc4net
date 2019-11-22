@@ -38,7 +38,7 @@ namespace OSLC4Net.Core.Model
         /// <returns></returns>
         public T GetValue()
         {
-            return this.value;
+            return value;
         }
 
         /// <summary>

@@ -49,22 +49,22 @@ namespace OSLC4Net.Client.Oslc.Resources
     
         public void AddBlockedByChangeRequest(Link blockingChangeRequest)
         {
-            this.blockedByChangeRequests.Add(blockingChangeRequest);
+            blockedByChangeRequests.Add(blockingChangeRequest);
         }
 
         public void AddContributor(Uri contributor)
         {
-            this.contributors.Add(contributor);
+            contributors.Add(contributor);
         }
 
         public void AddCreator(Uri creator)
         {
-            this.creators.Add(creator);
+            creators.Add(creator);
         }
 
         public void AddRelatedChangeRequest(Link relatedChangeRequest)
         {
-            this.relatedChangeRequests.Add(relatedChangeRequest);
+            relatedChangeRequests.Add(relatedChangeRequest);
         }
 
         [OslcDescription("The person(s) who are responsible for the work needed to complete the change request.")]

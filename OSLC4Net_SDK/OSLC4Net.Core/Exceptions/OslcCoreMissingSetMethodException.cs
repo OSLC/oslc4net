@@ -38,8 +38,8 @@ namespace OSLC4Net.Core.Exceptions
         public OslcCoreMissingSetMethodException(Type resourceType, MethodInfo getMethod, Exception exception)
             : base(MESSAGE_KEY, new object[] { resourceType.Name, getMethod.Name, exception })
         {
-            this._getMethod = getMethod;
-            this._resourceType = resourceType;
+            _getMethod = getMethod;
+            _resourceType = resourceType;
         }
 
         /// <summary>
@@ -50,8 +50,8 @@ namespace OSLC4Net.Core.Exceptions
         public OslcCoreMissingSetMethodException(Type resourceType, MethodInfo getMethod)
             : base(MESSAGE_KEY, new object[] { resourceType.Name, getMethod.Name, null })
         {
-            this._getMethod = getMethod;
-            this._resourceType = resourceType;
+            _getMethod = getMethod;
+            _resourceType = resourceType;
         }
     }
 }

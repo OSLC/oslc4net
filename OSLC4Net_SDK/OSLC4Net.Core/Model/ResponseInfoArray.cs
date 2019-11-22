@@ -58,7 +58,7 @@ namespace OSLC4Net.Core.Model
          */
         public T[] Array()
         {
-            return this.Resource;
+            return Resource;
         }
     }
 }

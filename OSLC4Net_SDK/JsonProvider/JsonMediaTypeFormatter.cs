@@ -51,7 +51,7 @@ namespace OSLC4Net.Core.JsonProvider
         /// <param name="rebuildJson"></param>
         public JsonMediaTypeFormatter(bool rebuildJson = true)
         {
-            this.RebuildJson = rebuildJson;
+            RebuildJson = rebuildJson;
 
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_JSON_TYPE);
             SupportedMediaTypes.Add(OslcMediaType.APPLICATION_X_OSLC_COMPACT_JSON_TYPE);
@@ -67,7 +67,7 @@ namespace OSLC4Net.Core.JsonProvider
             bool rebuildJson = true
         ) : this(rebuildJson)
         {
-            this.Json = json;
+            Json = json;
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace OSLC4Net.Core.JsonProvider
         ///
         public override MediaTypeFormatter GetPerRequestFormatterInstance(Type type, HttpRequestMessage request, MediaTypeHeaderValue mediaType)
         {
-            this.httpRequest = request;
+            httpRequest = request;
             return base.GetPerRequestFormatterInstance(type, request, mediaType);
         }
 

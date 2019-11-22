@@ -64,38 +64,38 @@ namespace OSLC4Net.Client.Oslc.Jazz
         /// <param name="catalogDomain">Namespace of the OSLC domain to find the catalog for.  Example:  OSLCConstants.OSLC_CM</param>
 	    public JazzRootServicesHelper (String url, String catalogDomain)
         {
-		    this.baseUrl = url;
-		    this.rootServicesUrl = this.baseUrl + "/rootservices";
+		    baseUrl = url;
+		    rootServicesUrl = baseUrl + "/rootservices";
 		    this.catalogDomain = catalogDomain;
 		
 		    if (String.Compare(this.catalogDomain, OSLCConstants.OSLC_CM, true) == 0 ||
 		        String.Compare(this.catalogDomain, OSLCConstants.OSLC_CM_V2, true) == 0) {
 			
-			    this.catalogNamespace = OSLCConstants.OSLC_CM;
-			    this.catalogProperty  = JazzRootServicesConstants.CM_ROOTSERVICES_CATALOG_PROP;
+			    catalogNamespace = OSLCConstants.OSLC_CM;
+			    catalogProperty  = JazzRootServicesConstants.CM_ROOTSERVICES_CATALOG_PROP;
 			
 		    } else if (String.Compare(this.catalogDomain, OSLCConstants.OSLC_QM, true) == 0 ||
 			           String.Compare(this.catalogDomain, OSLCConstants.OSLC_QM_V2, true) == 0) {
 			
-			    this.catalogNamespace = OSLCConstants.OSLC_QM;
-			    this.catalogProperty =  JazzRootServicesConstants.QM_ROOTSERVICES_CATALOG_PROP;
+			    catalogNamespace = OSLCConstants.OSLC_QM;
+			    catalogProperty =  JazzRootServicesConstants.QM_ROOTSERVICES_CATALOG_PROP;
 			
 		    } else if (String.Compare(this.catalogDomain, OSLCConstants.OSLC_RM, true) == 0 ||
 			           String.Compare(this.catalogDomain, OSLCConstants.OSLC_RM_V2, true) == 0) {
 			
-			    this.catalogNamespace = OSLCConstants.OSLC_RM;
-			    this.catalogProperty =  JazzRootServicesConstants.RM_ROOTSERVICES_CATALOG_PROP;
+			    catalogNamespace = OSLCConstants.OSLC_RM;
+			    catalogProperty =  JazzRootServicesConstants.RM_ROOTSERVICES_CATALOG_PROP;
 			
 		    } else if (String.Compare(this.catalogDomain, OSLCConstants.OSLC_AM_V2, true) == 0) {
 			
-			    this.catalogNamespace = OSLCConstants.OSLC_AM_V2;
-			    this.catalogProperty =  JazzRootServicesConstants.AM_ROOTSERVICES_CATALOG_PROP;
+			    catalogNamespace = OSLCConstants.OSLC_AM_V2;
+			    catalogProperty =  JazzRootServicesConstants.AM_ROOTSERVICES_CATALOG_PROP;
 			
 		    } 
 		    else if (String.Compare(this.catalogDomain, OSLCConstants.OSLC_AUTO, true) == 0) {
 			
-			    this.catalogNamespace = OSLCConstants.OSLC_AUTO;
-			    this.catalogProperty =  JazzRootServicesConstants.AUTO_ROOTSERVICES_CATALOG_PROP;
+			    catalogNamespace = OSLCConstants.OSLC_AUTO;
+			    catalogProperty =  JazzRootServicesConstants.AUTO_ROOTSERVICES_CATALOG_PROP;
 		
 		    }
 		    else {
@@ -178,20 +178,20 @@ namespace OSLC4Net.Client.Oslc.Jazz
                     parser.Load(rdfGraph, streamReader);
  
 			        //get the catalog URL
-			        this.catalogUrl = GetRootServicesProperty(rdfGraph, this.catalogNamespace, this.catalogProperty);
+			        catalogUrl = GetRootServicesProperty(rdfGraph, catalogNamespace, catalogProperty);
 						
 			        //get the OAuth URLs
-			        this.requestTokenUrl = GetRootServicesProperty(rdfGraph, JFS_NAMESPACE, JazzRootServicesConstants.OAUTH_REQUEST_TOKEN_URL);
-			        this.authorizationTokenUrl = GetRootServicesProperty(rdfGraph, JFS_NAMESPACE, JazzRootServicesConstants.OAUTH_USER_AUTH_URL);
-			        this.accessTokenUrl = GetRootServicesProperty(rdfGraph, JFS_NAMESPACE, JazzRootServicesConstants.OAUTH_ACCESS_TOKEN_URL);
+			        requestTokenUrl = GetRootServicesProperty(rdfGraph, JFS_NAMESPACE, JazzRootServicesConstants.OAUTH_REQUEST_TOKEN_URL);
+			        authorizationTokenUrl = GetRootServicesProperty(rdfGraph, JFS_NAMESPACE, JazzRootServicesConstants.OAUTH_USER_AUTH_URL);
+			        accessTokenUrl = GetRootServicesProperty(rdfGraph, JFS_NAMESPACE, JazzRootServicesConstants.OAUTH_ACCESS_TOKEN_URL);
 			        try { // Following field is optional, try to get it, if not found ignore exception because it will use the default
-				        this.authorizationRealm = GetRootServicesProperty(rdfGraph, JFS_NAMESPACE, JazzRootServicesConstants.OAUTH_REALM_NAME);
+				        authorizationRealm = GetRootServicesProperty(rdfGraph, JFS_NAMESPACE, JazzRootServicesConstants.OAUTH_REALM_NAME);
 			        } catch (ResourceNotFoundException e) {
 				        // Ignore
 			        }
                 }
 		    } catch (Exception e) {
-			    throw new RootServicesException(this.baseUrl, e);
+			    throw new RootServicesException(baseUrl, e);
 		    }
 		
 				

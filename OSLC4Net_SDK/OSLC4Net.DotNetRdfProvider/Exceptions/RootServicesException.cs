@@ -27,12 +27,12 @@ namespace OSLC4Net.Core.Exceptions
         public RootServicesException(string jazzUrl, Exception exception) :
             base(MESSAGE_KEY, new object[] { jazzUrl }, exception)
         {
-            this._jazzUrl = jazzUrl;
+            _jazzUrl = jazzUrl;
         }
 
         public string GetJazzUrl()
         {
-            return this._jazzUrl;
+            return _jazzUrl;
         }
     }
 }

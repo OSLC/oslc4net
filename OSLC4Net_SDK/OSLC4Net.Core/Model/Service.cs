@@ -55,22 +55,22 @@ namespace OSLC4Net.Core.Model
 
         public void AddCreationDialog(Dialog dialog)
         {
-            this.creationDialogs.Add(dialog);
+            creationDialogs.Add(dialog);
         }
 
         public void AddCreationFactory(CreationFactory creationFactory)
         {
-            this.creationFactories.Add(creationFactory);
+            creationFactories.Add(creationFactory);
         }
 
         public void AddQueryCapability(QueryCapability queryCapability)
         {
-            this.queryCapabilities.Add(queryCapability);
+            queryCapabilities.Add(queryCapability);
         }
 
         public void AddSelectionDialog(Dialog dialog)
         {
-            this.selectionDialogs.Add(dialog);
+            selectionDialogs.Add(dialog);
         }
 
         [OslcDescription("Enables clients to create a resource via UI")]
@@ -84,7 +84,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.LocalResource)]
         public Dialog[] GetCreationDialogs()
         {
-            return this.creationDialogs.ToArray();
+            return creationDialogs.ToArray();
         }
 
         [OslcDescription("Enables clients to create new resources")]
@@ -98,7 +98,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.LocalResource)]
         public CreationFactory[] GetCreationFactories()
         {
-            return this.creationFactories.ToArray();
+            return creationFactories.ToArray();
         }
 
         [OslcDescription("Namespace Uri of the OSLC domain specification that is implemented by this service")]
@@ -108,7 +108,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Domain")]
         public Uri GetDomain()
         {
-            return this.domain;
+            return domain;
         }
 
         [OslcDescription("Enables clients query across a collection of resources")]
@@ -122,7 +122,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.LocalResource)]
         public QueryCapability[] GetQueryCapabilities()
         {
-            return this.queryCapabilities.ToArray();
+            return queryCapabilities.ToArray();
         }
 
         [OslcDescription("Enables clients to select a resource via UI")]
@@ -136,7 +136,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.LocalResource)]
         public Dialog[] GetSelectionDialogs()
         {
-            return this.selectionDialogs.ToArray();
+            return selectionDialogs.ToArray();
         }
 
         public void SetCreationDialogs(Dialog[] creationDialogs)

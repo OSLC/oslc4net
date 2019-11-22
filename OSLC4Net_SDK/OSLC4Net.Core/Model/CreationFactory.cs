@@ -50,23 +50,23 @@ namespace OSLC4Net.Core.Model
         public CreationFactory(string title, Uri creation)
             : this()
         {
-            this._title = title;
-            this._creation = creation;
+            _title = title;
+            _creation = creation;
         }
 
         public void AddResourceShape(Uri resourceShape)
         {
-            this._resourceShapes.Add(resourceShape);
+            _resourceShapes.Add(resourceShape);
         }
 
         public void AddResourceType(Uri resourceType)
         {
-            this._resourceTypes.Add(resourceType);
+            _resourceTypes.Add(resourceType);
         }
 
         public void AddUsage(Uri usage)
         {
-            this._usages.Add(usage);
+            _usages.Add(usage);
         }
 
         [OslcDescription("To create a new resource via the factory, post it to this Uri")]
@@ -76,7 +76,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Creation")]
         public Uri GetCreation()
         {
-            return this._creation;
+            return _creation;
         }
 
         [OslcDescription("Very short label for use in menu items")]
@@ -85,7 +85,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Label")]
         public string GetLabel()
         {
-            return this._label;
+            return _label;
         }
 
         [OslcDescription(
@@ -98,7 +98,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_RESOURCE_SHAPE)]
         public Uri[] GetResourceShapes()
         {
-            return this._resourceShapes.ToArray();
+            return _resourceShapes.ToArray();
         }
 
         [OslcDescription(
@@ -109,7 +109,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Resource Types")]
         public Uri[] GetResourceTypes()
         {
-            return this._resourceTypes.ToArray();
+            return _resourceTypes.ToArray();
         }
 
         [OslcDescription("Title string that could be used for display")]
@@ -120,7 +120,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.XMLLiteral)]
         public string GetTitle()
         {
-            return this._title;
+            return _title;
         }
 
         [OslcDescription(
@@ -131,40 +131,40 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Usages")]
         public Uri[] GetUsages()
         {
-            return this._usages.ToArray();
+            return _usages.ToArray();
         }
 
         public void SetCreation(Uri creation)
         {
-            this._creation = creation;
+            _creation = creation;
         }
 
         public void SetLabel(string label)
         {
-            this._label = label;
+            _label = label;
         }
 
         public void SetResourceShapes(Uri[] resourceShapes)
         {
-            this._resourceShapes.Clear();
-            if (resourceShapes != null) this._resourceShapes.AddAll(resourceShapes);
+            _resourceShapes.Clear();
+            if (resourceShapes != null) _resourceShapes.AddAll(resourceShapes);
         }
 
         public void SetResourceTypes(Uri[] resourceTypes)
         {
-            this._resourceTypes.Clear();
-            if (resourceTypes != null) this._resourceTypes.AddAll(resourceTypes);
+            _resourceTypes.Clear();
+            if (resourceTypes != null) _resourceTypes.AddAll(resourceTypes);
         }
 
         public void SetTitle(string title)
         {
-            this._title = title;
+            _title = title;
         }
 
         public void SetUsages(Uri[] usages)
         {
-            this._usages.Clear();
-            if (usages != null) this._usages.AddAll(usages);
+            _usages.Clear();
+            if (usages != null) _usages.AddAll(usages);
         }
     }
 }

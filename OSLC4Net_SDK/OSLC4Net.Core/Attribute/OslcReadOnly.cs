@@ -33,7 +33,7 @@ namespace OSLC4Net.Core.Attribute
 
         public OslcReadOnly()
         {
-            this.value = true;
+            value = true;
         }
 
         public OslcReadOnly(bool value)

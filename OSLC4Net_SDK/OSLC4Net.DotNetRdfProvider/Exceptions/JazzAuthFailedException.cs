@@ -31,18 +31,18 @@ namespace OSLC4Net.Core.Exceptions
         public JazzAuthFailedException(string user, string jazzUrl) :
             base(MESSAGE_KEY, new object[] { user, jazzUrl })
         {
-            this._user = user;
-            this._jazzUrl = jazzUrl;
+            _user = user;
+            _jazzUrl = jazzUrl;
         }
 
         public string GetUser()
         {
-            return this._user;
+            return _user;
         }
 
         public string GetJazzUrl()
         {
-            return this._jazzUrl;
+            return _jazzUrl;
         }
     }
 }

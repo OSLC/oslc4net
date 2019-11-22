@@ -48,7 +48,7 @@ namespace OSLC4Net.Client.Oslc.Resources
     
         public void AddAffectedByChangeRequest(Link affectingChangeRequest)
         {
-            this.affectedByChangeRequests.Add(affectingChangeRequest);
+            affectedByChangeRequests.Add(affectingChangeRequest);
         }
 
         [OslcDescription("Change request that affects the Test Result.")]

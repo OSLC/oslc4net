@@ -37,18 +37,18 @@ namespace OSLC4Net.Core.Exceptions
         public OslcCoreMisusedOccursException(Type resourceType, MethodInfo method)
             : base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name })
         {
-            this._method = method;
-            this._resourceType = resourceType;
+            _method = method;
+            _resourceType = resourceType;
         }
 
         public MethodInfo GetMethod()
         {
-            return this._method;
+            return _method;
         }
 
         public Type GetResourceType()
         {
-            return this._resourceType;
+            return _resourceType;
         }
     }
 }

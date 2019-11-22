@@ -38,9 +38,9 @@ namespace OSLC4Net.Core.Exceptions
             OslcPropertyDefinition oslcPropertyDefinition)
             : base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name, oslcPropertyDefinition.value })
         {
-            this._method = method;
-            this._oslcPropertyDefinition = oslcPropertyDefinition;
-            this._resourceType = resourceType;
+            _method = method;
+            _oslcPropertyDefinition = oslcPropertyDefinition;
+            _resourceType = resourceType;
         }
 
         public OslcCoreInvalidPropertyDefinitionException(
@@ -49,9 +49,9 @@ namespace OSLC4Net.Core.Exceptions
             OslcPropertyDefinition oslcPropertyDefinition)
             : base(MESSAGE_KEY, new object[] { resourceType.Name, property.Name, oslcPropertyDefinition.value })
         {
-            this._property = property;
-            this._oslcPropertyDefinition = oslcPropertyDefinition;
-            this._resourceType = resourceType;
+            _property = property;
+            _oslcPropertyDefinition = oslcPropertyDefinition;
+            _resourceType = resourceType;
         }
     }
 }

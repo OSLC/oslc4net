@@ -33,9 +33,9 @@ namespace OSLC4Net.Core.Exceptions
         public OslcCoreRelativeURIException(Type resourceType, string methodName, Uri relativeURI)
             : base(MESSAGE_KEY, new object[] { resourceType.Name, methodName, relativeURI.ToString() })
         {
-            this._methodName = methodName;
-            this._relativeUri = relativeURI;
-            this._resourceType = resourceType;
+            _methodName = methodName;
+            _relativeUri = relativeURI;
+            _resourceType = resourceType;
         }
     }
 }

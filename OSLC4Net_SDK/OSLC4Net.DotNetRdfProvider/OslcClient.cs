@@ -22,7 +22,7 @@ using System.Net.Http.Headers;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 
-using OSLC4Net.Client.Exceptions;
+using OSLC4Net.Core.Exceptions;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
 
@@ -59,11 +59,11 @@ namespace OSLC4Net.Core
         protected OslcClient(RemoteCertificateValidationCallback certCallback,
                              HttpMessageHandler oauthHandler)
         {
-            this.formatters = new HashSet<MediaTypeFormatter>();
+            formatters = new HashSet<MediaTypeFormatter>();
 
             formatters.Add(new RdfXmlMediaTypeFormatter());
 
-            this.client = oauthHandler == null ?
+            client = oauthHandler == null ?
                 HttpClientFactory.Create(CreateSSLHandler(certCallback)) :
                 HttpClientFactory.Create(oauthHandler);
         }

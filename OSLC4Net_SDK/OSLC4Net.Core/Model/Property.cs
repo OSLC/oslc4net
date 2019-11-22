@@ -76,25 +76,25 @@ namespace OSLC4Net.Core.Model
         public Property(string name, Occurs occurs, Uri propertyDefinition, ValueType valueType)
             : this()
         {
-            this._name = name;
-            this._occurs = occurs;
-            this._propertyDefinition = propertyDefinition;
-            this._valueType = valueType;
+            _name = name;
+            _occurs = occurs;
+            _propertyDefinition = propertyDefinition;
+            _valueType = valueType;
         }
 
         public void AddAllowedValue(string allowedValue)
         {
-            this._allowedValues.Add(allowedValue);
+            _allowedValues.Add(allowedValue);
         }
 
         public void AddRange(Uri range)
         {
-            this._range.Add(range);
+            _range.Add(range);
         }
 
         public int CompareTo(Property o)
         {
-            return this._name.CompareTo(o.GetName());
+            return _name.CompareTo(o.GetName());
         }
 
         [OslcDescription(
@@ -105,7 +105,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Allowed Values")]
         public string[] GetAllowedValues()
         {
-            return this._allowedValues.ToArray();
+            return _allowedValues.ToArray();
         }
 
         [OslcDescription("Resource with allowed values for the property being defined")]
@@ -117,7 +117,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_ALLOWED_VALUES)]
         public Uri GetAllowedValuesRef()
         {
-            return this._allowedValuesRef;
+            return _allowedValuesRef;
         }
 
         [OslcDescription("A default value for property, inlined into property definition")]
@@ -126,7 +126,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Default Value")]
         public string GetDefaultValue()
         {
-            return this._defaultValue;
+            return _defaultValue;
         }
 
         [OslcDescription(
@@ -137,7 +137,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.XMLLiteral)]
         public string GetDescription()
         {
-            return this._description;
+            return _description;
         }
 
         [OslcDescription(
@@ -147,7 +147,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Maximum Size")]
         public int GetMaxSize()
         {
-            return this._maxSize;
+            return _maxSize;
         }
 
         [OslcDescription("Name of property being defined, i.e. second part of property's Prefixed Name")]
@@ -157,7 +157,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Name")]
         public string GetName()
         {
-            return this._name;
+            return _name;
         }
 
         [OslcAllowedValue(
@@ -173,11 +173,11 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Occurs")]
         public Uri GetOccurs()
         {
-            if (this._occurs != Occurs.Unknown)
+            if (_occurs != Occurs.Unknown)
             {
                 try
                 {
-                    return new Uri(OccursExtension.ToString(this._occurs));
+                    return new Uri(OccursExtension.ToString(_occurs));
                 }
                 catch (UriFormatException exception)
                 {
@@ -196,7 +196,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Property Definition")]
         public Uri GetPropertyDefinition()
         {
-            return this._propertyDefinition;
+            return _propertyDefinition;
         }
 
         [OslcDescription(
@@ -206,7 +206,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Ranges")]
         public Uri[] GetRange()
         {
-            return this._range.ToArray();
+            return _range.ToArray();
         }
 
         [OslcAllowedValue(
@@ -220,11 +220,11 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Representation")]
         public Uri GetRepresentation()
         {
-            if (this._representation != null)
+            if (_representation != null)
             {
                 try
                 {
-                    return new Uri(RepresentationExtension.ToString(this._representation));
+                    return new Uri(RepresentationExtension.ToString(_representation));
                 }
                 catch (UriFormatException exception)
                 {
@@ -244,7 +244,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.XMLLiteral)]
         public string GetTitle()
         {
-            return this._title;
+            return _title;
         }
 
         [OslcDescription(
@@ -255,7 +255,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Value Shape")]
         public Uri GetValueShape()
         {
-            return this._valueShape;
+            return _valueShape;
         }
 
         [OslcAllowedValue(
@@ -277,11 +277,11 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Value Type")]
         public Uri GetValueType()
         {
-            if (this._valueType != ValueType.Unknown)
+            if (_valueType != ValueType.Unknown)
             {
                 try
                 {
-                    return new Uri(ValueTypeExtension.ToString(this._valueType));
+                    return new Uri(ValueTypeExtension.ToString(_valueType));
                 }
                 catch (UriFormatException exception)
                 {
@@ -299,7 +299,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Hidden")]
         public bool IsHidden()
         {
-            return this._hidden;
+            return _hidden;
         }
 
         [OslcDescription(
@@ -310,7 +310,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Is Member Property")]
         public bool IsMemberProperty()
         {
-            return this._memberProperty;
+            return _memberProperty;
         }
 
         [OslcDescription(
@@ -320,17 +320,17 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Read Only")]
         public bool IsReadOnly()
         {
-            return this._readOnly;
+            return _readOnly;
         }
 
         public void SetAllowedValues(string[] allowedValues)
         {
-            this._allowedValues.Clear();
+            _allowedValues.Clear();
             if (allowedValues != null)
             {
                 foreach (var av in allowedValues)
                 {
-                    this._allowedValues.Add(av);
+                    _allowedValues.Add(av);
                 }
             }
         }
@@ -339,124 +339,124 @@ namespace OSLC4Net.Core.Model
         {
             if (allowedValuesRef != null)
             {
-                this._allowedValuesRef = allowedValuesRef;
+                _allowedValuesRef = allowedValuesRef;
             }
             else
             {
-                this._allowedValuesRef = null;
+                _allowedValuesRef = null;
             }
         }
 
         public void SetDefaultValue(string defaultValue)
         {
-            this._defaultValue = defaultValue;
+            _defaultValue = defaultValue;
         }
 
         public void SetDescription(string description)
         {
-            this._description = description;
+            _description = description;
         }
 
         public void SetHidden(bool hidden)
         {
-            this._hidden = hidden;
+            _hidden = hidden;
         }
 
         public void SetMaxSize(int maxSize)
         {
-            this._maxSize = maxSize;
+            _maxSize = maxSize;
         }
 
         public void SetMemberProperty(bool memberProperty)
         {
-            this._memberProperty = memberProperty;
+            _memberProperty = memberProperty;
         }
 
         public void SetName(string name)
         {
-            this._name = name;
+            _name = name;
         }
 
         public void SetOccurs(Occurs occurs)
         {
-            this._occurs = occurs;
+            _occurs = occurs;
         }
 
         public void SetOccurs(Uri occurs)
         {
             if (occurs != null)
             {
-                this._occurs = OccursExtension.FromString(occurs.ToString());
+                _occurs = OccursExtension.FromString(occurs.ToString());
             }
             else
             {
-                this._occurs = Occurs.Unknown;
+                _occurs = Occurs.Unknown;
             }
         }
 
         public void SetPropertyDefinition(Uri propertyDefinition)
         {
-            this._propertyDefinition = propertyDefinition;
+            _propertyDefinition = propertyDefinition;
         }
 
         public void SetRange(Uri[] ranges)
         {
-            this._range.Clear();
+            _range.Clear();
             if (ranges != null)
             {
                 foreach (var value in ranges)
                 {
-                    this._range.Add(value);
+                    _range.Add(value);
                 }
             }
         }
 
         public void SetReadOnly(bool readOnly)
         {
-            this._readOnly = readOnly;
+            _readOnly = readOnly;
         }
 
         public void SetRepresentation(Representation representation)
         {
-            this._representation = representation;
+            _representation = representation;
         }
 
         public void SetRepresentation(Uri representation)
         {
             if (representation != null)
             {
-                this._representation = RepresentationExtension.FromString(representation.ToString());
+                _representation = RepresentationExtension.FromString(representation.ToString());
             }
             else
             {
-                this._representation = Representation.Unknown;
+                _representation = Representation.Unknown;
             }
         }
 
         public void SetTitle(string title)
         {
-            this._title = title;
+            _title = title;
         }
 
         public void SetValueShape(Uri valueShape)
         {
-            this._valueShape = valueShape;
+            _valueShape = valueShape;
         }
 
         public void SetValueType(ValueType valueType)
         {
-            this._valueType = valueType;
+            _valueType = valueType;
         }
 
         public void SetValueType(Uri valueType)
         {
             if (valueType != null)
             {
-                this._valueType = ValueTypeExtension.FromString(valueType.ToString());
+                _valueType = ValueTypeExtension.FromString(valueType.ToString());
             }
             else
             {
-                this._valueType = ValueType.Unknown;
+                _valueType = ValueType.Unknown;
             }
         }
     }

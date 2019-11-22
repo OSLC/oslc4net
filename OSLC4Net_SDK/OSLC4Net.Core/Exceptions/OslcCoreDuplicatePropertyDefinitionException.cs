@@ -46,7 +46,7 @@ namespace OSLC4Net.Core.Exceptions
 
         public OslcPropertyDefinition GetOslcPropertyDefinition()
         {
-            return this.oslcPropertyDefinition;
+            return oslcPropertyDefinition;
         }
     }
 }

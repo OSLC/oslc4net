@@ -52,14 +52,14 @@ namespace OSLC4Net.Client.Oslc.Resources
 		    this.query = query;
 		    this.response = response;
 		
-		    this.pageNumber = 1;		
+		    pageNumber = 1;		
 	    }
 	
 	    private OslcQueryResult(OslcQueryResult prev) {
-		    this.query = new OslcQuery(prev);
-		    this.response = this.query.GetResponse();
+		    query = new OslcQuery(prev);
+		    response = query.GetResponse();
 		
-		    this.pageNumber = prev.pageNumber + 1;		
+		    pageNumber = prev.pageNumber + 1;		
 	    }
 	
         [MethodImpl(MethodImplOptions.Synchronized)]

@@ -31,17 +31,17 @@ namespace OSLC4Net.Core.Resources
 
         public RequirementCollection() : base()
         {
-            this.AddRdfType(new Uri(RmConstants.TYPE_REQUIREMENT_COLLECTION));
+            AddRdfType(new Uri(RmConstants.TYPE_REQUIREMENT_COLLECTION));
         }
 
         public RequirementCollection(Uri about) : base(about)
         {
-            this.AddRdfType(new Uri(RmConstants.TYPE_REQUIREMENT_COLLECTION));
+            AddRdfType(new Uri(RmConstants.TYPE_REQUIREMENT_COLLECTION));
         }
 
         public void AddUses(Uri uses)
         {
-            this._uses.Add(uses);
+            _uses.Add(uses);
         }
 
         [OslcDescription("A collection uses a resource - the resource is in the requirement collection.")]
@@ -51,16 +51,16 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Uses")]
         public Uri[] GetUses()
         {
-            return this._uses.ToArray();
+            return _uses.ToArray();
         }
 
         public void SetUses(Uri[] uses)
         {
-            this._uses.Clear();
+            _uses.Clear();
 
             if (uses != null)
             {
-                this._uses.AddAll(uses);
+                _uses.AddAll(uses);
             }
         }
     }

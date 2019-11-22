@@ -60,17 +60,17 @@ namespace OSLC4Net.Client.Oslc.Resources
     
         public void AddContributor(Uri contributor)
         {
-            this.contributors.Add(contributor);
+            contributors.Add(contributor);
         }
 
         public void AddCreator(Uri creator)
         {
-            this.creators.Add(creator);
+            creators.Add(creator);
         }
     
         public void AddRdfType(Uri rdfType)
         {
-            this.rdfTypes.Add(rdfType);
+            rdfTypes.Add(rdfType);
         }
 
         [OslcDescription("The person(s) who are responsible for the work needed to complete the automation plan.")]

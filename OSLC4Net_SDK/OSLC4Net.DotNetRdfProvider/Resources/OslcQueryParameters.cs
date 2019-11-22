@@ -46,61 +46,61 @@ namespace OSLC4Net.Core.Resources
         /// <param name="prefix"></param>
         public OslcQueryParameters(string where, string select, string searchTerms, string orderBy, string prefix)
         {
-            this._where = where;
-            this._select = select;
-            this._searchTerms = searchTerms;
-            this._orderBy = orderBy;
-            this._prefix = prefix;
+            _where = where;
+            _select = select;
+            _searchTerms = searchTerms;
+            _orderBy = orderBy;
+            _prefix = prefix;
         }
 
         public string GetWhere()
         {
-            return this._where;
+            return _where;
         }
 
         public void SetWhere(string where)
         {
-            this._where = EncodeQueryParams(where);
+            _where = EncodeQueryParams(where);
         }
 
         public string GetSelect()
         {
-            return this._select;
+            return _select;
         }
 
         public void SetSelect(string select)
         {
-            this._select = EncodeQueryParams(select);
+            _select = EncodeQueryParams(select);
         }
 
         public string GetSearchTerms()
         {
-            return this._searchTerms;
+            return _searchTerms;
         }
 
         public void SetSearchTerms(string searchTerms)
         {
-            this._searchTerms = EncodeQueryParams(searchTerms);
+            _searchTerms = EncodeQueryParams(searchTerms);
         }
 
         public string GetOrderBy()
         {
-            return this._orderBy;
+            return _orderBy;
         }
 
         public void SetOrderBy(string orderBy)
         {
-            this._orderBy = EncodeQueryParams(orderBy);
+            _orderBy = EncodeQueryParams(orderBy);
         }
 
         public string GetPrefix()
         {
-            return this._prefix;
+            return _prefix;
         }
 
         public void SetPrefix(string prefix)
         {
-            this._prefix = EncodeQueryParams(prefix);
+            _prefix = EncodeQueryParams(prefix);
         }
 
         private string EncodeQueryParams(string oslcQueryParam)

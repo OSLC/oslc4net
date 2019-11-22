@@ -41,24 +41,24 @@ namespace OSLC4Net.Core.Exceptions
         public OslcCoreInvalidValueTypeException(Type resourceType, MethodInfo method, ValueType valueType)
             : base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name, ValueTypeExtension.ToString(valueType) })
         {
-            this._method = method;
-            this._valueType = valueType;
-            this._resourceType = resourceType;
+            _method = method;
+            _valueType = valueType;
+            _resourceType = resourceType;
         }
 
         public MethodInfo GetMethod()
         {
-            return this._method;
+            return _method;
         }
 
         public Type GetResourceType()
         {
-            return this._resourceType;
+            return _resourceType;
         }
 
         public ValueType GetValueType()
         {
-            return this._valueType;
+            return _valueType;
         }
     }
 }

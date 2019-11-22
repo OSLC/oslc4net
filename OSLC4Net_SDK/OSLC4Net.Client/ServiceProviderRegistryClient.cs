@@ -51,7 +51,7 @@ namespace OSLC4Net.Client
 			                                 String                     mediaType,
 			                                 String                     uri) 
         {
-    	    this.client = new OslcRestClient(formatters,
+    	    client = new OslcRestClient(formatters,
     									     uri,
     									     mediaType);
         }

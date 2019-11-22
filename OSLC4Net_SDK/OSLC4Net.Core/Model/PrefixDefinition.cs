@@ -44,8 +44,8 @@ namespace OSLC4Net.Core.Model
         public PrefixDefinition(string prefix, Uri prefixBase)
             : this()
         {
-            this._prefix = prefix;
-            this._prefixBase = prefixBase;
+            _prefix = prefix;
+            _prefixBase = prefixBase;
         }
 
         [OslcDescription("Namespace prefix to be used for this namespace")]
@@ -55,7 +55,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Prefix")]
         public string GetPrefix()
         {
-            return this._prefix;
+            return _prefix;
         }
 
         [OslcDescription("The base Uri of the namespace")]
@@ -64,17 +64,17 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Prefix Base")]
         public Uri GetPrefixBase()
         {
-            return this._prefixBase;
+            return _prefixBase;
         }
 
         public void SetPrefix(string prefix)
         {
-            this._prefix = prefix;
+            _prefix = prefix;
         }
 
         public void SetPrefixBase(Uri prefixBase)
         {
-            this._prefixBase = prefixBase;
+            _prefixBase = prefixBase;
         }
     }
 }

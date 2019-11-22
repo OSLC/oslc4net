@@ -42,24 +42,24 @@ namespace OSLC4Net.Core.Exceptions
                 MESSAGE_KEY,
                 new object[] { resourceType.Name, method.Name, OccursExtension.ToString(oslcOccurs.value) })
         {
-            this._method = method;
-            this._oslcOccurs = oslcOccurs;
-            this._resourceType = resourceType;
+            _method = method;
+            _oslcOccurs = oslcOccurs;
+            _resourceType = resourceType;
         }
 
         public MethodInfo GetMethod()
         {
-            return this._method;
+            return _method;
         }
 
         public OslcOccurs GetOslcOccurs()
         {
-            return this._oslcOccurs;
+            return _oslcOccurs;
         }
 
         public Type GetResourceType()
         {
-            return this._resourceType;
+            return _resourceType;
         }
     }
 }

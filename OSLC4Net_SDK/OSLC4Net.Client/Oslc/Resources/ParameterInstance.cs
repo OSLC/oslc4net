@@ -54,7 +54,7 @@ namespace OSLC4Net.Client.Oslc.Resources
     
         public void addRdfType(Uri rdfType)
         {
-            this.rdfTypes.Add(rdfType);
+            rdfTypes.Add(rdfType);
         }
 
         [OslcDescription("Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]

@@ -38,17 +38,17 @@ namespace OSLC4Net.Core.Resources
 
         public QmResource() : base()
         {
-            this._rdfTypes.Add(this.GetRdfType());
+            _rdfTypes.Add(GetRdfType());
         }
 
         public QmResource(Uri about) : base(about)
         {
-            this._rdfTypes.Add(this.GetRdfType());
+            _rdfTypes.Add(GetRdfType());
         }
 
         public void AddRdfType(Uri rdfType)
         {
-            this._rdfTypes.Add(rdfType);
+            _rdfTypes.Add(rdfType);
         }
 
         [OslcDescription("Timestamp of resource creation.")]
@@ -57,7 +57,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Created")]
         public DateTime? GetCreated()
         {
-            return this._created;
+            return _created;
         }
 
         [OslcDescription("A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
@@ -67,7 +67,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Identifier")]
         public string GetIdentifier()
         {
-            return this._identifier;
+            return _identifier;
         }
 
         [OslcDescription("Resource Shape that provides hints as to resource property value-types and allowed values. ")]
@@ -76,7 +76,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Instance Shape")]
         public Uri GetInstanceShape()
         {
-            return this._instanceShape;
+            return _instanceShape;
         }
 
         [OslcDescription("Timestamp last latest resource modification.")]
@@ -85,7 +85,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Modified")]
         public DateTime? GetModified()
         {
-            return this._modified;
+            return _modified;
         }
 
         [OslcDescription("The resource type URIs.")]
@@ -94,7 +94,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Types")]
         public Uri[] GetRdfTypes()
         {
-            return this._rdfTypes.ToArray();
+            return _rdfTypes.ToArray();
         }
 
         [OslcDescription("The scope of a resource is a Uri for the resource's OSLC Service Provider.")]
@@ -103,7 +103,7 @@ namespace OSLC4Net.Core.Resources
         [OslcTitle("Service Provider")]
         public Uri GetServiceProvider()
         {
-            return this._serviceProvider;
+            return _serviceProvider;
         }
 
         [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
@@ -113,47 +113,47 @@ namespace OSLC4Net.Core.Resources
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
         public string GetTitle()
         {
-            return this._title;
+            return _title;
         }
 
         public void SetCreated(DateTime? created)
         {
-            this._created = created;
+            _created = created;
         }
 
         public void SetIdentifier(string identifier)
         {
-            this._identifier = identifier;
+            _identifier = identifier;
         }
 
         public void SetInstanceShape(Uri instanceShape)
         {
-            this._instanceShape = instanceShape;
+            _instanceShape = instanceShape;
         }
 
         public void SetModified(DateTime? modified)
         {
-            this._modified = modified;
+            _modified = modified;
         }
 
         public void SetRdfTypes(Uri[] rdfTypes)
         {
-            this._rdfTypes.Clear();
+            _rdfTypes.Clear();
 
             if (rdfTypes != null)
             {
-                this._rdfTypes.AddAll(rdfTypes);
+                _rdfTypes.AddAll(rdfTypes);
             }
         }
 
         public void SetServiceProvider(Uri serviceProvider)
         {
-            this._serviceProvider = serviceProvider;
+            _serviceProvider = serviceProvider;
         }
 
         public void SetTitle(string title)
         {
-            this._title = title;
+            _title = title;
         }
 
         protected abstract Uri GetRdfType();

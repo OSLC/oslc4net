@@ -59,7 +59,7 @@ namespace OSLC4Net.Core.Model
 
         public void AddService(Service srvc)
         {
-            this._services.Add(srvc);
+            _services.Add(srvc);
         }
 
         [OslcDescription("The date and time that this resource was created")]
@@ -68,7 +68,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Created")]
         public DateTime? GetCreated()
         {
-            return this._created;
+            return _created;
         }
 
         [OslcDescription("Description of the service provider")]
@@ -78,7 +78,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.XMLLiteral)]
         public string GetDescription()
         {
-            return this._description;
+            return _description;
         }
 
         [OslcDescription(
@@ -88,7 +88,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Details")]
         public Uri[] GetDetails()
         {
-            return this._details.ToArray();
+            return _details.ToArray();
         }
 
         [OslcDescription("A unique identifier for this resource")]
@@ -97,7 +97,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Identifier")]
         public string GetIdentifier()
         {
-            return this._identifier;
+            return _identifier;
         }
 
         [OslcDescription("Defines the three OAuth URIs required for a client to act as an OAuth consumer")]
@@ -110,7 +110,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.LocalResource)]
         public OAuthConfiguration GetOauthConfiguration()
         {
-            return this._oauthConfiguration;
+            return _oauthConfiguration;
         }
 
         [OslcDescription(
@@ -125,7 +125,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.LocalResource)]
         public PrefixDefinition[] GetPrefixDefinitions()
         {
-            return this._prefixDefinitions.ToArray();
+            return _prefixDefinitions.ToArray();
         }
 
         [OslcDescription("Describes the software product that provides the implementation")]
@@ -138,7 +138,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.LocalResource)]
         public Publisher GetPublisher()
         {
-            return this._publisher;
+            return _publisher;
         }
 
         [OslcDescription("Describes services offered by the service provider")]
@@ -153,7 +153,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.LocalResource)]
         public Service[] GetServices()
         {
-            return this._services.ToArray();
+            return _services.ToArray();
         }
 
         [OslcDescription("Title of the service provider")]
@@ -163,64 +163,64 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.XMLLiteral)]
         public string GetTitle()
         {
-            return this._title;
+            return _title;
         }
 
         public void SetCreated(DateTime? created)
         {
-            this._created = created;
+            _created = created;
         }
 
         public void SetDescription(string description)
         {
-            this._description = description;
+            _description = description;
         }
 
         public void SetDetails(Uri[] details)
         {
-            this._details.Clear();
+            _details.Clear();
             if (details != null)
             {
-                this._details.AddAll(details);
+                _details.AddAll(details);
             }
         }
 
         public void SetIdentifier(string identifier)
         {
-            this._identifier = identifier;
+            _identifier = identifier;
         }
 
         public void SetOauthConfiguration(OAuthConfiguration oauthConfiguration)
         {
-            this._oauthConfiguration = oauthConfiguration;
+            _oauthConfiguration = oauthConfiguration;
         }
 
         public void SetPrefixDefinitions(PrefixDefinition[] prefixDefinitions)
         {
-            this._prefixDefinitions.Clear();
+            _prefixDefinitions.Clear();
             if (prefixDefinitions != null)
             {
-                this._prefixDefinitions.AddAll(prefixDefinitions);
+                _prefixDefinitions.AddAll(prefixDefinitions);
             }
         }
 
         public void SetPublisher(Publisher publisher)
         {
-            this._publisher = publisher;
+            _publisher = publisher;
         }
 
         public void SetServices(Service[] services)
         {
-            this._services.Clear();
+            _services.Clear();
             if (services != null)
             {
-                this._services.AddAll(services);
+                _services.AddAll(services);
             }
         }
 
         public void SetTitle(string title)
         {
-            this._title = title;
+            _title = title;
         }
     }
 }

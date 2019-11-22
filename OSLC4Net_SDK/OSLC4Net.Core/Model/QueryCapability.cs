@@ -62,18 +62,18 @@ namespace OSLC4Net.Core.Model
         public QueryCapability(string title, Uri queryBase)
             : this()
         {
-            this._title = title;
-            this._queryBase = queryBase;
+            _title = title;
+            _queryBase = queryBase;
         }
 
         public void AddResourceType(Uri resourceType)
         {
-            this._resourceTypes.Add(resourceType);
+            _resourceTypes.Add(resourceType);
         }
 
         public void AddUsage(Uri usage)
         {
-            this._usages.Add(usage);
+            _usages.Add(usage);
         }
 
         [OslcDescription("Very short label for use in menu items")]
@@ -82,7 +82,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Label")]
         public string GetLabel()
         {
-            return this._label;
+            return _label;
         }
 
         [OslcDescription(
@@ -93,7 +93,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Query Base")]
         public Uri GetQueryBase()
         {
-            return this._queryBase;
+            return _queryBase;
         }
 
         [OslcDescription("The Query Capability SHOULD provide a Resource Shape that describes the query base Uri")]
@@ -105,7 +105,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_RESOURCE_SHAPE)]
         public Uri GetResourceShape()
         {
-            return this._resourceShape;
+            return _resourceShape;
         }
 
         [OslcDescription(
@@ -116,7 +116,7 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Resource Types")]
         public Uri[] GetResourceTypes()
         {
-            return this._resourceTypes.ToArray();
+            return _resourceTypes.ToArray();
         }
 
         [OslcDescription("Title string that could be used for display")]
@@ -127,7 +127,7 @@ namespace OSLC4Net.Core.Model
         [OslcValueType(ValueType.XMLLiteral)]
         public string GetTitle()
         {
-            return this._title;
+            return _title;
         }
 
         [OslcDescription(
@@ -138,44 +138,44 @@ namespace OSLC4Net.Core.Model
         [OslcTitle("Usages")]
         public Uri[] GetUsages()
         {
-            return this._usages.ToArray();
+            return _usages.ToArray();
         }
 
         public void SetLabel(string label)
         {
-            this._label = label;
+            _label = label;
         }
 
         public void SetQueryBase(Uri queryBase)
         {
-            this._queryBase = queryBase;
+            _queryBase = queryBase;
         }
 
         public void SetResourceShape(Uri resourceShape)
         {
-            this._resourceShape = resourceShape;
+            _resourceShape = resourceShape;
         }
 
         public void SetResourceTypes(Uri[] resourceTypes)
         {
-            this._resourceTypes.Clear();
+            _resourceTypes.Clear();
             if (resourceTypes != null)
             {
-                this._resourceTypes.AddAll(resourceTypes);
+                _resourceTypes.AddAll(resourceTypes);
             }
         }
 
         public void SetTitle(string title)
         {
-            this._title = title;
+            _title = title;
         }
 
         public void SetUsages(Uri[] usages)
         {
-            this._usages.Clear();
+            _usages.Clear();
             if (usages != null)
             {
-                this._usages.AddAll(usages);
+                _usages.AddAll(usages);
             }
         }
     }

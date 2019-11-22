@@ -83,7 +83,7 @@ namespace OSLC4Net.Client.Oslc.Resources
 
         public void AddSubject(String subject)
         {
-            this.subjects.Add(subject);
+            subjects.Add(subject);
         }
 
         public void AddConstrains(Link constrains)
@@ -158,17 +158,17 @@ namespace OSLC4Net.Client.Oslc.Resources
 
         public void AddContributor(Uri contributor)
         {
-            this.contributors.Add(contributor);
+            contributors.Add(contributor);
         }
 
         public void AddCreator(Uri creator)
         {
-            this.creators.Add(creator);
+            creators.Add(creator);
         }
 
         public void AddRdfType(Uri rdfType)
         {
-            this.rdfTypes.Add(rdfType);
+            rdfTypes.Add(rdfType);
         }
 
         [OslcDescription("Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
@@ -460,7 +460,7 @@ namespace OSLC4Net.Client.Oslc.Resources
 
         public void SetDecomposes(Link[] decomposes)
         {
-            this.affectedBy.Clear();
+            affectedBy.Clear();
 
             if (decomposes != null)
             {
