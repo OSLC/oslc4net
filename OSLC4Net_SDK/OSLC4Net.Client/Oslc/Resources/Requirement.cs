@@ -16,9 +16,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using OSLC4Net.Core.Model;
 using OSLC4Net.Core.Attribute;
+using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client.Oslc.Resources
 {
@@ -26,18 +25,18 @@ namespace OSLC4Net.Client.Oslc.Resources
     [OslcResourceShape(title = "Requirement Resource Shape", describes = new string[] { RmConstants.TYPE_REQUIREMENT })]
     public class Requirement : AbstractResource
     {
-        private String title;
-        private String description;
-        private String identifier;
-        private String shortTitle;
-        private readonly ISet<String> subjects = new HashSet<String>(); // XXX - TreeSet<> in Java
-        private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-        private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-        private DateTime? created;
-        private DateTime? modified;
-        private readonly ISet<Uri> rdfTypes = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-        private Uri serviceProvider;
-        private Uri instanceShape;
+        private string _title;
+        private string _description;
+        private string _identifier;
+        private string _shortTitle;
+        private readonly ISet<string> _subjects = new HashSet<string>(); // XXX - TreeSet<> in Java
+        private readonly ISet<Uri> _creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+        private readonly ISet<Uri> _contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+        private DateTime? _created;
+        private DateTime? _modified;
+        private readonly ISet<Uri> _rdfTypes = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+        private Uri _serviceProvider;
+        private Uri _instanceShape;
 
         // OSLC Links
         private readonly ISet<Link> elaboratedBy = new HashSet<Link>();
@@ -68,7 +67,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             // Only Add the type if Requirement is the created object
             if (!(this is RequirementCollection))
             {
-                rdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
+                _rdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
             }
         }
 
@@ -77,13 +76,13 @@ namespace OSLC4Net.Client.Oslc.Resources
             // Only Add the type if Requirement is the created object
             if (!(this is RequirementCollection))
             {
-                rdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
+                _rdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
             }
         }
 
-        public void AddSubject(String subject)
+        public void AddSubject(string subject)
         {
-            subjects.Add(subject);
+            _subjects.Add(subject);
         }
 
         public void AddConstrains(Link constrains)
@@ -158,17 +157,17 @@ namespace OSLC4Net.Client.Oslc.Resources
 
         public void AddContributor(Uri contributor)
         {
-            contributors.Add(contributor);
+            _contributors.Add(contributor);
         }
 
         public void AddCreator(Uri creator)
         {
-            creators.Add(creator);
+            _creators.Add(creator);
         }
 
         public void AddRdfType(Uri rdfType)
         {
-            rdfTypes.Add(rdfType);
+            _rdfTypes.Add(rdfType);
         }
 
         [OslcDescription("Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
@@ -176,9 +175,9 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "subject")]
         [OslcReadOnly(false)]
         [OslcTitle("Subjects")]
-        public String[] GetSubjects()
+        public string[] GetSubjects()
         {
-            return subjects.ToArray();
+            return _subjects.ToArray();
         }
 
         [OslcDescription("The subject is elaborated by the object.")]
@@ -342,7 +341,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Contributors")]
         public Uri[] GetContributors()
         {
-            return contributors.ToArray();
+            return _contributors.ToArray();
         }
 
         [OslcDescription("Timestamp of resource creation.")]
@@ -351,7 +350,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Created")]
         public DateTime? GetCreated()
         {
-            return created;
+            return _created;
         }
 
         [OslcDescription("Creator or creators of resource.")]
@@ -361,16 +360,16 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Creators")]
         public Uri[] GetCreators()
         {
-            return creators.ToArray();
+            return _creators.ToArray();
         }
 
         [OslcDescription("Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
         [OslcTitle("Description")]
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
-        public String GetDescription()
+        public string GetDescription()
         {
-            return description;
+            return _description;
         }
 
         [OslcDescription("A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
@@ -378,9 +377,9 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
         [OslcReadOnly]
         [OslcTitle("Identifier")]
-        public String GetIdentifier()
+        public string GetIdentifier()
         {
-            return identifier;
+            return _identifier;
         }
 
         [OslcDescription("Resource Shape that provides hints as to resource property value-types and allowed values. ")]
@@ -389,7 +388,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Instance Shape")]
         public Uri GetInstanceShape()
         {
-            return instanceShape;
+            return _instanceShape;
         }
 
         [OslcDescription("Timestamp last latest resource modification.")]
@@ -398,7 +397,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Modified")]
         public DateTime? GetModified()
         {
-            return modified;
+            return _modified;
         }
 
         [OslcDescription("The resource type URIs.")]
@@ -407,7 +406,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Types")]
         public Uri[] GetRdfTypes()
         {
-            return rdfTypes.ToArray();
+            return _rdfTypes.ToArray();
         }
 
         [OslcDescription("The scope of a resource is a Uri for the resource's OSLC Service Provider.")]
@@ -416,16 +415,16 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcTitle("Service Provider")]
         public Uri GetServiceProvider()
         {
-            return serviceProvider;
+            return _serviceProvider;
         }
 
         [OslcDescription("Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users.")]
         [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "shortTitle")]
         [OslcTitle("Short Title")]
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
-        public String GetShortTitle()
+        public string GetShortTitle()
         {
-            return shortTitle;
+            return _shortTitle;
         }
 
         [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
@@ -433,9 +432,9 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
         [OslcTitle("Title")]
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
-        public String GetTitle()
+        public string GetTitle()
         {
-            return title;
+            return _title;
         }
 
         public void SetConstrains(Link[] constrains)
@@ -580,81 +579,81 @@ namespace OSLC4Net.Client.Oslc.Resources
 
         public void SetContributors(Uri[] contributors)
         {
-            this.contributors.Clear();
+            this._contributors.Clear();
 
             if (contributors != null)
             {
-                this.contributors.AddAll(contributors);
+                this._contributors.AddAll(contributors);
             }
         }
 
         public void SetCreated(DateTime? created)
         {
-            this.created = created;
+            this._created = created;
         }
 
         public void SetCreators(Uri[] creators)
         {
-            this.creators.Clear();
+            this._creators.Clear();
 
             if (creators != null)
             {
-                this.creators.AddAll(creators);
+                this._creators.AddAll(creators);
             }
         }
 
-        public void SetDescription(String description)
+        public void SetDescription(string description)
         {
-            this.description = description;
+            this._description = description;
         }
 
-        public void SetIdentifier(String identifier)
+        public void SetIdentifier(string identifier)
         {
-            this.identifier = identifier;
+            this._identifier = identifier;
         }
 
         public void SetInstanceShape(Uri instanceShape)
         {
-            this.instanceShape = instanceShape;
+            this._instanceShape = instanceShape;
         }
 
         public void SetModified(DateTime? modified)
         {
-            this.modified = modified;
+            this._modified = modified;
         }
 
         public void SetRdfTypes(Uri[] rdfTypes)
         {
-            this.rdfTypes.Clear();
+            this._rdfTypes.Clear();
 
             if (rdfTypes != null)
             {
-                this.rdfTypes.AddAll(rdfTypes);
+                this._rdfTypes.AddAll(rdfTypes);
             }
         }
 
         public void SetServiceProvider(Uri serviceProvider)
         {
-            this.serviceProvider = serviceProvider;
+            this._serviceProvider = serviceProvider;
         }
 
-        public void SetShortTitle(String shortTitle)
+        public void SetShortTitle(string shortTitle)
         {
-            this.shortTitle = shortTitle;
+            this._shortTitle = shortTitle;
         }
 
-        public void SetTitle(String title)
+        public void SetTitle(string title)
         {
-            this.title = title;
+            this._title = title;
         }
 
-        public void SetSubjects(String[] subjects)
+        public void SetSubjects(string[] subjects)
         {
-            this.subjects.Clear();
+            this._subjects.Clear();
 
             if (subjects != null)
             {
-                this.subjects.AddAll(subjects);
+                this._subjects.AddAll(subjects);
             }
         }
     }

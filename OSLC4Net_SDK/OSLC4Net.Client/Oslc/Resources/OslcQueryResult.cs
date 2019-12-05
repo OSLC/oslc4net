@@ -44,7 +44,7 @@ namespace OSLC4Net.Client.Oslc.Resources
 	
 	    private IUriNode rdfType, infoResource; 
 	
-	    private String nextPageUrl = "";
+	    private string nextPageUrl = "";
 	
 	    private bool rdfInitialized = false;
 	
@@ -86,7 +86,7 @@ namespace OSLC4Net.Client.Oslc.Resources
 		    }
 	    }
 	
-	    internal String GetNextPageUrl() {
+	    internal string GetNextPageUrl() {
 
 		    InitializeRdf();
 
@@ -165,11 +165,11 @@ namespace OSLC4Net.Client.Oslc.Resources
         /// which examine the response unavailable (Example: GetRawResponse().
         /// </summary>
         /// <returns></returns>
-	    public String[] GetMembersUrls() {
+	    public string[] GetMembersUrls() {
 
 		    InitializeRdf();
 
-		    IList<String> membersUrls = new List<String>();
+		    IList<string> membersUrls = new List<string>();
             IUriNode membersResource = rdfGraph.CreateUriNode(new Uri(query.GetCapabilityUrl()));
             IEnumerable<Triple> triples = rdfGraph.GetTriplesWithSubject(membersResource);
 

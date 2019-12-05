@@ -32,17 +32,17 @@ namespace OSLC4Net.Client.Oslc.Resources
 	    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
         private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
         private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-        private readonly ISet<String>   subjects                    = new HashSet<String>(); // XXX - TreeSet<> in Java
+        private readonly ISet<string>   subjects                    = new HashSet<string>(); // XXX - TreeSet<> in Java
         private readonly ISet<Uri>      states                      = new HashSet<Uri>(); // XXX - TreeSet<> in Java
         private readonly ISet<ParameterInstance> inputParameters    = new HashSet<ParameterInstance>(); // XXX - TreeSet<> in Java
     
         private DateTime?   created;
-        private String      description;
-        private String      identifier;
+        private string description;
+        private string identifier;
         private Uri         instanceShape;
         private DateTime?   modified;
         private Uri         serviceProvider;
-        private String      title;
+        private string title;
         private Uri         desiredState;
         private Link        executesAutomationPlan;
 
@@ -76,7 +76,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             rdfTypes.Add(rdfType);
         }
 
-        public void AddSubject(String subject)
+        public void AddSubject(string subject)
         {
             subjects.Add(subject);
         }
@@ -124,7 +124,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
         [OslcTitle("Description")]
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
-        public String GetDescription()
+        public string GetDescription()
         {
             return description;
         }
@@ -134,7 +134,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
         [OslcReadOnly]
         [OslcTitle("Identifier")]
-        public String GetIdentifier()
+        public string GetIdentifier()
         {
             return identifier;
         }
@@ -206,7 +206,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "subject")]
         [OslcReadOnly(false)]
         [OslcTitle("Subjects")]
-        public String[] GetSubjects()
+        public string[] GetSubjects()
         {
             return subjects.ToArray();
         }
@@ -216,7 +216,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
         [OslcTitle("Title")]
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
-        public String GetTitle()
+        public string GetTitle()
         {
             return title;
         }
@@ -276,12 +276,12 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void SetDescription(String description)
+        public void SetDescription(string description)
         {
             this.description = description;
         }
 
-        public void SetIdentifier(String identifier)
+        public void SetIdentifier(string identifier)
         {
             this.identifier = identifier;
         }
@@ -321,7 +321,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             this.executesAutomationPlan = executesAutomationPlan;
         }
     
-        public void SetSubjects(String[] subjects)
+        public void SetSubjects(string[] subjects)
         {
             this.subjects.Clear();
 
@@ -331,7 +331,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void SetTitle(String title)
+        public void SetTitle(string title)
         {
             this.title = title;
         }

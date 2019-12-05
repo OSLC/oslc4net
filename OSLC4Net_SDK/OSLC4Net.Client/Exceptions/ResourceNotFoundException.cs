@@ -25,10 +25,10 @@ namespace OSLC4Net.Client.Exceptions
     /// </summary>
     public class ResourceNotFoundException : OslcClientApplicationException
     {
-	    private const String MESSAGE_KEY = "ResourceNotFoundException";
+	    private const string MESSAGE_KEY = "ResourceNotFoundException";
 	
-	    private readonly String resource;
-	    private readonly String value;
+	    private readonly string resource;
+	    private readonly string value;
 	
 	    public ResourceNotFoundException(string resource, string value) :
 		    base(MESSAGE_KEY, new object[] {resource, value})
@@ -37,12 +37,12 @@ namespace OSLC4Net.Client.Exceptions
 		    this.value = value;
 	    }
 	
-	    public String GetResource()
+	    public string GetResource()
         {
 		    return resource;
 	    }
 	
-	    public String GetValue()
+	    public string GetValue()
         {
 		    return value;
 	    }

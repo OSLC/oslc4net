@@ -29,7 +29,7 @@ namespace OSLC4Net.Core.Query.Impl
         public
         NestedPropertyImpl(
             CommonTree tree,
-            IDictionary<String, String> prefixMap
+            IDictionary<string, string> prefixMap
         ) : base((CommonTree)((CommonTree)tree.GetChild(0)).GetChild(0), PropertyType.NESTED_PROPERTY,
                   prefixMap, ((CommonTree)tree.GetChild(0)).Token.Type == OslcSelectParser.WILDCARD)
         {

@@ -33,7 +33,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         private readonly ISet<Link>     blocksTestExecutionRecords  = new HashSet<Link>();
         private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
         private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-        private readonly ISet<String>   dctermsTypes                = new HashSet<String>(); // XXX - TreeSet<> in Java
+        private readonly ISet<string>   dctermsTypes                = new HashSet<string>(); // XXX - TreeSet<> in Java
         private readonly ISet<Link>     implementsRequirements      = new HashSet<Link>();
         private readonly ISet<Link>     relatedChangeRequests       = new HashSet<Link>();
         private readonly ISet<Link>     relatedResources            = new HashSet<Link>(); // TODO - Extension to point to any other OSLC resource(s).
@@ -41,29 +41,29 @@ namespace OSLC4Net.Client.Oslc.Resources
         private readonly ISet<Link>     relatedTestExecutionRecords = new HashSet<Link>();
         private readonly ISet<Link>     relatedTestPlans            = new HashSet<Link>();
         private readonly ISet<Link>     relatedTestScripts          = new HashSet<Link>();
-        private readonly ISet<String>   subjects                    = new HashSet<String>(); // XXX - TreeSet<> in Java
+        private readonly ISet<string>   subjects                    = new HashSet<string>(); // XXX - TreeSet<> in Java
         private readonly ISet<Link>     testedByTestCases           = new HashSet<Link>();
         private readonly ISet<Link>     tracksChangeSets            = new HashSet<Link>();
         private readonly ISet<Link>     tracksRequirements          = new HashSet<Link>();
         private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
-        private Boolean     approved;
-        private Boolean     closed;
+        private bool approved;
+        private bool closed;
         private DateTime?   closeDate;
         private DateTime?   created;
-        private String      description;
+        private string description;
         private Uri         discussedBy;
-        private Boolean     isFixedValue;
-        private String      identifier;
-        private Boolean     inProgress;
+        private bool isFixedValue;
+        private string identifier;
+        private bool inProgress;
         private Uri         instanceShape;
         private DateTime?   modified;
-        private Boolean     reviewed;
+        private bool reviewed;
         private Uri         serviceProvider;
-        private String      shortTitle;
-        private String      status;
-        private String      title;
-        private Boolean     verified;
+        private string shortTitle;
+        private string status;
+        private string title;
+        private bool verified;
 
         public ChangeRequest() : base()
         {
@@ -110,7 +110,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             creators.Add(creator);
         }
 
-        public void AddDctermsType(String dctermsType)
+        public void AddDctermsType(string dctermsType)
         {
             dctermsTypes.Add(dctermsType);
         }
@@ -155,7 +155,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             relatedTestScripts.Add(relatedTestScript);
         }
 
-        public void AddSubject(String subject)
+        public void AddSubject(string subject)
         {
             subjects.Add(subject);
         }
@@ -273,7 +273,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcName("type")]
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "type")]
         [OslcTitle("Types")]
-        public String[] GetDctermsTypes()
+        public string[] GetDctermsTypes()
         {
             return dctermsTypes.ToArray();
         }
@@ -282,7 +282,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
         [OslcTitle("Description")]
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
-        public String GetDescription()
+        public string GetDescription()
         {
             return description;
         }
@@ -301,7 +301,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
         [OslcReadOnly]
         [OslcTitle("Identifier")]
-        public String GetIdentifier()
+        public string GetIdentifier()
         {
             return identifier;
         }
@@ -421,7 +421,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "shortTitle")]
         [OslcTitle("Short Title")]
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
-        public String GetShortTitle()
+        public string GetShortTitle()
         {
             return shortTitle;
         }
@@ -429,7 +429,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcDescription("Used to indicate the status of the change request based on values defined by the service provider. Most often a read-only property. Some possible values may include: 'Submitted', 'Done', 'InProgress', etc.")]
         [OslcPropertyDefinition(CmConstants.CHANGE_MANAGEMENT_NAMESPACE + "status")]
         [OslcTitle("Status")]
-        public String GetStatus()
+        public string GetStatus()
         {
             return status;
         }
@@ -439,7 +439,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "subject")]
         [OslcReadOnly(false)]
         [OslcTitle("Subjects")]
-        public String[] GetSubjects()
+        public string[] GetSubjects()
         {
             return subjects.ToArray();
         }
@@ -460,7 +460,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
         [OslcTitle("Title")]
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
-        public String GetTitle()
+        public string GetTitle()
         {
             return title;
         }
@@ -491,7 +491,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(CmConstants.CHANGE_MANAGEMENT_NAMESPACE + "approved")]
         [OslcReadOnly]
         [OslcTitle("Approved")]
-        public Boolean isApproved()
+        public bool isApproved()
         {
             return approved;
         }
@@ -500,7 +500,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(CmConstants.CHANGE_MANAGEMENT_NAMESPACE + "closed")]
         [OslcReadOnly]
         [OslcTitle("Closed")]
-        public Boolean isClosed()
+        public bool isClosed()
         {
             return closed;
         }
@@ -509,7 +509,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(CmConstants.CHANGE_MANAGEMENT_NAMESPACE + "fixed")]
         [OslcReadOnly]
         [OslcTitle("Fixed")]
-        public Boolean isFixed()
+        public bool isFixed()
         {
             return isFixedValue;
         }
@@ -519,7 +519,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(CmConstants.CHANGE_MANAGEMENT_NAMESPACE + "inprogress")]
         [OslcReadOnly]
         [OslcTitle("In Progress")]
-        public Boolean isInProgress()
+        public bool isInProgress()
         {
             return inProgress;
         }
@@ -528,7 +528,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(CmConstants.CHANGE_MANAGEMENT_NAMESPACE + "reviewed")]
         [OslcReadOnly]
         [OslcTitle("Reviewed")]
-        public Boolean isReviewed()
+        public bool isReviewed()
         {
             return reviewed;
         }
@@ -537,7 +537,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(CmConstants.CHANGE_MANAGEMENT_NAMESPACE + "verified")]
         [OslcReadOnly]
         [OslcTitle("Verified")]
-        public Boolean isVerified()
+        public bool isVerified()
         {
             return verified;
         }
@@ -582,7 +582,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void SetApproved(Boolean approved)
+        public void SetApproved(bool approved)
         {
             this.approved = approved;
         }
@@ -597,7 +597,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void SetClosed(Boolean closed)
+        public void SetClosed(bool closed)
         {
             this.closed = closed;
         }
@@ -632,7 +632,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void SetDctermsTypes(String[] dctermsTypes)
+        public void SetDctermsTypes(string[] dctermsTypes)
         {
             this.dctermsTypes.Clear();
 
@@ -642,7 +642,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void SetDescription(String description)
+        public void SetDescription(string description)
         {
             this.description = description;
         }
@@ -652,12 +652,12 @@ namespace OSLC4Net.Client.Oslc.Resources
             this.discussedBy = discussedBy;
         }
 
-        public void SetFixed(Boolean isFixed)
+        public void SetFixed(bool isFixed)
         {
             isFixedValue = isFixed;
         }
 
-        public void SetIdentifier(String identifier)
+        public void SetIdentifier(string identifier)
         {
             this.identifier = identifier;
         }
@@ -672,7 +672,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void SetInProgress(Boolean inProgress)
+        public void SetInProgress(bool inProgress)
         {
             this.inProgress = inProgress;
         }
@@ -757,7 +757,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void SetReviewed(Boolean reviewed)
+        public void SetReviewed(bool reviewed)
         {
             this.reviewed = reviewed;
         }
@@ -767,17 +767,17 @@ namespace OSLC4Net.Client.Oslc.Resources
             this.serviceProvider = serviceProvider;
         }
 
-        public void SetShortTitle(String shortTitle)
+        public void SetShortTitle(string shortTitle)
         {
             this.shortTitle = shortTitle;
         }
 
-        public void SetStatus(String status)
+        public void SetStatus(string status)
         {
             this.status = status;
         }
 
-        public void SetSubjects(String[] subjects)
+        public void SetSubjects(string[] subjects)
         {
             this.subjects.Clear();
 
@@ -797,7 +797,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void SetTitle(String title)
+        public void SetTitle(string title)
         {
             this.title = title;
         }
@@ -822,7 +822,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void SetVerified(Boolean verified)
+        public void SetVerified(bool verified)
         {
             this.verified = verified;
         }

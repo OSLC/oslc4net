@@ -33,21 +33,21 @@ namespace OSLC4Net.Client
     {
         private static readonly ILog LOGGER = LogManager.GetLogger(typeof(ServiceProviderRegistryURIs));
 
-        private static readonly String SYSTEM_PROPERTY_NAME_REGISTRY_URI = typeof(ServiceProviderRegistryURIs).Assembly.FullName + ".registryuri";
+        private static readonly string SYSTEM_PROPERTY_NAME_REGISTRY_URI = typeof(ServiceProviderRegistryURIs).Assembly.FullName + ".registryuri";
 
-        private static String SERVICE_PROVIDER_REGISTRY_URI;
+        private static string SERVICE_PROVIDER_REGISTRY_URI;
 
         static ServiceProviderRegistryURIs()
         {
-            String registryURI = Environment.GetEnvironmentVariable(SYSTEM_PROPERTY_NAME_REGISTRY_URI);
+            string registryURI = Environment.GetEnvironmentVariable(SYSTEM_PROPERTY_NAME_REGISTRY_URI);
 
-            String defaultBase = null;
+            string defaultBase = null;
 
             if (registryURI == null)
             {
                 // We need at least one default URI
 
-                String hostName = "localhost";
+                string hostName = "localhost";
 
                 try
                 {
@@ -83,7 +83,7 @@ namespace OSLC4Net.Client
         /// Get the ServiceProviderRegistry URI
         /// </summary>
         /// <returns></returns>
-        public static String getServiceProviderRegistryURI()
+        public static string getServiceProviderRegistryURI()
         {
             return SERVICE_PROVIDER_REGISTRY_URI;
         }

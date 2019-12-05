@@ -63,7 +63,7 @@ namespace OSLC4Net.Core.Query.Impl
             return '"' + Value.ToString() + "\"@" + LangTag.ToString();
         }
 
-        private String value = null;
-        private String langTag = null;
+        private string value = null;
+        private string langTag = null;
     }
 }

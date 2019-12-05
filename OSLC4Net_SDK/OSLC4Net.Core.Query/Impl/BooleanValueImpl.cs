@@ -37,7 +37,7 @@ namespace OSLC4Net.Core.Query.Impl
             {
                 if (value == null)
                 {
-                    value = Boolean.Parse(tree.Text);
+                    value = bool.Parse(tree.Text);
                 }
 
                 return value.Value;

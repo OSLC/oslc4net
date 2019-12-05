@@ -29,7 +29,7 @@ namespace OSLC4Net.Core.Query.Impl
         public
         TypedValueImpl(
             CommonTree tree,
-            IDictionary<String, String> prefixMap
+            IDictionary<string, string> prefixMap
         ) : base(tree, ValueType.TYPED_STRING)
         {
             this.prefixMap = prefixMap;
@@ -81,8 +81,8 @@ namespace OSLC4Net.Core.Query.Impl
             return '"' + Value.ToString() + "\"^^" + PrefixedName.ToString();
         }
 
-        private readonly IDictionary<String, String> prefixMap;
-        private String value = null;
+        private readonly IDictionary<string, string> prefixMap;
+        private string value = null;
         private PName prefixedName = null;
     }
 }

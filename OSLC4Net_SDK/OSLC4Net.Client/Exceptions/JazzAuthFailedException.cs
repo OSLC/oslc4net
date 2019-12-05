@@ -26,23 +26,23 @@ namespace OSLC4Net.Client.Exceptions
     /// </summary>
     public class JazzAuthFailedException : OslcClientApplicationException
     {
-	    private const String MESSAGE_KEY = "JazzAuthFailedException";
+	    private const string MESSAGE_KEY = "JazzAuthFailedException";
 	
-	    private readonly String user;
-	    private readonly String jazzUrl;
+	    private readonly string user;
+	    private readonly string jazzUrl;
 	
 	    public JazzAuthFailedException(string user, string jazzUrl) :
-		    base(MESSAGE_KEY, new Object[] {user, jazzUrl})
+		    base(MESSAGE_KEY, new object[] {user, jazzUrl})
         {
 		    this.user = user;
 		    this.jazzUrl = jazzUrl;
 	    }
 	
-	    public String GetUser() {
+	    public string GetUser() {
 		    return user;
 	    }
 	
-	    public String GetJazzUrl() {
+	    public string GetJazzUrl() {
 		    return jazzUrl;
 	    }
     }

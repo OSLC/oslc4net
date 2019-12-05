@@ -49,8 +49,8 @@ namespace OSLC4Net.Core.Query.Impl
             get
             {
                 if (identifier == null) {
-            
-                    String rawProperty = tree.GetChild(0).Text;
+
+                    string rawProperty = tree.GetChild(0).Text;
             
                     identifier = new PName();
             
@@ -73,7 +73,7 @@ namespace OSLC4Net.Core.Query.Impl
 
         private readonly SortTermType type;
         protected readonly CommonTree tree;
-        protected readonly IDictionary<String, String> prefixMap;
+        protected readonly IDictionary<string, string> prefixMap;
         private PName identifier = null;
     }
 }

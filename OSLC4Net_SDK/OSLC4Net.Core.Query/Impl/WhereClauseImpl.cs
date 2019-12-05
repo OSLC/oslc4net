@@ -26,7 +26,7 @@ namespace OSLC4Net.Core.Query.Impl
         public
         WhereClauseImpl(
             CommonTree tree,
-            IDictionary<String, String> prefixMap
+            IDictionary<string, string> prefixMap
         )
             : base(tree, true, prefixMap)
         {

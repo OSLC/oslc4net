@@ -328,7 +328,7 @@ namespace OSLC4Net.Client.Oslc
         /// <returns></returns>
 	    public string LookupServiceProviderUrl(string catalogUrl, string serviceProviderTitle) 
 	    {
-		    String retval = null;
+            string retval = null;
 		    HttpResponseMessage response = GetResource(catalogUrl, OSLCConstants.CT_RDF);
 
             if (response.StatusCode != HttpStatusCode.OK)
@@ -340,7 +340,7 @@ namespace OSLC4Net.Client.Oslc
 		
 		    if (catalog != null) {                
 			    foreach (ServiceProvider sp in catalog.GetServiceProviders()) {
-				    if (sp.GetTitle() != null && String.Compare(sp.GetTitle(), serviceProviderTitle, true) == 0) {
+				    if (sp.GetTitle() != null && string.Compare(sp.GetTitle(), serviceProviderTitle, true) == 0) {
 					    retval = sp.GetAbout().ToString();
 					    break;
 				    }				

@@ -22,18 +22,18 @@ namespace OSLC4Net.Client.Exceptions
 {
     public class RootServicesException : OslcClientApplicationException
     {
-        private const String MESSAGE_KEY = "RootServicesException";
+        private const string MESSAGE_KEY = "RootServicesException";
 	
-	    private readonly String jazzUrl;
+	    private readonly string jazzUrl;
 	
 	
 	    public RootServicesException(string jazzUrl, Exception exception) :
-		    base(MESSAGE_KEY, new Object[] {jazzUrl}, exception)
+		    base(MESSAGE_KEY, new object[] {jazzUrl}, exception)
         {
 		    this.jazzUrl = jazzUrl;
 	    }	
 	
-	    public String GetJazzUrl() {
+	    public string GetJazzUrl() {
 		    return jazzUrl;
 	    }
     }

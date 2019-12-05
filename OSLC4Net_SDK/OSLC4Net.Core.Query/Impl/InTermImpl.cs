@@ -29,7 +29,7 @@ namespace OSLC4Net.Core.Query.Impl
         public
         InTermImpl(
             CommonTree tree,
-            IDictionary<String, String> prefixMap
+            IDictionary<string, string> prefixMap
         ) : base(tree, TermType.IN_TERM, prefixMap)
         {
         }

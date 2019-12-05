@@ -35,7 +35,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         private readonly ISet<Link>     validatesRequirements       = new HashSet<Link>();
 
         private Uri      executionInstructions;
-        private String   description;
+        private string description;
 
         public TestScript() : base()
         {
@@ -90,7 +90,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
         [OslcTitle("Description")]
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
-        public String GetDescription()
+        public string GetDescription()
         {
             return description;
         }
@@ -145,7 +145,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void setDescription(String description)
+        public void setDescription(string description)
         {
             this.description = description;
         }

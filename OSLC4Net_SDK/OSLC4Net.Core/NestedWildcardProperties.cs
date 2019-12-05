@@ -34,6 +34,6 @@ namespace OSLC4Net.Core
          * @return map of all member properties of nested resources to be
          * output
          */
-        IDictionary<String, object> CommonNestedProperties();
+        IDictionary<string, object> CommonNestedProperties();
     }
 }

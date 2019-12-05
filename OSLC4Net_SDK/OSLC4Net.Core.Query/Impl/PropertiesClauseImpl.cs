@@ -29,7 +29,7 @@ namespace OSLC4Net.Core.Query.Impl
         public
         PropertiesClauseImpl(
             CommonTree tree,
-            IDictionary<String, String> prefixMap
+            IDictionary<string, string> prefixMap
         )
             : base(tree, prefixMap)
         {

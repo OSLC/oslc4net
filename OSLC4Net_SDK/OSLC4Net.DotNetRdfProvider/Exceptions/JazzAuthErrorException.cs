@@ -31,7 +31,7 @@ namespace OSLC4Net.Core.Exceptions
 
 
         public JazzAuthErrorException(HttpStatusCode status, string jazzUrl) :
-            base(MESSAGE_KEY, new Object[] { status.ToString(), jazzUrl })
+            base(MESSAGE_KEY, new object[] { status.ToString(), jazzUrl })
         {
             _status = status;
             _jazzUrl = jazzUrl;

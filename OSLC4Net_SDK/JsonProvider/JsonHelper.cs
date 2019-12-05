@@ -32,7 +32,7 @@ namespace OSLC4Net.Core.JsonProvider
 {
     public class JsonHelper
     {
-        private static readonly Char[] JSON_PROPERTY_DELIMITER_ARRAY = new Char[] {':'};
+        private static readonly char[] JSON_PROPERTY_DELIMITER_ARRAY = new char[] {':'};
 
         private const string JSON_PROPERTY_DELIMITER            = ":";
         private const string JSON_PROPERTY_PREFIXES             = "prefixes";
@@ -83,14 +83,14 @@ namespace OSLC4Net.Core.JsonProvider
         public static JsonObject CreateJson(string                      descriptionAbout,
                                             string                      responseInfoAbout,
                                             string                      nextPageAbout,
-                                            Int64?                      totalCount,
+                                            long?                      totalCount,
                                             IEnumerable<object>         objects,
-                                            IDictionary<String, object> properties)
+                                            IDictionary<string, object> properties)
         {
             JsonObject resultJsonObject = new JsonObject();
 
-            IDictionary<String, String> namespaceMappings        = new Dictionary<String, String>();
-            IDictionary<String, String> reverseNamespaceMappings = new Dictionary<String, String>();
+            IDictionary<string, string> namespaceMappings        = new Dictionary<string, string>();
+            IDictionary<string, string> reverseNamespaceMappings = new Dictionary<string, string>();
 
             if (descriptionAbout != null)
             {
@@ -200,8 +200,8 @@ namespace OSLC4Net.Core.JsonProvider
                                       Type        beanType)
         {
             List<object>                beans                    = new List<object>();
-            IDictionary<String, String> namespaceMappings        = new Dictionary<String, String>();
-            IDictionary<String, String> reverseNamespaceMappings = new Dictionary<String, String>();
+            IDictionary<string, string> namespaceMappings        = new Dictionary<string, string>();
+            IDictionary<string, string> reverseNamespaceMappings = new Dictionary<string, string>();
 
             // First read the prefixes and set up maps so we can create full property definition values later
             object prefixes = json.ContainsKey(JSON_PROPERTY_PREFIXES) ? json[JSON_PROPERTY_PREFIXES] : null;
@@ -230,7 +230,7 @@ namespace OSLC4Net.Core.JsonProvider
 
             string rdfPrefix = reverseNamespaceMappings[OslcConstants.RDF_NAMESPACE];
 
-            IDictionary<Type, IDictionary<String, MethodInfo>> classPropertyDefinitionsToSetMethods = new Dictionary<Type, IDictionary<String, MethodInfo>>();
+            IDictionary<Type, IDictionary<string, MethodInfo>> classPropertyDefinitionsToSetMethods = new Dictionary<Type, IDictionary<string, MethodInfo>>();
 
             JsonArray jsonArray = null;
 
@@ -330,19 +330,19 @@ namespace OSLC4Net.Core.JsonProvider
             return list;
         }
 
-        private static void BuildAttributeResource(IDictionary<String, String>      namespaceMappings,
-                                                   IDictionary<String, String>      reverseNamespaceMappings,
+        private static void BuildAttributeResource(IDictionary<string, string>      namespaceMappings,
+                                                   IDictionary<string, string>      reverseNamespaceMappings,
                                                    Type                             resourceType,
                                                    MethodInfo                       method,
                                                    OslcPropertyDefinition           propertyDefinitionAttribute,
                                                    JsonObject                       jsonObject,
                                                    object                           value,
-                                                   IDictionary<String, object>      nestedProperties,
+                                                   IDictionary<string, object>      nestedProperties,
                                                    bool                             onlyNested)
         {
             string propertyDefinition = propertyDefinitionAttribute.value;
 
-            String name;
+            string name;
             OslcName nameAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcName>(method);
 
             if (nameAttribute != null)
@@ -498,8 +498,8 @@ namespace OSLC4Net.Core.JsonProvider
             }
         }
     
-        private static JsonValue BuildContainer(IDictionary<String, String>    namespaceMappings,
-                                                IDictionary<String, String>    reverseNamespaceMappings,
+        private static JsonValue BuildContainer(IDictionary<string, string>    namespaceMappings,
+                                                IDictionary<string, string>    reverseNamespaceMappings,
                                                 OslcRdfCollectionType          collectionType,
                                                 JsonArray                      jsonArray)
         {
@@ -538,12 +538,12 @@ namespace OSLC4Net.Core.JsonProvider
             return container;
         }
 
-        private static void BuildResource(IDictionary<String, String>       namespaceMappings,
-                                          IDictionary<String, String>       reverseNamespaceMappings,
+        private static void BuildResource(IDictionary<string, string>       namespaceMappings,
+                                          IDictionary<string, string>       reverseNamespaceMappings,
                                           object                            obj,
                                           Type                              objectType,
                                           JsonObject                        jsonObject,
-                                          IDictionary<String, object>       properties,
+                                          IDictionary<string, object>       properties,
                                           IDictionary<object,JsonObject>    visitedObjects)
         {
     	    visitedObjects.Add(obj, jsonObject);
@@ -617,12 +617,12 @@ namespace OSLC4Net.Core.JsonProvider
               rdfTypesJsonArray.Add(rdfTypeJsonObject);
         }
     
-	    private static void BuildResourceAttributes(IDictionary<String, String>     namespaceMappings,
-			                                        IDictionary<String, String>     reverseNamespaceMappings,
+	    private static void BuildResourceAttributes(IDictionary<string, string>     namespaceMappings,
+			                                        IDictionary<string, string>     reverseNamespaceMappings,
 			                                        object                          obj,
 			                                        Type                            objectType,
 			                                        JsonObject                      jsonObject,
-			                                        IDictionary<String, object>     properties,
+			                                        IDictionary<string, object>     properties,
 			                                        IDictionary<object,JsonObject>  visitedObjects)
         {
 	        if (properties == OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON)
@@ -648,12 +648,12 @@ namespace OSLC4Net.Core.JsonProvider
 
                             if (value != null)
                             {
-                                IDictionary<String, object> nestedProperties = null;
+                                IDictionary<string, object> nestedProperties = null;
                                 bool onlyNested = false;
                             
                                 if (properties != null)
                                 {
-                                    IDictionary<String, object> map = (IDictionary<String, object>)properties[oslcPropertyDefinitionAttribute.value];
+                                    IDictionary<String, object> map = (IDictionary<string, object>)properties[oslcPropertyDefinitionAttribute.value];
                                 
                                     if (map != null)
                                     {
@@ -703,11 +703,11 @@ namespace OSLC4Net.Core.JsonProvider
             }
 	    }
 
-	    protected static void AddExtendedProperties(IDictionary<String, String> namespaceMappings,
-					                                IDictionary<String, String> reverseNamespaceMappings,
+	    protected static void AddExtendedProperties(IDictionary<string, string> namespaceMappings,
+					                                IDictionary<string, string> reverseNamespaceMappings,
 					                                JsonObject jsonObject,
 					                                IExtendedResource extendedResource,
-                                                    IDictionary<String, object> properties,
+                                                    IDictionary<string, object> properties,
                                                     IDictionary<object, JsonObject> visitedObjects)
 	    {
             IDictionary<QName, object> extendedProperties = extendedResource.GetExtendedProperties();
@@ -716,12 +716,12 @@ namespace OSLC4Net.Core.JsonProvider
 		    {
                 string ns = qname.GetNamespaceURI();
                 string localName = qname.GetLocalPart();
-                IDictionary<String, object> nestedProperties = null;
+                IDictionary<string, object> nestedProperties = null;
                 bool onlyNested = false;
             
                 if (properties != null)
                 {
-                    IDictionary<String, object> map = (IDictionary<String, object>)properties[ns + localName];
+                    IDictionary<String, object> map = (IDictionary<string, object>)properties[ns + localName];
                 
                     if (map != null)
                     {
@@ -756,7 +756,7 @@ namespace OSLC4Net.Core.JsonProvider
 			    }
 			    else
 			    {
-	                String prefix = reverseNamespaceMappings[ns];
+                    string prefix = reverseNamespaceMappings[ns];
 
 	                if (prefix == null)
 	                {
@@ -773,10 +773,10 @@ namespace OSLC4Net.Core.JsonProvider
 		    }
 	    }
 
-	    private static JsonValue GetExtendedPropertyJsonValue(IDictionary<String, String>       namespaceMappings,
-												              IDictionary<String, String>       reverseNamespaceMappings,
+	    private static JsonValue GetExtendedPropertyJsonValue(IDictionary<string, string>       namespaceMappings,
+												              IDictionary<string, string>       reverseNamespaceMappings,
 												              object                            obj,
-												              IDictionary<String, object>       nestedProperties,
+												              IDictionary<string, object>       nestedProperties,
 												              bool                              onlyNested,
 					                                          IDictionary<object,JsonObject>    visitedObjects)
 	    {
@@ -803,13 +803,13 @@ namespace OSLC4Net.Core.JsonProvider
 			
 			    return jsonArray;
 		    }
-		    else if ((obj is String)  ||
-				     (obj is Byte) ||
-				     (obj is Double) ||
-				     (obj is Decimal) ||
-				     (obj is Int16) ||
-				     (obj is Int32) ||
-				     (obj is Int64))
+		    else if ((obj is string)  ||
+				     (obj is byte) ||
+				     (obj is double) ||
+				     (obj is decimal) ||
+				     (obj is short) ||
+				     (obj is int) ||
+				     (obj is long))
 		    {
                 if (onlyNested)
                 {
@@ -818,7 +818,7 @@ namespace OSLC4Net.Core.JsonProvider
             
 			    return obj.ToString();
 		    }
-            else if (obj is Boolean)
+            else if (obj is bool)
             {
                 if (onlyNested)
                 {
@@ -869,7 +869,7 @@ namespace OSLC4Net.Core.JsonProvider
 		    return null;
 	    }
 	
-        private static String GetDefaultPropertyName(MethodInfo method)
+        private static string GetDefaultPropertyName(MethodInfo method)
         {
             string methodName    = method.Name;
             int    startingIndex = methodName.StartsWith(METHOD_NAME_START_GET) ? METHOD_NAME_START_GET_LENGTH : METHOD_NAME_START_IS_LENGTH;
@@ -888,21 +888,21 @@ namespace OSLC4Net.Core.JsonProvider
                    methodName.Substring(endingIndex);
         }
 
-        private static JsonValue HandleLocalResource(IDictionary<String, String>   namespaceMappings,
-                                                     IDictionary<String, String>   reverseNamespaceMappings,
+        private static JsonValue HandleLocalResource(IDictionary<string, string>   namespaceMappings,
+                                                     IDictionary<string, string>   reverseNamespaceMappings,
                                                      Type                          resourceType,
                                                      MethodInfo                    method,
                                                      object                        obj,
-                                                     IDictionary<String, object>   nestedProperties,
+                                                     IDictionary<string, object>   nestedProperties,
                                                      bool                          onlyNested)
         {
-            if ((obj is String) ||
-                (obj is Byte) ||
-                (obj is Double) ||
-                (obj is Decimal) ||
-                (obj is Int16) ||
-                (obj is Int32) ||
-                (obj is Int64))
+            if ((obj is string) ||
+                (obj is byte) ||
+                (obj is double) ||
+                (obj is decimal) ||
+                (obj is short) ||
+                (obj is int) ||
+                (obj is long))
             {
                 if (onlyNested)
                 {
@@ -911,7 +911,7 @@ namespace OSLC4Net.Core.JsonProvider
 
                 return obj.ToString();
             }
-            else if (obj is Boolean)
+            else if (obj is bool)
             {
                 if (onlyNested)
                 {
@@ -961,12 +961,12 @@ namespace OSLC4Net.Core.JsonProvider
                                         visitedObjects);
         }
 
-	    private static JsonValue HandleReifiedResource(IDictionary<String, String>  namespaceMappings,
-			                                           IDictionary<String, String>  reverseNamespaceMappings,
+	    private static JsonValue HandleReifiedResource(IDictionary<string, string>  namespaceMappings,
+			                                           IDictionary<string, string>  reverseNamespaceMappings,
 			                                           Type                         resourceType,
 			                                           MethodInfo                   method,
 			                                           object                       reifiedResource,
-	                                                   IDictionary<String, object>  properties)
+	                                                   IDictionary<string, object>  properties)
 	    {
             object value = reifiedResource.GetType().GetMethod("GetValue", Type.EmptyTypes).Invoke(reifiedResource, null);
 		    if (value == null)
@@ -1005,8 +1005,8 @@ namespace OSLC4Net.Core.JsonProvider
 		    return jsonObject;
 	    }
 
-	    protected static JsonObject HandleResourceReference(IDictionary<String, String> namespaceMappings,
-													        IDictionary<String, String> reverseNamespaceMappings,
+	    protected static JsonObject HandleResourceReference(IDictionary<string, string> namespaceMappings,
+													        IDictionary<string, string> reverseNamespaceMappings,
 													        Type                        resourceType,
 													        MethodInfo                  method,
 													        Uri                         uri)
@@ -1035,9 +1035,9 @@ namespace OSLC4Net.Core.JsonProvider
 
         private static JsonObject HandleSingleResource(object                        obj,
                                                        JsonObject                       jsonObject,
-                                                       IDictionary<String, String>      namespaceMappings,
-                                                       IDictionary<String, String>      reverseNamespaceMappings,
-                                                       IDictionary<String, object>      properties,
+                                                       IDictionary<string, string>      namespaceMappings,
+                                                       IDictionary<string, string>      reverseNamespaceMappings,
+                                                       IDictionary<string, object>      properties,
                                                        IDictionary<object,JsonObject>   visitedObjects)
         {
             Type objectType = obj.GetType();
@@ -1070,8 +1070,8 @@ namespace OSLC4Net.Core.JsonProvider
         }
 
 	    protected static void AddAboutURI(JsonObject jsonObject,
-			                              IDictionary<String, String> namespaceMappings,
-			                              IDictionary<String, String> reverseNamespaceMappings,
+			                              IDictionary<string, string> namespaceMappings,
+			                              IDictionary<string, string> reverseNamespaceMappings,
 			                              Type objectType,
 			                              Uri aboutURI)
 	    {
@@ -1095,10 +1095,10 @@ namespace OSLC4Net.Core.JsonProvider
 		    }
 	    }
 
-        private static String EnsureNamespacePrefix(string              prefix,
+        private static string EnsureNamespacePrefix(string              prefix,
                                                     string              ns,
-                                                    IDictionary<String, String> namespaceMappings,
-                                                    IDictionary<String, String> reverseNamespaceMappings)
+                                                    IDictionary<string, string> namespaceMappings,
+                                                    IDictionary<string, string> reverseNamespaceMappings)
         {
             string existingPrefix = reverseNamespaceMappings[ns];
 
@@ -1143,8 +1143,8 @@ namespace OSLC4Net.Core.JsonProvider
             }
         }
 
-        private static void RecursivelyCollectNamespaceMappings(IDictionary<String, String>     namespaceMappings,
-                                                                IDictionary<String, String>     reverseNamespaceMappings,
+        private static void RecursivelyCollectNamespaceMappings(IDictionary<string, string>     namespaceMappings,
+                                                                IDictionary<string, string>     reverseNamespaceMappings,
                                                                 Type objectType)
         {
             OslcSchema[] oslcSchemaAttribute = (OslcSchema[])objectType.Assembly.GetCustomAttributes(typeof(OslcSchema), false);
@@ -1194,13 +1194,13 @@ namespace OSLC4Net.Core.JsonProvider
         }
 
         private static void FromJSON(string                                             rdfPrefix,
-                                     IDictionary<String, String>                        jsonNamespaceMappings,
-                                     IDictionary<Type, IDictionary<String, MethodInfo>> classPropertyDefinitionsToSetMethods,
+                                     IDictionary<string, string>                        jsonNamespaceMappings,
+                                     IDictionary<Type, IDictionary<string, MethodInfo>> classPropertyDefinitionsToSetMethods,
                                      JsonObject                                         jsonObject,
                                      Type                                               beanType,
                                      object                                             bean)
         {
-            IDictionary<String, MethodInfo> setMethodMap;
+            IDictionary<string, MethodInfo> setMethodMap;
 
             if (! classPropertyDefinitionsToSetMethods.ContainsKey(beanType))
             {
@@ -1239,7 +1239,7 @@ namespace OSLC4Net.Core.JsonProvider
     	    {
                 isIReifiedResource = true;
 
-    		    String resourceReference = (string)jsonObject[rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE];
+                string resourceReference = (string)jsonObject[rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE];
 
     		    beanType.GetMethod("SetValue",  new Type[] { typeof(Uri) }).Invoke(bean, new object[] { new Uri(resourceReference) });
     	    }	
@@ -1366,7 +1366,7 @@ namespace OSLC4Net.Core.JsonProvider
 	     */
 	    private static object FromExtendedJSONValue(object                      jsonValue,
 			                                        string                      rdfPrefix,
-			                                        IDictionary<String, String> jsonNamespaceMappings,
+			                                        IDictionary<string, string> jsonNamespaceMappings,
 			                                        Type                        beanType)
 	    {
 		    if (jsonValue is JsonArray)
@@ -1391,7 +1391,7 @@ namespace OSLC4Net.Core.JsonProvider
 
 			    if (resourceURIValue != null)
 			    {
-				    Uri uri = new Uri((String) resourceURIValue); 
+				    Uri uri = new Uri((string) resourceURIValue); 
 
 				    if (!uri.IsAbsoluteUri)
 	                {
@@ -1400,26 +1400,26 @@ namespace OSLC4Net.Core.JsonProvider
 	                                                           uri);
 	                }
 				
-				    return new Uri((String) resourceURIValue);
+				    return new Uri((string) resourceURIValue);
 			    }
 			
 			    // Handle an inline resource.
 			    AbstractResource any = new AnyResource();
 			    FromJSON(rdfPrefix,
 				         jsonNamespaceMappings,
-				         new Dictionary<Type, IDictionary<String, MethodInfo>>(),
+				         new Dictionary<Type, IDictionary<string, MethodInfo>>(),
 				         o,
 				         typeof(AnyResource),
 				         any);
 			
 			    return any;
 		    }
-		    else if (jsonValue is String)
+		    else if (jsonValue is string)
 		    {
 			    // Check if it's in the OSLC date format.
 			    try
 			    {
-				    return DateTime.Parse((String)jsonValue);
+				    return DateTime.Parse((string)jsonValue);
 			    }
 			    catch (FormatException e)
 			    {
@@ -1443,7 +1443,7 @@ namespace OSLC4Net.Core.JsonProvider
 
 				foreach (JsonValue typeObj in types)
 				{
-					resource.AddType(new Uri((String)typeObj[rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE]));
+					resource.AddType(new Uri((string)typeObj[rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE]));
 				}
 		    }
 	    }
@@ -1482,12 +1482,12 @@ namespace OSLC4Net.Core.JsonProvider
 
             if (setMethodName.StartsWith(METHOD_NAME_START_SET))
             {
-                String getMethodName = METHOD_NAME_START_GET + setMethodName.Substring(METHOD_NAME_START_GET_LENGTH);
+                string getMethodName = METHOD_NAME_START_GET + setMethodName.Substring(METHOD_NAME_START_GET_LENGTH);
                 MethodInfo getMethod = beanType.GetMethod(getMethodName, Type.EmptyTypes);
 
                 if (getMethod == null)
-                {               
-                    String isMethodName = METHOD_NAME_START_IS + setMethodName.Substring(METHOD_NAME_START_GET_LENGTH);
+                {
+                    string isMethodName = METHOD_NAME_START_IS + setMethodName.Substring(METHOD_NAME_START_GET_LENGTH);
 
                     getMethod = beanType.GetMethod(isMethodName, Type.EmptyTypes);
                     
@@ -1512,8 +1512,8 @@ namespace OSLC4Net.Core.JsonProvider
         }
    
         private static object FromJSONValue(string                                              rdfPrefix,
-                                            IDictionary<String, String>                         jsonNamespaceMappings,
-                                            IDictionary<Type, IDictionary<String, MethodInfo>>  classPropertyDefinitionsToSetMethods,
+                                            IDictionary<string, string>                         jsonNamespaceMappings,
+                                            IDictionary<Type, IDictionary<string, MethodInfo>>  classPropertyDefinitionsToSetMethods,
                                             Type                                                beanType,
                                             MethodInfo                                          setMethod,
                                             Type                                                setMethodParameterType,
@@ -1579,7 +1579,7 @@ namespace OSLC4Net.Core.JsonProvider
 
                 object nestedBean;
 
-                if (setMethodComponentParameterType == typeof(String))
+                if (setMethodComponentParameterType == typeof(string))
                 {
                     nestedBean = "";
                 }
@@ -1717,17 +1717,17 @@ namespace OSLC4Net.Core.JsonProvider
                 {
                     return byte.Parse(stringValue);
                 }
-                else if (typeof(Int16) == setMethodComponentParameterType || typeof(Int16?) == setMethodComponentParameterType)
+                else if (typeof(short) == setMethodComponentParameterType || typeof(short?) == setMethodComponentParameterType)
                 {
-                    return Int16.Parse(stringValue);
+                    return short.Parse(stringValue);
                 }
-                else if (typeof(Int32) == setMethodComponentParameterType || typeof(Int32?) == setMethodComponentParameterType)
+                else if (typeof(int) == setMethodComponentParameterType || typeof(int?) == setMethodComponentParameterType)
                 {
-                    return Int32.Parse(stringValue);
+                    return int.Parse(stringValue);
                 }
-                else if (typeof(Int64) == setMethodComponentParameterType || typeof(Int64?) == setMethodComponentParameterType)
+                else if (typeof(long) == setMethodComponentParameterType || typeof(long?) == setMethodComponentParameterType)
                 {
-                    return Int64.Parse(stringValue);
+                    return long.Parse(stringValue);
                 }
                 else if (typeof(float) == setMethodComponentParameterType || typeof(float?) == setMethodComponentParameterType)
                 {
@@ -1750,9 +1750,9 @@ namespace OSLC4Net.Core.JsonProvider
             return null;
         }
 
-        private static IDictionary<String, MethodInfo> CreatePropertyDefinitionToSetMethods(Type beanType)
+        private static IDictionary<string, MethodInfo> CreatePropertyDefinitionToSetMethods(Type beanType)
         {
-            IDictionary<String, MethodInfo> result = new Dictionary<String, MethodInfo>();
+            IDictionary<string, MethodInfo> result = new Dictionary<string, MethodInfo>();
             MethodInfo[] methods = beanType.GetMethods();
 
             foreach (MethodInfo method in methods)

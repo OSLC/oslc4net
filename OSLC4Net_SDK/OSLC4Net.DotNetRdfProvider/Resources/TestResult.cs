@@ -35,7 +35,7 @@ namespace OSLC4Net.Core.Resources
         private Link reportsOnTestCase;
         private Link reportsOnTestPlan;
         private Link producedByTestExecutionRecord;
-        private String status;
+        private string status;
 
         public TestResult() : base()
         {
@@ -108,7 +108,7 @@ namespace OSLC4Net.Core.Resources
         [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "status")]
         [OslcTitle("Status")]
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
-        public String GetStatus()
+        public string GetStatus()
         {
             return status;
         }
@@ -143,7 +143,7 @@ namespace OSLC4Net.Core.Resources
             this.executesTestScript = executesTestScript;
         }
 
-        public void SetStatus(String status)
+        public void SetStatus(string status)
         {
             this.status = status;
         }

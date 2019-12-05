@@ -39,12 +39,12 @@ namespace OSLC4Net.Client.Exceptions
         /// <param name="key"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static String GetMessage(string key, object[] args)
+        public static string GetMessage(string key, object[] args)
         {
 
             try {
-                String message = rm.GetString( key );
-                return String.Format(message, args);
+                string message = rm.GetString( key );
+                return string.Format(message, args);
             } catch (Exception missingResourceException ) {
                 logger.Fatal(missingResourceException.Message, missingResourceException);
                 return "???" + key + "???";

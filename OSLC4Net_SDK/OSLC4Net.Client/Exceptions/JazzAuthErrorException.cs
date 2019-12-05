@@ -26,13 +26,13 @@ namespace OSLC4Net.Client.Exceptions
     /// </summary>
     public class JazzAuthErrorException : OslcClientApplicationException
     {
-	    private const String MESSAGE_KEY = "JazzAuthErrorException";
+	    private const string MESSAGE_KEY = "JazzAuthErrorException";
 	
 	    private readonly HttpStatusCode status;
-        private readonly String jazzUrl;
+        private readonly string jazzUrl;
 	
 	    public JazzAuthErrorException(HttpStatusCode status, string jazzUrl) :
-		    base(MESSAGE_KEY, new Object[] {status.ToString(), jazzUrl})
+		    base(MESSAGE_KEY, new object[] {status.ToString(), jazzUrl})
         {
 		    this.status = status;
 		    this.jazzUrl = jazzUrl;
@@ -42,7 +42,7 @@ namespace OSLC4Net.Client.Exceptions
 		    return status;
 	    }
 	
-	    public String getJazzUrl() {
+	    public string getJazzUrl() {
 		    return jazzUrl;
 	    }
     }

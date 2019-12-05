@@ -31,9 +31,9 @@ namespace OSLC4Net.Client.Oslc.Resources
     {
         private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
     
-        private String   name;
-        private String   value;
-        private String   description;
+        private string name;
+        private string value;
+        private string description;
         private Uri      instanceShape;
         private Uri      serviceProvider;
 
@@ -61,7 +61,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
         [OslcTitle("Description")]
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
-        public String GetDescription()
+        public string GetDescription()
         {
             return description;
         }
@@ -70,7 +70,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcOccurs(Occurs.ExactlyOne)]
         [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "name")]
         [OslcTitle("Name")]
-        public String GetName()
+        public string GetName()
         {
             return name;
         }
@@ -79,7 +79,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcOccurs(Occurs.ZeroOrOne)]
         [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "value")]
         [OslcTitle("Value")]
-        public String GetValue()
+        public string GetValue()
         {
             return value;
         }
@@ -111,17 +111,17 @@ namespace OSLC4Net.Client.Oslc.Resources
             return serviceProvider;
         }
 
-        public void SetDescription(String description)
+        public void SetDescription(string description)
         {
             this.description = description;
         }
 
-        public void SetName(String name)
+        public void SetName(string name)
         {
             this.name = name;
         }
     
-        public void SetValue(String value)
+        public void SetValue(string value)
         {
             this.value = value;
         }

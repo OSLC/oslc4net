@@ -28,7 +28,7 @@ namespace OSLC4Net.Core.Query
         {
         }
     
-        public ParseException(String msg) : base(msg)
+        public ParseException(string msg) : base(msg)
         {
         }
     }

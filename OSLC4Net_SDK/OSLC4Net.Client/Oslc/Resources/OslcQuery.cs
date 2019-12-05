@@ -31,27 +31,27 @@ namespace OSLC4Net.Client.Oslc.Resources
     {
 	    private readonly OslcClient oslcClient;
 	
-	    private readonly String capabilityUrl;
+	    private readonly string capabilityUrl;
 	
-	    private String queryUrl;
+	    private string queryUrl;
 	
 	    private readonly int pageSize;
 
         private readonly UriBuilder uriBuilder;
 	
 	    //query parameters
-	    private readonly String where;
-	    private readonly String select;
-	    private readonly String orderBy;
-	    private readonly String searchTerms;
-	    private readonly String prefix;
+	    private readonly string where;
+	    private readonly string select;
+	    private readonly string orderBy;
+	    private readonly string searchTerms;
+	    private readonly string prefix;
 
         /// <summary>
         /// Create an OSLC query that uses the remote system's default page size.
         /// </summary>
         /// <param name="oslcClient">the authenticated OSLC client</param>
         /// <param name="capabilityUrl">the URL that is the base </param>
-	    public OslcQuery(OslcClient oslcClient, String capabilityUrl) : 
+	    public OslcQuery(OslcClient oslcClient, string capabilityUrl) : 
 		    this(oslcClient, capabilityUrl, 0)
         {
 	    }
@@ -62,7 +62,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         /// <param name="oslcClient">the authenticated OSLC client</param>
         /// <param name="capabilityUrl">capabilityUrl capabilityUrl the URL that is the base</param>
         /// <param name="oslcQueryParams">an OslcQueryParameters object</param>
-	    public OslcQuery(OslcClient oslcClient, String capabilityUrl, OslcQueryParameters oslcQueryParams) :
+	    public OslcQuery(OslcClient oslcClient, string capabilityUrl, OslcQueryParameters oslcQueryParams) :
 		    this(oslcClient, capabilityUrl, 0, oslcQueryParams)
         {
 	    }
@@ -73,7 +73,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         /// <param name="oslcClient">the authenticated OSLC client</param>
         /// <param name="capabilityUrl">the URL that is the base</param>
         /// <param name="pageSize">the number of results to include on each page (OslcQueryResult)</param>
-	    public OslcQuery(OslcClient oslcClient, String capabilityUrl, int pageSize) :
+	    public OslcQuery(OslcClient oslcClient, string capabilityUrl, int pageSize) :
 		    this(oslcClient, capabilityUrl, pageSize, null)
         {
 	    }
@@ -85,7 +85,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         /// <param name="capabilityUrl">the URL that is the base</param>
         /// <param name="pageSize">the number of results to include on each page (OslcQueryResult)</param>
         /// <param name="oslcQueryParams">an OslcQueryParameters object</param>
-	    public OslcQuery(OslcClient oslcClient, String capabilityUrl,
+	    public OslcQuery(OslcClient oslcClient, string capabilityUrl,
 					     int pageSize, OslcQueryParameters oslcQueryParams)
         {
 		    this.oslcClient = oslcClient;
@@ -115,7 +115,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
 	    }
 	
-	    private OslcQuery(OslcQuery previousQuery, String nextPageUrl) :
+	    private OslcQuery(OslcQuery previousQuery, string nextPageUrl) :
 		    this(previousQuery.oslcClient, previousQuery.capabilityUrl, previousQuery.pageSize)
         {
 		    queryUrl = nextPageUrl;
@@ -161,14 +161,14 @@ namespace OSLC4Net.Client.Oslc.Resources
 	    /**
 	     * @return the base query capability URL
 	     */
-	    public String GetCapabilityUrl() {
+	    public string GetCapabilityUrl() {
 		    return capabilityUrl;
 	    }
 	
 	    /**
 	     * @return the complete query URL
 	     */
-	    public String GetQueryUrl() {
+	    public string GetQueryUrl() {
 		    if (queryUrl == null) {
 			    queryUrl = uriBuilder.ToString();
 		    }
@@ -185,7 +185,7 @@ namespace OSLC4Net.Client.Oslc.Resources
 
         private void QueryParam(string name, string value)
         {
-            String content = name + '=' + value;
+            string content = name + '=' + value;
 
             if (uriBuilder.Query != null && uriBuilder.Query.Length > 1)
             {

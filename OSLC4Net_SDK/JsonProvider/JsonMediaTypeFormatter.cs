@@ -298,7 +298,7 @@ namespace OSLC4Net.Core.JsonProvider
             {
                 if (formatterLogger == null) throw;
 
-                formatterLogger.LogError(String.Empty, e.Message);
+                formatterLogger.LogError(string.Empty, e.Message);
 
                 tcs.SetResult(GetDefaultValueForType(type));
             }

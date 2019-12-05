@@ -44,8 +44,8 @@ namespace OSLC4Net.Core.Query.Impl
                     children = new List<SortTerm>(rawChildren.Count());
             
                     foreach (CommonTree child in rawChildren) {
-                
-                        Object simpleTerm;
+
+                        object simpleTerm;
                 
                         switch(child.Token.Type) {
                         default:
@@ -64,7 +64,7 @@ namespace OSLC4Net.Core.Query.Impl
         }
 
         private readonly CommonTree tree;
-        private readonly IDictionary<String, String> prefixMap;
+        private readonly IDictionary<string, string> prefixMap;
         private IList<SortTerm> children = null;
     }
 }

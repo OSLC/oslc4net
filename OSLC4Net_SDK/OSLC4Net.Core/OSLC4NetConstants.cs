@@ -26,7 +26,7 @@ namespace OSLC4Net.Core
     /// <seealso cref="Oslc4Net.Core.OslcConstants"/>
     public static class OSLC4NetConstants
     {
-        public static readonly IDictionary<string, Object> OSLC4NET_PROPERTY_SINGLETON =
-            new Dictionary<string, Object>(0);
+        public static readonly IDictionary<string, object> OSLC4NET_PROPERTY_SINGLETON =
+            new Dictionary<string, object>(0);
     }
 }

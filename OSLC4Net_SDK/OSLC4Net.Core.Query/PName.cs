@@ -22,10 +22,10 @@ namespace OSLC4Net.Core.Query
 {
     public class PName
     {
-	    public String ns;
-	    public String prefix;
-	    public String local;
+	    public string ns;
+	    public string prefix;
+	    public string local;
 
-	    public override String ToString() { return prefix + ':' + local; }
+	    public override string ToString() { return prefix + ':' + local; }
     }
 }

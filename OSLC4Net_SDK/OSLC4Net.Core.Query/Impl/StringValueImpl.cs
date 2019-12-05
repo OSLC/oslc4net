@@ -50,6 +50,6 @@ namespace OSLC4Net.Core.Query.Impl
             return '"' + Value.ToString() + '"';
         }
     
-        private String value = null;
+        private string value = null;
     }
 }

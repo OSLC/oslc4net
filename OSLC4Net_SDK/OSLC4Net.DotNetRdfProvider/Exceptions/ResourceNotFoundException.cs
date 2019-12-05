@@ -22,7 +22,7 @@ namespace OSLC4Net.Core.Exceptions
     /// </summary>
     public class ResourceNotFoundException : OslcClientApplicationException
     {
-        private const String MESSAGE_KEY = "ResourceNotFoundException";
+        private const string MESSAGE_KEY = "ResourceNotFoundException";
 
         private readonly string _resource;
         private readonly string _value;

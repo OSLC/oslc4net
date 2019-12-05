@@ -40,14 +40,14 @@ namespace OSLC4Net.Client.Oslc.Jazz
         /// <param name="consumerKey"></param>
         /// <param name="consumerSecret"></param>\
         /// <param name="authUrl"></param>
-	    public JazzOAuthClient(String requestTokenURL,
-						       String authorizationTokenURL,
-						       String accessTokenURL,
-						       String consumerKey,
-						       String consumerSecret,
-                               String user,
-                               String passwd,
-                               String authUrl) :
+	    public JazzOAuthClient(string requestTokenURL,
+                               string authorizationTokenURL,
+                               string accessTokenURL,
+                               string consumerKey,
+                               string consumerSecret,
+                               string user,
+                               string passwd,
+                               string authUrl) :
             base(null, OAuthHandler(requestTokenURL, authorizationTokenURL, accessTokenURL, consumerKey, consumerSecret,
                                     user, passwd, authUrl))
         {
@@ -63,15 +63,15 @@ namespace OSLC4Net.Client.Oslc.Jazz
         /// <param name="consumerSecret"></param>
         /// <param name="oauthRealmName"></param>
         /// <param name="authUrl"></param>
-	    public JazzOAuthClient(String requestTokenURL,
-						       String authorizationTokenURL,
-						       String accessTokenURL,
-						       String consumerKey,
-						       String consumerSecret,
-                               String oauthRealmName,
-                               String user,
-                               String passwd,
-                               String authUrl) :
+	    public JazzOAuthClient(string requestTokenURL,
+                               string authorizationTokenURL,
+                               string accessTokenURL,
+                               string consumerKey,
+                               string consumerSecret,
+                               string oauthRealmName,
+                               string user,
+                               string passwd,
+                               string authUrl) :
             base(null, OAuthHandler(requestTokenURL, authorizationTokenURL, accessTokenURL, consumerKey, consumerSecret,
                                     user, passwd, authUrl))
         {
@@ -131,14 +131,14 @@ namespace OSLC4Net.Client.Oslc.Jazz
             private readonly string consumerSecret;
         }
 	
-        private static HttpMessageHandler OAuthHandler(String requestTokenURL,
-						                               String authorizationTokenURL,
-                                                       String accessTokenURL,
-						                               String consumerKey,
-                                                       String consumerSecret,
-                                                       String user,
-                                                       String passwd,
-                                                       String authUrl)
+        private static HttpMessageHandler OAuthHandler(string requestTokenURL,
+                                                       string authorizationTokenURL,
+                                                       string accessTokenURL,
+                                                       string consumerKey,
+                                                       string consumerSecret,
+                                                       string user,
+                                                       string passwd,
+                                                       string authUrl)
         {
             ServiceProviderDescription serviceDescription = new ServiceProviderDescription();
 
@@ -162,7 +162,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
             HttpClient client = oslcClient.GetHttpClient();
 
             HttpStatusCode statusCode = HttpStatusCode.Unused;
-		    String location = null;
+            string location = null;
             HttpResponseMessage resp;
 
 		    try 
@@ -180,7 +180,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
                     statusCode = FollowRedirects(client, statusCode, location);
                 }
 
-                String securityCheckUrl = "j_username=" + user + "&j_password=" + passwd;
+                string securityCheckUrl = "j_username=" + user + "&j_password=" + passwd;
                 StringContent content = new StringContent(securityCheckUrl, System.Text.Encoding.UTF8);
 
                 MediaTypeHeaderValue mediaTypeValue = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
@@ -191,15 +191,15 @@ namespace OSLC4Net.Client.Oslc.Jazz
 
                 resp = client.PostAsync(authUrl + "/j_security_check", content).Result;
 		        statusCode = resp.StatusCode;
-		    
-		        String jazzAuthMessage = null;
+
+                string jazzAuthMessage = null;
                 IEnumerable<string> values = new List<string>();
 
 		        if (resp.Headers.TryGetValues(JAZZ_AUTH_MESSAGE_HEADER, out values)) {
 		    	    jazzAuthMessage = values.Last();
 		        }
 		    
-		        if (jazzAuthMessage != null && String.Compare(jazzAuthMessage, JAZZ_AUTH_FAILED, true) == 0)
+		        if (jazzAuthMessage != null && string.Compare(jazzAuthMessage, JAZZ_AUTH_FAILED, true) == 0)
 		        {
                     resp.ConsumeContent();
                     throw new JazzAuthFailedException(user, authUrl);
@@ -242,7 +242,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
             return null;
 	    }
 
-        private static HttpStatusCode FollowRedirects(HttpClient client, HttpStatusCode statusCode, String location)
+        private static HttpStatusCode FollowRedirects(HttpClient client, HttpStatusCode statusCode, string location)
 	    {
 
             while ((statusCode == HttpStatusCode.Found) && (location != null))
@@ -260,7 +260,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
 		    return statusCode;
 	    }
 
-        private const String JAZZ_AUTH_MESSAGE_HEADER = "X-com-ibm-team-repository-web-auth-msg";
-        private const String JAZZ_AUTH_FAILED = "authfailed";
+        private const string JAZZ_AUTH_MESSAGE_HEADER = "X-com-ibm-team-repository-web-auth-msg";
+        private const string JAZZ_AUTH_FAILED = "authfailed";
     }
 }

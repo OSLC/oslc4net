@@ -30,7 +30,7 @@ namespace OSLC4Net.Core.Query.Impl
         SimpleTermImpl(
             CommonTree tree,
             TermType type,
-            IDictionary<String, String> prefixMap
+            IDictionary<string, string> prefixMap
         )
         {
             this.tree = tree;
@@ -74,7 +74,7 @@ namespace OSLC4Net.Core.Query.Impl
         }
 
         protected readonly CommonTree tree;
-        protected readonly IDictionary<String, String> prefixMap;
+        protected readonly IDictionary<string, string> prefixMap;
         private readonly TermType type;
         private PName property = null;
     }

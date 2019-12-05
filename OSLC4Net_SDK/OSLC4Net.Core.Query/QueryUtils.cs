@@ -38,13 +38,13 @@ namespace OSLC4Net.Core.Query
         /// </summary>
         /// <param name="prefixExpression">the oslc.prefix expression</param>
         /// <returns>the prefix map</returns>
-        public static IDictionary<String, String>
+        public static IDictionary<string, string>
         ParsePrefixes(
-            String prefixExpression
+            string prefixExpression
         )
         {
             if (prefixExpression == null) {
-                return new Dictionary<String, String>();
+                return new Dictionary<string, string>();
             }
         
             OslcPrefixParser parser = new OslcPrefixParser(prefixExpression);
@@ -58,10 +58,10 @@ namespace OSLC4Net.Core.Query
 
                 if (rawPrefix.Token == Tokens.Skip || rawPrefix is CommonErrorNode) {
                      throw new ParseException(rawPrefix.ToString());
-                 }            
-                
-                 String pn = rawPrefix.GetChild(0).Text;
-                 String uri = rawPrefix.GetChild(1).Text;
+                 }
+
+                string pn = rawPrefix.GetChild(0).Text;
+                string uri = rawPrefix.GetChild(1).Text;
                  
                  uri = uri.Substring(1, uri.Length - 2);
                  
@@ -81,8 +81,8 @@ namespace OSLC4Net.Core.Query
         /// <returns>the parsed where clause</returns>
         public static WhereClause
         ParseWhere(
-            String whereExpression,
-            IDictionary<String, String> prefixMap
+            string whereExpression,
+            IDictionary<string, string> prefixMap
         )
         {
             try
@@ -113,8 +113,8 @@ namespace OSLC4Net.Core.Query
         /// <returns>the parsed select clause</returns>
         public static SelectClause
         ParseSelect(
-            String selectExpression,
-            IDictionary<String, String> prefixMap
+            string selectExpression,
+            IDictionary<string, string> prefixMap
         )
         {
             try
@@ -145,8 +145,8 @@ namespace OSLC4Net.Core.Query
         /// <returns>the parsed properties clause</returns>
         public static PropertiesClause
         parseProperties(
-            String propertiesExpression,
-            IDictionary<String, String> prefixMap
+            string propertiesExpression,
+            IDictionary<string, string> prefixMap
         )
         {
             try
@@ -179,8 +179,8 @@ namespace OSLC4Net.Core.Query
         /// <returns></returns>
         public static OrderByClause
         ParseOrderBy(
-            String orderByExpression,
-            IDictionary<String, String> prefixMap
+            string orderByExpression,
+            IDictionary<string, string> prefixMap
         )
         {
             try {
@@ -222,16 +222,16 @@ namespace OSLC4Net.Core.Query
         /// </summary>
         /// <param name="properties"></param>
         /// <returns>the property map</returns>
-        public static IDictionary<String, Object>
+        public static IDictionary<string, object>
         InvertSelectedProperties(Properties properties)
         {
             IList<Property> children = properties.Children;
-            IDictionary<String, Object> result = new Dictionary<String, Object>(children.Count);
+            IDictionary<string, object> result = new Dictionary<string, object>(children.Count);
         
             foreach (Property property in children) {
             
                 PName pname = null;
-                String propertyName = null;
+                string propertyName = null;
             
                 if (! property.IsWildcard) {
                     pname = property.Identifier;
@@ -307,7 +307,7 @@ namespace OSLC4Net.Core.Query
             foreach (string propertyName in result.Keys) {
             
                 IDictionary<String, Object> nestedProperties =
-                    (IDictionary<String, Object>)result[propertyName];
+                    (IDictionary<string, object>)result[propertyName];
             
                 if (nestedProperties == OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON) {
                     result.Add(propertyName, commonNestedProperties);
@@ -330,7 +330,7 @@ namespace OSLC4Net.Core.Query
         /// <returns>the parsed search terms clause</returns>
         public static SearchTermsClause
         ParseSearchTerms(
-            String searchTermsExpression
+            string searchTermsExpression
         )
         {
             try {
@@ -347,8 +347,8 @@ namespace OSLC4Net.Core.Query
                 StringList stringList = new StringList(rawList.Count);
             
                 foreach (CommonTree str in rawList) {
-                
-                    String rawString = str.Text;
+
+                    string rawString = str.Text;
                 
                     stringList.Add(rawString.Substring(1, rawString.Length-2));
                 }
@@ -363,7 +363,7 @@ namespace OSLC4Net.Core.Query
         /// <summary>
         /// Implementation of a IDictionary<String, String> prefixMap
         /// </summary>
-        private class PrefixMap : Dictionary<String, String>
+        private class PrefixMap : Dictionary<string, string>
         {
             public
             PrefixMap(int size)
@@ -371,13 +371,13 @@ namespace OSLC4Net.Core.Query
             {
             }
             
-            public override String
+            public override string
             ToString()
             {
                 StringBuilder buffer = new StringBuilder();
                 bool first = true;
 
-                foreach (String key in Keys)
+                foreach (string key in Keys)
                 {
 
                     if (first)
@@ -416,7 +416,7 @@ namespace OSLC4Net.Core.Query
                 StringBuilder buffer = new StringBuilder();
                 bool first = true;
             
-                foreach (String str in this) {
+                foreach (string str in this) {
                 
                     if (first) {
                         first = false;
@@ -437,7 +437,7 @@ namespace OSLC4Net.Core.Query
         /// Implementation of SingletonWildcardProperties
         /// </summary>
         private class SingletonWildcardPropertiesImpl :
-            Dictionary<String, Object>,
+            Dictionary<string, object>,
             SingletonWildcardProperties
         {
             public
@@ -450,11 +450,11 @@ namespace OSLC4Net.Core.Query
         /// Implementation of NestedWildcardProperties
         /// </summary>
        private class NestedWildcardPropertiesImpl :
-            Dictionary<String, Object>,
+            Dictionary<string, object>,
             NestedWildcardProperties
         {
             public
-            NestedWildcardPropertiesImpl(IDictionary<String, Object> accumulated) : base(accumulated)
+            NestedWildcardPropertiesImpl(IDictionary<string, object> accumulated) : base(accumulated)
             {
             }
         
@@ -463,14 +463,14 @@ namespace OSLC4Net.Core.Query
             {
             }
         
-            public IDictionary<String, Object>
+            public IDictionary<string, object>
             CommonNestedProperties()
             {
                 return commonNestedProperties;
             }
         
-            internal IDictionary<String, Object> commonNestedProperties =
-                new Dictionary<String, Object>();
+            internal IDictionary<string, object> commonNestedProperties =
+                new Dictionary<string, object>();
         }
 
         /// <summary>
@@ -501,8 +501,8 @@ namespace OSLC4Net.Core.Query
         /// <param name="rhs">source of property map merge</param>
         private static void
         MergePropertyMaps(
-            IDictionary<String, Object> lhs,
-            IDictionary<String, Object> rhs
+            IDictionary<string, object> lhs,
+            IDictionary<string, object> rhs
         )
         {
             ICollection<String> propertyNames = rhs.Keys;
@@ -510,9 +510,9 @@ namespace OSLC4Net.Core.Query
             foreach (string propertyName in propertyNames) {
             
                 IDictionary<String, Object> lhsNestedProperties =
-                    (IDictionary<String, Object>)lhs[propertyName];
+                    (IDictionary<string, object>)lhs[propertyName];
                 IDictionary<String, Object> rhsNestedProperties =
-                    (IDictionary<String, Object>)rhs[propertyName];
+                    (IDictionary<string, object>)rhs[propertyName];
             
                 if (lhsNestedProperties == rhsNestedProperties) {
                     continue;

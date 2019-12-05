@@ -26,11 +26,11 @@ namespace OSLC4Net.Client.Oslc.Resources
     /// </summary>
     public class OslcQueryParameters
     {
-	    private String where;
-	    private String select;
-	    private String searchTerms;
-	    private String orderBy;
-	    private String prefix;
+	    private string where;
+	    private string select;
+	    private string searchTerms;
+	    private string orderBy;
+	    private string prefix;
 	
         private static ILog logger = LogManager.GetLogger(typeof(OslcQuery));
 
@@ -46,7 +46,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         /// <param name="searchTerms"></param>
         /// <param name="orderBy"></param>
         /// <param name="prefix"></param>
-	    public OslcQueryParameters (String where, String select, String searchTerms, String orderBy, String prefix) {
+	    public OslcQueryParameters (string where, string select, string searchTerms, string orderBy, string prefix) {
 		    this.where       = where;
 		    this.select      = select;
 		    this.searchTerms = searchTerms;
@@ -54,49 +54,49 @@ namespace OSLC4Net.Client.Oslc.Resources
 		    this.prefix      = prefix;
 	    }
 
-	    public String GetWhere() {
+	    public string GetWhere() {
 		    return where;
 	    }
 
-	    public void SetWhere(String where) {
+	    public void SetWhere(string where) {
 		    this.where = encodeQueryParams(where);
 	    }
 
-	    public String GetSelect() {
+	    public string GetSelect() {
 		    return select;
 	    }
 
-	    public void SetSelect(String select) {
+	    public void SetSelect(string select) {
 		    this.select = encodeQueryParams(select);
 	    }
 
-	    public String GetSearchTerms() {
+	    public string GetSearchTerms() {
 		    return searchTerms;
 	    }
 
-	    public void SetSearchTerms(String searchTerms) {
+	    public void SetSearchTerms(string searchTerms) {
 		    this.searchTerms = encodeQueryParams(searchTerms);
 	    }
 
-	    public String GetOrderBy() {
+	    public string GetOrderBy() {
 		    return orderBy;
 	    }
 
-	    public void SetOrderBy(String orderBy) {
+	    public void SetOrderBy(string orderBy) {
 		    this.orderBy = encodeQueryParams(orderBy);
 	    }
 
-	    public String GetPrefix() {
+	    public string GetPrefix() {
 		    return prefix;
 	    }
 
-	    public void SetPrefix(String prefix) {
+	    public void SetPrefix(string prefix) {
 		    this.prefix = encodeQueryParams(prefix);
 	    }
 	
-	    private String encodeQueryParams(String oslcQueryParam) {
+	    private string encodeQueryParams(string oslcQueryParam) {
 
-		    String encodedQueryParms = null;
+            string encodedQueryParms = null;
 		    try {
 			    encodedQueryParms = Uri.EscapeUriString(oslcQueryParam);
 		    } catch (Exception e) {

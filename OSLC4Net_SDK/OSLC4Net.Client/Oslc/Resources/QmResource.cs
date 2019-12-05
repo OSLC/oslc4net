@@ -30,11 +30,11 @@ namespace OSLC4Net.Client.Oslc.Resources
         private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
         private DateTime?   created;
-        private String      identifier;
+        private string identifier;
         private Uri         instanceShape;
         private DateTime?   modified;
         private Uri         serviceProvider;
-        private String      title;
+        private string title;
 
         public QmResource() : base()
         {
@@ -67,7 +67,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
         [OslcReadOnly]
         [OslcTitle("Identifier")]
-        public String GetIdentifier()
+        public string GetIdentifier()
         {
             return identifier;
         }
@@ -113,7 +113,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
         [OslcTitle("Title")]
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
-        public String GetTitle()
+        public string GetTitle()
         {
             return title;
         }
@@ -123,7 +123,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             this.created = created;
         }
 
-        public void SetIdentifier(String identifier)
+        public void SetIdentifier(string identifier)
         {
             this.identifier = identifier;
         }
@@ -153,7 +153,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             this.serviceProvider = serviceProvider;
         }
 
-        public void SetTitle(String title)
+        public void SetTitle(string title)
         {
             this.title = title;
         }

@@ -29,7 +29,7 @@ namespace OSLC4Net.Core.Query.Impl
         public
         PropertiesImpl(
             CommonTree tree,
-            IDictionary<String, String> prefixMap
+            IDictionary<string, string> prefixMap
         )
         {
             this.tree = tree;
@@ -83,7 +83,7 @@ namespace OSLC4Net.Core.Query.Impl
         static internal IList<Property>
         CreateChildren(
             CommonTree tree,
-            IDictionary<String, String> prefixMap
+            IDictionary<string, string> prefixMap
         )
         {
             IList<ITree> treeChildren = tree.Children;        
@@ -147,7 +147,7 @@ namespace OSLC4Net.Core.Query.Impl
         }
     
         private readonly CommonTree tree;
-        protected readonly IDictionary<String, String> prefixMap;
+        protected readonly IDictionary<string, string> prefixMap;
         private IList<Property> children = null;
     }
 }

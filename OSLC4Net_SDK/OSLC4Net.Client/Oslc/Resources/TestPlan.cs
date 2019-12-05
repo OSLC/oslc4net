@@ -32,11 +32,11 @@ namespace OSLC4Net.Client.Oslc.Resources
 	    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
         private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
         private readonly ISet<Link>     relatedChangeRequests       = new HashSet<Link>();
-        private readonly ISet<String>   subjects                    = new HashSet<String>(); // XXX - TreeSet<> in Java
+        private readonly ISet<string>   subjects                    = new HashSet<string>(); // XXX - TreeSet<> in Java
         private readonly ISet<Link>     usesTestCases               = new HashSet<Link>();
         private readonly ISet<Link>     validatesRequirementCollections = new HashSet<Link>();
 
-        private String   description;
+        private string description;
 
 	    public TestPlan() : base()
 	    {
@@ -63,7 +63,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             relatedChangeRequests.Add(relatedChangeRequest);
         }
 
-        public void AddSubject(String subject)
+        public void AddSubject(string subject)
         {
             subjects.Add(subject);
         }
@@ -102,7 +102,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
         [OslcTitle("Description")]
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
-        public String GetDescription()
+        public string GetDescription()
         {
             return description;
         }
@@ -123,7 +123,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "subject")]
         [OslcReadOnly(false)]
         [OslcTitle("Subjects")]
-        public String[] GetSubjects()
+        public string[] GetSubjects()
         {
             return subjects.ToArray();
         }
@@ -170,7 +170,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void SetDescription(String description)
+        public void SetDescription(string description)
         {
             this.description = description;
         }
@@ -185,7 +185,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void SetSubjects(String[] subjects)
+        public void SetSubjects(string[] subjects)
         {
             this.subjects.Clear();
 

@@ -27,7 +27,7 @@ namespace OSLC4Net.Core.Model
     /// </summary>
     public class Link : AbstractReifiedResource<Uri>
     {
-	    private String label;
+	    private string label;
 
 	    public Link()
 	    {	
@@ -38,7 +38,7 @@ namespace OSLC4Net.Core.Model
 		    SetValue(resource);
 	    }
 	
-	    public Link(Uri resource, String label)
+	    public Link(Uri resource, string label)
 	    {
 		    SetValue(resource);
 		    this.label = label;
@@ -50,7 +50,7 @@ namespace OSLC4Net.Core.Model
         /// <returns></returns>
 	    [OslcName("title")]
 	    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
-	    public String GetLabel()
+	    public string GetLabel()
 	    {
 		    return label;
 	    }
@@ -59,7 +59,7 @@ namespace OSLC4Net.Core.Model
         /// Sets the link label.
 	    /// </summary>
 	    /// <param name="label"></param>
-	    public void SetLabel(String label)
+	    public void SetLabel(string label)
 	    {
 		    this.label = label;
 	    }

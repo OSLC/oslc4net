@@ -35,9 +35,9 @@ namespace OSLC4Net.Client.Oslc.Resources
 
     
         private DateTime?   created;
-        private String      comment;
-        private String      label;
-        private String      identifier;
+        private string comment;
+        private string label;
+        private string identifier;
         private Uri         instanceShape;
         private DateTime?   modified;
         private Uri         serviceProvider;
@@ -106,7 +106,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.RDFS_NAMESPACE + "label")]
         [OslcTitle("Label")]
         [OslcOccurs(Occurs.ExactlyOne)]
-        public String GetLabel()
+        public string GetLabel()
         {
             return label;
         }
@@ -115,7 +115,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.RDFS_NAMESPACE + "comment")]
         [OslcTitle("Comment")]
         [OslcOccurs(Occurs.ZeroOrOne)]
-        public String GetComment()
+        public string GetComment()
         {
             return comment;
         }
@@ -125,7 +125,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
         [OslcReadOnly]
         [OslcTitle("Identifier")]
-        public String GetIdentifier()
+        public string GetIdentifier()
         {
             return identifier;
         }
@@ -191,17 +191,17 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void SetLabel(String label)
+        public void SetLabel(string label)
         {
             this.label = label;
         }
     
-        public void SetComment(String comment)
+        public void SetComment(string comment)
         {
             this.comment = comment;
         }
 
-        public void SetIdentifier(String identifier)
+        public void SetIdentifier(string identifier)
         {
             this.identifier = identifier;
         }

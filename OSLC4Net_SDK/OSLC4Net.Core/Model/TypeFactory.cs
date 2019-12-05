@@ -29,7 +29,7 @@ namespace OSLC4Net.Core.Model
     public static class TypeFactory
     {
 
-        public static String GetQualifiedName(Type objectType)
+        public static string GetQualifiedName(Type objectType)
         {
             return GetNamespace(objectType) +
                    GetName(objectType);

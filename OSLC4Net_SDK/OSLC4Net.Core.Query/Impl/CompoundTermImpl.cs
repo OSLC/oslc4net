@@ -30,7 +30,7 @@ namespace OSLC4Net.Core.Query.Impl
         CompoundTermImpl(
             CommonTree tree,
             bool isTopLevel,
-            IDictionary<String, String> prefixMap
+            IDictionary<string, string> prefixMap
         ) : base(isTopLevel ? null : tree,
                  isTopLevel ? TermType.TOP_LEVEL : TermType.NESTED,
                  prefixMap)

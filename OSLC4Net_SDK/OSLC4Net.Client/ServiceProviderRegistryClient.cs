@@ -48,8 +48,8 @@ namespace OSLC4Net.Client
         /// <param name="mediaType"></param>
         /// <param name="uri"></param>
         public ServiceProviderRegistryClient(ISet<MediaTypeFormatter>   formatters,
-			                                 String                     mediaType,
-			                                 String                     uri) 
+                                             string mediaType,
+                                             string uri) 
         {
     	    client = new OslcRestClient(formatters,
     									     uri,
@@ -62,7 +62,7 @@ namespace OSLC4Net.Client
         /// <param name="formatters"></param>
         /// <param name="mediaType"></param>
         public ServiceProviderRegistryClient(ISet<MediaTypeFormatter>   formatters,
-                                             String                     mediaType) :
+                                             string mediaType) :
             this(formatters, mediaType, ServiceProviderRegistryURIs.getServiceProviderRegistryURI())
         {
         }
@@ -348,7 +348,7 @@ namespace OSLC4Net.Client
                         Uri queryBase = queryCapability.GetQueryBase();
 
                         // Foundation Registry Services requires the query string of oslc.select=* in order to flesh out the ServiceProviders
-                        String query = queryBase.ToString() + "?oslc.select=*";
+                        string query = queryBase.ToString() + "?oslc.select=*";
 
                         OslcRestClient oslcRestClient = new OslcRestClient(client.GetFormatters(),
                                                                                  query);

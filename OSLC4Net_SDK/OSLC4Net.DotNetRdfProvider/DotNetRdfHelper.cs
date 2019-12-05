@@ -86,7 +86,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
         public static IGraph CreateDotNetRdfGraph(string descriptionAbout,
                                                   string responseInfoAbout,
                                                   string nextPageAbout,
-                                                  Int64? totalCount,
+                                                  long? totalCount,
                                                   IEnumerable<object> objects,
                                                   IDictionary<string, object> properties)
         {
@@ -232,7 +232,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
         {
             object newInstance = Activator.CreateInstance(beanType);
             IDictionary<Type, IDictionary<string, MethodInfo>> typePropertyDefinitionsToSetMethods = new Dictionary<Type, IDictionary<string, MethodInfo>>();
-            IDictionary<String, Object> visitedResources = new DictionaryWithReplacement<String, Object>();
+            IDictionary<string, object> visitedResources = new DictionaryWithReplacement<string, object>();
 
             FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
                               beanType,
@@ -273,7 +273,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                     {
                         INode resource = (INode)triple.Subject;
                         object newInstance = Activator.CreateInstance(beanType);
-                        IDictionary<String, Object> visitedResources = new DictionaryWithReplacement<String, Object>();
+                        IDictionary<string, object> visitedResources = new DictionaryWithReplacement<string, object>();
 
                         FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
                                           beanType,
@@ -293,7 +293,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                                               Type beanType,
                                               object bean,
                                               INode resource,
-                                              IDictionary<string, Object> visitedResources)
+                                              IDictionary<string, object> visitedResources)
         {
             IGraph graph = resource.Graph;
 
@@ -384,7 +384,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                             string prefix;
                             string localPart;
                             string ns;
-                            String qname;
+                            string qname;
 
                             if (graph.NamespaceMap.ReduceToQName(predicateUri, out qname))
                             {
@@ -464,7 +464,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
                         while (listNode != null && !nil.Equals(listNode.Uri))
                         {
-                            visitedResources.Add(GetVisitedResourceName(listNode), new Object());
+                            visitedResources.Add(GetVisitedResourceName(listNode), new object());
 
                             IUriNode o = (IUriNode)graph.GetTriplesWithSubjectPredicate(listNode, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListFirst))).First().Object;
                             objects.Add(o);
@@ -485,7 +485,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
                             if (o is IUriNode)
                             {
-                                visitedResources.Add(GetVisitedResourceName(o as IUriNode), new Object());
+                                visitedResources.Add(GetVisitedResourceName(o as IUriNode), new object());
                             }
 
                             objects.Add(o);
@@ -619,7 +619,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                             {
                                 object nestedBean;
 
-                                if (setMethodComponentParameterType == typeof(String))
+                                if (setMethodComponentParameterType == typeof(string))
                                 {
                                     nestedBean = "";
                                 }
@@ -646,7 +646,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                             IBlankNode nestedResource = o as IBlankNode;
                             object nestedBean;
 
-                            if (setMethodComponentParameterType == typeof(String))
+                            if (setMethodComponentParameterType == typeof(string))
                             {
                                 nestedBean = "";
                             }
@@ -886,7 +886,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
         private static object HandleExtendedPropertyValue(Type beanType,
                                                           INode obj,
-                                                          IDictionary<String, Object> visitedResources)
+                                                          IDictionary<string, object> visitedResources)
         {
             if (obj is ILiteralNode)
             {
@@ -1827,7 +1827,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             }
         }
 
-        private static String GetVisitedResourceName(INode resource)
+        private static string GetVisitedResourceName(INode resource)
         {
             string visitedResourceName = null;
 

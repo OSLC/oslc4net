@@ -45,7 +45,7 @@ namespace OSLC4Net.Core.Query.Impl
             }
         }
 
-        public override String
+        public override string
         ToString()
         {
             return Ascending + Identifier.ToString();

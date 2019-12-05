@@ -359,7 +359,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             {
                 if (formatterLogger == null) throw;
 
-                formatterLogger.LogError(String.Empty, e.Message);
+                formatterLogger.LogError(string.Empty, e.Message);
 
                 tcs.SetResult(GetDefaultValueForType(type));
             }

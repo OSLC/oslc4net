@@ -26,14 +26,14 @@ namespace OSLC4Net.Client.Oslc.Jazz
 {
     public class JazzFormAuthClient : OslcClient
     {
-	    private String url;
-	    private String authUrl;
-	    private String project;
-	    private String user;
-	    private String password;
+	    private string url;
+	    private string authUrl;
+	    private string project;
+	    private string user;
+	    private string password;
 	
-	    private const String JAZZ_AUTH_MESSAGE_HEADER = "X-com-ibm-team-repository-web-auth-msg";
-	    private const String JAZZ_AUTH_FAILED = "authfailed";
+	    private const string JAZZ_AUTH_MESSAGE_HEADER = "X-com-ibm-team-repository-web-auth-msg";
+	    private const string JAZZ_AUTH_FAILED = "authfailed";
 
 	    public JazzFormAuthClient() :
             base()
@@ -46,7 +46,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
         /// <param name="url">the URL of the Jazz server, including the web app context</param>
         /// <param name="user"></param>
         /// <param name="password"></param>
-	    public JazzFormAuthClient(String url, String user, String password) :
+	    public JazzFormAuthClient(string url, string user, string password) :
             this()
 	    {
 		    this.url = url;
@@ -64,43 +64,43 @@ namespace OSLC4Net.Client.Oslc.Jazz
 	    /// applications like RRC and DM.</param>
         /// <param name="user"></param>
         /// <param name="password"></param>
-	    public JazzFormAuthClient(String url, String authUrl, String user, String password) :
+	    public JazzFormAuthClient(string url, string authUrl, string user, string password) :
             this(url, user, password)
 	    {
 		    this.authUrl = authUrl;		
 	    }
 	
-	    public String GetUrl() {
+	    public string GetUrl() {
 		    return url;
 	    }
-	    public void SetUrl(String url) {
+	    public void SetUrl(string url) {
 		    this.url = url;
 	    }
 	
-	    public String GetAuthUrl() {
+	    public string GetAuthUrl() {
 		    return authUrl;
 	    }
 	
-	    public void SetAuthUrl(String authUrl) {
+	    public void SetAuthUrl(string authUrl) {
 		    this.authUrl = authUrl;
 	    }
 
-	    public String GetProject() {
+	    public string GetProject() {
 		    return project;
 	    }
-	    public void SetProject(String project) {
+	    public void SetProject(string project) {
 		    this.project = project;
 	    }
-	    public String GetUser() {
+	    public string GetUser() {
 		    return user;
 	    }
-	    public void SetUser(String user) {
+	    public void SetUser(string user) {
 		    this.user = user;
 	    }
-	    public String GetPassword() {
+	    public string GetPassword() {
 		    return password;
 	    }
-	    public void SetPassword(String password) {
+	    public void SetPassword(string password) {
 		    this.password = password;
 	    }
 
@@ -111,7 +111,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
 	    public HttpStatusCode FormLogin()
         {
             HttpStatusCode statusCode = HttpStatusCode.Unused;
-		    String location = null;
+            string location = null;
 
             HttpResponseMessage resp;
 		    try 
@@ -132,7 +132,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
 			    client.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
                 client.DefaultRequestHeaders.Add("OSLC-Core-Version", "2.0");
 
-                String securityCheckUrl = "j_username=" + user + "&j_password=" + password;
+                string securityCheckUrl = "j_username=" + user + "&j_password=" + password;
                 StringContent content = new StringContent(securityCheckUrl, Encoding.UTF8);
 
                 MediaTypeHeaderValue mediaTypeValue = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
@@ -143,15 +143,15 @@ namespace OSLC4Net.Client.Oslc.Jazz
 
                 resp = client.PostAsync(authUrl + "/j_security_check", content).Result;
 		        statusCode = resp.StatusCode;
-		    
-		        String jazzAuthMessage = null;
+
+                string jazzAuthMessage = null;
                 IEnumerable<string> values = new List<string>();
 
 		        if (resp.Headers.TryGetValues(JAZZ_AUTH_MESSAGE_HEADER, out values)) {
 		    	    jazzAuthMessage = values.Last();
 		        }
 		    
-		        if (jazzAuthMessage != null && String.Compare(jazzAuthMessage, JAZZ_AUTH_FAILED, true) == 0)
+		        if (jazzAuthMessage != null && string.Compare(jazzAuthMessage, JAZZ_AUTH_FAILED, true) == 0)
 		        {
                     resp.ConsumeContent();
 		    	    throw new JazzAuthFailedException(user, url);
@@ -178,7 +178,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
 		    return statusCode;
 	    }
 
-        private HttpStatusCode FollowRedirects(HttpStatusCode statusCode, String location)
+        private HttpStatusCode FollowRedirects(HttpStatusCode statusCode, string location)
 	    {
 
             while ((statusCode == HttpStatusCode.Found) && (location != null))
@@ -196,7 +196,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
 		    return statusCode;
 	    }
 
-	    private HttpResponseMessage GetArtifactFeed(String feedUrl)
+	    private HttpResponseMessage GetArtifactFeed(string feedUrl)
 	    {
 		    HttpResponseMessage resp = null;
 

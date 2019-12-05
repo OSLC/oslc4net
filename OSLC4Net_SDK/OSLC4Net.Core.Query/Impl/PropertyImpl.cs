@@ -30,7 +30,7 @@ namespace OSLC4Net.Core.Query.Impl
         PropertyImpl(
             CommonTree tree,
             PropertyType type,
-            IDictionary<String, String> prefixMap,
+            IDictionary<string, string> prefixMap,
             bool isWildcard
         )
         {
@@ -61,8 +61,8 @@ namespace OSLC4Net.Core.Query.Impl
                 if (isWildcard) {
                     throw new InvalidOperationException("wildcard has no identifier");
                 }
-        
-                String rawIdentifier = tree.Text;
+
+                string rawIdentifier = tree.Text;
         
                 identifier = new PName();
         
@@ -89,7 +89,7 @@ namespace OSLC4Net.Core.Query.Impl
     
         private readonly CommonTree tree;
         private readonly PropertyType type;
-        protected readonly IDictionary<String, String> prefixMap;
+        protected readonly IDictionary<string, string> prefixMap;
         private readonly bool isWildcard;
         private PName identifier = null;
     }

@@ -32,7 +32,7 @@ namespace OSLC4Net.Client.Oslc.Resources
 	    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
         private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
         private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-        private readonly ISet<String>   subjects                    = new HashSet<String>(); // XXX - TreeSet<> in Java
+        private readonly ISet<string>   subjects                    = new HashSet<string>(); // XXX - TreeSet<> in Java
         private readonly ISet<Uri>      states                      = new HashSet<Uri>(); // XXX - TreeSet<> in Java
         private readonly ISet<Uri>      verdicts                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
         private readonly ISet<Uri>      contributions               = new HashSet<Uri>(); // XXX - TreeSet<> in Java
@@ -40,11 +40,11 @@ namespace OSLC4Net.Client.Oslc.Resources
         private readonly ISet<ParameterInstance> outputParameters   = new HashSet<ParameterInstance>(); // XXX - TreeSet<> in Java
     
         private DateTime?   created;
-        private String      identifier;
+        private string identifier;
         private Uri         instanceShape;
         private DateTime?   modified;
         private Uri         serviceProvider;
-        private String      title;
+        private string title;
         private Uri         desiredState;
         private Link        producedByAutomationRequest;
         private Link        reportsOnAutomationPlan;
@@ -78,7 +78,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             rdfTypes.Add(rdfType);
         }
 
-        public void AddSubject(String subject)
+        public void AddSubject(string subject)
         {
             subjects.Add(subject);
         }
@@ -142,7 +142,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
         [OslcReadOnly]
         [OslcTitle("Identifier")]
-        public String GetIdentifier()
+        public string GetIdentifier()
         {
             return identifier;
         }
@@ -188,7 +188,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "subject")]
         [OslcReadOnly(false)]
         [OslcTitle("Subjects")]
-        public String[] GetSubjects()
+        public string[] GetSubjects()
         {
             return subjects.ToArray();
         }
@@ -198,7 +198,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
         [OslcTitle("Title")]
         [OslcValueType(Core.Model.ValueType.XMLLiteral)]
-        public String GetTitle()
+        public string GetTitle()
         {
             return title;
         }
@@ -330,7 +330,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void setIdentifier(String identifier)
+        public void setIdentifier(string identifier)
         {
             this.identifier = identifier;
         }
@@ -360,7 +360,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             this.serviceProvider = serviceProvider;
         }
 
-        public void setSubjects(String[] subjects)
+        public void setSubjects(string[] subjects)
         {
             this.subjects.Clear();
 
@@ -370,7 +370,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void setTitle(String title)
+        public void setTitle(string title)
         {
             this.title = title;
         }

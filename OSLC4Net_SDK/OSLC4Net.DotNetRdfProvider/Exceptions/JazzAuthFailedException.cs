@@ -23,7 +23,7 @@ namespace OSLC4Net.Core.Exceptions
     /// </summary>
     public class JazzAuthFailedException : OslcClientApplicationException
     {
-        private const String MESSAGE_KEY = "JazzAuthFailedException";
+        private const string MESSAGE_KEY = "JazzAuthFailedException";
 
         private readonly string _user;
         private readonly string _jazzUrl;

@@ -27,6 +27,6 @@ namespace OSLC4Net.Core.Query
     {
         string Value { get; }
 
-        String LangTag { get; }
+        string LangTag { get; }
     }
 }
