@@ -132,6 +132,10 @@
     <Compile Include="Resources\TestScript.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OSLC4Net.ChangeManagement\OSLC4Net.ChangeManagementCommon.csproj">
+      <Project>{7d5575dd-57db-4727-906b-a5fd1149c6a4}</Project>
+      <Name>OSLC4Net.ChangeManagementCommon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OSLC4Net.Core\OSLC4Net.Core.csproj">
       <Project>{C07B57BD-3356-4AD8-8050-D708B023A8EC}</Project>
       <Name>OSLC4Net.Core</Name>
