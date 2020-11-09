@@ -1,5 +1,6 @@
 # Welcome to the OSLC4Net project
 
+[![CI](https://github.com/OSLC/oslc4net/workflows/CI/badge.svg)](https://github.com/OSLC/oslc4net/actions?query=workflow%3ACI)
 [![Build status](https://ci.appveyor.com/api/projects/status/1d5u49mres43mkhw/branch/master?svg=true)](https://ci.appveyor.com/project/berezovskyi/oslc4net/branch/master)
 [![Discourse status](https://img.shields.io/discourse/https/meta.discourse.org/status.svg)](https://forum.open-services.net/)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/OSLC/chat)
