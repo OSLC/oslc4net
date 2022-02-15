@@ -9,7 +9,7 @@
 
 **OSLC4Net** is an SDK and sample applications to help the .NET community to adopt [OSLC](http://open-services.net) (Open Services for Lifecycle Collaboration) and build OSLC-compliant tools.  
 
-The current content of the project is the source for a .NET SDK written in C#. The SDK allows developers to create OSLC providers or consumers by adding OSLC annotations to .NET objects to allow them to be represented as OSLC resources. It includes a library based on the [dotNetRDF](https://dotnetrdf.codeplex.com/) package which assists with representing these resources as RDF/XML and which helps parse RDF/XML documents into OSLC .NET objects.  
+The current content of the project is the source for a .NET SDK written in C#. The SDK allows developers to create OSLC providers or consumers by adding OSLC annotations to .NET objects to allow them to be represented as OSLC resources. It includes a library based on the [dotNetRDF](https://dotnetrdf.org/) package which assists with representing these resources as RDF/XML and which helps parse RDF/XML documents into OSLC .NET objects.  
 
 The ASP.NET MVC 4 library can be used to assist with creating consumer REST requests or to help create a provider which can process OSLC REST requests.  
 
