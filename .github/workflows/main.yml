@@ -30,6 +30,7 @@ jobs:
       with:
         path: |
             ~/.nuget/packages
+            OSLC4Net_SDK/packages
             **/bin/Debug
             **/obj/Debug
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json', '**/*.sln', '**/*.csproj') }}
@@ -40,13 +41,19 @@ jobs:
       run: nuget restore OSLC4Net_SDK/OSLC4Net.Core.sln
 
     - name: Build OSLC4Net
-      #run: msbuild OSLC4Net_SDK/OSLC4Net.Core.sln /p:Configuration=Release
-      run: msbuild OSLC4Net_SDK/OSLC4Net.Core.sln
+      # /p:Configuration=Release is about 3x faster in Actions,
+      # not sure of the implications for VStest
+      run: msbuild OSLC4Net_SDK/OSLC4Net.Core.sln /p:Configuration=Release
+      #run: msbuild OSLC4Net_SDK/OSLC4Net.Core.sln
 
     - name: Run VStest
       uses: microsoft/vstest-action@v1.0.0
       with:
-        testAssembly: '**\bin\\Debug\*Test*.dll'
+        # see https://github.com/OSLC/oslc4net/issues/57
+        testAssembly: |
+            *Test\\bin\\*\\*.dll
+            *Tests\\bin\\*\\*.dll
+            !**\\OSLC4Net.ChangeManagementTest\\**\*
+        # OBS! searchFolder must be terminated
         searchFolder: '.\OSLC4Net_SDK\'
         runInParallel: true
-        #failOnMinTestsNotRun: true
