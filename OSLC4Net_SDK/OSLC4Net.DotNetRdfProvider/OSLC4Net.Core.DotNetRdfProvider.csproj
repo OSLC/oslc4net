@@ -63,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="dotNetRDF">
-      <Version>0.9.0.2110</Version>
+      <Version>1.0.0.2533</Version>
     </PackageReference>
     <PackageReference Include="log4net">
       <Version>2.0.15</Version>
