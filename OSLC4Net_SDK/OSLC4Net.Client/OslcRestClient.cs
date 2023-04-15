@@ -32,7 +32,7 @@ namespace OSLC4Net.Client
     /// </summary>
     public sealed class OslcRestClient
     {
-        public const int DEFAULT_READ_TIMEOUT = 2000;
+        public const int DEFAULT_READ_TIMEOUT = 60000;
 
         private readonly ISet<MediaTypeFormatter>   formatters;
         private readonly String                     uri;
