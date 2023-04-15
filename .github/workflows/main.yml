@@ -1,34 +1,28 @@
 # This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build: 
+  build:
     runs-on: windows-latest
- 
+
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
       name: Checkout Code
-     
+
     - name: Setup MSBuild Path
-      uses: warrenbuckley/Setup-MSBuild@v1
-       
+      uses: microsoft/setup-msbuild@v1.0.2
+
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.2.0
      
     - name: Restore NuGet Packages
       run: nuget restore OSLC4Net_SDK/OSLC4Net.Core.sln
- 
+
     - name: Build OSLC4Net
       run: msbuild OSLC4Net_SDK/OSLC4Net.Core.sln /p:Configuration=Release
- 
