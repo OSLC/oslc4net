@@ -24,7 +24,7 @@ jobs:
       uses: warrenbuckley/Setup-MSBuild@v1
        
     - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.0.2
+      uses: NuGet/setup-nuget@v1.2.0
      
     - name: Restore NuGet Packages
       run: nuget restore OSLC4Net_SDK/OSLC4Net.Core.sln
