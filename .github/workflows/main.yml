@@ -51,7 +51,7 @@ jobs:
       with:
         # see https://github.com/OSLC/oslc4net/issues/57
         testAssembly: |
-            *Test*\\bin\\*\\*.dll
+            **\\bin\\*\\*Test*.dll
             !**\\OSLC4Net.ChangeManagementTest\\**\*
         # OBS! searchFolder must be terminated
         searchFolder: '.\OSLC4Net_SDK\'
