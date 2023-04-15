@@ -29,10 +29,10 @@ jobs:
     - uses: actions/cache@v3
       with:
         path: |
-            ~/.nuget/packages
-            OSLC4Net_SDK/packages
-            **/bin/Debug
-            **/obj/Debug
+            ~/.nuget/packages/
+            OSLC4Net_SDK/packages/
+            OSLC4Net_SDK/**/bin/
+            OSLC4Net_SDK/**/obj/
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json', '**/*.sln', '**/*.csproj') }}
         restore-keys: |
           ${{ runner.os }}-nuget-
@@ -51,8 +51,7 @@ jobs:
       with:
         # see https://github.com/OSLC/oslc4net/issues/57
         testAssembly: |
-            *Test\\bin\\*\\*.dll
-            *Tests\\bin\\*\\*.dll
+            *Test*\\bin\\*\\*.dll
             !**\\OSLC4Net.ChangeManagementTest\\**\*
         # OBS! searchFolder must be terminated
         searchFolder: '.\OSLC4Net_SDK\'
