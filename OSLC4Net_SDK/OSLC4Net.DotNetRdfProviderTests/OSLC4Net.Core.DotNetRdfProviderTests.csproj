@@ -82,7 +82,7 @@
       <Version>2.0.15</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client">
-      <Version>5.2.9</Version>
+      <Version>5.2.3</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
