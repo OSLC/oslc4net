@@ -13,6 +13,9 @@ namespace OSLC4Net.StockQuoteSample5
     {
         protected void Application_Start()
         {
+            var frameworkName = new System.Runtime.Versioning.FrameworkName(
+    AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName
+);
             GlobalConfiguration.Configure(WebApiConfig.Register); // <--- this MUST be first 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
