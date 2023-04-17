@@ -22,6 +22,9 @@ jobs:
 
     - name: Setup MSBuild Path
       uses: microsoft/setup-msbuild@v1.3.1
+      with:
+        vs-version: '[17.5.3,18.0.0)'
+        msbuild-architecture: x64
 
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1
@@ -33,7 +36,7 @@ jobs:
             OSLC4Net_SDK/packages/
             OSLC4Net_SDK/**/bin/
             OSLC4Net_SDK/**/obj/
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json', '**/*.sln', '**/*.csproj') }}
+        key: ${{ runner.os }}-nuget-${{ hashFiles('.github/workflows/main.yml', '**/packages.config', '**/packages.lock.json', '**/*.sln', '**/*.csproj') }}
         restore-keys: |
           ${{ runner.os }}-nuget-
 
