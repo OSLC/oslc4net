@@ -21,12 +21,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Script.Serialization;
 
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
 using OSLC4Net.StockQuoteSample.Models;
-
+using System.Web.Mvc;
 
 namespace OSLC4Net.StockQuoteSample.Controllers
 {
@@ -40,7 +39,7 @@ namespace OSLC4Net.StockQuoteSample.Controllers
     /// for information on how routing words in ASP.NET MVC 4
     /// </summary>
 
-    public class ServiceProviderController : ApiController
+    public class ServiceProviderController : Controller
     {
         public static string BaseUri { get; set; }            //URI (as string) of the webapps root context
         public static Uri About { get; set; }                //URI for the StockQuote service

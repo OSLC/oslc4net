@@ -32,7 +32,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.Query", "OSLC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Client.Samples", "OSLC4Net.Client.Samples\OSLC4Net.Client.Samples.csproj", "{CBF6BE99-FBE9-45E2-8962-B1AFA474AD06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.StockQuoteSample5", "OSLC4Net.StockQuoteExp\OSLC4Net.StockQuoteSample5.csproj", "{A01A9DEE-DA90-4689-B459-A54141C1E160}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.StockQuoteSample", "OSLC4Net.StockQuoteSample\OSLC4Net.StockQuoteSample.csproj", "{A01A9DEE-DA90-4689-B459-A54141C1E160}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

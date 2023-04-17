@@ -1,11 +1,11 @@
-﻿using System;
+﻿using OSLC4Net.Core.DotNetRdfProvider;
+using OSLC4Net.Core.JsonProvider;
+using OSLC4Net.StockQuoteSample.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Http;
 using System.Web;
-using OSLC4Net.StockQuoteSample.Controllers;
-using OSLC4Net.Core.DotNetRdfProvider;
-using OSLC4Net.Core.JsonProvider;
+using System.Web.Http;
 
 namespace OSLC4Net.StockQuoteSample
 {
@@ -13,13 +13,17 @@ namespace OSLC4Net.StockQuoteSample
     {
         public static void Register(HttpConfiguration config)
         {
+            // Web API configuration and services
+
+            // Web API routes
+            config.MapHttpAttributeRoutes();
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            //Custom initialization
             config.Formatters.Clear();
             config.Formatters.Add(new RdfXmlMediaTypeFormatter());
             config.Formatters.Add(new JsonMediaTypeFormatter());
@@ -30,7 +34,7 @@ namespace OSLC4Net.StockQuoteSample
             string applicationBase = "http://localhost:7077";
             string baseUrl = applicationBase + "/api";
             ServiceProviderController.init(baseUrl);
+
         }
-   
     }
 }
