@@ -39,7 +39,7 @@ namespace OSLC4Net.StockQuoteSample.Controllers
     /// for information on how routing words in ASP.NET MVC 4
     /// </summary>
 
-    public class ServiceProviderController : Controller
+    public class ServiceProviderController : ApiController
     {
         public static string BaseUri { get; set; }            //URI (as string) of the webapps root context
         public static Uri About { get; set; }                //URI for the StockQuote service
