@@ -13,24 +13,15 @@
  *     Michael Fiedler  - initial API and implementation
  *******************************************************************************/
 using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
 using OSLC4Net.StockQuoteSample.Models;
-using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
 using OSLC4Net.Core.Attribute;
-using System.Web.Mvc;
-using System.Web.Http.Results;
-using System.Net.Http.Formatting;
-using System.Web.Razor.Text;
-using System.Threading;
 
 namespace OSLC4Net.StockQuoteSample.Controllers
 {
@@ -152,12 +143,6 @@ namespace OSLC4Net.StockQuoteSample.Controllers
             var response = Request.CreateResponse<StockQuote>(HttpStatusCode.Created, newStockQuote);
             string uri = Url.Link("DefaultApi", new { id = stockQuote.GetIdentifier() });
             response.Headers.Location = new Uri(uri);
-
-            //IContentNegotiator negotiator = this.Config.Services.GetContentNegotiator();
-
-            //HttpResponseMessage httpResponseMessage = new HttpResponseMessage(HttpStatusCode.Created);
-            //httpResponseMessage.Content = new ObjectContent<StockQuote>();
-            //httpResponseMessage.Headers.Location = new Uri(uri);
 
             return response;
         }
