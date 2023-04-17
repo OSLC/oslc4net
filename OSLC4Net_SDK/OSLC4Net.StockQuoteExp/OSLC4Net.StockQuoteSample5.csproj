@@ -326,6 +326,11 @@
       <Name>OSLC4Net.Core.DotNetRdfProvider</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Net.Http" Version="4.3.4">
+      <ExcludeAssets>All</ExcludeAssets>
+    </PackageReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
