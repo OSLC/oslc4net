@@ -213,14 +213,6 @@ namespace OSLC4Net.StockQuoteSample.Controllers
             {
                 map.Add(stockQuote.GetIdentifier(), stockQuote);
 
-                //string stockId = Utilities.CreateStockQuoteIdentifier(exchange, ticker);
-                //StockQuote stockQuote = map[stockId];
-                //if (stockQuote == null)
-                //{
-                //    throw new InvalidDataException("Could not find StockQuote with id: " + stockId);
-                //}
-
-                //stockQuote.SetChangePrice(decimal.Parse(stockEntry["c"]));
                 stockQuote.SetTitle(mapSymbol(stockQuote));
                 stockQuote.SetChangePrice(Math.Round((decimal)((random.NextDouble() - 0.4) * 100), 2, MidpointRounding.ToEven));
                 stockQuote.SetChangePricePercentage(Math.Round((decimal)((random.NextDouble()) * 150) * Math.Sign(stockQuote.GetChangePrice()), 2, MidpointRounding.ToEven));
@@ -246,100 +238,6 @@ namespace OSLC4Net.StockQuoteSample.Controllers
                 _ => stockQuote.GetSymbol()
             };
         }
-
-
-        /// <summary>
-        /// Call Google's stock quote service and retrieve the data from the JSON response.
-        /// Populate the fields of the requested StockQuote with the retrieved data.
-        /// 
-        /// WARNING: Google Finance API is shut down since 2012.
-        /// </summary>
-        /// <param name="stockQuotes"></param>
-        //private static void retrieveStockQuoteInfoGoogleFinance(params StockQuote[] stockQuotes)
-        //{
-        //    string uri = "http://www.google.com/finance/info?infotype=infoquoteall&q=";
-            
-        //    Dictionary <string,StockQuote> map = new Dictionary<string,StockQuote>();
-
-        //    bool first = true;
-        //    foreach(StockQuote stockQuote in stockQuotes)
-        //    {
-                
-        //        if (first)
-        //            first = false;
-        //        else
-        //            uri +=",";
-
-        //        uri += stockQuote.GetExchange() + ":" + stockQuote.GetSymbol();
-        //        map.Add(stockQuote.GetIdentifier(),stockQuote);
-        //    }
-
-        //    WebRequest request = WebRequest.Create(uri);
-        //    StreamReader reader = null;
-        //    try
-        //    {
-        //        reader = new StreamReader(request.GetResponse().GetResponseStream());
-        //    }
-        //    catch (System.Net.WebException e)
-        //    {
-        //        throw new System.Net.WebException("Error accessing uri: " + uri,
-        //                                           e.Status);
-                                                   
-        //    }
-        //    string response = reader.ReadToEnd();
-
-        //    int indexOf = response.IndexOf('[');
-        //    if (indexOf < 0) indexOf = 0;
-
-        //    JavaScriptSerializer serializer = new JavaScriptSerializer();
-        //    List<Dictionary<string,string>> stockList = 
-        //        serializer.Deserialize<List<Dictionary<string,string>>>(response.Substring(indexOf));
-
-        //    foreach (Dictionary<string,string> stockEntry in stockList)
-        //    {
-        //        string exchange = stockEntry["e"];
-        //        string ticker = stockEntry["t"];
-
-        //        string stockId = Utilities.CreateStockQuoteIdentifier(exchange, ticker);
-        //        StockQuote stockQuote = map[stockId];
-        //        if (stockQuote == null)
-        //        {
-        //            throw new InvalidDataException("Could not find StockQuote with id: " + stockId);
-        //        }
-
-        //        stockQuote.SetChangePrice(decimal.Parse(stockEntry["c"]));
-        //        stockQuote.SetChangePricePercentage(decimal.Parse(stockEntry["cp"]));
-
-        //        String hi = stockEntry["hi"];
-
-        //        if (hi.Length != 0)
-        //        {
-        //            stockQuote.SetHighPrice(decimal.Parse(hi));
-        //        }
-
-        //        stockQuote.SetHigh52WeekPrice(decimal.Parse(stockEntry["hi52"]));
-        //        stockQuote.SetLastTradedPrice(decimal.Parse(stockEntry["l"]));
-        //        stockQuote.SetLastTradedDate(stockEntry["lt"]);
-
-        //        String lo = stockEntry["lo"];
-
-        //        if (lo.Length != 0)
-        //        {
-        //            stockQuote.SetLowPrice(decimal.Parse(lo));
-        //        }
-
-        //        stockQuote.SetLow52WeekPrice(decimal.Parse(stockEntry["lo52"]));
-
-        //        String op = stockEntry["op"];
-
-        //        if (op.Length != 0)
-        //        {
-        //            stockQuote.SetOpenPrice(decimal.Parse(op));
-        //        }
-
-        //       stockQuote.SetTitle(stockEntry["name"]);
-        //    }                
-        //}
     }
 }
 
