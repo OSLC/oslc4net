@@ -29,16 +29,16 @@ jobs:
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1
 
-    - uses: actions/cache@v3
-      with:
-        path: |
-            ~/.nuget/packages/
-            OSLC4Net_SDK/packages/
-            OSLC4Net_SDK/**/bin/
-            OSLC4Net_SDK/**/obj/
-        key: ${{ runner.os }}-nuget-${{ hashFiles('.github/workflows/main.yml', '**/packages.config', '**/packages.lock.json', '**/*.sln', '**/*.csproj') }}
-        restore-keys: |
-          ${{ runner.os }}-nuget-
+    # - uses: actions/cache@v3
+    #   with:
+    #     path: |
+    #         ~/.nuget/packages/
+    #         OSLC4Net_SDK/packages/
+    #         OSLC4Net_SDK/**/bin/
+    #         OSLC4Net_SDK/**/obj/
+    #     key: ${{ runner.os }}-nuget-${{ hashFiles('.github/workflows/main.yml', '**/packages.config', '**/packages.lock.json', '**/*.sln', '**/*.csproj') }}
+    #     restore-keys: |
+    #       ${{ runner.os }}-nuget-
 
     - name: Restore NuGet Packages
       run: nuget restore OSLC4Net_SDK/OSLC4Net.Core.sln
