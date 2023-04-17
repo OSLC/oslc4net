@@ -13,22 +13,15 @@
  *     Michael Fiedler  - initial API and implementation
  *******************************************************************************/
 using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Script.Serialization;
 
 using OSLC4Net.StockQuoteSample.Models;
-using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
 using OSLC4Net.Core.Attribute;
-
-
 
 namespace OSLC4Net.StockQuoteSample.Controllers
 {
@@ -80,7 +73,7 @@ namespace OSLC4Net.StockQuoteSample.Controllers
             List<StockQuote> stockQuoteCollection = stockQuoteStore.GetAll().ToList<StockQuote>();
 
             //Get realtime stock quote
-            retrieveStockQuoteInfo(stockQuoteCollection.ToArray<StockQuote>());
+            retrieveStockQuoteInfoFake(stockQuoteCollection.ToArray<StockQuote>());
 
             //Update the resource with runtime subject and ServiceProvider URIs
             foreach (StockQuote stockQuote in stockQuoteCollection)
@@ -109,7 +102,7 @@ namespace OSLC4Net.StockQuoteSample.Controllers
             StockQuote requestedStockQuote = stockQuoteStore.Get(id);
 
             //Get realtime stock quote
-            retrieveStockQuoteInfo(requestedStockQuote);
+            retrieveStockQuoteInfoFake(requestedStockQuote);
 
             //Update the resource with runtime subject and ServiceProvider URIs
             requestedStockQuote.SetAbout(new Uri(ServiceProviderController.About.ToString() + "/" + requestedStockQuote.GetIdentifier()));
@@ -140,7 +133,7 @@ namespace OSLC4Net.StockQuoteSample.Controllers
             StockQuote newStockQuote = stockQuoteStore.Add(stockQuote);
 
             //Get realtime stock quote
-            retrieveStockQuoteInfo(newStockQuote);
+            retrieveStockQuoteInfoFake(newStockQuote);
 
             //Update the resource with runtime subject and ServiceProvider URIs
             newStockQuote.SetAbout(new Uri(ServiceProviderController.About.ToString() + "/" + stockQuote.GetIdentifier()));
@@ -150,6 +143,7 @@ namespace OSLC4Net.StockQuoteSample.Controllers
             var response = Request.CreateResponse<StockQuote>(HttpStatusCode.Created, newStockQuote);
             string uri = Url.Link("DefaultApi", new { id = stockQuote.GetIdentifier() });
             response.Headers.Location = new Uri(uri);
+
             return response;
         }
 
@@ -195,95 +189,39 @@ namespace OSLC4Net.StockQuoteSample.Controllers
         }
 
 
-        /// <summary>
-        /// Call Google's stock quote service and retrieve the data from the JSON response.
-        /// Populate the fields of the requested StockQuote with the retrieved data
-        /// </summary>
-        /// <param name="stockQuotes"></param>
-        private static void retrieveStockQuoteInfo(params StockQuote[] stockQuotes)
+        private static void retrieveStockQuoteInfoFake(params StockQuote[] stockQuotes)
         {
-            string uri = "http://www.google.com/finance/info?infotype=infoquoteall&q=";
-            
-            Dictionary <string,StockQuote> map = new Dictionary<string,StockQuote>();
+            var random = new Random();
+            Dictionary<string, StockQuote> map = new Dictionary<string, StockQuote>();
 
-            bool first = true;
-            foreach(StockQuote stockQuote in stockQuotes)
+            foreach (StockQuote stockQuote in stockQuotes)
             {
-                
-                if (first)
-                    first = false;
-                else
-                    uri +=",";
+                map.Add(stockQuote.GetIdentifier(), stockQuote);
 
-                uri += stockQuote.GetExchange() + ":" + stockQuote.GetSymbol();
-                map.Add(stockQuote.GetIdentifier(),stockQuote);
+                stockQuote.SetTitle(mapSymbol(stockQuote));
+                stockQuote.SetChangePrice(Math.Round((decimal)((random.NextDouble() - 0.4) * 100), 2, MidpointRounding.ToEven));
+                stockQuote.SetChangePricePercentage(Math.Round((decimal)((random.NextDouble()) * 150) * Math.Sign(stockQuote.GetChangePrice()), 2, MidpointRounding.ToEven));
+                stockQuote.SetLastTradedPrice(Math.Round((decimal)(random.NextDouble() * 500), 2, MidpointRounding.ToEven));
+                stockQuote.SetOpenPrice(Math.Round((decimal)((random.NextDouble() + 0.01) * 1000), 2, MidpointRounding.ToEven));
+                stockQuote.SetLowPrice(Math.Round((decimal)((random.NextDouble() + 0.01) * 100), 2, MidpointRounding.ToEven));
+                stockQuote.SetLow52WeekPrice(Math.Round(stockQuote.GetLowPrice() + (decimal)((random.NextDouble() + 0.01) * 50), 2, MidpointRounding.ToEven));
+                stockQuote.SetHigh52WeekPrice(Math.Round(Math.Max(stockQuote.GetLastTradedPrice(), stockQuote.GetLow52WeekPrice()) + (decimal)(random.NextDouble() * 500), 2, MidpointRounding.ToEven));
+                stockQuote.SetHighPrice(Math.Round(stockQuote.GetHigh52WeekPrice() + (decimal)(random.NextDouble() * 200), 2, MidpointRounding.ToEven));
+                stockQuote.SetLastTradedDate(DateTime.Today.ToString("yyyy-MM-dd"));
             }
+        }
 
-            WebRequest request = WebRequest.Create(uri);
-            StreamReader reader = null;
-            try
+        private static string mapSymbol(StockQuote stockQuote)
+        {
+            return stockQuote.GetSymbol() switch
             {
-                reader = new StreamReader(request.GetResponse().GetResponseStream());
-            }
-            catch (System.Net.WebException e)
-            {
-                throw new System.Net.WebException("Error accessing uri: " + uri,
-                                                   e.Status);
-                                                   
-            }
-            string response = reader.ReadToEnd();
-
-            int indexOf = response.IndexOf('[');
-            if (indexOf < 0) indexOf = 0;
-
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            List<Dictionary<string,string>> stockList = 
-                serializer.Deserialize<List<Dictionary<string,string>>>(response.Substring(indexOf));
-
-            foreach (Dictionary<string,string> stockEntry in stockList)
-            {
-                string exchange = stockEntry["e"];
-                string ticker = stockEntry["t"];
-
-                string stockId = Utilities.CreateStockQuoteIdentifier(exchange, ticker);
-                StockQuote stockQuote = map[stockId];
-                if (stockQuote == null)
-                {
-                    throw new InvalidDataException("Could not find StockQuote with id: " + stockId);
-                }
-
-                stockQuote.SetChangePrice(decimal.Parse(stockEntry["c"]));
-                stockQuote.SetChangePricePercentage(decimal.Parse(stockEntry["cp"]));
-
-                String hi = stockEntry["hi"];
-
-                if (hi.Length != 0)
-                {
-                    stockQuote.SetHighPrice(decimal.Parse(hi));
-                }
-
-                stockQuote.SetHigh52WeekPrice(decimal.Parse(stockEntry["hi52"]));
-                stockQuote.SetLastTradedPrice(decimal.Parse(stockEntry["l"]));
-                stockQuote.SetLastTradedDate(stockEntry["lt"]);
-
-                String lo = stockEntry["lo"];
-
-                if (lo.Length != 0)
-                {
-                    stockQuote.SetLowPrice(decimal.Parse(lo));
-                }
-
-                stockQuote.SetLow52WeekPrice(decimal.Parse(stockEntry["lo52"]));
-
-                String op = stockEntry["op"];
-
-                if (op.Length != 0)
-                {
-                    stockQuote.SetOpenPrice(decimal.Parse(op));
-                }
-
-               stockQuote.SetTitle(stockEntry["name"]);
-            }                
+                "GOOG" => "Google",
+                "AAPL" => "Apple",
+                "NFLX" => "Netflix",
+                "IBM" => "IBM",
+                "BWA" => "BorgWarner Inc.",
+                _ => stockQuote.GetSymbol()
+            };
         }
     }
 }

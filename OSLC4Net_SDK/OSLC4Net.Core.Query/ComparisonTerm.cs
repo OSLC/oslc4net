@@ -22,7 +22,7 @@ namespace OSLC4Net.Core.Query
 {
     public enum Operator
     {
-        EQUALS,
+        EQUALS, // TODO: rename for CLS compliance
         NOT_EQUALS,
         LESS_THAN,
         GREATER_THAN,

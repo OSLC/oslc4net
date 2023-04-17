@@ -13,20 +13,9 @@
  *     Michael Fiedler  - initial API and implementation
  *******************************************************************************/
 using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using System.Web.Script.Serialization;
-
-using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
 using OSLC4Net.StockQuoteSample.Models;
-
 
 namespace OSLC4Net.StockQuoteSample.Controllers
 {
