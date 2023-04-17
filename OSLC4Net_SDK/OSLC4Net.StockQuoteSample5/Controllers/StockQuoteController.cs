@@ -30,6 +30,8 @@ using OSLC4Net.Core.Attribute;
 using System.Web.Mvc;
 using System.Web.Http.Results;
 using System.Net.Http.Formatting;
+using System.Web.Razor.Text;
+using System.Threading;
 
 namespace OSLC4Net.StockQuoteSample.Controllers
 {
@@ -81,7 +83,7 @@ namespace OSLC4Net.StockQuoteSample.Controllers
             List<StockQuote> stockQuoteCollection = stockQuoteStore.GetAll().ToList<StockQuote>();
 
             //Get realtime stock quote
-            retrieveStockQuoteInfo(stockQuoteCollection.ToArray<StockQuote>());
+            retrieveStockQuoteInfoFake(stockQuoteCollection.ToArray<StockQuote>());
 
             //Update the resource with runtime subject and ServiceProvider URIs
             foreach (StockQuote stockQuote in stockQuoteCollection)
@@ -110,7 +112,7 @@ namespace OSLC4Net.StockQuoteSample.Controllers
             StockQuote requestedStockQuote = stockQuoteStore.Get(id);
 
             //Get realtime stock quote
-            retrieveStockQuoteInfo(requestedStockQuote);
+            retrieveStockQuoteInfoFake(requestedStockQuote);
 
             //Update the resource with runtime subject and ServiceProvider URIs
             requestedStockQuote.SetAbout(new Uri(ServiceProviderController.About.ToString() + "/" + requestedStockQuote.GetIdentifier()));
@@ -141,7 +143,7 @@ namespace OSLC4Net.StockQuoteSample.Controllers
             StockQuote newStockQuote = stockQuoteStore.Add(stockQuote);
 
             //Get realtime stock quote
-            retrieveStockQuoteInfo(newStockQuote);
+            retrieveStockQuoteInfoFake(newStockQuote);
 
             //Update the resource with runtime subject and ServiceProvider URIs
             newStockQuote.SetAbout(new Uri(ServiceProviderController.About.ToString() + "/" + stockQuote.GetIdentifier()));
@@ -203,12 +205,58 @@ namespace OSLC4Net.StockQuoteSample.Controllers
         }
 
 
+        private static void retrieveStockQuoteInfoFake(params StockQuote[] stockQuotes)
+        {
+            var random = new Random();
+            Dictionary<string, StockQuote> map = new Dictionary<string, StockQuote>();
+
+            foreach (StockQuote stockQuote in stockQuotes)
+            {
+                map.Add(stockQuote.GetIdentifier(), stockQuote);
+
+                //string stockId = Utilities.CreateStockQuoteIdentifier(exchange, ticker);
+                //StockQuote stockQuote = map[stockId];
+                //if (stockQuote == null)
+                //{
+                //    throw new InvalidDataException("Could not find StockQuote with id: " + stockId);
+                //}
+
+                //stockQuote.SetChangePrice(decimal.Parse(stockEntry["c"]));
+                stockQuote.SetTitle(mapSymbol(stockQuote));
+                stockQuote.SetChangePrice(Math.Round((decimal)((random.NextDouble() - 0.4) * 100), 2, MidpointRounding.ToEven));
+                stockQuote.SetChangePricePercentage(Math.Round((decimal)((random.NextDouble()) * 150) * Math.Sign(stockQuote.GetChangePrice()), 2, MidpointRounding.ToEven));
+                stockQuote.SetLastTradedPrice(Math.Round((decimal)(random.NextDouble() * 500), 2, MidpointRounding.ToEven));
+                stockQuote.SetOpenPrice(Math.Round((decimal)((random.NextDouble() + 0.01) * 1000), 2, MidpointRounding.ToEven));
+                stockQuote.SetLowPrice(Math.Round((decimal)((random.NextDouble() + 0.01) * 100), 2, MidpointRounding.ToEven));
+                stockQuote.SetLow52WeekPrice(Math.Round(stockQuote.GetLowPrice() + (decimal)((random.NextDouble() + 0.01) * 50), 2, MidpointRounding.ToEven));
+                stockQuote.SetHigh52WeekPrice(Math.Round(Math.Max(stockQuote.GetLastTradedPrice(), stockQuote.GetLow52WeekPrice()) + (decimal)(random.NextDouble() * 500), 2, MidpointRounding.ToEven));
+                stockQuote.SetHighPrice(Math.Round(stockQuote.GetHigh52WeekPrice() + (decimal)(random.NextDouble() * 200), 2, MidpointRounding.ToEven));
+                stockQuote.SetLastTradedDate(DateTime.Today.ToString("yyyy-MM-dd"));
+            }
+        }
+
+        private static string mapSymbol(StockQuote stockQuote)
+        {
+            return stockQuote.GetSymbol() switch
+            {
+                "GOOG" => "Google",
+                "AAPL" => "Apple",
+                "NFLX" => "Netflix",
+                "IBM" => "IBM",
+                "BWA" => "BorgWarner Inc.",
+                _ => stockQuote.GetSymbol()
+            };
+        }
+
+
         /// <summary>
         /// Call Google's stock quote service and retrieve the data from the JSON response.
-        /// Populate the fields of the requested StockQuote with the retrieved data
+        /// Populate the fields of the requested StockQuote with the retrieved data.
+        /// 
+        /// WARNING: Google Finance API is shut down since 2012.
         /// </summary>
         /// <param name="stockQuotes"></param>
-        private static void retrieveStockQuoteInfo(params StockQuote[] stockQuotes)
+        private static void retrieveStockQuoteInfoGoogleFinance(params StockQuote[] stockQuotes)
         {
             string uri = "http://www.google.com/finance/info?infotype=infoquoteall&q=";
             

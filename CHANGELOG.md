@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Since 2017-04-15, the project is hosted on Github under the OSLC community org.
 - The project now targets .NET 4.8 instead of .NET 4.5.
 - Nuget project configuration was migrated from `packages.config` to PackageReference.
+- The StockQuoteSample was updated to ASP.NET MVC 5 (5.2.3 for now due to problems with the `System.Net.Http.Formatting` dependency). Faker library was used to provide data instead of Google Finance; project language level was raised from C# 7 to C# 10 as a result.
 
 ### Deprecated
 
