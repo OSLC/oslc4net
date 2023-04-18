@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The project now targets .NET 4.8 instead of .NET 4.5.
 - Nuget project configuration was migrated from `packages.config` to PackageReference.
 - The StockQuoteSample was updated to ASP.NET MVC 5.
+- Migrated from MSBuild-based NuGet package restore to NuGet 2.7+ Automatic Package Restore.
 
 ### Deprecated
 
