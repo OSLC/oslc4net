@@ -124,11 +124,14 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="DotNetOpenAuth.Core">
+      <Version>4.3.4.13329</Version>
+    </PackageReference>
     <PackageReference Include="DotNetOpenAuth.OAuth.Common">
-      <Version>4.3.1.13153</Version>
+      <Version>4.3.4.13329</Version>
     </PackageReference>
     <PackageReference Include="DotNetOpenAuth.OAuth.Consumer">
-      <Version>4.3.1.13153</Version>
+      <Version>4.3.4.13329</Version>
     </PackageReference>
     <PackageReference Include="dotNetRDF">
       <Version>1.0.13</Version>
