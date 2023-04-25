@@ -33,7 +33,7 @@ You'll see a web page created - that is currently just a skeleton provided by AS
 
 A request to the first URL using Fiddler should have the following response:
 
-![](doc/stockquote.png)
+![](https://raw.githubusercontent.com/OSLC/oslc4net/master/doc/stockquote.png)
 
 ## More information on OSLC
 
