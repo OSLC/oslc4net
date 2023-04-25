@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The StockQuoteSample was updated to ASP.NET MVC 5.
 - Migrated from MSBuild-based NuGet package restore to NuGet 2.7+ Automatic Package Restore.
 - Migrated from MSTestV1 (`Microsoft.VisualStudio.QualityTools.UnitTestFramework`) to MSTestV2 (`MSTest.Test*`).
+- **`AssemblyVersion` was set to `0.3.0.0`** (from 1.0.0.0 in the v0.2.3). This could be a breaking change in some cases, but given that the project was used by a small number of people, the version being obviously wrong (given being present in the 0.2.3 release) and not having a Nuget release before, we decided to go ahead. Furthermore, switching from a direct assembly reference or a project reference to a Nuget package would require changes to the project references anyway.
 
 ### Deprecated
 
