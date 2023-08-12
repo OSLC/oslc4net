@@ -9,8 +9,8 @@ updates:
     directory: "/OSLC4Net_SDK" # Location of package manifests
     open-pull-requests-limit: 12
     schedule:
-      interval: "monthly"
+      interval: "daily"
   - package-ecosystem: "github-actions" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: "monthly"
+      interval: "daily"
