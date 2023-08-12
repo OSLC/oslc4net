@@ -10,7 +10,7 @@
 
 The SDK allows developers to create OSLC providers or consumers by adding OSLC annotations to .NET objects to represent them as OSLC resources. It includes a library based on the [dotNetRDF](https://dotnetrdf.org/) package, which assists with representing these resources as RDF/XML and helps parse RDF/XML documents into OSLC .NET objects.
 
-The [OSLC4Net.Client package](https://www.nuget.org/packages/OSLC4Net.Client/) can be used to help create consumer REST requests. On the server side, the project offers an RDF-specific `MediaTypeFormatter` that can help process OSLC REST requests withing an ASP.NET MVC 5 API. **Join the [discussion on the .NET Core migration](https://github.com/OSLC/oslc4net/issues/25).**
+The [OSLC4Net.Client package](https://www.nuget.org/packages/OSLC4Net.Client/) can be used to help create consumer REST requests. On the server side, the project offers an RDF-specific `MediaTypeFormatter` that can help process OSLC REST requests within an ASP.NET MVC 5 API. **Join the [discussion on the .NET Core migration](https://github.com/OSLC/oslc4net/issues/25).**
 
 ## Getting started
 
