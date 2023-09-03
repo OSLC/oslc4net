@@ -1,226 +1,118 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C07B57BD-3356-4AD8-8050-D708B023A8EC}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>OSLC4Net.Core</RootNamespace>
     <AssemblyName>OSLC4Net.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <Version>0.3.0-alpha</Version>
     <VersionSuffix>alpha</VersionSuffix>
     <PackageLicenseExpression>EPL-1.0</PackageLicenseExpression>
     <Authors>Andrii Berezovskyi and OSLC4Net contributors</Authors>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <!-- TODO: remove PackageOutputPath after migration to .NET Core-->
-    <PackageOutputPath>MSBuild_Nuget_Pack/</PackageOutputPath> 
-    <PackageProjectUrl>https://github.com/OSLC/oslc4net/</PackageProjectUrl> 
-    <RepositoryUrl>https://github.com/OSLC/oslc4net/</RepositoryUrl> 
-    <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <TargetFrameworkProfile />
+    <PackageOutputPath>MSBuild_Nuget_Pack/</PackageOutputPath>
+    <PackageProjectUrl>https://github.com/OSLC/oslc4net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/OSLC/oslc4net/</RepositoryUrl>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\OSLC4Net.Core.XML</DocumentationFile>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="5.2.0"/>
-    <None Include="../../README.md" Pack="true" PackagePath=""/>
+    <PackageReference Include="log4net" Version="2.0.15" />
   </ItemGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="5.2.0" />
+    <None Include="../../README.md" Pack="true" PackagePath="" />
   </ItemGroup>
+
+
   <ItemGroup>
-    <Compile Include="Exceptions\OslcCoreMissingNamespacePrefixException.cs" />
-    <Compile Include="Exceptions\OslcCoreMissingNamespaceDeclarationException.cs" />
-    <Compile Include="Exceptions\OslcCoreInvalidAttributeException.cs" />
-    <Compile Include="Model\ResponseInfoCollection.cs" />
-    <Compile Include="Model\ResponseInfoArray.cs" />
-    <Compile Include="Model\ResponseInfo.cs" />
-    <Compile Include="Model\FilteredResource.cs" />
-    <Compile Include="Attribute\OslcRdfCollectionType.cs" />
-    <Compile Include="Exceptions\OslcCoreDeregistrationException.cs" />
-    <Compile Include="Exceptions\OslcCoreRegistrationException.cs" />
-    <Compile Include="Exceptions\OslcCoreInvalidRepresentationException.cs" />
-    <Compile Include="Exceptions\OslcCoreInvalidValueTypeException.cs" />
-    <Compile Include="Exceptions\OslcCoreInvalidOccursException.cs" />
-    <Compile Include="Exceptions\OslcCoreInvalidPropertyTypeException.cs" />
-    <Compile Include="Exceptions\OslcCoreDuplicatePropertyDefinitionException.cs" />
-    <Compile Include="Exceptions\OslcCoreMissingAttributeException.cs" />
-    <Compile Include="Exceptions\OslcCoreInvalidPropertyDefinitionException.cs" />
-    <Compile Include="Exceptions\OslcCoreMissingSetMethodException.cs" />
-    <Compile Include="Exceptions\OslcCoreMisusedOccursException.cs" />
-    <Compile Include="Exceptions\OslcCoreRelativeURIException.cs" />
-    <Compile Include="Exceptions\MessageExtractor.cs" />
-    <Compile Include="Exceptions\OslcCoreApplicationException.cs" />
-    <Compile Include="Model\ServiceProviderFactory.cs" />
-    <Compile Include="Model\SortedUriSet.cs" />
-    <Compile Include="OSLC4NetConstants.cs" />
-    <Compile Include="Model\AbstractResource.cs" />
-    <Compile Include="Model\AnyResource.cs" />
-    <Compile Include="Model\AbstractReifiedResource.cs" />
-    <Compile Include="Model\Compact.cs" />
-    <Compile Include="Model\Preview.cs" />
-    <Compile Include="Model\ServiceProviderCatalog.cs" />
-    <Compile Include="Model\Publisher.cs" />
-    <Compile Include="Model\OAuthConfiguration.cs" />
-    <Compile Include="Model\QueryCapability.cs" />
-    <Compile Include="Model\CreationFactory.cs" />
-    <Compile Include="Model\Dialog.cs" />
-    <Compile Include="Model\Service.cs" />
-    <Compile Include="Model\PrefixDefinition.cs" />
-    <Compile Include="Model\ServiceProvider.cs" />
-    <Compile Include="Model\OslcMediaType.cs" />
-    <Compile Include="Model\XmlNamespace.cs" />
-    <Compile Include="Model\Link.cs" />
-    <Compile Include="Model\EnumerableWrapper.cs" />
-    <Compile Include="Model\InheritedGenericInterfacesHelper.cs" />
-    <Compile Include="Model\Property.cs" />
-    <Compile Include="Model\ResourceShape.cs" />
-    <Compile Include="Model\ResourceShapeFactory.cs" />
-    <Compile Include="Model\InheritedMethodAttributeHelper.cs" />
-    <Compile Include="Model\IExtendedResource.cs" />
-    <Compile Include="Model\IReifiedResource.cs" />
-    <Compile Include="Model\IResource.cs" />
-    <Compile Include="Model\Occurs.cs" />
-    <Compile Include="Attribute\OslcAllowedValue.cs">
+    <Compile Update="Attribute\OslcAllowedValue.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcAllowedValues.cs">
+    <Compile Update="Attribute\OslcAllowedValues.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\OslcConstants.cs" />
-    <Compile Include="Attribute\OslcCreationFactory.cs">
+    <Compile Update="Attribute\OslcCreationFactory.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcDefaultValue.cs">
+    <Compile Update="Attribute\OslcDefaultValue.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcDescription.cs">
+    <Compile Update="Attribute\OslcDescription.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcDialog.cs">
+    <Compile Update="Attribute\OslcDialog.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcDialogs.cs">
+    <Compile Update="Attribute\OslcDialogs.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcHidden.cs">
+    <Compile Update="Attribute\OslcHidden.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcMaxSize.cs">
+    <Compile Update="Attribute\OslcMaxSize.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcMemberProperty.cs">
+    <Compile Update="Attribute\OslcMemberProperty.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcName.cs">
+    <Compile Update="Attribute\OslcName.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcNamespace.cs">
+    <Compile Update="Attribute\OslcNamespace.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcNamespaceDefinition.cs">
+    <Compile Update="Attribute\OslcNamespaceDefinition.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcOccurs.cs">
+    <Compile Update="Attribute\OslcOccurs.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcPropertyDefinition.cs">
+    <Compile Update="Attribute\OslcPropertyDefinition.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcQueryCapability.cs">
+    <Compile Update="Attribute\OslcQueryCapability.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcRange.cs">
+    <Compile Update="Attribute\OslcRange.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcReadOnly.cs">
+    <Compile Update="Attribute\OslcReadOnly.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcRepresentation.cs">
+    <Compile Update="Attribute\OslcRepresentation.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcResourceShape.cs">
+    <Compile Update="Attribute\OslcResourceShape.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcSchema.cs">
+    <Compile Update="Attribute\OslcSchema.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcService.cs">
+    <Compile Update="Attribute\OslcService.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcTitle.cs">
+    <Compile Update="Attribute\OslcTitle.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcValueShape.cs">
+    <Compile Update="Attribute\OslcValueShape.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attribute\OslcValueType.cs">
+    <Compile Update="Attribute\OslcValueType.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="NestedWildcardProperties.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\QName.cs" />
-    <Compile Include="Model\Representation.cs" />
-    <Compile Include="Model\TypeFactory.cs" />
-    <Compile Include="Model\URI.cs" />
-    <Compile Include="Model\ValueType.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
+    <Compile Update="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="SingletonWildcardProperties.cs" />
   </ItemGroup>
+
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+    <EmbeddedResource Update="Properties\Resources.resx">
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="log4net">
-      <Version>2.0.15</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.AspNet.WebApi.Client">
-      <Version>5.2.9</Version>
-    </PackageReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

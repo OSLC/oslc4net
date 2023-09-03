@@ -11,17 +11,15 @@
     <RootNamespace>OSLC4Net.Client</RootNamespace>
     <AssemblyName>OSLC4Net.Client</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-
     <Version>0.3.0-alpha</Version>
     <VersionSuffix>alpha</VersionSuffix>
     <PackageLicenseExpression>EPL-1.0</PackageLicenseExpression>
     <Authors>Andrii Berezovskyi and OSLC4Net contributors</Authors>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <!-- TODO: remove PackageOutputPath after migration to .NET Core-->
-    <PackageOutputPath>MSBuild_Nuget_Pack/</PackageOutputPath> 
-    <PackageProjectUrl>https://github.com/OSLC/oslc4net/</PackageProjectUrl> 
-    <RepositoryUrl>https://github.com/OSLC/oslc4net/</RepositoryUrl> 
-    
+    <PackageOutputPath>MSBuild_Nuget_Pack/</PackageOutputPath>
+    <PackageProjectUrl>https://github.com/OSLC/oslc4net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/OSLC/oslc4net/</RepositoryUrl>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <TargetFrameworkProfile />
@@ -47,8 +45,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="5.2.0"/>
-    <None Include="../../README.md" Pack="true" PackagePath=""/>
+    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="5.2.0" />
+    <None Include="../../README.md" Pack="true" PackagePath="" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
