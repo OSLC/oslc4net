@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## UNRELEASED
+
+### Security
+
+- NA
+
+### Added
+
+- NA
+
+### Changed
+
+- `OSLC4Net.Core` now targets `netstandard2.0`, which allows it to  be used under .NET Framework 4.7.2 or higher as well as .NET Core/.NET 5+.
+
+### Deprecated
+
+- NA
+
+### Removed
+
+- NA
+
+### Fixed
+
+- NA
+
 ## [0.3.0-alpha] - 2023-04-29
 
 ### Security
@@ -66,6 +92,31 @@ m/a
 
 m/a
 
+## Template
+
+### Security
+
+- NA
+
+### Added
+
+- NA
+
+### Changed
+
+- NA
+
+### Deprecated
+
+- NA
+
+### Removed
+
+- NA
+
+### Fixed
+
+- NA
 
 
 [unreleased]: https://github.com/OSLC/oslc4net/compare/v0.2.3...HEAD

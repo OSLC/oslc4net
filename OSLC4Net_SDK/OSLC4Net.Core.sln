@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core", "OSLC4Net.Core\OSLC4Net.Core.csproj", "{C07B57BD-3356-4AD8-8050-D708B023A8EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSLC4Net.Core", "OSLC4Net.Core\OSLC4Net.Core.csproj", "{C07B57BD-3356-4AD8-8050-D708B023A8EC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.DotNetRdfProvider", "OSLC4Net.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj", "{DFE6E48C-D5B1-4FC6-8D94-C72286080F78}"
 EndProject
