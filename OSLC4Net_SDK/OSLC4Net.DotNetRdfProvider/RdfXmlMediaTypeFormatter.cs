@@ -233,20 +233,22 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                     
                     if (content == null || content.Headers == null || content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_RDF_XML)) 
                     {
-                        RdfXmlWriter rdfXmlWriter = new RdfXmlWriter();
-
-                        rdfXmlWriter.UseDtd = false;
-                        rdfXmlWriter.PrettyPrintMode = false;
-                        rdfXmlWriter.CompressionLevel = 20;
+                        RdfXmlWriter rdfXmlWriter = new RdfXmlWriter
+                        {
+                            UseDtd = false,
+                            PrettyPrintMode = false,
+                            CompressionLevel = 20
+                        };
                         //turtlelWriter.UseTypedNodes = false;
 
                         rdfWriter = rdfXmlWriter;
                     }
                     else if (content.Headers.ContentType.MediaType.Equals(OslcMediaType.TEXT_TURTLE))
                     {
-                        TurtleWriter turtlelWriter = new TurtleWriter(TurtleSyntax.W3C);
-
-                        turtlelWriter.PrettyPrintMode = false;
+                        var turtlelWriter = new CompressingTurtleWriter(TurtleSyntax.W3C)
+                        {
+                            PrettyPrintMode = false
+                        };
 
                         rdfWriter = turtlelWriter;
                     }                     
@@ -254,11 +256,12 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                     {
                         //For now, use the dotNetRDF RdfXmlWriter for application/xml
                         //OslcXmlWriter oslcXmlWriter = new OslcXmlWriter();
-                        RdfXmlWriter oslcXmlWriter = new RdfXmlWriter();
-
-                        oslcXmlWriter.UseDtd = false;
-                        oslcXmlWriter.PrettyPrintMode = false;
-                        oslcXmlWriter.CompressionLevel = 20;
+                        RdfXmlWriter oslcXmlWriter = new RdfXmlWriter
+                        {
+                            UseDtd = false,
+                            PrettyPrintMode = false,
+                            CompressionLevel = 20
+                        };
 
                         rdfWriter = oslcXmlWriter;
                     }
