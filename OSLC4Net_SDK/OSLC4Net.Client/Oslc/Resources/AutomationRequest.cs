@@ -1,5 +1,6 @@
 ﻿/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
+ * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,11 +23,11 @@ using OSLC4Net.Core.Attribute;
 
 namespace OSLC4Net.Client.Oslc.Resources
 {
-    [OslcResourceShape(title = "Automation Request Resource Shape", describes = new string[] {AutomationConstants.TYPE_AUTOMATION_REQUEST})]
-    [OslcNamespace(AutomationConstants.AUTOMATION_NAMESPACE)]
     /// <summary>
     /// http://open-services.net/wiki/automation/OSLC-Automation-Specification-Version-2.0/#Resource_AutomationRequest
     /// </summary>
+    [OslcResourceShape(title = "Automation Request Resource Shape", describes = new string[] {AutomationConstants.TYPE_AUTOMATION_REQUEST})]
+    [OslcNamespace(AutomationConstants.AUTOMATION_NAMESPACE)]
     public class AutomationRequest : AbstractResource
     {
 	    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
