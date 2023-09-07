@@ -17,8 +17,10 @@ jobs:
     timeout-minutes: 15
 
     steps:
-    - uses: actions/checkout@v3
-      name: Checkout Code
+    - name: Checkout Code
+      uses: actions/checkout@v4
+      with:
+        show-progress: false
 
     - name: Setup MSBuild Path
       uses: microsoft/setup-msbuild@v1.3.1
