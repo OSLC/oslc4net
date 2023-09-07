@@ -20,7 +20,7 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
       with:
-        progress: false
+        show-progress: false
 
     - name: Setup MSBuild Path
       uses: microsoft/setup-msbuild@v1.3.1
