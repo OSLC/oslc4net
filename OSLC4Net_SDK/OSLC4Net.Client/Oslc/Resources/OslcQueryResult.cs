@@ -1,5 +1,6 @@
 ﻿/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
+ * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -174,10 +175,13 @@ namespace OSLC4Net.Client.Oslc.Resources
             IEnumerable<Triple> triples = rdfGraph.GetTriplesWithSubject(membersResource);
 
 		    foreach (Triple triple in triples) {
-			    try {
+                try
+                {
 				    membersUrls.Add((triple.Object as IUriNode).Uri.ToString());
-			    } catch (Exception t) {
-				    //FIXME
+                }
+                catch (Exception)
+                {
+				    // TODO: make exception more specific
 				    Console.Error.WriteLine("Member was not a resource");
 			    }
 		    }
@@ -195,16 +199,17 @@ namespace OSLC4Net.Client.Oslc.Resources
 
             IUriNode membersResource = rdfGraph.CreateUriNode(new Uri(query.GetCapabilityUrl()));
             IEnumerable<Triple> triples = rdfGraph.GetTriplesWithSubject(membersResource);
-            IEnumerable<T> result = new TripleEnumerableWrapper<T>(triples);
+            IEnumerable<T> result = new TripleEnumerableWrapper<T>(triples, rdfGraph);
 
             return result;
         }
 
         private class TripleEnumerableWrapper<T> : IEnumerable<T>
         {
-            public TripleEnumerableWrapper(IEnumerable<Triple> triples)
+            public TripleEnumerableWrapper(IEnumerable<Triple> triples, IGraph graph)
             {
                 this.triples = triples;
+                this.graph = graph;
             }
 
             IEnumerator
@@ -213,17 +218,17 @@ namespace OSLC4Net.Client.Oslc.Resources
                 return GetEnumerator();
             }
 
-            public IEnumerator<T>
-            GetEnumerator()
+            public IEnumerator<T> GetEnumerator()
             {
-                return new TripleEnumeratorWrapper<T>(triples.GetEnumerator());
+                return new TripleEnumeratorWrapper(triples.GetEnumerator(), graph);
             }
 
-            private class TripleEnumeratorWrapper<T> : IEnumerator<T>
+            private class TripleEnumeratorWrapper : IEnumerator<T>
             {
-                public TripleEnumeratorWrapper(IEnumerator<Triple> triples)
+                public TripleEnumeratorWrapper(IEnumerator<Triple> triples,  IGraph graph)
                 {
                     this.triples = triples;
+                    this.graph = graph;
                 }
 
                 object IEnumerator.Current
@@ -240,7 +245,7 @@ namespace OSLC4Net.Client.Oslc.Resources
                     {
                         Triple member = triples.Current;
 
-                        return (T)DotNetRdfHelper.FromDotNetRdfNode((IUriNode)member.Object, typeof(T));
+                        return (T)DotNetRdfHelper.FromDotNetRdfNode((IUriNode)member.Object, graph, typeof(T));
                     }
                 }
 
@@ -260,9 +265,11 @@ namespace OSLC4Net.Client.Oslc.Resources
                 }
 
                 private IEnumerator<Triple> triples;
+                private readonly IGraph graph;
             }
 
             IEnumerable<Triple> triples;
+            private readonly IGraph graph;
         }
     }
 }

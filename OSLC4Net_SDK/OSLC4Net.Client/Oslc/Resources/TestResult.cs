@@ -22,11 +22,11 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client.Oslc.Resources
 {
-    [OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] {QmConstants.TYPE_TEST_RESULT})]
-    [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
     /// <summary>
     /// http://open-services.net/bin/view/Main/QmSpecificationV2#Resource_TestResult
     /// </summary>
+    [OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] {QmConstants.TYPE_TEST_RESULT})]
+    [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
     public class TestResult : QmResource
     {
         private readonly ISet<Link>     affectedByChangeRequests       = new HashSet<Link>();

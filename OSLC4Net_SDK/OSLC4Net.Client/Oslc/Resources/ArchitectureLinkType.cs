@@ -1,5 +1,6 @@
 ﻿/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
+ * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,11 +23,11 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client.Oslc.Resources
 {
-    [OslcResourceShape(title = "Architecture Management LinkType Resource Shape", describes = new string[] { ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE })]
-    [OslcNamespace(ArchitectureConstants.ARCHITECTURE_NAMESPACE)]
     /// <summary>
     /// http://open-services.net/wiki/architecture-management/OSLC-Architecture-Management-Specification-Version-2.0/
     /// </summary>
+    [OslcResourceShape(title = "Architecture Management LinkType Resource Shape", describes = new string[] { ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE })]
+    [OslcNamespace(ArchitectureConstants.ARCHITECTURE_NAMESPACE)]
     public class ArchitectureLinkType : AbstractResource
     {
 	    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java

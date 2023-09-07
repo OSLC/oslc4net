@@ -14,6 +14,7 @@
     <RepositoryUrl>https://github.com/OSLC/oslc4net/</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="dotNetRdf.Core" Version="3.0.1" />
     <PackageReference Include="NuGet.Build.Tasks.Pack" Version="5.2.0" />
     <None Include="../../README.md" Pack="true" PackagePath="" />
   </ItemGroup>
@@ -27,9 +28,6 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="dotNetRDF">
-      <Version>1.0.13</Version>
-    </PackageReference>
     <PackageReference Include="log4net">
       <Version>2.0.15</Version>
     </PackageReference>
@@ -39,6 +37,9 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <!-- <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" /> -->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

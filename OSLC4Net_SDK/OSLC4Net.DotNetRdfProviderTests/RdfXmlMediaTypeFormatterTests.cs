@@ -1,5 +1,6 @@
 ﻿/*******************************************************************************
  * Copyright (c) 2012, 2013 IBM Corporation.
+ * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -45,7 +46,7 @@ namespace DotNetRdfProviderTests
 
             RdfXmlMediaTypeFormatter formatter = new RdfXmlMediaTypeFormatter();
 
-            string rdfXml = Serialize<ChangeRequest>(formatter, changeRequest1, OslcMediaType.APPLICATION_RDF_XML_TYPE);
+            string rdfXml = Serialize(formatter, changeRequest1, OslcMediaType.APPLICATION_RDF_XML_TYPE);
 
             Debug.WriteLine(rdfXml);
 
@@ -79,9 +80,10 @@ namespace DotNetRdfProviderTests
                                                                    null,
                                                                    crListOut,
                                                                    null);
-            RdfXmlMediaTypeFormatter formatter = new RdfXmlMediaTypeFormatter(rdfGraph);
+            // TODO: fix overload confusion with one arg
+            RdfXmlMediaTypeFormatter formatter = new RdfXmlMediaTypeFormatter(rdfGraph, true);
 
-            string rdfXml = SerializeCollection<ChangeRequest>(formatter, crListOut, OslcMediaType.APPLICATION_RDF_XML_TYPE);
+            string rdfXml = SerializeCollection(formatter, crListOut, OslcMediaType.APPLICATION_RDF_XML_TYPE);
 
             Debug.WriteLine(rdfXml);
 
@@ -123,7 +125,7 @@ namespace DotNetRdfProviderTests
 
             RdfXmlMediaTypeFormatter formatter = new RdfXmlMediaTypeFormatter();
 
-            string rdfXml = Serialize<ChangeRequest>(formatter, changeRequest1, OslcMediaType.APPLICATION_XML_TYPE);
+            string rdfXml = Serialize(formatter, changeRequest1, OslcMediaType.APPLICATION_XML_TYPE);
 
             Debug.WriteLine(rdfXml);
 
@@ -145,7 +147,7 @@ namespace DotNetRdfProviderTests
 
             RdfXmlMediaTypeFormatter formatter = new RdfXmlMediaTypeFormatter();
 
-            string turtle = Serialize<ChangeRequest>(formatter, changeRequest1, OslcMediaType.TEXT_TURTLE_TYPE);
+            string turtle = Serialize(formatter, changeRequest1, OslcMediaType.TEXT_TURTLE_TYPE);
 
             Debug.WriteLine(turtle);
 

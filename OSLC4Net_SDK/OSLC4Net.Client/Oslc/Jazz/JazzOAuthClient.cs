@@ -1,5 +1,6 @@
 ﻿/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
+ * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -37,8 +38,10 @@ namespace OSLC4Net.Client.Oslc.Jazz
         /// <param name="requestTokenURL"></param>
         /// <param name="authorizationTokenURL"></param>
         /// <param name="accessTokenURL"></param>
-        /// <param name="consumerKey"></param>
-        /// <param name="consumerSecret"></param>\
+        /// <param name="user">Jazz username</param>
+        /// <param name="passwd">Jazz user password</param>
+        /// <param name="consumerKey">OAuth1.0a consumer key</param>
+        /// <param name="consumerSecret">OAuth1.0a consumer secret</param>
         /// <param name="authUrl"></param>
 	    public JazzOAuthClient(String requestTokenURL,
 						       String authorizationTokenURL,
@@ -59,8 +62,10 @@ namespace OSLC4Net.Client.Oslc.Jazz
         /// <param name="requestTokenURL"></param>
         /// <param name="authorizationTokenURL"></param>
         /// <param name="accessTokenURL"></param>
-        /// <param name="consumerKey"></param>
-        /// <param name="consumerSecret"></param>
+        /// <param name="user">Jazz username</param>
+        /// <param name="passwd">Jazz user password</param>
+        /// <param name="consumerKey">OAuth1.0a consumer key</param>
+        /// <param name="consumerSecret">OAuth1.0a consumer secret</param>
         /// <param name="oauthRealmName"></param>
         /// <param name="authUrl"></param>
 	    public JazzOAuthClient(String requestTokenURL,

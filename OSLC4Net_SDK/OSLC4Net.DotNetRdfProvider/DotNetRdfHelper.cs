@@ -1,5 +1,6 @@
 ﻿/*******************************************************************************
  * Copyright (c) 2012, 2013 IBM Corporation.
+ * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,19 +17,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Formatting;
-using System.Net.Http.Headers;
 using System.Numerics;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Exceptions;
@@ -98,7 +90,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
         public static IGraph CreateDotNetRdfGraph(string                      descriptionAbout,
                                                   string                      responseInfoAbout,
                                                   string                      nextPageAbout,
-                                                  Int64?                      totalCount,
+                                                  long?                      totalCount,
                                                   IEnumerable<object>         objects,
                                                   IDictionary<string, object> properties)
         {
@@ -128,8 +120,9 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                 graph.Assert(new Triple(responseInfoResource, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType)),
                                         graph.CreateUriNode(new Uri(OslcConstants.TYPE_RESPONSE_INFO))));
 
+                long countValue = totalCount ?? objects.Count();
                 graph.Assert(new Triple(responseInfoResource, graph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + PROPERTY_TOTAL_COUNT)),
-                                        new StringNode(graph, (totalCount == null ? objects.Count() : totalCount).ToString())));
+                                        graph.CreateLiteralNode(countValue.ToString())));
                 
                 if (nextPageAbout != null)
                 {
@@ -238,16 +231,20 @@ namespace OSLC4Net.Core.DotNetRdfProvider
         /// <param name="beanType"></param>
         /// <returns></returns>
         public static object FromDotNetRdfNode(IUriNode resource,
+                                               IGraph   graph,
                                                Type     beanType)
         {
             object   newInstance = Activator.CreateInstance(beanType);
             IDictionary<Type, IDictionary<string, MethodInfo>> typePropertyDefinitionsToSetMethods = new Dictionary<Type, IDictionary<string, MethodInfo>>();
-            IDictionary<String, Object> visitedResources = new DictionaryWithReplacement<String, Object>();
+            // TODO: check that all .Add() calls were converted into [k] = v 
+            //IDictionary<string, object> visitedResources = new DictionaryWithReplacement<string, object>();
+            IDictionary<string, object> visitedResources = new Dictionary<string, object>();
 
             FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
                               beanType,
                               newInstance,
                               resource,
+                              graph,
                               visitedResources);
 
             return newInstance;
@@ -281,14 +278,16 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
                     foreach (Triple triple in triples)
                     {
-                        INode   resource = (INode)triple.Subject;
+                        INode   resource = triple.Subject;
                         object  newInstance = Activator.CreateInstance(beanType);
-                        IDictionary<String, Object> visitedResources = new DictionaryWithReplacement<String, Object>();
+                        //IDictionary<string, object> visitedResources = new DictionaryWithReplacement<string, object>();
+                        IDictionary<string, object> visitedResources = new Dictionary<string, object>();
 
                         FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
                                           beanType,
                                           newInstance,
                                           resource,
+                                          graph,
                                           visitedResources);
 
                         add.Invoke(results, new object[] { newInstance });
@@ -303,10 +302,9 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                                               Type                                                  beanType,
                                               object                                                bean,
                                               INode                                                 resource,
-                                              IDictionary<string, Object>                           visitedResources)
+                                              IGraph                                                graph,
+                                              IDictionary<string, object>                           visitedResources)
         {
-            IGraph graph = resource.Graph;
-
             IDictionary<string, MethodInfo> setMethodMap;
 
             if (typePropertyDefinitionsToSetMethods.ContainsKey(beanType))
@@ -321,7 +319,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                                                         setMethodMap);
             }
 
-            visitedResources.Add(GetVisitedResourceName(resource), bean);
+            visitedResources[GetVisitedResourceName(resource)] = bean;
 
             if (bean is IResource)
             {
@@ -353,7 +351,8 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             if (bean is IExtendedResource)
             {
         	    extendedResource = (IExtendedResource) bean;
-        	    extendedProperties = new DictionaryWithReplacement<QName, object>();
+                // TODO: check that all .Add() calls are replaced with []=
+        	    extendedProperties = new Dictionary<QName, object>();
         	    extendedResource.SetExtendedProperties(extendedProperties);
             }
             else
@@ -394,7 +393,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                             string prefix;
                             string localPart;
                             string ns;
-                            String qname;
+                            string qname;
 
                             if (graph.NamespaceMap.ReduceToQName(predicateUri, out qname))
                             {
@@ -418,24 +417,31 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                                 }
                             }
                 		    QName key = new QName(ns, localPart, prefix);
-                		    object value = HandleExtendedPropertyValue(beanType, obj, visitedResources);
+                		    object value = HandleExtendedPropertyValue(beanType, obj, graph, visitedResources);
                             if (!extendedProperties.ContainsKey(key))
                 		    {
-                			    extendedProperties.Add(key, value);
+                			    extendedProperties[key] = value;
                 		    }
                 		    else
                 		    {
                                 object previous = extendedProperties[key];
+                                // TODO: untangle this mess (Andrew 2023-09)
+                                // I think the idea was to store the property object directly if the property has
+                                // a cardinality of 1, when a new object is added, the backing object shall switch to
+                                // an ICollection. ImmutableList<T> should work quite well here.
+                                // Alternatively, bite the bullet an back every property with an ICollection.
                                 IList<object> collection;
-                			    if (previous is IList<object>)
+                			    if (previous is IList<object> list)
                 			    {
-                				    collection = ((IList<object>) previous);
+                				    collection = list;
                 			    }
                 			    else
                 			    {
-                				    collection = new List<object>();
-                				    collection.Add(previous);
-                				    extendedProperties.Add(key, collection);
+                                    collection = new List<object>
+                                    {
+                                        previous
+                                    };
+                                    extendedProperties[key] = collection;
                 			    }
 
                 			    collection.Add(value);
@@ -474,7 +480,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
                         while (listNode != null && ! nil.Equals(listNode.Uri)) 
                         {
-                            visitedResources.Add(GetVisitedResourceName(listNode), new Object());
+                            visitedResources[GetVisitedResourceName(listNode)] = new object();
                        
                             IUriNode o = (IUriNode)graph.GetTriplesWithSubjectPredicate(listNode, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListFirst))).First().Object;
                             objects.Add(o);
@@ -482,7 +488,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                             listNode = (IUriNode)graph.GetTriplesWithSubjectPredicate(listNode, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListRest))).First().Object;
                         }
 
-                        visitedResources.Add(GetVisitedResourceName(obj as IUriNode), objects);
+                        visitedResources[GetVisitedResourceName(obj as IUriNode)] = objects;
                     }
                     else if (multiple && IsRdfCollectionResource(graph, obj))
                     {
@@ -495,19 +501,20 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                          
                             if (o is IUriNode)
                             {
-                                visitedResources.Add(GetVisitedResourceName(o as IUriNode), new Object());
+                                visitedResources[GetVisitedResourceName(o as IUriNode)] = new object();
                             }
                         
                             objects.Add(o);
                         }
 
-                        visitedResources.Add(GetVisitedResourceName(obj as IUriNode), objects);
+                        visitedResources[GetVisitedResourceName(obj as IUriNode)] = objects;
                     }
                     else
                     {
-                        objects = new List<INode>(); 
-
-                        objects.Add(obj);
+                        objects = new List<INode>
+                        {
+                            obj
+                        };
 
                         objects = new ReadOnlyCollection<INode>(objects);
                     }
@@ -629,7 +636,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                             {
                                 object nestedBean;
 
-                                if (setMethodComponentParameterType == typeof(String))
+                                if (setMethodComponentParameterType == typeof(string))
                                 {
                                     nestedBean = "";
                                 }
@@ -646,6 +653,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                                                   setMethodComponentParameterType,
                                                   nestedBean,
                                                   nestedResource,
+                                                  graph,
                                                   visitedResources);
 
                                 parameter = nestedBean;
@@ -656,7 +664,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                             IBlankNode nestedResource = o as IBlankNode;
                             object nestedBean;
 
-                            if (setMethodComponentParameterType == typeof(String))
+                            if (setMethodComponentParameterType == typeof(string))
                             {
                                 nestedBean = "";
                             }
@@ -673,6 +681,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                                               setMethodComponentParameterType,
                                               nestedBean,
                                               nestedResource,
+                                              graph,
                                               visitedResources);
 
                             parameter = nestedBean;
@@ -702,7 +711,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                                 }
 
                                 // Fill in any reified statements.
-                                IEnumerable<Triple> reifiedTriples = GetReifiedTriples(triple);
+                                IEnumerable<Triple> reifiedTriples = GetReifiedTriples(triple, graph);
 
                                 foreach (Triple reifiedTriple in reifiedTriples)
                                 {
@@ -710,6 +719,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                                                       reifiedType,
                                                       reifiedResource,
                                                       reifiedTriple.Subject,
+                                                      graph,
                                                       visitedResources);
                                 }
 
@@ -815,10 +825,9 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             return false;
         }
 
-        // XXX - Not sure if this is how reification works.  Will have to test later.
-        private static IEnumerable<Triple> GetReifiedTriples(Triple source)
+        // TODO: check if the RDF 1.1 reification works correctly and cover with basic tests.
+        private static IEnumerable<Triple> GetReifiedTriples(Triple source, IGraph graph)
         {
-            IGraph graph = source.Graph;
             IUriNode rdfSubject = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfSubject));
             IEnumerable<Triple> reifiedSubjects =
                 graph.GetTriplesWithPredicateObject(rdfSubject, source.Subject);
@@ -895,8 +904,10 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 
 	    private static object HandleExtendedPropertyValue(Type beanType,
                                                           INode obj,
-                                                          IDictionary<String, Object> visitedResources)
+                                                          IGraph graph,
+                                                          IDictionary<string, object> visitedResources)
 	    {
+            // TODO: use modern C#
 		    if (obj is ILiteralNode)
 		    {
 				if (obj is BooleanNode)
@@ -951,8 +962,8 @@ namespace OSLC4Net.Core.DotNetRdfProvider
 		
             IUriNode nestedResource = obj as IUriNode;
 
-		    // Is this an inline resource? AND we have not visited it yet?
-		    if ((obj is IBlankNode || nestedResource.Graph.GetTriplesWithSubject(nestedResource).Count() > 0) && 
+		    // TODO: Is this an inline resource? AND we have not visited it yet?
+		    if ((obj is IBlankNode || graph.GetTriplesWithSubject(nestedResource).Count() > 0) && 
 		        (!visitedResources.ContainsKey(GetVisitedResourceName(obj))))
 		    {
 			    AbstractResource any = new AnyResource();
@@ -961,12 +972,13 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                                   typeof(AnyResource),
                                   any,
                                   obj,
+                                  graph,
                                   visitedResources);
 
                 return any;
 		    }
 
-            if (obj is IBlankNode || nestedResource.Graph.GetTriplesWithSubject(nestedResource).Count() > 0)
+            if (obj is IBlankNode || graph.GetTriplesWithSubject(nestedResource).Count() > 0)
             {
                 return visitedResources[GetVisitedResourceName(nestedResource)];
             }
@@ -1562,11 +1574,11 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             
         	    if (xmlLiteral)
         	    {
-                    nestedNode = new StringNode(graph, value.ToString(), new Uri(RdfSpecsHelper.RdfXmlLiteral));
+                    nestedNode = graph.CreateLiteralNode(value.ToString(), new Uri(RdfSpecsHelper.RdfXmlLiteral));
         	    }
         	    else
         	    {
-                    nestedNode = new StringNode(graph, value.ToString());
+                    nestedNode = graph.CreateLiteralNode(value.ToString());
         	    }
             }
             else if ((value is bool) ||
@@ -1649,7 +1661,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                     return;
                 }
 
-                nestedNode = new DateTimeNode(graph, ((DateTime)value).ToUniversalTime());
+                nestedNode = LiteralExtensions.ToLiteral(((DateTime)value).ToUniversalTime(), graph);
             }
             else if (objType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
             {
@@ -1837,7 +1849,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             }
         }
 
-        private static String GetVisitedResourceName(INode resource)
+        private static string GetVisitedResourceName(INode resource)
         {
     	    string visitedResourceName = null;
     	
@@ -1851,23 +1863,6 @@ namespace OSLC4Net.Core.DotNetRdfProvider
     	    }
     	
     	    return visitedResourceName;
-        }
-
-        private class DictionaryWithReplacement<TKey, TValue> : Dictionary<TKey, TValue>, IDictionary<TKey, TValue>
-        {
-            public DictionaryWithReplacement() : base()
-            {
-            }
-
-            public void Add(TKey key, TValue value)
-            {
-                if (ContainsKey(key))
-                {
-                    Remove(key);
-                }
-                
-                base.Add(key, value);
-            }
         }
     }
 }

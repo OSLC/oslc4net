@@ -323,7 +323,8 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                 }
                 else if (content.Headers.ContentType.MediaType.Equals(OslcMediaType.TEXT_TURTLE))
                 {
-                    rdfParser = new TurtleParser(TurtleSyntax.W3C);
+                    // TODO: enable RDF-star support (2023-09, Andrew)
+                    rdfParser = new TurtleParser(TurtleSyntax.Original, true);
                 }
                 else
                 {

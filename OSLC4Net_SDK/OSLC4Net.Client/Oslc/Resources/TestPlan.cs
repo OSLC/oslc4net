@@ -1,5 +1,6 @@
 ﻿/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
+ * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,11 +23,11 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client.Oslc.Resources
 {
-    [OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] {QmConstants.TYPE_TEST_PLAN})]
-    [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
     /// <summary>
     /// http://open-services.net/bin/view/Main/QmSpecificationV2#Resource_TestPlan
     /// </summary>
+    [OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] {QmConstants.TYPE_TEST_PLAN})]
+    [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
     public class TestPlan : QmResource
     {
 	    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
