@@ -67,6 +67,10 @@
       <Project>{469BA948-728B-4B8C-80E9-7EC06CED8196}</Project>
       <Name>OSLC4Net.Core.JsonProvider</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OSLC4Net.Client.Jazz\OSLC4Net.Client.Jazz.csproj">
+      <Project>{8dc8fe84-2ced-4d16-a886-56456a76dede}</Project>
+      <Name>OSLC4Net.Client.Jazz</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OSLC4Net.Client\OSLC4Net.Client.csproj">
       <Project>{EED02B8F-2C90-4484-B4B6-BB510750B84C}</Project>
       <Name>OSLC4Net.Client</Name>
