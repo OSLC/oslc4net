@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-- NA
+- (breaking) `OSLC4Net.Client` now defaults to strong TLS certificate checking. Skipping TLS checks now requires explicit configuration.
 
 ### Added
 
@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - `OSLC4Net.Core` now targets `netstandard2.0`, which allows it to  be used under .NET Framework 4.7.2 or higher as well as .NET Core/.NET 5+.
+- dotNetRDF was upgraded from v1 to v3 to enable targeting `netstandard2.0`. One of the key breaking changes is that `ITriple` and `INode` no longer have the `.Graph` property. This caused breaking changes to some of the method signatures in `OSLC4Net.DotNetRdfProvider` to allow the `IGraph` instance to be passed.
+- `OSLC4Net.Client` now targets `netstandard2.0`.
+  - The main breaking change is the replacement of the legacy `WebRequestHandler` with `HttpClientHandler`. This caused some method/constructor signatures to change. 
+  - `RemoteCertificateValidationCallback` was replaced with a lambda function.
 
 ### Deprecated
 
