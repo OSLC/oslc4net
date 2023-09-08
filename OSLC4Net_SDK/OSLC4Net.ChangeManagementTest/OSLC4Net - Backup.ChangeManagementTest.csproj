@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyTitle>OSLC4Net.ChangeManagementTest</AssemblyTitle>
+    <Company>IBM</Company>
+    <Product>OSLC4Net.ChangeManagementTest</Product>
+    <Copyright>Copyright © IBM 2012</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Update="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+  <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+</ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
+      <Visible>False</Visible>
+    </CodeAnalysisDependentAssemblyPaths>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OSLC4Net.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj" />
+    <ProjectReference Include="..\OSLC4Net.ChangeManagement\OSLC4Net.ChangeManagementCommon.csproj" />
+    <ProjectReference Include="..\OSLC4Net.Client\OSLC4Net.Client.csproj" />
+    <ProjectReference Include="..\OSLC4Net.Core\OSLC4Net.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="log4net">
+      <Version>2.0.15</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client">
+      <Version>5.2.9</Version>
+    </PackageReference>
+    <PackageReference Include="MSTest.TestAdapter">
+      <Version>3.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="MSTest.TestFramework">
+      <Version>3.1.1</Version>
+    </PackageReference>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,72 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Client.Jazz", "OSLC4Net.Client.Jazz\OSLC4Net.Client.Jazz.csproj", "{8DC8FE84-2CED-4D16-A886-56456A76DEDE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{14E6018F-EF47-48BC-8D9C-5B90598F2724} = {14E6018F-EF47-48BC-8D9C-5B90598F2724}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Client.Samples", "OSLC4Net.Client.Samples\OSLC4Net.Client.Samples.csproj", "{CBF6BE99-FBE9-45E2-8962-B1AFA474AD06}"
+	ProjectSection(ProjectDependencies) = postProject
+		{14E6018F-EF47-48BC-8D9C-5B90598F2724} = {14E6018F-EF47-48BC-8D9C-5B90598F2724}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.StockQuoteSample", "OSLC4Net.StockQuoteSample\OSLC4Net.StockQuoteSample.csproj", "{A01A9DEE-DA90-4689-B459-A54141C1E160}"
+	ProjectSection(ProjectDependencies) = postProject
+		{180140AA-F9B8-445D-B75F-3B158BF89B48} = {180140AA-F9B8-445D-B75F-3B158BF89B48}
+		{417C9A42-3FA6-47DB-B587-DECF3C02AF3D} = {417C9A42-3FA6-47DB-B587-DECF3C02AF3D}
+		{7523B529-C7D8-48E0-A0E8-E2C648EFE463} = {7523B529-C7D8-48E0-A0E8-E2C648EFE463}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSLC4Net.Core", "..\OSLC4Net_SDK\OSLC4Net.Core\OSLC4Net.Core.csproj", "{180140AA-F9B8-445D-B75F-3B158BF89B48}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSLC4Net.Client", "..\OSLC4Net_SDK\OSLC4Net.Client\OSLC4Net.Client.csproj", "{14E6018F-EF47-48BC-8D9C-5B90598F2724}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSLC4Net.Core.Query", "..\OSLC4Net_SDK\OSLC4Net.Core.Query\OSLC4Net.Core.Query.csproj", "{417C9A42-3FA6-47DB-B587-DECF3C02AF3D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSLC4Net.Core.DotNetRdfProvider", "..\OSLC4Net_SDK\OSLC4Net.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj", "{7523B529-C7D8-48E0-A0E8-E2C648EFE463}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8DC8FE84-2CED-4D16-A886-56456A76DEDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DC8FE84-2CED-4D16-A886-56456A76DEDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DC8FE84-2CED-4D16-A886-56456A76DEDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DC8FE84-2CED-4D16-A886-56456A76DEDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBF6BE99-FBE9-45E2-8962-B1AFA474AD06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBF6BE99-FBE9-45E2-8962-B1AFA474AD06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBF6BE99-FBE9-45E2-8962-B1AFA474AD06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBF6BE99-FBE9-45E2-8962-B1AFA474AD06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A01A9DEE-DA90-4689-B459-A54141C1E160}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A01A9DEE-DA90-4689-B459-A54141C1E160}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A01A9DEE-DA90-4689-B459-A54141C1E160}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A01A9DEE-DA90-4689-B459-A54141C1E160}.Release|Any CPU.Build.0 = Release|Any CPU
+		{180140AA-F9B8-445D-B75F-3B158BF89B48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{180140AA-F9B8-445D-B75F-3B158BF89B48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{180140AA-F9B8-445D-B75F-3B158BF89B48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{180140AA-F9B8-445D-B75F-3B158BF89B48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14E6018F-EF47-48BC-8D9C-5B90598F2724}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14E6018F-EF47-48BC-8D9C-5B90598F2724}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14E6018F-EF47-48BC-8D9C-5B90598F2724}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14E6018F-EF47-48BC-8D9C-5B90598F2724}.Release|Any CPU.Build.0 = Release|Any CPU
+		{417C9A42-3FA6-47DB-B587-DECF3C02AF3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{417C9A42-3FA6-47DB-B587-DECF3C02AF3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{417C9A42-3FA6-47DB-B587-DECF3C02AF3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{417C9A42-3FA6-47DB-B587-DECF3C02AF3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7523B529-C7D8-48E0-A0E8-E2C648EFE463}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7523B529-C7D8-48E0-A0E8-E2C648EFE463}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7523B529-C7D8-48E0-A0E8-E2C648EFE463}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7523B529-C7D8-48E0-A0E8-E2C648EFE463}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5F2E9DDC-4F8F-4564-BBF7-12C6017EAC98}
+	EndGlobalSection
+EndGlobal

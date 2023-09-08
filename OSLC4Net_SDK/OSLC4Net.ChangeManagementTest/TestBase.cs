@@ -30,6 +30,7 @@ using OSLC4Net.Core.Model;
 namespace OSLC4Net.ChangeManagementTest
 {
     [TestClass]
+    [TestCategory("RunningOslcServerRequired")]
     public abstract class TestBase
     {
         private static readonly ISet<MediaTypeFormatter> FORMATTERS = new HashSet<MediaTypeFormatter>();

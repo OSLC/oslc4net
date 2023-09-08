@@ -1,26 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <OutputType>Library</OutputType>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <AssemblyTitle>OSLC4Net.Core.QueryTests</AssemblyTitle>
-    <Company>IBM</Company>
-    <Product>OSLC4Net.Core.QueryTests</Product>
-    <Copyright>Copyright © IBM 2013</Copyright>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Update="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
-      <Visible>False</Visible>
-    </CodeAnalysisDependentAssemblyPaths>
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OSLC4Net.Core.Query\OSLC4Net.Core.Query.csproj" />
   </ItemGroup>
@@ -29,10 +10,11 @@
       <Version>2.0.15</Version>
     </PackageReference>
     <PackageReference Include="MSTest.TestAdapter">
-      <Version>3.0.2</Version>
+      <Version>3.1.1</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
     <PackageReference Include="MSTest.TestFramework">
-      <Version>3.0.2</Version>
+      <Version>3.1.1</Version>
     </PackageReference>
   </ItemGroup>
 </Project>

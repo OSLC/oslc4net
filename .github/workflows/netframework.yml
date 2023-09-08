@@ -1,0 +1,63 @@
+# This is a basic workflow to help you get started with Actions
+name: 'CI (.NET Framework)'
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' && github.ref != 'refs/heads/main' }}
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 15
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+      with:
+        show-progress: false
+
+    - name: Setup MSBuild Path
+      uses: microsoft/setup-msbuild@v1.3.1
+      # with:
+      #   vs-version: '[17.5.3,18.0.0)'
+      #   msbuild-architecture: x64
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1
+
+    # - uses: actions/cache@v3
+    #   with:
+    #     path: |
+    #         ~/.nuget/packages/
+    #         OSLC4Net_NETFramework/packages/
+    #         OSLC4Net_NETFramework/**/bin/
+    #         OSLC4Net_NETFramework/**/obj/
+    #     key: ${{ runner.os }}-nuget-${{ hashFiles('.github/workflows/main.yml', '**/packages.config', '**/packages.lock.json', '**/*.sln', '**/*.csproj') }}
+    #     restore-keys: |
+    #       ${{ runner.os }}-nuget-
+
+    - name: Restore NuGet Packages
+      run: nuget restore OSLC4Net_NETFramework/OSLC4Net_NETFramework.sln
+
+    - name: Build OSLC4Net
+      # /p:Configuration=Release is about 3x faster in Actions,
+      # not sure of the implications for VStest
+      run: msbuild OSLC4Net_NETFramework/OSLC4Net_NETFramework.sln /p:Configuration=Release
+      #run: msbuild OSLC4Net_NETFramework/OSLC4Net_NETFramework.sln
+
+    - name: Run VStest
+      uses: microsoft/vstest-action@v1.0.0
+      with:
+        # see https://github.com/OSLC/oslc4net/issues/57
+        testAssembly: |
+            **\\bin\\*\\*Test*.dll
+            !**\\OSLC4Net.ChangeManagementTest\\**\*
+        # OBS! searchFolder must be terminated
+        searchFolder: '.\OSLC4Net_NETFramework\'
+        runInParallel: true
