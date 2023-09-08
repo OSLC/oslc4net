@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- NA
+- OSLC4Net.JsonProvider was removed as it would take a significant amount of effort to migrate from `System.Json` provided by .NET Framework to `System.Text.Json`. Users are recommended to use one of the accepted serializations for RDF, such as Turtle, RDF/XML, N-triples, or JSON-LD instead.
 
 ### Fixed
 

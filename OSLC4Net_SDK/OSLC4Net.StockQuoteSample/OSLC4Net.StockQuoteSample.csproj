@@ -254,10 +254,6 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\JsonProvider\OSLC4Net.Core.JsonProvider.csproj">
-      <Project>{469ba948-728b-4b8c-80e9-7ec06ced8196}</Project>
-      <Name>OSLC4Net.Core.JsonProvider</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OSLC4Net.Core\OSLC4Net.Core.csproj">
       <Project>{c07b57bd-3356-4ad8-8050-d708b023a8ec}</Project>
       <Name>OSLC4Net.Core</Name>

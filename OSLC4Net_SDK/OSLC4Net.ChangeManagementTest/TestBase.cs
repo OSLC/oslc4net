@@ -37,7 +37,6 @@ namespace OSLC4Net.ChangeManagementTest
         static TestBase()
         {
             FORMATTERS.Add(new RdfXmlMediaTypeFormatter());
-            FORMATTERS.Add(new OSLC4Net.Core.JsonProvider.JsonMediaTypeFormatter());
         }
 
         private static Uri CREATED_CHANGE_REQUEST_URI;

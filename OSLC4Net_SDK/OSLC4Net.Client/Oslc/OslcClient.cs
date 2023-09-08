@@ -66,7 +66,6 @@ namespace OSLC4Net.Client.Oslc
             this.formatters = new HashSet<MediaTypeFormatter>();
 
             formatters.Add(new RdfXmlMediaTypeFormatter());
-            formatters.Add(new Core.JsonProvider.JsonMediaTypeFormatter());
 
             this.client = oauthHandler == null ?
                 HttpClientFactory.Create(CreateSSLHandler(certCallback)) :
