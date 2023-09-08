@@ -1,11 +1,10 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSLC4Net.Core", "OSLC4Net.Core\OSLC4Net.Core.csproj", "{C07B57BD-3356-4AD8-8050-D708B023A8EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.DotNetRdfProvider", "OSLC4Net.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj", "{DFE6E48C-D5B1-4FC6-8D94-C72286080F78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSLC4Net.Core.DotNetRdfProvider", "OSLC4Net.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj", "{DFE6E48C-D5B1-4FC6-8D94-C72286080F78}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1B650CF7-24E5-444B-9C9E-91EFAEBAEA29}"
 	ProjectSection(SolutionItems) = preProject
@@ -20,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.DotNetRdfProv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Client", "OSLC4Net.Client\OSLC4Net.Client.csproj", "{EED02B8F-2C90-4484-B4B6-BB510750B84C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.ChangeManagementTest", "OSLC4Net.ChangeManagementTest\OSLC4Net.ChangeManagementTest.csproj", "{A64566A0-5EDB-48A1-B3E5-7F873169D402}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSLC4Net.ChangeManagementTest", "OSLC4Net.ChangeManagementTest\OSLC4Net.ChangeManagementTest.csproj", "{A64566A0-5EDB-48A1-B3E5-7F873169D402}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.JsonProvider", "JsonProvider\OSLC4Net.Core.JsonProvider.csproj", "{469BA948-728B-4B8C-80E9-7EC06CED8196}"
 EndProject
@@ -31,8 +30,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.Query", "OSLC4Net.Core.Query\OSLC4Net.Core.Query.csproj", "{B7EC82FE-64D2-4271-8D04-3044046360FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Client.Samples", "OSLC4Net.Client.Samples\OSLC4Net.Client.Samples.csproj", "{CBF6BE99-FBE9-45E2-8962-B1AFA474AD06}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8DC8FE84-2CED-4D16-A886-56456A76DEDE} = {8DC8FE84-2CED-4D16-A886-56456A76DEDE}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.StockQuoteSample", "OSLC4Net.StockQuoteSample\OSLC4Net.StockQuoteSample.csproj", "{A01A9DEE-DA90-4689-B459-A54141C1E160}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Client.Jazz", "OSLC4Net.Client.Jazz\OSLC4Net.Client.Jazz.csproj", "{8DC8FE84-2CED-4D16-A886-56456A76DEDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -166,6 +170,18 @@ Global
 		{A01A9DEE-DA90-4689-B459-A54141C1E160}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A01A9DEE-DA90-4689-B459-A54141C1E160}.Release|x86.ActiveCfg = Release|Any CPU
 		{A01A9DEE-DA90-4689-B459-A54141C1E160}.Release|x86.Build.0 = Release|Any CPU
+		{8DC8FE84-2CED-4D16-A886-56456A76DEDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DC8FE84-2CED-4D16-A886-56456A76DEDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DC8FE84-2CED-4D16-A886-56456A76DEDE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8DC8FE84-2CED-4D16-A886-56456A76DEDE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8DC8FE84-2CED-4D16-A886-56456A76DEDE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8DC8FE84-2CED-4D16-A886-56456A76DEDE}.Debug|x86.Build.0 = Debug|Any CPU
+		{8DC8FE84-2CED-4D16-A886-56456A76DEDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DC8FE84-2CED-4D16-A886-56456A76DEDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DC8FE84-2CED-4D16-A886-56456A76DEDE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8DC8FE84-2CED-4D16-A886-56456A76DEDE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8DC8FE84-2CED-4D16-A886-56456A76DEDE}.Release|x86.ActiveCfg = Release|Any CPU
+		{8DC8FE84-2CED-4D16-A886-56456A76DEDE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

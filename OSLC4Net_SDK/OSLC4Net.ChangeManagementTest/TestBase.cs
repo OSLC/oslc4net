@@ -14,7 +14,6 @@
  *******************************************************************************/
 
 using System;
-using System.Text;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -26,7 +25,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OSLC4Net.ChangeManagement;
 using OSLC4Net.Client;
 using OSLC4Net.Core.DotNetRdfProvider;
-using OSLC4Net.Core.JsonProvider;
 using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.ChangeManagementTest

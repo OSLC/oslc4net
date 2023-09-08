@@ -70,13 +70,8 @@
     <Compile Include="Exceptions\OslcClientApplicationException.cs" />
     <Compile Include="Exceptions\ResourceNotFoundException.cs" />
     <Compile Include="Exceptions\RootServicesException.cs" />
-    <Compile Include="Oslc\Jazz\JazzFormAuthClient.cs" />
-    <Compile Include="Oslc\Jazz\JazzRootServicesConstants.cs" />
-    <Compile Include="Oslc\Jazz\JazzRootServicesHelper.cs" />
     <Compile Include="Oslc\OslcClient.cs" />
     <Compile Include="Oslc\OSLCConstants.cs" />
-    <Compile Include="Oslc\Jazz\JazzConstants.cs" />
-    <Compile Include="Oslc\Jazz\JazzOAuthClient.cs" />
     <Compile Include="Oslc\Resources\ArchitectureConstants.cs" />
     <Compile Include="Oslc\Resources\ArchitectureLinkType.cs" />
     <Compile Include="Oslc\Resources\ArchitectureResource.cs" />
@@ -140,15 +135,6 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DotNetOpenAuth.Core">
-      <Version>4.3.4.13329</Version>
-    </PackageReference>
-    <PackageReference Include="DotNetOpenAuth.OAuth.Common">
-      <Version>4.3.4.13329</Version>
-    </PackageReference>
-    <PackageReference Include="DotNetOpenAuth.OAuth.Consumer">
-      <Version>4.3.4.13329</Version>
-    </PackageReference>
     <PackageReference Include="log4net">
       <Version>2.0.15</Version>
     </PackageReference>
