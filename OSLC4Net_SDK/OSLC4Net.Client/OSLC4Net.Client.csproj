@@ -44,7 +44,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\JsonProvider\OSLC4Net.Core.JsonProvider.csproj" />
     <ProjectReference Include="..\OSLC4Net.Core.Query\OSLC4Net.Core.Query.csproj" />
     <ProjectReference Include="..\OSLC4Net.Core\OSLC4Net.Core.csproj" />
     <ProjectReference Include="..\OSLC4Net.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj" />

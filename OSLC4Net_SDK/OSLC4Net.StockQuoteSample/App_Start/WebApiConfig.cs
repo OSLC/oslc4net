@@ -1,9 +1,6 @@
 ﻿using OSLC4Net.Core.DotNetRdfProvider;
-using OSLC4Net.Core.JsonProvider;
 using OSLC4Net.StockQuoteSample.Controllers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Http;
 
@@ -26,7 +23,6 @@ namespace OSLC4Net.StockQuoteSample
 
             config.Formatters.Clear();
             config.Formatters.Add(new RdfXmlMediaTypeFormatter());
-            config.Formatters.Add(new JsonMediaTypeFormatter());
 
             HttpContext context = HttpContext.Current;
             // see https://github.com/OSLC/oslc4net/issues/12

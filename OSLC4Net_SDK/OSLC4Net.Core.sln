@@ -21,10 +21,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSLC4Net.Client", "OSLC4Net
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSLC4Net.ChangeManagementTest", "OSLC4Net.ChangeManagementTest\OSLC4Net.ChangeManagementTest.csproj", "{A64566A0-5EDB-48A1-B3E5-7F873169D402}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.JsonProvider", "JsonProvider\OSLC4Net.Core.JsonProvider.csproj", "{469BA948-728B-4B8C-80E9-7EC06CED8196}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.JsonProviderTests", "JsonProviderTests\OSLC4Net.Core.JsonProviderTests.csproj", "{1D393679-17ED-4D61-9121-99D942605466}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSLC4Net.Core.QueryTests", "OSLC4Net.Core.QueryTests\OSLC4Net.Core.QueryTests.csproj", "{3A431EAB-9E35-480B-B6ED-E2EA83DF58D0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSLC4Net.Core.Query", "OSLC4Net.Core.Query\OSLC4Net.Core.Query.csproj", "{B7EC82FE-64D2-4271-8D04-3044046360FA}"
@@ -108,26 +104,6 @@ Global
 		{A64566A0-5EDB-48A1-B3E5-7F873169D402}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{A64566A0-5EDB-48A1-B3E5-7F873169D402}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A64566A0-5EDB-48A1-B3E5-7F873169D402}.Release|x86.ActiveCfg = Release|Any CPU
-		{469BA948-728B-4B8C-80E9-7EC06CED8196}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{469BA948-728B-4B8C-80E9-7EC06CED8196}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{469BA948-728B-4B8C-80E9-7EC06CED8196}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{469BA948-728B-4B8C-80E9-7EC06CED8196}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{469BA948-728B-4B8C-80E9-7EC06CED8196}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{469BA948-728B-4B8C-80E9-7EC06CED8196}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{469BA948-728B-4B8C-80E9-7EC06CED8196}.Release|Any CPU.Build.0 = Release|Any CPU
-		{469BA948-728B-4B8C-80E9-7EC06CED8196}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{469BA948-728B-4B8C-80E9-7EC06CED8196}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{469BA948-728B-4B8C-80E9-7EC06CED8196}.Release|x86.ActiveCfg = Release|Any CPU
-		{1D393679-17ED-4D61-9121-99D942605466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1D393679-17ED-4D61-9121-99D942605466}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1D393679-17ED-4D61-9121-99D942605466}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{1D393679-17ED-4D61-9121-99D942605466}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{1D393679-17ED-4D61-9121-99D942605466}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{1D393679-17ED-4D61-9121-99D942605466}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1D393679-17ED-4D61-9121-99D942605466}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1D393679-17ED-4D61-9121-99D942605466}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{1D393679-17ED-4D61-9121-99D942605466}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{1D393679-17ED-4D61-9121-99D942605466}.Release|x86.ActiveCfg = Release|Any CPU
 		{3A431EAB-9E35-480B-B6ED-E2EA83DF58D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3A431EAB-9E35-480B-B6ED-E2EA83DF58D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A431EAB-9E35-480B-B6ED-E2EA83DF58D0}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
