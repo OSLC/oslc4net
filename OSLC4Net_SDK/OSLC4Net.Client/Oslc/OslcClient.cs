@@ -21,10 +21,13 @@ using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using System.Reflection;
 
 using OSLC4Net.Client.Exceptions;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
+
+using log4net;
 
 namespace OSLC4Net.Client.Oslc
 {
@@ -33,11 +36,12 @@ namespace OSLC4Net.Client.Oslc
     /// </summary>
     public class OslcClient
     {
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         protected readonly ISet<MediaTypeFormatter> formatters;
         protected readonly HttpClient client;
 
         /// <summary>
-        /// Initialize a new OslcClient, accepting all SSL certificates. 
+        /// Initialize a new OslcClient. 
         /// </summary>
         public OslcClient() : this(null)
         {
@@ -46,44 +50,47 @@ namespace OSLC4Net.Client.Oslc
         /// <summary>
         /// Initialize a new OslcClient.
         /// </summary>
-        /// <param name="certCallback">optionally control SSL certificate management</param>
-        public OslcClient(RemoteCertificateValidationCallback certCallback) : this(certCallback, null)
+        /// <param name="certCallback">optionally control SSL certificate management (null will not replace the default validation callback)</param>
+        public OslcClient(Func<HttpRequestMessage, X509Certificate2, X509Chain, SslPolicyErrors, bool> certCallback) : this(certCallback, null)
         {
         }
 
         /// <summary>
         /// Initialize a new OslcClient
         /// </summary>
-        /// <param name="certCallback">optionally control SSL certificate management</param>
+        /// <param name="certCallback">optionally control SSL certificate management (null will not replace the default validation callback)</param>
         /// <param name="oauthHandler">optionally use OAuth</param>
-        protected OslcClient(RemoteCertificateValidationCallback certCallback,
+        protected OslcClient(Func<HttpRequestMessage, X509Certificate2, X509Chain, SslPolicyErrors, bool> certCallback,
                              HttpMessageHandler oauthHandler)
         {
             this.formatters = new HashSet<MediaTypeFormatter>();
 
             formatters.Add(new RdfXmlMediaTypeFormatter());
-            formatters.Add(new OSLC4Net.Core.JsonProvider.JsonMediaTypeFormatter());
+            formatters.Add(new Core.JsonProvider.JsonMediaTypeFormatter());
 
             this.client = oauthHandler == null ?
                 HttpClientFactory.Create(CreateSSLHandler(certCallback)) :
                 HttpClientFactory.Create(oauthHandler);
         }
-        
+
         /// <summary>
         /// Create an SSL Web Request Handler
         /// </summary>
-        /// <param name="certCallback">optionally control SSL certificate management</param>
+        /// <param name="certCallback">optionally control SSL certificate management (use 
+        /// HttpClientHandler.DangerousAcceptAnyServerCertificateValidator in .NET 5+ if really needed)</param>
         /// <returns></returns>
-        public static WebRequestHandler CreateSSLHandler(RemoteCertificateValidationCallback certCallback = null)
+        public static HttpClientHandler CreateSSLHandler(Func<HttpRequestMessage, X509Certificate2, X509Chain, SslPolicyErrors, bool> certCallback = null)
         {
-            WebRequestHandler webRequestHandler = new WebRequestHandler();
+            HttpClientHandler handler = new HttpClientHandler();
 
-            webRequestHandler.AllowAutoRedirect = false;
-            webRequestHandler.ServerCertificateValidationCallback = certCallback != null ?
-                certCallback :
-                new RemoteCertificateValidationCallback(AcceptAllServerCertificates);
+            handler.AllowAutoRedirect = false;
+            if (certCallback != null)
+            {
+                log.Warn("TLS certificate validation may be compromised! DO NOT USE IN PRODUCTION");
+                handler.ServerCertificateCustomValidationCallback = certCallback;
+            }
 
-            return webRequestHandler;
+            return handler;
         }
 
         /// <summary>

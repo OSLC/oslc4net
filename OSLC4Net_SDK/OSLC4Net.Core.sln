@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSLC4Net.ChangeManagementCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.DotNetRdfProviderTests", "OSLC4Net.DotNetRdfProviderTests\OSLC4Net.Core.DotNetRdfProviderTests.csproj", "{382EB8FE-ED61-4C3F-92CA-A8214B0D3178}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Client", "OSLC4Net.Client\OSLC4Net.Client.csproj", "{EED02B8F-2C90-4484-B4B6-BB510750B84C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSLC4Net.Client", "OSLC4Net.Client\OSLC4Net.Client.csproj", "{EED02B8F-2C90-4484-B4B6-BB510750B84C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSLC4Net.ChangeManagementTest", "OSLC4Net.ChangeManagementTest\OSLC4Net.ChangeManagementTest.csproj", "{A64566A0-5EDB-48A1-B3E5-7F873169D402}"
 EndProject
