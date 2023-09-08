@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `OSLC4Net.Client` now targets `netstandard2.0`.
   - The main breaking change is the replacement of the legacy `WebRequestHandler` with `HttpClientHandler`. This caused some method/constructor signatures to change. 
   - `RemoteCertificateValidationCallback` was replaced with a lambda function.
+- `OSLC4Net.Query` now targets `netstandard2.0`. The Antlr3 runtime package targeting PCL was replaced with a package targeting NETStandard1.0 (Antlr 4 targets NETStandard2.0).
 
 ### Deprecated
 

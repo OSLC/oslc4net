@@ -1,158 +1,41 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B7EC82FE-64D2-4271-8D04-3044046360FA}</ProjectGuid>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OSLC4Net.Core.Query</RootNamespace>
-    <AssemblyName>OSLC4Net.Core.Query</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <Version>0.3.0-alpha</Version>
     <VersionSuffix>alpha</VersionSuffix>
     <PackageLicenseExpression>EPL-1.0</PackageLicenseExpression>
     <Authors>Andrii Berezovskyi and OSLC4Net contributors</Authors>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <!-- TODO: remove PackageOutputPath after migration to .NET Core-->
     <PackageOutputPath>MSBuild_Nuget_Pack/</PackageOutputPath>
     <PackageProjectUrl>https://github.com/OSLC/oslc4net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/OSLC/oslc4net/</RepositoryUrl>
-    <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyTitle>OSLC4Net.Core.Query</AssemblyTitle>
+    <Product>OSLC4Net.Core.Query</Product>
+    <Copyright>Copyright OSLC4Net contributors 2023, IBM 2013</Copyright>
+    <AssemblyVersion>0.3.0.0</AssemblyVersion>
+    <FileVersion>0.3.0.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Antlr3.Runtime">
+      <Version>3.5.1</Version>
+    </PackageReference>
     <PackageReference Include="NuGet.Build.Tasks.Pack" Version="5.2.0" />
     <None Include="../../README.md" Pack="true" PackagePath="" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="BooleanValue.cs" />
-    <Compile Include="ComparisonTerm.cs" />
-    <Compile Include="CompoundTerm.cs" />
-    <Compile Include="DecimalValue.cs" />
-    <Compile Include="Impl\BooleanValueImpl.cs" />
-    <Compile Include="Impl\ComparisonTermImpl.cs" />
-    <Compile Include="Impl\CompoundTermImpl.cs" />
-    <Compile Include="Impl\DecimalValueImpl.cs" />
-    <Compile Include="Impl\InTermImpl.cs" />
-    <Compile Include="Impl\LangedStringValueImpl.cs" />
-    <Compile Include="Impl\OslcWhereLexer.cs" />
-    <Compile Include="Impl\OslcWhereParser.cs" />
-    <Compile Include="Impl\PropertiesClauseImpl.cs" />
-    <Compile Include="Impl\NestedPropertyImpl.cs" />
-    <Compile Include="Impl\OslcOrderByLexer.cs" />
-    <Compile Include="Impl\OslcOrderByParser.cs" />
-    <Compile Include="Impl\OslcPrefixLexer.cs" />
-    <Compile Include="Impl\OslcPrefixParser.cs" />
-    <Compile Include="Impl\OslcSearchTermsLexer.cs" />
-    <Compile Include="Impl\OslcSearchTermsParser.cs" />
-    <Compile Include="Impl\OslcSelectLexer.cs" />
-    <Compile Include="Impl\OslcSelectParser.cs" />
-    <Compile Include="Impl\PropertiesImpl.cs" />
-    <Compile Include="Impl\PropertyImpl.cs" />
-    <Compile Include="Impl\ScopedSortTermImpl.cs" />
-    <Compile Include="Impl\SelectClauseImpl.cs" />
-    <Compile Include="Impl\SimpleSortTermImpl.cs" />
-    <Compile Include="Impl\SimpleTermImpl.cs" />
-    <Compile Include="Impl\SortTermImpl.cs" />
-    <Compile Include="Impl\SortTermsImpl.cs" />
-    <Compile Include="Impl\StringValueImpl.cs" />
-    <Compile Include="Impl\UriRefValueImpl.cs" />
-    <Compile Include="Impl\ValueImpl.cs" />
-    <Compile Include="Impl\WhereClauseImpl.cs" />
-    <Compile Include="Impl\WildcardImpl.cs" />
-    <Compile Include="InvalidOperationException.cs" />
-    <Compile Include="LangedStringValue.cs" />
-    <Compile Include="NestedProperty.cs" />
-    <Compile Include="Properties.cs" />
-    <Compile Include="PropertiesClause.cs" />
-    <Compile Include="Property.cs" />
-    <Compile Include="ScopedSortTerm.cs" />
-    <Compile Include="OrderByClause.cs" />
-    <Compile Include="ParseException.cs" />
-    <Compile Include="PName.cs" />
-    <Compile Include="QueryUtils.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SearchTermsClause.cs" />
-    <Compile Include="SelectClause.cs" />
-    <Compile Include="SimpleSortTerm.cs" />
-    <Compile Include="SimpleTerm.cs" />
-    <Compile Include="SortTerm.cs" />
-    <Compile Include="SortTerms.cs" />
-    <Compile Include="StringValue.cs" />
-    <Compile Include="TypedValue.cs" />
-    <Compile Include="Impl\TypedValueImpl.cs" />
-    <Compile Include="UriRefValue.cs" />
-    <Compile Include="Value.cs" />
-    <Compile Include="WhereClause.cs" />
-    <Compile Include="Wildcard.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Impl\GeneratingParsers.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Grammars\OslcWhere.g" />
-    <None Include="Grammars\OslcSelect.g" />
-    <None Include="Grammars\OslcSearchTerms.g" />
-    <None Include="Grammars\OslcOrderBy.g" />
-    <None Include="Grammars\OslcPrefix.g" />
-    <None Include="Impl\OslcOrderBy.tokens" />
-    <None Include="Impl\OslcPrefix.tokens" />
-    <None Include="Impl\OslcSearchTerms.tokens" />
-    <None Include="Impl\OslcSelect.tokens" />
-    <None Include="Impl\OslcWhere.tokens" />
+    <ProjectReference Include="..\OSLC4Net.Core\OSLC4Net.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OSLC4Net.Core\OSLC4Net.Core.csproj">
-      <Project>{C07B57BD-3356-4AD8-8050-D708B023A8EC}</Project>
-      <Name>OSLC4Net.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Antlr3.Runtime.PCL">
-      <Version>3.5.0.3</Version>
-    </PackageReference>
     <PackageReference Include="log4net">
       <Version>2.0.15</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
