@@ -4,16 +4,6 @@ using System.Runtime.InteropServices;
 
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.ChangeManagement;
-
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-[assembly: AssemblyTitle("ChangeManagement")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("IBM")]
-[assembly: AssemblyProduct("OSLC4Net.ChangeManagement")]
-[assembly: AssemblyCopyright("Copyright © IBM 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -24,18 +14,5 @@ using OSLC4Net.ChangeManagement;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("84d8ba6e-da20-40f0-8937-2ba3b8b7eff9")]
-
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: OslcSchema(typeof(XmlNamespace))]
