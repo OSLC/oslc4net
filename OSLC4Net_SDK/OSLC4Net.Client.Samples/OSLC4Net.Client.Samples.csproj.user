@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartAction>Project</StartAction>
-    <StartArguments>/url=https://fit-vm11-105.rtp.raleigh.ibm.com:9443/rm /user=clmadmin /password=ec11ipse /project="Debug Project"</StartArguments>
-  </PropertyGroup>
-</Project>

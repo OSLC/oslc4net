@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- NA
+- Support for .NET Core / .NET 5+ was added by migrating most of the projects in the solution to target `netstandard2.0`.
 
 ### Changed
 
@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - OSLC4Net.JsonProvider was removed as it would take a significant amount of effort to migrate from `System.Json` provided by .NET Framework to `System.Text.Json`. Users are recommended to use one of the accepted serializations for RDF, such as Turtle, RDF/XML, N-triples, or JSON-LD instead.
+- `Newtonsoft.Json` package was only used in the StockQuoteSample ASP.NET MVC project. Its references were removed from all other projects.
 
 ### Fixed
 

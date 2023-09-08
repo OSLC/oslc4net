@@ -1,63 +1,36 @@
-# This is a basic workflow to help you get started with Actions
-name: CI
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: CI  
 
 on:
   push:
-    branches: [ master ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ master ]
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.ref != 'refs/heads/master' && github.ref != 'refs/heads/main' }}
+    branches: [ "master" ]
 
 jobs:
-  build:
-    runs-on: windows-latest
-    timeout-minutes: 15
-
+  build-dotnet:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        version: ['6.x', '7.x', '8.x']
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: OSLC4Net_SDK/
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
       with:
         show-progress: false
-
-    - name: Setup MSBuild Path
-      uses: microsoft/setup-msbuild@v1.3.1
-      # with:
-      #   vs-version: '[17.5.3,18.0.0)'
-      #   msbuild-architecture: x64
-
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1
-
-    # - uses: actions/cache@v3
-    #   with:
-    #     path: |
-    #         ~/.nuget/packages/
-    #         OSLC4Net_SDK/packages/
-    #         OSLC4Net_SDK/**/bin/
-    #         OSLC4Net_SDK/**/obj/
-    #     key: ${{ runner.os }}-nuget-${{ hashFiles('.github/workflows/main.yml', '**/packages.config', '**/packages.lock.json', '**/*.sln', '**/*.csproj') }}
-    #     restore-keys: |
-    #       ${{ runner.os }}-nuget-
-
-    - name: Restore NuGet Packages
-      run: nuget restore OSLC4Net_SDK/OSLC4Net.Core.sln
-
-    - name: Build OSLC4Net
-      # /p:Configuration=Release is about 3x faster in Actions,
-      # not sure of the implications for VStest
-      run: msbuild OSLC4Net_SDK/OSLC4Net.Core.sln /p:Configuration=Release
-      #run: msbuild OSLC4Net_SDK/OSLC4Net.Core.sln
-
-    - name: Run VStest
-      uses: microsoft/vstest-action@v1.0.0
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
       with:
-        # see https://github.com/OSLC/oslc4net/issues/57
-        testAssembly: |
-            **\\bin\\*\\*Test*.dll
-            !**\\OSLC4Net.ChangeManagementTest\\**\*
-        # OBS! searchFolder must be terminated
-        searchFolder: '.\OSLC4Net_SDK\'
-        runInParallel: true
+        dotnet-version: ${{ matrix.version }}
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal  --filter TestCategory!=RunningOslcServerRequired
