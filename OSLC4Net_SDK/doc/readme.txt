@@ -1,1 +1,0 @@
-This is currently a placeholder.   See the project page for more information:   http://oslc4net.codeplex.com/
