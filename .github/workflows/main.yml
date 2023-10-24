@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        version: ['6.x', '7.x', '8.x']
+        version: [ {setup: '6.x', target: "net6.0"}, {setup: '7.x', target: "net7.0"}, {setup: '8.x', target: "net8.0"}]
     runs-on: ${{ matrix.os }}
     defaults:
       run:
@@ -27,10 +27,10 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: ${{ matrix.version }}
+        dotnet-version: ${{ matrix.version.setup }}
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore --runtime ${{ matrix.version.target }}
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore --framework ${{ matrix.version.target }}
     - name: Test
-      run: dotnet test --no-build --verbosity normal  --filter TestCategory!=RunningOslcServerRequired
+      run: dotnet test --no-build --framework ${{ matrix.version.target }} --verbosity normal  --filter TestCategory!=RunningOslcServerRequired
