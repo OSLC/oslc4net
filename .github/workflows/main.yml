@@ -31,6 +31,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore --framework ${{ matrix.version.target }}
+      run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --framework ${{ matrix.version.target }} --verbosity normal  --filter TestCategory!=RunningOslcServerRequired
