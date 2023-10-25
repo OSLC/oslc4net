@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -14,33 +14,31 @@
  *******************************************************************************/
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using OSLC4Net.Core.Attribute;
 
-namespace OSLC4Net.Core.Model
-{
-    /// <summary>
-    /// OSLC Service Provider Catalog resource 
-    /// </summary>
-    [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-    [OslcResourceShape(title = "OSLC Service Provider Catalog Resource Shape", describes = new string[] { OslcConstants.TYPE_SERVICE_PROVIDER_CATALOG })]
-    public class ServiceProviderCatalog : AbstractResource 
-    {
-        private readonly SortedSet<Uri> domains = new SortedUriSet();
-        private readonly SortedSet<Uri> referencedServiceProviderCatalogs = new SortedUriSet();
-        private readonly IList<ServiceProvider> serviceProviders = new List<ServiceProvider>();
+namespace OSLC4Net.Core.Model;
 
-        private String description;
+/// <summary>
+/// OSLC Service Provider Catalog resource
+/// </summary>
+[OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
+[OslcResourceShape(title = "OSLC Service Provider Catalog Resource Shape", describes = new string[] { OslcConstants.TYPE_SERVICE_PROVIDER_CATALOG })]
+public class ServiceProviderCatalog : AbstractResource
+{
+    private readonly SortedSet<Uri> domains = new SortedUriSet();
+    private readonly SortedSet<Uri> referencedServiceProviderCatalogs = new SortedUriSet();
+    private readonly IList<ServiceProvider> serviceProviders = new List<ServiceProvider>();
+
+    private string description;
 	    private OAuthConfiguration oauthConfiguration;
 	    private Publisher publisher;
-	    private String title;
+	    private string title;
 
 	    public ServiceProviderCatalog() : base()
-        {
+    {
 	    }
 
 	    public void AddDomain(Uri domain) {
@@ -54,15 +52,15 @@ namespace OSLC4Net.Core.Model
 	    }
 
 	    public void AddServiceProvider(ServiceProvider serviceProvider) {
-            this.serviceProviders.Add(serviceProvider);
-        }
+        this.serviceProviders.Add(serviceProvider);
+    }
 
 	    [OslcDescription("Description of the service provider catalog")]
 	    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
 	    [OslcReadOnly]
 	    [OslcTitle("Description")]
 	    [OslcValueType(ValueType.XMLLiteral)]
-        public String GetDescription() {
+    public string GetDescription() {
 		    return description;
 	    }
 
@@ -70,8 +68,8 @@ namespace OSLC4Net.Core.Model
 	    [OslcName("domain")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "domain")]
 	    [OslcReadOnly]
-        [OslcTitle("Domains")]
-        public Uri[] GetDomains() {
+    [OslcTitle("Domains")]
+    public Uri[] GetDomains() {
 	        return domains.ToArray();
 	    }
 
@@ -79,10 +77,10 @@ namespace OSLC4Net.Core.Model
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "oauthConfiguration")]
 	    [OslcRange(OslcConstants.TYPE_O_AUTH_CONFIGURATION)]
 	    [OslcReadOnly]
-        [OslcRepresentation(Representation.Inline)]
+    [OslcRepresentation(Representation.Inline)]
 	    [OslcTitle("OAuth URIs")]
 	    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_OAUTH_CONFIGURATION)]
-        [OslcValueType(ValueType.LocalResource)]
+    [OslcValueType(ValueType.LocalResource)]
 	    public OAuthConfiguration GetOauthConfiguration() {
 		    return oauthConfiguration;
 	    }
@@ -91,21 +89,21 @@ namespace OSLC4Net.Core.Model
 	    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "publisher")]
 	    [OslcRange(OslcConstants.TYPE_PUBLISHER)]
 	    [OslcReadOnly]
-        [OslcRepresentation(Representation.Inline)]
+    [OslcRepresentation(Representation.Inline)]
 	    [OslcTitle("Publisher")]
 	    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_PUBLISHER)]
-        [OslcValueType(ValueType.LocalResource)]
-        public Publisher GetPublisher() {
+    [OslcValueType(ValueType.LocalResource)]
+    public Publisher GetPublisher() {
 		    return publisher;
 	    }
 
 	    [OslcDescription("Additional service provider catalogs")]
 	    [OslcName("serviceProviderCatalog")]
-        [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "serviceProviderCatalog")]
-        [OslcRange(OslcConstants.TYPE_SERVICE_PROVIDER_CATALOG)]
-        [OslcReadOnly]
-        [OslcTitle("Additional Service Provider Catalogs")]
-        [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_SERVICE_PROVIDER_CATALOG)]
+    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "serviceProviderCatalog")]
+    [OslcRange(OslcConstants.TYPE_SERVICE_PROVIDER_CATALOG)]
+    [OslcReadOnly]
+    [OslcTitle("Additional Service Provider Catalogs")]
+    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_SERVICE_PROVIDER_CATALOG)]
 	    public Uri[] GetReferencedServiceProviderCatalogs() {
 	        return referencedServiceProviderCatalogs.ToArray();
 	    }
@@ -115,20 +113,20 @@ namespace OSLC4Net.Core.Model
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "serviceProvider")]
 	    [OslcRange(OslcConstants.TYPE_SERVICE_PROVIDER)]
 	    [OslcReadOnly]
-        [OslcRepresentation(Representation.Inline)]
-        [OslcTitle("Service Providers")]
+    [OslcRepresentation(Representation.Inline)]
+    [OslcTitle("Service Providers")]
 	    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_SERVICE_PROVIDER)]
-        [OslcValueType(ValueType.LocalResource)]
-        public ServiceProvider[] GetServiceProviders() {
+    [OslcValueType(ValueType.LocalResource)]
+    public ServiceProvider[] GetServiceProviders() {
 	        return serviceProviders.ToArray();
 	    }
 
 	    [OslcDescription("Title of the service provider catalog")]
 	    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
 	    [OslcReadOnly]
-        [OslcTitle("Title")]
-        [OslcValueType(ValueType.XMLLiteral)]
-	    public String GetTitle() {
+    [OslcTitle("Title")]
+    [OslcValueType(ValueType.XMLLiteral)]
+	    public string GetTitle() {
 		    return title;
 	    }
 
@@ -146,15 +144,15 @@ namespace OSLC4Net.Core.Model
 	        serviceProviders.Remove(serviceProvider);
 	    }
 
-	    public void SetDescription(String description) {
+	    public void SetDescription(string description) {
 		    this.description = description;
 	    }
 
 	    public void SetDomains(Uri[] domains) {
 	        this.domains.Clear();
 	        if (domains != null) {
-                this.domains.AddAll(domains);
-            }
+            this.domains.AddAll(domains);
+        }
 	    }
 
 	    public void SetOauthConfiguration(OAuthConfiguration oauthConfiguration) {
@@ -165,22 +163,21 @@ namespace OSLC4Net.Core.Model
 		    this.publisher = publisher;
 	    }
 
-        public void SetReferencedServiceProviderCatalogs(Uri[] referencedServiceProviderCatalogs) {
+    public void SetReferencedServiceProviderCatalogs(Uri[] referencedServiceProviderCatalogs) {
 	        this.referencedServiceProviderCatalogs.Clear();
 	        if (referencedServiceProviderCatalogs != null) {
-                this.referencedServiceProviderCatalogs.AddAll(referencedServiceProviderCatalogs);
-            }
+            this.referencedServiceProviderCatalogs.AddAll(referencedServiceProviderCatalogs);
+        }
 	    }
 
-        public void SetServiceProviders(ServiceProvider[] serviceProviders) {
+    public void SetServiceProviders(ServiceProvider[] serviceProviders) {
 	        this.serviceProviders.Clear();
 	        if (serviceProviders != null) {
-                this.serviceProviders.AddAll(serviceProviders);
-            }
+            this.serviceProviders.AddAll(serviceProviders);
+        }
 	    }
 
-        public void SetTitle(String title) {
+    public void SetTitle(string title) {
 		    this.title = title;
 	    }
-    }
 }

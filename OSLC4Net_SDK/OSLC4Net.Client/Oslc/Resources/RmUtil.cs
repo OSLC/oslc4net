@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -15,27 +15,25 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OSLC4Net.Core.Model;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using OSLC4Net.Client.Exceptions;
 using System.Xml.Linq;
 
-namespace OSLC4Net.Client.Oslc.Resources
+namespace OSLC4Net.Client.Oslc.Resources;
+
+public static class RmUtil
 {
-    public static class RmUtil
-    {
-	    public static ResourceShape LookupRequirementsInstanceShapes(String serviceProviderUrl, String oslcDomain, String oslcResourceType, OslcClient client, String requiredInstanceShape) 
+	    public static ResourceShape LookupRequirementsInstanceShapes(string serviceProviderUrl, string oslcDomain, string oslcResourceType, OslcClient client, string requiredInstanceShape)
 	    {
 		    HttpResponseMessage response = client.GetResource(serviceProviderUrl, OSLCConstants.CT_RDF);
-            ISet<MediaTypeFormatter> formatters = client.GetFormatters();
+        ISet<MediaTypeFormatter> formatters = client.GetFormatters();
 		    ServiceProvider serviceProvider = response.Content.ReadAsAsync<ServiceProvider>(formatters).Result;
-				
+
 		    if (serviceProvider != null) {
 			    foreach (Service service in serviceProvider.GetServices()) {
-				    Uri domain = service.GetDomain();				
+				    Uri domain = service.GetDomain();
 				    if (domain != null  && domain.ToString().Equals(oslcDomain)) {
 					    CreationFactory [] creationFactories = service.GetCreationFactories();
 					    if (creationFactories != null && creationFactories.Length > 0) {
@@ -47,32 +45,31 @@ namespace OSLC4Net.Client.Oslc.Resources
 										    foreach ( Uri typeURI in instanceShapes) {
 											    response = client.GetResource(typeURI.ToString(),OSLCConstants.CT_RDF);
 											    ResourceShape resourceShape =  response.Content.ReadAsAsync<ResourceShape>(formatters).Result;
-											    String typeTitle = resourceShape.GetTitle();
-											    if ( ( typeTitle != null) && (String.Compare(typeTitle, requiredInstanceShape, true) == 0) ) {
-												    return resourceShape;	
+                                            string typeTitle = resourceShape.GetTitle();
+											    if ( ( typeTitle != null) && (string.Compare(typeTitle, requiredInstanceShape, true) == 0) ) {
+												    return resourceShape;
 											    }
 										    }
 									    }
-								    }							
+								    }
 							    }
 						    }
 					    }
 				    }
 			    }
-		    }		 
-		
-		    throw new ResourceNotFoundException(serviceProviderUrl, "InstanceShapes");
-        }		
-	
-	    public static XElement ConvertStringToHTML(String text) {
+		    }
 
-            XDocument document = new XDocument();
+		    throw new ResourceNotFoundException(serviceProviderUrl, "InstanceShapes");
+    }
+
+	    public static XElement ConvertStringToHTML(string text) {
+
+        XDocument document = new XDocument();
 		    XElement divElement = new XElement(XName.Get("div", RmConstants.NAMESPACE_URI_XHTML));
 
-            document.Add(divElement);
+        document.Add(divElement);
 		    divElement.SetValue(text);
 
 		    return divElement;
 	    }
-    }
 }

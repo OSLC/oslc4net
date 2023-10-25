@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -14,51 +14,49 @@
  *******************************************************************************/
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using OSLC4Net.Core.Attribute;
 
-namespace OSLC4Net.Core.Model
+namespace OSLC4Net.Core.Model;
+
+/// <summary>
+/// OSLC Property attributes
+/// </summary>
+/// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
+///
+[OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
+[OslcResourceShape(title = "OSLC Property Resource Shape", describes = new string[] { OslcConstants.TYPE_PROPERTY })]
+public sealed class Property : AbstractResource, IComparable<Property>
 {
-    /// <summary>
-    /// OSLC Property attributes
-    /// </summary>
-    /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-    /// 
-    [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-    [OslcResourceShape(title = "OSLC Property Resource Shape", describes = new string[] { OslcConstants.TYPE_PROPERTY })]
-    public sealed class Property : AbstractResource, IComparable<Property>
-    {
 	    private IList<string> allowedValues = new List<string>();
 	    private List<Uri> range = new List<Uri>();
 
-        private Uri allowedValuesRef;
+    private Uri allowedValuesRef;
 	    private string defaultValue;
 	    private string description;
-	    private Boolean hidden;
+	    private bool hidden;
 	    private int maxSize;
-	    private Boolean memberProperty;
+	    private bool memberProperty;
 	    private string name;
 	    private Occurs occurs;
 	    private Uri propertyDefinition;
-	    private Boolean readOnly;
+	    private bool readOnly;
 	    private Representation representation;
 	    private string title;
 	    private Uri valueShape;
 	    private ValueType valueType;
 
 	    public Property() : base()
-        {
+    {
 	    }
 
 	    public Property(string name,
 			    Occurs occurs,
 			    Uri propertyDefinition,
 			    ValueType valueType) : this()
-        {
+    {
 		    this.name = name;
 		    this.occurs = occurs;
 		    this.propertyDefinition = propertyDefinition;
@@ -66,12 +64,12 @@ namespace OSLC4Net.Core.Model
 	    }
 
 	    public void AddAllowedValue(string allowedValue)
-        {
+    {
 		    this.allowedValues.Add(allowedValue);
 	    }
 
 	    public void AddRange(Uri range)
-        {
+    {
 		    this.range.Add(range);
 	    }
 
@@ -83,7 +81,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcName("allowedValue")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "allowedValue")]
 	    [OslcReadOnly]
-        [OslcTitle("Allowed Values")]
+    [OslcTitle("Allowed Values")]
 	    public string[] GetAllowedValues() {
 		    return allowedValues.ToArray();
 	    }
@@ -93,7 +91,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "allowedValues")]
 	    [OslcRange(OslcConstants.TYPE_ALLOWED_VALUES)]
 	    [OslcReadOnly]
-        [OslcTitle("Allowed Value Reference")]
+    [OslcTitle("Allowed Value Reference")]
 	    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_ALLOWED_VALUES)]
 	    public Uri GetAllowedValuesRef() {
 	        return allowedValuesRef;
@@ -102,7 +100,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcDescription("A default value for property, inlined into property definition")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "defaultValue")]
 	    [OslcReadOnly]
-        [OslcTitle("Default Value")]
+    [OslcTitle("Default Value")]
 	    public string GetDefaultValue() {
 		    return defaultValue;
 	    }
@@ -110,8 +108,8 @@ namespace OSLC4Net.Core.Model
 	    [OslcDescription("Description of the property. SHOULD include only content that is valid and suitable inside an XHTML <div> element")]
 	    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
 	    [OslcReadOnly]
-        [OslcTitle("Description")]
-        [OslcValueType(ValueType.XMLLiteral)]
+    [OslcTitle("Description")]
+    [OslcValueType(ValueType.XMLLiteral)]
 	    public string GetDescription() {
 		    return description;
 	    }
@@ -119,7 +117,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcDescription("For string properties only, specifies maximum characters allowed. If not set, then there is no maximum or maximum is specified elsewhere")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "maxSize")]
 	    [OslcReadOnly]
-        [OslcTitle("Maximum Size")]
+    [OslcTitle("Maximum Size")]
 	    public int getMaxSize() {
 		    return maxSize;
 	    }
@@ -129,19 +127,19 @@ namespace OSLC4Net.Core.Model
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "name")]
 	    [OslcReadOnly]
 	    [OslcTitle("Name")]
-        public string GetName() {
+    public string GetName() {
 		    return name;
 	    }
 
 	    [OslcAllowedValue(OslcConstants.OSLC_CORE_NAMESPACE + "Exactly-one",
-                          OslcConstants.OSLC_CORE_NAMESPACE + "Zero-or-one",
-                          OslcConstants.OSLC_CORE_NAMESPACE + "Zero-or-many",
-                          OslcConstants.OSLC_CORE_NAMESPACE + "One-or-many")]
+                      OslcConstants.OSLC_CORE_NAMESPACE + "Zero-or-one",
+                      OslcConstants.OSLC_CORE_NAMESPACE + "Zero-or-many",
+                      OslcConstants.OSLC_CORE_NAMESPACE + "One-or-many")]
 	    [OslcDescription("MUST be either http://open-services.net/ns/core#Exactly-one, http://open-services.net/ns/core#Zero-or-one, http://open-services.net/ns/core#Zero-or-many or http://open-services.net/ns/core#One-or-many")]
 	    [OslcOccurs(Occurs.ExactlyOne)]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "occurs")]
 	    [OslcReadOnly]
-        [OslcTitle("Occurs")]
+    [OslcTitle("Occurs")]
 	    public Uri GetOccurs() {
 	        if (occurs != Occurs.Unknown) {
 	            try {
@@ -159,7 +157,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcOccurs(Occurs.ExactlyOne)]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "propertyDefinition")]
 	    [OslcReadOnly]
-        [OslcTitle("Property Definition")]
+    [OslcTitle("Property Definition")]
 	    public Uri GetPropertyDefinition() {
 	        return propertyDefinition;
 	    }
@@ -167,7 +165,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcDescription("For properties with a resource value-type, Providers MAY also specify the range of possible resource classes allowed, each specified by Uri. The default range is http://open-services.net/ns/core#Any")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "range")]
 	    [OslcReadOnly]
-        [OslcTitle("Ranges")]
+    [OslcTitle("Ranges")]
 	    public Uri[] GetRange() {
 	        return range.ToArray();
 	    }
@@ -175,10 +173,10 @@ namespace OSLC4Net.Core.Model
 	    [OslcAllowedValue(OslcConstants.OSLC_CORE_NAMESPACE + "Reference",
 	                      OslcConstants.OSLC_CORE_NAMESPACE + "Inline",
 	                      OslcConstants.OSLC_CORE_NAMESPACE + "Either")]
-        [OslcDescription("Should be http://open-services.net/ns/core#Reference, http://open-services.net/ns/core#Inline or http://open-services.net/ns/core#Either")]
+    [OslcDescription("Should be http://open-services.net/ns/core#Reference, http://open-services.net/ns/core#Inline or http://open-services.net/ns/core#Either")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "representation")]
 	    [OslcReadOnly]
-        [OslcTitle("Representation")]
+    [OslcTitle("Representation")]
 	    public Uri GetRepresentation() {
 	        if (representation != null) {
 	            try {
@@ -195,9 +193,9 @@ namespace OSLC4Net.Core.Model
 	    [OslcDescription("Title of the property. SHOULD include only content that is valid and suitable inside an XHTML <div> element")]
 	    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
 	    [OslcReadOnly]
-        [OslcTitle("Title")]
+    [OslcTitle("Title")]
 	    [OslcValueType(ValueType.XMLLiteral)]
-        public string GetTitle() {
+    public string GetTitle() {
 		    return title;
 	    }
 
@@ -205,8 +203,8 @@ namespace OSLC4Net.Core.Model
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "valueShape")]
 	    [OslcRange(OslcConstants.TYPE_RESOURCE_SHAPE)]
 	    [OslcReadOnly]
-        [OslcTitle("Value Shape")]
-        public Uri GetValueShape() {
+    [OslcTitle("Value Shape")]
+    public Uri GetValueShape() {
 	        return valueShape;
 	    }
 
@@ -221,11 +219,11 @@ namespace OSLC4Net.Core.Model
 	                      OslcConstants.OSLC_CORE_NAMESPACE + "Resource",
 	                      OslcConstants.OSLC_CORE_NAMESPACE + "LocalResource",
 	                      OslcConstants.OSLC_CORE_NAMESPACE + "AnyResource")]
-        [OslcDescription("See list of allowed values for oslc:valueType")]
-        [OslcOccurs(Occurs.ExactlyOne)]
+    [OslcDescription("See list of allowed values for oslc:valueType")]
+    [OslcOccurs(Occurs.ExactlyOne)]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "valueType")]
 	    [OslcReadOnly]
-        [OslcTitle("Value Type")]
+    [OslcTitle("Value Type")]
 	    public Uri GetValueType() {
 	        if (valueType != ValueType.Unknown) {
 	            try {
@@ -233,7 +231,7 @@ namespace OSLC4Net.Core.Model
 	            } catch (UriFormatException exception) {
 	                // This should never happen since we control the possible values of the ValueType enum.
 	                throw new SystemException(exception.Message, exception);
-                }
+            }
 	        }
 
 	        return null;
@@ -242,8 +240,8 @@ namespace OSLC4Net.Core.Model
 	    [OslcDescription("A hint that indicates that property MAY be hidden when presented in a user interface")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hidden")]
 	    [OslcReadOnly]
-        [OslcTitle("Hidden")]
-	    public Boolean IsHidden() {
+    [OslcTitle("Hidden")]
+	    public bool IsHidden() {
 		    return hidden;
 	    }
 
@@ -251,16 +249,16 @@ namespace OSLC4Net.Core.Model
 	    [OslcName("isMemberProperty")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "isMemberProperty")]
 	    [OslcReadOnly]
-        [OslcTitle("Is Member Property")]
-	    public Boolean IsMemberProperty() {
+    [OslcTitle("Is Member Property")]
+	    public bool IsMemberProperty() {
 		    return memberProperty;
 	    }
 
 	    [OslcDescription("true if the property is read-only. If not set, or set to false, then the property is writable. Providers SHOULD declare a property read-only when changes to the value of that property will not be accepted on PUT. Consumers should note that the converse does not apply: Providers MAY reject a change to the value of a writable property.")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "readOnly")]
 	    [OslcReadOnly]
-        [OslcTitle("Read Only")]
-	    public Boolean IsReadOnly() {
+    [OslcTitle("Read Only")]
+	    public bool IsReadOnly() {
 		    return readOnly;
 	    }
 
@@ -268,9 +266,9 @@ namespace OSLC4Net.Core.Model
 	        this.allowedValues.Clear();
 	        if (allowedValues != null) {
 
-                foreach (string av in allowedValues) {
+            foreach (string av in allowedValues) {
 	                this.allowedValues.Add(av);
-                }
+            }
 	        }
 	    }
 
@@ -290,7 +288,7 @@ namespace OSLC4Net.Core.Model
 		    this.description = description;
 	    }
 
-	    public void SetHidden(Boolean hidden) {
+	    public void SetHidden(bool hidden) {
 		    this.hidden = hidden;
 	    }
 
@@ -298,7 +296,7 @@ namespace OSLC4Net.Core.Model
 		    this.maxSize = maxSize;
 	    }
 
-	    public void SetMemberProperty(Boolean memberProperty) {
+	    public void SetMemberProperty(bool memberProperty) {
 		    this.memberProperty = memberProperty;
 	    }
 
@@ -325,13 +323,13 @@ namespace OSLC4Net.Core.Model
 	    public void SetRange(Uri[] ranges) {
 	        this.range.Clear();
 	        if (ranges != null) {
-                foreach (Uri value in ranges) {
+            foreach (Uri value in ranges) {
 	                this.range.Add(value);
-                }
+            }
 	        }
 	    }
 
-	    public void SetReadOnly(Boolean readOnly) {
+	    public void SetReadOnly(bool readOnly) {
 		    this.readOnly = readOnly;
 	    }
 
@@ -358,7 +356,7 @@ namespace OSLC4Net.Core.Model
 	    public void SetValueType(ValueType valueType) {
 	        this.valueType = valueType;
 	    }
-	
+
 	    public void SetValueType(Uri valueType) {
 	        if (valueType != null) {
 	            this.valueType = ValueTypeExtension.FromString(valueType.ToString());
@@ -366,5 +364,4 @@ namespace OSLC4Net.Core.Model
 	            this.valueType = ValueType.Unknown;
 	        }
 	    }
-    }
 }

@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -14,36 +14,34 @@
  *******************************************************************************/
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using OSLC4Net.Core.Attribute;
 
-namespace OSLC4Net.Core.Model
-{
-    /// <summary>
-    /// OSLC Resource Shape resource
-    /// </summary>
-    [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-    [OslcResourceShape(title = "OSLC Creation Factory Resource Shape", describes = new string[] { OslcConstants.TYPE_CREATION_FACTORY })]
-    public class CreationFactory : AbstractResource 
-    {
-        private readonly SortedSet<Uri> resourceShapes = new SortedUriSet();
-        private readonly SortedSet<Uri> resourceTypes = new SortedUriSet();
-        private readonly SortedSet<Uri> usages = new SortedUriSet();
+namespace OSLC4Net.Core.Model;
 
-        private Uri creation;
-	    private String label;
-	    private String title;
+/// <summary>
+/// OSLC Resource Shape resource
+/// </summary>
+[OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
+[OslcResourceShape(title = "OSLC Creation Factory Resource Shape", describes = new string[] { OslcConstants.TYPE_CREATION_FACTORY })]
+public class CreationFactory : AbstractResource
+{
+    private readonly SortedSet<Uri> resourceShapes = new SortedUriSet();
+    private readonly SortedSet<Uri> resourceTypes = new SortedUriSet();
+    private readonly SortedSet<Uri> usages = new SortedUriSet();
+
+    private Uri creation;
+	    private string label;
+	    private string title;
 
 	    public CreationFactory() : base()
-        {
+    {
 	    }
 
-	    public CreationFactory(String title, Uri creation) : this()
-        {
+	    public CreationFactory(string title, Uri creation) : this()
+    {
 		    this.title = title;
 		    this.creation = creation;
 	    }
@@ -64,7 +62,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcOccurs(Occurs.ExactlyOne)]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "creation")]
 	    [OslcReadOnly]
-        [OslcTitle("Creation")]
+    [OslcTitle("Creation")]
 	    public Uri GetCreation() {
 	        return creation;
 	    }
@@ -72,8 +70,8 @@ namespace OSLC4Net.Core.Model
 	    [OslcDescription("Very short label for use in menu items")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "label")]
 	    [OslcReadOnly]
-        [OslcTitle("Label")]
-	    public String GetLabel() {
+    [OslcTitle("Label")]
+	    public string GetLabel() {
 		    return label;
 	    }
 
@@ -82,9 +80,9 @@ namespace OSLC4Net.Core.Model
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "resourceShape")]
 	    [OslcRange(OslcConstants.TYPE_RESOURCE_SHAPE)]
 	    [OslcReadOnly]
-        [OslcTitle("Resource Shapes")]
+    [OslcTitle("Resource Shapes")]
 	    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_RESOURCE_SHAPE)]
-        public Uri[] GetResourceShapes() {
+    public Uri[] GetResourceShapes() {
 	        return resourceShapes.ToArray();
 	    }
 
@@ -92,7 +90,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcName("resourceType")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "resourceType")]
 	    [OslcReadOnly]
-        [OslcTitle("Resource Types")]
+    [OslcTitle("Resource Types")]
 	    public Uri[] GetResourceTypes() {
 	        return resourceTypes.ToArray();
 	    }
@@ -101,9 +99,9 @@ namespace OSLC4Net.Core.Model
 	    [OslcOccurs(Occurs.ExactlyOne)]
 	    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
 	    [OslcReadOnly]
-        [OslcTitle("Title")]
-        [OslcValueType(ValueType.XMLLiteral)]
-	    public String GetTitle() {
+    [OslcTitle("Title")]
+    [OslcValueType(ValueType.XMLLiteral)]
+	    public string GetTitle() {
 		    return title;
 	    }
 
@@ -111,42 +109,41 @@ namespace OSLC4Net.Core.Model
 	    [OslcName("usage")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "usage")]
 	    [OslcReadOnly]
-        [OslcTitle("Usages")]
+    [OslcTitle("Usages")]
 	    public Uri[] GetUsages() {
 	        return usages.ToArray();
 	    }
 
-        public void SetCreation(Uri creation) {
+    public void SetCreation(Uri creation) {
 	        this.creation = creation;
 	    }
 
-        public void SetLabel(String label) {
+    public void SetLabel(string label) {
 		    this.label = label;
 	    }
 
-        public void SetResourceShapes(Uri[] resourceShapes) {
-            this.resourceShapes.Clear();
-            if (resourceShapes != null) {
-                this.resourceShapes.AddAll(resourceShapes);
-            }
+    public void SetResourceShapes(Uri[] resourceShapes) {
+        this.resourceShapes.Clear();
+        if (resourceShapes != null) {
+            this.resourceShapes.AddAll(resourceShapes);
         }
+    }
 
 	    public void SetResourceTypes(Uri[] resourceTypes) {
-            this.resourceTypes.Clear();
-            if (resourceTypes != null) {
-                this.resourceTypes.AddAll(resourceTypes);
-            }
+        this.resourceTypes.Clear();
+        if (resourceTypes != null) {
+            this.resourceTypes.AddAll(resourceTypes);
         }
+    }
 
-	    public void SetTitle(String title) {
+	    public void SetTitle(string title) {
 		    this.title = title;
 	    }
 
 	    public void SetUsages(Uri[] usages) {
-            this.usages.Clear();
-            if (usages != null) {
-                this.usages.AddAll(usages);
-            }
+        this.usages.Clear();
+        if (usages != null) {
+            this.usages.AddAll(usages);
         }
     }
 }

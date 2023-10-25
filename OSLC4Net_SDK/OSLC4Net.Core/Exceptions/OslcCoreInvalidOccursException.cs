@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -14,48 +14,44 @@
  *******************************************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
 
-namespace OSLC4Net.Core.Exceptions
+namespace OSLC4Net.Core.Exceptions;
+
+public class OslcCoreInvalidOccursException : OslcCoreApplicationException
 {
-    public class OslcCoreInvalidOccursException : OslcCoreApplicationException
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="resourceType"></param>
+    /// <param name="method"></param>
+    /// <param name="oslcOccurs"></param>
+    public OslcCoreInvalidOccursException(Type resourceType, MethodInfo method, OslcOccurs oslcOccurs) :
+        base(MESSAGE_KEY, new object[] {resourceType.Name, method.Name, OccursExtension.ToString(oslcOccurs.value)})
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="resourceType"></param>
-        /// <param name="method"></param>
-        /// <param name="oslcOccurs"></param>
-        public OslcCoreInvalidOccursException(Type resourceType, MethodInfo method, OslcOccurs oslcOccurs) :
-            base(MESSAGE_KEY, new Object[] {resourceType.Name, method.Name, OccursExtension.ToString(oslcOccurs.value)})
-        {
-            this.method        = method;
-            this.oslcOccurs    = oslcOccurs;
-            this.resourceType = resourceType;
-        }
+        this.method        = method;
+        this.oslcOccurs    = oslcOccurs;
+        this.resourceType = resourceType;
+    }
 
 	    public MethodInfo GetMethod() {
-            return method;
-        }
+        return method;
+    }
 
-        public OslcOccurs GetOslcOccurs() {
+    public OslcOccurs GetOslcOccurs() {
 		    return oslcOccurs;
 	    }
 
-        public Type GetResourceType() {
-            return resourceType;
-        }
-
-        private static readonly String MESSAGE_KEY = "InvalidOccursException";
-
-        private MethodInfo  method;
-        private OslcOccurs  oslcOccurs;
-        private Type        resourceType;
+    public Type GetResourceType() {
+        return resourceType;
     }
+
+    private static readonly string MESSAGE_KEY = "InvalidOccursException";
+
+    private MethodInfo  method;
+    private OslcOccurs  oslcOccurs;
+    private Type        resourceType;
 }
