@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -41,7 +41,7 @@ namespace OSLC4Net.Client.Oslc
         protected readonly HttpClient client;
 
         /// <summary>
-        /// Initialize a new OslcClient. 
+        /// Initialize a new OslcClient.
         /// </summary>
         public OslcClient() : this(null)
         {
@@ -75,7 +75,7 @@ namespace OSLC4Net.Client.Oslc
         /// <summary>
         /// Create an SSL Web Request Handler
         /// </summary>
-        /// <param name="certCallback">optionally control SSL certificate management (use 
+        /// <param name="certCallback">optionally control SSL certificate management (use
         /// HttpClientHandler.DangerousAcceptAnyServerCertificateValidator in .NET 5+ if really needed)</param>
         /// <returns></returns>
         public static HttpClientHandler CreateSSLHandler(Func<HttpRequestMessage, X509Certificate2, X509Chain, SslPolicyErrors, bool> certCallback = null)
@@ -119,10 +119,10 @@ namespace OSLC4Net.Client.Oslc
             do
             {
                 response = client.GetAsync(url).Result;
- 
+
                 if ((response.StatusCode == HttpStatusCode.MovedPermanently) ||
                     (response.StatusCode == HttpStatusCode.Moved))
-                {				
+                {
 				    url = response.Headers.Location.AbsoluteUri;
                     response.ConsumeContent();
 				    redirect = true;
@@ -130,7 +130,7 @@ namespace OSLC4Net.Client.Oslc
 				    redirect = false;
 			    }
 		    } while (redirect);
-		
+
 		    return response;
 	    }
 
@@ -143,7 +143,7 @@ namespace OSLC4Net.Client.Oslc
         {
             client.DefaultRequestHeaders.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
- 
+
             HttpResponseMessage response = null;
             bool redirect = false;
 
@@ -166,7 +166,7 @@ namespace OSLC4Net.Client.Oslc
 
             return response;
         }
-        
+
         /// <summary>
         /// Create (POST) an artifact to a URL - usually an OSLC Creation Factory
         /// </summary>
@@ -175,10 +175,10 @@ namespace OSLC4Net.Client.Oslc
         /// <param name="mediaType"></param>
         /// <returns></returns>
 	    public HttpResponseMessage CreateResource(string url, object artifact, string mediaType)
-        {		
+        {
 		    return CreateResource(url, artifact, mediaType, "*/*");
 	    }
-	
+
         /// <summary>
         /// Create (POST) an artifact to a URL - usually an OSLC Creation Factory
         /// </summary>
@@ -196,7 +196,7 @@ namespace OSLC4Net.Client.Oslc
             MediaTypeHeaderValue mediaTypeValue = new MediaTypeHeaderValue(mediaType);
             MediaTypeFormatter formatter =
                 new MediaTypeFormatterCollection(formatters).FindWriter(artifact.GetType(), mediaTypeValue);
- 
+
 		    HttpResponseMessage response = null;
 		    bool redirect = false;
 
@@ -207,10 +207,10 @@ namespace OSLC4Net.Client.Oslc
                 content.Headers.ContentType = mediaTypeValue;
 
                 response = client.PostAsync(url, content).Result;
- 
+
                 if ((response.StatusCode == HttpStatusCode.MovedPermanently) ||
                     (response.StatusCode == HttpStatusCode.Moved))
-                {				
+                {
 				    url = response.Headers.Location.AbsoluteUri;
                     response.ConsumeContent();
 				    redirect = true;
@@ -218,7 +218,7 @@ namespace OSLC4Net.Client.Oslc
 				    redirect = false;
 			    }
 		    } while (redirect);
-		
+
 		    return response;
 	    }
 
@@ -233,7 +233,7 @@ namespace OSLC4Net.Client.Oslc
         {
             return UpdateResource(url, artifact, mediaType, "*/*");
 	    }
-	
+
         /// <summary>
         /// Update (PUT) an artifact to a URL - usually the URL for an existing OSLC artifact
         /// </summary>
@@ -278,7 +278,7 @@ namespace OSLC4Net.Client.Oslc
 
             return response;
 	    }
-	
+
         /// <summary>
         /// Update (PUT) an artifact to a URL - usually the URL for an existing OSLC artifact
         /// </summary>
@@ -332,9 +332,9 @@ namespace OSLC4Net.Client.Oslc
         /// <param name="catalogUrl"></param>
         /// <param name="serviceProviderTitle"></param>
         /// <returns></returns>
-	    public string LookupServiceProviderUrl(string catalogUrl, string serviceProviderTitle) 
+	    public string LookupServiceProviderUrl(string catalogUrl, string serviceProviderTitle)
 	    {
-		    String retval = null;
+            string retval = null;
 		    HttpResponseMessage response = GetResource(catalogUrl, OSLCConstants.CT_RDF);
 
             if (response.StatusCode != HttpStatusCode.OK)
@@ -343,23 +343,23 @@ namespace OSLC4Net.Client.Oslc
             }
 
 		    ServiceProviderCatalog catalog = response.Content.ReadAsAsync<ServiceProviderCatalog>(formatters).Result;
-		
-		    if (catalog != null) {                
+
+		    if (catalog != null) {
 			    foreach (ServiceProvider sp in catalog.GetServiceProviders()) {
-				    if (sp.GetTitle() != null && String.Compare(sp.GetTitle(), serviceProviderTitle, true) == 0) {
+				    if (sp.GetTitle() != null && string.Compare(sp.GetTitle(), serviceProviderTitle, true) == 0) {
 					    retval = sp.GetAbout().ToString();
 					    break;
-				    }				
+				    }
 			    }
 		    }
 
 		    if (retval == null ) {
 			    throw new ResourceNotFoundException(catalogUrl, serviceProviderTitle);
 		    }
-		
+
 		    return retval;
 	    }
-	
+
         /// <summary>
         /// Find the OSLC Query Capability URL for a given OSLC resource type.  If no resource type is given, returns
 	    /// the default Query Capability, if it exists.
@@ -368,11 +368,11 @@ namespace OSLC4Net.Client.Oslc
         /// <param name="oslcDomain"></param>
         /// <param name="oslcResourceType">the resource type of the desired query capability.   This may differ from the OSLC artifact type.</param>
         /// <returns>URL of requested Query Capablility or null if not found.</returns>
-        public string LookupQueryCapability(string serviceProviderUrl, string oslcDomain, string oslcResourceType) 
+        public string LookupQueryCapability(string serviceProviderUrl, string oslcDomain, string oslcResourceType)
 	    {
 		    QueryCapability defaultQueryCapability = null;
 		    QueryCapability firstQueryCapability = null;
-		
+
 		    HttpResponseMessage response = GetResource(serviceProviderUrl, OSLCConstants.CT_RDF);
 
             if (response.StatusCode != HttpStatusCode.OK)
@@ -380,22 +380,22 @@ namespace OSLC4Net.Client.Oslc
 		        throw new ResourceNotFoundException(serviceProviderUrl, "QueryCapability");
             }
 
-		    ServiceProvider serviceProvider = response.Content.ReadAsAsync<ServiceProvider>(formatters).Result;		
-		
+		    ServiceProvider serviceProvider = response.Content.ReadAsAsync<ServiceProvider>(formatters).Result;
+
 		    if (serviceProvider != null) {
 			    foreach (Service service in serviceProvider.GetServices()) {
-				    Uri domain = service.GetDomain();				
+				    Uri domain = service.GetDomain();
 				    if (domain != null  && domain.ToString().Equals(oslcDomain)) {
 					    QueryCapability [] queryCapabilities = service.GetQueryCapabilities();
 					    if (queryCapabilities != null && queryCapabilities.Length > 0) {
 						    firstQueryCapability = queryCapabilities[0];
 						    foreach (QueryCapability  queryCapability in service.GetQueryCapabilities()) {
 							    foreach (Uri resourceType in queryCapability.GetResourceTypes()) {
-								
+
 								    //return as soon as domain + resource type are matched
 								    if (resourceType.ToString() != null && resourceType.ToString().Equals(oslcResourceType)) {
 									    return queryCapability.GetQueryBase().OriginalString;
-								    }							
+								    }
 							    }
 							    //Check if this is the default capability
 							    foreach (Uri usage in queryCapability.GetUsages()) {
@@ -408,7 +408,7 @@ namespace OSLC4Net.Client.Oslc
 				    }
 			    }
 		    }
-		
+
 		    //If we reached this point, there was no resource type match
 		    if (defaultQueryCapability != null) {
 			    //return default, if present
@@ -416,11 +416,11 @@ namespace OSLC4Net.Client.Oslc
 		    } else if (firstQueryCapability != null && firstQueryCapability.GetResourceTypes().Length == 0) {
 			    //return the first for the domain, if present
 			    return firstQueryCapability.GetQueryBase().ToString();
-		    } 
-		
+		    }
+
 		    throw new ResourceNotFoundException(serviceProviderUrl, "QueryCapability");
 	    }
-	
+
         /// <summary>
         /// Find the OSLC Creation Factory URL for a given OSLC resource type.  If no resource type is given, returns
 	    /// the default Creation Factory, if it exists.
@@ -429,11 +429,11 @@ namespace OSLC4Net.Client.Oslc
         /// <param name="oslcDomain"></param>
         /// <param name="oslcResourceType">the resource type of the desired query capability.   This may differ from the OSLC artifact type.</param>
         /// <returns>URL of requested Creation Factory or null if not found.</returns>
-	    public string LookupCreationFactory(string serviceProviderUrl, string oslcDomain, string oslcResourceType) 
+	    public string LookupCreationFactory(string serviceProviderUrl, string oslcDomain, string oslcResourceType)
 	    {
 		    CreationFactory defaultCreationFactory = null;
 		    CreationFactory firstCreationFactory = null;
-		
+
 		    HttpResponseMessage response = GetResource(serviceProviderUrl, OSLCConstants.CT_RDF);
 
             if (response.StatusCode != HttpStatusCode.OK)
@@ -441,22 +441,22 @@ namespace OSLC4Net.Client.Oslc
 		        throw new ResourceNotFoundException(serviceProviderUrl, "CreationFactory");
             }
 
-		    ServiceProvider serviceProvider = response.Content.ReadAsAsync<ServiceProvider>(formatters).Result;		
-				
+		    ServiceProvider serviceProvider = response.Content.ReadAsAsync<ServiceProvider>(formatters).Result;
+
 		    if (serviceProvider != null) {
 			    foreach (Service service in serviceProvider.GetServices()) {
-				    Uri domain = service.GetDomain();				
+				    Uri domain = service.GetDomain();
 				    if (domain != null  && domain.ToString().Equals(oslcDomain)) {
 					    CreationFactory [] creationFactories = service.GetCreationFactories();
 					    if (creationFactories != null && creationFactories.Length > 0) {
 						    firstCreationFactory = creationFactories[0];
 						    foreach (CreationFactory creationFactory in creationFactories) {
 							    foreach (Uri resourceType in creationFactory.GetResourceTypes()) {
-								
+
 								    //return as soon as domain + resource type are matched
 								    if (resourceType.ToString() != null && resourceType.ToString().Equals(oslcResourceType)) {
 									    return creationFactory.GetCreation().ToString();
-								    }							
+								    }
 							    }
 							    //Check if this is the default factory
 							    foreach (Uri usage in creationFactory.GetUsages()) {
@@ -469,7 +469,7 @@ namespace OSLC4Net.Client.Oslc
 				    }
 			    }
 		    }
-		
+
 		    //If we reached this point, there was no resource type match
 		    if (defaultCreationFactory != null) {
 			    //return default, if present
@@ -477,16 +477,16 @@ namespace OSLC4Net.Client.Oslc
 		    } else if (firstCreationFactory != null && firstCreationFactory.GetResourceTypes().Length == 0) {
 			    //return the first for the domain, if present
 			    return firstCreationFactory.GetCreation().ToString();
-		    } 
-		
+		    }
+
 		    throw new ResourceNotFoundException(serviceProviderUrl, "CreationFactory");
 	    }
 
         public ISet<MediaTypeFormatter> GetFormatters()
         {
             return formatters;
-        } 
-	
+        }
+
         /// <summary>
         /// Handle SSL server certificate processing, accepting all certificates.
         /// </summary>

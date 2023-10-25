@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -14,10 +14,6 @@
  *******************************************************************************/
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using OSLC4Net.Core.Attribute;
 
@@ -28,12 +24,12 @@ namespace OSLC4Net.Core.Model
     /// </summary>
     [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
     [OslcResourceShape(title = "OSLC Preview Resource Shape", describes = new string[] { OslcConstants.TYPE_PREVIEW })]
-    public class Preview : AbstractResource 
+    public class Preview : AbstractResource
     {
 	    private Uri document;
-        private String hintHeight;
-	    private String hintWidth;
-	    private String initialHeight;
+        private string hintHeight;
+	    private string hintWidth;
+	    private string initialHeight;
 
 	    public Preview() : base()
         {
@@ -51,7 +47,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintHeight")]
 	    [OslcReadOnly]
         [OslcTitle("Hint Height")]
-	    public String GetHintHeight()
+	    public string GetHintHeight()
         {
             return hintHeight;
         }
@@ -60,7 +56,7 @@ namespace OSLC4Net.Core.Model
         [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintWidth")]
         [OslcReadOnly]
         [OslcTitle("Hint Width")]
-        public String GetHintWidth()
+        public string GetHintWidth()
         {
             return hintWidth;
         }
@@ -69,7 +65,7 @@ namespace OSLC4Net.Core.Model
         [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "initialHeight")]
         [OslcReadOnly]
         [OslcTitle("Initial Height")]
-        public String GetInitialHeight()
+        public string GetInitialHeight()
         {
             return initialHeight;
         }
@@ -78,17 +74,17 @@ namespace OSLC4Net.Core.Model
 	        this.document = document;
 	    }
 
-        public void SetHintHeight(String hintHeight)
+        public void SetHintHeight(string hintHeight)
         {
             this.hintHeight = hintHeight;
         }
 
-        public void SetHintWidth(String hintWidth)
+        public void SetHintWidth(string hintWidth)
         {
             this.hintWidth = hintWidth;
         }
 
-        public void SetInitialHeight(String initialHeight)
+        public void SetInitialHeight(string initialHeight)
         {
             this.initialHeight = initialHeight;
         }

@@ -5,7 +5,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -17,7 +17,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using OSLC4Net.Core.Model;
 using OSLC4Net.Core.Attribute;
 
@@ -33,22 +32,22 @@ namespace OSLC4Net.Client.Oslc.Resources
 	    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
         private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
         private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-        private readonly ISet<String>   subjects                    = new HashSet<String>(); // XXX - TreeSet<> in Java
+        private readonly ISet<string>   subjects                    = new HashSet<string>(); // XXX - TreeSet<> in Java
         private readonly ISet<Property> parameterDefinitions        = new HashSet<Property>(); // XXX - TreeSet<> in Java
-    
+
         private DateTime?   created;
-        private String      description;
-        private String      identifier;
+        private string description;
+        private string identifier;
         private Uri         instanceShape;
         private DateTime?   modified;
         private Uri         serviceProvider;
-        private String      title;
+        private string title;
 
 	    public AutomationPlan() : base()
 	    {
 		    rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_PLAN));
 	    }
-	
+
         public AutomationPlan(Uri about) : base(about)
         {
 		    rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_PLAN));
@@ -58,7 +57,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
     	    return new Uri(AutomationConstants.TYPE_AUTOMATION_PLAN);
         }
-    
+
         public void AddContributor(Uri contributor)
         {
             this.contributors.Add(contributor);
@@ -68,13 +67,13 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             this.creators.Add(creator);
         }
-    
+
         public void AddRdfType(Uri rdfType)
         {
             this.rdfTypes.Add(rdfType);
         }
 
-        public void AddSubject(String subject)
+        public void AddSubject(string subject)
         {
             this.subjects.Add(subject);
         }
@@ -117,7 +116,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
         [OslcTitle("Description")]
         [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
-        public String GetDescription()
+        public string GetDescription()
         {
             return description;
         }
@@ -127,7 +126,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
         [OslcReadOnly]
         [OslcTitle("Identifier")]
-        public String GetIdentifier()
+        public string GetIdentifier()
         {
             return identifier;
         }
@@ -173,7 +172,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "subject")]
         [OslcReadOnly(false)]
         [OslcTitle("Subjects")]
-        public String[] GetSubjects()
+        public string[] GetSubjects()
         {
             return subjects.ToArray();
         }
@@ -183,11 +182,11 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
         [OslcTitle("Title")]
         [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
-        public String GetTitle()
+        public string GetTitle()
         {
             return title;
         }
-    
+
         [OslcDescription("The parameter definitions for the automation plan.")]
         [OslcOccurs(Occurs.ZeroOrMany)]
         [OslcName("parameterDefinition")]
@@ -198,7 +197,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             return parameterDefinitions.ToArray();
         }
 
-    
+
         public void SetContributors(Uri[] contributors)
         {
             this.contributors.Clear();
@@ -224,16 +223,16 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void SetDescription(String description)
+        public void SetDescription(string description)
         {
             this.description = description;
         }
 
-        public void SetIdentifier(String identifier)
+        public void SetIdentifier(string identifier)
         {
             this.identifier = identifier;
         }
-    
+
         public void SetInstanceShape(Uri instanceShape)
         {
             this.instanceShape = instanceShape;
@@ -259,7 +258,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             this.serviceProvider = serviceProvider;
         }
 
-        public void SetSubjects(String[] subjects)
+        public void SetSubjects(string[] subjects)
         {
             this.subjects.Clear();
 
@@ -269,7 +268,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void SetTitle(String title)
+        public void SetTitle(string title)
         {
             this.title = title;
         }

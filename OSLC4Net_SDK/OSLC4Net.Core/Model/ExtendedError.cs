@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using OSLC4Net.Core.Attribute;
 
@@ -16,7 +13,7 @@ namespace OSLC4Net.Core.Model
         private Uri           moreInfo;
         private string        rel;
 
-	    public ExtendedError():base() 
+	    public ExtendedError():base()
         {
 	    }
 
@@ -32,7 +29,7 @@ namespace OSLC4Net.Core.Model
         [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintWidth")]
         [OslcReadOnly]
         [OslcTitle("Hint Width")]
-        public string GetHintWidth() 
+        public string GetHintWidth()
         {
             return hintWidth;
         }
@@ -41,7 +38,7 @@ namespace OSLC4Net.Core.Model
         [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "moreInfo")]
         [OslcReadOnly]
         [OslcTitle("More Info")]
-        public Uri GetMoreInfo() 
+        public Uri GetMoreInfo()
         {
             return moreInfo;
         }
@@ -50,22 +47,22 @@ namespace OSLC4Net.Core.Model
         [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "rel")]
         [OslcReadOnly]
         [OslcTitle("Rel")]
-        public string GetRel() 
+        public string GetRel()
         {
             return rel;
         }
 
-        public void SetHintHeight(string hintHeight) 
+        public void SetHintHeight(string hintHeight)
         {
             this.hintHeight = hintHeight;
         }
 
-        public void SetHintWidth(string hintWidth) 
+        public void SetHintWidth(string hintWidth)
         {
             this.hintWidth = hintWidth;
         }
 
-        public void SetMoreInfo(Uri moreInfo) 
+        public void SetMoreInfo(Uri moreInfo)
         {
             this.moreInfo = moreInfo;
         }

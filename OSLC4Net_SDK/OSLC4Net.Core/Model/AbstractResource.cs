@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -14,10 +14,7 @@
  *******************************************************************************/
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace OSLC4Net.Core.Model
 {
@@ -29,7 +26,7 @@ namespace OSLC4Net.Core.Model
     {
         private Uri about;
         private ICollection<Uri> types = (ICollection<Uri>)new List<Uri>();
-        private IDictionary<QName, Object> extendedProperties = new Dictionary<QName, Object>();
+        private IDictionary<QName, object> extendedProperties = new Dictionary<QName, object>();
 
         protected AbstractResource(Uri about)
         {
@@ -57,9 +54,9 @@ namespace OSLC4Net.Core.Model
         {
 		    this.about = about;
 	    }
-    
+
         /// <param name="properties"></param>
-	    public void SetExtendedProperties(IDictionary<QName, Object> properties)
+	    public void SetExtendedProperties(IDictionary<QName, object> properties)
 	    {
 		    this.extendedProperties = properties;
 	    }
@@ -68,7 +65,7 @@ namespace OSLC4Net.Core.Model
         /// Get all extended properties
         /// </summary>
         /// <returns></returns>
-	    public IDictionary<QName, Object> GetExtendedProperties()
+	    public IDictionary<QName, object> GetExtendedProperties()
 	    {
 		    return extendedProperties;
 	    }

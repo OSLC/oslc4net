@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -14,10 +14,8 @@
  *******************************************************************************/
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using OSLC4Net.Core.Attribute;
 
@@ -28,21 +26,21 @@ namespace OSLC4Net.Core.Model
     /// </summary>
     [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
     [OslcResourceShape(title = "OSLC Creation Factory Resource Shape", describes = new string[] { OslcConstants.TYPE_CREATION_FACTORY })]
-    public class CreationFactory : AbstractResource 
+    public class CreationFactory : AbstractResource
     {
         private readonly SortedSet<Uri> resourceShapes = new SortedUriSet();
         private readonly SortedSet<Uri> resourceTypes = new SortedUriSet();
         private readonly SortedSet<Uri> usages = new SortedUriSet();
 
         private Uri creation;
-	    private String label;
-	    private String title;
+	    private string label;
+	    private string title;
 
 	    public CreationFactory() : base()
         {
 	    }
 
-	    public CreationFactory(String title, Uri creation) : this()
+	    public CreationFactory(string title, Uri creation) : this()
         {
 		    this.title = title;
 		    this.creation = creation;
@@ -73,7 +71,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "label")]
 	    [OslcReadOnly]
         [OslcTitle("Label")]
-	    public String GetLabel() {
+	    public string GetLabel() {
 		    return label;
 	    }
 
@@ -103,7 +101,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcReadOnly]
         [OslcTitle("Title")]
         [OslcValueType(ValueType.XMLLiteral)]
-	    public String GetTitle() {
+	    public string GetTitle() {
 		    return title;
 	    }
 
@@ -120,7 +118,7 @@ namespace OSLC4Net.Core.Model
 	        this.creation = creation;
 	    }
 
-        public void SetLabel(String label) {
+        public void SetLabel(string label) {
 		    this.label = label;
 	    }
 
@@ -138,7 +136,7 @@ namespace OSLC4Net.Core.Model
             }
         }
 
-	    public void SetTitle(String title) {
+	    public void SetTitle(string title) {
 		    this.title = title;
 	    }
 

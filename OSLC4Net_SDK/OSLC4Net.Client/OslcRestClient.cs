@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -32,21 +32,21 @@ namespace OSLC4Net.Client
         public const int DEFAULT_READ_TIMEOUT = 60000;
 
         private readonly ISet<MediaTypeFormatter>   formatters;
-        private readonly String                     uri;
+        private readonly string uri;
         private readonly HttpClient                 client;
-        private readonly String                     mediaType;
+        private readonly string mediaType;
         private readonly int                        readTimeout;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="formatters"></param>
         /// <param name="uri"></param>
         /// <param name="mediaType"></param>
         /// <param name="readTimeout"></param>
 	    public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
-	                          String                    uri,
-	                          String                    mediaType,
+                              string uri,
+                              string mediaType,
 	                          int                       readTimeout)
 	    {
 	        this.formatters  = formatters;
@@ -60,44 +60,44 @@ namespace OSLC4Net.Client
 	    }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="formatters"></param>
         /// <param name="uri"></param>
         /// <param name="mediaType"></param>
 	    public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
-                              String                    uri,
-                              String                    mediaType) :
+                              string uri,
+                              string mediaType) :
             this(formatters, uri, mediaType, DEFAULT_READ_TIMEOUT)
         {
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="formatters"></param>
         /// <param name="uri"></param>
         /// <param name="timeout"></param>
         public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
-                              String                    uri,
+                              string uri,
                               int                       timeout) :
             this(formatters, uri, OslcMediaType.APPLICATION_RDF_XML, timeout)
         {
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="formatters"></param>
         /// <param name="uri"></param>
         public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
-                              String                    uri) :
+                              string uri) :
             this(formatters, uri, OslcMediaType.APPLICATION_RDF_XML, DEFAULT_READ_TIMEOUT)
         {
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="formatters"></param>
         /// <param name="uri"></param>
@@ -105,27 +105,27 @@ namespace OSLC4Net.Client
         /// <param name="readTimeout"></param>
         public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
                               Uri                       uri,
-                              String                    mediaType,
+                              string mediaType,
                               int                       readTimeout) :
             this(formatters, uri.ToString(), mediaType, readTimeout)
         {
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="formatters"></param>
         /// <param name="uri"></param>
         /// <param name="mediaType"></param>
 	    public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
                               Uri                       uri,
-                              String                    mediaType) :
+                              string mediaType) :
             this(formatters, uri.ToString(), mediaType, DEFAULT_READ_TIMEOUT)
         {
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="formatters"></param>
         /// <param name="uri"></param>
@@ -138,7 +138,7 @@ namespace OSLC4Net.Client
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="formatters"></param>
         /// <param name="uri"></param>
@@ -149,7 +149,7 @@ namespace OSLC4Net.Client
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
 	    public ISet<MediaTypeFormatter> GetFormatters()
@@ -157,7 +157,7 @@ namespace OSLC4Net.Client
 	        return formatters;
 	    }
 
-	    public String GetMediaType()
+	    public string GetMediaType()
 	    {
 	        return mediaType;
 	    }
@@ -167,7 +167,7 @@ namespace OSLC4Net.Client
 	        return readTimeout;
 	    }
 
-        public String GetUri()
+        public string GetUri()
         {
             return uri;
         }
@@ -267,7 +267,7 @@ namespace OSLC4Net.Client
         /// </summary>
         /// <param name="oslcResource"></param>
         /// <returns></returns>
-	    public HttpResponseMessage AddOslcResourceReturnClientResponse(Object oslcResource)
+	    public HttpResponseMessage AddOslcResourceReturnClientResponse(object oslcResource)
 	    {
             this.client.DefaultRequestHeaders.Clear();
             this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
@@ -298,7 +298,7 @@ namespace OSLC4Net.Client
         /// </summary>
         /// <param name="oslcResource"></param>
         /// <returns></returns>
-        public HttpResponseMessage UpdateOslcResourceReturnClientResponse(Object oslcResource)
+        public HttpResponseMessage UpdateOslcResourceReturnClientResponse(object oslcResource)
         {
             this.client.DefaultRequestHeaders.Clear();
             this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
@@ -314,7 +314,7 @@ namespace OSLC4Net.Client
             return response;
         }
 
-        
+
         /// <summary>
         /// Remove an OSLC resource
         /// </summary>

@@ -5,7 +5,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -17,7 +17,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
 
@@ -34,22 +33,22 @@ namespace OSLC4Net.Client.Oslc.Resources
         private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
         private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
-    
+
         private DateTime?   created;
-        private String      comment;
-        private String      label;
-        private String      identifier;
+        private string comment;
+        private string label;
+        private string identifier;
         private Uri         instanceShape;
         private DateTime?   modified;
         private Uri         serviceProvider;
-    
+
 
 	    public ArchitectureLinkType() : base()
 	    {
-		
+
 		    rdfTypes.Add(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE));
 	    }
-	
+
         public ArchitectureLinkType(Uri about) : base(about)
          {
 		    rdfTypes.Add(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE));
@@ -58,7 +57,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         protected Uri GetRdfType() {
     	    return new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE);
         }
-    
+
         public void AddContributor(Uri contributor)
         {
             this.contributors.Add(contributor);
@@ -68,7 +67,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             this.creators.Add(creator);
         }
-    
+
         public void AddRdfType(Uri rdfType)
         {
             this.rdfTypes.Add(rdfType);
@@ -107,16 +106,16 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.RDFS_NAMESPACE + "label")]
         [OslcTitle("Label")]
         [OslcOccurs(Occurs.ExactlyOne)]
-        public String GetLabel()
+        public string GetLabel()
         {
             return label;
         }
-    
+
         [OslcDescription("Descriptive text about link type. ")]
         [OslcPropertyDefinition(OslcConstants.RDFS_NAMESPACE + "comment")]
         [OslcTitle("Comment")]
         [OslcOccurs(Occurs.ZeroOrOne)]
-        public String GetComment()
+        public string GetComment()
         {
             return comment;
         }
@@ -126,7 +125,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
         [OslcReadOnly]
         [OslcTitle("Identifier")]
-        public String GetIdentifier()
+        public string GetIdentifier()
         {
             return identifier;
         }
@@ -166,7 +165,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return serviceProvider;
         }
-   
+
         public void SetContributors(Uri[] contributors)
         {
             this.contributors.Clear();
@@ -192,21 +191,21 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void SetLabel(String label)
+        public void SetLabel(string label)
         {
             this.label = label;
         }
-    
-        public void SetComment(String comment)
+
+        public void SetComment(string comment)
         {
             this.comment = comment;
         }
 
-        public void SetIdentifier(String identifier)
+        public void SetIdentifier(string identifier)
         {
             this.identifier = identifier;
         }
-    
+
         public void SetInstanceShape(Uri instanceShape)
         {
             this.instanceShape = instanceShape;
@@ -226,7 +225,7 @@ namespace OSLC4Net.Client.Oslc.Resources
                 this.rdfTypes.AddAll(rdfTypes);
             }
         }
-    
+
         public void SetServiceProvider(Uri serviceProvider)
         {
             this.serviceProvider = serviceProvider;

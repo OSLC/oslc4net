@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -21,15 +21,11 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
-using System.Numerics;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
-
-using log4net;
 
 using VDS.RDF;
 using VDS.RDF.Parsing;
@@ -38,7 +34,7 @@ using VDS.RDF.Writing;
 namespace OSLC4Net.Core.DotNetRdfProvider
 {
     /// <summary>
-    /// A class to 
+    /// A class to
     ///     - read RDF/XML from an input stream and create .NET objects.
     ///     - write .NET objects to an output stream as RDF/XML
     /// </summary>
@@ -46,7 +42,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
     {
 
         public IGraph Graph { get; set; }
-        public bool RebuildGraph { get; set; } 
+        public bool RebuildGraph { get; set; }
         private HttpRequestMessage httpRequest;
 
         /// <summary>
@@ -65,7 +61,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
         }
 
         /// <summary>
-        /// RdfXml formatter which accepts a pre-built RDF Graph 
+        /// RdfXml formatter which accepts a pre-built RDF Graph
         /// </summary>
         /// <param name="graph"></param>
         public RdfXmlMediaTypeFormatter(
@@ -102,7 +98,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             if (ImplementsGenericType(typeof(FilteredResource<>), type))
             {
                 Type[] actualTypeArguments = GetChildClassParameterArguments(typeof(FilteredResource<>), type);
-            
+
                 if (actualTypeArguments.Count() != 1)
                 {
                     return false;
@@ -111,12 +107,12 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                 if (ImplementsICollection(actualTypeArguments[0]))
                 {
                     actualTypeArguments = actualTypeArguments[0].GetGenericArguments();
-                
+
                     if (actualTypeArguments.Count() != 1)
                     {
                         return false;
                     }
-                
+
                     actualType = actualTypeArguments[0];
                 }
                 else
@@ -128,7 +124,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             {
                 actualType = type;
             }
-        
+
             if (IsSinglton(actualType))
             {
                 return true;
@@ -203,7 +199,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                                 PropertyInfo totalCountProp = value.GetType().GetProperty("TotalCount");
                                 PropertyInfo nextPageProp = value.GetType().GetProperty("NextPage");
 
-                                Graph = DotNetRdfHelper.CreateDotNetRdfGraph(descriptionAbout, responseInfoAbout, 
+                                Graph = DotNetRdfHelper.CreateDotNetRdfGraph(descriptionAbout, responseInfoAbout,
                                                                              (string)nextPageProp.GetValue(value, null),
                                                                              (int)totalCountProp.GetValue(value, null),
                                                                              objects as IEnumerable<object>,
@@ -230,8 +226,8 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                     }
 
                     IRdfWriter rdfWriter;
-                    
-                    if (content == null || content.Headers == null || content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_RDF_XML)) 
+
+                    if (content == null || content.Headers == null || content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_RDF_XML))
                     {
                         RdfXmlWriter rdfXmlWriter = new RdfXmlWriter
                         {
@@ -251,7 +247,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
                         };
 
                         rdfWriter = turtlelWriter;
-                    }                     
+                    }
                     else
                     {
                         //For now, use the dotNetRDF RdfXmlWriter for application/xml
@@ -316,8 +312,8 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             try
             {
                 IRdfReader rdfParser;
-                    
-                if (content == null || content.Headers == null || content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_RDF_XML)) 
+
+                if (content == null || content.Headers == null || content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_RDF_XML))
                 {
                     rdfParser = new RdfXmlParser();
                 }
@@ -363,7 +359,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider
             {
                 if (formatterLogger == null) throw;
 
-                formatterLogger.LogError(String.Empty, e.Message);
+                formatterLogger.LogError(string.Empty, e.Message);
 
                 tcs.SetResult(GetDefaultValueForType(type));
             }

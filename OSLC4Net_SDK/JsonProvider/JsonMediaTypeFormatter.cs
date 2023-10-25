@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -24,18 +24,15 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
 
-using log4net;
-
 namespace OSLC4Net.Core.JsonProvider
 {
     /// <summary>
-    /// A class to 
+    /// A class to
     ///     - read RDF/XML from an input stream and create .NET objects.
     ///     - write .NET objects to an output stream as RDF/XML
     /// </summary>
@@ -59,7 +56,7 @@ namespace OSLC4Net.Core.JsonProvider
         }
 
         /// <summary>
-        /// JSON formatter which accepts a pre-built JSON object 
+        /// JSON formatter which accepts a pre-built JSON object
         /// </summary>
         /// <param name="json"></param>
         /// <param name="rebuildJson"></param>
@@ -97,7 +94,7 @@ namespace OSLC4Net.Core.JsonProvider
             if (ImplementsGenericType(typeof(FilteredResource<>), type))
             {
                 Type[] actualTypeArguments = GetChildClassParameterArguments(typeof(FilteredResource<>), type);
-            
+
                 if (actualTypeArguments.Count() != 1)
                 {
                     return false;
@@ -106,12 +103,12 @@ namespace OSLC4Net.Core.JsonProvider
                 if (ImplementsICollection(actualTypeArguments[0]))
                 {
                     actualTypeArguments = actualTypeArguments[0].GetGenericArguments();
-                
+
                     if (actualTypeArguments.Count() != 1)
                     {
                         return false;
                     }
-                
+
                     actualType = actualTypeArguments[0];
                 }
                 else
@@ -123,7 +120,7 @@ namespace OSLC4Net.Core.JsonProvider
             {
                 actualType = type;
             }
-        
+
             if (IsSinglton(actualType))
             {
                 return true;
@@ -299,7 +296,7 @@ namespace OSLC4Net.Core.JsonProvider
             {
                 if (formatterLogger == null) throw;
 
-                formatterLogger.LogError(String.Empty, e.Message);
+                formatterLogger.LogError(string.Empty, e.Message);
 
                 tcs.SetResult(GetDefaultValueForType(type));
             }

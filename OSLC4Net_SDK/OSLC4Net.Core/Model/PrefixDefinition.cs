@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -14,10 +14,6 @@
  *******************************************************************************/
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using OSLC4Net.Core.Attribute;
 
@@ -28,16 +24,16 @@ namespace OSLC4Net.Core.Model
     /// </summary>
     [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
     [OslcResourceShape(title = "OSLC Prefix Definition Resource Shape", describes = new string[] { OslcConstants.TYPE_PREFIX_DEFINITION })]
-    public class PrefixDefinition : AbstractResource 
+    public class PrefixDefinition : AbstractResource
     {
-	    private String prefix;
+	    private string prefix;
 	    private Uri prefixBase;
 
 	    public PrefixDefinition() : base()
         {
 	    }
 
-	    public PrefixDefinition(String prefix, Uri prefixBase) : this()
+	    public PrefixDefinition(string prefix, Uri prefixBase) : this()
         {
 		    this.prefix = prefix;
 		    this.prefixBase = prefixBase;
@@ -48,7 +44,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "prefix")]
 	    [OslcReadOnly]
         [OslcTitle("Prefix")]
-	    public String GetPrefix() {
+	    public string GetPrefix() {
 		    return prefix;
 	    }
 
@@ -60,7 +56,7 @@ namespace OSLC4Net.Core.Model
 	        return prefixBase;
 	    }
 
-	    public void SetPrefix(String prefix) {
+	    public void SetPrefix(string prefix) {
 		    this.prefix = prefix;
 	    }
 

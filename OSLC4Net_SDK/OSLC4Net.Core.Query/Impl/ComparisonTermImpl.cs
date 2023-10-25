@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -15,8 +15,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Antlr.Runtime.Tree;
 
 namespace OSLC4Net.Core.Query.Impl
@@ -29,7 +27,7 @@ namespace OSLC4Net.Core.Query.Impl
         public
         ComparisonTermImpl(
             CommonTree tree,
-            IDictionary<String, String> prefixMap
+            IDictionary<string, string> prefixMap
         ) : base(tree, TermType.COMPARISON, prefixMap)
         {
             switch (((CommonTree)tree.GetChild(1)).Token.Type) {
@@ -70,9 +68,9 @@ namespace OSLC4Net.Core.Query.Impl
                 if (operand == null)
                 {
                     CommonTree treeOperand = (CommonTree)tree.GetChild(2);
-            
+
                     operand = CreateValue(treeOperand, "unspported literal value type",
-                                          prefixMap);            
+                                          prefixMap);
                 }
 
                 return operand;
@@ -83,12 +81,12 @@ namespace OSLC4Net.Core.Query.Impl
         {
             return Property.ToString() + OperatorExtension.ToString(op) + Operand.ToString();
         }
-    
+
         static internal Value
         CreateValue(
             CommonTree treeOperand,
-            String errorPrefix,
-            IDictionary<String, String> prefixMap
+            string errorPrefix,
+            IDictionary<string, string> prefixMap
         )
         {
             switch (treeOperand.Token.Type) {
@@ -108,16 +106,16 @@ namespace OSLC4Net.Core.Query.Impl
                 throw new InvalidOperationException(
                         errorPrefix + ": " +
                             treeOperand.Token.Text);
-            }       
+            }
         }
-    
+
         private readonly Operator op;
         private Value operand = null;
     }
 
     internal static class OperatorExtension
     {
-        public static String
+        public static string
         ToString(Operator op)
         {
             switch (op)

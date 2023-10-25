@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -14,10 +14,6 @@
  *******************************************************************************/
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using OSLC4Net.Core.Attribute;
 
@@ -28,13 +24,13 @@ namespace OSLC4Net.Core.Model
     /// </summary>
     [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
     [OslcResourceShape(title = "OSLC Compact Resource Shape", describes = new string[] { OslcConstants.TYPE_COMPACT })]
-    public class Compact : AbstractResource 
+    public class Compact : AbstractResource
     {
         private Uri icon;
         private Preview largePreview;
-        private String shortTitle;
+        private string shortTitle;
         private Preview smallPreview;
-	    private String title;
+	    private string title;
 
 	    public Compact() : base()
         {
@@ -64,7 +60,7 @@ namespace OSLC4Net.Core.Model
         [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "shortTitle")]
         [OslcReadOnly]
         [OslcTitle("Short Title")]
-        public String GetShortTitle() {
+        public string GetShortTitle() {
             return shortTitle;
         }
 
@@ -86,7 +82,7 @@ namespace OSLC4Net.Core.Model
         [OslcReadOnly]
         [OslcTitle("Title")]
         [OslcValueType(ValueType.XMLLiteral)]
-	    public String GetTitle() {
+	    public string GetTitle() {
 		    return title;
 	    }
 
@@ -98,7 +94,7 @@ namespace OSLC4Net.Core.Model
             this.largePreview = largePreview;
         }
 
-        public void SetShortTitle(String shortTitle) {
+        public void SetShortTitle(string shortTitle) {
             this.shortTitle = shortTitle;
         }
 
@@ -106,7 +102,7 @@ namespace OSLC4Net.Core.Model
             this.smallPreview = smallPreview;
         }
 
-        public void SetTitle(String title) {
+        public void SetTitle(string title) {
 		    this.title = title;
 	    }
     }

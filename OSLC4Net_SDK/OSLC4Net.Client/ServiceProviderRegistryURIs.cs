@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -27,21 +27,21 @@ namespace OSLC4Net.Client
     {
         private static readonly ILog LOGGER = LogManager.GetLogger(typeof(ServiceProviderRegistryURIs));
 
-        private static readonly String SYSTEM_PROPERTY_NAME_REGISTRY_URI = typeof(ServiceProviderRegistryURIs).Assembly.FullName + ".registryuri";
+        private static readonly string SYSTEM_PROPERTY_NAME_REGISTRY_URI = typeof(ServiceProviderRegistryURIs).Assembly.FullName + ".registryuri";
 
-        private static String SERVICE_PROVIDER_REGISTRY_URI;
+        private static string SERVICE_PROVIDER_REGISTRY_URI;
 
         static ServiceProviderRegistryURIs()
         {
-            String registryURI = Environment.GetEnvironmentVariable(SYSTEM_PROPERTY_NAME_REGISTRY_URI);
+            string registryURI = Environment.GetEnvironmentVariable(SYSTEM_PROPERTY_NAME_REGISTRY_URI);
 
-            String defaultBase = null;
+            string defaultBase = null;
 
             if (registryURI == null)
             {
                 // We need at least one default URI
 
-                String hostName = "localhost";
+                string hostName = "localhost";
 
                 try
                 {
@@ -70,14 +70,14 @@ namespace OSLC4Net.Client
 
                 LOGGER.Warn("System property '" + SYSTEM_PROPERTY_NAME_REGISTRY_URI + "' not set.  Using calculated value '" + SERVICE_PROVIDER_REGISTRY_URI + "'");
             }
-           
+
         }
 
         /// <summary>
         /// Get the ServiceProviderRegistry URI
         /// </summary>
         /// <returns></returns>
-        public static String getServiceProviderRegistryURI()
+        public static string getServiceProviderRegistryURI()
         {
             return SERVICE_PROVIDER_REGISTRY_URI;
         }

@@ -1,10 +1,10 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -13,12 +13,8 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
 using System.Net.Http.Formatting;
-using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -40,14 +36,14 @@ namespace OSLC4Net.ChangeManagementTest
             FORMATTERS.Add(new RdfXmlMediaTypeFormatter());
         }
 
-        private static Uri CREATED_CHANGE_REQUEST_URI;
+        private static Uri? CREATED_CHANGE_REQUEST_URI;
 
         protected TestBase()
         {
         }
 
-        private static String GetCreation(String mediaType,
-                                          String type)
+        private static string GetCreation(string mediaType,
+                                          string type)
         {
             ServiceProvider[] serviceProviders = new ServiceProviderRegistryClient(FORMATTERS, mediaType).GetServiceProviders();
 
@@ -80,8 +76,8 @@ namespace OSLC4Net.ChangeManagementTest
             throw new AssertFailedException("Unable to retrieve creation for type '" + type + "'");
        }
 
-        private static String GetQueryBase(String mediaType,
-                                           String type)
+        private static string GetQueryBase(string mediaType,
+                                           string type)
         {
             ServiceProvider[] serviceProviders = new ServiceProviderRegistryClient(FORMATTERS, mediaType).GetServiceProviders();
 
@@ -114,37 +110,31 @@ namespace OSLC4Net.ChangeManagementTest
             throw new AssertFailedException("Unable to retrieve queryBase for type '" + type + "'");
         }
 
-        private static ResourceShape GetResourceShape(String mediaType,
-                                                      String type)
+        private static ResourceShape GetResourceShape(string mediaType,
+                                                      string type)
         {
             ServiceProvider[] serviceProviders = new ServiceProviderRegistryClient(FORMATTERS, mediaType).GetServiceProviders();
 
             foreach (ServiceProvider serviceProvider in serviceProviders)
             {
                 Service[] services = serviceProvider.GetServices();
-
                 foreach (Service service in services)
                 {
                     if (Constants.CHANGE_MANAGEMENT_DOMAIN.Equals(service.GetDomain().ToString()))
                     {
                         QueryCapability[] queryCapabilities = service.GetQueryCapabilities();
-
                         foreach (QueryCapability queryCapability in queryCapabilities)
                         {
                             Uri[] resourceTypes = queryCapability.GetResourceTypes();
-
                             foreach (Uri resourceType in resourceTypes)
                             {
                                 if (resourceType.ToString().Equals(type))
                                 {
                                     Uri resourceShape = queryCapability.GetResourceShape();
-
                                     if (resourceShape != null)
                                     {
-                                        OslcRestClient oslcRestClient = new OslcRestClient(FORMATTERS,
-                                                                                                 resourceShape,
-                                                                                                 mediaType);
-
+                                        OslcRestClient oslcRestClient = new(
+                                            FORMATTERS, resourceShape, mediaType);
                                         return oslcRestClient.GetOslcResource<ResourceShape>();
                                     }
                                 }
@@ -157,7 +147,7 @@ namespace OSLC4Net.ChangeManagementTest
             throw new AssertFailedException("Unable to retrieve resource shape for type '" + type + "'");
        }
 
-        private static void VerifyChangeRequest(String        mediaType,
+        private static void VerifyChangeRequest(string mediaType,
                                                 ChangeRequest changeRequest,
                                                 bool          recurse)
         {
@@ -165,7 +155,7 @@ namespace OSLC4Net.ChangeManagementTest
 
             Uri       aboutURI           = changeRequest.GetAbout();
             DateTime? createdDate        = changeRequest.GetCreated();
-            String    identifierString   = changeRequest.GetIdentifier();
+            string identifierString   = changeRequest.GetIdentifier();
             DateTime? modifiedDate       = changeRequest.GetModified();
             Uri[]     rdfTypesURIs       = changeRequest.GetRdfTypes();
             Uri       serviceProviderURI = changeRequest.GetServiceProvider();
@@ -183,17 +173,17 @@ namespace OSLC4Net.ChangeManagementTest
 
             if (recurse)
             {
-                OslcRestClient aboutOSLCRestClient = new OslcRestClient(FORMATTERS,
-                                                                        aboutURI,
-                                                                        mediaType);
+                OslcRestClient aboutOSLCRestClient = new(FORMATTERS,
+                                                        aboutURI,
+                                                        mediaType);
 
                 VerifyChangeRequest(mediaType,
                                     aboutOSLCRestClient.GetOslcResource<ChangeRequest>(),
-                                    false);
+                                    recurse: false);
 
-                OslcRestClient serviceProviderOSLCRestClient = new OslcRestClient(FORMATTERS,
-                                                                                  serviceProviderURI,
-                                                                                  mediaType);
+                OslcRestClient serviceProviderOSLCRestClient = new(FORMATTERS,
+                                                                serviceProviderURI,
+                                                                mediaType);
 
                 ServiceProvider serviceProvider = serviceProviderOSLCRestClient.GetOslcResource<ServiceProvider>();
 
@@ -201,22 +191,22 @@ namespace OSLC4Net.ChangeManagementTest
             }
         }
 
-        private static void VerifyCompact(String  mediaType,
+        private static void VerifyCompact(string mediaType,
                                           Compact compact)
         {
             Assert.IsNotNull(compact);
 
             Uri    aboutURI         = compact.GetAbout();
-            String shortTitleString = compact.GetShortTitle();
-            String titleString      = compact.GetTitle();
+            string shortTitleString = compact.GetShortTitle();
+            string titleString      = compact.GetTitle();
 
             Assert.IsNotNull(aboutURI);
             Assert.IsNotNull(shortTitleString);
             Assert.IsNotNull(titleString);
 
-            OslcRestClient aboutOSLCRestClient = new OslcRestClient(FORMATTERS,
-                                                                    aboutURI,
-                                                                    mediaType);
+            OslcRestClient aboutOSLCRestClient = new(FORMATTERS,
+                                                    aboutURI,
+                                                    mediaType);
 
             VerifyChangeRequest(mediaType,
                                 aboutOSLCRestClient.GetOslcResource<ChangeRequest>(),
@@ -224,7 +214,7 @@ namespace OSLC4Net.ChangeManagementTest
         }
 
         private static void VerifyResourceShape(ResourceShape resourceShape,
-                                                String        type)
+                                                string type)
         {
             Assert.IsNotNull(resourceShape);
 
@@ -237,14 +227,14 @@ namespace OSLC4Net.ChangeManagementTest
                 Assert.IsTrue(describes.Contains(new Uri(type)));
             }
 
-            OSLC4Net.Core.Model.Property[] properties = resourceShape.GetProperties();
+            Property[] properties = resourceShape.GetProperties();
 
             Assert.IsNotNull(properties);
             Assert.IsTrue(properties.Length > 0);
 
-            foreach (OSLC4Net.Core.Model.Property property in properties)
+            foreach (var property in properties)
             {
-                String name               = property.GetName();
+                string name               = property.GetName();
                 Uri    propertyDefinition = property.GetPropertyDefinition();
 
                 Assert.IsNotNull(property.GetDescription());
@@ -259,7 +249,7 @@ namespace OSLC4Net.ChangeManagementTest
             }
         }
 
-        protected void TestResourceShape(String mediaType)
+        protected void TestResourceShape(string mediaType)
         {
             ResourceShape resourceShape = GetResourceShape(mediaType,
                                                            Constants.TYPE_CHANGE_REQUEST);
@@ -268,12 +258,12 @@ namespace OSLC4Net.ChangeManagementTest
                                 Constants.TYPE_CHANGE_REQUEST);
         }
 
-        protected void TestCompact(String compactMediaType,
-                                   String normalMediaType)
+        protected void TestCompact(string compactMediaType,
+                                   string normalMediaType)
         {
             Assert.IsNotNull(CREATED_CHANGE_REQUEST_URI);
 
-            OslcRestClient oslcRestClient = new OslcRestClient(FORMATTERS,
+            OslcRestClient oslcRestClient = new(FORMATTERS,
                                                                CREATED_CHANGE_REQUEST_URI,
                                                                compactMediaType);
 
@@ -283,11 +273,11 @@ namespace OSLC4Net.ChangeManagementTest
                           compact);
         }
 
-        protected ChangeRequest MakeChangeRequest(String mediaType)
+        protected ChangeRequest MakeChangeRequest(string mediaType)
         {
             CREATED_CHANGE_REQUEST_URI = null;
 
-            ChangeRequest changeRequest = new ChangeRequest();
+            ChangeRequest changeRequest = new();
 
             changeRequest.AddContributor(new Uri("http://myserver/mycmapp/users/bob"));
             changeRequest.AddCreator(new Uri("http://myserver/mycmapp/users/bob"));
@@ -305,11 +295,11 @@ namespace OSLC4Net.ChangeManagementTest
             changeRequest.AddTracksRequirement(new Link(new Uri("http://myserver/reqtool/req/34ef31af")));
             changeRequest.AddTracksRequirement(new Link(new Uri("http://remoteserver/reqrepo/project1/req456"), "Requirement 456"));
 
-            String creation = GetCreation(mediaType, Constants.TYPE_CHANGE_REQUEST);
+            string creation = GetCreation(mediaType, Constants.TYPE_CHANGE_REQUEST);
 
-            OslcRestClient oslcRestClient = new OslcRestClient(FORMATTERS,
-                                                               creation,
-                                                               mediaType);
+            OslcRestClient oslcRestClient = new(FORMATTERS,
+                                                creation,
+                                                mediaType);
 
             ChangeRequest addedChangeRequest = oslcRestClient.AddOslcResource(changeRequest);
 
@@ -318,7 +308,7 @@ namespace OSLC4Net.ChangeManagementTest
             return addedChangeRequest;
         }
 
-        protected void TestCreate(String mediaType)
+        protected void TestCreate(string mediaType)
         {
             Assert.IsNull(CREATED_CHANGE_REQUEST_URI);
 
@@ -329,14 +319,13 @@ namespace OSLC4Net.ChangeManagementTest
                                 true);
         }
 
-        protected HttpResponseMessage DeleteChangeRequest(String mediaType)
+        protected HttpResponseMessage? DeleteChangeRequest(string mediaType)
         {
             try
             {
-                OslcRestClient oslcRestClient = new OslcRestClient(FORMATTERS,
-                                                                   CREATED_CHANGE_REQUEST_URI,
-                                                                   mediaType);
-
+                OslcRestClient oslcRestClient = new(FORMATTERS,
+                                                    CREATED_CHANGE_REQUEST_URI,
+                                                    mediaType);
                 return oslcRestClient.RemoveOslcResourceReturnClientResponse();
             }
             catch (Exception)
@@ -349,49 +338,49 @@ namespace OSLC4Net.ChangeManagementTest
             }
         }
 
-        protected void TestDelete(String mediaType)
+        protected void TestDelete(string mediaType)
         {
-            OslcRestClient oslcRestClient = new OslcRestClient(FORMATTERS,
-                                                               CREATED_CHANGE_REQUEST_URI,
-                                                               mediaType);
+            OslcRestClient oslcRestClient = new(FORMATTERS,
+                                                CREATED_CHANGE_REQUEST_URI,
+                                                mediaType);
 
             Assert.IsNotNull(CREATED_CHANGE_REQUEST_URI);
 
-            HttpResponseMessage clientResponse = DeleteChangeRequest(mediaType);
+            HttpResponseMessage? clientResponse = DeleteChangeRequest(mediaType);
 
             Assert.IsNotNull(clientResponse);
-            Assert.AreEqual(HttpStatusCode.NoContent, clientResponse.StatusCode);
+            Assert.AreEqual(HttpStatusCode.NoContent, clientResponse?.StatusCode);
 
             Assert.IsNull(oslcRestClient.GetOslcResource<ChangeRequest>());
         }
 
-        protected void TestRetrieve(String mediaType)
+        protected void TestRetrieve(string mediaType)
         {
             Assert.IsNotNull(CREATED_CHANGE_REQUEST_URI);
 
-            OslcRestClient oslcRestClient = new OslcRestClient(FORMATTERS,
-                                                               CREATED_CHANGE_REQUEST_URI,
-                                                               mediaType);
+            OslcRestClient oslcRestClient = new(FORMATTERS,
+                                                CREATED_CHANGE_REQUEST_URI,
+                                                mediaType);
 
             ChangeRequest changeRequest = oslcRestClient.GetOslcResource<ChangeRequest>();
 
             VerifyChangeRequest(mediaType,
                                 changeRequest,
-                                true);
+                                recurse: true);
         }
 
-        protected void TestRetrieves(String mediaType)
+        protected void TestRetrieves(string mediaType)
         {
             Assert.IsNotNull(CREATED_CHANGE_REQUEST_URI);
 
-            String queryBase = GetQueryBase(mediaType,
+            string queryBase = GetQueryBase(mediaType,
                                             Constants.TYPE_CHANGE_REQUEST);
 
             Assert.IsNotNull(queryBase);
 
-            OslcRestClient oslcRestClient = new OslcRestClient(FORMATTERS,
-                                                               queryBase,
-                                                               mediaType);
+            OslcRestClient oslcRestClient = new(FORMATTERS,
+                                                queryBase,
+                                                mediaType);
 
             ChangeRequest[] changeRequests = oslcRestClient.GetOslcResources<ChangeRequest>();
 
@@ -402,9 +391,7 @@ namespace OSLC4Net.ChangeManagementTest
 
             foreach (ChangeRequest changeRequest in changeRequests)
             {
-                VerifyChangeRequest(mediaType,
-                                    changeRequest,
-                                    true);
+                VerifyChangeRequest(mediaType, changeRequest, recurse: true);
 
                 if (CREATED_CHANGE_REQUEST_URI.Equals(changeRequest.GetAbout()))
                 {
@@ -415,19 +402,17 @@ namespace OSLC4Net.ChangeManagementTest
             Assert.IsTrue(found);
         }
 
-        protected void TestUpdate(String mediaType)
+        protected static void TestUpdate(string mediaType)
         {
             Assert.IsNotNull(CREATED_CHANGE_REQUEST_URI);
 
-            OslcRestClient oslcRestClient = new OslcRestClient(FORMATTERS,
-                                                               CREATED_CHANGE_REQUEST_URI,
-                                                               mediaType);
+            OslcRestClient oslcRestClient = new(FORMATTERS,
+                                                CREATED_CHANGE_REQUEST_URI,
+                                                mediaType);
 
             ChangeRequest changeRequest = oslcRestClient.GetOslcResource<ChangeRequest>();
 
-            VerifyChangeRequest(mediaType,
-                                changeRequest,
-                                true);
+            VerifyChangeRequest(mediaType, changeRequest, recurse: true);
 
             Assert.IsNull(changeRequest.IsApproved());
             Assert.IsNull(changeRequest.GetCloseDate());
@@ -451,7 +436,7 @@ namespace OSLC4Net.ChangeManagementTest
             Assert.AreEqual(changeRequest.GetAbout(), updatedChangeRequest.GetAbout());
             Assert.AreEqual(true, updatedChangeRequest.IsApproved());
             Assert.AreEqual(closeDate.ToShortDateString() + " - " + closeDate.ToShortTimeString(),
-                            updatedChangeRequest.GetCloseDate().Value.ToShortDateString() + " - " + updatedChangeRequest.GetCloseDate().Value.ToShortTimeString());
+                            updatedChangeRequest.GetCloseDate()?.ToShortDateString() + " - " + updatedChangeRequest.GetCloseDate()?.ToShortTimeString());
             Assert.IsFalse(changeRequest.GetModified().Equals(updatedChangeRequest.GetModified()));
             Assert.IsTrue(updatedChangeRequest.GetModified() > updatedChangeRequest.GetCreated());
         }

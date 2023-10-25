@@ -5,7 +5,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -17,7 +17,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using OSLC4Net.Core.Model;
 using OSLC4Net.Core.Attribute;
 
@@ -33,19 +32,19 @@ namespace OSLC4Net.Client.Oslc.Resources
 	    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
         private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
         private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-        private readonly ISet<String>   subjects                    = new HashSet<String>(); // XXX - TreeSet<> in Java
+        private readonly ISet<string>   subjects                    = new HashSet<string>(); // XXX - TreeSet<> in Java
         private readonly ISet<Uri>      states                      = new HashSet<Uri>(); // XXX - TreeSet<> in Java
         private readonly ISet<Uri>      verdicts                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
         private readonly ISet<Uri>      contributions               = new HashSet<Uri>(); // XXX - TreeSet<> in Java
         private readonly ISet<ParameterInstance> inputParameters    = new HashSet<ParameterInstance>(); // XXX - TreeSet<> in Java
         private readonly ISet<ParameterInstance> outputParameters   = new HashSet<ParameterInstance>(); // XXX - TreeSet<> in Java
-    
+
         private DateTime?   created;
-        private String      identifier;
+        private string identifier;
         private Uri         instanceShape;
         private DateTime?   modified;
         private Uri         serviceProvider;
-        private String      title;
+        private string title;
         private Uri         desiredState;
         private Link        producedByAutomationRequest;
         private Link        reportsOnAutomationPlan;
@@ -54,7 +53,7 @@ namespace OSLC4Net.Client.Oslc.Resources
 	    {
 		    rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_RESULT));
 	    }
-	
+
         public AutomationResult(Uri about) : base(about)
          {
 		    rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_RESULT));
@@ -63,7 +62,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         protected Uri GetRdfType() {
     	    return new Uri(AutomationConstants.TYPE_AUTOMATION_RESULT);
         }
-    
+
         public void AddContributor(Uri contributor)
         {
             this.contributors.Add(contributor);
@@ -73,13 +72,13 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             this.creators.Add(creator);
         }
-    
+
         public void AddRdfType(Uri rdfType)
         {
             this.rdfTypes.Add(rdfType);
         }
 
-        public void AddSubject(String subject)
+        public void AddSubject(string subject)
         {
             this.subjects.Add(subject);
         }
@@ -88,27 +87,27 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             this.states.Add(state);
         }
-    
+
         public void AddVerdict(Uri verdict)
         {
             this.verdicts.Add(verdict);
         }
-    
+
         public void AddContribution(Uri contribution)
         {
             this.contributions.Add(contribution);
         }
-    
+
         public void AddInputParameter(ParameterInstance parameter)
         {
             this.inputParameters.Add(parameter);
         }
-    
+
         public void AddOutputParameter(ParameterInstance parameter)
         {
             this.outputParameters.Add(parameter);
         }
-    
+
         [OslcDescription("The person(s) who are responsible for the work needed to complete the automation result.")]
         [OslcName("contributor")]
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "contributor")]
@@ -143,7 +142,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
         [OslcReadOnly]
         [OslcTitle("Identifier")]
-        public String GetIdentifier()
+        public string GetIdentifier()
         {
             return identifier;
         }
@@ -189,7 +188,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "subject")]
         [OslcReadOnly(false)]
         [OslcTitle("Subjects")]
-        public String[] GetSubjects()
+        public string[] GetSubjects()
         {
             return subjects.ToArray();
         }
@@ -199,11 +198,11 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
         [OslcTitle("Title")]
         [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
-        public String GetTitle()
+        public string GetTitle()
         {
             return title;
         }
-    
+
         [OslcDescription("Used to indicate the state of the automation result based on values defined by the service provider.")]
         [OslcOccurs(Occurs.OneOrMany)]
         [OslcReadOnly(true)]
@@ -221,7 +220,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return states.ToArray();
         }
-    
+
         [OslcDescription("A result contribution associated with this automation result.")]
         [OslcOccurs(Occurs.ZeroOrMany)]
         [OslcName("contribution")]
@@ -231,7 +230,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return contributions.ToArray();
         }
-    
+
         [OslcDescription("Used to indicate the verdict of the automation result based on values defined by the service provider.")]
         [OslcOccurs(Occurs.OneOrMany)]
         [OslcName("verdict")]
@@ -247,7 +246,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return verdicts.ToArray();
         }
-    
+
         [OslcDescription("Used to indicate the desired state of the Automation Request based on values defined by the service provider.")]
         [OslcPropertyDefinition(AutomationConstants.AUTOMATION_NAMESPACE + "desiredState")]
         [OslcName("desiredState")]
@@ -264,7 +263,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return desiredState;
         }
-    
+
         [OslcDescription("Automation Request which produced the Automation Result.")]
         [OslcPropertyDefinition(AutomationConstants.AUTOMATION_NAMESPACE + "producedByAutomationRequest")]
         [OslcName("producedByAutomationRequest")]
@@ -274,7 +273,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return producedByAutomationRequest;
         }
-    
+
         [OslcDescription("Automation Plan which the Automation Result reports on.")]
         [OslcPropertyDefinition(AutomationConstants.AUTOMATION_NAMESPACE + "reportsOnAutomationPlan")]
         [OslcName("reportsOnAutomationPlan")]
@@ -284,7 +283,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return reportsOnAutomationPlan;
         }
-    
+
         [OslcDescription("A copy of the parameters provided during creation of the Automation Request which produced this Automation Result.")]
         [OslcOccurs(Occurs.ZeroOrMany)]
         [OslcName("inputParameter")]
@@ -305,7 +304,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return outputParameters.ToArray();
         }
-    
+
         public void setContributors(Uri[] contributors)
         {
             this.contributors.Clear();
@@ -331,11 +330,11 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void setIdentifier(String identifier)
+        public void setIdentifier(string identifier)
         {
             this.identifier = identifier;
         }
-    
+
         public void setInstanceShape(Uri instanceShape)
         {
             this.instanceShape = instanceShape;
@@ -361,7 +360,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             this.serviceProvider = serviceProvider;
         }
 
-        public void setSubjects(String[] subjects)
+        public void setSubjects(string[] subjects)
         {
             this.subjects.Clear();
 
@@ -371,7 +370,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void setTitle(String title)
+        public void setTitle(string title)
         {
             this.title = title;
         }
@@ -385,7 +384,7 @@ namespace OSLC4Net.Client.Oslc.Resources
                 this.states.AddAll(states);
             }
         }
-    
+
         public void setVerdicts(Uri[] verdicts)
         {
             this.verdicts.Clear();
@@ -395,7 +394,7 @@ namespace OSLC4Net.Client.Oslc.Resources
                 this.verdicts.AddAll(verdicts);
             }
         }
-    
+
         public void setContributions(Uri[] contributions)
         {
             this.contributions.Clear();
@@ -405,7 +404,7 @@ namespace OSLC4Net.Client.Oslc.Resources
                 this.contributions.AddAll(contributions);
             }
         }
-    
+
         public void setDesiredState(Uri desiredState)
         {
             this.desiredState = desiredState;
@@ -415,12 +414,12 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             this.producedByAutomationRequest = producedByAutomationRequest;
         }
-    
+
         public void setReportsOnAutomationPlan(Link reportsOnAutomationPlan)
         {
             this.reportsOnAutomationPlan = reportsOnAutomationPlan;
         }
-    
+
         public void setInputParameters(ParameterInstance[] parameters)
         {
             this.inputParameters.Clear();
@@ -430,7 +429,7 @@ namespace OSLC4Net.Client.Oslc.Resources
                 this.inputParameters.AddAll(parameters);
             }
         }
-    
+
         public void setOutputParameters(ParameterInstance[] parameters)
         {
             this.outputParameters.Clear();

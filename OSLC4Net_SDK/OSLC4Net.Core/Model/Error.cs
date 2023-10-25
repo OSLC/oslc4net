@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using OSLC4Net.Core.Attribute;
+﻿using OSLC4Net.Core.Attribute;
 
 namespace OSLC4Net.Core.Model
 {

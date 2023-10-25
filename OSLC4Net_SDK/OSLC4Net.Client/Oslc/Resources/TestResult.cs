@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -16,7 +16,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
 
@@ -34,8 +33,8 @@ namespace OSLC4Net.Client.Oslc.Resources
         private Link     executesTestScript;
         private Link     reportsOnTestCase;
         private Link     reportsOnTestPlan;
-        private Link     producedByTestExecutionRecord;    
-        private String   status;
+        private Link     producedByTestExecutionRecord;
+        private string status;
 
         public TestResult() : base()
         {
@@ -45,7 +44,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
     	    return new Uri(QmConstants.TYPE_TEST_RESULT);
         }
-    
+
         public void AddAffectedByChangeRequest(Link affectingChangeRequest)
         {
             this.affectedByChangeRequests.Add(affectingChangeRequest);
@@ -61,7 +60,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return affectedByChangeRequests.ToArray();
         }
-    
+
         [OslcDescription("Test Plan that the Test Result reports on.")]
         [OslcName("reportsOnTestPlan")]
         [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "reportsOnTestPlan")]
@@ -72,7 +71,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return reportsOnTestPlan;
         }
-    
+
         [OslcDescription("Test Case that the Test Result reports on.")]
         [OslcName("reportsOnTestCase")]
         [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "reportsOnTestCase")]
@@ -83,7 +82,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return reportsOnTestCase;
         }
-    
+
         [OslcDescription("Test Script executed to produce the Test Result.")]
         [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "executesTestScript")]
         [OslcTitle("Executes Test Script")]
@@ -91,7 +90,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return executesTestScript;
         }
-    
+
         [OslcDescription("Test Execution Record that the Test Result was produced by.")]
         [OslcName("producedByTestExecutionRecord")]
         [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "producedByTestExecutionRecord")]
@@ -102,17 +101,17 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return producedByTestExecutionRecord;
         }
-    
+
         [OslcDescription("Used to indicate the state of the Test Result based on values defined by the service provider.")]
         [OslcOccurs(Occurs.ZeroOrOne)]
         [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "status")]
         [OslcTitle("Status")]
         [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
-        public String GetStatus()
+        public string GetStatus()
         {
             return status;
         }
-    
+
         public void SetAffectedByChangeRequests(Link[] affectedByChangeRequests)
         {
             this.affectedByChangeRequests.Clear();
@@ -122,28 +121,28 @@ namespace OSLC4Net.Client.Oslc.Resources
                 this.affectedByChangeRequests.AddAll(affectedByChangeRequests);
             }
         }
-    
+
         public void SetReportsOnTestPlan(Link reportsOnTestPlan)
         {
             this.reportsOnTestPlan = reportsOnTestPlan;
         }
-    
+
         public void SetReportsOnTestCase(Link reportsOnTestCase)
         {
             this.reportsOnTestCase = reportsOnTestCase;
         }
-    
+
         public void SetProducedByTestExecutionRecord(Link producedByTestExecutionRecord)
         {
             this.producedByTestExecutionRecord = producedByTestExecutionRecord;
         }
-    
+
         public void SetExecutesTestScript(Link executesTestScript)
         {
             this.executesTestScript = executesTestScript;
         }
-    
-        public void SetStatus(String status)
+
+        public void SetStatus(string status)
         {
             this.status = status;
         }

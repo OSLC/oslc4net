@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -15,7 +15,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Antlr.Runtime.Tree;
 
@@ -30,7 +29,7 @@ namespace OSLC4Net.Core.Query.Impl
         CompoundTermImpl(
             CommonTree tree,
             bool isTopLevel,
-            IDictionary<String, String> prefixMap
+            IDictionary<string, string> prefixMap
         ) : base(isTopLevel ? null : tree,
                  isTopLevel ? TermType.TOP_LEVEL : TermType.NESTED,
                  prefixMap)
@@ -53,11 +52,11 @@ namespace OSLC4Net.Core.Query.Impl
                     children =
                         new List<SimpleTerm>(
                                 treeChildren.Count - (isTopLevel ? 0 : 1));
-        
+
                     foreach (CommonTree child in treeChildren) {
-            
+
                         SimpleTerm simpleTerm;
-            
+
                         switch(child.Token.Type) {
                         case OslcWhereParser.SIMPLE_TERM:
                             simpleTerm = new ComparisonTermImpl(child, prefixMap);
@@ -71,7 +70,7 @@ namespace OSLC4Net.Core.Query.Impl
                         default:
                             throw new InvalidOperationException("unimplemented type of simple term: " + child.Token.Text);
                         }
-            
+
                         children.Add(simpleTerm);
                     }
                 }
@@ -83,32 +82,32 @@ namespace OSLC4Net.Core.Query.Impl
         public override string ToString()
         {
              StringBuilder builder = new StringBuilder();
-        
+
             if (! isTopLevel) {
                 builder.Append(Property.ToString());
                 builder.Append('{');
             }
-        
+
             bool first = true;
-        
+
             foreach (SimpleTerm term in Children) {
-            
+
                 if (first) {
                     first = false;
                 } else {
                     builder.Append(" and ");
                 }
-            
+
                 builder.Append(term.ToString());
             }
-        
+
             if (! isTopLevel) {
                 builder.Append('}');
             }
-        
+
             return builder.ToString();
        }
-    
+
         private readonly CommonTree tree;
         private readonly bool isTopLevel;
         private IList<SimpleTerm> children = null;

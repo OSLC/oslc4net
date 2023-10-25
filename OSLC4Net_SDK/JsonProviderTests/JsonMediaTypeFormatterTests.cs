@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -16,15 +16,12 @@
 using System;
 using System.Diagnostics;
 using System.Json;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.IO;
-using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -157,7 +154,7 @@ namespace JsonProviderTests
             writer.Flush();
 
             stream.Position = 0;
-    
+
             var result = await formatter.ReadFromStreamAsync(typeof(T), stream, content, logFormatter);
 
             Debug.Write(result.ToString());

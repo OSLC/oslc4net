@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -14,11 +14,7 @@
  *******************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Reflection;
-using System.Text;
 
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Exceptions;
@@ -29,33 +25,33 @@ namespace OSLC4Net.Core.Model
     {
 
         private ServiceProviderFactory() : base()
-        {          
-        } 
+        {
+        }
 
 	    public static ServiceProvider CreateServiceProvider(string baseURI, string title, string description, Publisher publisher, Type[] resourceTypes)
         {
 		    return InitServiceProvider(new ServiceProvider(), baseURI, title, description, publisher, resourceTypes, null);
 	    }
-	
+
 	    public static ServiceProvider CreateServiceProvider(string baseURI, string title, string description, Publisher publisher, Type[] resourceTypes, Dictionary<string,object> pathParameterValues)
         {
 		    return InitServiceProvider(new ServiceProvider(), baseURI, title, description, publisher, resourceTypes, pathParameterValues);
 	    }
 
-	    public static ServiceProvider InitServiceProvider(ServiceProvider serviceProvider, string baseURI, string title, string description, Publisher publisher, Type[] resourceTypes, Dictionary<string,object> pathParameterValues) 
+	    public static ServiceProvider InitServiceProvider(ServiceProvider serviceProvider, string baseURI, string title, string description, Publisher publisher, Type[] resourceTypes, Dictionary<string,object> pathParameterValues)
         {
-            
+
 		    serviceProvider.SetTitle(title);
 		    serviceProvider.SetDescription(description);
 		    serviceProvider.SetPublisher(publisher);
 
 	        Dictionary<string, Service> serviceMap = new Dictionary<string, Service>();
 
-		    foreach (Type resourceType in resourceTypes) 
+		    foreach (Type resourceType in resourceTypes)
             {
 		        OslcService[] serviceAttribute = (OslcService[]) resourceType.GetCustomAttributes(typeof(OslcService),false);
 
-		        if (serviceAttribute == null || serviceAttribute.Length == 0) 
+		        if (serviceAttribute == null || serviceAttribute.Length == 0)
                 {
 		            throw new OslcCoreMissingAttributeException(resourceType, typeof(OslcService));
 		        } else if (serviceAttribute.Length > 1)
@@ -93,29 +89,29 @@ namespace OSLC4Net.Core.Model
         /// <param name="service"></param>
         /// <param name="pathParameterValues"></param>
 	    private static void HandleResourceType(string baseURI, Type resourceType,
-			    Service service, Dictionary<string,object> pathParameterValues) 
+			    Service service, Dictionary<string,object> pathParameterValues)
         {
-		    foreach (MethodInfo method in resourceType.GetMethods()) 
+		    foreach (MethodInfo method in resourceType.GetMethods())
             {
-			   
-			    if (method.Name.StartsWith("Get")) 
+
+			    if (method.Name.StartsWith("Get"))
                 {
 				    OslcQueryCapability [] queryCapabilityAttribute = (OslcQueryCapability [])method.GetCustomAttributes(typeof(OslcQueryCapability), false);
 				    string[] resourceShapes = null;
-				    if (queryCapabilityAttribute != null && queryCapabilityAttribute.Length > 0) 
+				    if (queryCapabilityAttribute != null && queryCapabilityAttribute.Length > 0)
                     {
 					    service.AddQueryCapability(CreateQueryCapability(baseURI, method, pathParameterValues));
 					    string resourceShape = queryCapabilityAttribute[0].resourceShape;
-					    if ((resourceShape != null) && (resourceShape.Length > 0)) 
+					    if ((resourceShape != null) && (resourceShape.Length > 0))
                         {
 					        resourceShapes = new string[] {resourceShape};
 					    }
 				    }
 				    OslcDialogs [] dialogsAttribute = (OslcDialogs [])method.GetCustomAttributes(typeof(OslcDialogs), false);
-				    if (dialogsAttribute != null && dialogsAttribute.Length > 0) 
+				    if (dialogsAttribute != null && dialogsAttribute.Length > 0)
                     {
 				        OslcDialog [] dialogs = dialogsAttribute[0].value;
-				        foreach (OslcDialog dialog in dialogs) 
+				        foreach (OslcDialog dialog in dialogs)
                         {
 				            if (dialog != null) {
 				                service.AddSelectionDialog(CreateSelectionDialog(baseURI, method, dialog, resourceShapes, pathParameterValues));
@@ -125,7 +121,7 @@ namespace OSLC4Net.Core.Model
 				    else
 				    {
                         OslcDialog [] dialogAttribute = (OslcDialog [])method.GetCustomAttributes(typeof(OslcDialog), false);
-                        if (dialogAttribute != null && dialogAttribute.Length > 0) 
+                        if (dialogAttribute != null && dialogAttribute.Length > 0)
                         {
                             service.AddSelectionDialog(CreateSelectionDialog(baseURI, method, dialogAttribute[0], resourceShapes, pathParameterValues));
                         }
@@ -134,18 +130,18 @@ namespace OSLC4Net.Core.Model
 				    if (method.Name.StartsWith("Post")) {
 					    OslcCreationFactory [] creationFactoryAttribute =(OslcCreationFactory []) method.GetCustomAttributes(typeof(OslcCreationFactory), false);
 					    string[] resourceShapes = null;
-					    if (creationFactoryAttribute != null && creationFactoryAttribute.Length > 0) 
+					    if (creationFactoryAttribute != null && creationFactoryAttribute.Length > 0)
                         {
 						    service.AddCreationFactory(CreateCreationFactory(baseURI, method, pathParameterValues));
 						    resourceShapes = creationFactoryAttribute[0].resourceShapes;
 					    }
 	                    OslcDialogs [] dialogsAttribute = (OslcDialogs []) method.GetCustomAttributes(typeof(OslcDialogs), false);
-	                    if (dialogsAttribute != null && dialogsAttribute.Length > 0) 
+	                    if (dialogsAttribute != null && dialogsAttribute.Length > 0)
                         {
 	                        OslcDialog[] dialogs = dialogsAttribute[0].value;
-	                        foreach (OslcDialog dialog in dialogs) 
+	                        foreach (OslcDialog dialog in dialogs)
                             {
-	                            if (dialog != null) 
+	                            if (dialog != null)
                                 {
 	                                service.AddCreationDialog(CreateCreationDialog(baseURI, method, dialog, resourceShapes, pathParameterValues));
 	                            }
@@ -154,7 +150,7 @@ namespace OSLC4Net.Core.Model
 	                    else
 	                    {
 	                        OslcDialog [] dialogAttribute = (OslcDialog []) method.GetCustomAttributes(typeof(OslcDialog), false);
-	                        if (dialogAttribute != null && dialogAttribute.Length > 0) 
+	                        if (dialogAttribute != null && dialogAttribute.Length > 0)
                             {
 	                            service.AddCreationDialog(CreateCreationDialog(baseURI, method, dialogAttribute[0], resourceShapes, pathParameterValues));
 	                        }
@@ -164,7 +160,7 @@ namespace OSLC4Net.Core.Model
 		    }
 	    }
 
-	    private static CreationFactory CreateCreationFactory(string baseURI, MethodInfo method, Dictionary<string,object> pathParameterValues) 
+	    private static CreationFactory CreateCreationFactory(string baseURI, MethodInfo method, Dictionary<string,object> pathParameterValues)
         {
 		    OslcCreationFactory [] creationFactoryAttribute = (OslcCreationFactory [])method.GetCustomAttributes(typeof(OslcCreationFactory), false);
 
@@ -179,9 +175,9 @@ namespace OSLC4Net.Core.Model
             //controller names must end with Controller
             int pos = typeName.IndexOf("Controller");
             string controllerName = typeName.Substring(0, pos);
-            
+
             string creation = ResolvePathParameters(baseURI, controllerName.ToLower(), pathParameterValues);
-            
+
             /* TODO Path methodPathAttribute = method.getAttribute(Path.class);
             if (methodPathAttribute != null) {
 			    creation = creation + '/' + methodPathAttribute.value();
@@ -191,22 +187,22 @@ namespace OSLC4Net.Core.Model
 		    CreationFactory creationFactory = null;
 		    creationFactory = new CreationFactory(title, new Uri(creation)); //TODO:  Normalize the URI
 
-		    if ((label != null) && (label.Length > 0)) 
+		    if ((label != null) && (label.Length > 0))
             {
 		        creationFactory.SetLabel(label);
 		    }
 
-		    foreach (string resourceShape in resourceShapes) 
+		    foreach (string resourceShape in resourceShapes)
             {
                 creationFactory.AddResourceShape(new Uri(baseURI + "/" + resourceShape));
             }
 
-		    foreach (string resourceType in resourceTypes) 
+		    foreach (string resourceType in resourceTypes)
             {
                 creationFactory.AddResourceType(new Uri(resourceType));
             }
 
-		    foreach (string usage in usages) 
+		    foreach (string usage in usages)
             {
                 creationFactory.AddUsage(new Uri(usage));
             }
@@ -214,7 +210,7 @@ namespace OSLC4Net.Core.Model
 		    return creationFactory;
 	    }
 
-	    private static QueryCapability CreateQueryCapability(string baseURI, MethodInfo method, Dictionary<string,object> pathParameterValues) 
+	    private static QueryCapability CreateQueryCapability(string baseURI, MethodInfo method, Dictionary<string,object> pathParameterValues)
         {
 		    OslcQueryCapability [] queryCapabilityAttribute = (OslcQueryCapability [])method.GetCustomAttributes(typeof(OslcQueryCapability), false);
 
@@ -244,17 +240,17 @@ namespace OSLC4Net.Core.Model
 		        queryCapability.SetLabel(label);
 		    }
 
-		    if ((resourceShape != null) && (resourceShape.Length > 0)) 
+		    if ((resourceShape != null) && (resourceShape.Length > 0))
             {
 		        queryCapability.SetResourceShape(new Uri(baseURI + resourceShape));
             }
 
-            foreach (string resourceType in resourceTypes) 
+            foreach (string resourceType in resourceTypes)
             {
                 queryCapability.AddResourceType(new Uri(resourceType));
             }
 
-            foreach (string usage in usages) 
+            foreach (string usage in usages)
             {
                 queryCapability.AddUsage(new Uri(usage));
             }
@@ -303,43 +299,43 @@ namespace OSLC4Net.Core.Model
             {
                 throw new OslcCoreInvalidAttributeException(typeof(OslcDialog),typeof(OslcDialog));
             }
-            
+
 
             Dialog dialog = null;
             dialog = new Dialog(title, new Uri(uri));
 
-            if ((label != null) && (label.Length > 0)) 
+            if ((label != null) && (label.Length > 0))
             {
                 dialog.SetLabel(label);
             }
 
-            if ((hintWidth != null) && (hintWidth.Length > 0)) 
+            if ((hintWidth != null) && (hintWidth.Length > 0))
             {
                 dialog.SetHintWidth(hintWidth);
             }
 
-            if ((hintHeight != null) && (hintHeight.Length > 0)) 
+            if ((hintHeight != null) && (hintHeight.Length > 0))
             {
                 dialog.SetHintHeight(hintHeight);
             }
 
-            foreach (string resourceType in resourceTypes) 
+            foreach (string resourceType in resourceTypes)
             {
                 dialog.AddResourceType(new Uri(resourceType));
             }
 
-            foreach (string usage in usages) 
+            foreach (string usage in usages)
             {
                 dialog.AddUsage(new Uri(usage));
             }
 
             return dialog;
         }
-    
+
         private static string ResolvePathParameters(string basePath, string pathAttribute, Dictionary<string, object> pathParameterValues)
         {
     	    string returnUri = null;
-    	
+
     	    //Build the path from the @Path template + map of parameter value replacements
     	    if (pathParameterValues != null && pathParameterValues.Count > 0)
     	    {
@@ -352,14 +348,14 @@ namespace OSLC4Net.Core.Model
     		    }
     		*/
                 returnUri = basePath + "/" + pathAttribute;
-    	    } 
+    	    }
     	    else
     	    {
     		    // no parameters supplied - assume @Path not templated
     		    returnUri = basePath + "/" + pathAttribute;
     	    }
     	    return returnUri;
-    	
+
         }
     }
 }

@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -14,12 +14,9 @@
  *******************************************************************************/
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 using System.Reflection;
-using System.Text;
 
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Exceptions;
@@ -53,7 +50,7 @@ namespace OSLC4Net.Core.Model
             TYPE_TO_VALUE_TYPE[typeof(decimal)] = ValueType.Float;
             TYPE_TO_VALUE_TYPE[typeof(double)]  = ValueType.Double;
             TYPE_TO_VALUE_TYPE[typeof(string)]  = ValueType.String;
- 
+
             // Object types
             TYPE_TO_VALUE_TYPE[typeof(BigInteger)] = ValueType.Integer;
             TYPE_TO_VALUE_TYPE[typeof(DateTime)] =   ValueType.DateTime;
@@ -160,7 +157,7 @@ namespace OSLC4Net.Core.Model
 		    }
 
             Type componentType = GetComponentType(resourceType, method, returnType);
-        
+
             // Reified resources are a special case.
             if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IReifiedResource<>), componentType))
             {

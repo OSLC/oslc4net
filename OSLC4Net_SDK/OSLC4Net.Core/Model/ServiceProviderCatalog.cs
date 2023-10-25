@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -14,30 +14,28 @@
  *******************************************************************************/
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using OSLC4Net.Core.Attribute;
 
 namespace OSLC4Net.Core.Model
 {
     /// <summary>
-    /// OSLC Service Provider Catalog resource 
+    /// OSLC Service Provider Catalog resource
     /// </summary>
     [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
     [OslcResourceShape(title = "OSLC Service Provider Catalog Resource Shape", describes = new string[] { OslcConstants.TYPE_SERVICE_PROVIDER_CATALOG })]
-    public class ServiceProviderCatalog : AbstractResource 
+    public class ServiceProviderCatalog : AbstractResource
     {
         private readonly SortedSet<Uri> domains = new SortedUriSet();
         private readonly SortedSet<Uri> referencedServiceProviderCatalogs = new SortedUriSet();
         private readonly IList<ServiceProvider> serviceProviders = new List<ServiceProvider>();
 
-        private String description;
+        private string description;
 	    private OAuthConfiguration oauthConfiguration;
 	    private Publisher publisher;
-	    private String title;
+	    private string title;
 
 	    public ServiceProviderCatalog() : base()
         {
@@ -62,7 +60,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcReadOnly]
 	    [OslcTitle("Description")]
 	    [OslcValueType(ValueType.XMLLiteral)]
-        public String GetDescription() {
+        public string GetDescription() {
 		    return description;
 	    }
 
@@ -128,7 +126,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcReadOnly]
         [OslcTitle("Title")]
         [OslcValueType(ValueType.XMLLiteral)]
-	    public String GetTitle() {
+	    public string GetTitle() {
 		    return title;
 	    }
 
@@ -146,7 +144,7 @@ namespace OSLC4Net.Core.Model
 	        serviceProviders.Remove(serviceProvider);
 	    }
 
-	    public void SetDescription(String description) {
+	    public void SetDescription(string description) {
 		    this.description = description;
 	    }
 
@@ -179,7 +177,7 @@ namespace OSLC4Net.Core.Model
             }
 	    }
 
-        public void SetTitle(String title) {
+        public void SetTitle(string title) {
 		    this.title = title;
 	    }
     }

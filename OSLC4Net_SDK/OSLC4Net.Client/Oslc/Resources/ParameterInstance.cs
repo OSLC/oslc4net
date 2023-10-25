@@ -5,7 +5,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -17,7 +17,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using OSLC4Net.Core.Model;
 using OSLC4Net.Core.Attribute;
 
@@ -31,10 +30,10 @@ namespace OSLC4Net.Client.Oslc.Resources
     public class ParameterInstance : AbstractResource
     {
         private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    
-        private String   name;
-        private String   value;
-        private String   description;
+
+        private string name;
+        private string value;
+        private string description;
         private Uri      instanceShape;
         private Uri      serviceProvider;
 
@@ -42,7 +41,7 @@ namespace OSLC4Net.Client.Oslc.Resources
 	    {
 		    rdfTypes.Add(new Uri(AutomationConstants.TYPE_PARAMETER_INSTANCE));
 	    }
-	
+
         public ParameterInstance(Uri about) : base(about)
         {
 		    rdfTypes.Add(new Uri(AutomationConstants.TYPE_PARAMETER_INSTANCE));
@@ -52,7 +51,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
     	    return new Uri(AutomationConstants.TYPE_PARAMETER_INSTANCE);
         }
-    
+
         public void addRdfType(Uri rdfType)
         {
             this.rdfTypes.Add(rdfType);
@@ -62,7 +61,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
         [OslcTitle("Description")]
         [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
-        public String GetDescription()
+        public string GetDescription()
         {
             return description;
         }
@@ -71,7 +70,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcOccurs(Occurs.ExactlyOne)]
         [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "name")]
         [OslcTitle("Name")]
-        public String GetName()
+        public string GetName()
         {
             return name;
         }
@@ -80,11 +79,11 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcOccurs(Occurs.ZeroOrOne)]
         [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "value")]
         [OslcTitle("Value")]
-        public String GetValue()
+        public string GetValue()
         {
             return value;
         }
-    
+
         [OslcDescription("Resource Shape that provides hints as to resource property value-types and allowed values. ")]
         [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "instanceShape")]
         [OslcRange(OslcConstants.TYPE_RESOURCE_SHAPE)]
@@ -112,21 +111,21 @@ namespace OSLC4Net.Client.Oslc.Resources
             return serviceProvider;
         }
 
-        public void SetDescription(String description)
+        public void SetDescription(string description)
         {
             this.description = description;
         }
 
-        public void SetName(String name)
+        public void SetName(string name)
         {
             this.name = name;
         }
-    
-        public void SetValue(String value)
+
+        public void SetValue(string value)
         {
             this.value = value;
         }
-    
+
         public void SetInstanceShape(Uri instanceShape)
         {
             this.instanceShape = instanceShape;

@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -16,7 +16,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
 
@@ -35,12 +34,12 @@ namespace OSLC4Net.Client.Oslc.Resources
         private readonly ISet<Link>     validatesRequirements       = new HashSet<Link>();
 
         private Uri      executionInstructions;
-        private String   description;
+        private string description;
 
         public TestScript() : base()
         {
         }
-    
+
         protected override Uri GetRdfType()
         {
     	    return new Uri(QmConstants.TYPE_TEST_SCRIPT);
@@ -65,7 +64,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             this.validatesRequirements.Add(requirement);
         }
-    
+
         [OslcDescription("The person(s) who are responsible for the work needed to complete the change request.")]
         [OslcName("contributor")]
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "contributor")]
@@ -90,7 +89,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
         [OslcTitle("Description")]
         [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
-        public String GetDescription()
+        public string GetDescription()
         {
             return description;
         }
@@ -102,7 +101,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
             return executionInstructions;
         }
-    
+
         [OslcDescription("A related change request.")]
         [OslcName("relatedChangeRequest")]
         [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "relatedChangeRequest")]
@@ -145,7 +144,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             }
         }
 
-        public void setDescription(String description)
+        public void setDescription(string description)
         {
             this.description = description;
         }

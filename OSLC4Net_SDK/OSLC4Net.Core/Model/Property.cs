@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -14,10 +14,8 @@
  *******************************************************************************/
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using OSLC4Net.Core.Attribute;
 
@@ -27,7 +25,7 @@ namespace OSLC4Net.Core.Model
     /// OSLC Property attributes
     /// </summary>
     /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-    /// 
+    ///
     [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
     [OslcResourceShape(title = "OSLC Property Resource Shape", describes = new string[] { OslcConstants.TYPE_PROPERTY })]
     public sealed class Property : AbstractResource, IComparable<Property>
@@ -38,13 +36,13 @@ namespace OSLC4Net.Core.Model
         private Uri allowedValuesRef;
 	    private string defaultValue;
 	    private string description;
-	    private Boolean hidden;
+	    private bool hidden;
 	    private int maxSize;
-	    private Boolean memberProperty;
+	    private bool memberProperty;
 	    private string name;
 	    private Occurs occurs;
 	    private Uri propertyDefinition;
-	    private Boolean readOnly;
+	    private bool readOnly;
 	    private Representation representation;
 	    private string title;
 	    private Uri valueShape;
@@ -243,7 +241,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hidden")]
 	    [OslcReadOnly]
         [OslcTitle("Hidden")]
-	    public Boolean IsHidden() {
+	    public bool IsHidden() {
 		    return hidden;
 	    }
 
@@ -252,7 +250,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "isMemberProperty")]
 	    [OslcReadOnly]
         [OslcTitle("Is Member Property")]
-	    public Boolean IsMemberProperty() {
+	    public bool IsMemberProperty() {
 		    return memberProperty;
 	    }
 
@@ -260,7 +258,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "readOnly")]
 	    [OslcReadOnly]
         [OslcTitle("Read Only")]
-	    public Boolean IsReadOnly() {
+	    public bool IsReadOnly() {
 		    return readOnly;
 	    }
 
@@ -290,7 +288,7 @@ namespace OSLC4Net.Core.Model
 		    this.description = description;
 	    }
 
-	    public void SetHidden(Boolean hidden) {
+	    public void SetHidden(bool hidden) {
 		    this.hidden = hidden;
 	    }
 
@@ -298,7 +296,7 @@ namespace OSLC4Net.Core.Model
 		    this.maxSize = maxSize;
 	    }
 
-	    public void SetMemberProperty(Boolean memberProperty) {
+	    public void SetMemberProperty(bool memberProperty) {
 		    this.memberProperty = memberProperty;
 	    }
 
@@ -331,7 +329,7 @@ namespace OSLC4Net.Core.Model
 	        }
 	    }
 
-	    public void SetReadOnly(Boolean readOnly) {
+	    public void SetReadOnly(bool readOnly) {
 		    this.readOnly = readOnly;
 	    }
 
@@ -358,7 +356,7 @@ namespace OSLC4Net.Core.Model
 	    public void SetValueType(ValueType valueType) {
 	        this.valueType = valueType;
 	    }
-	
+
 	    public void SetValueType(Uri valueType) {
 	        if (valueType != null) {
 	            this.valueType = ValueTypeExtension.FromString(valueType.ToString());

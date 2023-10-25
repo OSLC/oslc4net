@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -16,7 +16,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using OSLC4Net.Core.Model;
 using OSLC4Net.Core.Attribute;
 
@@ -30,11 +29,11 @@ namespace OSLC4Net.Client.Oslc.Resources
         private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
         private DateTime?   created;
-        private String      identifier;
+        private string identifier;
         private Uri         instanceShape;
         private DateTime?   modified;
         private Uri         serviceProvider;
-        private String      title;
+        private string title;
 
         public QmResource() : base()
         {
@@ -45,7 +44,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         {
              rdfTypes.Add(GetRdfType());
         }
-     
+
         protected abstract Uri GetRdfType();
 
         public void AddRdfType(Uri rdfType)
@@ -67,7 +66,7 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
         [OslcReadOnly]
         [OslcTitle("Identifier")]
-        public String GetIdentifier()
+        public string GetIdentifier()
         {
             return identifier;
         }
@@ -113,17 +112,17 @@ namespace OSLC4Net.Client.Oslc.Resources
         [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
         [OslcTitle("Title")]
         [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
-        public String GetTitle()
+        public string GetTitle()
         {
             return title;
         }
-    
+
         public void SetCreated(DateTime? created)
         {
             this.created = created;
         }
 
-        public void SetIdentifier(String identifier)
+        public void SetIdentifier(string identifier)
         {
             this.identifier = identifier;
         }
@@ -153,7 +152,7 @@ namespace OSLC4Net.Client.Oslc.Resources
             this.serviceProvider = serviceProvider;
         }
 
-        public void SetTitle(String title)
+        public void SetTitle(string title)
         {
             this.title = title;
         }

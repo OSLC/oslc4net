@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -13,10 +13,7 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Antlr.Runtime.Tree;
 
 namespace OSLC4Net.Core.Query.Impl
@@ -30,7 +27,7 @@ namespace OSLC4Net.Core.Query.Impl
         SimpleTermImpl(
             CommonTree tree,
             TermType type,
-            IDictionary<String, String> prefixMap
+            IDictionary<string, string> prefixMap
         )
         {
             this.tree = tree;
@@ -55,12 +52,12 @@ namespace OSLC4Net.Core.Query.Impl
                     string rawPName = tree.GetChild(0).Text;
 
                     property = new PName();
-            
+
                     int colon = rawPName.IndexOf(':');
-            
+
                     if (colon < 0) {
                         property.local = rawPName;
-                    } else { 
+                    } else {
                         if (colon > 0) {
                             property.prefix = rawPName.Substring(0, colon);
                             property.ns = prefixMap[property.prefix];
@@ -74,7 +71,7 @@ namespace OSLC4Net.Core.Query.Impl
         }
 
         protected readonly CommonTree tree;
-        protected readonly IDictionary<String, String> prefixMap;
+        protected readonly IDictionary<string, string> prefixMap;
         private readonly TermType type;
         private PName property = null;
     }

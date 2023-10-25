@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -14,10 +14,8 @@
  *******************************************************************************/
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using OSLC4Net.Core.Attribute;
 
@@ -27,8 +25,8 @@ namespace OSLC4Net.Core.Model
     /// OSLC Service attribute
     /// </summary>
     [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-    [OslcResourceShape(title = "OSLC Service Resource Shape", describes = new String[] { OslcConstants.TYPE_SERVICE })]
-    public class Service : AbstractResource 
+    [OslcResourceShape(title = "OSLC Service Resource Shape", describes = new string[] { OslcConstants.TYPE_SERVICE })]
+    public class Service : AbstractResource
     {
 	    private IList<Dialog> creationDialogs = new List<Dialog>();
 	    private IList<CreationFactory> creationFactories = new List<CreationFactory>();

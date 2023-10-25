@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -14,10 +14,6 @@
  *******************************************************************************/
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using OSLC4Net.Core.Attribute;
 
@@ -28,18 +24,18 @@ namespace OSLC4Net.Core.Model
     /// </summary>
     [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
     [OslcResourceShape(title = "OSLC Publisher Resource Shape", describes = new string[] { OslcConstants.TYPE_PUBLISHER })]
-    public class Publisher : AbstractResource 
+    public class Publisher : AbstractResource
     {
 	    private Uri    icon;
-	    private String identifier;
-	    private String label;
-	    private String title;
+	    private string identifier;
+	    private string label;
+	    private string title;
 
 	    public Publisher() : base()
         {
 	    }
 
-	    public Publisher(String title, String identifier) : this()
+	    public Publisher(string title, string identifier) : this()
         {
 		    this.title = title;
 		    this.identifier = identifier;
@@ -58,7 +54,7 @@ namespace OSLC4Net.Core.Model
 	   [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
 	   [OslcReadOnly] // TODO - Marked as unspecified in the spec, but is this correct?
 	   [OslcTitle("Identifier")]
-	    public String GetIdentifier() {
+	    public string GetIdentifier() {
 		    return identifier;
 	    }
 
@@ -66,7 +62,7 @@ namespace OSLC4Net.Core.Model
 	   [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "label")]
 	   [OslcReadOnly]
        [OslcTitle("Label")]
-	    public String GetLabel() {
+	    public string GetLabel() {
 		    return label;
 	    }
 
@@ -76,7 +72,7 @@ namespace OSLC4Net.Core.Model
 	   [OslcReadOnly]
        [OslcTitle("Title")]
        [OslcValueType(ValueType.XMLLiteral)]
-	    public String GetTitle() {
+	    public string GetTitle() {
 		    return title;
 	    }
 
@@ -84,15 +80,15 @@ namespace OSLC4Net.Core.Model
 	        this.icon = icon;
 	    }
 
-	    public void SetIdentifier(String identifier) {
+	    public void SetIdentifier(string identifier) {
 		    this.identifier = identifier;
 	    }
 
-	    public void SetLabel(String label) {
+	    public void SetLabel(string label) {
 		    this.label = label;
 	    }
 
-	    public void SetTitle(String title) {
+	    public void SetTitle(string title) {
 		    this.title = title;
 	    }
     }

@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -14,12 +14,7 @@
  *******************************************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-
-using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Core.Exceptions
@@ -27,13 +22,13 @@ namespace OSLC4Net.Core.Exceptions
     public class OslcCoreInvalidRepresentationException : OslcCoreApplicationException
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="resourceType"></param>
         /// <param name="method"></param>
         /// <param name="representation"></param>
         public OslcCoreInvalidRepresentationException(Type resourceType, MethodInfo method, Representation representation) :
-            base(MESSAGE_KEY, new Object[] {resourceType.Name, method.Name, RepresentationExtension.ToString(representation)})
+            base(MESSAGE_KEY, new object[] {resourceType.Name, method.Name, RepresentationExtension.ToString(representation)})
         {
             this.method         = method;
             this.representation = representation;

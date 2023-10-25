@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using OSLC4Net.Core.Attribute;
 
@@ -13,11 +11,11 @@ namespace OSLC4Net.Core.Model
     {
         private List<string> allowedValues = new List<string>();
 
-	    public AllowedValues():base() 
+	    public AllowedValues():base()
         {
 	    }
 
-	    public void AddAllowedValue(string allowedValue) 
+	    public void AddAllowedValue(string allowedValue)
         {
             this.allowedValues.Add(allowedValue);
         }
@@ -28,12 +26,12 @@ namespace OSLC4Net.Core.Model
         [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "allowedValue")]
         [OslcReadOnly]
         [OslcTitle("Allowed Values")]
-        public string[] GetAllowedValues() 
+        public string[] GetAllowedValues()
         {
             return allowedValues.ToArray<string>();
         }
 
-	    public void SetAllowedValues(string[] allowedValues) 
+	    public void SetAllowedValues(string[] allowedValues)
         {
 	        this.allowedValues.Clear();
 	        if (allowedValues != null) {

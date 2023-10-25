@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -13,11 +13,8 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
 using System.Diagnostics;
-using System.Text;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using OSLC4Net.Core.Query;
@@ -28,7 +25,7 @@ namespace OSLC4Net.Core.QueryTests
     [TestClass]
     public class QueryBasicTest
     {
-	    static String PREFIXES = "qm=<http://qm.example.com/ns/>," +
+	    static string PREFIXES = "qm=<http://qm.example.com/ns/>," +
 			    "olsc=<http://open-services.net/ns/core#>," +
 			    "xs=<http://www.w3.org/2001/XMLSchema>";
 
@@ -50,7 +47,7 @@ namespace OSLC4Net.Core.QueryTests
                 try
                 {
 
-                    IDictionary<String, String> prefixMap =
+                    IDictionary<string, string> prefixMap =
                         QueryUtils.ParsePrefixes(trial.Expression);
 
                     Debug.WriteLine(prefixMap.ToString());
@@ -70,9 +67,9 @@ namespace OSLC4Net.Core.QueryTests
         [TestMethod]
         public void BasicOrderByTest()
         {
-            String prefixes = "qm=<http://qm.example.com/ns/>," +
+            string prefixes = "qm=<http://qm.example.com/ns/>," +
                 "oslc=<http://open-services.net/ns/core#>";
-            IDictionary<String, String> prefixMap = QueryUtils.ParsePrefixes(prefixes);
+            IDictionary<string, string> prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
             Trial[] trials = {
                     new Trial("-qm:priority", true),
@@ -135,9 +132,9 @@ namespace OSLC4Net.Core.QueryTests
         [TestMethod]
         public void BasicSelectTest()
         {
-            String prefixes = "qm=<http://qm.example.com/ns/>," +
+            string prefixes = "qm=<http://qm.example.com/ns/>," +
                 "oslc=<http://open-services.net/ns/core#>";
-            IDictionary<String, String> prefixMap = QueryUtils.ParsePrefixes(prefixes);
+            IDictionary<string, string> prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
             Trial[] trials = {
                     new Trial("*{*}", true),
@@ -175,10 +172,10 @@ namespace OSLC4Net.Core.QueryTests
         [TestMethod]
         public void BasicWhereTest()
         {
-            String prefixes = "qm=<http://qm.example.com/ns/>," +
+            string prefixes = "qm=<http://qm.example.com/ns/>," +
                 "oslc=<http://open-services.net/ns/core#>," +
                 "xs=<http://www.w3.org/2001/XMLSchema>";
-            IDictionary<String, String> prefixMap = QueryUtils.ParsePrefixes(prefixes);
+            IDictionary<string, string> prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
             Trial[] trials = {
                     new Trial("qm:testcase=<http://example.com/tests/31459>", true),
@@ -215,9 +212,9 @@ namespace OSLC4Net.Core.QueryTests
         [TestMethod]
         public void BasicInvertTest()
         {
-            String prefixes = "qm=<http://qm.example.com/ns/>," +
+            string prefixes = "qm=<http://qm.example.com/ns/>," +
                 "oslc=<http://open-services.net/ns/core#>";
-            IDictionary<String, String> prefixMap = QueryUtils.ParsePrefixes(prefixes);
+            IDictionary<string, string> prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
             Trial[] trials = {
                     new Trial("*{*}", true),
@@ -241,7 +238,7 @@ namespace OSLC4Net.Core.QueryTests
 
                     Assert.IsTrue(trial.ShouldSucceed);
 
-                    IDictionary<String, object> invertedProperties = QueryUtils.InvertSelectedProperties(selectClause);
+                    IDictionary<string, object> invertedProperties = QueryUtils.InvertSelectedProperties(selectClause);
                 }
                 catch (ParseException e)
                 {
@@ -251,28 +248,28 @@ namespace OSLC4Net.Core.QueryTests
                 }
             }
         }
-	
+
         [TestMethod]
 	    public void TestUriRef()
         {
-		    IDictionary<String, String> prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
+		    IDictionary<string, string> prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
 		    WhereClause where = QueryUtils.ParseWhere(
 				    "qm:testCase=<http://example.org/tests/24>", prefixMap);
-		
+
 		    IList<SimpleTerm> children = where.Children;
 		    Assert.AreEqual(1, children.Count, "Where clause should only have one term");
-		
+
 		    SimpleTerm simpleTerm = children[0];
 		    PName prop = simpleTerm.Property;
             Assert.AreEqual(prop.ns + prop.local, "http://qm.example.com/ns/testCase");
 		    Assert.IsTrue(simpleTerm is ComparisonTerm);
-	
+
 		    ComparisonTerm comparison = (ComparisonTerm) simpleTerm;
             Assert.AreEqual(comparison.Operator, Operator.EQUALS);
-		
+
 		    Value v = comparison.Operand;
 		    Assert.IsTrue(v is UriRefValue);
-		
+
 		    UriRefValue uriRef = (UriRefValue) v;
             Assert.AreEqual("http://example.org/tests/24", uriRef.Value);
 	    }

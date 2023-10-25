@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -15,41 +15,38 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
-using System.Net.Http.Headers;
-using System.Text;
 
 using OSLC4Net.Core.Exceptions;
 using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client
 {
-    
+
 
     /// <summary>
     /// This classs provides methods to register and deregister with an OSLC ServiceProvider Registry (not yet
     /// implemented in OSLC4Net - see Eclipse Lyo for a Java implementation)
-    /// 
-    /// It also provides methods to get a ServiceProviderCatalog and retrieve the ServiceProviders 
+    ///
+    /// It also provides methods to get a ServiceProviderCatalog and retrieve the ServiceProviders
     /// </summary>
-  
-   
+
+
     public sealed class ServiceProviderRegistryClient
     {
         private OslcRestClient client;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="formatters"></param>
         /// <param name="mediaType"></param>
         /// <param name="uri"></param>
         public ServiceProviderRegistryClient(ISet<MediaTypeFormatter>   formatters,
-			                                 String                     mediaType,
-			                                 String                     uri) 
+                                             string mediaType,
+                                             string uri)
         {
     	    this.client = new OslcRestClient(formatters,
     									     uri,
@@ -57,18 +54,18 @@ namespace OSLC4Net.Client
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="formatters"></param>
         /// <param name="mediaType"></param>
         public ServiceProviderRegistryClient(ISet<MediaTypeFormatter>   formatters,
-                                             String                     mediaType) :
+                                             string mediaType) :
             this(formatters, mediaType, ServiceProviderRegistryURIs.getServiceProviderRegistryURI())
         {
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="formatters"></param>
         public ServiceProviderRegistryClient(ISet<MediaTypeFormatter> formatters) :
@@ -348,7 +345,7 @@ namespace OSLC4Net.Client
                         Uri queryBase = queryCapability.GetQueryBase();
 
                         // Foundation Registry Services requires the query string of oslc.select=* in order to flesh out the ServiceProviders
-                        String query = queryBase.ToString() + "?oslc.select=*";
+                        string query = queryBase.ToString() + "?oslc.select=*";
 
                         OslcRestClient oslcRestClient = new OslcRestClient(client.GetFormatters(),
                                                                                  query);
