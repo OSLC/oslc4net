@@ -19,47 +19,47 @@ using System.Linq;
 
 using OSLC4Net.Core.Attribute;
 
-namespace OSLC4Net.Core.Model
-{
-    /// <summary>
-    /// OSLC Dialog resource
-    /// </summary>
-    [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-    [OslcResourceShape(title = "OSLC Dialog Resource Shape", describes = new string[] { OslcConstants.TYPE_DIALOG })]
-    public class Dialog : AbstractResource
-    {
-        private SortedSet<Uri> resourceTypes = new SortedUriSet();
-        private SortedSet<Uri> usages = new SortedUriSet();
+namespace OSLC4Net.Core.Model;
 
-        private Uri dialog;
+/// <summary>
+/// OSLC Dialog resource
+/// </summary>
+[OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
+[OslcResourceShape(title = "OSLC Dialog Resource Shape", describes = new string[] { OslcConstants.TYPE_DIALOG })]
+public class Dialog : AbstractResource
+{
+    private SortedSet<Uri> resourceTypes = new SortedUriSet();
+    private SortedSet<Uri> usages = new SortedUriSet();
+
+    private Uri dialog;
 	    private string hintHeight;
 	    private string hintWidth;
 	    private string label;
 	    private string title;
 
 	    public Dialog() : base()
-        {
+    {
 	    }
 
 	    public Dialog(string title, Uri dialog) : this()
-        {
+    {
 		    this.title = title;
 		    this.dialog = dialog;
 	    }
 
-        public void AddResourceType(Uri resourceType) {
-            this.resourceTypes.Add(resourceType);
-        }
+    public void AddResourceType(Uri resourceType) {
+        this.resourceTypes.Add(resourceType);
+    }
 
-        public void AddUsage(Uri usage) {
-            this.usages.Add(usage);
-        }
+    public void AddUsage(Uri usage) {
+        this.usages.Add(usage);
+    }
 
 	    [OslcDescription("The Uri of the dialog")]
 	    [OslcOccurs(Occurs.ExactlyOne)]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "dialog")]
 	    [OslcReadOnly]
-        [OslcTitle("Dialog")]
+    [OslcTitle("Dialog")]
 	    public Uri GetDialog() {
 	        return dialog;
 	    }
@@ -67,7 +67,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcDescription("Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1) Em and ex units are interpreted relative to the default system font (at 100% size)")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintHeight")]
 	    [OslcReadOnly]
-        [OslcTitle("Hint Height")]
+    [OslcTitle("Hint Height")]
 	    public string GetHintHeight() {
 		    return hintHeight;
 	    }
@@ -75,7 +75,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcDescription("Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1) Em and ex units are interpreted relative to the default system font (at 100% size)")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintWidth")]
 	    [OslcReadOnly]
-        [OslcTitle("Hint Width")]
+    [OslcTitle("Hint Width")]
 	    public string GetHintWidth() {
 		    return hintWidth;
 	    }
@@ -83,7 +83,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcDescription("Very short label for use in menu items")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "label")]
 	    [OslcReadOnly]
-        [OslcTitle("Label")]
+    [OslcTitle("Label")]
 	    public string GetLabel() {
 		    return label;
 	    }
@@ -92,7 +92,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcName("resourceType")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "resourceType")]
 	    [OslcReadOnly]
-        [OslcTitle("Resource Types")]
+    [OslcTitle("Resource Types")]
 	    public Uri[] GetResourceTypes() {
 	        return resourceTypes.ToArray();
 	    }
@@ -101,8 +101,8 @@ namespace OSLC4Net.Core.Model
 	    [OslcOccurs(Occurs.ExactlyOne)]
 	    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
 	    [OslcReadOnly]
-        [OslcTitle("Title")]
-        [OslcValueType(ValueType.XMLLiteral)]
+    [OslcTitle("Title")]
+    [OslcValueType(ValueType.XMLLiteral)]
 	    public string GetTitle() {
 		    return title;
 	    }
@@ -111,7 +111,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcName("usage")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "usage")]
 	    [OslcReadOnly]
-        [OslcTitle("Usages")]
+    [OslcTitle("Usages")]
 	    public Uri[] GetUsages() {
 	        return usages.ToArray();
 	    }
@@ -135,8 +135,8 @@ namespace OSLC4Net.Core.Model
 	    public void SetResourceTypes(Uri[] resourceTypes) {
 	        this.resourceTypes.Clear();
 	        if (resourceTypes != null) {
-                this.resourceTypes.AddAll(resourceTypes);
-            }
+            this.resourceTypes.AddAll(resourceTypes);
+        }
 	    }
 
 	    public void SetTitle(string title) {
@@ -146,8 +146,7 @@ namespace OSLC4Net.Core.Model
 	    public void SetUsages(Uri[] usages) {
 	        this.usages.Clear();
 	        if (usages != null) {
-                this.usages.AddAll(usages);
-            }
+            this.usages.AddAll(usages);
+        }
 	    }
-    }
 }

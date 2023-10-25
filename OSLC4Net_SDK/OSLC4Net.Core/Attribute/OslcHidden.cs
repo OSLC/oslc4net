@@ -14,24 +14,23 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Attribute
-{
-    /// <summary>
-    /// OSLC Hidden attribute
-    /// </summary>
-    /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-    [System.AttributeUsage(System.AttributeTargets.Method)
-    ]
-    public class OslcHidden : System.Attribute
-    {
-        /**
-         * A hint that indicates that property MAY be hidden when presented in a user interface.
-         */
-        public readonly bool value;
+namespace OSLC4Net.Core.Attribute;
 
-        public OslcHidden(bool value)
-        {
-            this.value = value;
-        }
+/// <summary>
+/// OSLC Hidden attribute
+/// </summary>
+/// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
+[System.AttributeUsage(System.AttributeTargets.Method)
+]
+public class OslcHidden : System.Attribute
+{
+    /**
+     * A hint that indicates that property MAY be hidden when presented in a user interface.
+     */
+    public readonly bool value;
+
+    public OslcHidden(bool value)
+    {
+        this.value = value;
     }
 }

@@ -13,13 +13,12 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query
+namespace OSLC4Net.Core.Query;
+
+/// <summary>
+/// URI_REF operand from oslc.where clause
+/// </summary>
+public interface UriRefValue : Value
 {
-    /// <summary>
-    /// URI_REF operand from oslc.where clause
-    /// </summary>
-    public interface UriRefValue : Value
-    {
-        string Value { get; }
-    }
+    string Value { get; }
 }

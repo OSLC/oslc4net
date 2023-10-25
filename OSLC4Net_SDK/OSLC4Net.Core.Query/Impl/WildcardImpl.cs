@@ -13,21 +13,20 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query.Impl
-{
-    /// <summary>
-    /// Implementation of Wildcard interface
-    /// </summary>
-    internal class WildcardImpl : PropertyImpl, Wildcard
-    {
-        public
-        WildcardImpl() : base(null, PropertyType.IDENTIFIER, null, true)
-        {
-        }
+namespace OSLC4Net.Core.Query.Impl;
 
-        public override string ToString()
-        {
-            return "*";
-        }
+/// <summary>
+/// Implementation of Wildcard interface
+/// </summary>
+internal class WildcardImpl : PropertyImpl, Wildcard
+{
+    public
+    WildcardImpl() : base(null, PropertyType.IDENTIFIER, null, true)
+    {
+    }
+
+    public override string ToString()
+    {
+        return "*";
     }
 }

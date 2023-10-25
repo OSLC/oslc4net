@@ -15,32 +15,31 @@
 
 using Antlr.Runtime.Tree;
 
-namespace OSLC4Net.Core.Query.Impl
+namespace OSLC4Net.Core.Query.Impl;
+
+/// <summary>
+/// Implementation of Value interface
+/// </summary>
+internal class ValueImpl : Value
 {
-    /// <summary>
-    /// Implementation of Value interface
-    /// </summary>
-    internal class ValueImpl : Value
+    protected
+    ValueImpl(
+        CommonTree tree,
+        ValueType type
+    )
     {
-        protected
-        ValueImpl(
-            CommonTree tree,
-            ValueType type
-        )
-        {
-            this.tree = tree;
-            this.type = type;
-        }
-
-        public ValueType Type
-        {
-            get
-            {
-                return type;
-            }
-        }
-
-        protected readonly CommonTree tree;
-        private readonly ValueType type;
+        this.tree = tree;
+        this.type = type;
     }
+
+    public ValueType Type
+    {
+        get
+        {
+            return type;
+        }
+    }
+
+    protected readonly CommonTree tree;
+    private readonly ValueType type;
 }

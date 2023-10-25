@@ -13,34 +13,33 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Exceptions
+namespace OSLC4Net.Core.Exceptions;
+
+/// <summary>
+/// Exception thrown when a required OSLC attribute definition is missing.
+/// </summary>
+public class OslcCoreMissingNamespaceDeclarationException : OslcCoreApplicationException
 {
     /// <summary>
-    /// Exception thrown when a required OSLC attribute definition is missing.
+    ///
     /// </summary>
-    public class OslcCoreMissingNamespaceDeclarationException : OslcCoreApplicationException
+    /// <param name="ns"></param>
+    /// <param name="annotationType"></param>
+    public OslcCoreMissingNamespaceDeclarationException(string ns) :
+        base(MESSAGE_KEY, new object[] { ns })
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="ns"></param>
-        /// <param name="annotationType"></param>
-        public OslcCoreMissingNamespaceDeclarationException(string ns) :
-            base(MESSAGE_KEY, new object[] { ns })
-        {
-            this.ns = ns;
-         }
+        this.ns = ns;
+     }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns></returns>
 	    public string GetNamespace() {
-            return ns;
+        return ns;
 	    }
 
-        private static readonly string MESSAGE_KEY = "MissingNamespaceDeclarationException";
+    private static readonly string MESSAGE_KEY = "MissingNamespaceDeclarationException";
 
 	    private string ns;
-    }
 }

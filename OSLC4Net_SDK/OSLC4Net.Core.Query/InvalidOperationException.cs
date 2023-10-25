@@ -15,13 +15,12 @@
 
 using System.Collections.Generic;
 
-namespace OSLC4Net.Core.Query
+namespace OSLC4Net.Core.Query;
+
+/// <summary>
+/// <i>in</i> operator simple term from olsc.where clause
+/// </summary>
+public interface InTerm : SimpleTerm
 {
-    /// <summary>
-    /// <i>in</i> operator simple term from olsc.where clause
-    /// </summary>
-    public interface InTerm : SimpleTerm
-    {
-        IList<Value> Values { get; }
-    }
+    IList<Value> Values { get; }
 }

@@ -13,12 +13,11 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query
+namespace OSLC4Net.Core.Query;
+
+/// <summary>
+/// Wildcard property from olsc.select of oslc.properties clause
+/// </summary>
+public interface Wildcard : Property
 {
-    /// <summary>
-    /// Wildcard property from olsc.select of oslc.properties clause
-    /// </summary>
-    public interface Wildcard : Property
-    {
-    }
 }

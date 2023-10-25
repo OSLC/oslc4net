@@ -16,63 +16,62 @@
 using System.Collections.Generic;
 using Antlr.Runtime.Tree;
 
-namespace OSLC4Net.Core.Query.Impl
+namespace OSLC4Net.Core.Query.Impl;
+
+/// <summary>
+/// Implementation of SimpleTerm interface
+/// </summary>
+internal abstract class SimpleTermImpl : SimpleTerm
 {
-    /// <summary>
-    /// Implementation of SimpleTerm interface
-    /// </summary>
-    internal abstract class SimpleTermImpl : SimpleTerm
+    protected
+    SimpleTermImpl(
+        CommonTree tree,
+        TermType type,
+        IDictionary<string, string> prefixMap
+    )
     {
-        protected
-        SimpleTermImpl(
-            CommonTree tree,
-            TermType type,
-            IDictionary<string, string> prefixMap
-        )
-        {
-            this.tree = tree;
-            this.type = type;
-            this.prefixMap = prefixMap;
-        }
-
-        public TermType Type
-        {
-            get
-            {
-                return type;
-            }
-        }
-
-        public PName Property
-        {
-            get
-            {
-                if (property == null)
-                {
-                    string rawPName = tree.GetChild(0).Text;
-
-                    property = new PName();
-
-                    int colon = rawPName.IndexOf(':');
-
-                    if (colon < 0) {
-                        property.local = rawPName;
-                    } else {
-                        if (colon > 0) {
-                            property.prefix = rawPName.Substring(0, colon);
-                            property.ns = prefixMap[property.prefix];
-                        }
-                        property.local = rawPName.Substring(colon + 1);
-                    }
-                }
-
-                return property;
-            }
-        }
-
-        protected readonly CommonTree tree;
-        protected readonly IDictionary<string, string> prefixMap;
-        private readonly TermType type;
-        private PName property = null;
+        this.tree = tree;
+        this.type = type;
+        this.prefixMap = prefixMap;
     }
+
+    public TermType Type
+    {
+        get
+        {
+            return type;
+        }
+    }
+
+    public PName Property
+    {
+        get
+        {
+            if (property == null)
+            {
+                string rawPName = tree.GetChild(0).Text;
+
+                property = new PName();
+
+                int colon = rawPName.IndexOf(':');
+
+                if (colon < 0) {
+                    property.local = rawPName;
+                } else {
+                    if (colon > 0) {
+                        property.prefix = rawPName.Substring(0, colon);
+                        property.ns = prefixMap[property.prefix];
+                    }
+                    property.local = rawPName.Substring(colon + 1);
+                }
+            }
+
+            return property;
+        }
+    }
+
+    protected readonly CommonTree tree;
+    protected readonly IDictionary<string, string> prefixMap;
+    private readonly TermType type;
+    private PName property = null;
 }

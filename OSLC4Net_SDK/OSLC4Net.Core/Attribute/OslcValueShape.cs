@@ -14,25 +14,24 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Attribute
-{
-    /// <summary>
-    /// OSLC ValueShape attribute
-    /// </summary>
-    /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-    [System.AttributeUsage(System.AttributeTargets.Method)
-    ]
-    public class OslcValueShape : System.Attribute
-    {
-        /**
-         * If the value-type is a resource type, then Property MAY provide a shape value
-         * to indicate the Resource Shape that applies to the resource.
-         */
-        public readonly string value;
+namespace OSLC4Net.Core.Attribute;
 
-        public OslcValueShape(string value)
-        {
-            this.value = value;
-        }
+/// <summary>
+/// OSLC ValueShape attribute
+/// </summary>
+/// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
+[System.AttributeUsage(System.AttributeTargets.Method)
+]
+public class OslcValueShape : System.Attribute
+{
+    /**
+     * If the value-type is a resource type, then Property MAY provide a shape value
+     * to indicate the Resource Shape that applies to the resource.
+     */
+    public readonly string value;
+
+    public OslcValueShape(string value)
+    {
+        this.value = value;
     }
 }

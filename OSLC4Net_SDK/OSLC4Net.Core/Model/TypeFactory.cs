@@ -17,32 +17,31 @@ using System;
 
 using OSLC4Net.Core.Attribute;
 
-namespace OSLC4Net.Core.Model
+namespace OSLC4Net.Core.Model;
+
+/// <summary>
+/// Static utilities to return the qualified name of a type
+/// </summary>
+public static class TypeFactory
 {
-    /// <summary>
-    /// Static utilities to return the qualified name of a type
-    /// </summary>
-    public static class TypeFactory
+
+    public static string GetQualifiedName(Type objectType)
     {
+        return GetNamespace(objectType) +
+               GetName(objectType);
+    }
 
-        public static string GetQualifiedName(Type objectType)
-        {
-            return GetNamespace(objectType) +
-                   GetName(objectType);
-        }
+    public static string GetNamespace(Type objectType)
+    {
+        OslcNamespace[] oslcNamespaceAnnotation = (OslcNamespace[])(objectType.GetCustomAttributes(typeof(OslcNamespace), false));
 
-        public static string GetNamespace(Type objectType)
-        {
-            OslcNamespace[] oslcNamespaceAnnotation = (OslcNamespace[])(objectType.GetCustomAttributes(typeof(OslcNamespace), false));
+        return oslcNamespaceAnnotation.Length > 0 ? oslcNamespaceAnnotation[0].value : OslcConstants.OSLC_DATA_NAMESPACE;
+    }
 
-            return oslcNamespaceAnnotation.Length > 0 ? oslcNamespaceAnnotation[0].value : OslcConstants.OSLC_DATA_NAMESPACE;
-        }
+    public static string GetName(Type objectType)
+    {
+        OslcName[] oslcNameAnnotation = (OslcName[])(objectType.GetCustomAttributes(typeof(OslcName), false));
 
-        public static string GetName(Type objectType)
-        {
-            OslcName[] oslcNameAnnotation = (OslcName[])(objectType.GetCustomAttributes(typeof(OslcName), false));
-
-            return oslcNameAnnotation.Length > 0 ? oslcNameAnnotation[0].value : objectType.Name;
-        }
+        return oslcNameAnnotation.Length > 0 ? oslcNameAnnotation[0].value : objectType.Name;
     }
 }

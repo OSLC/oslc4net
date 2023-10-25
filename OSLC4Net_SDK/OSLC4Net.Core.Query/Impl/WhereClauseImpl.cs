@@ -16,17 +16,16 @@
 using System.Collections.Generic;
 using Antlr.Runtime.Tree;
 
-namespace OSLC4Net.Core.Query.Impl
+namespace OSLC4Net.Core.Query.Impl;
+
+class WhereClauseImpl : CompoundTermImpl, WhereClause
 {
-    class WhereClauseImpl : CompoundTermImpl, WhereClause
+    public
+    WhereClauseImpl(
+        CommonTree tree,
+        IDictionary<string, string> prefixMap
+    )
+        : base(tree, true, prefixMap)
     {
-        public
-        WhereClauseImpl(
-            CommonTree tree,
-            IDictionary<string, string> prefixMap
-        )
-            : base(tree, true, prefixMap)
-        {
-        }
     }
 }

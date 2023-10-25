@@ -16,33 +16,33 @@
 using System;
 using log4net;
 
-namespace OSLC4Net.Client.Oslc.Resources
+namespace OSLC4Net.Client.Oslc.Resources;
+
+/// <summary>
+/// A container for OSLC Query parameters which can be associated with an OslcQuery object.
+/// </summary>
+public class OslcQueryParameters
 {
-    /// <summary>
-    /// A container for OSLC Query parameters which can be associated with an OslcQuery object.
-    /// </summary>
-    public class OslcQueryParameters
-    {
 	    private string where;
 	    private string select;
 	    private string searchTerms;
 	    private string orderBy;
 	    private string prefix;
 
-        private static ILog logger = LogManager.GetLogger(typeof(OslcQuery));
+    private static ILog logger = LogManager.GetLogger(typeof(OslcQuery));
 
 	    public OslcQueryParameters()
 	    {
 	    }
 
-        /// <summary>
-        /// Initialize an OSLC Parameter using the supplied terms
-        /// </summary>
-        /// <param name="where"></param>
-        /// <param name="select"></param>
-        /// <param name="searchTerms"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="prefix"></param>
+    /// <summary>
+    /// Initialize an OSLC Parameter using the supplied terms
+    /// </summary>
+    /// <param name="where"></param>
+    /// <param name="select"></param>
+    /// <param name="searchTerms"></param>
+    /// <param name="orderBy"></param>
+    /// <param name="prefix"></param>
 	    public OslcQueryParameters (string where, string select, string searchTerms, string orderBy, string prefix) {
 		    this.where       = where;
 		    this.select      = select;
@@ -93,7 +93,7 @@ namespace OSLC4Net.Client.Oslc.Resources
 
 	    private string encodeQueryParams(string oslcQueryParam) {
 
-            string encodedQueryParms = null;
+        string encodedQueryParms = null;
 		    try {
 			    encodedQueryParms = Uri.EscapeUriString(oslcQueryParam);
 		    } catch (Exception e) {
@@ -101,9 +101,8 @@ namespace OSLC4Net.Client.Oslc.Resources
 			    logger.Error("Could not UTF-8 encode query parameters: " + oslcQueryParam, e);
 		    }
 
-            // XXX - CLM is picky about encoding and native .NET URL encoder doesn't
-            // encode these extra substitutions
+        // XXX - CLM is picky about encoding and native .NET URL encoder doesn't
+        // encode these extra substitutions
 		    return encodedQueryParms.Replace("#", "%23").Replace("/", "%2F").Replace(":", "%3A").Replace("=", "%3D");
 	    }
-    }
 }

@@ -17,37 +17,36 @@ using System.Collections.Generic;
 
 using Antlr.Runtime.Tree;
 
-namespace OSLC4Net.Core.Query.Impl
+namespace OSLC4Net.Core.Query.Impl;
+
+class SimpleSortTermImpl : SortTermImpl, SimpleSortTerm
 {
-    class SimpleSortTermImpl : SortTermImpl, SimpleSortTerm
+    public SimpleSortTermImpl(
+        CommonTree tree,
+        IDictionary<string, string> prefixMap
+    ) : base(SortTermType.SIMPLE, tree, prefixMap)
     {
-        public SimpleSortTermImpl(
-            CommonTree tree,
-            IDictionary<string, string> prefixMap
-        ) : base(SortTermType.SIMPLE, tree, prefixMap)
-        {
-        }
-
-        public bool
-        Ascending
-        {
-            get
-            {
-                if (ascending == null)
-                {
-                    ascending = tree.GetChild(1).Text.Equals("+");
-                }
-
-                return ascending == true ? true : false;
-            }
-        }
-
-        public override string
-        ToString()
-        {
-            return Ascending + Identifier.ToString();
-        }
-
-        private bool? ascending = null;
     }
+
+    public bool
+    Ascending
+    {
+        get
+        {
+            if (ascending == null)
+            {
+                ascending = tree.GetChild(1).Text.Equals("+");
+            }
+
+            return ascending == true ? true : false;
+        }
+    }
+
+    public override string
+    ToString()
+    {
+        return Ascending + Identifier.ToString();
+    }
+
+    private bool? ascending = null;
 }

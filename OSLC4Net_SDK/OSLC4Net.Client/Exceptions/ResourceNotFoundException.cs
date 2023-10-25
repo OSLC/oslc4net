@@ -13,13 +13,13 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Client.Exceptions
+namespace OSLC4Net.Client.Exceptions;
+
+/// <summary>
+/// Exceptions indicating a Jazz authentication or credentials problem
+/// </summary>
+public class ResourceNotFoundException : OslcClientApplicationException
 {
-    /// <summary>
-    /// Exceptions indicating a Jazz authentication or credentials problem
-    /// </summary>
-    public class ResourceNotFoundException : OslcClientApplicationException
-    {
 	    private const string MESSAGE_KEY = "ResourceNotFoundException";
 
 	    private readonly string resource;
@@ -27,19 +27,18 @@ namespace OSLC4Net.Client.Exceptions
 
 	    public ResourceNotFoundException(string resource, string value) :
 		    base(MESSAGE_KEY, new object[] {resource, value})
-        {
+    {
 		    this.resource = resource;
 		    this.value = value;
 	    }
 
 	    public string GetResource()
-        {
+    {
 		    return resource;
 	    }
 
 	    public string GetValue()
-        {
+    {
 		    return value;
 	    }
-    }
 }

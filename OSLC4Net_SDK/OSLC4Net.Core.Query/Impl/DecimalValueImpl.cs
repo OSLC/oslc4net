@@ -15,36 +15,35 @@
 
 using Antlr.Runtime.Tree;
 
-namespace OSLC4Net.Core.Query.Impl
+namespace OSLC4Net.Core.Query.Impl;
+
+/// <summary>
+/// Implementation of DecimalValue interface
+/// </summary>
+internal class DecimalValueImpl : ValueImpl, DecimalValue
 {
-    /// <summary>
-    /// Implementation of DecimalValue interface
-    /// </summary>
-    internal class DecimalValueImpl : ValueImpl, DecimalValue
+    public
+    DecimalValueImpl(CommonTree tree) : base(tree, ValueType.DECIMAL)
     {
-        public
-        DecimalValueImpl(CommonTree tree) : base(tree, ValueType.DECIMAL)
-        {
-        }
-
-        public string Value
-        {
-            get
-            {
-                if (value == null)
-                {
-                    value = tree.Text;
-                }
-
-                return value;
-            }
-        }
-
-        public override string ToString()
-        {
-            return Value.ToString();
-        }
-
-        private string value = null;
     }
+
+    public string Value
+    {
+        get
+        {
+            if (value == null)
+            {
+                value = tree.Text;
+            }
+
+            return value;
+        }
+    }
+
+    public override string ToString()
+    {
+        return Value.ToString();
+    }
+
+    private string value = null;
 }

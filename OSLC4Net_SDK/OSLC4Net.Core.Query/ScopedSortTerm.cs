@@ -13,10 +13,9 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query
+namespace OSLC4Net.Core.Query;
+
+public interface ScopedSortTerm
 {
-    public interface ScopedSortTerm
-    {
-        SortTerms SortTerms { get; }
-    }
+    SortTerms SortTerms { get; }
 }

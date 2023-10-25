@@ -14,16 +14,16 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Attribute
+namespace OSLC4Net.Core.Attribute;
+
+/// <summary>
+/// OSLC QueryCapability attribute
+/// </summary>
+///  <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
+[System.AttributeUsage(System.AttributeTargets.Method)
+]
+public class OslcQueryCapability : System.Attribute
 {
-    /// <summary>
-    /// OSLC QueryCapability attribute
-    /// </summary>
-    ///  <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-    [System.AttributeUsage(System.AttributeTargets.Method)
-    ]
-    public class OslcQueryCapability : System.Attribute
-    {
 	    /**
 	     * Title string that could be used for display
 	     */
@@ -35,19 +35,18 @@ namespace OSLC4Net.Core.Attribute
 	    public string label = "";
 
 	    /**
-         * Resource shapes
-         */
-        public string resourceShape = "";
+     * Resource shapes
+     */
+    public string resourceShape = "";
 
-        /**
-         * Resource types
-         */
-        public string[] resourceTypes = { };
+    /**
+     * Resource types
+     */
+    public string[] resourceTypes = { };
 
-        /**
-         * Usages
-         */
-        public string[] usages = { };
+    /**
+     * Usages
+     */
+    public string[] usages = { };
 
-    }
 }

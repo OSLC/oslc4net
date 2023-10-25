@@ -16,20 +16,19 @@
 using System.Collections.Generic;
 using Antlr.Runtime.Tree;
 
-namespace OSLC4Net.Core.Query.Impl
+namespace OSLC4Net.Core.Query.Impl;
+
+/// <summary>
+/// Implementation of PropertiesClause interface
+/// </summary>
+internal class PropertiesClauseImpl : PropertiesImpl, PropertiesClause
 {
-    /// <summary>
-    /// Implementation of PropertiesClause interface
-    /// </summary>
-    internal class PropertiesClauseImpl : PropertiesImpl, PropertiesClause
+    public
+    PropertiesClauseImpl(
+        CommonTree tree,
+        IDictionary<string, string> prefixMap
+    )
+        : base(tree, prefixMap)
     {
-        public
-        PropertiesClauseImpl(
-            CommonTree tree,
-            IDictionary<string, string> prefixMap
-        )
-            : base(tree, prefixMap)
-        {
-        }
     }
 }

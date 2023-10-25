@@ -15,26 +15,25 @@
 
 using System.Reflection;
 
-namespace OSLC4Net.Core.Model
+namespace OSLC4Net.Core.Model;
+
+public static class InheritedMethodAttributeHelper
 {
-    public static class InheritedMethodAttributeHelper
+    /// <summary>
+    ///
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="method"></param>
+    /// <returns></returns>
+    public static T GetAttribute<T>(MethodInfo method) where T : System.Attribute
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="method"></param>
-        /// <returns></returns>
-        public static T GetAttribute<T>(MethodInfo method) where T : System.Attribute
+        T[] attributes = (T[])method.GetCustomAttributes(typeof(T), true);
+
+        if (attributes.Length > 0)
         {
-            T[] attributes = (T[])method.GetCustomAttributes(typeof(T), true);
-
-            if (attributes.Length > 0)
-            {
-                return attributes[0];
-            }
-
-            return null;
+            return attributes[0];
         }
+
+        return null;
     }
 }

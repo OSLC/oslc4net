@@ -16,28 +16,27 @@
 using System;
 using System.Collections.Generic;
 
-namespace OSLC4Net.Core.Model
-{
-    /// <summary>
-    /// Interface to represent an OSLC resource.
-    /// </summary>
-    public interface IResource
-    {
-        Uri GetAbout();
-        void SetAbout(Uri about);
-    }
+namespace OSLC4Net.Core.Model;
 
-    public static class AddAllExtension
+/// <summary>
+/// Interface to represent an OSLC resource.
+/// </summary>
+public interface IResource
+{
+    Uri GetAbout();
+    void SetAbout(Uri about);
+}
+
+public static class AddAllExtension
+{
+    public static void AddAll<T>(
+        this ICollection<T> target,
+        IEnumerable<T> source
+    )
     {
-        public static void AddAll<T>(
-            this ICollection<T> target,
-            IEnumerable<T> source
-        )
+        foreach (T item in source)
         {
-            foreach (T item in source)
-            {
-                target.Add(item);
-            }
+            target.Add(item);
         }
     }
 }

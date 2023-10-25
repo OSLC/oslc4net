@@ -13,12 +13,11 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query
+namespace OSLC4Net.Core.Query;
+
+/// <summary>
+/// Top-level CompoundTerm from olsc.where clause
+/// </summary>
+public interface WhereClause : CompoundTerm
 {
-    /// <summary>
-    /// Top-level CompoundTerm from olsc.where clause
-    /// </summary>
-    public interface WhereClause : CompoundTerm
-    {
-    }
 }

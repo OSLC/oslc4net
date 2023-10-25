@@ -14,26 +14,25 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Attribute
+namespace OSLC4Net.Core.Attribute;
+
+/// <summary>
+/// OSLC Range attribute
+/// </summary>
+/// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
+[System.AttributeUsage(System.AttributeTargets.Method)
+]
+public class OslcRange : System.Attribute
 {
-    /// <summary>
-    /// OSLC Range attribute
-    /// </summary>
-    /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-    [System.AttributeUsage(System.AttributeTargets.Method)
-    ]
-    public class OslcRange : System.Attribute
+    /**
+     * Specify the range of possible resource types allowed (for properties with a resource value-type).
+     */
+    public readonly string[] value;
+
+    public OslcRange(params string[] value)
     {
-        /**
-         * Specify the range of possible resource types allowed (for properties with a resource value-type).
-         */
-        public readonly string[] value;
+        this.value = new string[value.Length];
 
-        public OslcRange(params string[] value)
-        {
-            this.value = new string[value.Length];
-
-            value.CopyTo(this.value, 0);
-        }
+        value.CopyTo(this.value, 0);
     }
 }

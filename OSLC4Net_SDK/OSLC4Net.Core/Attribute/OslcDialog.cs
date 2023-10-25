@@ -14,15 +14,15 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Attribute
+namespace OSLC4Net.Core.Attribute;
+
+/// <summary>
+/// OSLC Dialog attribute
+/// </summary>
+[System.AttributeUsage(System.AttributeTargets.Method)
+]
+public class OslcDialog : System.Attribute
 {
-    /// <summary>
-    /// OSLC Dialog attribute
-    /// </summary>
-    [System.AttributeUsage(System.AttributeTargets.Method)
-    ]
-    public class OslcDialog : System.Attribute
-    {
 	    /**
 	     * Title string that could be used for display
 	     */
@@ -38,25 +38,24 @@ namespace OSLC4Net.Core.Attribute
 	     */
 	    public string uri;
 
-        /**
-         * Values MUST be expressed in relative length units.  Em and ex units are interpreted relative to the default system font (at 100% size).
-         */
-        public string hintWidth = "";
+    /**
+     * Values MUST be expressed in relative length units.  Em and ex units are interpreted relative to the default system font (at 100% size).
+     */
+    public string hintWidth = "";
 
-        /**
-         * Values MUST be expressed in relative length units.  Em and ex units are interpreted relative to the default system font (at 100% size).
-         */
-        public string hintHeight = "";
+    /**
+     * Values MUST be expressed in relative length units.  Em and ex units are interpreted relative to the default system font (at 100% size).
+     */
+    public string hintHeight = "";
 
-        /**
-         * Resource types
-         */
-        public string[] resourceTypes = { };
+    /**
+     * Resource types
+     */
+    public string[] resourceTypes = { };
 
-        /**
-         * Usages
-         */
-        public string[] usages = { };
+    /**
+     * Usages
+     */
+    public string[] usages = { };
 
-    }
 }

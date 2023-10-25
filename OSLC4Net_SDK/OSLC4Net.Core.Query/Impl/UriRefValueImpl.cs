@@ -15,37 +15,36 @@
 
 using Antlr.Runtime.Tree;
 
-namespace OSLC4Net.Core.Query.Impl
+namespace OSLC4Net.Core.Query.Impl;
+
+/// <summary>
+/// Implementation of UriRefValue interface
+/// </summary>
+internal class UriRefValueImpl : ValueImpl, UriRefValue
 {
-    /// <summary>
-    /// Implementation of UriRefValue interface
-    /// </summary>
-    internal class UriRefValueImpl : ValueImpl, UriRefValue
+    public
+    UriRefValueImpl(CommonTree tree) : base(tree, ValueType.URI_REF)
     {
-        public
-        UriRefValueImpl(CommonTree tree) : base(tree, ValueType.URI_REF)
-        {
-        }
-
-        public string Value
-        {
-            get
-            {
-                if (value == null)
-                {
-                    value = tree.Text;
-                    value = value.Substring(1, value.Length - 2);
-                }
-
-                return value;
-            }
-        }
-
-        public override string ToString()
-        {
-            return '<' + Value.ToString() + '>';
-        }
-
-        private string value = null;
     }
+
+    public string Value
+    {
+        get
+        {
+            if (value == null)
+            {
+                value = tree.Text;
+                value = value.Substring(1, value.Length - 2);
+            }
+
+            return value;
+        }
+    }
+
+    public override string ToString()
+    {
+        return '<' + Value.ToString() + '>';
+    }
+
+    private string value = null;
 }

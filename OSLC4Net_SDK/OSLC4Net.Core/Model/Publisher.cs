@@ -17,26 +17,26 @@ using System;
 
 using OSLC4Net.Core.Attribute;
 
-namespace OSLC4Net.Core.Model
+namespace OSLC4Net.Core.Model;
+
+/// <summary>
+/// OSLC Publisher resource
+/// </summary>
+[OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
+[OslcResourceShape(title = "OSLC Publisher Resource Shape", describes = new string[] { OslcConstants.TYPE_PUBLISHER })]
+public class Publisher : AbstractResource
 {
-    /// <summary>
-    /// OSLC Publisher resource
-    /// </summary>
-    [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-    [OslcResourceShape(title = "OSLC Publisher Resource Shape", describes = new string[] { OslcConstants.TYPE_PUBLISHER })]
-    public class Publisher : AbstractResource
-    {
 	    private Uri    icon;
 	    private string identifier;
 	    private string label;
 	    private string title;
 
 	    public Publisher() : base()
-        {
+    {
 	    }
 
 	    public Publisher(string title, string identifier) : this()
-        {
+    {
 		    this.title = title;
 		    this.identifier = identifier;
 	    }
@@ -44,8 +44,8 @@ namespace OSLC4Net.Core.Model
 	   [OslcDescription("URL to an icon file that represents the provider. This icon should be a favicon format and 16x16 pixels in size")]
 	   [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "icon")]
 	   [OslcReadOnly]
-       [OslcTitle("Icon")]
-        public Uri GetIcon() {
+   [OslcTitle("Icon")]
+    public Uri GetIcon() {
 	        return icon;
 	    }
 
@@ -61,17 +61,17 @@ namespace OSLC4Net.Core.Model
 	   [OslcDescription("Very short label for use in menu items")]
 	   [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "label")]
 	   [OslcReadOnly]
-       [OslcTitle("Label")]
+   [OslcTitle("Label")]
 	    public string GetLabel() {
 		    return label;
 	    }
 
 	   [OslcDescription("Title string that could be used for display")]
-       [OslcOccurs(Occurs.ExactlyOne)]
+   [OslcOccurs(Occurs.ExactlyOne)]
 	   [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
 	   [OslcReadOnly]
-       [OslcTitle("Title")]
-       [OslcValueType(ValueType.XMLLiteral)]
+   [OslcTitle("Title")]
+   [OslcValueType(ValueType.XMLLiteral)]
 	    public string GetTitle() {
 		    return title;
 	    }
@@ -91,5 +91,4 @@ namespace OSLC4Net.Core.Model
 	    public void SetTitle(string title) {
 		    this.title = title;
 	    }
-    }
 }

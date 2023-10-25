@@ -19,17 +19,17 @@ using System.Linq;
 
 using OSLC4Net.Core.Attribute;
 
-namespace OSLC4Net.Core.Model
+namespace OSLC4Net.Core.Model;
+
+/// <summary>
+/// OSLC ResourceShape resource
+/// </summary>
+[OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
+[OslcResourceShape(title = "OSLC Resource Shape Resource Shape", describes = new string[] { OslcConstants.TYPE_RESOURCE_SHAPE })]
+public class ResourceShape : AbstractResource
 {
-    /// <summary>
-    /// OSLC ResourceShape resource
-    /// </summary>
-    [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-    [OslcResourceShape(title = "OSLC Resource Shape Resource Shape", describes = new string[] { OslcConstants.TYPE_RESOURCE_SHAPE })]
-    public class ResourceShape : AbstractResource
-    {
-        private SortedSet<Uri> describes = new SortedUriSet();
-        private SortedSet<Property> properties = new SortedSet<Property>();
+    private SortedSet<Uri> describes = new SortedUriSet();
+    private SortedSet<Property> properties = new SortedSet<Property>();
 
 	    private string title;
 
@@ -50,7 +50,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcDescription("Type or types of resource described by this shape")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "describes")]
 	    [OslcReadOnly]
-        [OslcTitle("Describes")]
+    [OslcTitle("Describes")]
 	    public Uri[] GetDescribes() {
 	        return describes.ToArray();
 	    }
@@ -60,19 +60,19 @@ namespace OSLC4Net.Core.Model
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "property")]
 	    [OslcRange(OslcConstants.TYPE_PROPERTY)]
 	    [OslcReadOnly]
-        [OslcRepresentation(Representation.Inline)]
+    [OslcRepresentation(Representation.Inline)]
 	    [OslcTitle("Properties")]
 	    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_PROPERTY)]
-        [OslcValueType(ValueType.LocalResource)]
-        public Property[] GetProperties() {
+    [OslcValueType(ValueType.LocalResource)]
+    public Property[] GetProperties() {
 	        return properties.ToArray();
 	    }
 
 	    [OslcDescription("Title of the resource shape. SHOULD include only content that is valid and suitable inside an XHTML <div> element")]
 	    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
 	    [OslcReadOnly]
-        [OslcTitle("Title")]
-        [OslcValueType(ValueType.XMLLiteral)]
+    [OslcTitle("Title")]
+    [OslcValueType(ValueType.XMLLiteral)]
 	    public string GetTitle() {
 		    return title;
 	    }
@@ -80,23 +80,22 @@ namespace OSLC4Net.Core.Model
 	    public void SetDescribes(Uri[] describes) {
 	        this.describes.Clear();
 	        if (describes != null) {
-                foreach (Uri desc in describes) {
+            foreach (Uri desc in describes) {
 	                this.describes.Add(desc);
-                }
+            }
 	        }
 	    }
 
 	    public void SetProperties(Property[] properties) {
 	        this.properties.Clear();
 	        if (properties != null) {
-                foreach (Property prop in properties) {
+            foreach (Property prop in properties) {
 	                this.properties.Add(prop);
-                }
+            }
 	        }
 	    }
 
 	    public void SetTitle(string title) {
 		    this.title = title;
 	    }
-    }
 }

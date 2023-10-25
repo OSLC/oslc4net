@@ -16,21 +16,20 @@
 
 using System.Collections.Generic;
 
-namespace OSLC4Net.Core
-{
+namespace OSLC4Net.Core;
 
-    /// <summary>
-    ///  Marker interface applied to a Map(String, Object> to
-    ///  indicate that when selecting properties for output all immediate,
-    ///  resource properties of the resource should be output with entries
-    ///   in the {@link NestedWildcardProperties#commonNestedProperties()
-    /// </summary>
-    public interface NestedWildcardProperties
-    {
-        /**
-         * @return map of all member properties of nested resources to be
-         * output
-         */
-        IDictionary<string, object> CommonNestedProperties();
-    }
+
+/// <summary>
+///  Marker interface applied to a Map(String, Object> to
+///  indicate that when selecting properties for output all immediate,
+///  resource properties of the resource should be output with entries
+///   in the {@link NestedWildcardProperties#commonNestedProperties()
+/// </summary>
+public interface NestedWildcardProperties
+{
+    /**
+     * @return map of all member properties of nested resources to be
+     * output
+     */
+    IDictionary<string, object> CommonNestedProperties();
 }

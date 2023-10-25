@@ -15,20 +15,19 @@
 
 using System;
 
-namespace OSLC4Net.Core.Model
-{
-    /// <summary>
-    /// Represents a resource of any (unknown) type, usually the object of a
-    /// statement in anIExtendedResource.
-    /// </summary>
-    public class AnyResource : AbstractResource
-    {
-        public AnyResource(Uri about) : base(about)
-        {
-        }
+namespace OSLC4Net.Core.Model;
 
-        public AnyResource() : base()
-        {
-        }
+/// <summary>
+/// Represents a resource of any (unknown) type, usually the object of a
+/// statement in anIExtendedResource.
+/// </summary>
+public class AnyResource : AbstractResource
+{
+    public AnyResource(Uri about) : base(about)
+    {
+    }
+
+    public AnyResource() : base()
+    {
     }
 }

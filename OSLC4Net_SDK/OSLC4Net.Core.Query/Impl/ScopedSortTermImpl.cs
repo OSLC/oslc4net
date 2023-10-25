@@ -17,30 +17,29 @@ using System.Collections.Generic;
 
 using Antlr.Runtime.Tree;
 
-namespace OSLC4Net.Core.Query.Impl
+namespace OSLC4Net.Core.Query.Impl;
+
+class ScopedSortTermImpl : SortTermImpl, ScopedSortTerm
 {
-    class ScopedSortTermImpl : SortTermImpl, ScopedSortTerm
+    public ScopedSortTermImpl(
+        CommonTree tree,
+        IDictionary<string, string> prefixMap
+    ) : base(SortTermType.SCOPED, tree, prefixMap)
     {
-        public ScopedSortTermImpl(
-            CommonTree tree,
-            IDictionary<string, string> prefixMap
-        ) : base(SortTermType.SCOPED, tree, prefixMap)
-        {
-        }
-
-        public SortTerms
-        SortTerms
-        {
-            get
-            {
-                if (sortTerms == null) {
-                    sortTerms = new SortTermsImpl((CommonTree)tree.GetChild(1), prefixMap);
-                }
-
-                return sortTerms;
-            }
-        }
-
-        private SortTerms sortTerms = null;
     }
+
+    public SortTerms
+    SortTerms
+    {
+        get
+        {
+            if (sortTerms == null) {
+                sortTerms = new SortTermsImpl((CommonTree)tree.GetChild(1), prefixMap);
+            }
+
+            return sortTerms;
+        }
+    }
+
+    private SortTerms sortTerms = null;
 }

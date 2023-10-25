@@ -13,24 +13,23 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query
-{
-    public enum ValueType
-    {
-        URI_REF,
-        BOOLEAN,
-        DECIMAL,
-        STRING,
-        TYPED_STRING,
-        LANGED_STRING
-    }
+namespace OSLC4Net.Core.Query;
 
-    /// <summary>
-    /// Operand from ComparisonTerm or InTerm
-    /// impleTerm from olsc.where clause
-    /// </summary>
-    public interface Value
-    {
-        ValueType Type { get; }
-    }
+public enum ValueType
+{
+    URI_REF,
+    BOOLEAN,
+    DECIMAL,
+    STRING,
+    TYPED_STRING,
+    LANGED_STRING
+}
+
+/// <summary>
+/// Operand from ComparisonTerm or InTerm
+/// impleTerm from olsc.where clause
+/// </summary>
+public interface Value
+{
+    ValueType Type { get; }
 }

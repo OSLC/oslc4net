@@ -19,40 +19,39 @@ using System.Reflection;
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
 
-namespace OSLC4Net.Core.Exceptions
+namespace OSLC4Net.Core.Exceptions;
+
+public class OslcCoreInvalidOccursException : OslcCoreApplicationException
 {
-    public class OslcCoreInvalidOccursException : OslcCoreApplicationException
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="resourceType"></param>
+    /// <param name="method"></param>
+    /// <param name="oslcOccurs"></param>
+    public OslcCoreInvalidOccursException(Type resourceType, MethodInfo method, OslcOccurs oslcOccurs) :
+        base(MESSAGE_KEY, new object[] {resourceType.Name, method.Name, OccursExtension.ToString(oslcOccurs.value)})
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="resourceType"></param>
-        /// <param name="method"></param>
-        /// <param name="oslcOccurs"></param>
-        public OslcCoreInvalidOccursException(Type resourceType, MethodInfo method, OslcOccurs oslcOccurs) :
-            base(MESSAGE_KEY, new object[] {resourceType.Name, method.Name, OccursExtension.ToString(oslcOccurs.value)})
-        {
-            this.method        = method;
-            this.oslcOccurs    = oslcOccurs;
-            this.resourceType = resourceType;
-        }
+        this.method        = method;
+        this.oslcOccurs    = oslcOccurs;
+        this.resourceType = resourceType;
+    }
 
 	    public MethodInfo GetMethod() {
-            return method;
-        }
+        return method;
+    }
 
-        public OslcOccurs GetOslcOccurs() {
+    public OslcOccurs GetOslcOccurs() {
 		    return oslcOccurs;
 	    }
 
-        public Type GetResourceType() {
-            return resourceType;
-        }
-
-        private static readonly string MESSAGE_KEY = "InvalidOccursException";
-
-        private MethodInfo  method;
-        private OslcOccurs  oslcOccurs;
-        private Type        resourceType;
+    public Type GetResourceType() {
+        return resourceType;
     }
+
+    private static readonly string MESSAGE_KEY = "InvalidOccursException";
+
+    private MethodInfo  method;
+    private OslcOccurs  oslcOccurs;
+    private Type        resourceType;
 }

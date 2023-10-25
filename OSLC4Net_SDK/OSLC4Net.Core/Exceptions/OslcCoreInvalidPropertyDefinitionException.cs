@@ -18,28 +18,27 @@ using System.Reflection;
 
 using OSLC4Net.Core.Attribute;
 
-namespace OSLC4Net.Core.Exceptions
+namespace OSLC4Net.Core.Exceptions;
+
+public class OslcCoreInvalidPropertyDefinitionException : OslcCoreApplicationException
 {
-    public class OslcCoreInvalidPropertyDefinitionException : OslcCoreApplicationException
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="resourceType"></param>
+    /// <param name="method"></param>
+    /// <param name="oslcPropertyDefinition"></param>
+    public OslcCoreInvalidPropertyDefinitionException(Type resourceType, MethodInfo method, OslcPropertyDefinition oslcPropertyDefinition) :
+        base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name, oslcPropertyDefinition.value })
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="resourceType"></param>
-        /// <param name="method"></param>
-        /// <param name="oslcPropertyDefinition"></param>
-        public OslcCoreInvalidPropertyDefinitionException(Type resourceType, MethodInfo method, OslcPropertyDefinition oslcPropertyDefinition) :
-            base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name, oslcPropertyDefinition.value })
-        {
-            this.method = method;
-            this.oslcPropertyDefinition = oslcPropertyDefinition;
-            this.resourceType = resourceType;
-        }
-
-        private static readonly string MESSAGE_KEY = "InvalidPropertyDefinitionException";
-
-        private MethodInfo              method;
-        private OslcPropertyDefinition  oslcPropertyDefinition;
-        private Type                    resourceType;
+        this.method = method;
+        this.oslcPropertyDefinition = oslcPropertyDefinition;
+        this.resourceType = resourceType;
     }
+
+    private static readonly string MESSAGE_KEY = "InvalidPropertyDefinitionException";
+
+    private MethodInfo              method;
+    private OslcPropertyDefinition  oslcPropertyDefinition;
+    private Type                    resourceType;
 }

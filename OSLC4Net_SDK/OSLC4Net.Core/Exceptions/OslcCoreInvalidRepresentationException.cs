@@ -17,40 +17,39 @@ using System;
 using System.Reflection;
 using OSLC4Net.Core.Model;
 
-namespace OSLC4Net.Core.Exceptions
+namespace OSLC4Net.Core.Exceptions;
+
+public class OslcCoreInvalidRepresentationException : OslcCoreApplicationException
 {
-    public class OslcCoreInvalidRepresentationException : OslcCoreApplicationException
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="resourceType"></param>
+    /// <param name="method"></param>
+    /// <param name="representation"></param>
+    public OslcCoreInvalidRepresentationException(Type resourceType, MethodInfo method, Representation representation) :
+        base(MESSAGE_KEY, new object[] {resourceType.Name, method.Name, RepresentationExtension.ToString(representation)})
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="resourceType"></param>
-        /// <param name="method"></param>
-        /// <param name="representation"></param>
-        public OslcCoreInvalidRepresentationException(Type resourceType, MethodInfo method, Representation representation) :
-            base(MESSAGE_KEY, new object[] {resourceType.Name, method.Name, RepresentationExtension.ToString(representation)})
-        {
-            this.method         = method;
-            this.representation = representation;
-            this.resourceType   = resourceType;
-        }
+        this.method         = method;
+        this.representation = representation;
+        this.resourceType   = resourceType;
+    }
 
 	    public MethodInfo GetMethod() {
-            return method;
-        }
+        return method;
+    }
 
-        public Representation GetRepresentation() {
+    public Representation GetRepresentation() {
 		    return representation;
 	    }
 
-        public Type GetResourceType() {
-            return resourceType;
-        }
-
-        private static readonly string MESSAGE_KEY = "InvalidRepresentationException";
-
-        private MethodInfo      method;
-	    private Representation  representation;
-        private Type            resourceType;
+    public Type GetResourceType() {
+        return resourceType;
     }
+
+    private static readonly string MESSAGE_KEY = "InvalidRepresentationException";
+
+    private MethodInfo      method;
+	    private Representation  representation;
+    private Type            resourceType;
 }

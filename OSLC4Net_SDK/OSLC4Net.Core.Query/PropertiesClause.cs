@@ -13,12 +13,11 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query
+namespace OSLC4Net.Core.Query;
+
+/// <summary>
+/// Top-level properties from oslc.Properties clause
+/// </summary>
+public interface PropertiesClause : Properties
 {
-    /// <summary>
-    /// Top-level properties from oslc.Properties clause
-    /// </summary>
-    public interface PropertiesClause : Properties
-    {
-    }
 }

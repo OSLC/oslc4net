@@ -16,41 +16,40 @@
 using System;
 using System.Reflection;
 
-namespace OSLC4Net.Core.Exceptions
+namespace OSLC4Net.Core.Exceptions;
+
+/// <summary>
+/// Exception thrown for an invalid property type
+/// </summary>
+public class OslcCoreInvalidPropertyTypeException : OslcCoreApplicationException
 {
     /// <summary>
-    /// Exception thrown for an invalid property type
+    ///
     /// </summary>
-    public class OslcCoreInvalidPropertyTypeException : OslcCoreApplicationException
+    /// <param name="resourceType"></param>
+    /// <param name="method"></param>
+    /// <param name="returnType"></param>
+    public OslcCoreInvalidPropertyTypeException(Type resourceType, MethodInfo method, Type returnType) :
+        base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name, returnType.Name })
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="resourceType"></param>
-        /// <param name="method"></param>
-        /// <param name="returnType"></param>
-        public OslcCoreInvalidPropertyTypeException(Type resourceType, MethodInfo method, Type returnType) :
-            base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name, returnType.Name })
-        {
-            this.method = method;
-            this.resourceType = resourceType;
-            this.returnType = returnType;
-        }
-
-        public MethodInfo GetMethod()
-        {
-            return method;
-        }
-
-        public Type GetResourceClass()
-        {
-            return resourceType;
-        }
-
-        private static readonly string MESSAGE_KEY = "InvalidPropertyTypeException";
-
-        private MethodInfo method;
-        private Type resourceType;
-        private Type returnType;
+        this.method = method;
+        this.resourceType = resourceType;
+        this.returnType = returnType;
     }
+
+    public MethodInfo GetMethod()
+    {
+        return method;
+    }
+
+    public Type GetResourceClass()
+    {
+        return resourceType;
+    }
+
+    private static readonly string MESSAGE_KEY = "InvalidPropertyTypeException";
+
+    private MethodInfo method;
+    private Type resourceType;
+    private Type returnType;
 }

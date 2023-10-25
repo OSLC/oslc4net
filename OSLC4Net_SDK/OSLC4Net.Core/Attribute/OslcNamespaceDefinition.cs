@@ -16,31 +16,30 @@
 
 using System;
 
-namespace OSLC4Net.Core.Attribute
+namespace OSLC4Net.Core.Attribute;
+
+/// <summary>
+/// The definition of an OSLC namespace attribute
+/// </summary>
+[Serializable]
+public class OslcNamespaceDefinition
 {
-    /// <summary>
-    /// The definition of an OSLC namespace attribute
-    /// </summary>
-    [Serializable]
-    public class OslcNamespaceDefinition
+    /**
+     * Namespace URI.
+     */
+    public readonly string namespaceURI;
+
+    /**
+     * Prefix for the namespace.
+     */
+    public readonly string prefix;
+
+    public OslcNamespaceDefinition(
+        string namespaceURI,
+        string prefix
+    )
     {
-        /**
-         * Namespace URI.
-         */
-        public readonly string namespaceURI;
-
-        /**
-         * Prefix for the namespace.
-         */
-        public readonly string prefix;
-
-        public OslcNamespaceDefinition(
-            string namespaceURI,
-            string prefix
-        )
-        {
-            this.namespaceURI = namespaceURI;
-            this.prefix = prefix;
-        }
+        this.namespaceURI = namespaceURI;
+        this.prefix = prefix;
     }
 }

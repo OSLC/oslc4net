@@ -13,15 +13,14 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query
-{
-    /// <summary>
-    /// yped value operand from oslc.where clause
-    /// </summary>
-    public interface TypedValue : Value
-    {
-        string Value { get; }
+namespace OSLC4Net.Core.Query;
 
-        PName PrefixedName { get; }
-    }
+/// <summary>
+/// yped value operand from oslc.where clause
+/// </summary>
+public interface TypedValue : Value
+{
+    string Value { get; }
+
+    PName PrefixedName { get; }
 }

@@ -15,37 +15,36 @@
 
 using Antlr.Runtime.Tree;
 
-namespace OSLC4Net.Core.Query.Impl
+namespace OSLC4Net.Core.Query.Impl;
+
+/// <summary>
+/// Implementation of StringValue interface
+/// </summary>
+internal class StringValueImpl : ValueImpl, StringValue
 {
-    /// <summary>
-    /// Implementation of StringValue interface
-    /// </summary>
-    internal class StringValueImpl : ValueImpl, StringValue
+    public
+    StringValueImpl(CommonTree tree) : base(tree, ValueType.STRING)
     {
-        public
-        StringValueImpl(CommonTree tree) : base(tree, ValueType.STRING)
-        {
-        }
-
-        public string Value
-        {
-            get
-            {
-                if (value == null)
-                {
-                    value = tree.Text;
-                    value = value.Substring(1, value.Length - 2);
-                }
-
-                return value;
-            }
-        }
-
-        public override string ToString()
-        {
-            return '"' + Value.ToString() + '"';
-        }
-
-        private string value = null;
     }
+
+    public string Value
+    {
+        get
+        {
+            if (value == null)
+            {
+                value = tree.Text;
+                value = value.Substring(1, value.Length - 2);
+            }
+
+            return value;
+        }
+    }
+
+    public override string ToString()
+    {
+        return '"' + Value.ToString() + '"';
+    }
+
+    private string value = null;
 }

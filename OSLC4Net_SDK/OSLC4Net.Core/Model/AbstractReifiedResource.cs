@@ -13,14 +13,14 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Model
+namespace OSLC4Net.Core.Model;
+
+/// <summary>
+/// An OSLC reified resource
+/// </summary>
+/// <typeparam name="T"></typeparam>
+public abstract class AbstractReifiedResource<T> : IReifiedResource<T>
 {
-    /// <summary>
-    /// An OSLC reified resource
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public abstract class AbstractReifiedResource<T> : IReifiedResource<T>
-    {
 	    private T value;
 
 	    protected AbstractReifiedResource()
@@ -32,22 +32,21 @@ namespace OSLC4Net.Core.Model
 		    this.value = value;
 	    }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns></returns>
 	    public T GetValue()
 	    {
 		    return value;
 	    }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="value"></param>
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="value"></param>
 	    public void SetValue(T value)
 	    {
 		    this.value = value;
 	    }
-    }
 }

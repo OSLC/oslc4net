@@ -15,15 +15,14 @@
 
 using System.Collections.Generic;
 
-namespace OSLC4Net.Core
+namespace OSLC4Net.Core;
+
+/// <summary>
+/// Constants specific to OSLC4Net
+/// </summary>
+/// <seealso cref="Oslc4Net.Core.OslcConstants"/>
+public static class OSLC4NetConstants
 {
-    /// <summary>
-    /// Constants specific to OSLC4Net
-    /// </summary>
-    /// <seealso cref="Oslc4Net.Core.OslcConstants"/>
-    public static class OSLC4NetConstants
-    {
-        public static readonly IDictionary<string, object> OSLC4NET_PROPERTY_SINGLETON =
-            new Dictionary<string, object>(0);
-    }
+    public static readonly IDictionary<string, object> OSLC4NET_PROPERTY_SINGLETON =
+        new Dictionary<string, object>(0);
 }

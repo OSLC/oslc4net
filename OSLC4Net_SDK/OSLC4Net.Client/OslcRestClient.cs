@@ -22,31 +22,31 @@ using System.Net.Http.Headers;
 
 using OSLC4Net.Core.Model;
 
-namespace OSLC4Net.Client
+namespace OSLC4Net.Client;
+
+/// <summary>
+/// A class providing client utilities to query/get, create, update and delete OSLC resources
+/// </summary>
+public sealed class OslcRestClient
 {
+    public const int DEFAULT_READ_TIMEOUT = 60000;
+
+    private readonly ISet<MediaTypeFormatter>   formatters;
+    private readonly string uri;
+    private readonly HttpClient                 client;
+    private readonly string mediaType;
+    private readonly int                        readTimeout;
+
     /// <summary>
-    /// A class providing client utilities to query/get, create, update and delete OSLC resources
+    ///
     /// </summary>
-    public sealed class OslcRestClient
-    {
-        public const int DEFAULT_READ_TIMEOUT = 60000;
-
-        private readonly ISet<MediaTypeFormatter>   formatters;
-        private readonly string uri;
-        private readonly HttpClient                 client;
-        private readonly string mediaType;
-        private readonly int                        readTimeout;
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="formatters"></param>
-        /// <param name="uri"></param>
-        /// <param name="mediaType"></param>
-        /// <param name="readTimeout"></param>
+    /// <param name="formatters"></param>
+    /// <param name="uri"></param>
+    /// <param name="mediaType"></param>
+    /// <param name="readTimeout"></param>
 	    public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
-                              string uri,
-                              string mediaType,
+                          string uri,
+                          string mediaType,
 	                          int                       readTimeout)
 	    {
 	        this.formatters  = formatters;
@@ -56,102 +56,102 @@ namespace OSLC4Net.Client
 
 		    this.client = new HttpClient();
 
-            this.client.Timeout = new TimeSpan(TimeSpan.TicksPerMillisecond * readTimeout);
+        this.client.Timeout = new TimeSpan(TimeSpan.TicksPerMillisecond * readTimeout);
 	    }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="formatters"></param>
-        /// <param name="uri"></param>
-        /// <param name="mediaType"></param>
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="formatters"></param>
+    /// <param name="uri"></param>
+    /// <param name="mediaType"></param>
 	    public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
-                              string uri,
-                              string mediaType) :
-            this(formatters, uri, mediaType, DEFAULT_READ_TIMEOUT)
-        {
-        }
+                          string uri,
+                          string mediaType) :
+        this(formatters, uri, mediaType, DEFAULT_READ_TIMEOUT)
+    {
+    }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="formatters"></param>
-        /// <param name="uri"></param>
-        /// <param name="timeout"></param>
-        public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
-                              string uri,
-                              int                       timeout) :
-            this(formatters, uri, OslcMediaType.APPLICATION_RDF_XML, timeout)
-        {
-        }
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="formatters"></param>
+    /// <param name="uri"></param>
+    /// <param name="timeout"></param>
+    public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
+                          string uri,
+                          int                       timeout) :
+        this(formatters, uri, OslcMediaType.APPLICATION_RDF_XML, timeout)
+    {
+    }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="formatters"></param>
-        /// <param name="uri"></param>
-        public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
-                              string uri) :
-            this(formatters, uri, OslcMediaType.APPLICATION_RDF_XML, DEFAULT_READ_TIMEOUT)
-        {
-        }
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="formatters"></param>
+    /// <param name="uri"></param>
+    public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
+                          string uri) :
+        this(formatters, uri, OslcMediaType.APPLICATION_RDF_XML, DEFAULT_READ_TIMEOUT)
+    {
+    }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="formatters"></param>
-        /// <param name="uri"></param>
-        /// <param name="mediaType"></param>
-        /// <param name="readTimeout"></param>
-        public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
-                              Uri                       uri,
-                              string mediaType,
-                              int                       readTimeout) :
-            this(formatters, uri.ToString(), mediaType, readTimeout)
-        {
-        }
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="formatters"></param>
+    /// <param name="uri"></param>
+    /// <param name="mediaType"></param>
+    /// <param name="readTimeout"></param>
+    public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
+                          Uri                       uri,
+                          string mediaType,
+                          int                       readTimeout) :
+        this(formatters, uri.ToString(), mediaType, readTimeout)
+    {
+    }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="formatters"></param>
-        /// <param name="uri"></param>
-        /// <param name="mediaType"></param>
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="formatters"></param>
+    /// <param name="uri"></param>
+    /// <param name="mediaType"></param>
 	    public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
-                              Uri                       uri,
-                              string mediaType) :
-            this(formatters, uri.ToString(), mediaType, DEFAULT_READ_TIMEOUT)
-        {
-        }
+                          Uri                       uri,
+                          string mediaType) :
+        this(formatters, uri.ToString(), mediaType, DEFAULT_READ_TIMEOUT)
+    {
+    }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="formatters"></param>
-        /// <param name="uri"></param>
-        /// <param name="timeout"></param>
-        public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
-                              Uri                       uri,
-                              int                       timeout) :
-            this(formatters, uri.ToString(), OslcMediaType.APPLICATION_RDF_XML, timeout)
-        {
-        }
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="formatters"></param>
+    /// <param name="uri"></param>
+    /// <param name="timeout"></param>
+    public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
+                          Uri                       uri,
+                          int                       timeout) :
+        this(formatters, uri.ToString(), OslcMediaType.APPLICATION_RDF_XML, timeout)
+    {
+    }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="formatters"></param>
-        /// <param name="uri"></param>
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="formatters"></param>
+    /// <param name="uri"></param>
 	    public OslcRestClient(ISet<MediaTypeFormatter>  formatters,
-                              Uri                       uri) :
-            this(formatters, uri.ToString(), OslcMediaType.APPLICATION_RDF_XML, DEFAULT_READ_TIMEOUT)
-        {
-        }
+                          Uri                       uri) :
+        this(formatters, uri.ToString(), OslcMediaType.APPLICATION_RDF_XML, DEFAULT_READ_TIMEOUT)
+    {
+    }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns></returns>
 	    public ISet<MediaTypeFormatter> GetFormatters()
 	    {
 	        return formatters;
@@ -167,166 +167,165 @@ namespace OSLC4Net.Client
 	        return readTimeout;
 	    }
 
-        public string GetUri()
-        {
-            return uri;
-        }
+    public string GetUri()
+    {
+        return uri;
+    }
 
 	    public HttpClient GetClient()
 	    {
 		    return client;
 	    }
 
-        /// <summary>
-        /// Retrieve an OSLC resource of the specified type.  The type must have an associated .NET class with OSLC4Net annotations.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+    /// <summary>
+    /// Retrieve an OSLC resource of the specified type.  The type must have an associated .NET class with OSLC4Net annotations.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
 	    public T GetOslcResource<T>() where T : class
+    {
+        this.client.DefaultRequestHeaders.Clear();
+        this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
+
+	    HttpResponseMessage response = client.GetAsync(uri).Result;
+        HttpStatusCode statusCode = response.StatusCode;
+
+        switch (statusCode)
         {
-            this.client.DefaultRequestHeaders.Clear();
-            this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
-
-    	    HttpResponseMessage response = client.GetAsync(uri).Result;
-            HttpStatusCode statusCode = response.StatusCode;
-
-            switch (statusCode)
-            {
-                case HttpStatusCode.OK:
-                    return response.Content.ReadAsAsync<T>(formatters).Result;
-                case HttpStatusCode.NoContent:
-                case HttpStatusCode.NotFound:
-                case HttpStatusCode.Gone:
-                    return null;
-                default:
-                    throw new HttpRequestException(response.ReasonPhrase);
-            }
+            case HttpStatusCode.OK:
+                return response.Content.ReadAsAsync<T>(formatters).Result;
+            case HttpStatusCode.NoContent:
+            case HttpStatusCode.NotFound:
+            case HttpStatusCode.Gone:
+                return null;
+            default:
+                throw new HttpRequestException(response.ReasonPhrase);
         }
+    }
 
-        /// <summary>
-        /// Get an array of OSLC resources of the specified type.  The type must have an associated .NET class with OSLC4Net annotations.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+    /// <summary>
+    /// Get an array of OSLC resources of the specified type.  The type must have an associated .NET class with OSLC4Net annotations.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
 	    public T[] GetOslcResources<T>()
 	    {
-            this.client.DefaultRequestHeaders.Clear();
-            this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
+        this.client.DefaultRequestHeaders.Clear();
+        this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
 
-    	    HttpResponseMessage response = client.GetAsync(uri).Result;
-            HttpStatusCode statusCode = response.StatusCode;
+	    HttpResponseMessage response = client.GetAsync(uri).Result;
+        HttpStatusCode statusCode = response.StatusCode;
 
-            switch (statusCode)
-            {
-                case HttpStatusCode.OK:
-                    T[] dummy = new T[0];
-                    return (T[])response.Content.ReadAsAsync(dummy.GetType(), formatters).Result;
-                case HttpStatusCode.NoContent:
-                case HttpStatusCode.NotFound:
-                case HttpStatusCode.Gone:
-                    return null;
-                default:
-                    throw new HttpRequestException(response.ReasonPhrase);
-            }
+        switch (statusCode)
+        {
+            case HttpStatusCode.OK:
+                T[] dummy = new T[0];
+                return (T[])response.Content.ReadAsAsync(dummy.GetType(), formatters).Result;
+            case HttpStatusCode.NoContent:
+            case HttpStatusCode.NotFound:
+            case HttpStatusCode.Gone:
+                return null;
+            default:
+                throw new HttpRequestException(response.ReasonPhrase);
+        }
 	    }
 
-        /// <summary>
-        /// Create an OSLC resource of the specified type.  The type must have an associated .NET class with OSLC4Net annotations.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="oslcResource"></param>
-        /// <returns></returns>
-        public T AddOslcResource<T>(T oslcResource)
+    /// <summary>
+    /// Create an OSLC resource of the specified type.  The type must have an associated .NET class with OSLC4Net annotations.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="oslcResource"></param>
+    /// <returns></returns>
+    public T AddOslcResource<T>(T oslcResource)
 	    {
-            this.client.DefaultRequestHeaders.Clear();
-            this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+        this.client.DefaultRequestHeaders.Clear();
+        this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
 
-            MediaTypeHeaderValue mediaTypeValue = new MediaTypeHeaderValue(mediaType);
-            MediaTypeFormatter formatter =
-                new MediaTypeFormatterCollection(formatters).FindWriter(oslcResource.GetType(), mediaTypeValue);
-            ObjectContent<T> content = new ObjectContent<T>(oslcResource, formatter);
+        MediaTypeHeaderValue mediaTypeValue = new MediaTypeHeaderValue(mediaType);
+        MediaTypeFormatter formatter =
+            new MediaTypeFormatterCollection(formatters).FindWriter(oslcResource.GetType(), mediaTypeValue);
+        ObjectContent<T> content = new ObjectContent<T>(oslcResource, formatter);
 
-            content.Headers.ContentType = mediaTypeValue;
+        content.Headers.ContentType = mediaTypeValue;
 
-            return client.PostAsync(uri, content).ContinueWith(response =>
+        return client.PostAsync(uri, content).ContinueWith(response =>
+            {
+                HttpStatusCode status = response.Result.StatusCode;
+
+                if (status != HttpStatusCode.Created && status != HttpStatusCode.OK)
                 {
-                    HttpStatusCode status = response.Result.StatusCode;
+                    throw new HttpRequestException(response.Result.ReasonPhrase);
+                }
 
-                    if (status != HttpStatusCode.Created && status != HttpStatusCode.OK)
-                    {
-                        throw new HttpRequestException(response.Result.ReasonPhrase);
-                    }
+                return response;
+            }).Result.Result.Content.ReadAsAsync<T>(formatters).Result;
+        }
 
-                    return response;
-                }).Result.Result.Content.ReadAsAsync<T>(formatters).Result;
-            }
-
-        /// <summary>
-        /// Add an OSLC resource of the specified type and return an HttpResponseMessage.
-        /// The type must have an associated .NET class with OSLC4Net annotations.
-        /// </summary>
-        /// <param name="oslcResource"></param>
-        /// <returns></returns>
+    /// <summary>
+    /// Add an OSLC resource of the specified type and return an HttpResponseMessage.
+    /// The type must have an associated .NET class with OSLC4Net annotations.
+    /// </summary>
+    /// <param name="oslcResource"></param>
+    /// <returns></returns>
 	    public HttpResponseMessage AddOslcResourceReturnClientResponse(object oslcResource)
 	    {
-            this.client.DefaultRequestHeaders.Clear();
-            this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+        this.client.DefaultRequestHeaders.Clear();
+        this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
 
-            MediaTypeHeaderValue mediaTypeValue = new MediaTypeHeaderValue(mediaType);
-            MediaTypeFormatter formatter =
-                new MediaTypeFormatterCollection(formatters).FindWriter(oslcResource.GetType(), mediaTypeValue);
-            ObjectContent content = new ObjectContent(oslcResource.GetType(), oslcResource, formatter);
+        MediaTypeHeaderValue mediaTypeValue = new MediaTypeHeaderValue(mediaType);
+        MediaTypeFormatter formatter =
+            new MediaTypeFormatterCollection(formatters).FindWriter(oslcResource.GetType(), mediaTypeValue);
+        ObjectContent content = new ObjectContent(oslcResource.GetType(), oslcResource, formatter);
 
-            content.Headers.ContentType = mediaTypeValue;
+        content.Headers.ContentType = mediaTypeValue;
 
-            HttpResponseMessage response = client.PostAsync(uri, content).Result;
-            HttpStatusCode statusCode = response.StatusCode;
+        HttpResponseMessage response = client.PostAsync(uri, content).Result;
+        HttpStatusCode statusCode = response.StatusCode;
 
-            switch (statusCode)
-            {
-                case HttpStatusCode.OK:
-                case HttpStatusCode.Created:
-                    return response;
-                default:
-                    throw new HttpRequestException(response.ReasonPhrase);
-            }
+        switch (statusCode)
+        {
+            case HttpStatusCode.OK:
+            case HttpStatusCode.Created:
+                return response;
+            default:
+                throw new HttpRequestException(response.ReasonPhrase);
+        }
 	    }
 
-        /// <summary>
-        /// Update an OSLC resource of the specified type and return an HttpResponseMessage.
-        /// The type must have an associated .NET class with OSLC4Net annotations.
-        /// </summary>
-        /// <param name="oslcResource"></param>
-        /// <returns></returns>
-        public HttpResponseMessage UpdateOslcResourceReturnClientResponse(object oslcResource)
-        {
-            this.client.DefaultRequestHeaders.Clear();
-            this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+    /// <summary>
+    /// Update an OSLC resource of the specified type and return an HttpResponseMessage.
+    /// The type must have an associated .NET class with OSLC4Net annotations.
+    /// </summary>
+    /// <param name="oslcResource"></param>
+    /// <returns></returns>
+    public HttpResponseMessage UpdateOslcResourceReturnClientResponse(object oslcResource)
+    {
+        this.client.DefaultRequestHeaders.Clear();
+        this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
 
-            MediaTypeFormatter formatter =
-                new MediaTypeFormatterCollection(formatters).FindWriter(oslcResource.GetType(), new MediaTypeHeaderValue(mediaType));
-            ObjectContent content = new ObjectContent(oslcResource.GetType(), oslcResource, formatter);
+        MediaTypeFormatter formatter =
+            new MediaTypeFormatterCollection(formatters).FindWriter(oslcResource.GetType(), new MediaTypeHeaderValue(mediaType));
+        ObjectContent content = new ObjectContent(oslcResource.GetType(), oslcResource, formatter);
 
-            content.Headers.ContentType = new MediaTypeHeaderValue(mediaType);
+        content.Headers.ContentType = new MediaTypeHeaderValue(mediaType);
 
-            HttpResponseMessage response = client.PutAsync(uri, content).Result;
+        HttpResponseMessage response = client.PutAsync(uri, content).Result;
 
-            return response;
-        }
+        return response;
+    }
 
 
-        /// <summary>
-        /// Remove an OSLC resource
-        /// </summary>
-        /// <returns></returns>
-        public HttpResponseMessage RemoveOslcResourceReturnClientResponse()
-        {
-            this.client.DefaultRequestHeaders.Clear();
-            this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+    /// <summary>
+    /// Remove an OSLC resource
+    /// </summary>
+    /// <returns></returns>
+    public HttpResponseMessage RemoveOslcResourceReturnClientResponse()
+    {
+        this.client.DefaultRequestHeaders.Clear();
+        this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
 
-            HttpResponseMessage response = client.DeleteAsync(uri).Result;
+        HttpResponseMessage response = client.DeleteAsync(uri).Result;
 
-            return response;
-        }
+        return response;
     }
 }

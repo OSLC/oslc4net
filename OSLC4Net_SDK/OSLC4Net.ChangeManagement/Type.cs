@@ -15,59 +15,58 @@
 
 using System;
 
-namespace OSLC4Net.ChangeManagement
+namespace OSLC4Net.ChangeManagement;
+
+public enum Type
 {
-    public enum Type
+    [Description("Defect")]
+    Defect,
+    [Description("Task")]
+    Task,
+    [Description("Story")]
+    Story,
+    [Description("Bug Report")]
+    Bug_Report,
+    [Description("Feature Request")]
+    Feature_Request
+}
+
+class TypeExtension
+{
+    public static string ToString(Type type)
     {
-        [Description("Defect")]
-        Defect,
-        [Description("Task")]
-        Task,
-        [Description("Story")]
-        Story,
-        [Description("Bug Report")]
-        Bug_Report,
-        [Description("Feature Request")]
-        Feature_Request
+        Description[] attributes = (Description[])type.GetType().GetField(type.ToString()).GetCustomAttributes(typeof(Description), false);
+
+        return attributes.Length > 0 ? attributes[0].value : string.Empty;
     }
 
-    class TypeExtension
+    public static Type FromString(string value)
     {
-        public static string ToString(Type type)
+        foreach (Type type in Enum.GetValues(typeof(Type)))
         {
-            Description[] attributes = (Description[])type.GetType().GetField(type.ToString()).GetCustomAttributes(typeof(Description), false);
+            string description = ToString(type);
 
-            return attributes.Length > 0 ? attributes[0].value : string.Empty;
-        }
-
-        public static Type FromString(string value)
-        {
-            foreach (Type type in Enum.GetValues(typeof(Type)))
+            if (description.Equals(value))
             {
-                string description = ToString(type);
-
-                if (description.Equals(value))
-                {
-                    return type;
-                }
+                return type;
             }
-
-            throw new ArgumentException();
         }
+
+        throw new ArgumentException();
     }
+}
 
-    [System.AttributeUsage(System.AttributeTargets.Field)
-    ]
-    class Description : System.Attribute
+[System.AttributeUsage(System.AttributeTargets.Field)
+]
+class Description : System.Attribute
+{
+    /**
+     *  Description of element; used in enumerations
+     */
+    public readonly string value;
+
+    public Description(string value)
     {
-        /**
-         *  Description of element; used in enumerations
-         */
-        public readonly string value;
-
-        public Description(string value)
-        {
-            this.value = value;
-        }
+        this.value = value;
     }
 }

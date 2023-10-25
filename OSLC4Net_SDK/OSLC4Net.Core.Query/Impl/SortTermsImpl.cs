@@ -19,51 +19,50 @@ using System.Linq;
 
 using Antlr.Runtime.Tree;
 
-namespace OSLC4Net.Core.Query.Impl
+namespace OSLC4Net.Core.Query.Impl;
+
+class SortTermsImpl : OrderByClause
 {
-    class SortTermsImpl : OrderByClause
+    public SortTermsImpl(
+        CommonTree tree,
+        IDictionary<string, string> prefixMap
+    )
     {
-        public SortTermsImpl(
-            CommonTree tree,
-            IDictionary<string, string> prefixMap
-        )
+        this.tree = tree;
+        this.prefixMap = prefixMap;
+    }
+
+    public IList<SortTerm> Children
+    {
+        get
         {
-            this.tree = tree;
-            this.prefixMap = prefixMap;
-        }
+            if (children == null) {
 
-        public IList<SortTerm> Children
-        {
-            get
-            {
-                if (children == null) {
+                IList<CommonTree> rawChildren = (IList<CommonTree>)tree.Children;
 
-                    IList<CommonTree> rawChildren = (IList<CommonTree>)tree.Children;
+                children = new List<SortTerm>(rawChildren.Count());
 
-                    children = new List<SortTerm>(rawChildren.Count());
+                foreach (CommonTree child in rawChildren) {
 
-                    foreach (CommonTree child in rawChildren) {
+                    object simpleTerm;
 
-                        object simpleTerm;
-
-                        switch(child.Token.Type) {
-                        default:
-                            throw new InvalidOperationException("unimplemented type of sort term: " + child.Token.Text);
-                        }
-
-                        children.Add((SortTerm)simpleTerm);
+                    switch(child.Token.Type) {
+                    default:
+                        throw new InvalidOperationException("unimplemented type of sort term: " + child.Token.Text);
                     }
 
-                    // XXX - Can't figure out why this doesn't work
-                    // children = children.AsReadOnly();
+                    children.Add((SortTerm)simpleTerm);
                 }
 
-                return children;
+                // XXX - Can't figure out why this doesn't work
+                // children = children.AsReadOnly();
             }
-        }
 
-        private readonly CommonTree tree;
-        private readonly IDictionary<string, string> prefixMap;
-        private IList<SortTerm> children = null;
+            return children;
+        }
     }
+
+    private readonly CommonTree tree;
+    private readonly IDictionary<string, string> prefixMap;
+    private IList<SortTerm> children = null;
 }

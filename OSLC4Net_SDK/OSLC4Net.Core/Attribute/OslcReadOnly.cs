@@ -14,29 +14,28 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Attribute
+namespace OSLC4Net.Core.Attribute;
+
+/// <summary>
+/// OSLC ReadOnly attribute
+/// </summary>
+/// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
+[System.AttributeUsage(System.AttributeTargets.Method)
+]
+public class OslcReadOnly : System.Attribute
 {
-    /// <summary>
-    /// OSLC ReadOnly attribute
-    /// </summary>
-    /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-    [System.AttributeUsage(System.AttributeTargets.Method)
-    ]
-    public class OslcReadOnly : System.Attribute
+    /**
+     * True if the property is read-only. If not set, or set to false, then the property is writable.
+     */
+    public readonly bool value;
+
+    public OslcReadOnly()
     {
-        /**
-         * True if the property is read-only. If not set, or set to false, then the property is writable.
-         */
-        public readonly bool value;
+        this.value = true;
+    }
 
-        public OslcReadOnly()
-        {
-            this.value = true;
-        }
-
-        public OslcReadOnly(bool value)
-        {
-            this.value = value;
-        }
+    public OslcReadOnly(bool value)
+    {
+        this.value = value;
     }
 }

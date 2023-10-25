@@ -20,32 +20,31 @@ using log4net;
 
 using OSLC4Net.Client.Properties;
 
-namespace OSLC4Net.Client.Exceptions
+namespace OSLC4Net.Client.Exceptions;
+
+/// <summary>
+/// Utility methods for retrieving messages
+/// </summary>
+public static class MessageExtractor
 {
+    private static ResourceManager rm = Resources.ResourceManager;
+    private static readonly ILog logger = LogManager.GetLogger(typeof(MessageExtractor));
+
     /// <summary>
-    /// Utility methods for retrieving messages
+    ///
     /// </summary>
-    public static class MessageExtractor
+    /// <param name="key"></param>
+    /// <param name="args"></param>
+    /// <returns></returns>
+    public static string GetMessage(string key, object[] args)
     {
-        private static ResourceManager rm = Resources.ResourceManager;
-        private static readonly ILog logger = LogManager.GetLogger(typeof(MessageExtractor));
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        public static string GetMessage(string key, object[] args)
-        {
-
-            try {
-                string message = rm.GetString( key );
-                return string.Format(message, args);
-            } catch (Exception missingResourceException ) {
-                logger.Fatal(missingResourceException.Message, missingResourceException);
-                return "???" + key + "???";
-            }
+        try {
+            string message = rm.GetString( key );
+            return string.Format(message, args);
+        } catch (Exception missingResourceException ) {
+            logger.Fatal(missingResourceException.Message, missingResourceException);
+            return "???" + key + "???";
         }
     }
 }

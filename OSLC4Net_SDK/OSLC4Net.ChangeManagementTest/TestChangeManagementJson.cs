@@ -18,82 +18,81 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using OSLC4Net.Core.Model;
 
-namespace OSLC4Net.ChangeManagementTest
+namespace OSLC4Net.ChangeManagementTest;
+
+[TestClass]
+public class TestChangeManagementJson : TestBase
 {
-    [TestClass]
-    public class TestChangeManagementJson : TestBase
+    public TestContext TestContext { set; get; }
+
+    [TestInitialize]
+    public void TestSetup()
     {
-        public TestContext TestContext { set; get; }
-
-        [TestInitialize]
-        public void TestSetup()
+        switch (TestContext.TestName)
         {
-            switch (TestContext.TestName)
-            {
-                case "TestResourceShape":
-                case "TestCreate":
-                    break;
-                default:
-                    MakeChangeRequest(OslcMediaType.APPLICATION_JSON);
-                    break;
-            }
+            case "TestResourceShape":
+            case "TestCreate":
+                break;
+            default:
+                MakeChangeRequest(OslcMediaType.APPLICATION_JSON);
+                break;
         }
+    }
 
-        [TestCleanup]
-        public void TestTeardown()
+    [TestCleanup]
+    public void TestTeardown()
+    {
+        switch (TestContext.TestName)
         {
-            switch (TestContext.TestName)
-            {
-                case "TestResourceShape":
-                case "TestDelete":
-                    break;
-                default:
-                    DeleteChangeRequest(OslcMediaType.APPLICATION_JSON);
-                    break;
-            }
+            case "TestResourceShape":
+            case "TestDelete":
+                break;
+            default:
+                DeleteChangeRequest(OslcMediaType.APPLICATION_JSON);
+                break;
         }
+    }
 
-        [TestMethod]
-        public void TestResourceShape()
-        {
-            TestResourceShape(OslcMediaType.APPLICATION_JSON);
-        }
+    [TestMethod]
+    public void TestResourceShape()
+    {
+        TestResourceShape(OslcMediaType.APPLICATION_JSON);
+    }
 
-        [TestMethod]
-        public void TestCreate()
-        {
-            TestCreate(OslcMediaType.APPLICATION_JSON);
-        }
+    [TestMethod]
+    public void TestCreate()
+    {
+        TestCreate(OslcMediaType.APPLICATION_JSON);
+    }
 
-        [TestMethod]
-        public void TestRetrieve()
-        {
-            TestRetrieve(OslcMediaType.APPLICATION_JSON);
-        }
+    [TestMethod]
+    public void TestRetrieve()
+    {
+        TestRetrieve(OslcMediaType.APPLICATION_JSON);
+    }
 
-        [TestMethod]
-        public void TestRetrieves()
-        {
-            TestRetrieves(OslcMediaType.APPLICATION_JSON);
-        }
+    [TestMethod]
+    public void TestRetrieves()
+    {
+        TestRetrieves(OslcMediaType.APPLICATION_JSON);
+    }
 
-        [TestMethod]
-        public void TestCompact()
-        {
-            TestCompact(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
-                        OslcMediaType.APPLICATION_JSON);
-        }
+    [TestMethod]
+    public void TestCompact()
+    {
+        TestCompact(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
+                    OslcMediaType.APPLICATION_JSON);
+    }
 
-        [TestMethod]
-        public void TestUpdate()
-        {
-            TestUpdate(OslcMediaType.APPLICATION_JSON);
-        }
+    [TestMethod]
+    public void TestUpdate()
+    {
+        TestUpdate(OslcMediaType.APPLICATION_JSON);
+    }
 
-        [TestMethod]
-        public void TestDelete()
-        {
-            TestDelete(OslcMediaType.APPLICATION_JSON);
-        }
+    [TestMethod]
+    public void TestDelete()
+    {
+        TestDelete(OslcMediaType.APPLICATION_JSON);
     }
 }

@@ -17,78 +17,77 @@ using System;
 using System.Collections.Generic;
 using Antlr.Runtime.Tree;
 
-namespace OSLC4Net.Core.Query.Impl
+namespace OSLC4Net.Core.Query.Impl;
+
+/// <summary>
+/// Implementation of Property interface
+/// </summary>
+internal class PropertyImpl : Property
 {
-    /// <summary>
-    /// Implementation of Property interface
-    /// </summary>
-    internal class PropertyImpl : Property
+    public
+    PropertyImpl(
+        CommonTree tree,
+        PropertyType type,
+        IDictionary<string, string> prefixMap,
+        bool isWildcard
+    )
     {
-        public
-        PropertyImpl(
-            CommonTree tree,
-            PropertyType type,
-            IDictionary<string, string> prefixMap,
-            bool isWildcard
-        )
-        {
-            this.tree = tree;
-            this.type = type;
-            this.prefixMap = prefixMap;
-            this.isWildcard = isWildcard;
-        }
+        this.tree = tree;
+        this.type = type;
+        this.prefixMap = prefixMap;
+        this.isWildcard = isWildcard;
+    }
 
-        public PropertyType Type
-        {
-            get { return type; }
-        }
+    public PropertyType Type
+    {
+        get { return type; }
+    }
 
-        public bool IsWildcard
-        {
-            get { return isWildcard; }
-        }
+    public bool IsWildcard
+    {
+        get { return isWildcard; }
+    }
 
-        public PName Identifier
-        {
-            get {
+    public PName Identifier
+    {
+        get {
 
-                if (identifier != null) {
-                    return identifier;
-                }
-
-                if (isWildcard) {
-                    throw new InvalidOperationException("wildcard has no identifier");
-                }
-
-                string rawIdentifier = tree.Text;
-
-                identifier = new PName();
-
-                int colon = rawIdentifier.IndexOf(':');
-
-                if (colon < 0) {
-                    identifier.local = rawIdentifier;
-                } else {
-                    if (colon > 0) {
-                        identifier.prefix = rawIdentifier.Substring(0, colon);
-                        identifier.ns = prefixMap[identifier.prefix];
-                    }
-                    identifier.local = rawIdentifier.Substring(colon + 1);
-                }
-
+            if (identifier != null) {
                 return identifier;
             }
-        }
 
-        public override string ToString()
-        {
-            return Identifier.ToString();
-        }
+            if (isWildcard) {
+                throw new InvalidOperationException("wildcard has no identifier");
+            }
 
-        private readonly CommonTree tree;
-        private readonly PropertyType type;
-        protected readonly IDictionary<string, string> prefixMap;
-        private readonly bool isWildcard;
-        private PName identifier = null;
+            string rawIdentifier = tree.Text;
+
+            identifier = new PName();
+
+            int colon = rawIdentifier.IndexOf(':');
+
+            if (colon < 0) {
+                identifier.local = rawIdentifier;
+            } else {
+                if (colon > 0) {
+                    identifier.prefix = rawIdentifier.Substring(0, colon);
+                    identifier.ns = prefixMap[identifier.prefix];
+                }
+                identifier.local = rawIdentifier.Substring(colon + 1);
+            }
+
+            return identifier;
+        }
     }
+
+    public override string ToString()
+    {
+        return Identifier.ToString();
+    }
+
+    private readonly CommonTree tree;
+    private readonly PropertyType type;
+    protected readonly IDictionary<string, string> prefixMap;
+    private readonly bool isWildcard;
+    private PName identifier = null;
 }

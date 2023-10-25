@@ -16,20 +16,19 @@
 
 using System;
 
-namespace OSLC4Net.Core.Attribute
-{
-    /// <summary>
-    /// Describe the assembley schema
-    /// </summary>
-    [System.AttributeUsage(System.AttributeTargets.Assembly)
-    ]
-    public class OslcSchema : System.Attribute
-    {
-        public Type namespaceType;
+namespace OSLC4Net.Core.Attribute;
 
-        public OslcSchema(Type namespaceType)
-        {
-            this.namespaceType = namespaceType;
-        }
+/// <summary>
+/// Describe the assembley schema
+/// </summary>
+[System.AttributeUsage(System.AttributeTargets.Assembly)
+]
+public class OslcSchema : System.Attribute
+{
+    public Type namespaceType;
+
+    public OslcSchema(Type namespaceType)
+    {
+        this.namespaceType = namespaceType;
     }
 }

@@ -15,51 +15,50 @@
 
 using Antlr.Runtime.Tree;
 
-namespace OSLC4Net.Core.Query.Impl
+namespace OSLC4Net.Core.Query.Impl;
+
+/// <summary>
+/// Implementation of LangedStringValue interface
+/// </summary>
+internal class LangedStringValueImpl : ValueImpl, LangedStringValue
 {
-    /// <summary>
-    /// Implementation of LangedStringValue interface
-    /// </summary>
-    internal class LangedStringValueImpl : ValueImpl, LangedStringValue
+    public
+    LangedStringValueImpl(CommonTree tree) : base(tree, ValueType.LANGED_STRING)
     {
-        public
-        LangedStringValueImpl(CommonTree tree) : base(tree, ValueType.LANGED_STRING)
-        {
-        }
-
-        public string Value
-        {
-            get
-            {
-                if (value == null)
-                {
-                    value = tree.GetChild(0).Text;
-                    value = value.Substring(1, value.Length - 2);
-                }
-
-                return value;
-            }
-        }
-
-        public string LangTag
-        {
-            get
-            {
-                if (langTag == null)
-                {
-                    langTag = tree.GetChild(1).Text.Substring(1);
-                }
-
-                return langTag;
-            }
-        }
-
-        public override string ToString()
-        {
-            return '"' + Value.ToString() + "\"@" + LangTag.ToString();
-        }
-
-        private string value = null;
-        private string langTag = null;
     }
+
+    public string Value
+    {
+        get
+        {
+            if (value == null)
+            {
+                value = tree.GetChild(0).Text;
+                value = value.Substring(1, value.Length - 2);
+            }
+
+            return value;
+        }
+    }
+
+    public string LangTag
+    {
+        get
+        {
+            if (langTag == null)
+            {
+                langTag = tree.GetChild(1).Text.Substring(1);
+            }
+
+            return langTag;
+        }
+    }
+
+    public override string ToString()
+    {
+        return '"' + Value.ToString() + "\"@" + LangTag.ToString();
+    }
+
+    private string value = null;
+    private string langTag = null;
 }

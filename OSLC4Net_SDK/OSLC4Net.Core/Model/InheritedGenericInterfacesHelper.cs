@@ -15,28 +15,27 @@
 
 using System;
 
-namespace OSLC4Net.Core.Model
+namespace OSLC4Net.Core.Model;
+
+public static class InheritedGenericInterfacesHelper
 {
-    public static class InheritedGenericInterfacesHelper
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="genericType"></param>
+    /// <param name="typeToTest"></param>
+    /// <returns></returns>
+    public static bool ImplementsGenericInterface(Type genericType, Type typeToTest)
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="genericType"></param>
-        /// <param name="typeToTest"></param>
-        /// <returns></returns>
-        public static bool ImplementsGenericInterface(Type genericType, Type typeToTest)
-        {
-            Type[] interfaces = typeToTest.GetInterfaces();
+        Type[] interfaces = typeToTest.GetInterfaces();
 
-            foreach (Type interfac in interfaces) {
-                if (interfac.IsGenericType && genericType == interfac.GetGenericTypeDefinition())
-                {
-                    return true;
-                }
+        foreach (Type interfac in interfaces) {
+            if (interfac.IsGenericType && genericType == interfac.GetGenericTypeDefinition())
+            {
+                return true;
             }
-
-            return false;
         }
+
+        return false;
     }
 }

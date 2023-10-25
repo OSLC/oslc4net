@@ -20,178 +20,177 @@ using System.Linq;
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
 
-namespace OSLC4Net.Client.Oslc.Resources
+namespace OSLC4Net.Client.Oslc.Resources;
+
+/// <summary>
+/// http://open-services.net/bin/view/Main/QmSpecificationV2#Resource_TestExecutionRecord
+/// </summary>
+[OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] {QmConstants.TYPE_TEST_EXECUTION_RECORD})]
+[OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
+public class TestExecutionRecord : QmResource
 {
-    /// <summary>
-    /// http://open-services.net/bin/view/Main/QmSpecificationV2#Resource_TestExecutionRecord
-    /// </summary>
-    [OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] {QmConstants.TYPE_TEST_EXECUTION_RECORD})]
-    [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
-    public class TestExecutionRecord : QmResource
+    private readonly ISet<Link>     blockedByChangeRequests     = new HashSet<Link>();
+    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Link>     relatedChangeRequests       = new HashSet<Link>();
+
+    private Link     reportsOnTestPlan;
+    private Uri      runsOnTestEnvironment;
+    private Link     runsTestCase;
+
+    public TestExecutionRecord() : base()
     {
-        private readonly ISet<Link>     blockedByChangeRequests     = new HashSet<Link>();
-        private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-        private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-        private readonly ISet<Link>     relatedChangeRequests       = new HashSet<Link>();
+    }
 
-        private Link     reportsOnTestPlan;
-        private Uri      runsOnTestEnvironment;
-        private Link     runsTestCase;
+    protected override Uri GetRdfType()
+    {
+	    return new Uri(QmConstants.TYPE_TEST_EXECUTION_RECORD);
+    }
 
-        public TestExecutionRecord() : base()
+    public void AddBlockedByChangeRequest(Link blockingChangeRequest)
+    {
+        this.blockedByChangeRequests.Add(blockingChangeRequest);
+    }
+
+    public void AddContributor(Uri contributor)
+    {
+        this.contributors.Add(contributor);
+    }
+
+    public void AddCreator(Uri creator)
+    {
+        this.creators.Add(creator);
+    }
+
+    public void AddRelatedChangeRequest(Link relatedChangeRequest)
+    {
+        this.relatedChangeRequests.Add(relatedChangeRequest);
+    }
+
+    [OslcDescription("The person(s) who are responsible for the work needed to complete the change request.")]
+    [OslcName("contributor")]
+    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "contributor")]
+    [OslcRange(QmConstants.TYPE_PERSON)]
+    [OslcTitle("Contributors")]
+    public Uri[] GetContributors()
+    {
+        return contributors.ToArray();
+    }
+
+    [OslcDescription("Creator or creators of resource.")]
+    [OslcName("creator")]
+    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "creator")]
+    [OslcRange(QmConstants.TYPE_PERSON)]
+    [OslcTitle("Creators")]
+    public Uri[] GetCreators()
+    {
+        return creators.ToArray();
+    }
+
+    [OslcDescription("Change Request that prevents execution of the Test Execution Record.")]
+    [OslcName("blockedByChangeRequest")]
+    [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "blockedByChangeRequest")]
+    [OslcRange(QmConstants.TYPE_CHANGE_REQUEST)]
+    [OslcReadOnly(false)]
+    [OslcTitle("Blocked By Change Request")]
+    public Link[] GetBlockedByChangeRequests()
+    {
+        return blockedByChangeRequests.ToArray();
+    }
+
+    [OslcDescription("This relationship is loosely coupled and has no specific meaning.")]
+    [OslcName("relatedChangeRequest")]
+    [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "relatedChangeRequest")]
+    [OslcRange(QmConstants.TYPE_CHANGE_REQUEST)]
+    [OslcReadOnly(false)]
+    [OslcTitle("Related Change Requests")]
+    public Link[] GetRelatedChangeRequests()
+    {
+        return relatedChangeRequests.ToArray();
+    }
+
+    [OslcDescription("Test Plan that the Test Execution Record reports on.")]
+    [OslcName("reportsOnTestPlan")]
+    [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "reportsOnTestPlan")]
+    [OslcRange(QmConstants.TYPE_TEST_PLAN)]
+    [OslcReadOnly(false)]
+    [OslcTitle("Reports On Test Plan")]
+    public Link GetReportsOnTestPlan()
+    {
+        return reportsOnTestPlan;
+    }
+
+    [OslcDescription("Indicates the environment details of the test case for this execution record.")]
+    [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "runsOnTestEnvironment")]
+    [OslcTitle("Runs On Test Environment")]
+    public Uri GetRunsOnTestEnvironment()
+    {
+        return runsOnTestEnvironment;
+    }
+
+    [OslcDescription("Test Case run by the Test Execution Record.")]
+    [OslcName("runsTestCase")]
+    [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "runsTestCase")]
+    [OslcRange(QmConstants.TYPE_TEST_CASE)]
+    [OslcReadOnly(false)]
+    [OslcTitle("Runs Test Case")]
+    public Link GetRunsTestCase()
+    {
+        return runsTestCase;
+    }
+
+    public void SetBlockedByChangeRequests(Link[] blockedByChangeRequests)
+    {
+        this.blockedByChangeRequests.Clear();
+
+        if (blockedByChangeRequests != null)
         {
+            this.blockedByChangeRequests.AddAll(blockedByChangeRequests);
         }
+    }
 
-        protected override Uri GetRdfType()
+    public void SetContributors(Uri[] contributors)
+    {
+        this.contributors.Clear();
+
+        if (contributors != null)
         {
-    	    return new Uri(QmConstants.TYPE_TEST_EXECUTION_RECORD);
+            this.contributors.AddAll(contributors);
         }
+    }
 
-        public void AddBlockedByChangeRequest(Link blockingChangeRequest)
+    public void SetCreators(Uri[] creators)
+    {
+        this.creators.Clear();
+
+        if (creators != null)
         {
-            this.blockedByChangeRequests.Add(blockingChangeRequest);
+            this.creators.AddAll(creators);
         }
+    }
 
-        public void AddContributor(Uri contributor)
+    public void SetRelatedChangeRequests(Link[] relatedChangeRequests)
+    {
+        this.relatedChangeRequests.Clear();
+
+        if (relatedChangeRequests != null)
         {
-            this.contributors.Add(contributor);
+            this.relatedChangeRequests.AddAll(relatedChangeRequests);
         }
+    }
 
-        public void AddCreator(Uri creator)
-        {
-            this.creators.Add(creator);
-        }
+    public void SetReportsOnTestPlan(Link reportsOnTestPlan)
+    {
+        this.reportsOnTestPlan = reportsOnTestPlan;
+    }
 
-        public void AddRelatedChangeRequest(Link relatedChangeRequest)
-        {
-            this.relatedChangeRequests.Add(relatedChangeRequest);
-        }
+    public void SetRunsOnTestEnvironment(Uri runsOnTestEnvironment)
+    {
+        this.runsOnTestEnvironment = runsOnTestEnvironment;
+    }
 
-        [OslcDescription("The person(s) who are responsible for the work needed to complete the change request.")]
-        [OslcName("contributor")]
-        [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "contributor")]
-        [OslcRange(QmConstants.TYPE_PERSON)]
-        [OslcTitle("Contributors")]
-        public Uri[] GetContributors()
-        {
-            return contributors.ToArray();
-        }
-
-        [OslcDescription("Creator or creators of resource.")]
-        [OslcName("creator")]
-        [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "creator")]
-        [OslcRange(QmConstants.TYPE_PERSON)]
-        [OslcTitle("Creators")]
-        public Uri[] GetCreators()
-        {
-            return creators.ToArray();
-        }
-
-        [OslcDescription("Change Request that prevents execution of the Test Execution Record.")]
-        [OslcName("blockedByChangeRequest")]
-        [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "blockedByChangeRequest")]
-        [OslcRange(QmConstants.TYPE_CHANGE_REQUEST)]
-        [OslcReadOnly(false)]
-        [OslcTitle("Blocked By Change Request")]
-        public Link[] GetBlockedByChangeRequests()
-        {
-            return blockedByChangeRequests.ToArray();
-        }
-
-        [OslcDescription("This relationship is loosely coupled and has no specific meaning.")]
-        [OslcName("relatedChangeRequest")]
-        [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "relatedChangeRequest")]
-        [OslcRange(QmConstants.TYPE_CHANGE_REQUEST)]
-        [OslcReadOnly(false)]
-        [OslcTitle("Related Change Requests")]
-        public Link[] GetRelatedChangeRequests()
-        {
-            return relatedChangeRequests.ToArray();
-        }
-
-        [OslcDescription("Test Plan that the Test Execution Record reports on.")]
-        [OslcName("reportsOnTestPlan")]
-        [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "reportsOnTestPlan")]
-        [OslcRange(QmConstants.TYPE_TEST_PLAN)]
-        [OslcReadOnly(false)]
-        [OslcTitle("Reports On Test Plan")]
-        public Link GetReportsOnTestPlan()
-        {
-            return reportsOnTestPlan;
-        }
-
-        [OslcDescription("Indicates the environment details of the test case for this execution record.")]
-        [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "runsOnTestEnvironment")]
-        [OslcTitle("Runs On Test Environment")]
-        public Uri GetRunsOnTestEnvironment()
-        {
-            return runsOnTestEnvironment;
-        }
-
-        [OslcDescription("Test Case run by the Test Execution Record.")]
-        [OslcName("runsTestCase")]
-        [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "runsTestCase")]
-        [OslcRange(QmConstants.TYPE_TEST_CASE)]
-        [OslcReadOnly(false)]
-        [OslcTitle("Runs Test Case")]
-        public Link GetRunsTestCase()
-        {
-            return runsTestCase;
-        }
-
-        public void SetBlockedByChangeRequests(Link[] blockedByChangeRequests)
-        {
-            this.blockedByChangeRequests.Clear();
-
-            if (blockedByChangeRequests != null)
-            {
-                this.blockedByChangeRequests.AddAll(blockedByChangeRequests);
-            }
-        }
-
-        public void SetContributors(Uri[] contributors)
-        {
-            this.contributors.Clear();
-
-            if (contributors != null)
-            {
-                this.contributors.AddAll(contributors);
-            }
-        }
-
-        public void SetCreators(Uri[] creators)
-        {
-            this.creators.Clear();
-
-            if (creators != null)
-            {
-                this.creators.AddAll(creators);
-            }
-        }
-
-        public void SetRelatedChangeRequests(Link[] relatedChangeRequests)
-        {
-            this.relatedChangeRequests.Clear();
-
-            if (relatedChangeRequests != null)
-            {
-                this.relatedChangeRequests.AddAll(relatedChangeRequests);
-            }
-        }
-
-        public void SetReportsOnTestPlan(Link reportsOnTestPlan)
-        {
-            this.reportsOnTestPlan = reportsOnTestPlan;
-        }
-
-        public void SetRunsOnTestEnvironment(Uri runsOnTestEnvironment)
-        {
-            this.runsOnTestEnvironment = runsOnTestEnvironment;
-        }
-
-        public void SetRunsTestCase(Link runsTestCase)
-        {
-            this.runsTestCase = runsTestCase;
-        }
+    public void SetRunsTestCase(Link runsTestCase)
+    {
+        this.runsTestCase = runsTestCase;
     }
 }

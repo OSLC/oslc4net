@@ -13,10 +13,9 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query
+namespace OSLC4Net.Core.Query;
+
+public interface SimpleSortTerm : SortTerm
 {
-    public interface SimpleSortTerm : SortTerm
-    {
-        bool Ascending { get; }
-    }
+    bool Ascending { get; }
 }

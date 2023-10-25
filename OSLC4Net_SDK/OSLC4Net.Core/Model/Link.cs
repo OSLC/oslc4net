@@ -17,13 +17,13 @@ using System;
 
 using OSLC4Net.Core.Attribute;
 
-namespace OSLC4Net.Core.Model
+namespace OSLC4Net.Core.Model;
+
+/// <summary>
+/// An OSLC link - inculdes a Uri and a label.
+/// </summary>
+public class Link : AbstractReifiedResource<Uri>
 {
-    /// <summary>
-    /// An OSLC link - inculdes a Uri and a label.
-    /// </summary>
-    public class Link : AbstractReifiedResource<Uri>
-    {
 	    private string label;
 
 	    public Link()
@@ -41,10 +41,10 @@ namespace OSLC4Net.Core.Model
 		    this.label = label;
 	    }
 
-        /// <summary>
-        /// Gets the link label.
-        /// </summary>
-        /// <returns></returns>
+    /// <summary>
+    /// Gets the link label.
+    /// </summary>
+    /// <returns></returns>
 	    [OslcName("title")]
 	    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
 	    public string GetLabel()
@@ -53,12 +53,11 @@ namespace OSLC4Net.Core.Model
 	    }
 
 	    /// <summary>
-        /// Sets the link label.
+    /// Sets the link label.
 	    /// </summary>
 	    /// <param name="label"></param>
 	    public void SetLabel(string label)
 	    {
 		    this.label = label;
 	    }
-    }
 }

@@ -14,15 +14,15 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Attribute
+namespace OSLC4Net.Core.Attribute;
+
+/// <summary>
+/// OSLC Resource Shape attribute
+/// </summary>
+[System.AttributeUsage(System.AttributeTargets.Class)
+]
+public class OslcResourceShape : System.Attribute
 {
-    /// <summary>
-    /// OSLC Resource Shape attribute
-    /// </summary>
-    [System.AttributeUsage(System.AttributeTargets.Class)
-    ]
-    public class OslcResourceShape : System.Attribute
-    {
 	    /**
 	     * Title string that could be used for display
 	     */
@@ -31,6 +31,5 @@ namespace OSLC4Net.Core.Attribute
 	    /**
 	     * Type or types of resource described by this shape.
 	     */
-        public string[] describes = {};
-    }
+    public string[] describes = {};
 }

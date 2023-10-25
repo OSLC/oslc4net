@@ -17,32 +17,31 @@
 using System.Collections.Generic;
 
 
-namespace OSLC4Net.Core.Model
+namespace OSLC4Net.Core.Model;
+
+/// <summary>
+/// Class representing a filtered OSLC resource.  That is, a representation of resource where some of the
+/// attributes are not present (filtered using oslc.select or oslc.properties)
+/// </summary>
+/// <typeparam name="T"></typeparam>
+public class FilteredResource<T>
 {
-    /// <summary>
-    /// Class representing a filtered OSLC resource.  That is, a representation of resource where some of the
-    /// attributes are not present (filtered using oslc.select or oslc.properties)
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class FilteredResource<T>
+    /**
+     * Resource.
+     */
+   public T Resource { get; private set; }
+
+    /**
+     * properties
+     */
+   public IDictionary<string, object> Properties { get; private set; }
+
+    public FilteredResource(
+        T resource,
+        IDictionary<string, object> properties
+    )
     {
-        /**
-         * Resource.
-         */
-       public T Resource { get; private set; }
-
-        /**
-         * properties
-         */
-       public IDictionary<string, object> Properties { get; private set; }
-
-        public FilteredResource(
-            T resource,
-            IDictionary<string, object> properties
-        )
-        {
-            this.Resource = resource;
-            this.Properties = properties;
-        }
+        this.Resource = resource;
+        this.Properties = properties;
     }
 }

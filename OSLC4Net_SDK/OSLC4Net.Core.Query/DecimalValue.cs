@@ -13,17 +13,16 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query
+namespace OSLC4Net.Core.Query;
+
+/// <summary>
+/// Decimal literal operand from olsc.where clause.<p>
+///
+/// Not converted to any .NET native class as only clients of this
+/// interface can convert to native DB field values without losing
+/// precision.
+/// </summary>
+public interface DecimalValue : Value
 {
-    /// <summary>
-    /// Decimal literal operand from olsc.where clause.<p>
-    ///
-    /// Not converted to any .NET native class as only clients of this
-    /// interface can convert to native DB field values without losing
-    /// precision.
-    /// </summary>
-    public interface DecimalValue : Value
-    {
-        string Value { get; }
-    }
+    string Value { get; }
 }

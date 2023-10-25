@@ -16,26 +16,25 @@
 
 using OSLC4Net.Core.Model;
 
-namespace OSLC4Net.Core.Attribute
+namespace OSLC4Net.Core.Attribute;
+
+[System.AttributeUsage(System.AttributeTargets.Method)
+]
+public class OslcRdfCollectionType : System.Attribute
 {
-    [System.AttributeUsage(System.AttributeTargets.Method)
-    ]
-    public class OslcRdfCollectionType : System.Attribute
+    /**
+     * Namespace URI.
+     */
+    public readonly string namespaceURI = OslcConstants.RDF_NAMESPACE;
+
+    /**
+     * Prefix for the namespace.
+     */
+    public readonly string collectionType = "List";
+
+    public OslcRdfCollectionType(string namespaceURI, string collectionType)
     {
-        /**
-         * Namespace URI.
-         */
-        public readonly string namespaceURI = OslcConstants.RDF_NAMESPACE;
-
-        /**
-         * Prefix for the namespace.
-         */
-        public readonly string collectionType = "List";
-
-        public OslcRdfCollectionType(string namespaceURI, string collectionType)
-        {
-            this.namespaceURI = namespaceURI;
-            this.collectionType = collectionType;
-        }
+        this.namespaceURI = namespaceURI;
+        this.collectionType = collectionType;
     }
 }

@@ -17,33 +17,32 @@ using System;
 
 using OSLC4Net.Core.Attribute;
 
-namespace OSLC4Net.Core.Exceptions
+namespace OSLC4Net.Core.Exceptions;
+
+/// <summary>
+/// Exception thrown when a property is defined more than once
+/// </summary>
+public class OslcCoreDuplicatePropertyDefinitionException : OslcCoreApplicationException
 {
     /// <summary>
-    /// Exception thrown when a property is defined more than once
+    ///
     /// </summary>
-    public class OslcCoreDuplicatePropertyDefinitionException : OslcCoreApplicationException
+    /// <param name="resourceType"></param>
+    /// <param name="oslcPropertyDefinition"></param>
+    public OslcCoreDuplicatePropertyDefinitionException(Type resourceType, OslcPropertyDefinition oslcPropertyDefinition) :
+        base(MESSAGE_KEY, new object[] {resourceType.Name, oslcPropertyDefinition.value})
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="resourceType"></param>
-        /// <param name="oslcPropertyDefinition"></param>
-        public OslcCoreDuplicatePropertyDefinitionException(Type resourceType, OslcPropertyDefinition oslcPropertyDefinition) :
-            base(MESSAGE_KEY, new object[] {resourceType.Name, oslcPropertyDefinition.value})
-        {
-            this.oslcPropertyDefinition = oslcPropertyDefinition;
-            this.resourceType          = resourceType;
-        }
-
-        public OslcPropertyDefinition GetOslcPropertyDefinition()
-        {
-            return oslcPropertyDefinition;
-        }
-
-        private static readonly string MESSAGE_KEY = "DuplicatePropertyDefinitionException";
-
-        private OslcPropertyDefinition oslcPropertyDefinition;
-        private Type               resourceType;
+        this.oslcPropertyDefinition = oslcPropertyDefinition;
+        this.resourceType          = resourceType;
     }
+
+    public OslcPropertyDefinition GetOslcPropertyDefinition()
+    {
+        return oslcPropertyDefinition;
+    }
+
+    private static readonly string MESSAGE_KEY = "DuplicatePropertyDefinitionException";
+
+    private OslcPropertyDefinition oslcPropertyDefinition;
+    private Type               resourceType;
 }

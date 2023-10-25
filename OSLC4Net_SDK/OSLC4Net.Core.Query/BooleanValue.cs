@@ -13,13 +13,12 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query
+namespace OSLC4Net.Core.Query;
+
+/// <summary>
+/// Boolean literal operand from olsc.where clause
+/// </summary>
+public interface BooleanValue : Value
 {
-    /// <summary>
-    /// Boolean literal operand from olsc.where clause
-    /// </summary>
-    public interface BooleanValue : Value
-    {
-        bool Value { get; }
-    }
+    bool Value { get; }
 }

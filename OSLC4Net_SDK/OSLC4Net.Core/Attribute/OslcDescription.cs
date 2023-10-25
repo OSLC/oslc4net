@@ -14,24 +14,23 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Attribute
+namespace OSLC4Net.Core.Attribute;
+
+/// <summary>
+/// OSLC Description attribute
+/// </summary>
+/// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
+[System.AttributeUsage(System.AttributeTargets.Method)
+]
+public class OslcDescription : System.Attribute
 {
-    /// <summary>
-    /// OSLC Description attribute
-    /// </summary>
-    /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-    [System.AttributeUsage(System.AttributeTargets.Method)
-    ]
-    public class OslcDescription : System.Attribute
-    {
 	    /**
 	     * A default value for property, inlined into property definition.
 	     */
-        public readonly string value;
+    public readonly string value;
 
-        public OslcDescription(string value)
-        {
-            this.value = value;
-        }
+    public OslcDescription(string value)
+    {
+        this.value = value;
     }
 }

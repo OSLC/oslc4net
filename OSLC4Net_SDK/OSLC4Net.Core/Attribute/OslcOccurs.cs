@@ -16,23 +16,22 @@
 
 using OSLC4Net.Core.Model;
 
-namespace OSLC4Net.Core.Attribute
-{
-    /// <summary>
-    /// OSLC Occurs attribute
-    /// </summary>
-    [System.AttributeUsage(System.AttributeTargets.Method)
-    ]
-    public class OslcOccurs : System.Attribute
-    {
-        /**
-         * Occurs of property.
-         */
-        public readonly Occurs value;
+namespace OSLC4Net.Core.Attribute;
 
-        public OslcOccurs(Occurs value)
-        {
-            this.value = value;
-        }
+/// <summary>
+/// OSLC Occurs attribute
+/// </summary>
+[System.AttributeUsage(System.AttributeTargets.Method)
+]
+public class OslcOccurs : System.Attribute
+{
+    /**
+     * Occurs of property.
+     */
+    public readonly Occurs value;
+
+    public OslcOccurs(Occurs value)
+    {
+        this.value = value;
     }
 }

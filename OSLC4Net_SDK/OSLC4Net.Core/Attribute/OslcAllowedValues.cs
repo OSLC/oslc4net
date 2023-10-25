@@ -14,24 +14,23 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Attribute
-{
-    /// <summary>
-    /// OSLC AllowedValues (enumeration) attribute
-    /// </summary>
-    /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-    [System.AttributeUsage(System.AttributeTargets.Method)
-    ]
-    public class OslcAllowedValues : System.Attribute
-    {
-        /**
-         * Specify how the resource will be represented (for properties with a resource value-type).
-         */
-        public readonly string value;
+namespace OSLC4Net.Core.Attribute;
 
-        public OslcAllowedValues(string value)
-        {
-            this.value = value;
-        }
+/// <summary>
+/// OSLC AllowedValues (enumeration) attribute
+/// </summary>
+/// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
+[System.AttributeUsage(System.AttributeTargets.Method)
+]
+public class OslcAllowedValues : System.Attribute
+{
+    /**
+     * Specify how the resource will be represented (for properties with a resource value-type).
+     */
+    public readonly string value;
+
+    public OslcAllowedValues(string value)
+    {
+        this.value = value;
     }
 }

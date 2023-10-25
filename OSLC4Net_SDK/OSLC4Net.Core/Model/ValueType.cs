@@ -15,67 +15,66 @@
 
 using System;
 
-namespace OSLC4Net.Core.Model
+namespace OSLC4Net.Core.Model;
+
+/// <summary>
+/// OSLC ValueType attribute
+/// </summary>
+/// <remarks>see http://open-services.net/bin/view/Main/OslcCoreSpecification#OSLC_Defined_Resources</remarks>
+public enum ValueType
 {
-    /// <summary>
-    /// OSLC ValueType attribute
-    /// </summary>
-    /// <remarks>see http://open-services.net/bin/view/Main/OslcCoreSpecification#OSLC_Defined_Resources</remarks>
-    public enum ValueType
-    {
-        [URI(OslcConstants.XML_NAMESPACE + "boolean")]
-        Boolean,
-        [URI(OslcConstants.XML_NAMESPACE + "dateTime")]
+    [URI(OslcConstants.XML_NAMESPACE + "boolean")]
+    Boolean,
+    [URI(OslcConstants.XML_NAMESPACE + "dateTime")]
 	    DateTime,
-        [URI(OslcConstants.XML_NAMESPACE + "decimal")]
+    [URI(OslcConstants.XML_NAMESPACE + "decimal")]
 	    Decimal,
-        [URI(OslcConstants.XML_NAMESPACE + "double")]
+    [URI(OslcConstants.XML_NAMESPACE + "double")]
 	    Double,
-        [URI(OslcConstants.XML_NAMESPACE + "float")]
+    [URI(OslcConstants.XML_NAMESPACE + "float")]
 	    Float,
-        [URI(OslcConstants.XML_NAMESPACE + "integer")]
+    [URI(OslcConstants.XML_NAMESPACE + "integer")]
 	    Integer,
-        [URI(OslcConstants.XML_NAMESPACE + "string")]
+    [URI(OslcConstants.XML_NAMESPACE + "string")]
 	    String,
-        [URI(OslcConstants.RDF_NAMESPACE + "XMLLiteral")]
+    [URI(OslcConstants.RDF_NAMESPACE + "XMLLiteral")]
 	    XMLLiteral,
-        [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Resource")]
+    [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Resource")]
 	    Resource,
-        [URI(OslcConstants.OSLC_CORE_NAMESPACE + "LocalResource")]
+    [URI(OslcConstants.OSLC_CORE_NAMESPACE + "LocalResource")]
 	    LocalResource,
-        [URI("")]
-        Unknown
-    //  [URI(OslcConstants.OSLC_CORE_ENUM_NAMESPACE + "AnyResource")]
-    //	AnyResource // AnyResource not supported by OSLC4J
-    }
+    [URI("")]
+    Unknown
+//  [URI(OslcConstants.OSLC_CORE_ENUM_NAMESPACE + "AnyResource")]
+//	AnyResource // AnyResource not supported by OSLC4J
+}
 
-    public static class ValueTypeExtension
+public static class ValueTypeExtension
+{
+    public static string ToString(ValueType valueType)
     {
-        public static string ToString(ValueType valueType)
-        {
-            URI[] attributes = (URI[])valueType.GetType().GetField(valueType.ToString()).GetCustomAttributes(typeof(URI), false);
+        URI[] attributes = (URI[])valueType.GetType().GetField(valueType.ToString()).GetCustomAttributes(typeof(URI), false);
 
-            return attributes.Length > 0 ? attributes[0].uri : string.Empty;
+        return attributes.Length > 0 ? attributes[0].uri : string.Empty;
 	    }
 
 	    public static ValueType FromString(string value)
-        {
+    {
 	        foreach (ValueType valueType in Enum.GetValues(typeof(ValueType)))
+        {
+            string uri = ToString(valueType);
+
+            if (uri.Equals(value))
             {
-                string uri = ToString(valueType);
-
-                if (uri.Equals(value))
-                {
-                    return valueType;
-                }
+                return valueType;
             }
+        }
 
-            return ValueType.Unknown; // XXX - Java code does return null;
+        return ValueType.Unknown; // XXX - Java code does return null;
 	    }
 
 	    public static ValueType FromURI(URI uri)
-        {
+    {
 		    return FromString(uri.ToString());
 	    }
-    }
 }

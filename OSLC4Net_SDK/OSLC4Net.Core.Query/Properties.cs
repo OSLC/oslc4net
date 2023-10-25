@@ -15,13 +15,12 @@
 
 using System.Collections.Generic;
 
-namespace OSLC4Net.Core.Query
+namespace OSLC4Net.Core.Query;
+
+/// <summary>
+/// Properties from olsc.select of oslc.properties clause
+/// </summary>
+public interface Properties
 {
-    /// <summary>
-    /// Properties from olsc.select of oslc.properties clause
-    /// </summary>
-    public interface Properties
-    {
-        IList<Property> Children { get; }
-    }
+    IList<Property> Children { get; }
 }

@@ -13,12 +13,11 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query
+namespace OSLC4Net.Core.Query;
+
+/// <summary>
+/// Top level select clause from olsc.select
+/// </summary>
+public interface SelectClause : Properties
 {
-    /// <summary>
-    /// Top level select clause from olsc.select
-    /// </summary>
-    public interface SelectClause : Properties
-    {
-    }
 }

@@ -15,21 +15,21 @@
 
 using System.Net;
 
-namespace OSLC4Net.Client.Exceptions
+namespace OSLC4Net.Client.Exceptions;
+
+/// <summary>
+/// Exceptions indicating a Jazz authentication or credentials problem
+/// </summary>
+public class JazzAuthErrorException : OslcClientApplicationException
 {
-    /// <summary>
-    /// Exceptions indicating a Jazz authentication or credentials problem
-    /// </summary>
-    public class JazzAuthErrorException : OslcClientApplicationException
-    {
 	    private const string MESSAGE_KEY = "JazzAuthErrorException";
 
 	    private readonly HttpStatusCode status;
-        private readonly string jazzUrl;
+    private readonly string jazzUrl;
 
 	    public JazzAuthErrorException(HttpStatusCode status, string jazzUrl) :
 		    base(MESSAGE_KEY, new object[] {status.ToString(), jazzUrl})
-        {
+    {
 		    this.status = status;
 		    this.jazzUrl = jazzUrl;
 	    }
@@ -41,5 +41,4 @@ namespace OSLC4Net.Client.Exceptions
 	    public string getJazzUrl() {
 		    return jazzUrl;
 	    }
-    }
 }

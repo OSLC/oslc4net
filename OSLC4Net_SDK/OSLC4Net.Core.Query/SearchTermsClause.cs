@@ -15,12 +15,11 @@
 
 using System.Collections.Generic;
 
-namespace OSLC4Net.Core.Query
+namespace OSLC4Net.Core.Query;
+
+/// <summary>
+/// String list from oslc.searchTerms clause
+/// </summary>
+public interface SearchTermsClause : IList<string>
 {
-    /// <summary>
-    /// String list from oslc.searchTerms clause
-    /// </summary>
-    public interface SearchTermsClause : IList<string>
-    {
-    }
 }

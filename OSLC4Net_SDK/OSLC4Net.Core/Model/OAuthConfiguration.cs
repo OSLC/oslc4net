@@ -17,34 +17,34 @@ using System;
 
 using OSLC4Net.Core.Attribute;
 
-namespace OSLC4Net.Core.Model
+namespace OSLC4Net.Core.Model;
+
+/// <summary>
+/// An OSLC OAuth configuration resource
+/// </summary>
+[OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
+[OslcResourceShape(title = "OSLC OAuth Configuration Resource Shape", describes = new string[] { OslcConstants.TYPE_O_AUTH_CONFIGURATION })]
+public class OAuthConfiguration : AbstractResource
 {
-    /// <summary>
-    /// An OSLC OAuth configuration resource
-    /// </summary>
-    [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-    [OslcResourceShape(title = "OSLC OAuth Configuration Resource Shape", describes = new string[] { OslcConstants.TYPE_O_AUTH_CONFIGURATION })]
-    public class OAuthConfiguration : AbstractResource
-    {
 	    private Uri authorizationURI;
 	    private Uri oauthAccessTokenURI;
 	    private Uri oauthRequestTokenURI;
 
-        /// <summary>
-        ///
-        /// </summary>
+    /// <summary>
+    ///
+    /// </summary>
 	    public OAuthConfiguration() : base()
-        {
+    {
 	    }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="oauthRequestTokenURI"></param>
-        /// <param name="authorizationURI"></param>
-        /// <param name="oauthAccessTokenURI"></param>
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="oauthRequestTokenURI"></param>
+    /// <param name="authorizationURI"></param>
+    /// <param name="oauthAccessTokenURI"></param>
 	    public OAuthConfiguration(Uri oauthRequestTokenURI, Uri authorizationURI,  Uri oauthAccessTokenURI) : this()
-        {
+    {
 		    this.oauthRequestTokenURI = oauthRequestTokenURI;
 		    this.authorizationURI =  authorizationURI;
 		    this.oauthAccessTokenURI = oauthAccessTokenURI;
@@ -55,7 +55,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "authorizationURI")]
 	    [OslcReadOnly]
 	    [OslcTitle("Authorization Uri")]
-        public Uri GetAuthorizationURI() {
+    public Uri GetAuthorizationURI() {
 	        return authorizationURI;
 	    }
 
@@ -64,7 +64,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "oauthAccessTokenURI")]
 	    [OslcReadOnly]
 	    [OslcTitle("Access Token Uri")]
-        public Uri GetOauthAccessTokenURI() {
+    public Uri GetOauthAccessTokenURI() {
 	        return oauthAccessTokenURI;
 	    }
 
@@ -73,7 +73,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "oauthRequestTokenURI")]
 	    [OslcReadOnly]
 	    [OslcTitle("Request Token Uri")]
-        public Uri GetOauthRequestTokenURI() {
+    public Uri GetOauthRequestTokenURI() {
 	        return oauthRequestTokenURI;
 	    }
 
@@ -88,5 +88,4 @@ namespace OSLC4Net.Core.Model
 	    public void SetOauthRequestTokenURI(Uri oauthRequestTokenURI) {
 	        this.oauthRequestTokenURI = oauthRequestTokenURI;
 	    }
-    }
 }

@@ -14,15 +14,15 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Attribute
+namespace OSLC4Net.Core.Attribute;
+
+/// <summary>
+/// OSLC CreationFactory attribute
+/// </summary>
+[System.AttributeUsage(System.AttributeTargets.Method)
+]
+public class OslcCreationFactory : System.Attribute
 {
-    /// <summary>
-    /// OSLC CreationFactory attribute
-    /// </summary>
-    [System.AttributeUsage(System.AttributeTargets.Method)
-    ]
-    public class OslcCreationFactory : System.Attribute
-    {
 	    /**
 	     * Title string that could be used for display
 	     */
@@ -31,22 +31,21 @@ namespace OSLC4Net.Core.Attribute
 	    /**
 	     * Very short label for use in menu items
 	     */
-        public string label = "";
+    public string label = "";
 
 	    /**
 	     * Resource shapes
 	     */
-        public string[] resourceShapes = { };
+    public string[] resourceShapes = { };
 
 	    /**
 	     * Resource types
 	     */
-        public string[] resourceTypes = { };
+    public string[] resourceTypes = { };
 
 	    /**
 	     * Usages
 	     */
-        public string[] usages = { };
+    public string[] usages = { };
 
-    }
 }

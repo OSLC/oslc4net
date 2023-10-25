@@ -17,24 +17,24 @@ using System;
 
 using OSLC4Net.Core.Attribute;
 
-namespace OSLC4Net.Core.Model
+namespace OSLC4Net.Core.Model;
+
+/// <summary>
+/// OSLC PrefixDefinition resource
+/// </summary>
+[OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
+[OslcResourceShape(title = "OSLC Prefix Definition Resource Shape", describes = new string[] { OslcConstants.TYPE_PREFIX_DEFINITION })]
+public class PrefixDefinition : AbstractResource
 {
-    /// <summary>
-    /// OSLC PrefixDefinition resource
-    /// </summary>
-    [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-    [OslcResourceShape(title = "OSLC Prefix Definition Resource Shape", describes = new string[] { OslcConstants.TYPE_PREFIX_DEFINITION })]
-    public class PrefixDefinition : AbstractResource
-    {
 	    private string prefix;
 	    private Uri prefixBase;
 
 	    public PrefixDefinition() : base()
-        {
+    {
 	    }
 
 	    public PrefixDefinition(string prefix, Uri prefixBase) : this()
-        {
+    {
 		    this.prefix = prefix;
 		    this.prefixBase = prefixBase;
 	    }
@@ -43,7 +43,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcOccurs(Occurs.ExactlyOne)]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "prefix")]
 	    [OslcReadOnly]
-        [OslcTitle("Prefix")]
+    [OslcTitle("Prefix")]
 	    public string GetPrefix() {
 		    return prefix;
 	    }
@@ -51,7 +51,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcDescription("The base Uri of the namespace")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "prefixBase")]
 	    [OslcReadOnly]
-        [OslcTitle("Prefix Base")]
+    [OslcTitle("Prefix Base")]
 	    public Uri GetPrefixBase() {
 	        return prefixBase;
 	    }
@@ -63,5 +63,4 @@ namespace OSLC4Net.Core.Model
 	    public void SetPrefixBase(Uri prefixBase) {
 	        this.prefixBase = prefixBase;
 	    }
-    }
 }

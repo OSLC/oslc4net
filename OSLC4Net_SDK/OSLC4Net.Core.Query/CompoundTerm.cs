@@ -15,16 +15,15 @@
 
 using System.Collections.Generic;
 
-namespace OSLC4Net.Core.Query
+namespace OSLC4Net.Core.Query;
+
+/// <summary>
+/// Compound term from oslc.where clause.<p>
+///
+/// <b>Note:</b> If top-level compound term, {@link SimpleTerm#property()}
+/// will return <code>null</code>.
+/// </summary>
+public interface CompoundTerm
 {
-    /// <summary>
-    /// Compound term from oslc.where clause.<p>
-    ///
-    /// <b>Note:</b> If top-level compound term, {@link SimpleTerm#property()}
-    /// will return <code>null</code>.
-    /// </summary>
-    public interface CompoundTerm
-    {
-        IList<SimpleTerm> Children { get; }
-    }
+    IList<SimpleTerm> Children { get; }
 }

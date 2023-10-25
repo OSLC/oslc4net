@@ -16,23 +16,22 @@
 
 using OSLC4Net.Core.Model;
 
-namespace OSLC4Net.Core.Attribute
-{
-    /// <summary>
-    /// OSLC Representation attribute
-    /// </summary>
-    [System.AttributeUsage(System.AttributeTargets.Method)
-    ]
-    public class OslcRepresentation : System.Attribute
-    {
-        /**
-         * Specify how the resource will be represented (for properties with a resource value-type).
-         */
-        public readonly Representation value;
+namespace OSLC4Net.Core.Attribute;
 
-        public OslcRepresentation(Representation value)
-        {
-            this.value = value;
-        }
+/// <summary>
+/// OSLC Representation attribute
+/// </summary>
+[System.AttributeUsage(System.AttributeTargets.Method)
+]
+public class OslcRepresentation : System.Attribute
+{
+    /**
+     * Specify how the resource will be represented (for properties with a resource value-type).
+     */
+    public readonly Representation value;
+
+    public OslcRepresentation(Representation value)
+    {
+        this.value = value;
     }
 }

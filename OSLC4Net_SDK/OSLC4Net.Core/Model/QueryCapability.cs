@@ -19,53 +19,53 @@ using System.Linq;
 
 using OSLC4Net.Core.Attribute;
 
-namespace OSLC4Net.Core.Model
-{
-    /// <summary>
-    /// OSLC QueryCapability resource
-    /// </summary>
-    [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-    [OslcResourceShape(title = "OSLC Query Capability Resource Shape", describes = new string[] { OslcConstants.TYPE_QUERY_CAPABILITY })]
-    public class QueryCapability : AbstractResource
-    {
-        private readonly SortedSet<Uri> resourceTypes = new SortedUriSet();
-        private readonly SortedSet<Uri> usages = new SortedUriSet();
+namespace OSLC4Net.Core.Model;
 
-        private string label;
+/// <summary>
+/// OSLC QueryCapability resource
+/// </summary>
+[OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
+[OslcResourceShape(title = "OSLC Query Capability Resource Shape", describes = new string[] { OslcConstants.TYPE_QUERY_CAPABILITY })]
+public class QueryCapability : AbstractResource
+{
+    private readonly SortedSet<Uri> resourceTypes = new SortedUriSet();
+    private readonly SortedSet<Uri> usages = new SortedUriSet();
+
+    private string label;
 	    private Uri queryBase;
-        private Uri resourceShape;
+    private Uri resourceShape;
 	    private string title;
 
-        /// <summary>
-        ///
-        /// </summary>
+    /// <summary>
+    ///
+    /// </summary>
 	    public QueryCapability() : base()
-        {
+    {
 	    }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="title"></param>
-        /// <param name="queryBase"></param>
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="title"></param>
+    /// <param name="queryBase"></param>
 	    public QueryCapability(string title, Uri queryBase) : this()
-        {
+    {
 		    this.title = title;
 		    this.queryBase = queryBase;
 	    }
 
 	    public void AddResourceType(Uri resourceType) {
-            this.resourceTypes.Add(resourceType);
-        }
+        this.resourceTypes.Add(resourceType);
+    }
 
 	    public void AddUsage(Uri usage) {
-            this.usages.Add(usage);
-        }
+        this.usages.Add(usage);
+    }
 
 	    [OslcDescription("Very short label for use in menu items")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "label")]
 	    [OslcReadOnly]
-        [OslcTitle("Label")]
+    [OslcTitle("Label")]
 	    public string GetLabel() {
 		    return label;
 	    }
@@ -74,19 +74,19 @@ namespace OSLC4Net.Core.Model
 	    [OslcOccurs(Occurs.ExactlyOne)]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "queryBase")]
 	    [OslcReadOnly]
-        [OslcTitle("Query Base")]
+    [OslcTitle("Query Base")]
 	    public Uri GetQueryBase() {
 	        return queryBase;
 	    }
 
 	    [OslcDescription("The Query Capability SHOULD provide a Resource Shape that describes the query base Uri")]
 	    [OslcName("resourceShape")]
-        [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "resourceShape")]
+    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "resourceShape")]
 	    [OslcRange(OslcConstants.TYPE_RESOURCE_SHAPE)]
 	    [OslcReadOnly]
-        [OslcTitle("Resource Shape")]
+    [OslcTitle("Resource Shape")]
 	    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_RESOURCE_SHAPE)]
-        public Uri GetResourceShape() {
+    public Uri GetResourceShape() {
 	        return resourceShape;
 	    }
 
@@ -94,7 +94,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcName("resourceType")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "resourceType")]
 	    [OslcReadOnly]
-        [OslcTitle("Resource Types")]
+    [OslcTitle("Resource Types")]
 	    public Uri[] GetResourceTypes() {
 	        return resourceTypes.ToArray();
 	    }
@@ -103,8 +103,8 @@ namespace OSLC4Net.Core.Model
 	    [OslcOccurs(Occurs.ExactlyOne)]
 	    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
 	    [OslcReadOnly]
-        [OslcTitle("Title")]
-        [OslcValueType(ValueType.XMLLiteral)]
+    [OslcTitle("Title")]
+    [OslcValueType(ValueType.XMLLiteral)]
 	    public string GetTitle() {
 		    return title;
 	    }
@@ -113,7 +113,7 @@ namespace OSLC4Net.Core.Model
 	    [OslcName("usage")]
 	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "usage")]
 	    [OslcReadOnly]
-        [OslcTitle("Usages")]
+    [OslcTitle("Usages")]
 	    public Uri[] GetUsages() {
 	        return usages.ToArray();
 	    }
@@ -130,22 +130,21 @@ namespace OSLC4Net.Core.Model
 	        this.resourceShape = resourceShape;
 	    }
 
-        public void SetResourceTypes(Uri[] resourceTypes) {
+    public void SetResourceTypes(Uri[] resourceTypes) {
 	        this.resourceTypes.Clear();
 	        if (resourceTypes != null) {
-                this.resourceTypes.AddAll(resourceTypes);
-            }
+            this.resourceTypes.AddAll(resourceTypes);
+        }
 	    }
 
-        public void SetTitle(string title) {
+    public void SetTitle(string title) {
 		    this.title = title;
 	    }
 
-        public void SetUsages(Uri[] usages) {
+    public void SetUsages(Uri[] usages) {
 	        this.usages.Clear();
 	        if (usages != null) {
-                this.usages.AddAll(usages);
-            }
+            this.usages.AddAll(usages);
+        }
 	    }
-    }
 }

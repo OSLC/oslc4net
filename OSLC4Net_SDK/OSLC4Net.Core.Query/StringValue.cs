@@ -13,13 +13,12 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query
+namespace OSLC4Net.Core.Query;
+
+/// <summary>
+/// String literal operand from olsc.where clause
+/// </summary>
+interface StringValue
 {
-    /// <summary>
-    /// String literal operand from olsc.where clause
-    /// </summary>
-    interface StringValue
-    {
-        string Value { get; }
-    }
+    string Value { get; }
 }

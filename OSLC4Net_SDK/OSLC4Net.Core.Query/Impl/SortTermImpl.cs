@@ -17,58 +17,57 @@ using System.Collections.Generic;
 
 using Antlr.Runtime.Tree;
 
-namespace OSLC4Net.Core.Query.Impl
+namespace OSLC4Net.Core.Query.Impl;
+
+class SortTermImpl : SortTerm
 {
-    class SortTermImpl : SortTerm
+    public SortTermImpl(
+        SortTermType type,
+        CommonTree tree,
+        IDictionary<string, string> prefixMap
+    )
     {
-        public SortTermImpl(
-            SortTermType type,
-            CommonTree tree,
-            IDictionary<string, string> prefixMap
-        )
-        {
-            this.type = type;
-            this.tree = tree;
-            this.prefixMap = prefixMap;
-        }
-
-        public SortTermType
-        Type
-        {
-            get { return type; }
-        }
-
-        public PName
-        Identifier
-        {
-            get
-            {
-                if (identifier == null) {
-
-                    string rawProperty = tree.GetChild(0).Text;
-
-                    identifier = new PName();
-
-                    int colon = rawProperty.IndexOf(':');
-
-                    if (colon < 0) {
-                        identifier.local = rawProperty;
-                    } else {
-                        if (colon > 0) {
-                            identifier.prefix = rawProperty.Substring(0, colon);
-                            identifier.ns = prefixMap[identifier.prefix];
-                        }
-                        identifier.local = rawProperty.Substring(colon + 1);
-                    }
-                }
-
-                return identifier;
-            }
-        }
-
-        private readonly SortTermType type;
-        protected readonly CommonTree tree;
-        protected readonly IDictionary<string, string> prefixMap;
-        private PName identifier = null;
+        this.type = type;
+        this.tree = tree;
+        this.prefixMap = prefixMap;
     }
+
+    public SortTermType
+    Type
+    {
+        get { return type; }
+    }
+
+    public PName
+    Identifier
+    {
+        get
+        {
+            if (identifier == null) {
+
+                string rawProperty = tree.GetChild(0).Text;
+
+                identifier = new PName();
+
+                int colon = rawProperty.IndexOf(':');
+
+                if (colon < 0) {
+                    identifier.local = rawProperty;
+                } else {
+                    if (colon > 0) {
+                        identifier.prefix = rawProperty.Substring(0, colon);
+                        identifier.ns = prefixMap[identifier.prefix];
+                    }
+                    identifier.local = rawProperty.Substring(colon + 1);
+                }
+            }
+
+            return identifier;
+        }
+    }
+
+    private readonly SortTermType type;
+    protected readonly CommonTree tree;
+    protected readonly IDictionary<string, string> prefixMap;
+    private PName identifier = null;
 }

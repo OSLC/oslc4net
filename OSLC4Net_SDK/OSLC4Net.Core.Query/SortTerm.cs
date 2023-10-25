@@ -13,17 +13,16 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query
-{
-    public enum SortTermType
-    {
-        SIMPLE,
-        SCOPED
-    }
+namespace OSLC4Net.Core.Query;
 
-    public interface SortTerm
-    {
-        SortTermType Type { get; }
-        PName Identifier { get; }
-    }
+public enum SortTermType
+{
+    SIMPLE,
+    SCOPED
+}
+
+public interface SortTerm
+{
+    SortTermType Type { get; }
+    PName Identifier { get; }
 }

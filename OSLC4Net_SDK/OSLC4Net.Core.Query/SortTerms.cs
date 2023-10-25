@@ -15,10 +15,9 @@
 
 using System.Collections.Generic;
 
-namespace OSLC4Net.Core.Query
+namespace OSLC4Net.Core.Query;
+
+public interface SortTerms
 {
-    public interface SortTerms
-    {
-        IList<SortTerm> Children { get; }
-    }
+    IList<SortTerm> Children { get; }
 }

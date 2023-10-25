@@ -13,24 +13,23 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query
+namespace OSLC4Net.Core.Query;
+
+public enum PropertyType
 {
-    public enum PropertyType
-    {
-        IDENTIFIER,
-        NESTED_PROPERTY
-    }
+    IDENTIFIER,
+    NESTED_PROPERTY
+}
 
-    /// <summary>
-    /// Property list element from olsc.select of oslc.properties clause
-    /// </summary>
-    public interface Property
-    {
+/// <summary>
+/// Property list element from olsc.select of oslc.properties clause
+/// </summary>
+public interface Property
+{
 
-        PropertyType Type { get; }
+    PropertyType Type { get; }
 
-        bool IsWildcard { get; }
+    bool IsWildcard { get; }
 
-        PName Identifier { get; }
-    }
+    PName Identifier { get; }
 }

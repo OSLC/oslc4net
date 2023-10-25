@@ -13,23 +13,22 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Model
-{
-    /// <summary>
-    /// A wrapper for a URI
-    /// </summary>
-    [System.AttributeUsage(System.AttributeTargets.Field)
-    ]
-    public class URI : System.Attribute
-    {
-        /**
-         *  URI of element; used in enumerations
-         */
-        public readonly string uri;
+namespace OSLC4Net.Core.Model;
 
-        public URI(string uri)
-        {
-            this.uri = uri;
-        }
+/// <summary>
+/// A wrapper for a URI
+/// </summary>
+[System.AttributeUsage(System.AttributeTargets.Field)
+]
+public class URI : System.Attribute
+{
+    /**
+     *  URI of element; used in enumerations
+     */
+    public readonly string uri;
+
+    public URI(string uri)
+    {
+        this.uri = uri;
     }
 }

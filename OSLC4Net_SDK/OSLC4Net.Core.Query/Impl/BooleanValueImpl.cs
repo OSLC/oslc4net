@@ -15,36 +15,35 @@
 
 using Antlr.Runtime.Tree;
 
-namespace OSLC4Net.Core.Query.Impl
+namespace OSLC4Net.Core.Query.Impl;
+
+/// <summary>
+/// Implementation of BooleanValue interface
+/// </summary>
+internal class BooleanValueImpl : ValueImpl, BooleanValue
 {
-    /// <summary>
-    /// Implementation of BooleanValue interface
-    /// </summary>
-    internal class BooleanValueImpl : ValueImpl, BooleanValue
+    public
+    BooleanValueImpl(CommonTree tree) : base(tree, ValueType.BOOLEAN)
     {
-        public
-        BooleanValueImpl(CommonTree tree) : base(tree, ValueType.BOOLEAN)
-        {
-        }
-
-        public bool Value
-        {
-            get
-            {
-                if (value == null)
-                {
-                    value = bool.Parse(tree.Text);
-                }
-
-                return value.Value;
-            }
-        }
-
-        public override string ToString()
-        {
-            return Value.ToString();
-        }
-
-        private bool? value = null;
     }
+
+    public bool Value
+    {
+        get
+        {
+            if (value == null)
+            {
+                value = bool.Parse(tree.Text);
+            }
+
+            return value.Value;
+        }
+    }
+
+    public override string ToString()
+    {
+        return Value.ToString();
+    }
+
+    private bool? value = null;
 }

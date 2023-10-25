@@ -14,25 +14,24 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Attribute
-{
-    /// <summary>
-    /// OSLC MaxSize attribute
-    /// </summary>
-    /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-    [System.AttributeUsage(System.AttributeTargets.Method)
-    ]
-    public class OslcMaxSize : System.Attribute
-    {
-        /**
-         * For String properties only, specifies maximum characters allowed.
-         * If not set, then there is no maximum or maximum is specified elsewhere.
-         */
-        public readonly int value;
+namespace OSLC4Net.Core.Attribute;
 
-        public OslcMaxSize(int value)
-        {
-            this.value = value;
-        }
+/// <summary>
+/// OSLC MaxSize attribute
+/// </summary>
+/// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
+[System.AttributeUsage(System.AttributeTargets.Method)
+]
+public class OslcMaxSize : System.Attribute
+{
+    /**
+     * For String properties only, specifies maximum characters allowed.
+     * If not set, then there is no maximum or maximum is specified elsewhere.
+     */
+    public readonly int value;
+
+    public OslcMaxSize(int value)
+    {
+        this.value = value;
     }
 }

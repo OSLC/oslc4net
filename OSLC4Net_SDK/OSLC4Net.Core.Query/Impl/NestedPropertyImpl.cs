@@ -17,54 +17,53 @@ using System.Collections.Generic;
 using System.Text;
 using Antlr.Runtime.Tree;
 
-namespace OSLC4Net.Core.Query.Impl
+namespace OSLC4Net.Core.Query.Impl;
+
+/// <summary>
+/// Implementation of NestedProperty interface
+/// </summary>
+internal class NestedPropertyImpl : PropertyImpl, NestedProperty
 {
-    /// <summary>
-    /// Implementation of NestedProperty interface
-    /// </summary>
-    internal class NestedPropertyImpl : PropertyImpl, NestedProperty
+    public
+    NestedPropertyImpl(
+        CommonTree tree,
+        IDictionary<string, string> prefixMap
+    ) : base((CommonTree)((CommonTree)tree.GetChild(0)).GetChild(0), PropertyType.NESTED_PROPERTY,
+              prefixMap, ((CommonTree)tree.GetChild(0)).Token.Type == OslcSelectParser.WILDCARD)
     {
-        public
-        NestedPropertyImpl(
-            CommonTree tree,
-            IDictionary<string, string> prefixMap
-        ) : base((CommonTree)((CommonTree)tree.GetChild(0)).GetChild(0), PropertyType.NESTED_PROPERTY,
-                  prefixMap, ((CommonTree)tree.GetChild(0)).Token.Type == OslcSelectParser.WILDCARD)
-        {
-            this.tree = tree;
-            // children = PropertiesImpl.CreateChildren((CommonTree)tree.GetChild(1), prefixMap);
-        }
-
-        public IList<Property> Children
-        {
-            get
-            {
-                if (children == null)
-                {
-                    children = PropertiesImpl.CreateChildren((CommonTree)tree.GetChild(1), prefixMap);
-                }
-
-                return children;
-            }
-        }
-
-        public override string ToString()
-        {
-            StringBuilder buffer = new StringBuilder();
-
-            buffer.Append(IsWildcard ?
-                                "*" :
-                                Identifier.ToString());
-            buffer.Append('{');
-
-            PropertiesImpl.ChildrenToString(buffer, Children);
-
-            buffer.Append('}');
-
-            return buffer.ToString();
-        }
-
-        private readonly CommonTree tree;
-        private IList<Property> children = null;
+        this.tree = tree;
+        // children = PropertiesImpl.CreateChildren((CommonTree)tree.GetChild(1), prefixMap);
     }
+
+    public IList<Property> Children
+    {
+        get
+        {
+            if (children == null)
+            {
+                children = PropertiesImpl.CreateChildren((CommonTree)tree.GetChild(1), prefixMap);
+            }
+
+            return children;
+        }
+    }
+
+    public override string ToString()
+    {
+        StringBuilder buffer = new StringBuilder();
+
+        buffer.Append(IsWildcard ?
+                            "*" :
+                            Identifier.ToString());
+        buffer.Append('{');
+
+        PropertiesImpl.ChildrenToString(buffer, Children);
+
+        buffer.Append('}');
+
+        return buffer.ToString();
+    }
+
+    private readonly CommonTree tree;
+    private IList<Property> children = null;
 }

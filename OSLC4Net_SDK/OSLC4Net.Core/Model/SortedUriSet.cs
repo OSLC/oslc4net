@@ -16,20 +16,19 @@
 using System;
 using System.Collections.Generic;
 
-namespace OSLC4Net.Core.Model
-{
-    class SortedUriSet : SortedSet<Uri>
-    {
-        public SortedUriSet() : base(new SortByAbsoluteUri())
-        {
-        }
+namespace OSLC4Net.Core.Model;
 
-        protected class SortByAbsoluteUri : IComparer<Uri>
+class SortedUriSet : SortedSet<Uri>
+{
+    public SortedUriSet() : base(new SortByAbsoluteUri())
+    {
+    }
+
+    protected class SortByAbsoluteUri : IComparer<Uri>
+    {
+        public int Compare(Uri x, Uri y)
         {
-            public int Compare(Uri x, Uri y)
-            {
-                return x.AbsoluteUri.ToString().CompareTo(y.AbsoluteUri.ToString());
-            }
+            return x.AbsoluteUri.ToString().CompareTo(y.AbsoluteUri.ToString());
         }
     }
 }

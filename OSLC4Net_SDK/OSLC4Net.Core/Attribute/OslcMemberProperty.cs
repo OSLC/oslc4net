@@ -14,23 +14,22 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Attribute
-{
-    /// <summary>
-    /// OSLC Members attribute
-    /// </summary>
-    [System.AttributeUsage(System.AttributeTargets.Method)
-    ]
-    public class OslcMemberProperty : System.Attribute
-    {
-        /**
-         * If set to true, this indicates that the property is a membership property.
-         */
-        public readonly bool value;
+namespace OSLC4Net.Core.Attribute;
 
-        public OslcMemberProperty(bool value)
-        {
-            this.value = value;
-        }
+/// <summary>
+/// OSLC Members attribute
+/// </summary>
+[System.AttributeUsage(System.AttributeTargets.Method)
+]
+public class OslcMemberProperty : System.Attribute
+{
+    /**
+     * If set to true, this indicates that the property is a membership property.
+     */
+    public readonly bool value;
+
+    public OslcMemberProperty(bool value)
+    {
+        this.value = value;
     }
 }

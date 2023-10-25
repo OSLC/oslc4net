@@ -19,49 +19,48 @@ using System.Linq;
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
 
-namespace OSLC4Net.Client.Oslc.Resources
+namespace OSLC4Net.Client.Oslc.Resources;
+
+[OslcNamespace(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE)]
+[OslcResourceShape(title = "Requirement Collection Resource Shape", describes = new string[] {RmConstants.TYPE_REQUIREMENT_COLLECTION})]
+public class RequirementCollection : Requirement
 {
-    [OslcNamespace(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE)]
-    [OslcResourceShape(title = "Requirement Collection Resource Shape", describes = new string[] {RmConstants.TYPE_REQUIREMENT_COLLECTION})]
-    public class RequirementCollection : Requirement
-    {
 	    // The only extra field is uses
 	    private readonly ISet<Uri>      uses	 = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
-        public RequirementCollection() : base()
+    public RequirementCollection() : base()
+    {
+        AddRdfType(new Uri(RmConstants.TYPE_REQUIREMENT_COLLECTION));
+    }
+
+    public RequirementCollection(Uri about) : base(about)
+    {
+
+        AddRdfType(new Uri(RmConstants.TYPE_REQUIREMENT_COLLECTION));
+    }
+
+    public void AddUses(Uri uses)
+    {
+        this.uses.Add(uses);
+    }
+
+    [OslcDescription("A collection uses a resource - the resource is in the requirement collection.")]
+    [OslcName("uses")]
+    [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "uses")]
+    [OslcRange(RmConstants.TYPE_REQUIREMENT)]
+    [OslcTitle("Uses")]
+    public Uri[] GetUses()
+    {
+        return uses.ToArray();
+    }
+
+    public void SetUses(Uri[] uses)
+    {
+        this.uses.Clear();
+
+        if (uses != null)
         {
-            AddRdfType(new Uri(RmConstants.TYPE_REQUIREMENT_COLLECTION));
-        }
-
-        public RequirementCollection(Uri about) : base(about)
-        {
-
-            AddRdfType(new Uri(RmConstants.TYPE_REQUIREMENT_COLLECTION));
-        }
-
-        public void AddUses(Uri uses)
-        {
-            this.uses.Add(uses);
-        }
-
-        [OslcDescription("A collection uses a resource - the resource is in the requirement collection.")]
-        [OslcName("uses")]
-        [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "uses")]
-        [OslcRange(RmConstants.TYPE_REQUIREMENT)]
-        [OslcTitle("Uses")]
-        public Uri[] GetUses()
-        {
-            return uses.ToArray();
-        }
-
-        public void SetUses(Uri[] uses)
-        {
-            this.uses.Clear();
-
-            if (uses != null)
-            {
-                this.uses.AddAll(uses);
-            }
+            this.uses.AddAll(uses);
         }
     }
 }

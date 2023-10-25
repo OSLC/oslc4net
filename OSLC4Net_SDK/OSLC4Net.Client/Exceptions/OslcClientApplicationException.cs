@@ -15,21 +15,20 @@
 
 using System;
 
-namespace OSLC4Net.Client.Exceptions
-{
-    /// <summary>
-    ///  Base class for all application exceptions.
-    /// </summary>
-    public class OslcClientApplicationException : Exception
-    {
-        public OslcClientApplicationException(string messageKey, object[] args) :
-            base(MessageExtractor.GetMessage(messageKey, args))
-        {
-        }
+namespace OSLC4Net.Client.Exceptions;
 
-        public OslcClientApplicationException(string messageKey, object[] args, Exception e) :
-            base(MessageExtractor.GetMessage(messageKey, args), e)
-        {
-        }
+/// <summary>
+///  Base class for all application exceptions.
+/// </summary>
+public class OslcClientApplicationException : Exception
+{
+    public OslcClientApplicationException(string messageKey, object[] args) :
+        base(MessageExtractor.GetMessage(messageKey, args))
+    {
+    }
+
+    public OslcClientApplicationException(string messageKey, object[] args, Exception e) :
+        base(MessageExtractor.GetMessage(messageKey, args), e)
+    {
     }
 }

@@ -13,27 +13,26 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query
+namespace OSLC4Net.Core.Query;
+
+public enum TermType
 {
-    public enum TermType
-    {
-        COMPARISON,
-        IN_TERM,
-        NESTED,
-        TOP_LEVEL
-    }
+    COMPARISON,
+    IN_TERM,
+    NESTED,
+    TOP_LEVEL
+}
 
-    /// <summary>
-    /// Simple term from oslc.where clause
-    /// </summary>
-    public interface SimpleTerm
-    {
-        TermType Type { get; }
+/// <summary>
+/// Simple term from oslc.where clause
+/// </summary>
+public interface SimpleTerm
+{
+    TermType Type { get; }
 
-        /**
-         * @return type of simple term.  When {@link CompoundTerm}
-         * return <code>null</code>.
-         */
-        PName Property { get; }
-    }
+    /**
+     * @return type of simple term.  When {@link CompoundTerm}
+     * return <code>null</code>.
+     */
+    PName Property { get; }
 }

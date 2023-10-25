@@ -13,14 +13,13 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query
+namespace OSLC4Net.Core.Query;
+
+public class PName
 {
-    public class PName
-    {
 	    public string ns;
 	    public string prefix;
 	    public string local;
 
 	    public override string ToString() { return prefix + ':' + local; }
-    }
 }

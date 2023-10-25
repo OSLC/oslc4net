@@ -14,21 +14,20 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Attribute
-{
-    [System.AttributeUsage(System.AttributeTargets.Class|
-                           System.AttributeTargets.Interface)
-    ]
-    public class OslcNamespace : System.Attribute
-    {
-        /**
-         * Namespace URI of the element.
-         */
-        public readonly string value;
+namespace OSLC4Net.Core.Attribute;
 
-        public OslcNamespace(string value)
-        {
-            this.value = value;
-        }
+[System.AttributeUsage(System.AttributeTargets.Class|
+                       System.AttributeTargets.Interface)
+]
+public class OslcNamespace : System.Attribute
+{
+    /**
+     * Namespace URI of the element.
+     */
+    public readonly string value;
+
+    public OslcNamespace(string value)
+    {
+        this.value = value;
     }
 }

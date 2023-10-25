@@ -13,12 +13,11 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query
+namespace OSLC4Net.Core.Query;
+
+/// <summary>
+/// Nested property from olsc.select of oslc.properties clause
+/// </summary>
+public interface NestedProperty : Property, Properties
 {
-    /// <summary>
-    /// Nested property from olsc.select of oslc.properties clause
-    /// </summary>
-    public interface NestedProperty : Property, Properties
-    {
-    }
 }

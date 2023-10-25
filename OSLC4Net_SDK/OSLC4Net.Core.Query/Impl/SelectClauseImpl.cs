@@ -16,20 +16,19 @@
 using System.Collections.Generic;
 using Antlr.Runtime.Tree;
 
-namespace OSLC4Net.Core.Query.Impl
+namespace OSLC4Net.Core.Query.Impl;
+
+/// <summary>
+/// Implementation of SelectClause interface
+/// </summary>
+internal class SelectClauseImpl : PropertiesImpl, SelectClause
 {
-    /// <summary>
-    /// Implementation of SelectClause interface
-    /// </summary>
-    internal class SelectClauseImpl : PropertiesImpl, SelectClause
+    public
+    SelectClauseImpl(
+        CommonTree tree,
+        IDictionary<string, string> prefixMap
+    )
+        : base(tree, prefixMap)
     {
-        public
-        SelectClauseImpl(
-            CommonTree tree,
-            IDictionary<string, string> prefixMap
-        )
-            : base(tree, prefixMap)
-        {
-        }
     }
 }

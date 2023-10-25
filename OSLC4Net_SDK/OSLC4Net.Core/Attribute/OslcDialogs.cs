@@ -14,22 +14,21 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Attribute
+namespace OSLC4Net.Core.Attribute;
+
+/// <summary>
+/// OSLC Dialogs attribute
+/// </summary>
+[System.AttributeUsage(System.AttributeTargets.Method)
+]
+public class OslcDialogs : System.Attribute
 {
-    /// <summary>
-    /// OSLC Dialogs attribute
-    /// </summary>
-    [System.AttributeUsage(System.AttributeTargets.Method)
-    ]
-    public class OslcDialogs : System.Attribute
+    public readonly OslcDialog[] value;
+
+    public OslcDialogs(params OslcDialog[] value)
     {
-        public readonly OslcDialog[] value;
+        this.value = new OslcDialog[value.Length];
 
-        public OslcDialogs(params OslcDialog[] value)
-        {
-            this.value = new OslcDialog[value.Length];
-
-            value.CopyTo(this.value, 0);
-        }
+        value.CopyTo(this.value, 0);
     }
 }

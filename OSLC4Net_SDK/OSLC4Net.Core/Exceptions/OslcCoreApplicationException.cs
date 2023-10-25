@@ -15,16 +15,15 @@
 
 using System;
 
-namespace OSLC4Net.Core.Exceptions
+namespace OSLC4Net.Core.Exceptions;
+
+/// <summary>
+/// OSLC4Net Core exception
+/// </summary>
+public class OslcCoreApplicationException : Exception
 {
-    /// <summary>
-    /// OSLC4Net Core exception
-    /// </summary>
-    public class OslcCoreApplicationException : Exception
+    public OslcCoreApplicationException(string messageKey, object[] args) :
+        base(MessageExtractor.GetMessage(messageKey, args))
     {
-        public OslcCoreApplicationException(string messageKey, object[] args) :
-            base(MessageExtractor.GetMessage(messageKey, args))
-        {
-        }
     }
 }

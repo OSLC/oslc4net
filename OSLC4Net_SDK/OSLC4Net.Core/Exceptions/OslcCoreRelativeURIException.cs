@@ -15,25 +15,24 @@
 
 using System;
 
-namespace OSLC4Net.Core.Exceptions
+namespace OSLC4Net.Core.Exceptions;
+
+/// <summary>
+/// Exception thrown when relative URIs are encountered in an RDF model
+/// </summary>
+public class OslcCoreRelativeURIException : OslcCoreApplicationException
 {
-    /// <summary>
-    /// Exception thrown when relative URIs are encountered in an RDF model
-    /// </summary>
-    public class OslcCoreRelativeURIException : OslcCoreApplicationException
+    public OslcCoreRelativeURIException(Type resourceType, string methodName, Uri relativeURI) :
+        base(MESSAGE_KEY, new object[] {resourceType.Name, methodName, relativeURI.ToString()})
     {
-        public OslcCoreRelativeURIException(Type resourceType, string methodName, Uri relativeURI) :
-            base(MESSAGE_KEY, new object[] {resourceType.Name, methodName, relativeURI.ToString()})
-        {
-            this.methodName    = methodName;
-            this.relativeURI   = relativeURI;
-            this.resourceType = resourceType;
-        }
-
-        private static readonly string MESSAGE_KEY = "RelativeURIException";
-
-        private string methodName;
-        private Uri         relativeURI;
-        private Type        resourceType;
+        this.methodName    = methodName;
+        this.relativeURI   = relativeURI;
+        this.resourceType = resourceType;
     }
+
+    private static readonly string MESSAGE_KEY = "RelativeURIException";
+
+    private string methodName;
+    private Uri         relativeURI;
+    private Type        resourceType;
 }

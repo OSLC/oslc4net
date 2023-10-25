@@ -17,71 +17,70 @@ using System.Collections.Generic;
 using System.Text;
 using Antlr.Runtime.Tree;
 
-namespace OSLC4Net.Core.Query.Impl
+namespace OSLC4Net.Core.Query.Impl;
+
+/// <summary>
+/// Implementation of InTerm interface
+/// </summary>
+internal class InTermImpl : SimpleTermImpl, InTerm
 {
-    /// <summary>
-    /// Implementation of InTerm interface
-    /// </summary>
-    internal class InTermImpl : SimpleTermImpl, InTerm
+    public
+    InTermImpl(
+        CommonTree tree,
+        IDictionary<string, string> prefixMap
+    ) : base(tree, TermType.IN_TERM, prefixMap)
     {
-        public
-        InTermImpl(
-            CommonTree tree,
-            IDictionary<string, string> prefixMap
-        ) : base(tree, TermType.IN_TERM, prefixMap)
-        {
-        }
-
-        public IList<Value> Values
-        {
-            get
-            {
-                if (values == null)
-                {
-                    IList<ITree> treeValues =  ((CommonTree)tree.GetChild(1)).Children;
-
-                    values = new List<Value>(treeValues.Count - 1);
-
-                    foreach (CommonTree treeValue in treeValues) {
-
-                        Value value =
-                            ComparisonTermImpl.CreateValue(
-                                    treeValue, "unspported literal value type",
-                                    prefixMap);
-
-                        values.Add(value);
-                    }
-                }
-
-                return values;
-            }
-        }
-
-        public override string ToString()
-        {
-            StringBuilder buffer = new StringBuilder();
-
-            buffer.Append(Property.ToString());
-            buffer.Append(" in [");
-
-            bool first = true;
-
-            foreach (Value value in Values) {
-
-                if (first) {
-                    first = false;
-                } else {
-                    buffer.Append(',');
-                }
-
-                buffer.Append(value.ToString());
-            }
-
-            buffer.Append(']');
-
-            return buffer.ToString();
-        }
-
-        private List<Value> values = null;
     }
+
+    public IList<Value> Values
+    {
+        get
+        {
+            if (values == null)
+            {
+                IList<ITree> treeValues =  ((CommonTree)tree.GetChild(1)).Children;
+
+                values = new List<Value>(treeValues.Count - 1);
+
+                foreach (CommonTree treeValue in treeValues) {
+
+                    Value value =
+                        ComparisonTermImpl.CreateValue(
+                                treeValue, "unspported literal value type",
+                                prefixMap);
+
+                    values.Add(value);
+                }
+            }
+
+            return values;
+        }
+    }
+
+    public override string ToString()
+    {
+        StringBuilder buffer = new StringBuilder();
+
+        buffer.Append(Property.ToString());
+        buffer.Append(" in [");
+
+        bool first = true;
+
+        foreach (Value value in Values) {
+
+            if (first) {
+                first = false;
+            } else {
+                buffer.Append(',');
+            }
+
+            buffer.Append(value.ToString());
+        }
+
+        buffer.Append(']');
+
+        return buffer.ToString();
+    }
+
+    private List<Value> values = null;
 }

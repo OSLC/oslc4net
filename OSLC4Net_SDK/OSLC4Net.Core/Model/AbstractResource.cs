@@ -16,85 +16,84 @@
 using System;
 using System.Collections.Generic;
 
-namespace OSLC4Net.Core.Model
+namespace OSLC4Net.Core.Model;
+
+/// <summary>
+/// This class represents and abstract OSLC resource.  It is normally the parent class for concrete OSLC resource types.
+/// See the ChangeMangement.cs objec in the ChangeManagementCommon project
+/// </summary>
+public abstract class AbstractResource : IExtendedResource
 {
-    /// <summary>
-    /// This class represents and abstract OSLC resource.  It is normally the parent class for concrete OSLC resource types.
-    /// See the ChangeMangement.cs objec in the ChangeManagementCommon project
-    /// </summary>
-    public abstract class AbstractResource : IExtendedResource
+    private Uri about;
+    private ICollection<Uri> types = (ICollection<Uri>)new List<Uri>();
+    private IDictionary<QName, object> extendedProperties = new Dictionary<QName, object>();
+
+    protected AbstractResource(Uri about)
     {
-        private Uri about;
-        private ICollection<Uri> types = (ICollection<Uri>)new List<Uri>();
-        private IDictionary<QName, object> extendedProperties = new Dictionary<QName, object>();
+        this.about = about;
+    }
 
-        protected AbstractResource(Uri about)
-        {
-            this.about = about;
-        }
+    protected AbstractResource()
+    {
+    }
 
-        protected AbstractResource()
-        {
-        }
-
-        /// <summary>
-        /// Get the subject URI
-        /// </summary>
-        /// <returns></returns>
-        public Uri GetAbout()
-        {
+    /// <summary>
+    /// Get the subject URI
+    /// </summary>
+    /// <returns></returns>
+    public Uri GetAbout()
+    {
 		    return about;
 	    }
 
-        /// <summary>
-        /// Set the subject URI
-        /// </summary>
-        /// <param name="about"></param>
-        public void SetAbout(Uri about)
-        {
+    /// <summary>
+    /// Set the subject URI
+    /// </summary>
+    /// <param name="about"></param>
+    public void SetAbout(Uri about)
+    {
 		    this.about = about;
 	    }
 
-        /// <param name="properties"></param>
+    /// <param name="properties"></param>
 	    public void SetExtendedProperties(IDictionary<QName, object> properties)
 	    {
 		    this.extendedProperties = properties;
 	    }
 
-        /// <summary>
-        /// Get all extended properties
-        /// </summary>
-        /// <returns></returns>
+    /// <summary>
+    /// Get all extended properties
+    /// </summary>
+    /// <returns></returns>
 	    public IDictionary<QName, object> GetExtendedProperties()
 	    {
 		    return extendedProperties;
 	    }
 
-        /// <summary>
-        /// Get the RDF types
-        /// </summary>
-        /// <returns></returns>
-        public ICollection<Uri> GetTypes()
-        {
-    	    return types;
-        }
+    /// <summary>
+    /// Get the RDF types
+    /// </summary>
+    /// <returns></returns>
+    public ICollection<Uri> GetTypes()
+    {
+	    return types;
+    }
 
-        /// <summary>
-        /// Set the RDF types
-        /// </summary>
-        /// <param name="types"></param>
-        public void SetTypes(ICollection<Uri> types)
-        {
-    	    this.types = types;
-        }
+    /// <summary>
+    /// Set the RDF types
+    /// </summary>
+    /// <param name="types"></param>
+    public void SetTypes(ICollection<Uri> types)
+    {
+	    this.types = types;
+    }
 
-        /// <summary>
-        /// Add an additional RDF type
-        /// </summary>
-        /// <param name="type"></param>
-        public void AddType(Uri type)
-        {
-    	    this.types.Add(type);
-        }
+    /// <summary>
+    /// Add an additional RDF type
+    /// </summary>
+    /// <param name="type"></param>
+    public void AddType(Uri type)
+    {
+	    this.types.Add(type);
     }
 }

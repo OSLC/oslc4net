@@ -15,99 +15,98 @@
 
 using System;
 
-namespace OSLC4Net.Core.Model
+namespace OSLC4Net.Core.Model;
+
+/// <summary>
+/// Class representing namespace-qualified names
+/// </summary>
+public class QName
 {
     /// <summary>
-    /// Class representing namespace-qualified names
+    /// Constructor with local part only
     /// </summary>
-    public class QName
+    /// <param name="localPart"></param>
+    public QName(string localPart)
     {
-        /// <summary>
-        /// Constructor with local part only
-        /// </summary>
-        /// <param name="localPart"></param>
-        public QName(string localPart)
+        this.localPart = localPart;
+    }
+
+    /// <summary>
+    /// Constructior with namespace and local part
+    /// </summary>
+    /// <param name="namespaceURI"></param>
+    /// <param name="localPart"></param>
+    public QName(
+        string namespaceURI,
+        string localPart
+    ) : this(namespaceURI, localPart, null)
+    {
+    }
+
+    /// <summary>
+    /// Constructor with namespace, local part and prefix/alias
+    /// </summary>
+    /// <param name="namespaceURI"></param>
+    /// <param name="localPart"></param>
+    /// <param name="prefix"></param>
+    public QName(
+        string namespaceURI,
+        string localPart,
+        string prefix
+    )
+    {
+        if (namespaceURI == null || localPart == null)
         {
-            this.localPart = localPart;
+            throw new ArgumentException();
         }
 
-        /// <summary>
-        /// Constructior with namespace and local part
-        /// </summary>
-        /// <param name="namespaceURI"></param>
-        /// <param name="localPart"></param>
-        public QName(
-            string namespaceURI,
-            string localPart
-        ) : this(namespaceURI, localPart, null)
-        {
-        }
+        this.namespaceURI = namespaceURI;
+        this.localPart = localPart;
+        this.prefix = prefix;
+    }
 
-        /// <summary>
-        /// Constructor with namespace, local part and prefix/alias
-        /// </summary>
-        /// <param name="namespaceURI"></param>
-        /// <param name="localPart"></param>
-        /// <param name="prefix"></param>
-        public QName(
-            string namespaceURI,
-            string localPart,
-            string prefix
-        )
-        {
-            if (namespaceURI == null || localPart == null)
-            {
-                throw new ArgumentException();
-            }
+    public string GetNamespaceURI()
+    {
+        return namespaceURI;
+    }
 
-            this.namespaceURI = namespaceURI;
-            this.localPart = localPart;
-            this.prefix = prefix;
-        }
+    public string GetLocalPart()
+    {
+        return localPart;
+    }
 
-        public string GetNamespaceURI()
-        {
-            return namespaceURI;
-        }
+    public string GetPrefix()
+    {
+        return prefix;
+    }
 
-        public string GetLocalPart()
+    public override string ToString()
+    {
+        if (namespaceURI == null)
         {
             return localPart;
         }
 
-        public string GetPrefix()
-        {
-            return prefix;
-        }
-
-        public override string ToString()
-        {
-            if (namespaceURI == null)
-            {
-                return localPart;
-            }
-
-            return '{' + namespaceURI + '}' + localPart;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (! (obj is QName))
-            {
-                return false;
-            }
-
-            return namespaceURI.Equals(((QName)obj).namespaceURI) &&
-                localPart.Equals(((QName)obj).localPart);
-        }
-
-        public override int GetHashCode()
-        {
-            return namespaceURI.GetHashCode() * 31 + localPart.GetHashCode();
-        }
-
-        private string namespaceURI;
-        private string localPart;
-        private string prefix;
+        return '{' + namespaceURI + '}' + localPart;
     }
+
+    public override bool Equals(object obj)
+    {
+        if (! (obj is QName))
+        {
+            return false;
+        }
+
+        return namespaceURI.Equals(((QName)obj).namespaceURI) &&
+            localPart.Equals(((QName)obj).localPart);
+    }
+
+    public override int GetHashCode()
+    {
+        return namespaceURI.GetHashCode() * 31 + localPart.GetHashCode();
+    }
+
+    private string namespaceURI;
+    private string localPart;
+    private string prefix;
 }

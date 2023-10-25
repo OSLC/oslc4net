@@ -15,45 +15,44 @@
 
 using System;
 
-namespace OSLC4Net.Core.Exceptions
+namespace OSLC4Net.Core.Exceptions;
+
+/// <summary>
+/// Exception thrown when a required OSLC attribute definition is missing.
+/// </summary>
+public class OslcCoreMissingAttributeException : OslcCoreApplicationException
 {
     /// <summary>
-    /// Exception thrown when a required OSLC attribute definition is missing.
+    ///
     /// </summary>
-    public class OslcCoreMissingAttributeException : OslcCoreApplicationException
+    /// <param name="resourceType"></param>
+    /// <param name="annotationType"></param>
+    public OslcCoreMissingAttributeException(Type resourceType, Type annotationType) :
+        base(MESSAGE_KEY, new object[] { resourceType.Name, annotationType.Name })
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="resourceType"></param>
-        /// <param name="annotationType"></param>
-        public OslcCoreMissingAttributeException(Type resourceType, Type annotationType) :
-            base(MESSAGE_KEY, new object[] { resourceType.Name, annotationType.Name })
-        {
-            this.annotationType = annotationType;
-            this.resourceType = resourceType;
-        }
+        this.annotationType = annotationType;
+        this.resourceType = resourceType;
+    }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns></returns>
 	    public Type GetAnnotationType() {
 		    return annotationType;
 	    }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        public Type GetResourceType()
-        {
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns></returns>
+    public Type GetResourceType()
+    {
 		    return resourceType;
-        }
+    }
 
-        private static readonly string MESSAGE_KEY = "MissingAnnotationException";
+    private static readonly string MESSAGE_KEY = "MissingAnnotationException";
 
 	    private Type annotationType;
-        private Type resourceType;
-    }
+    private Type resourceType;
 }

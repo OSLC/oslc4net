@@ -13,13 +13,13 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Client.Oslc
+namespace OSLC4Net.Client.Oslc;
+
+/// <summary>
+/// General OSLC constants
+/// </summary>
+public static class OSLCConstants
 {
-    /// <summary>
-    /// General OSLC constants
-    /// </summary>
-    public static class OSLCConstants
-    {
 	    public const string RFC_DATE_FORMAT = "yyyy-MM-dd'T'h:m:ss.S'Z'";
 
 	    public const string DC = "http://purl.org/dc/terms/";
@@ -144,5 +144,4 @@ namespace OSLC4Net.Client.Oslc
 	    public const string DCTERMS_NAME 		= DCTERMS + "name";
 	    public const string DCTERMS_CREATED		= DCTERMS + "created";
 	    public const string DCTERMS_MODIFIED	= DCTERMS + "modified";
-    }
 }

@@ -16,37 +16,36 @@
 using System;
 using System.Reflection;
 
-namespace OSLC4Net.Core.Exceptions
-{
-    /// <summary>
-    /// Exception thrown for an incorrect use of the OSLC Occurs attribute
-    /// </summary>
-    public class OslcCoreMisusedOccursException : OslcCoreApplicationException
-    {
+namespace OSLC4Net.Core.Exceptions;
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="resourceType"></param>
-        /// <param name="method"></param>
-        public OslcCoreMisusedOccursException(Type resourceType, MethodInfo method) :
-            base(MESSAGE_KEY, new object[] {resourceType.Name, method.Name})
-        {
-            this.method        = method;
-            this.resourceType = resourceType;
-        }
+/// <summary>
+/// Exception thrown for an incorrect use of the OSLC Occurs attribute
+/// </summary>
+public class OslcCoreMisusedOccursException : OslcCoreApplicationException
+{
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="resourceType"></param>
+    /// <param name="method"></param>
+    public OslcCoreMisusedOccursException(Type resourceType, MethodInfo method) :
+        base(MESSAGE_KEY, new object[] {resourceType.Name, method.Name})
+    {
+        this.method        = method;
+        this.resourceType = resourceType;
+    }
 
 	    public MethodInfo GetMethod() {
-            return method;
-        }
-
-        public Type GetResourceType() {
-            return resourceType;
-        }
-
-        private static readonly string MESSAGE_KEY = "MisusedOccursException";
-
-        private MethodInfo     method;
-        private Type   resourceType;
+        return method;
     }
+
+    public Type GetResourceType() {
+        return resourceType;
+    }
+
+    private static readonly string MESSAGE_KEY = "MisusedOccursException";
+
+    private MethodInfo     method;
+    private Type   resourceType;
 }

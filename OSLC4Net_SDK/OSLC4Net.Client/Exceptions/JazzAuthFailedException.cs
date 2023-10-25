@@ -13,13 +13,13 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Client.Exceptions
+namespace OSLC4Net.Client.Exceptions;
+
+/// <summary>
+/// Exceptions indicating a Jazz authentication or credentials problem
+/// </summary>
+public class JazzAuthFailedException : OslcClientApplicationException
 {
-    /// <summary>
-    /// Exceptions indicating a Jazz authentication or credentials problem
-    /// </summary>
-    public class JazzAuthFailedException : OslcClientApplicationException
-    {
 	    private const string MESSAGE_KEY = "JazzAuthFailedException";
 
 	    private readonly string user;
@@ -27,7 +27,7 @@ namespace OSLC4Net.Client.Exceptions
 
 	    public JazzAuthFailedException(string user, string jazzUrl) :
 		    base(MESSAGE_KEY, new object[] {user, jazzUrl})
-        {
+    {
 		    this.user = user;
 		    this.jazzUrl = jazzUrl;
 	    }
@@ -39,5 +39,4 @@ namespace OSLC4Net.Client.Exceptions
 	    public string GetJazzUrl() {
 		    return jazzUrl;
 	    }
-    }
 }

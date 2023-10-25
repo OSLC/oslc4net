@@ -13,15 +13,14 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query
-{
-    /// <summary>
-    /// Language specified string value operand from oslc.where clause
-    /// </summary>
-    public interface LangedStringValue : Value
-    {
-        string Value { get; }
+namespace OSLC4Net.Core.Query;
 
-        string LangTag { get; }
-    }
+/// <summary>
+/// Language specified string value operand from oslc.where clause
+/// </summary>
+public interface LangedStringValue : Value
+{
+    string Value { get; }
+
+    string LangTag { get; }
 }

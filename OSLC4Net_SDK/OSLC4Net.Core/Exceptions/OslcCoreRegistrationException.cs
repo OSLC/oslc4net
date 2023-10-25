@@ -15,40 +15,39 @@
 
 using OSLC4Net.Core.Model;
 
-namespace OSLC4Net.Core.Exceptions
+namespace OSLC4Net.Core.Exceptions;
+
+/// <summary>
+/// Exception thrown for a service provider registration failure
+/// </summary>
+public class OslcCoreRegistrationException : OslcCoreApplicationException
 {
-    /// <summary>
-    /// Exception thrown for a service provider registration failure
-    /// </summary>
-    public class OslcCoreRegistrationException : OslcCoreApplicationException
+    public OslcCoreRegistrationException(ServiceProvider serviceProvider, int statusCode, string responseMessage) :
+        base(MESSAGE_KEY, new object[] { serviceProvider.GetTitle(), statusCode, responseMessage })
     {
-        public OslcCoreRegistrationException(ServiceProvider serviceProvider, int statusCode, string responseMessage) :
-            base(MESSAGE_KEY, new object[] { serviceProvider.GetTitle(), statusCode, responseMessage })
-        {
-            this.responseMessage = responseMessage;
-            this.serviceProvider = serviceProvider;
-            this.statusCode = statusCode;
-        }
+        this.responseMessage = responseMessage;
+        this.serviceProvider = serviceProvider;
+        this.statusCode = statusCode;
+    }
 
-        public string getResponseMessage()
-        {
-            return responseMessage;
-        }
+    public string getResponseMessage()
+    {
+        return responseMessage;
+    }
 
-        public ServiceProvider getServiceProvider()
-        {
-            return serviceProvider;
-        }
+    public ServiceProvider getServiceProvider()
+    {
+        return serviceProvider;
+    }
 
-        public int getStatusCode()
-        {
-            return statusCode;
-        }
+    public int getStatusCode()
+    {
+        return statusCode;
+    }
 
-        private static readonly string MESSAGE_KEY = "RegistrationException";
+    private static readonly string MESSAGE_KEY = "RegistrationException";
 
-        private string responseMessage;
+    private string responseMessage;
 	    private ServiceProvider serviceProvider;
 	    private int             statusCode;
-    }
 }

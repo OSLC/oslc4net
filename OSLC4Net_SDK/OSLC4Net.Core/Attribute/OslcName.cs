@@ -14,25 +14,24 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Attribute
-{
-    /// <summary>
-    /// OSLC Name attribute
-    /// </summary>
-    [System.AttributeUsage(System.AttributeTargets.Method|
-                           System.AttributeTargets.Class|
-                           System.AttributeTargets.Interface)
-    ]
-    public class OslcName : System.Attribute
-    {
-        /**
-         *  Name of the element.
-         */
-        public readonly string value;
+namespace OSLC4Net.Core.Attribute;
 
-        public OslcName(string value)
-        {
-            this.value = value;
-        }
+/// <summary>
+/// OSLC Name attribute
+/// </summary>
+[System.AttributeUsage(System.AttributeTargets.Method|
+                       System.AttributeTargets.Class|
+                       System.AttributeTargets.Interface)
+]
+public class OslcName : System.Attribute
+{
+    /**
+     *  Name of the element.
+     */
+    public readonly string value;
+
+    public OslcName(string value)
+    {
+        this.value = value;
     }
 }

@@ -15,23 +15,22 @@
 
 using System;
 
-namespace OSLC4Net.Client.Exceptions
+namespace OSLC4Net.Client.Exceptions;
+
+public class RootServicesException : OslcClientApplicationException
 {
-    public class RootServicesException : OslcClientApplicationException
-    {
-        private const string MESSAGE_KEY = "RootServicesException";
+    private const string MESSAGE_KEY = "RootServicesException";
 
 	    private readonly string jazzUrl;
 
 
 	    public RootServicesException(string jazzUrl, Exception exception) :
 		    base(MESSAGE_KEY, new object[] {jazzUrl}, exception)
-        {
+    {
 		    this.jazzUrl = jazzUrl;
 	    }
 
 	    public string GetJazzUrl() {
 		    return jazzUrl;
 	    }
-    }
 }

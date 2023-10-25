@@ -15,38 +15,37 @@
 
 using System;
 
-namespace OSLC4Net.ChangeManagement
+namespace OSLC4Net.ChangeManagement;
+
+public enum Severity
 {
-    public enum Severity
+    Unclassified,
+    Minor,
+    Normal,
+    Major,
+    Critical,
+    Blocker
+}
+
+class SeverityExtension
+{
+    public static string ToString(Severity severity)
     {
-        Unclassified,
-        Minor,
-        Normal,
-        Major,
-        Critical,
-        Blocker
+        return severity.ToString();
     }
 
-    class SeverityExtension
+    public static Severity FromString(string value)
     {
-        public static string ToString(Severity severity)
+        foreach (Severity severity in Enum.GetValues(typeof(Severity)))
         {
-            return severity.ToString();
-        }
+            string stringValue = ToString(severity);
 
-        public static Severity FromString(string value)
-        {
-            foreach (Severity severity in Enum.GetValues(typeof(Severity)))
+            if (stringValue.Equals(value))
             {
-                string stringValue = ToString(severity);
-
-                if (stringValue.Equals(value))
-                {
-                    return severity;
-                }
+                return severity;
             }
-
-            throw new ArgumentException();
         }
+
+        throw new ArgumentException();
     }
 }
