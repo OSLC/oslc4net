@@ -31,7 +31,6 @@ jobs:
     - name: Test PowerShell
       shell: pwsh
       run: |
-        cd OSLC4Net_SDK/
         (Get-Content JsonProviderTests/OSLC4Net.Core.JsonProviderTests.csproj) | 
           ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
           Set-Content JsonProviderTests/OSLC4Net.Core.JsonProviderTests.csproj
