@@ -39,7 +39,7 @@ namespace OSLC4Net.Core.JsonProvider
     ///     - read RDF/XML from an input stream and create .NET objects.
     ///     - write .NET objects to an output stream as RDF/XML
     /// </summary>
-    public class JsonMediaTypeFormatter : MediaTypeFormatter
+    public class OslcJsonMediaTypeFormatter : MediaTypeFormatter
     {
 
         public JsonValue Json { get; set; }
@@ -50,7 +50,7 @@ namespace OSLC4Net.Core.JsonProvider
         /// Defauld JSON formatter
         /// </summary>
         /// <param name="rebuildJson"></param>
-        public JsonMediaTypeFormatter(bool rebuildJson = true)
+        public OslcJsonMediaTypeFormatter(bool rebuildJson = true)
         {
             this.RebuildJson = rebuildJson;
 
@@ -63,7 +63,7 @@ namespace OSLC4Net.Core.JsonProvider
         /// </summary>
         /// <param name="json"></param>
         /// <param name="rebuildJson"></param>
-        public JsonMediaTypeFormatter(
+        public OslcJsonMediaTypeFormatter(
             JsonValue json,
             bool rebuildJson = true
         ) : this(rebuildJson)
@@ -158,7 +158,7 @@ namespace OSLC4Net.Core.JsonProvider
         {
             return Task.Factory.StartNew(() =>
                 {
-                    if ((Json == null) || (Json.Count() == 0) || RebuildJson)
+                    if ((Json == null) || (Json.Count == 0) || RebuildJson)
                     {
                         if (ImplementsGenericType(typeof(FilteredResource<>), type))
                         {
@@ -223,7 +223,7 @@ namespace OSLC4Net.Core.JsonProvider
                             Json = JsonHelper.CreateJson(new EnumerableWrapper(value));
                         }
 
-                        Debug.WriteLine("JsonMediaTypeFormatter.WriteToStreamAsync(): Generated JSON: " + Json);
+                        // Debug.WriteLine("JsonMediaTypeFormatter.WriteToStreamAsync(): Generated JSON: " + Json);
                     }
 
                     Json.Save(writeStream);
@@ -275,7 +275,7 @@ namespace OSLC4Net.Core.JsonProvider
             {
                 JsonObject jsonObject = (JsonObject)JsonObject.Load(readStream);
 
-                Debug.WriteLine("JsonMediaTypeFormatter.ReadFromStreamAsync(): Loaded JSON: " + jsonObject);
+                Debug.WriteLine("JsonMediaTypeFormatter.ReadFromStreamAsync(): Loaded JSON: " + jsonObject?.ToString());
 
                 bool isSingleton = IsSinglton(type);
                 object output = JsonHelper.FromJson(jsonObject, isSingleton ? type : GetMemberType(type));

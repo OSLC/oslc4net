@@ -33,6 +33,7 @@ using OSLC4Net.Core.JsonProvider;
 using OSLC4Net.Core.Model;
 
 using log4net;
+using System.Threading.Tasks;
 
 namespace JsonProviderTests
 {
@@ -40,21 +41,24 @@ namespace JsonProviderTests
     public class JsonMediaTypeFormatterTests
     {
         [TestMethod]
-        public void TestJsonSerialization()
+        public async Task TestJsonSerialization()
         {
-            ChangeRequest changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeReuest"));
+            ChangeRequest changeRequest1 = new(new Uri("http://com/somewhere/changeReuest"));
 
             changeRequest1.SetFixed(true);
             changeRequest1.AddAffectedByDefect(new Link(new Uri("http://com/somewhere/changeRequest2"), "Test of links"));
 
-            OSLC4Net.Core.JsonProvider.JsonMediaTypeFormatter formatter = new OSLC4Net.Core.JsonProvider.JsonMediaTypeFormatter();
+            OslcJsonMediaTypeFormatter formatter = new();
 
+            Assert.IsNotNull(changeRequest1);
             string json = Serialize<ChangeRequest>(formatter, changeRequest1, OslcMediaType.APPLICATION_JSON_TYPE);
 
+            Assert.IsNotNull(json);
             Debug.WriteLine(json);
 
-            ChangeRequest changeRequest2 = Deserialize<ChangeRequest>(formatter, json, OslcMediaType.APPLICATION_JSON_TYPE);
+            ChangeRequest changeRequest2 = await Deserialize<ChangeRequest>(formatter, json, OslcMediaType.APPLICATION_JSON_TYPE);
 
+            Assert.IsNotNull(changeRequest2);
             Assert.AreEqual(changeRequest1.GetAbout(), changeRequest2.GetAbout());
             Assert.AreEqual(changeRequest1.IsFixed(), changeRequest2.IsFixed());
             Assert.AreEqual(changeRequest1.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
@@ -64,14 +68,14 @@ namespace JsonProviderTests
         [TestMethod]
         public void TestJsonCollectionSerialization()
         {
-            List<ChangeRequest> crListOut = new List<ChangeRequest>();
-            ChangeRequest changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeRequest1"));
+            List<ChangeRequest> crListOut = new();
+            ChangeRequest changeRequest1 = new(new Uri("http://com/somewhere/changeRequest1"));
             changeRequest1.SetFixed(true);
             changeRequest1.AddAffectedByDefect(new Link(new Uri("http://com/somewhere/changeRequest2"), "Test of links"));
 
             crListOut.Add(changeRequest1);
 
-            ChangeRequest changeRequest2 = new ChangeRequest(new Uri("http://com/somewhere/changeRequest2"));
+            ChangeRequest changeRequest2 = new(new Uri("http://com/somewhere/changeRequest2"));
             changeRequest2.SetFixed(false);
             changeRequest2.AddAffectedByDefect(new Link(new Uri("http://com/somewhere/changeRequest1"), "Test of links"));
 
@@ -83,7 +87,7 @@ namespace JsonProviderTests
                                                    null,
                                                    crListOut,
                                                    null);
-            OSLC4Net.Core.JsonProvider.JsonMediaTypeFormatter formatter = new OSLC4Net.Core.JsonProvider.JsonMediaTypeFormatter(json, false);
+            OSLC4Net.Core.JsonProvider.OslcJsonMediaTypeFormatter formatter = new(json, false);
 
             string jsonString = SerializeCollection<ChangeRequest>(formatter, crListOut, OslcMediaType.APPLICATION_JSON_TYPE);
 
@@ -115,7 +119,7 @@ namespace JsonProviderTests
 
         }
 
-        private string Serialize<T>(MediaTypeFormatter formatter, T value, MediaTypeHeaderValue mediaType)
+        private string Serialize<T>(MediaTypeFormatter formatter, T value, MediaTypeHeaderValue mediaType) where T : IResource
         {
             Stream stream = new MemoryStream();
             HttpContent content = new StreamContent(stream);
@@ -128,7 +132,7 @@ namespace JsonProviderTests
             return content.ReadAsStringAsync().Result;
         }
 
-        private string SerializeCollection<T>(MediaTypeFormatter formatter, IEnumerable<T> value, MediaTypeHeaderValue mediaType)
+        private string SerializeCollection<T>(MediaTypeFormatter formatter, IEnumerable<T> value, MediaTypeHeaderValue mediaType) where T : IResource
         {
             Stream stream = new MemoryStream();
             HttpContent content = new StreamContent(stream);
@@ -141,10 +145,10 @@ namespace JsonProviderTests
             return content.ReadAsStringAsync().Result;
         }
 
-        private T Deserialize<T>(MediaTypeFormatter formatter, string str, MediaTypeHeaderValue mediaType) where T : class
+        private async Task<T> Deserialize<T>(MediaTypeFormatter formatter, string str, MediaTypeHeaderValue mediaType) where T : class, IResource
         {
             Stream stream = new MemoryStream();
-            StreamWriter writer = new StreamWriter(stream);
+            StreamWriter writer = new(stream);
             HttpContent content = new StreamContent(stream);
 
             content.Headers.ContentType = mediaType;
@@ -153,14 +157,18 @@ namespace JsonProviderTests
             writer.Flush();
 
             stream.Position = 0;
+    
+            var result = await formatter.ReadFromStreamAsync(typeof(T), stream, content, logFormatter);
 
-            return formatter.ReadFromStreamAsync(typeof(T), stream, content, logFormatter).Result as T;
+            Debug.Write(result.ToString());
+
+            return result as T;
         }
 
-        private IEnumerable<T> DeserializeCollection<T>(MediaTypeFormatter formatter, string str, MediaTypeHeaderValue mediaType) where T : class
+        private IEnumerable<T> DeserializeCollection<T>(MediaTypeFormatter formatter, string str, MediaTypeHeaderValue mediaType) where T : class, IResource
         {
             Stream stream = new MemoryStream();
-            StreamWriter writer = new StreamWriter(stream);
+            StreamWriter writer = new(stream);
             HttpContent content = new StreamContent(stream);
 
             content.Headers.ContentType = mediaType;
@@ -193,6 +201,6 @@ namespace JsonProviderTests
             private ILog logger;
         }
 
-        private static LogFormatter logFormatter = new LogFormatter(LogManager.GetLogger(typeof(JsonMediaTypeFormatterTests)));
+        private static LogFormatter logFormatter = new(LogManager.GetLogger(typeof(JsonMediaTypeFormatterTests)));
     }
 }

@@ -1,65 +1,31 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{469BA948-728B-4B8C-80E9-7EC06CED8196}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OSLC4Net.Core.JsonProvider</RootNamespace>
     <AssemblyName>OSLC4Net.Core.JsonProvider</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <RootNamespace>OSLC4Net.Core.JsonProvider</RootNamespace>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Version>0.3.0-alpha</Version>
     <VersionSuffix>alpha</VersionSuffix>
     <PackageLicenseExpression>EPL-1.0</PackageLicenseExpression>
     <Authors>Andrii Berezovskyi and OSLC4Net contributors</Authors>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <!-- TODO: remove PackageOutputPath after migration to .NET Core-->
-    <PackageOutputPath>MSBuild_Nuget_Pack/</PackageOutputPath>
     <PackageProjectUrl>https://github.com/OSLC/oslc4net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/OSLC/oslc4net/</RepositoryUrl>
-    <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <!-- TODO: remove PackageOutputPath after migration to .NET Core-->
+    <!-- <PackageOutputPath>MSBuild_Nuget_Pack/</PackageOutputPath> -->
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NuGet.Build.Tasks.Pack" Version="5.2.0" />
     <None Include="../../README.md" Pack="true" PackagePath="" />
+    <PackageReference Include="System.Json" Version="4.7.1" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="JsonHelper.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="JsonMediaTypeFormatter.cs" />
+    <!-- <Reference Include="System" /> -->
+    <!-- <Reference Include="System.Core" /> -->
+    <!-- <Reference Include="System.Xml.Linq" /> -->
+    <!-- <Reference Include="System.Data.DataSetExtensions" /> -->
+    <!-- <Reference Include="Microsoft.CSharp" /> -->
+    <!-- <Reference Include="System.Data" /> -->
+    <!-- <Reference Include="System.Xml" /> -->
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OSLC4Net.Core\OSLC4Net.Core.csproj">
@@ -77,14 +43,7 @@
     <PackageReference Include="Microsoft.AspNet.WebApi.Client">
       <Version>5.2.9</Version>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="System.Json">
-      <Version>4.0.20126.16343</Version>
-    </PackageReference>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
