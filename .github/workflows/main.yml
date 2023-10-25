@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        version: [ {setup: '6.x', target: "net6.0"}, {setup: '7.x', target: "net7.0"}, {setup: '8.x', target: "net7.0"}]
+        version: [ {setup: '6.x', target: "net6.0"}, {setup: '7.x', target: "net7.0"}, {setup: '8.x', target: "net8.0"}]
     runs-on: ${{ matrix.os }}
     defaults:
       run:
@@ -29,18 +29,18 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: ${{ matrix.version.setup }}
-    # - name: Target ${{ matrix.version.target }}
-    #   shell: pwsh
-    #   run: |
-    #     (Get-Content JsonProviderTests/OSLC4Net.Core.JsonProviderTests.csproj) | 
-    #       ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
-    #       Set-Content JsonProviderTests/OSLC4Net.Core.JsonProviderTests.csproj
-    #     (Get-Content OSLC4Net.ChangeManagementTest/OSLC4Net.ChangeManagementTest.csproj) | 
-    #       ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
-    #       Set-Content OSLC4Net.ChangeManagementTest/OSLC4Net.ChangeManagementTest.csproj
-    #     (Get-Content OSLC4Net.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj) | 
-    #       ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
-    #       Set-Content OSLC4Net.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj
+    - name: Target ${{ matrix.version.target }} only
+      shell: pwsh
+      run: |
+        (Get-Content JsonProviderTests/OSLC4Net.Core.JsonProviderTests.csproj) | 
+          ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
+          Set-Content JsonProviderTests/OSLC4Net.Core.JsonProviderTests.csproj
+        (Get-Content OSLC4Net.ChangeManagementTest/OSLC4Net.ChangeManagementTest.csproj) | 
+          ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
+          Set-Content OSLC4Net.ChangeManagementTest/OSLC4Net.ChangeManagementTest.csproj
+        (Get-Content OSLC4Net.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj) | 
+          ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
+          Set-Content OSLC4Net.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
