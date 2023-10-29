@@ -56,6 +56,6 @@ jobs:
     - name: Build and publish NuGet package
       shell: pwsh
       run: |
-        dotnet pack -c Release --version-suffix "ts.$(Get-Date -Format 'yyMMddHHmm')" -o ./nupkg_out
+        dotnet pack -c Release --version-suffix "ts.$(Get-Date -Format 'yyyyMMddHHmm')" -o ./nupkg_out
         dotnet nuget push '.\nupkg_out\*.nupkg' --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate --no-symbols
       if: success() && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest' && github.ref == 'refs/heads/b-nuget_gh_push'
