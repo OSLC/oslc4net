@@ -2,21 +2,10 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <OutputType>Library</OutputType>
-    <Version>0.3.0-alpha</Version>
-    <VersionSuffix>alpha</VersionSuffix>
-    <PackageLicenseExpression>EPL-1.0</PackageLicenseExpression>
-    <Authors>Andrii Berezovskyi and OSLC4Net contributors</Authors>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageOutputPath>MSBuild_Nuget_Pack/</PackageOutputPath>
-    <PackageProjectUrl>https://github.com/OSLC/oslc4net/</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/OSLC/oslc4net/</RepositoryUrl>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyTitle>OSLC4Net.Core.Query</AssemblyTitle>
     <Product>OSLC4Net.Core.Query</Product>
-    <Copyright>Copyright OSLC4Net contributors 2023, IBM 2013</Copyright>
-    <AssemblyVersion>0.3.0.0</AssemblyVersion>
-    <FileVersion>0.3.0.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Antlr3.Runtime">
@@ -26,7 +15,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <None Include="../../README.md" Pack="true" PackagePath="" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Impl\GeneratingParsers.txt" />
