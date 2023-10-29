@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: CI  
+name: CI
 
 on:
   push:
@@ -29,16 +29,19 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: ${{ matrix.version.setup }}
+        source-url: https://nuget.pkg.github.com/oslc/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: Target ${{ matrix.version.target }} only
       shell: pwsh
       run: |
-        (Get-Content JsonProviderTests/OSLC4Net.Core.JsonProviderTests.csproj) | 
+        (Get-Content JsonProviderTests/OSLC4Net.Core.JsonProviderTests.csproj) |
           ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
           Set-Content JsonProviderTests/OSLC4Net.Core.JsonProviderTests.csproj
-        (Get-Content OSLC4Net.ChangeManagementTest/OSLC4Net.ChangeManagementTest.csproj) | 
+        (Get-Content OSLC4Net.ChangeManagementTest/OSLC4Net.ChangeManagementTest.csproj) |
           ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
           Set-Content OSLC4Net.ChangeManagementTest/OSLC4Net.ChangeManagementTest.csproj
-        (Get-Content OSLC4Net.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj) | 
+        (Get-Content OSLC4Net.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj) |
           ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
           Set-Content OSLC4Net.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj
     - name: Restore dependencies
@@ -47,3 +50,14 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal  --filter TestCategory!=RunningOslcServerRequired
+    # - name: Set version suffix
+    #   id: version
+    #   run: echo "::set-output name=suffix::$(date +'-ts.%y%m%d%H%M')"
+    - name: Build and publish NuGet package
+      shell: pwsh
+      run: |
+        dotnet pack -c Release --version-suffix "ts.$(Get-Date -Format 'yyyyMMddHHmm')" -o ./nupkg_out
+        dotnet nuget push '.\nupkg_out\*.nupkg' --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate --no-symbols
+      if: |
+        success() && github.ref == 'refs/heads/main'
+        && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'

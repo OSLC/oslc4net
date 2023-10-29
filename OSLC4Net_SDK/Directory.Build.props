@@ -1,5 +1,21 @@
 <Project>
- <PropertyGroup>
-   <LangVersion>10</LangVersion>
- </PropertyGroup>
+  <PropertyGroup>
+    <VersionPrefix>0.4.0</VersionPrefix>
+    <VersionSuffix>$(VersionSuffix)</VersionSuffix>
+    <!-- <VersionSuffix>alpha</VersionSuffix> -->
+    <!-- <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion> -->
+    <PackageLicenseExpression>EPL-1.0</PackageLicenseExpression>
+    <Authors>Andrii Berezovskyi and OSLC4Net contributors</Authors>
+    <!-- <Copyright>Copyright © 2023 Andrii Berezovskyi and OSLC4Net contributors; 2012 IBM</Copyright> -->
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/OSLC/oslc4net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/OSLC/oslc4net/</RepositoryUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(SolutionDir)\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <LangVersion>10</LangVersion>
+  </PropertyGroup>
 </Project>

@@ -3,15 +3,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>OSLC4Net.Core.DotNetRdfProvider</RootNamespace>
     <AssemblyName>OSLC4Net.Core.DotNetRdfProvider</AssemblyName>
-    <Version>0.3.0-alpha</Version>
-    <VersionSuffix>alpha</VersionSuffix>
-    <PackageLicenseExpression>EPL-1.0</PackageLicenseExpression>
-    <Authors>Andrii Berezovskyi and OSLC4Net contributors</Authors>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <!-- TODO: remove PackageOutputPath after migration to .NET Core-->
-    <PackageOutputPath>MSBuild_Nuget_Pack/</PackageOutputPath>
-    <PackageProjectUrl>https://github.com/OSLC/oslc4net/</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/OSLC/oslc4net/</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="dotNetRdf.Core" Version="3.1.1" />
@@ -19,7 +10,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <None Include="../../README.md" Pack="true" PackagePath="" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OSLC4Net.Core\OSLC4Net.Core.csproj">
@@ -45,7 +35,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <!-- <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" /> -->
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

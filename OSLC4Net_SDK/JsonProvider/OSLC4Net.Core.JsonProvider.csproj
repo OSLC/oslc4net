@@ -3,29 +3,12 @@
     <AssemblyName>OSLC4Net.Core.JsonProvider</AssemblyName>
     <RootNamespace>OSLC4Net.Core.JsonProvider</RootNamespace>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.3.0-alpha</Version>
-    <VersionSuffix>alpha</VersionSuffix>
-    <PackageLicenseExpression>EPL-1.0</PackageLicenseExpression>
-    <Authors>Andrii Berezovskyi and OSLC4Net contributors</Authors>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageProjectUrl>https://github.com/OSLC/oslc4net/</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/OSLC/oslc4net/</RepositoryUrl>
-    <!-- TODO: remove PackageOutputPath after migration to .NET Core-->
-    <!-- <PackageOutputPath>MSBuild_Nuget_Pack/</PackageOutputPath> -->
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NuGet.Build.Tasks.Pack" Version="6.7.0" />
-    <None Include="../../README.md" Pack="true" PackagePath="" />
     <PackageReference Include="System.Json" Version="4.7.1" />
   </ItemGroup>
   <ItemGroup>
-    <!-- <Reference Include="System" /> -->
-    <!-- <Reference Include="System.Core" /> -->
-    <!-- <Reference Include="System.Xml.Linq" /> -->
-    <!-- <Reference Include="System.Data.DataSetExtensions" /> -->
-    <!-- <Reference Include="Microsoft.CSharp" /> -->
-    <!-- <Reference Include="System.Data" /> -->
-    <!-- <Reference Include="System.Xml" /> -->
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OSLC4Net.Core\OSLC4Net.Core.csproj">
@@ -44,11 +27,4 @@
       <Version>5.2.9</Version>
     </PackageReference>
   </ItemGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

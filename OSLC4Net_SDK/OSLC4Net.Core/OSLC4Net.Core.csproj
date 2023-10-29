@@ -4,15 +4,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>OSLC4Net.Core</RootNamespace>
     <AssemblyName>OSLC4Net.Core</AssemblyName>
-    <Version>0.3.0-alpha</Version>
-    <VersionSuffix>alpha</VersionSuffix>
-    <PackageLicenseExpression>EPL-1.0</PackageLicenseExpression>
-    <Authors>Andrii Berezovskyi and OSLC4Net contributors</Authors>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <!-- TODO: remove PackageOutputPath after migration to .NET Core-->
-    <PackageOutputPath>MSBuild_Nuget_Pack/</PackageOutputPath>
-    <PackageProjectUrl>https://github.com/OSLC/oslc4net/</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/OSLC/oslc4net/</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,7 +15,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <None Include="../../README.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
 
