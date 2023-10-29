@@ -57,7 +57,7 @@ jobs:
       shell: pwsh
       run: |
         dotnet pack -c Release /p:PackageVersionSuffix=$(Get-Date -Format '-ts.yyMMddHHmm') -o ./nupkg_out
-        dotnet nuget push './nupkg_out/*.nupkg' --skip-duplicate
+        dotnet nuget push '.\nupkg_out\*.nupkg' --skip-duplicate --no-symbols
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       if: success() && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest' #&& github.ref == 'refs/heads/main'
