@@ -33,6 +33,7 @@ public static class ServiceProviderRegistryURIs
 
     static ServiceProviderRegistryURIs()
     {
+        LOGGER.Debug($"Checking {SYSTEM_PROPERTY_NAME_REGISTRY_URI} env var for OSLC SPC URI");
         string registryURI = Environment.GetEnvironmentVariable(SYSTEM_PROPERTY_NAME_REGISTRY_URI);
 
         string defaultBase = null;
