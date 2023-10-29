@@ -29,6 +29,9 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: ${{ matrix.version.setup }}
+        source-url: https://nuget.pkg.github.com/oslc/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: Target ${{ matrix.version.target }} only
       shell: pwsh
       run: |
@@ -52,14 +55,9 @@ jobs:
     #   run: echo "::set-output name=suffix::$(date +'-ts.%y%m%d%H%M')"
     - name: Build and publish NuGet package
       shell: pwsh
-      run: dotnet pack -c Release /p:PackageVersionSuffix=$(Get-Date -Format '-ts.yyMMddHHmm')
+      run: |
+        dotnet pack -c Release /p:PackageVersionSuffix=$(Get-Date -Format '-ts.yyMMddHHmm') -o ./nupkg_out
+        dotnet nuget push ./nupkg_out/*.nupkg --skip-duplicate
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      if: success()
-    - name: Push NuGet package to GitHub Packages
-      uses: nuget/push@v1
-      with:
-        nuget-api-key: ${{ secrets.GITHUB_TOKEN }}
-        nuget-source: 'https://nuget.pkg.github.com/oslc/index.json'
-        package-path: './**/*.nupkg'
-      if: success()
+      if: success() && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest' #&& github.ref == 'refs/heads/main'
