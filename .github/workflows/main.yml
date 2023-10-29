@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: CI  
+name: CI
 
 on:
   push:
@@ -32,13 +32,13 @@ jobs:
     - name: Target ${{ matrix.version.target }} only
       shell: pwsh
       run: |
-        (Get-Content JsonProviderTests/OSLC4Net.Core.JsonProviderTests.csproj) | 
+        (Get-Content JsonProviderTests/OSLC4Net.Core.JsonProviderTests.csproj) |
           ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
           Set-Content JsonProviderTests/OSLC4Net.Core.JsonProviderTests.csproj
-        (Get-Content OSLC4Net.ChangeManagementTest/OSLC4Net.ChangeManagementTest.csproj) | 
+        (Get-Content OSLC4Net.ChangeManagementTest/OSLC4Net.ChangeManagementTest.csproj) |
           ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
           Set-Content OSLC4Net.ChangeManagementTest/OSLC4Net.ChangeManagementTest.csproj
-        (Get-Content OSLC4Net.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj) | 
+        (Get-Content OSLC4Net.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj) |
           ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
           Set-Content OSLC4Net.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj
     - name: Restore dependencies
@@ -47,3 +47,19 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal  --filter TestCategory!=RunningOslcServerRequired
+    # - name: Set version suffix
+    #   id: version
+    #   run: echo "::set-output name=suffix::$(date +'-ts.%y%m%d%H%M')"
+    - name: Build and publish NuGet package
+      shell: pwsh
+      run: dotnet pack -c Release /p:PackageVersionSuffix=$(Get-Date -Format '-ts.yyMMddHHmm')
+      env:
+        NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      if: success()
+    - name: Push NuGet package to GitHub Packages
+      uses: nuget/push@v1
+      with:
+        nuget-api-key: ${{ secrets.GITHUB_TOKEN }}
+        nuget-source: 'https://nuget.pkg.github.com/oslc/index.json'
+        package-path: './**/*.nupkg'
+      if: success()
