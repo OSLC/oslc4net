@@ -1,4 +1,4 @@
-# Welcome to the OSLC4Net project
+# OSLC4Net, an OSLC SDK for .NET
 
 [![CI](https://github.com/OSLC/oslc4net/workflows/CI/badge.svg)](https://github.com/OSLC/oslc4net/actions?query=workflow%3ACI)
 [![Discourse status](https://img.shields.io/discourse/https/meta.discourse.org/status.svg)](https://forum.open-services.net/)
