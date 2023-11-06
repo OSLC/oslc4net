@@ -10,7 +10,7 @@ on:
     branches: [ 'main', 'master' ]
 
 jobs:
-  build-dotnet:
+  test:
     strategy:
       fail-fast: false
       matrix:
