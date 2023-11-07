@@ -246,7 +246,7 @@ public sealed class ServiceProviderRegistryClient
     public async Task<ICollection<ServiceProvider>> GetServiceProvidersAsync()
     {
         // We first try for a ServiceProviderCatalog
-        ServiceProviderCatalog serviceProviderCatalog = await FetchServiceProviderCatalogAsync();
+        var serviceProviderCatalog = await FetchServiceProviderCatalogAsync();
 
         if (serviceProviderCatalog != null)
         {

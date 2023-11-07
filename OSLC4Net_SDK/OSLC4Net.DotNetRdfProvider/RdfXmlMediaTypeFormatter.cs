@@ -307,23 +307,25 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     {
         var tcs = new TaskCompletionSource<object>();
 
-        if (content != null && content.Headers != null && content.Headers.ContentLength == 0) return null;
+        if (content == null || content.Headers == null || content.Headers.ContentLength == 0) return null;
 
         try
         {
             IRdfReader rdfParser;
 
             // TODO: one class per RDF content type
-            if (content == null || content.Headers == null || content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_RDF_XML))
+            var mediaType = content.Headers.ContentType.MediaType;
+            if (mediaType.Equals(OslcMediaType.APPLICATION_RDF_XML))
             {
                 rdfParser = new RdfXmlParser();
             }
-            else if (content.Headers.ContentType.MediaType.Equals(OslcMediaType.TEXT_TURTLE))
+            else if (mediaType.Equals(OslcMediaType.TEXT_TURTLE))
             {
                 // TODO: enable RDF-star support (2023-09, Andrew)
                 rdfParser = new TurtleParser(TurtleSyntax.Original, true);
             }
-            else if (content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML))
+            else if (mediaType.Equals(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML)
+                     || mediaType.Equals(OslcMediaType.APPLICATION_XML))
             {
                 //For now, use the dotNetRDF RdfXmlParser() for application/xml.  This could change
                 rdfParser = new RdfXmlParser();
@@ -331,7 +333,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             else
             {
                 throw new UnsupportedMediaTypeException(
-                    "Given type is not supported or is not valid RDF: ${content.Headers.ContentType.MediaType}",
+                    $"Given type is not supported or is not valid RDF: ${content.Headers.ContentType.MediaType}",
                     content.Headers.ContentType);
             }
 
@@ -389,11 +391,11 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         {
             Type[] interfaces = type.GetInterfaces();
 
-            foreach (Type interfac in interfaces)
+            foreach (Type iface in interfaces)
             {
-                if (interfac.IsGenericType && interfac.GetGenericTypeDefinition() == typeof(IEnumerable<object>).GetGenericTypeDefinition())
+                if (iface.IsGenericType && iface.GetGenericTypeDefinition() == typeof(IEnumerable<object>).GetGenericTypeDefinition())
                 {
-                    Type memberType = interfac.GetGenericArguments()[0];
+                    Type memberType = iface.GetGenericArguments()[0];
 
                     if (memberType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
                     {
