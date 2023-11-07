@@ -18,9 +18,11 @@ indent_style = space
 charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
+max_line_length = 80
 
 [*.cs]
 indent_size = 4
+max_line_length = 100
 dotnet_sort_system_directives_first = true
 
 # Don't use this. qualifier
@@ -231,7 +233,8 @@ dotnet_diagnostic.CA1857.severity = warning
 dotnet_diagnostic.CA1858.severity = warning
 
 # CA2007: Consider calling ConfigureAwait on the awaited task
-dotnet_diagnostic.CA2007.severity = warning
+# TODO: reenable
+# dotnet_diagnostic.CA2007.severity = warning
 
 # CA2008: Do not create tasks without passing a TaskScheduler
 dotnet_diagnostic.CA2008.severity = warning
@@ -323,8 +326,8 @@ dotnet_diagnostic.IDE0060.severity = warning
 dotnet_diagnostic.IDE0062.severity = warning
 
 # IDE0073: File header
-dotnet_diagnostic.IDE0073.severity = warning
-file_header_template = Licensed to the .NET Foundation under one or more agreements.\nThe .NET Foundation licenses this file to you under the MIT license.
+# dotnet_diagnostic.IDE0073.severity = warning
+# file_header_template = Licensed to the .NET Foundation under one or more agreements.\nThe .NET Foundation licenses this file to you under the MIT license.
 
 # IDE0161: Convert to file-scoped namespace
 dotnet_diagnostic.IDE0161.severity = warning

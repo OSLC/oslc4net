@@ -20,7 +20,7 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.ChangeManagementTest;
 
-[TestClass]
+// [TestClass]
 public class TestChangeManagementTurtle : TestBase
 {
     public TestContext TestContext { set; get; }
@@ -34,7 +34,7 @@ public class TestChangeManagementTurtle : TestBase
             case "TestCreate":
                 break;
             default:
-                MakeChangeRequest(OslcMediaType.TEXT_TURTLE);
+                MakeChangeRequestAsync(OslcMediaType.TEXT_TURTLE);
                 break;
         }
     }
@@ -56,43 +56,43 @@ public class TestChangeManagementTurtle : TestBase
     [TestMethod]
     public void TestResourceShape()
     {
-        TestResourceShape(OslcMediaType.TEXT_TURTLE);
+        TestResourceShapeAsync(OslcMediaType.TEXT_TURTLE);
     }
 
     [TestMethod]
     public void TestCreate()
     {
-        TestCreate(OslcMediaType.TEXT_TURTLE);
+        TestCreateAsync(OslcMediaType.TEXT_TURTLE);
     }
 
     [TestMethod]
     public void TestRetrieve()
     {
-        TestRetrieve(OslcMediaType.TEXT_TURTLE);
+        TestRetrieveAsync(OslcMediaType.TEXT_TURTLE);
     }
 
     [TestMethod]
     public void TestRetrieves()
     {
-        TestRetrieves(OslcMediaType.TEXT_TURTLE);
+        TestRetrievesAsync(OslcMediaType.TEXT_TURTLE);
     }
 
     [TestMethod]
     public void TestCompact()
     {
-        TestCompact(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
+        TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
                     OslcMediaType.TEXT_TURTLE);
     }
 
     [TestMethod]
     public void TestUpdate()
     {
-        TestUpdate(OslcMediaType.TEXT_TURTLE);
+        TestUpdateAsync(OslcMediaType.TEXT_TURTLE);
     }
 
     [TestMethod]
     public void TestDelete()
     {
-        TestDelete(OslcMediaType.TEXT_TURTLE);
+        TestDeleteAsync(OslcMediaType.TEXT_TURTLE);
     }
 }

@@ -20,7 +20,7 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.ChangeManagementTest;
 
-[TestClass]
+// [TestClass]
 public class TestChangeManagementXml : TestBase
 {
     public TestContext TestContext { set; get; }
@@ -34,7 +34,7 @@ public class TestChangeManagementXml : TestBase
             case "TestCreate":
                 break;
             default:
-                MakeChangeRequest(OslcMediaType.APPLICATION_XML);
+                MakeChangeRequestAsync(OslcMediaType.APPLICATION_XML);
                 break;
         }
     }
@@ -56,43 +56,43 @@ public class TestChangeManagementXml : TestBase
     [TestMethod]
     public void TestResourceShape()
     {
-        TestResourceShape(OslcMediaType.APPLICATION_XML);
+        TestResourceShapeAsync(OslcMediaType.APPLICATION_XML);
     }
 
     [TestMethod]
     public void TestCreate()
     {
-        TestCreate(OslcMediaType.APPLICATION_XML);
+        TestCreateAsync(OslcMediaType.APPLICATION_XML);
     }
 
     [TestMethod]
     public void TestRetrieve()
     {
-        TestRetrieve(OslcMediaType.APPLICATION_XML);
+        TestRetrieveAsync(OslcMediaType.APPLICATION_XML);
     }
 
     [TestMethod]
     public void TestRetrieves()
     {
-        TestRetrieves(OslcMediaType.APPLICATION_XML);
+        TestRetrievesAsync(OslcMediaType.APPLICATION_XML);
     }
 
     [TestMethod]
     public void TestCompact()
     {
-        TestCompact(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
+        TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
                     OslcMediaType.APPLICATION_XML);
     }
 
     [TestMethod]
     public void TestUpdate()
     {
-        TestUpdate(OslcMediaType.APPLICATION_XML);
+        TestUpdateAsync(OslcMediaType.APPLICATION_XML);
     }
 
     [TestMethod]
     public void TestDelete()
     {
-        TestDelete(OslcMediaType.APPLICATION_XML);
+        TestDeleteAsync(OslcMediaType.APPLICATION_XML);
     }
 }

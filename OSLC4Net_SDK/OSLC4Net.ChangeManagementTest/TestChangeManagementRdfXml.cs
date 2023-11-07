@@ -23,7 +23,7 @@ namespace OSLC4Net.ChangeManagementTest;
 [TestClass]
 public class TestChangeManagementRdfXml : TestBase
 {
-    public TestContext TestContext { set; get; }
+    public TestContext? TestContext { set; get; }
 
     [TestInitialize]
     public void TestSetup()
@@ -34,7 +34,7 @@ public class TestChangeManagementRdfXml : TestBase
             case "TestCreate":
                 break;
             default:
-                MakeChangeRequest(OslcMediaType.APPLICATION_RDF_XML);
+                MakeChangeRequestAsync(OslcMediaType.APPLICATION_RDF_XML);
                 break;
         }
     }
@@ -54,45 +54,17 @@ public class TestChangeManagementRdfXml : TestBase
     }
 
     [TestMethod]
-    public void TestResourceShape()
+    public async Task TestRdfXml()
     {
-        TestResourceShape(OslcMediaType.APPLICATION_RDF_XML);
-    }
-
-    [TestMethod]
-    public void TestCreate()
-    {
-        TestCreate(OslcMediaType.APPLICATION_RDF_XML);
-    }
-
-    [TestMethod]
-    public void TestRetrieve()
-    {
-        TestRetrieve(OslcMediaType.APPLICATION_RDF_XML);
-    }
-
-    [TestMethod]
-    public void TestRetrieves()
-    {
-        TestRetrieves(OslcMediaType.APPLICATION_RDF_XML);
-    }
-
-    [TestMethod]
-    public void TestCompact()
-    {
-        TestCompact(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
-                    OslcMediaType.APPLICATION_RDF_XML);
-    }
-
-    [TestMethod]
-    public void TestUpdate()
-    {
-        TestUpdate(OslcMediaType.APPLICATION_RDF_XML);
-    }
-
-    [TestMethod]
-    public void TestDelete()
-    {
-        TestDelete(OslcMediaType.APPLICATION_RDF_XML);
+        await TestResourceShapeAsync(OslcMediaType.APPLICATION_RDF_XML);
+        await TestCreateAsync(OslcMediaType.APPLICATION_RDF_XML);
+        await Task.WhenAll(new [] {
+            TestRetrieveAsync(OslcMediaType.APPLICATION_RDF_XML),
+            TestRetrievesAsync(OslcMediaType.APPLICATION_RDF_XML),
+            TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
+                        OslcMediaType.APPLICATION_RDF_XML)
+        });
+        await TestUpdateAsync(OslcMediaType.APPLICATION_RDF_XML);
+        await TestDeleteAsync(OslcMediaType.APPLICATION_RDF_XML);
     }
 }

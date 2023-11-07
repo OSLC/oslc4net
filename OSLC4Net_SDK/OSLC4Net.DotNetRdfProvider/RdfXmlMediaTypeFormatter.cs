@@ -125,7 +125,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             actualType = type;
         }
 
-        if (IsSinglton(actualType))
+        if (IsSingleton(actualType))
         {
             return true;
         }
@@ -275,7 +275,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     /// <returns></returns>
     public override bool CanReadType(Type type)
     {
-        if (IsSinglton(type))
+        if (IsSingleton(type))
         {
             return true;
         }
@@ -313,6 +313,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         {
             IRdfReader rdfParser;
 
+            // TODO: one class per RDF content type
             if (content == null || content.Headers == null || content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_RDF_XML))
             {
                 rdfParser = new RdfXmlParser();
@@ -322,11 +323,16 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                 // TODO: enable RDF-star support (2023-09, Andrew)
                 rdfParser = new TurtleParser(TurtleSyntax.Original, true);
             }
-            else
+            else if (content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML))
             {
                 //For now, use the dotNetRDF RdfXmlParser() for application/xml.  This could change
-                //rdfParser = new OslcXmlParser();
                 rdfParser = new RdfXmlParser();
+            }
+            else
+            {
+                throw new UnsupportedMediaTypeException(
+                    "Given type is not supported or is not valid RDF: ${content.Headers.ContentType.MediaType}",
+                    content.Headers.ContentType);
             }
 
             IGraph graph = new Graph();
@@ -336,7 +342,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             {
                 rdfParser.Load(graph, streamReader);
 
-                bool isSingleton = IsSinglton(type);
+                bool isSingleton = IsSingleton(type);
                 object output = DotNetRdfHelper.FromDotNetRdfGraph(graph, isSingleton ? type : GetMemberType(type));
 
                 if (isSingleton)
@@ -367,7 +373,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         return tcs.Task;
     }
 
-    private bool IsSinglton(Type type)
+    private bool IsSingleton(Type type)
     {
         return type.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0;
     }

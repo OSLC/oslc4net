@@ -75,10 +75,10 @@ public static class ServiceProviderRegistryURIs
     }
 
     /// <summary>
-    /// Get the ServiceProviderRegistry URI
+    /// Get a "global"/"root" ServiceProviderRegistry URI - not part of the OSLC standard.
     /// </summary>
     /// <returns></returns>
-    public static string getServiceProviderRegistryURI()
+    public static string getGlobalServiceProviderRegistryURI()
     {
         return SERVICE_PROVIDER_REGISTRY_URI;
     }

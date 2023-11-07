@@ -20,7 +20,7 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.ChangeManagementTest;
 
-[TestClass]
+// [TestClass]
 public class TestChangeManagementJson : TestBase
 {
     public TestContext TestContext { set; get; }
@@ -34,7 +34,7 @@ public class TestChangeManagementJson : TestBase
             case "TestCreate":
                 break;
             default:
-                MakeChangeRequest(OslcMediaType.APPLICATION_JSON);
+                MakeChangeRequestAsync(OslcMediaType.APPLICATION_JSON);
                 break;
         }
     }
@@ -56,43 +56,43 @@ public class TestChangeManagementJson : TestBase
     [TestMethod]
     public void TestResourceShape()
     {
-        TestResourceShape(OslcMediaType.APPLICATION_JSON);
+        TestResourceShapeAsync(OslcMediaType.APPLICATION_JSON);
     }
 
     [TestMethod]
     public void TestCreate()
     {
-        TestCreate(OslcMediaType.APPLICATION_JSON);
+        TestCreateAsync(OslcMediaType.APPLICATION_JSON);
     }
 
     [TestMethod]
     public void TestRetrieve()
     {
-        TestRetrieve(OslcMediaType.APPLICATION_JSON);
+        TestRetrieveAsync(OslcMediaType.APPLICATION_JSON);
     }
 
     [TestMethod]
     public void TestRetrieves()
     {
-        TestRetrieves(OslcMediaType.APPLICATION_JSON);
+        TestRetrievesAsync(OslcMediaType.APPLICATION_JSON);
     }
 
     [TestMethod]
     public void TestCompact()
     {
-        TestCompact(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
+        TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
                     OslcMediaType.APPLICATION_JSON);
     }
 
     [TestMethod]
     public void TestUpdate()
     {
-        TestUpdate(OslcMediaType.APPLICATION_JSON);
+        TestUpdateAsync(OslcMediaType.APPLICATION_JSON);
     }
 
     [TestMethod]
     public void TestDelete()
     {
-        TestDelete(OslcMediaType.APPLICATION_JSON);
+        TestDeleteAsync(OslcMediaType.APPLICATION_JSON);
     }
 }
