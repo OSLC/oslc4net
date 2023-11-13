@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-- (breaking) `OSLC4Net.Client` now defaults to strong TLS certificate checking. Skipping TLS checks now requires explicit configuration.
+- 💥 (breaking) `OSLC4Net.Client` now defaults to strong TLS certificate checking. Skipping TLS checks now requires explicit configuration.
 
 ### Added
 
@@ -20,10 +20,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `OSLC4Net.Core` now targets `netstandard2.0`, which allows it to  be used under .NET Framework 4.7.2 or higher as well as .NET Core/.NET 5+.
 - dotNetRDF was upgraded from v1 to v3 to enable targeting `netstandard2.0`. One of the key breaking changes is that `ITriple` and `INode` no longer have the `.Graph` property. This caused breaking changes to some of the method signatures in `OSLC4Net.DotNetRdfProvider` to allow the `IGraph` instance to be passed.
 - `OSLC4Net.Client` now targets `netstandard2.0`.
-  - The main breaking change is the replacement of the legacy `WebRequestHandler` with `HttpClientHandler`. This caused some method/constructor signatures to change. 
-  - `RemoteCertificateValidationCallback` was replaced with a lambda function.
+  - 💥 The main breaking change is the replacement of the legacy `WebRequestHandler` with `HttpClientHandler`. This caused some method/constructor signatures to change. 
+  - 💥 `RemoteCertificateValidationCallback` was replaced with a lambda function.
 - `OSLC4Net.Query` now targets `netstandard2.0`. The Antlr3 runtime package targeting PCL was replaced with a package targeting NETStandard1.0 (Antlr 4 targets NETStandard2.0).
-- `JsonMediaTypeFormatter` was renamed into `OslcJsonMediaTypeFormatter` to better reflect its purpose (support a bespoke OSLC JSON format) and avoid conflict with `System.Net.Http.Formatting.MediaTypeFormatter`.
+- 💥 `JsonMediaTypeFormatter` was renamed into `OslcJsonMediaTypeFormatter` to better reflect its purpose (support a bespoke OSLC JSON format) and avoid conflict with `System.Net.Http.Formatting.MediaTypeFormatter`.
 
 ### Deprecated
 
@@ -31,7 +31,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- OSLC4Net.JsonProvider was removed as it would take a significant amount of effort to migrate from `System.Json` provided by .NET Framework to `System.Text.Json`. Users are recommended to use one of the accepted serializations for RDF, such as Turtle, RDF/XML, N-triples, or JSON-LD instead.
 - `Newtonsoft.Json` package was only used in the StockQuoteSample ASP.NET MVC project. Its references were removed from all other projects.
 
 ### Fixed
