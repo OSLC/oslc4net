@@ -26,7 +26,7 @@ using OSLC4Net.Core.Model;
 namespace OSLC4Net.ChangeManagementTest;
 
 [TestClass]
-// [TestCategory("RunningOslcServerRequired")]
+[TestCategory("RunningOslcServerRequired")]
 public abstract class TestBase
 {
     protected virtual IEnumerable<MediaTypeFormatter> Formatters { get; } = OslcRestClient.DEFAULT_FORMATTERS;
