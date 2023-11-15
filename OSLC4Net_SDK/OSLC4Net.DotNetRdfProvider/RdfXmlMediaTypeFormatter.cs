@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -321,8 +322,8 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             }
             else if (mediaType.Equals(OslcMediaType.TEXT_TURTLE))
             {
-                // TODO: enable RDF-star support (2023-09, Andrew)
-                rdfParser = new TurtleParser(TurtleSyntax.Original, true);
+                // TODO: make IRI validation configurable
+                rdfParser = new TurtleParser(TurtleSyntax.Rdf11Star, false);
             }
             else if (mediaType.Equals(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML)
                      || mediaType.Equals(OslcMediaType.APPLICATION_XML))
@@ -342,6 +343,11 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 
             using (streamReader)
             {
+                var rdfString = streamReader.ReadToEnd();
+                Debug.Write(rdfString);
+                readStream.Position = 0; // reset stream
+                streamReader.DiscardBufferedData();
+
                 rdfParser.Load(graph, streamReader);
 
                 bool isSingleton = IsSingleton(type);

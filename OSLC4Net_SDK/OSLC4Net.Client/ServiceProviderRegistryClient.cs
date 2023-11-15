@@ -45,13 +45,13 @@ public sealed class ServiceProviderRegistryClient
     /// <param name="formatters"></param>
     /// <param name="mediaType"></param>
     public ServiceProviderRegistryClient(string uri,
-                                        ISet<MediaTypeFormatter> formatters,
+                                        IEnumerable<MediaTypeFormatter> formatters,
                                          string mediaType)
     {
         _client = new OslcRestClient(formatters, uri, mediaType);
     }
 
-    public ServiceProviderRegistryClient(string uri, ISet<MediaTypeFormatter> formatters) :
+    public ServiceProviderRegistryClient(string uri, IEnumerable<MediaTypeFormatter> formatters) :
         this(uri, formatters, OslcMediaType.APPLICATION_RDF_XML)
     {
     }

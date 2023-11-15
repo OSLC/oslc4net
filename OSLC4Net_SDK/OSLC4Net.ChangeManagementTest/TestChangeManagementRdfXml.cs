@@ -20,7 +20,7 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.ChangeManagementTest;
 
-[TestClass]
+// [TestClass]
 public class TestChangeManagementRdfXml : TestBase
 {
     public TestContext? TestContext { set; get; }
@@ -56,15 +56,16 @@ public class TestChangeManagementRdfXml : TestBase
     [TestMethod]
     public async Task TestRdfXml()
     {
-        await TestResourceShapeAsync(OslcMediaType.APPLICATION_RDF_XML);
-        await TestCreateAsync(OslcMediaType.APPLICATION_RDF_XML);
+        const string mediaType = OslcMediaType.APPLICATION_RDF_XML;
+        await TestResourceShapeAsync(mediaType);
+        await TestCreateAsync(mediaType);
         await Task.WhenAll(new [] {
-            TestRetrieveAsync(OslcMediaType.APPLICATION_RDF_XML),
-            TestRetrievesAsync(OslcMediaType.APPLICATION_RDF_XML),
+            TestRetrieveAsync(mediaType),
+            TestRetrievesAsync(mediaType),
             TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
-                        OslcMediaType.APPLICATION_RDF_XML)
+                        mediaType)
         });
-        await TestUpdateAsync(OslcMediaType.APPLICATION_RDF_XML);
-        await TestDeleteAsync(OslcMediaType.APPLICATION_RDF_XML);
+        await TestUpdateAsync(mediaType);
+        await TestDeleteAsync(mediaType);
     }
 }

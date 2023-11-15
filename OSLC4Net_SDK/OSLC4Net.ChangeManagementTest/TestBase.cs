@@ -26,10 +26,10 @@ using OSLC4Net.Core.Model;
 namespace OSLC4Net.ChangeManagementTest;
 
 [TestClass]
-[TestCategory("RunningOslcServerRequired")]
+// [TestCategory("RunningOslcServerRequired")]
 public abstract class TestBase
 {
-    protected readonly ISet<MediaTypeFormatter> FORMATTERS = OslcRestClient.DEFAULT_FORMATTERS;
+    protected virtual IEnumerable<MediaTypeFormatter> Formatters { get; } = OslcRestClient.DEFAULT_FORMATTERS;
     protected Uri? CREATED_CHANGE_REQUEST_URI;
     protected readonly IConfigurationRoot _config;
     protected readonly string _serviceProviderCatalogURI;
@@ -78,7 +78,7 @@ public abstract class TestBase
     protected async Task<string> GetQueryBaseAsync(string mediaType,
                                        string type)
     {
-        var registryClient = new ServiceProviderRegistryClient(_serviceProviderCatalogURI, FORMATTERS, mediaType);
+        var registryClient = new ServiceProviderRegistryClient(_serviceProviderCatalogURI, Formatters, mediaType);
         var serviceProviders = await registryClient.GetServiceProvidersAsync();
 
         foreach (var serviceProvider in serviceProviders)
@@ -114,7 +114,7 @@ public abstract class TestBase
                                                   string type)
     {
         var registryClient = new ServiceProviderRegistryClient(_serviceProviderCatalogURI,
-                    FORMATTERS, mediaType);
+                    Formatters, mediaType);
         var serviceProviders = await registryClient.GetServiceProvidersAsync();
 
         foreach (var serviceProvider in serviceProviders)
@@ -136,7 +136,7 @@ public abstract class TestBase
                                 if (resourceShape != null)
                                 {
                                     OslcRestClient oslcRestClient = new(
-                                        FORMATTERS, resourceShape, mediaType);
+                                        Formatters, resourceShape, mediaType);
                                     return await oslcRestClient.GetOslcResourceAsync<ResourceShape>();
                                 }
                             }
@@ -172,14 +172,14 @@ public abstract class TestBase
         // Assert.IsNotNull(serviceProviderURI);
         // Assert.IsTrue(modifiedDate.Equals(createdDate) || modifiedDate > createdDate);
 
-        // says who?
+        // FIXME: says who?
         // Assert.IsTrue(aboutURI.ToString().EndsWith(identifierString));
 
         Assert.IsTrue(rdfTypesURIs.Contains(new Uri(Constants.TYPE_CHANGE_REQUEST)));
 
         if (recurse)
         {
-            OslcRestClient aboutOSLCRestClient = new(FORMATTERS,
+            OslcRestClient aboutOSLCRestClient = new(Formatters,
                                                     aboutURI,
                                                     mediaType);
 
@@ -187,7 +187,7 @@ public abstract class TestBase
                                 await aboutOSLCRestClient.GetOslcResourceAsync<ChangeRequest>(),
                                 recurse: false);
             if(serviceProviderURI != null) {
-                OslcRestClient serviceProviderOSLCRestClient = new(FORMATTERS,
+                OslcRestClient serviceProviderOSLCRestClient = new(Formatters,
                                                                 serviceProviderURI,
                                                                 mediaType);
 
@@ -212,7 +212,7 @@ public abstract class TestBase
         // Assert.IsNotNull(shortTitleString);
         Assert.IsNotNull(titleString);
 
-        OslcRestClient aboutOSLCRestClient = new(FORMATTERS,
+        OslcRestClient aboutOSLCRestClient = new(Formatters,
                                                 aboutURI,
                                                 mediaType);
 
@@ -272,7 +272,7 @@ public abstract class TestBase
     {
         Assert.IsNotNull(CREATED_CHANGE_REQUEST_URI);
 
-        OslcRestClient oslcRestClient = new(FORMATTERS,
+        OslcRestClient oslcRestClient = new(Formatters,
                                             CREATED_CHANGE_REQUEST_URI,
                                             compactMediaType);
 
@@ -306,7 +306,7 @@ public abstract class TestBase
 
         string creation = await GetCreationAsync(mediaType, Constants.TYPE_CHANGE_REQUEST);
 
-        OslcRestClient oslcRestClient = new(FORMATTERS,
+        OslcRestClient oslcRestClient = new(Formatters,
                                             creation,
                                             mediaType);
 
@@ -332,7 +332,7 @@ public abstract class TestBase
     {
         try
         {
-            OslcRestClient oslcRestClient = new(FORMATTERS,
+            OslcRestClient oslcRestClient = new(Formatters,
                                                 CREATED_CHANGE_REQUEST_URI,
                                                 mediaType);
             return oslcRestClient.RemoveOslcResourceReturnClientResponse();
@@ -350,7 +350,7 @@ public abstract class TestBase
     protected async Task TestDeleteAsync(string mediaType)
     {
         Assert.IsNotNull(CREATED_CHANGE_REQUEST_URI);
-        var oslcRestClient = new OslcRestClient(FORMATTERS,
+        var oslcRestClient = new OslcRestClient(Formatters,
                                             CREATED_CHANGE_REQUEST_URI,
                                             mediaType);
 
@@ -370,7 +370,7 @@ public abstract class TestBase
     {
         Assert.IsNotNull(CREATED_CHANGE_REQUEST_URI);
 
-        OslcRestClient oslcRestClient = new(FORMATTERS,
+        OslcRestClient oslcRestClient = new(Formatters,
                                             CREATED_CHANGE_REQUEST_URI,
                                             mediaType);
 
@@ -389,7 +389,7 @@ public abstract class TestBase
 
         Assert.IsNotNull(queryBase);
 
-        var client = new OslcRestClient(FORMATTERS, queryBase, mediaType);
+        var client = new OslcRestClient(Formatters, queryBase, mediaType);
 
         ICollection<ChangeRequest> changeRequests = await client.GetOslcResourcesAsync<ChangeRequest>();
 
@@ -398,6 +398,7 @@ public abstract class TestBase
 
         bool found = false;
 
+        // FIXME add paging
         foreach (ChangeRequest changeRequest in changeRequests)
         {
             VerifyChangeRequest(mediaType, changeRequest, recurse: true);
@@ -415,7 +416,7 @@ public abstract class TestBase
     {
         Assert.IsNotNull(CREATED_CHANGE_REQUEST_URI);
 
-        OslcRestClient oslcRestClient = new(FORMATTERS,
+        OslcRestClient oslcRestClient = new(Formatters,
                                             CREATED_CHANGE_REQUEST_URI,
                                             mediaType);
 

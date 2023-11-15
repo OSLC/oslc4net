@@ -14,27 +14,29 @@
  *******************************************************************************/
 
 
+using System.Net.Http.Formatting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using OSLC4Net.Client;
 using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.ChangeManagementTest;
 
-// [TestClass]
+[TestClass]
 public class TestChangeManagementTurtle : TestBase
 {
-    public TestContext TestContext { set; get; }
+    // protected new readonly ISet<MediaTypeFormatter> FORMATTERS = OslcRestClient.DEFAULT_FORMATTERS;
+    public TestContext? TestContext { set; get; }
 
     [TestInitialize]
-    public void TestSetup()
+    public async Task TestSetup()
     {
-        switch (TestContext.TestName)
+        switch (TestContext!.TestName)
         {
             case "TestResourceShape":
             case "TestCreate":
                 break;
             default:
-                MakeChangeRequestAsync(OslcMediaType.TEXT_TURTLE);
+                await MakeChangeRequestAsync(OslcMediaType.TEXT_TURTLE);
                 break;
         }
     }
@@ -42,7 +44,7 @@ public class TestChangeManagementTurtle : TestBase
     [TestCleanup]
     public void TestTeardown()
     {
-        switch (TestContext.TestName)
+        switch (TestContext!.TestName)
         {
             case "TestResourceShape":
             case "TestDelete":
@@ -54,45 +56,27 @@ public class TestChangeManagementTurtle : TestBase
     }
 
     [TestMethod]
-    public void TestResourceShape()
+    public async Task TestResourceShape()
     {
-        TestResourceShapeAsync(OslcMediaType.TEXT_TURTLE);
+        await TestResourceShapeAsync(OslcMediaType.TEXT_TURTLE);
     }
 
+    /// <summary>
+    /// Ordering of test methods shall not be relied upon for execution order
+    /// </summary>
     [TestMethod]
-    public void TestCreate()
+    public async Task TestAcceptance()
     {
-        TestCreateAsync(OslcMediaType.TEXT_TURTLE);
-    }
-
-    [TestMethod]
-    public void TestRetrieve()
-    {
-        TestRetrieveAsync(OslcMediaType.TEXT_TURTLE);
-    }
-
-    [TestMethod]
-    public void TestRetrieves()
-    {
-        TestRetrievesAsync(OslcMediaType.TEXT_TURTLE);
-    }
-
-    [TestMethod]
-    public void TestCompact()
-    {
-        TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
-                    OslcMediaType.TEXT_TURTLE);
-    }
-
-    [TestMethod]
-    public void TestUpdate()
-    {
-        TestUpdateAsync(OslcMediaType.TEXT_TURTLE);
-    }
-
-    [TestMethod]
-    public void TestDelete()
-    {
-        TestDeleteAsync(OslcMediaType.TEXT_TURTLE);
+        const string mediaType = OslcMediaType.TEXT_TURTLE;
+        await TestResourceShapeAsync(mediaType);
+        await TestCreateAsync(mediaType);
+        await Task.WhenAll(new [] {
+            TestRetrieveAsync(mediaType),
+            TestRetrievesAsync(mediaType),
+            TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
+                mediaType)
+        });
+        await TestUpdateAsync(mediaType);
+        await TestDeleteAsync(mediaType);
     }
 }

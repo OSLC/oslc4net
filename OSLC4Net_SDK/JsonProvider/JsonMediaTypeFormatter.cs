@@ -270,6 +270,10 @@ public class OslcJsonMediaTypeFormatter : MediaTypeFormatter
 
         try
         {
+            StreamReader sr = new(readStream);
+            var httpResponseBody = sr.ReadToEnd();
+            readStream.Position = 0;
+            Debug.WriteLine("HTTP response body" + httpResponseBody);
             JsonObject jsonObject = (JsonObject)JsonObject.Load(readStream);
 
             Debug.WriteLine("JsonMediaTypeFormatter.ReadFromStreamAsync(): Loaded JSON: " + jsonObject?.ToString());

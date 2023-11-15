@@ -14,27 +14,32 @@
  *******************************************************************************/
 
 
+using System.Net.Http.Formatting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using OSLC4Net.Core.JsonProvider;
 using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.ChangeManagementTest;
 
+// FIXME: re-enable
 // [TestClass]
 public class TestChangeManagementJson : TestBase
 {
-    public TestContext TestContext { set; get; }
+    protected override IEnumerable<MediaTypeFormatter> Formatters { get; } =
+        new HashSet<MediaTypeFormatter>() { new OslcJsonMediaTypeFormatter()};
+
+    public TestContext? TestContext { set; get; }
 
     [TestInitialize]
-    public void TestSetup()
+    public async Task TestSetup()
     {
-        switch (TestContext.TestName)
+        switch (TestContext!.TestName)
         {
             case "TestResourceShape":
             case "TestCreate":
                 break;
             default:
-                MakeChangeRequestAsync(OslcMediaType.APPLICATION_JSON);
+                await MakeChangeRequestAsync(OslcMediaType.APPLICATION_JSON);
                 break;
         }
     }
@@ -42,7 +47,7 @@ public class TestChangeManagementJson : TestBase
     [TestCleanup]
     public void TestTeardown()
     {
-        switch (TestContext.TestName)
+        switch (TestContext!.TestName)
         {
             case "TestResourceShape":
             case "TestDelete":
@@ -54,45 +59,45 @@ public class TestChangeManagementJson : TestBase
     }
 
     [TestMethod]
-    public void TestResourceShape()
+    public async Task TestResourceShape()
     {
-        TestResourceShapeAsync(OslcMediaType.APPLICATION_JSON);
+        await TestResourceShapeAsync(OslcMediaType.APPLICATION_JSON);
     }
 
     [TestMethod]
-    public void TestCreate()
+    public async Task TestCreate()
     {
-        TestCreateAsync(OslcMediaType.APPLICATION_JSON);
+        await TestCreateAsync(OslcMediaType.APPLICATION_JSON);
     }
 
     [TestMethod]
-    public void TestRetrieve()
+    public async Task TestRetrieve()
     {
-        TestRetrieveAsync(OslcMediaType.APPLICATION_JSON);
+        await TestRetrieveAsync(OslcMediaType.APPLICATION_JSON);
     }
 
     [TestMethod]
-    public void TestRetrieves()
+    public async Task TestRetrieves()
     {
-        TestRetrievesAsync(OslcMediaType.APPLICATION_JSON);
+        await TestRetrievesAsync(OslcMediaType.APPLICATION_JSON);
     }
 
     [TestMethod]
-    public void TestCompact()
+    public async Task TestCompact()
     {
-        TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
+        await TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
                     OslcMediaType.APPLICATION_JSON);
     }
 
     [TestMethod]
-    public void TestUpdate()
+    public async Task TestUpdate()
     {
-        TestUpdateAsync(OslcMediaType.APPLICATION_JSON);
+        await TestUpdateAsync(OslcMediaType.APPLICATION_JSON);
     }
 
     [TestMethod]
-    public void TestDelete()
+    public async Task TestDelete()
     {
-        TestDeleteAsync(OslcMediaType.APPLICATION_JSON);
+        await TestDeleteAsync(OslcMediaType.APPLICATION_JSON);
     }
 }

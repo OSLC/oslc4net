@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
 
@@ -8,6 +8,7 @@
 
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\JsonProvider\OSLC4Net.Core.JsonProvider.csproj" />
     <ProjectReference Include="..\OSLC4Net.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj" />
     <ProjectReference Include="..\OSLC4Net.ChangeManagement\OSLC4Net.ChangeManagementCommon.csproj" />
     <ProjectReference Include="..\OSLC4Net.Client\OSLC4Net.Client.csproj" />

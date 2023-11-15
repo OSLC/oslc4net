@@ -20,7 +20,7 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.ChangeManagementTest;
 
-// [TestClass]
+[TestClass]
 public class TestChangeManagementXml : TestBase
 {
     public TestContext TestContext { set; get; }
