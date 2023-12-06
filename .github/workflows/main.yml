@@ -48,7 +48,7 @@ jobs:
           ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
           Set-Content OSLC4Net.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore --locked-mode
     - name: Build
       run: dotnet build --no-restore
     - name: Test
