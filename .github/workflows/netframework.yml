@@ -36,10 +36,10 @@ jobs:
       with:
         path: |
             ${{ github.workspace }}/.nuget/packages
-            OSLC4Net_NETFramework/packages/
-            OSLC4Net_NETFramework/**/*.nuget.g.props
-            OSLC4Net_NETFramework/**/*.nuget.g.targets
-            OSLC4Net_NETFramework/**/project.assets.json
+        # OSLC4Net_NETFramework/packages/
+        # OSLC4Net_NETFramework/**/*.nuget.g.props
+        # OSLC4Net_NETFramework/**/*.nuget.g.targets
+        # OSLC4Net_NETFramework/**/project.assets.json
         # OSLC4Net_NETFramework/**/bin/
         # OSLC4Net_NETFramework/**/obj/
         key: ${{ runner.os }}-nuget-${{ hashFiles('.github/workflows/main.yml', '.github/workflows/netframework.yml',  '**/packages.config', '**/packages.lock.json', '**/*.sln', '**/*.csproj') }}
