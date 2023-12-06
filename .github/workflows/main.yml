@@ -20,13 +20,15 @@ jobs:
     defaults:
       run:
         working-directory: OSLC4Net_SDK/
+    env:
+      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
       with:
         show-progress: false
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ matrix.version.setup }}
         source-url: https://nuget.pkg.github.com/oslc/index.json
@@ -44,6 +46,15 @@ jobs:
         (Get-Content OSLC4Net.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj) |
           ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
           Set-Content OSLC4Net.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj
+    - name: Cache NuGet
+      # id: cache-nuget
+      uses: actions/cache@v3
+      # env:
+      #   cache-name: cache-node-modules
+      with:
+        # npm cache files are stored in `~/.npm` on Linux/macOS
+        path: ${{ env.NUGET_PACKAGES }}
+        key: ${{ runner.os }}-nuget-${{ matrix.version.target }}-${{ hashFiles('.github/workflows/main.yml', '**/Directory.Build.props', '**/packages.config', '**/packages.lock.json', '**/*.sln', '**/*.csproj') }}
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
