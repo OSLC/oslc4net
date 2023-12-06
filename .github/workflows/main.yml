@@ -20,11 +20,14 @@ jobs:
     defaults:
       run:
         working-directory: OSLC4Net_SDK/
+    env:
+      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
       with:
         show-progress: false
+        cache: true
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
