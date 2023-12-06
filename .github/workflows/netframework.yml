@@ -15,7 +15,8 @@ jobs:
   build:
     runs-on: windows-latest
     timeout-minutes: 15
-
+    env:
+      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
@@ -31,15 +32,15 @@ jobs:
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1
 
-    # - uses: actions/cache@v3
-    #   with:
-    #     path: |
-    #         ~/.nuget/packages/
-    #         OSLC4Net_NETFramework/packages/
-    #         OSLC4Net_NETFramework/**/bin/
-    #         OSLC4Net_NETFramework/**/obj/
-    #     key: ${{ runner.os }}-nuget-${{ hashFiles('.github/workflows/main.yml', '**/packages.config', '**/packages.lock.json', '**/*.sln', '**/*.csproj') }}
-    #     restore-keys: |
+    - uses: actions/cache@v3
+      with:
+        path: |
+            ${{ github.workspace }}/.nuget/packages
+            OSLC4Net_NETFramework/packages/
+        # OSLC4Net_NETFramework/**/bin/
+        # OSLC4Net_NETFramework/**/obj/
+        key: ${{ runner.os }}-nuget-${{ hashFiles('.github/workflows/main.yml', '**/packages.config', '**/packages.lock.json', '**/*.sln', '**/*.csproj') }}
+        # restore-keys: |
     #       ${{ runner.os }}-nuget-
 
     - name: Restore NuGet Packages
