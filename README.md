@@ -5,7 +5,7 @@
 
 ## What is OSLC4NET?
 
-**OSLC4Net** is an SDK and sample applications that help the .NET community adopt Open Services for Lifecycle Collaboration (OSLC, [homepage](http://open-services.net)) and build OSLC-compliant tools.
+**OSLC4Net** is an SDK and sample applications that help the .NET community adopt Open Services for Lifecycle Collaboration (OSLC, [homepage](http://open-services.net)) and build OSLC-conformant tools.
 
 The SDK allows developers to create OSLC providers or consumers by adding OSLC annotations to .NET objects to represent them as OSLC resources. It includes a library based on the [dotNetRDF](https://dotnetrdf.org/) package, which assists with representing these resources as RDF/XML and helps parse RDF/XML documents into OSLC .NET objects.
 
@@ -68,4 +68,4 @@ A request to the first URL using Fiddler should have the following response:
 
 ## OSLC4Net License
 
-OSLC4Net is licensed under the [Eclipse Public License 1.0](LICENSE)  
+OSLC4Net is licensed under the [Eclipse Public License 1.0](LICENSE)
