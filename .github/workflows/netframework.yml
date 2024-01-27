@@ -24,7 +24,7 @@ jobs:
         show-progress: false
 
     - name: Setup MSBuild Path
-      uses: microsoft/setup-msbuild@v1.3.1
+      uses: microsoft/setup-msbuild@v1.3.2
       # with:
       #   vs-version: '[17.5.3,18.0.0)'
       #   msbuild-architecture: x64
