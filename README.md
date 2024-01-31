@@ -1,14 +1,13 @@
 # OSLC4Net, an OSLC SDK for .NET
 
 [![CI](https://github.com/OSLC/oslc4net/workflows/CI/badge.svg)](https://github.com/OSLC/oslc4net/actions?query=workflow%3ACI)
-[![Discourse status](https://img.shields.io/discourse/https/meta.discourse.org/status.svg)](https://forum.open-services.net/)
-[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/OSLC/chat)
+[![Discourse forum](https://img.shields.io/discourse/users?color=28bd84&server=https%3A%2F%2Fforum.open-services.net%2F)](https://forum.open-services.net/c/sdks/oslc4net/10)
 
 ## What is OSLC4NET?
 
-**OSLC4Net** is an SDK and sample applications that help the .NET community adopt Open Services for Lifecycle Collaboration (OSLC, [homepage](http://open-services.net)) and build OSLC-compliant tools.
+**OSLC4Net** is an SDK and sample applications that help the .NET community adopt Open Services for Lifecycle Collaboration (OSLC, [homepage](http://open-services.net)) and build OSLC-conformant tools.
 
-The SDK allows developers to create OSLC providers or consumers by adding OSLC annotations to .NET objects to represent them as OSLC resources. It includes a library based on the [dotNetRDF](https://dotnetrdf.org/) package, which assists with representing these resources as RDF/XML and helps parse RDF/XML documents into OSLC .NET objects.
+The SDK allows developers to create OSLC servers and clients by adding OSLC annotations to .NET objects to represent them as OSLC resources. It includes a library based on the [dotNetRDF](https://dotnetrdf.org/) package, which assists with representing these resources as RDF and helps parse Turle, RDF/XML, and JSON-LD documents into OSLC .NET objects.
 
 The [OSLC4Net.Client package](https://www.nuget.org/packages/OSLC4Net.Client/) can be used to help create consumer REST requests. On the server side, the project offers an RDF-specific `MediaTypeFormatter` that can help process OSLC REST requests within an ASP.NET MVC 5 API. **Join the [discussion on the .NET Core migration](https://github.com/OSLC/oslc4net/issues/25).**
 
@@ -69,4 +68,4 @@ A request to the first URL using Fiddler should have the following response:
 
 ## OSLC4Net License
 
-OSLC4Net is licensed under the [Eclipse Public License 1.0](LICENSE)  
+OSLC4Net is licensed under the [Eclipse Public License 1.0](LICENSE)

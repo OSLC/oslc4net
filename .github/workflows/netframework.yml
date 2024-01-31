@@ -15,7 +15,8 @@ jobs:
   build:
     runs-on: windows-latest
     timeout-minutes: 15
-
+    env:
+      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
@@ -23,23 +24,26 @@ jobs:
         show-progress: false
 
     - name: Setup MSBuild Path
-      uses: microsoft/setup-msbuild@v1.3.1
+      uses: microsoft/setup-msbuild@v2.0.0
       # with:
       #   vs-version: '[17.5.3,18.0.0)'
       #   msbuild-architecture: x64
 
     - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1
+      uses: NuGet/setup-nuget@v2
 
-    # - uses: actions/cache@v3
-    #   with:
-    #     path: |
-    #         ~/.nuget/packages/
-    #         OSLC4Net_NETFramework/packages/
-    #         OSLC4Net_NETFramework/**/bin/
-    #         OSLC4Net_NETFramework/**/obj/
-    #     key: ${{ runner.os }}-nuget-${{ hashFiles('.github/workflows/main.yml', '**/packages.config', '**/packages.lock.json', '**/*.sln', '**/*.csproj') }}
-    #     restore-keys: |
+    - uses: actions/cache@v4
+      with:
+        path: |
+            ${{ github.workspace }}/.nuget/packages
+        # OSLC4Net_NETFramework/packages/
+        # OSLC4Net_NETFramework/**/*.nuget.g.props
+        # OSLC4Net_NETFramework/**/*.nuget.g.targets
+        # OSLC4Net_NETFramework/**/project.assets.json
+        # OSLC4Net_NETFramework/**/bin/
+        # OSLC4Net_NETFramework/**/obj/
+        key: ${{ runner.os }}-nuget-${{ hashFiles('.github/workflows/main.yml', '.github/workflows/netframework.yml',  '**/packages.config', '**/packages.lock.json', '**/*.sln', '**/*.csproj') }}
+        # restore-keys: |
     #       ${{ runner.os }}-nuget-
 
     - name: Restore NuGet Packages
