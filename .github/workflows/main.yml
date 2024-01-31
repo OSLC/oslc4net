@@ -60,7 +60,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal  --filter TestCategory!=RunningOslcServerRequired --collect:"OSLC4Net code coverage"
+      run: dotnet test --no-build --verbosity normal  --filter TestCategory!=RunningOslcServerRequired --collect:"XPlat Code Coverage"
     # - name: Set version suffix
     #   id: version
     #   run: echo "::set-output name=suffix::$(date +'-ts.%y%m%d%H%M')"
