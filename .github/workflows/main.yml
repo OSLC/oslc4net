@@ -53,6 +53,10 @@ jobs:
     # - name: Set version suffix
     #   id: version
     #   run: echo "::set-output name=suffix::$(date +'-ts.%y%m%d%H%M')"
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     - name: Build and publish NuGet package
       shell: pwsh
       run: |
