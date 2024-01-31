@@ -1411,17 +1411,17 @@ public class JsonHelper
 
 			    return any;
 		    }
-		    else if (jsonValue is string)
+		    else if (jsonValue is string jsonString)
 		    {
 			    // Check if it's in the OSLC date format.
 			    try
 			    {
-				    return DateTime.Parse((string)jsonValue);
+				    return DateTime.Parse(jsonString);
 			    }
 			    catch (FormatException e)
 			    {
 				    // It's not a date. Treat it as a string.
-				    return jsonValue;
+				    return jsonString;
 			    }
 		    }
 
@@ -1455,7 +1455,7 @@ public class JsonHelper
             return false;
         }
 
-        JsonObject jsonObject = (JsonObject)jsonValue;
+        var jsonObject = jsonValue as JsonObject;
 
         bool isListNode =
                 jsonObject.ContainsKey(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_FIRST)
@@ -1688,59 +1688,112 @@ public class JsonHelper
         }
         else
         {
-            string stringValue = (string)(JsonValue)jsonValue;
+            // TODO: JsonPrimitive<JsonValue can be a ready-made boolean
+            JsonPrimitive jsonPrimitive = jsonValue as JsonPrimitive;
+            if (jsonPrimitive == null)
+            {
+                logger.Warn($"JSON value is not a primitive: '{jsonValue}'");
+                throw new ArgumentException();
+            }
 
             if (typeof(string) == setMethodComponentParameterType)
             {
-                return stringValue;
+                return (string)jsonPrimitive;
             }
             else if (typeof(bool) == setMethodComponentParameterType || typeof(bool?) == setMethodComponentParameterType)
             {
-                // Cannot use Boolean.parseBoolean since it supports case-insensitive TRUE.
-                if (bool.TrueString.ToUpper().Equals(stringValue.ToUpper()))
+                if (jsonPrimitive.JsonType == JsonType.Boolean)
                 {
-                    return true;
-                }
-                else if (bool.FalseString.ToUpper().Equals(stringValue.ToUpper()))
+                    return (bool)jsonPrimitive;
+                } else if (jsonPrimitive.JsonType == JsonType.String)
                 {
-                    return false;
+                    var boolString = (string)jsonPrimitive;
+                    // TODO: revisit the decision not to use Boolean.TryParse()
+                    // Cannot use Boolean.parseBoolean since it supports case-insensitive TRUE.
+                    if (bool.TrueString.ToUpper().Equals(boolString.ToUpper()))
+                    {
+                        return true;
+                    }
+                    else if (bool.FalseString.ToUpper().Equals(boolString.ToUpper()))
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
-                    throw new InvalidOperationException("'" + stringValue + "' has wrong format for Boolean.");
+                    throw new ArgumentException($"'{jsonPrimitive}' has wrong format for Boolean.");
                 }
             }
             else if (typeof(byte) == setMethodComponentParameterType || typeof(byte?) == setMethodComponentParameterType)
             {
-                return byte.Parse(stringValue);
+                return byte.Parse(jsonPrimitive);
             }
             else if (typeof(short) == setMethodComponentParameterType || typeof(short?) == setMethodComponentParameterType)
             {
-                return short.Parse(stringValue);
+                return short.Parse(jsonPrimitive);
             }
             else if (typeof(int) == setMethodComponentParameterType || typeof(int?) == setMethodComponentParameterType)
             {
-                return int.Parse(stringValue);
+                if (jsonPrimitive.JsonType == JsonType.Number)
+                {
+                    return (int)jsonPrimitive;
+                }
+                else
+                {
+                    return int.Parse((string)jsonPrimitive);
+                }
             }
             else if (typeof(long) == setMethodComponentParameterType || typeof(long?) == setMethodComponentParameterType)
             {
-                return long.Parse(stringValue);
+                if (jsonPrimitive.JsonType == JsonType.Number)
+                {
+                    return (long)jsonPrimitive;
+                }
+                else
+                {
+                    return long.Parse((string)jsonPrimitive);
+                }
             }
             else if (typeof(float) == setMethodComponentParameterType || typeof(float?) == setMethodComponentParameterType)
             {
-                return float.Parse(stringValue);
+                if (jsonPrimitive.JsonType == JsonType.Number)
+                {
+                    return (float)jsonPrimitive;
+                }
+                else
+                {
+                    return float.Parse((string)jsonPrimitive);
+                }
             }
             else if (typeof(decimal) == setMethodComponentParameterType || typeof(decimal?) == setMethodComponentParameterType)
             {
-                return decimal.Parse(stringValue);
+                if (jsonPrimitive.JsonType == JsonType.Number)
+                {
+                    return (decimal)jsonPrimitive;
+                }
+                else
+                {
+                    return decimal.Parse((string)jsonPrimitive);
+                }
             }
             else if (typeof(double) == setMethodComponentParameterType || typeof(double?) == setMethodComponentParameterType)
             {
-                return double.Parse(stringValue);
+                if (jsonPrimitive.JsonType == JsonType.Number)
+                {
+                    return (double)jsonPrimitive;
+                }
+                else
+                {
+                    return double.Parse((string)jsonPrimitive);
+                }
             }
             else if (typeof(DateTime) == setMethodComponentParameterType || typeof(DateTime?) == setMethodComponentParameterType)
             {
-                return DateTime.Parse(stringValue);
+                if (!DateTime.TryParse(jsonPrimitive, out var parsedDate))
+                {
+                    logger.Warn($"Cannot parse '{jsonPrimitive}' as a DateTime");
+                }
+                return parsedDate;
             }
         }
 

@@ -1,11 +1,11 @@
 ﻿/*******************************************************************************
- * Copyright (c) 2013 IBM Corporation.
  * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
+ * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -135,7 +135,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
             private readonly string consumerKey;
             private readonly string consumerSecret;
         }
-	
+
         private static HttpMessageHandler OAuthHandler(String requestTokenURL,
 						                               String authorizationTokenURL,
                                                        String accessTokenURL,
@@ -170,7 +170,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
 		    String location = null;
             HttpResponseMessage resp;
 
-		    try 
+		    try
 		    {
                 client.DefaultRequestHeaders.Clear();
 
@@ -196,14 +196,14 @@ namespace OSLC4Net.Client.Oslc.Jazz
 
                 resp = client.PostAsync(authUrl + "/j_security_check", content).Result;
 		        statusCode = resp.StatusCode;
-		    
+
 		        String jazzAuthMessage = null;
                 IEnumerable<string> values = new List<string>();
 
 		        if (resp.Headers.TryGetValues(JAZZ_AUTH_MESSAGE_HEADER, out values)) {
 		    	    jazzAuthMessage = values.Last();
 		        }
-		    
+
 		        if (jazzAuthMessage != null && String.Compare(jazzAuthMessage, JAZZ_AUTH_FAILED, true) == 0)
 		        {
                     resp.ConsumeContent();
@@ -229,7 +229,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
                     {
                         DesktopConsumer desktopConsumer = new DesktopConsumer(serviceDescription, tokenManager);
                         AuthorizedTokenResponse authorizedTokenResponse = desktopConsumer.ProcessUserAuthorization(tokenManager.GetRequestToken(), qscoll["oauth_verifier"]);
-                        
+
                         return consumer.CreateAuthorizingHandler(authorizedTokenResponse.AccessToken, CreateSSLHandler());
                     }
 
