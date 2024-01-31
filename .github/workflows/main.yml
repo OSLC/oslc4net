@@ -34,10 +34,6 @@ jobs:
         source-url: https://nuget.pkg.github.com/oslc/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-    - name: Install coverlet.collector
-      shell: pwsh
-      run: |
-        dotnet add package coverlet.collector
     - name: Target ${{ matrix.version.target }} only
       shell: pwsh
       run: |
