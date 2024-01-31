@@ -270,13 +270,13 @@ public class OslcJsonMediaTypeFormatter : MediaTypeFormatter
 
         try
         {
-            StreamReader sr = new(readStream);
-            var httpResponseBody = sr.ReadToEnd();
-            readStream.Position = 0;
-            Debug.WriteLine("HTTP response body" + httpResponseBody);
-            JsonObject jsonObject = (JsonObject)JsonObject.Load(readStream);
+            // StreamReader sr = new(readStream);
+            // var httpResponseBody = sr.ReadToEnd();
+            // readStream.Position = 0;
+            // Debug.WriteLine("HTTP response body" + httpResponseBody);
 
-            Debug.WriteLine("JsonMediaTypeFormatter.ReadFromStreamAsync(): Loaded JSON: " + jsonObject?.ToString());
+            JsonObject jsonObject = (JsonObject)JsonObject.Load(readStream);
+            // Debug.WriteLine("JsonMediaTypeFormatter.ReadFromStreamAsync(): Loaded JSON: " + jsonObject?.ToString());
 
             bool isSingleton = IsSinglton(type);
             object output = JsonHelper.FromJson(jsonObject, isSingleton ? type : GetMemberType(type));
