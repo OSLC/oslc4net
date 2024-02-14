@@ -31,7 +31,7 @@ Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking c
 
 ### Deprecated
 
-- NA
+This release does not introduce deprecations.
 
 ### Removed
 
@@ -39,7 +39,7 @@ Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking c
 
 ### Fixed
 
-- NA
+This release does not contain bug fixes.
 
 ## [0.3.0-alpha] - 2023-04-29
 
@@ -68,13 +68,17 @@ Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking c
 
 ### Removed
 
-- ❗️ Support for .NET 4.5 (and thus, 4.6 and 4.7) was dropped.
+- ❗️ Support for .NET 4.5, 4.6, and 4.7 was dropped.
 
 ### Fixed
 
 - `System.Net.Http.Formatting` issues were resolved by removing references to related SDK-provider assemblies, assembly extensions, and replacing them with a uniform reference to `Microsoft.AspNet.WebApi.Client` 5.2.9.
 
 ## [0.2.3] - 2013-07-26
+
+### Security
+
+This release does not contain security updates.
 
 ### Added
 
@@ -88,45 +92,42 @@ Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking c
 
 ### Deprecated
 
-m/a
+This release does not introduce deprecations.
 
 ### Removed
 
-m/a
+This release does not remove any features.
 
 ### Fixed
 
-m/a
+This release does not contain bug fixes.
 
-### Security
-
-m/a
 
 ## Template
 
 ### Security
 
-- NA
+This release does not contain security updates.
 
 ### Added
 
-- NA
+This release does not contain new features.
 
 ### Changed
 
-- NA
+This release does not contain significant changes.
 
 ### Deprecated
 
-- NA
+This release does not introduce deprecations.
 
 ### Removed
 
-- NA
+This release does not remove any features.
 
 ### Fixed
 
-- NA
+This release does not contain bug fixes.
 
 
 [unreleased]: https://github.com/OSLC/oslc4net/compare/v0.2.3...HEAD
