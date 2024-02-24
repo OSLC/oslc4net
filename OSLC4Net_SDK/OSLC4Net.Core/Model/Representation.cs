@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -35,7 +35,7 @@ public static class RepresentationExtension
 {
     public static string ToString(Representation representation)
     {
-        URI[] attributes = (URI[])representation.GetType().GetField(representation.ToString()).GetCustomAttributes(typeof(URI), false);
+        var attributes = (URI[])representation.GetType().GetField(representation.ToString()).GetCustomAttributes(typeof(URI), false);
 
         return attributes.Length > 0 ? attributes[0].uri : string.Empty;
 	    }
@@ -44,7 +44,7 @@ public static class RepresentationExtension
     {
 	        foreach (Representation representation in Enum.GetValues(typeof(Representation)))
         {
-            string uri = ToString(representation);
+            var uri = ToString(representation);
 
             if (uri.Equals(value))
             {

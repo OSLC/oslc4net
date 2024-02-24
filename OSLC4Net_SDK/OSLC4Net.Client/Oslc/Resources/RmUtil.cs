@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -27,25 +27,25 @@ public static class RmUtil
 {
 	    public static ResourceShape LookupRequirementsInstanceShapes(string serviceProviderUrl, string oslcDomain, string oslcResourceType, OslcClient client, string requiredInstanceShape)
 	    {
-		    HttpResponseMessage response = client.GetResource(serviceProviderUrl, OSLCConstants.CT_RDF);
-        ISet<MediaTypeFormatter> formatters = client.GetFormatters();
-		    ServiceProvider serviceProvider = response.Content.ReadAsAsync<ServiceProvider>(formatters).Result;
+		    var response = client.GetResource(serviceProviderUrl, OSLCConstants.CT_RDF);
+        var formatters = client.GetFormatters();
+		    var serviceProvider = response.Content.ReadAsAsync<ServiceProvider>(formatters).Result;
 
 		    if (serviceProvider != null) {
-			    foreach (Service service in serviceProvider.GetServices()) {
-				    Uri domain = service.GetDomain();
+			    foreach (var service in serviceProvider.GetServices()) {
+				    var domain = service.GetDomain();
 				    if (domain != null  && domain.ToString().Equals(oslcDomain)) {
-					    CreationFactory [] creationFactories = service.GetCreationFactories();
+					    var creationFactories = service.GetCreationFactories();
 					    if (creationFactories != null && creationFactories.Length > 0) {
-						    foreach  (CreationFactory creationFactory in creationFactories) {
-							    foreach  (Uri resourceType in creationFactory.GetResourceTypes()) {
+						    foreach  (var creationFactory in creationFactories) {
+							    foreach  (var resourceType in creationFactory.GetResourceTypes()) {
 								    if (resourceType.ToString() != null && resourceType.ToString().Equals(oslcResourceType)) {
-									    Uri[] instanceShapes = creationFactory.GetResourceShapes();
+									    var instanceShapes = creationFactory.GetResourceShapes();
 									    if (instanceShapes != null ){
-										    foreach ( Uri typeURI in instanceShapes) {
+										    foreach ( var typeURI in instanceShapes) {
 											    response = client.GetResource(typeURI.ToString(),OSLCConstants.CT_RDF);
-											    ResourceShape resourceShape =  response.Content.ReadAsAsync<ResourceShape>(formatters).Result;
-                                            string typeTitle = resourceShape.GetTitle();
+											    var resourceShape =  response.Content.ReadAsAsync<ResourceShape>(formatters).Result;
+                                            var typeTitle = resourceShape.GetTitle();
 											    if ( ( typeTitle != null) && (string.Compare(typeTitle, requiredInstanceShape, true) == 0) ) {
 												    return resourceShape;
 											    }
@@ -64,8 +64,8 @@ public static class RmUtil
 
 	    public static XElement ConvertStringToHTML(string text) {
 
-        XDocument document = new XDocument();
-		    XElement divElement = new XElement(XName.Get("div", RmConstants.NAMESPACE_URI_XHTML));
+        var document = new XDocument();
+		    var divElement = new XElement(XName.Get("div", RmConstants.NAMESPACE_URI_XHTML));
 
         document.Add(divElement);
 		    divElement.SetValue(text);

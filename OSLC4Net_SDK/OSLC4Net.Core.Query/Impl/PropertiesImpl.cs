@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -65,7 +65,7 @@ internal class PropertiesImpl : Properties
 
     public override string ToString()
     {
-        StringBuilder builder = ChildrenToString(new StringBuilder(), Children);
+        var builder = ChildrenToString(new StringBuilder(), Children);
 
         return builder.ToString();
     }
@@ -84,7 +84,7 @@ internal class PropertiesImpl : Properties
         IDictionary<string, string> prefixMap
     )
     {
-        IList<ITree> treeChildren = tree.Children;
+        var treeChildren = tree.Children;
         IList<Property> children = new List<Property>(treeChildren.Count);
 
         foreach (CommonTree treeChild in treeChildren) {
@@ -128,9 +128,9 @@ internal class PropertiesImpl : Properties
         IList<Property> children
     )
     {
-        bool first = true;
+        var first = true;
 
-         foreach (Property property in children) {
+         foreach (var property in children) {
 
              if (first) {
                  first = false;

@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -38,11 +38,11 @@ class SortTermsImpl : OrderByClause
         {
             if (children == null) {
 
-                IList<CommonTree> rawChildren = (IList<CommonTree>)tree.Children;
+                var rawChildren = (IList<CommonTree>)tree.Children;
 
                 children = new List<SortTerm>(rawChildren.Count());
 
-                foreach (CommonTree child in rawChildren) {
+                foreach (var child in rawChildren) {
 
                     object simpleTerm;
 

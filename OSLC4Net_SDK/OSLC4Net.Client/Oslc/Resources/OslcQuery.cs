@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -181,7 +181,7 @@ public class OslcQuery
 
     private void QueryParam(string name, string value)
     {
-        string content = name + '=' + value;
+        var content = name + '=' + value;
 
         if (uriBuilder.Query != null && uriBuilder.Query.Length > 1)
         {

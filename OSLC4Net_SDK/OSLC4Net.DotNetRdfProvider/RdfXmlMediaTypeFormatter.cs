@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012, 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -15,7 +15,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -98,7 +97,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 
         if (ImplementsGenericType(typeof(FilteredResource<>), type))
         {
-            Type[] actualTypeArguments = GetChildClassParameterArguments(typeof(FilteredResource<>), type);
+            var actualTypeArguments = GetChildClassParameterArguments(typeof(FilteredResource<>), type);
 
             if (actualTypeArguments.Count() != 1)
             {
@@ -126,12 +125,12 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             actualType = type;
         }
 
-        if (IsSingleton(actualType))
+        if (IsSinglton(actualType))
         {
             return true;
         }
 
-        Type memberType = GetMemberType(type);
+        var memberType = GetMemberType(type);
 
         if (memberType == null)
         {
@@ -164,10 +163,10 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                 {
                     if (ImplementsGenericType(typeof(FilteredResource<>), type))
                     {
-                        PropertyInfo resourceProp = value.GetType().GetProperty("Resource");
-                        Type[] actualTypeArguments = GetChildClassParameterArguments(typeof(FilteredResource<>), type);
-                        object objects = resourceProp.GetValue(value, null);
-                        PropertyInfo propertiesProp = value.GetType().GetProperty("Properties");
+                        var resourceProp = value.GetType().GetProperty("Resource");
+                        var actualTypeArguments = GetChildClassParameterArguments(typeof(FilteredResource<>), type);
+                        var objects = resourceProp.GetValue(value, null);
+                        var propertiesProp = value.GetType().GetProperty("Properties");
 
                         if (! ImplementsICollection(actualTypeArguments[0]))
                         {
@@ -178,7 +177,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                         {
                             //Subject URI for the collection is the query capability
                             //TODO:  should this be set by the app based on service provider info
-                            int portNum = httpRequest.RequestUri.Port;
+                            var portNum = httpRequest.RequestUri.Port;
                             string portString = null;
                             if (portNum == 80 || portNum == 443)
                             {
@@ -189,16 +188,16 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                                 portString = ":" + portNum.ToString();
                             }
 
-                            string descriptionAbout = httpRequest.RequestUri.Scheme + "://" +
-                                                      httpRequest.RequestUri.Host +
-                                                      portString +
-                                                      httpRequest.RequestUri.LocalPath;
+                            var descriptionAbout = httpRequest.RequestUri.Scheme + "://" +
+                                                   httpRequest.RequestUri.Host +
+                                                   portString +
+                                                   httpRequest.RequestUri.LocalPath;
 
                             //Subject URI for the responseInfo is the full request URI
-                            string responseInfoAbout = httpRequest.RequestUri.ToString();
+                            var responseInfoAbout = httpRequest.RequestUri.ToString();
 
-                            PropertyInfo totalCountProp = value.GetType().GetProperty("TotalCount");
-                            PropertyInfo nextPageProp = value.GetType().GetProperty("NextPage");
+                            var totalCountProp = value.GetType().GetProperty("TotalCount");
+                            var nextPageProp = value.GetType().GetProperty("NextPage");
 
                             Graph = DotNetRdfHelper.CreateDotNetRdfGraph(descriptionAbout, responseInfoAbout,
                                                                          (string)nextPageProp.GetValue(value, null),
@@ -230,7 +229,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 
                 if (content == null || content.Headers == null || content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_RDF_XML))
                 {
-                    RdfXmlWriter rdfXmlWriter = new RdfXmlWriter
+                    var rdfXmlWriter = new RdfXmlWriter
                     {
                         UseDtd = false,
                         PrettyPrintMode = false,
@@ -253,7 +252,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                 {
                     //For now, use the dotNetRDF RdfXmlWriter for application/xml
                     //OslcXmlWriter oslcXmlWriter = new OslcXmlWriter();
-                    RdfXmlWriter oslcXmlWriter = new RdfXmlWriter
+                    var oslcXmlWriter = new RdfXmlWriter
                     {
                         UseDtd = false,
                         PrettyPrintMode = false,
@@ -276,12 +275,12 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     /// <returns></returns>
     public override bool CanReadType(Type type)
     {
-        if (IsSingleton(type))
+        if (IsSinglton(type))
         {
             return true;
         }
 
-        Type memberType = GetMemberType(type);
+        var memberType = GetMemberType(type);
 
         if (memberType == null)
         {
@@ -308,54 +307,41 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     {
         var tcs = new TaskCompletionSource<object>();
 
-        if (content == null || content.Headers == null || content.Headers.ContentLength == 0) return null;
+        if (content != null && content.Headers != null && content.Headers.ContentLength == 0) return null;
 
         try
         {
             IRdfReader rdfParser;
 
-            // TODO: one class per RDF content type
-            var mediaType = content.Headers.ContentType.MediaType;
-            if (mediaType.Equals(OslcMediaType.APPLICATION_RDF_XML))
+            if (content == null || content.Headers == null || content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_RDF_XML))
             {
                 rdfParser = new RdfXmlParser();
             }
-            else if (mediaType.Equals(OslcMediaType.TEXT_TURTLE))
+            else if (content.Headers.ContentType.MediaType.Equals(OslcMediaType.TEXT_TURTLE))
             {
-                // TODO: make IRI validation configurable
-                rdfParser = new TurtleParser(TurtleSyntax.Rdf11Star, false);
-            }
-            else if (mediaType.Equals(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML)
-                     || mediaType.Equals(OslcMediaType.APPLICATION_XML))
-            {
-                //For now, use the dotNetRDF RdfXmlParser() for application/xml.  This could change
-                rdfParser = new RdfXmlParser();
+                // TODO: enable RDF-star support (2023-09, Andrew)
+                rdfParser = new TurtleParser(TurtleSyntax.Original, true);
             }
             else
             {
-                throw new UnsupportedMediaTypeException(
-                    $"Given type is not supported or is not valid RDF: ${content.Headers.ContentType.MediaType}",
-                    content.Headers.ContentType);
+                //For now, use the dotNetRDF RdfXmlParser() for application/xml.  This could change
+                //rdfParser = new OslcXmlParser();
+                rdfParser = new RdfXmlParser();
             }
 
             IGraph graph = new Graph();
-            StreamReader streamReader = new StreamReader(readStream);
+            var streamReader = new StreamReader(readStream);
 
             using (streamReader)
             {
-                var rdfString = streamReader.ReadToEnd();
-                Debug.Write(rdfString);
-                readStream.Position = 0; // reset stream
-                streamReader.DiscardBufferedData();
-
                 rdfParser.Load(graph, streamReader);
 
-                bool isSingleton = IsSingleton(type);
-                object output = DotNetRdfHelper.FromDotNetRdfGraph(graph, isSingleton ? type : GetMemberType(type));
+                var isSingleton = IsSinglton(type);
+                var output = DotNetRdfHelper.FromDotNetRdfGraph(graph, isSingleton ? type : GetMemberType(type));
 
                 if (isSingleton)
                 {
-                    bool haveOne = (int)output.GetType().GetProperty("Count").GetValue(output, null) > 0;
+                    var haveOne = (int)output.GetType().GetProperty("Count").GetValue(output, null) > 0;
 
                     tcs.SetResult(haveOne ? output.GetType().GetProperty("Item").GetValue(output, new object[] { 0 }): null);
                 }
@@ -381,7 +367,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         return tcs.Task;
     }
 
-    private bool IsSingleton(Type type)
+    private bool IsSinglton(Type type)
     {
         return type.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0;
     }
@@ -395,13 +381,13 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 
         if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IEnumerable<>), type))
         {
-            Type[] interfaces = type.GetInterfaces();
+            var interfaces = type.GetInterfaces();
 
-            foreach (Type iface in interfaces)
+            foreach (var interfac in interfaces)
             {
-                if (iface.IsGenericType && iface.GetGenericTypeDefinition() == typeof(IEnumerable<object>).GetGenericTypeDefinition())
+                if (interfac.IsGenericType && interfac.GetGenericTypeDefinition() == typeof(IEnumerable<object>).GetGenericTypeDefinition())
                 {
-                    Type memberType = iface.GetGenericArguments()[0];
+                    var memberType = interfac.GetGenericArguments()[0];
 
                     if (memberType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
                     {
@@ -432,7 +418,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 
     private static bool ImplementsGenericType(Type genericType, Type typeToTest)
     {
-        bool isParentGeneric = genericType.IsGenericType;
+        var isParentGeneric = genericType.IsGenericType;
 
         return ImplementsGenericType(genericType, typeToTest, isParentGeneric);
     }
@@ -456,12 +442,12 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 
     private static Type[] GetChildClassParameterArguments(Type genericType, Type typeToTest)
     {
-        bool isParentGeneric = genericType.IsGenericType;
+        var isParentGeneric = genericType.IsGenericType;
 
         while (true)
         {
-            Type parentType = typeToTest.BaseType;
-            Type parentToTest = isParentGeneric && parentType.IsGenericType ? parentType.GetGenericTypeDefinition() : parentType;
+            var parentType = typeToTest.BaseType;
+            var parentToTest = isParentGeneric && parentType.IsGenericType ? parentType.GetGenericTypeDefinition() : parentType;
 
             if (parentToTest == genericType)
             {

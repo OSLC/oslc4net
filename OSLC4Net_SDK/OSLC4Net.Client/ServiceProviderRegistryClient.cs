@@ -1,5 +1,4 @@
-﻿/*******************************************************************************
- * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -19,11 +18,13 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
-using System.Threading.Tasks;
+
 using OSLC4Net.Core.Exceptions;
 using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client;
+
+
 
 /// <summary>
 /// This classs provides methods to register and deregister with an OSLC ServiceProvider Registry (not yet
@@ -32,33 +33,43 @@ namespace OSLC4Net.Client;
 /// It also provides methods to get a ServiceProviderCatalog and retrieve the ServiceProviders
 /// </summary>
 
+
 public sealed class ServiceProviderRegistryClient
 {
-    private readonly OslcRestClient _client;
-
-    public OslcRestClient OslcClient => _client;
+    private OslcRestClient client;
 
     /// <summary>
     ///
     /// </summary>
-    /// <param name="uri">OSLC Service Provider Catalor URI</param>
     /// <param name="formatters"></param>
     /// <param name="mediaType"></param>
-    public ServiceProviderRegistryClient(string uri,
-                                        IEnumerable<MediaTypeFormatter> formatters,
-                                         string mediaType)
+    /// <param name="uri"></param>
+    public ServiceProviderRegistryClient(ISet<MediaTypeFormatter>   formatters,
+                                         string mediaType,
+                                         string uri)
     {
-        _client = new OslcRestClient(formatters, uri, mediaType);
+	    this.client = new OslcRestClient(formatters,
+									     uri,
+									     mediaType);
     }
 
-    public ServiceProviderRegistryClient(string uri, IEnumerable<MediaTypeFormatter> formatters) :
-        this(uri, formatters, OslcMediaType.APPLICATION_RDF_XML)
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="formatters"></param>
+    /// <param name="mediaType"></param>
+    public ServiceProviderRegistryClient(ISet<MediaTypeFormatter>   formatters,
+                                         string mediaType) :
+        this(formatters, mediaType, ServiceProviderRegistryURIs.getServiceProviderRegistryURI())
     {
     }
 
-    public ServiceProviderRegistryClient(string uri) :
-        // TODO: build an Accept string from the formatter list on the fly
-        this(uri, OslcRestClient.DEFAULT_FORMATTERS, OslcMediaType.APPLICATION_RDF_XML)
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="formatters"></param>
+    public ServiceProviderRegistryClient(ISet<MediaTypeFormatter> formatters) :
+        this (formatters, OslcMediaType.APPLICATION_RDF_XML)
     {
     }
 
@@ -67,17 +78,17 @@ public sealed class ServiceProviderRegistryClient
     /// </summary>
     /// <param name="serviceProviderToRegister"></param>
     /// <returns></returns>
-    public async Task<Uri> RegisterServiceProviderAsync(ServiceProvider serviceProviderToRegister)
+    public Uri registerServiceProvider(ServiceProvider serviceProviderToRegister)
     {
         var typeServiceProviderURI = new Uri(OslcConstants.TYPE_SERVICE_PROVIDER);
-        var oslcUsageDefault = new Uri(OslcConstants.OSLC_USAGE_DEFAULT);
+        var oslcUsageDefault       = new Uri(OslcConstants.OSLC_USAGE_DEFAULT);
 
         ServiceProvider[] serviceProviders;
 
         // We have to first get the ServiceProvider for ServiceProviders and then find the CreationFactory for a ServiceProvider
 
         // We first try for a ServiceProviderCatalog
-        var serviceProviderCatalog = await FetchServiceProviderCatalogAsync();
+        var serviceProviderCatalog = getServiceProviderCatalog();
 
         if (serviceProviderCatalog != null)
         {
@@ -86,11 +97,11 @@ public sealed class ServiceProviderRegistryClient
         else
         {
             // Secondly we try for a ServiceProvider which is acting as a ServiceProvider registry
-            ServiceProvider serviceProvider = await GetServiceProviderAsync();
+            var serviceProvider = GetServiceProvider();
 
             if (serviceProvider != null)
             {
-                serviceProviders = new ServiceProvider[] { serviceProvider };
+                serviceProviders = new ServiceProvider[] {serviceProvider};
             }
             else
             {
@@ -102,61 +113,64 @@ public sealed class ServiceProviderRegistryClient
 
         if (serviceProviders != null)
         {
-            CreationFactory firstCreationFactory = null;
+            CreationFactory firstCreationFactory        = null;
             CreationFactory firstDefaultCreationFactory = null;
 
-            for (int serviceProviderIndex = 0;
-                 (serviceProviderIndex < serviceProviders.Length) &&
-                  (firstDefaultCreationFactory == null);
+            for (var serviceProviderIndex = 0;
+                 ((serviceProviderIndex < serviceProviders.Length) &&
+                  (firstDefaultCreationFactory == null));
                  serviceProviderIndex++)
             {
-                ServiceProvider serviceProvider = serviceProviders[serviceProviderIndex];
+                var serviceProvider = serviceProviders[serviceProviderIndex];
 
-                Service[] services = serviceProvider.GetServices();
+                var services = serviceProvider.GetServices();
 
                 if (services != null)
                 {
-                    for (int serviceIndex = 0;
-                         (serviceIndex < services.Length) &&
-                          (firstDefaultCreationFactory == null);
+                    for (var serviceIndex = 0;
+                         ((serviceIndex < services.Length) &&
+                          (firstDefaultCreationFactory == null));
                          serviceIndex++)
                     {
-                        Service service = services[serviceIndex];
+                        var service = services[serviceIndex];
 
-                        CreationFactory[] creationFactories = service.GetCreationFactories();
+                        var creationFactories = service.GetCreationFactories();
 
                         if (creationFactories != null)
                         {
-                            for (int creationFactoryIndex = 0;
-                                 (creationFactoryIndex < creationFactories.Length) &&
-                                  (firstDefaultCreationFactory == null);
+                            for (var creationFactoryIndex = 0;
+                                 ((creationFactoryIndex < creationFactories.Length) &&
+                                  (firstDefaultCreationFactory == null));
                                  creationFactoryIndex++)
                             {
-                                CreationFactory creationFactory = creationFactories[creationFactoryIndex];
+                                var creationFactory = creationFactories[creationFactoryIndex];
 
-                                Uri[] resourceTypes = creationFactory.GetResourceTypes();
+                                var resourceTypes = creationFactory.GetResourceTypes();
 
                                 if (resourceTypes != null)
                                 {
-                                    for (int resourceTypeIndex = 0;
-                                         (resourceTypeIndex < resourceTypes.Length) &&
-                                          (firstDefaultCreationFactory == null);
+                                    for (var resourceTypeIndex = 0;
+                                         ((resourceTypeIndex < resourceTypes.Length) &&
+                                          (firstDefaultCreationFactory == null));
                                          resourceTypeIndex++)
                                     {
-                                        Uri resourceType = resourceTypes[resourceTypeIndex];
+                                        var resourceType = resourceTypes[resourceTypeIndex];
 
                                         if (typeServiceProviderURI.Equals(resourceType))
                                         {
-                                            firstCreationFactory ??= creationFactory;
+                                            if (firstCreationFactory == null)
+                                            {
+                                                firstCreationFactory = creationFactory;
+                                            }
 
-                                            Uri[] usages = creationFactory.GetUsages();
+                                            var usages = creationFactory.GetUsages();
 
-                                            for (int usageIndex = 0;
-                                                 (usageIndex < usages.Length) &&
-                                                  (firstDefaultCreationFactory == null);
+                                            for (var usageIndex = 0;
+                                                 ((usageIndex < usages.Length) &&
+                                                  (firstDefaultCreationFactory == null));
                                                  usageIndex++)
                                             {
-                                                Uri usage = usages[usageIndex];
+                                                var usage = usages[usageIndex];
 
                                                 if (oslcUsageDefault.Equals(usage))
                                                 {
@@ -174,16 +188,16 @@ public sealed class ServiceProviderRegistryClient
 
             if (firstCreationFactory != null)
             {
-                CreationFactory creationFactory = firstDefaultCreationFactory != null ? firstDefaultCreationFactory : firstCreationFactory;
+                var creationFactory = firstDefaultCreationFactory != null ? firstDefaultCreationFactory : firstCreationFactory;
 
-                Uri creation = creationFactory.GetCreation();
+                var creation = creationFactory.GetCreation();
 
-                OslcRestClient oslcRestClient = new OslcRestClient(_client.GetFormatters(),
+                var oslcRestClient = new OslcRestClient(client.GetFormatters(),
                                                                          creation);
 
-                HttpResponseMessage clientResponse = oslcRestClient.AddOslcResourceReturnClientResponse(serviceProviderToRegister);
+                var clientResponse = oslcRestClient.AddOslcResourceReturnClientResponse(serviceProviderToRegister);
 
-                HttpStatusCode statusCode = clientResponse.StatusCode;
+                var statusCode = clientResponse.StatusCode;
 
                 if (statusCode != HttpStatusCode.Created)
                 {
@@ -207,9 +221,9 @@ public sealed class ServiceProviderRegistryClient
     /// <param name="serviceProviderURI"></param>
     public void DeregisterServiceProvider(Uri serviceProviderURI)
     {
-        HttpResponseMessage clientResponse = new OslcRestClient(_client.GetFormatters(), serviceProviderURI).RemoveOslcResourceReturnClientResponse();
+        var clientResponse = new OslcRestClient(client.GetFormatters(), serviceProviderURI).RemoveOslcResourceReturnClientResponse();
 
-        HttpStatusCode statusCode = clientResponse.StatusCode;
+        var statusCode = clientResponse.StatusCode;
         if (statusCode != HttpStatusCode.OK)
         {
             throw new OslcCoreDeregistrationException(serviceProviderURI,
@@ -218,15 +232,17 @@ public sealed class ServiceProviderRegistryClient
         }
     }
 
-    /// <summary>
-    /// If a {@link ServiceProviderCatalog} is being used, this will return that object.
-    /// Otherwise null will be returned.
-    /// </summary>
-    /// <returns></returns>
-    public async Task<ServiceProviderCatalog> FetchServiceProviderCatalogAsync()
+   /// <summary>
+   /// If a {@link ServiceProviderCatalog} is being used, this will return that object.
+   /// Otherwise null will be returned.
+   /// </summary>
+   /// <returns></returns>
+    public ServiceProviderCatalog getServiceProviderCatalog()
     {
-        return await _client.GetOslcResourceAsync<ServiceProviderCatalog>();
+        return client.GetOslcResource<ServiceProviderCatalog>();
     }
+
+
 
     /// <summary>
     /// If aServiceProvider is being used as a ServiceProvider registry without an owning ServiceProviderCatalog,
@@ -234,19 +250,19 @@ public sealed class ServiceProviderRegistryClient
     /// Otherwise null will be returned.
     /// </summary>
     /// <returns></returns>
-    public async Task<ServiceProvider> GetServiceProviderAsync()
+    public ServiceProvider GetServiceProvider()
     {
-        return await _client.GetOslcResourceAsync<ServiceProvider>();
+        return client.GetOslcResource<ServiceProvider>();
     }
 
     /// <summary>
     /// Return the registered ServiceProvider's.
     /// </summary>
     /// <returns></returns>
-    public async Task<ICollection<ServiceProvider>> GetServiceProvidersAsync()
+    public ServiceProvider[] GetServiceProviders()
     {
         // We first try for a ServiceProviderCatalog
-        var serviceProviderCatalog = await FetchServiceProviderCatalogAsync();
+        var serviceProviderCatalog = getServiceProviderCatalog();
 
         if (serviceProviderCatalog != null)
         {
@@ -254,58 +270,61 @@ public sealed class ServiceProviderRegistryClient
         }
 
         // Secondly we try for a ServiceProvider which is acting as a ServiceProvider registry
-        ServiceProvider serviceProvider = await GetServiceProviderAsync();
+        var serviceProvider = GetServiceProvider();
 
         if (serviceProvider != null)
         {
-            Service[] services = serviceProvider.GetServices();
+            var services = serviceProvider.GetServices();
 
             if (services != null)
             {
-                QueryCapability firstQueryCapability = null;
+                QueryCapability firstQueryCapability        = null;
                 QueryCapability firstDefaultQueryCapability = null;
 
-                for (int serviceIndex = 0;
-                     (serviceIndex < services.Length) &&
-                      (firstDefaultQueryCapability == null);
+                for (var serviceIndex = 0;
+                     ((serviceIndex < services.Length) &&
+                      (firstDefaultQueryCapability == null));
                      serviceIndex++)
                 {
-                    Service service = services[serviceIndex];
+                    var service = services[serviceIndex];
 
-                    QueryCapability[] queryCapabilities = service.GetQueryCapabilities();
+                    var queryCapabilities = service.GetQueryCapabilities();
 
                     if (queryCapabilities != null)
                     {
-                        for (int queryCapabilityIndex = 0;
-                             (queryCapabilityIndex < queryCapabilities.Length) &&
-                              (firstDefaultQueryCapability == null);
+                        for (var queryCapabilityIndex = 0;
+                             ((queryCapabilityIndex < queryCapabilities.Length) &&
+                              (firstDefaultQueryCapability == null));
                              queryCapabilityIndex++)
                         {
-                            QueryCapability queryCapability = queryCapabilities[queryCapabilityIndex];
+                            var queryCapability = queryCapabilities[queryCapabilityIndex];
 
-                            Uri[] resourceTypes = queryCapability.GetResourceTypes();
+                            var resourceTypes = queryCapability.GetResourceTypes();
 
                             if (resourceTypes != null)
                             {
-                                for (int resourceTypeIndex = 0;
-                                     (resourceTypeIndex < resourceTypes.Length) &&
-                                      (firstDefaultQueryCapability == null);
+                                for (var resourceTypeIndex = 0;
+                                     ((resourceTypeIndex < resourceTypes.Length) &&
+                                      (firstDefaultQueryCapability == null));
                                      resourceTypeIndex++)
                                 {
-                                    Uri resourceType = resourceTypes[resourceTypeIndex];
+                                    var resourceType = resourceTypes[resourceTypeIndex];
 
                                     if (OslcConstants.TYPE_SERVICE_PROVIDER.Equals(resourceType.ToString()))
                                     {
-                                        firstQueryCapability ??= queryCapability;
+                                        if (firstQueryCapability == null)
+                                        {
+                                            firstQueryCapability = queryCapability;
+                                        }
 
-                                        Uri[] usages = queryCapability.GetUsages();
+                                        var usages = queryCapability.GetUsages();
 
-                                        for (int usageIndex = 0;
-                                             (usageIndex < usages.Length) &&
-                                              (firstDefaultQueryCapability == null);
+                                        for (var usageIndex = 0;
+                                             ((usageIndex < usages.Length) &&
+                                              (firstDefaultQueryCapability == null));
                                              usageIndex++)
                                         {
-                                            Uri usage = usages[usageIndex];
+                                            var usage = usages[usageIndex];
 
                                             if (OslcConstants.OSLC_USAGE_DEFAULT.Equals(usage.ToString()))
                                             {
@@ -321,17 +340,17 @@ public sealed class ServiceProviderRegistryClient
 
                 if (firstQueryCapability != null)
                 {
-                    // respect the OslcConstants.OSLC_USAGE_DEFAULT hint if possible
-                    var queryCapability = firstDefaultQueryCapability ?? firstQueryCapability;
+                    var queryCapability = firstDefaultQueryCapability != null ? firstDefaultQueryCapability : firstQueryCapability;
 
-                    Uri queryBase = queryCapability.GetQueryBase();
+                    var queryBase = queryCapability.GetQueryBase();
 
                     // Foundation Registry Services requires the query string of oslc.select=* in order to flesh out the ServiceProviders
                     var query = queryBase.ToString() + "?oslc.select=*";
 
-                    var oslcRestClient = new OslcRestClient(_client.GetFormatters(), query);
+                    var oslcRestClient = new OslcRestClient(client.GetFormatters(),
+                                                                             query);
 
-                    return await oslcRestClient.GetOslcResourcesAsync<ServiceProvider>();
+                    return oslcRestClient.GetOslcResources<ServiceProvider>();
                 }
             }
         }
@@ -339,4 +358,11 @@ public sealed class ServiceProviderRegistryClient
         return null;
     }
 
+    /// <summary>
+    /// Get the OslcClient associated with this SerivceProviderRegistryClient
+    /// </summary>
+    /// <returns></returns>
+	    public OslcRestClient getClient() {
+		    return client;
+	    }
 }

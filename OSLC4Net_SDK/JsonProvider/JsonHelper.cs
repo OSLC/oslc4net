@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -84,19 +84,19 @@ public class JsonHelper
                                         IEnumerable<object>         objects,
                                         IDictionary<string, object> properties)
     {
-        JsonObject resultJsonObject = new JsonObject();
+        var resultJsonObject = new JsonObject();
 
         IDictionary<string, string> namespaceMappings        = new Dictionary<string, string>();
         IDictionary<string, string> reverseNamespaceMappings = new Dictionary<string, string>();
 
         if (descriptionAbout != null)
         {
-            JsonArray jsonArray = new JsonArray();
+            var jsonArray = new JsonArray();
 
-            foreach (object obj in objects)
+            foreach (var obj in objects)
             {
         	    Dictionary<object,JsonObject> visitedObjects = new DictionaryWithReplacement<object,JsonObject>();
-                JsonObject jsonObject = HandleSingleResource(obj,
+                var jsonObject = HandleSingleResource(obj,
                                                              new JsonObject(),
                                                              namespaceMappings,
                                                              reverseNamespaceMappings,
@@ -110,13 +110,13 @@ public class JsonHelper
             }
 
             // Ensure we have an rdf prefix
-            string rdfPrefix = EnsureNamespacePrefix(OslcConstants.RDF_NAMESPACE_PREFIX,
+            var rdfPrefix = EnsureNamespacePrefix(OslcConstants.RDF_NAMESPACE_PREFIX,
                                                      OslcConstants.RDF_NAMESPACE,
                                                      namespaceMappings,
                                                      reverseNamespaceMappings);
 
             // Ensure we have an rdfs prefix
-            string rdfsPrefix = EnsureNamespacePrefix(OslcConstants.RDFS_NAMESPACE_PREFIX,
+            var rdfsPrefix = EnsureNamespacePrefix(OslcConstants.RDFS_NAMESPACE_PREFIX,
                                                       OslcConstants.RDFS_NAMESPACE,
                                                       namespaceMappings,
                                                       reverseNamespaceMappings);
@@ -130,12 +130,12 @@ public class JsonHelper
             if (responseInfoAbout != null)
             {
                 // Ensure we have an oslc prefix
-                string oslcPrefix = EnsureNamespacePrefix(OslcConstants.OSLC_CORE_NAMESPACE_PREFIX,
+                var oslcPrefix = EnsureNamespacePrefix(OslcConstants.OSLC_CORE_NAMESPACE_PREFIX,
                                                           OslcConstants.OSLC_CORE_NAMESPACE,
                                                           namespaceMappings,
                                                           reverseNamespaceMappings);
 
-                JsonObject responseInfoJsonObject = new JsonObject();
+                var responseInfoJsonObject = new JsonObject();
 
                 responseInfoJsonObject.Add(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_ABOUT,
                                            responseInfoAbout);
@@ -149,9 +149,9 @@ public class JsonHelper
                                                nextPageAbout);
                 }
 
-                JsonArray responseInfoTypesJsonArray = new JsonArray();
+                var responseInfoTypesJsonArray = new JsonArray();
 
-                JsonObject responseInfoTypeJsonObject = new JsonObject();
+                var responseInfoTypeJsonObject = new JsonObject();
 
                 responseInfoTypeJsonObject.Add(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE,
                                                OslcConstants.TYPE_RESPONSE_INFO);
@@ -177,8 +177,8 @@ public class JsonHelper
         }
 
         // Set the namespace prefixes
-        JsonObject namespaces = new JsonObject();
-        foreach (string key in namespaceMappings.Keys)
+        var namespaces = new JsonObject();
+        foreach (var key in namespaceMappings.Keys)
         {
             namespaces.Add(key,
                            namespaceMappings[key]);
@@ -196,7 +196,7 @@ public class JsonHelper
     public static object FromJson(JsonValue   json,
                                   Type        beanType)
     {
-        List<object>                beans                    = new List<object>();
+        var                beans                    = new List<object>();
         IDictionary<string, string> namespaceMappings        = new Dictionary<string, string>();
         IDictionary<string, string> reverseNamespaceMappings = new Dictionary<string, string>();
 
@@ -205,11 +205,11 @@ public class JsonHelper
 
         if (prefixes is JsonObject)
         {
-            JsonObject prefixesJsonObject = (JsonObject) prefixes;
+            var prefixesJsonObject = (JsonObject) prefixes;
 
-            foreach (string prefix in prefixesJsonObject.Keys)
+            foreach (var prefix in prefixesJsonObject.Keys)
             {
-                string ns = (string)prefixesJsonObject[prefix];
+                var ns = (string)prefixesJsonObject[prefix];
 
                 namespaceMappings.Add(prefix,
                                       ns);
@@ -225,7 +225,7 @@ public class JsonHelper
             throw new OslcCoreMissingNamespaceDeclarationException(OslcConstants.RDF_NAMESPACE);
         }
 
-        string rdfPrefix = reverseNamespaceMappings[OslcConstants.RDF_NAMESPACE];
+        var rdfPrefix = reverseNamespaceMappings[OslcConstants.RDF_NAMESPACE];
 
         IDictionary<Type, IDictionary<string, MethodInfo>> classPropertyDefinitionsToSetMethods = new Dictionary<Type, IDictionary<string, MethodInfo>>();
 
@@ -234,7 +234,7 @@ public class JsonHelper
         // Look for rdfs:member
         if (reverseNamespaceMappings.ContainsKey(OslcConstants.RDFS_NAMESPACE))
         {
-            string rdfsPrefix = reverseNamespaceMappings[OslcConstants.RDFS_NAMESPACE];
+            var rdfsPrefix = reverseNamespaceMappings[OslcConstants.RDFS_NAMESPACE];
             object members = json.ContainsKey(rdfsPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_MEMBER) ?
                 json[rdfsPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_MEMBER] : null;
 
@@ -247,7 +247,7 @@ public class JsonHelper
         if (jsonArray == null)
         {
             // Look for oslc:results.  Seen in ChangeManagement.
-            string oslcPrefix = reverseNamespaceMappings[OslcConstants.OSLC_CORE_NAMESPACE];
+            var oslcPrefix = reverseNamespaceMappings[OslcConstants.OSLC_CORE_NAMESPACE];
 
             if (oslcPrefix != null)
             {
@@ -267,9 +267,9 @@ public class JsonHelper
             {
                 if (obj is JsonObject)
                 {
-                    JsonObject resourceJsonObject = (JsonObject) obj;
+                    var resourceJsonObject = (JsonObject) obj;
 
-                    object bean = Activator.CreateInstance(beanType);
+                    var bean = Activator.CreateInstance(beanType);
 
                     FromJSON(rdfPrefix,
                              namespaceMappings,
@@ -284,7 +284,7 @@ public class JsonHelper
         }
         else if (json is JsonObject)
         {
-            object bean = Activator.CreateInstance(beanType);
+            var bean = Activator.CreateInstance(beanType);
 
             FromJSON(rdfPrefix,
                      namespaceMappings,
@@ -299,7 +299,7 @@ public class JsonHelper
         {
             foreach (JsonObject jsonObject in json as JsonArray)
             {
-                object bean = Activator.CreateInstance(beanType);
+                var bean = Activator.CreateInstance(beanType);
 
                 FromJSON(rdfPrefix,
                          namespaceMappings,
@@ -316,10 +316,10 @@ public class JsonHelper
         // set individual elements. We cannot use Collection.toArray.
         // Array.set will unwrap objects to their corresponding primitives.
         Type[] types = { beanType };
-        object list = Activator.CreateInstance(typeof(List<>).MakeGenericType(types));
-        MethodInfo add = list.GetType().GetMethod("Add", types);
+        var list = Activator.CreateInstance(typeof(List<>).MakeGenericType(types));
+        var add = list.GetType().GetMethod("Add", types);
 
-        foreach (object bean in beans)
+        foreach (var bean in beans)
         {
             add.Invoke(list, new object[] { bean });
         }
@@ -337,10 +337,10 @@ public class JsonHelper
                                                IDictionary<string, object>      nestedProperties,
                                                bool                             onlyNested)
     {
-        string propertyDefinition = propertyDefinitionAttribute.value;
+        var propertyDefinition = propertyDefinitionAttribute.value;
 
         string name;
-        OslcName nameAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcName>(method);
+        var nameAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcName>(method);
 
         if (nameAttribute != null)
         {
@@ -360,7 +360,7 @@ public class JsonHelper
 
         bool isRdfContainer;
 
-        OslcRdfCollectionType collectionType =
+        var collectionType =
             InheritedMethodAttributeHelper.GetAttribute<OslcRdfCollectionType>(method);
 
         if (collectionType != null &&
@@ -379,25 +379,25 @@ public class JsonHelper
 
         JsonValue localResourceValue;
 
-        Type returnType = method.ReturnType;
+        var returnType = method.ReturnType;
 
         if (returnType.IsArray)
         {
-            JsonArray jsonArray = new JsonArray();
+            var jsonArray = new JsonArray();
 
             // We cannot cast to object[] in case this is an array of primitives.  We will use Array reflection instead.
             // Strange case about primitive arrays:  they cannot be cast to object[], but retrieving their individual elements
             // does not return primitives, but the primitive object wrapping counterparts like Integer, Byte, Double, etc.
-            int length =
+            var length =
                 (int)value.GetType().GetProperty("Length").GetValue(value, null);
-            MethodInfo getValue = value.GetType().GetMethod("GetValue", new Type[] { typeof(int) });
-            for (int index = 0;
+            var getValue = value.GetType().GetMethod("GetValue", new Type[] { typeof(int) });
+            for (var index = 0;
                  index < length;
                  index++)
             {
-                object obj = getValue.Invoke(value, new object[] { index });
+                var obj = getValue.Invoke(value, new object[] { index });
 
-                JsonValue localResource = HandleLocalResource(namespaceMappings,
+                var localResource = HandleLocalResource(namespaceMappings,
                                                               reverseNamespaceMappings,
                                                               resourceType,
                                                               method,
@@ -430,13 +430,13 @@ public class JsonHelper
         }
         else if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(ICollection<>), returnType))
         {
-            JsonArray jsonArray = new JsonArray();
+            var jsonArray = new JsonArray();
 
             IEnumerable<object> collection = new EnumerableWrapper(value);
 
-            foreach (object obj in collection)
+            foreach (var obj in collection)
             {
-                JsonValue localResource = HandleLocalResource(namespaceMappings,
+                var localResource = HandleLocalResource(namespaceMappings,
                                                               reverseNamespaceMappings,
                                                               resourceType,
                                                               method,
@@ -480,7 +480,7 @@ public class JsonHelper
 
         if (localResourceValue != null)
         {
-            string ns = propertyDefinition.Substring(0,
+            var ns = propertyDefinition.Substring(0,
                                                      propertyDefinition.Length - name.Length);
 
             if (! reverseNamespaceMappings.ContainsKey(ns))
@@ -488,7 +488,7 @@ public class JsonHelper
                 throw new OslcCoreMissingNamespaceDeclarationException(ns);
             }
 
-            string prefix = reverseNamespaceMappings[ns];
+            var prefix = reverseNamespaceMappings[ns];
 
             jsonObject.Add(prefix + JSON_PROPERTY_DELIMITER + name,
                            localResourceValue);
@@ -501,23 +501,23 @@ public class JsonHelper
                                             JsonArray                      jsonArray)
     {
         // Ensure we have an rdf prefix
-        string rdfPrefix = EnsureNamespacePrefix(OslcConstants.RDF_NAMESPACE_PREFIX,
+        var rdfPrefix = EnsureNamespacePrefix(OslcConstants.RDF_NAMESPACE_PREFIX,
                                                  OslcConstants.RDF_NAMESPACE,
                                                  namespaceMappings,
                                                  reverseNamespaceMappings);
 
         if (JSON_PROPERTY_SUFFIX_LIST.Equals(collectionType.collectionType))
         {
-            JsonObject listObject = new JsonObject();
+            var listObject = new JsonObject();
 
             listObject.Add(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE,
                            OslcConstants.RDF_NAMESPACE + JSON_PROPERTY_SUFFIX_NIL);
 
-            for (int i = jsonArray.Count - 1; i >= 0; i --)
+            for (var i = jsonArray.Count - 1; i >= 0; i --)
             {
-                JsonValue o = jsonArray[i];
+                var o = jsonArray[i];
 
-                JsonObject newListObject = new JsonObject();
+                var newListObject = new JsonObject();
                 newListObject.Add(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_FIRST, o);
                 newListObject.Add(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_REST, listObject);
 
@@ -527,7 +527,7 @@ public class JsonHelper
             return listObject;
         }
 
-        JsonObject container = new JsonObject();
+        var container = new JsonObject();
 
         container.Add(rdfPrefix + JSON_PROPERTY_DELIMITER + collectionType.collectionType,
                       jsonArray);
@@ -555,14 +555,14 @@ public class JsonHelper
         // For JSON, we have to save array of rdf:type
 
         // Ensure we have an rdf prefix
-        string rdfPrefix = EnsureNamespacePrefix(OslcConstants.RDF_NAMESPACE_PREFIX,
+        var rdfPrefix = EnsureNamespacePrefix(OslcConstants.RDF_NAMESPACE_PREFIX,
                                                  OslcConstants.RDF_NAMESPACE,
                                                  namespaceMappings,
                                                  reverseNamespaceMappings);
 
         if (rdfPrefix != null)
         {
-            JsonArray rdfTypesJsonArray = new JsonArray();
+            var rdfTypesJsonArray = new JsonArray();
 
             string qualifiedName;
             if (objectType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
@@ -579,10 +579,10 @@ public class JsonHelper
 
             if (obj is IExtendedResource)
             {
-        	    IExtendedResource extendedResource = (IExtendedResource) obj;
-        	    foreach (Uri type in extendedResource.GetTypes())
+        	    var extendedResource = (IExtendedResource) obj;
+        	    foreach (var type in extendedResource.GetTypes())
         	    {
-        		    string typeString = type.ToString();
+        		    var typeString = type.ToString();
         		    if (!typeString.Equals(qualifiedName))
         		    {
         			    AddType(rdfPrefix,
@@ -608,7 +608,7 @@ public class JsonHelper
 		                        JsonArray rdfTypesJsonArray,
 		                        string    typeURI)
     {
-	      JsonObject rdfTypeJsonObject = new JsonObject();
+	      var rdfTypeJsonObject = new JsonObject();
           rdfTypeJsonObject.Add(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE,
     		                    typeURI);
           rdfTypesJsonArray.Add(rdfTypeJsonObject);
@@ -627,30 +627,30 @@ public class JsonHelper
 	            return;
 	        }
 
-	        foreach (MethodInfo method in objectType.GetMethods())
+	        foreach (var method in objectType.GetMethods())
         {
             if (method.GetParameters().Length == 0)
             {
-                string methodName = method.Name;
+                var methodName = method.Name;
                 if (((methodName.StartsWith(METHOD_NAME_START_GET)) &&
                      (methodName.Length > METHOD_NAME_START_GET_LENGTH)) ||
                     ((methodName.StartsWith(METHOD_NAME_START_IS)) &&
                      (methodName.Length > METHOD_NAME_START_IS_LENGTH)))
                 {
-                    OslcPropertyDefinition oslcPropertyDefinitionAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcPropertyDefinition>(method);
+                    var oslcPropertyDefinitionAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcPropertyDefinition>(method);
 
                     if (oslcPropertyDefinitionAttribute != null)
                     {
-                        object value = method.Invoke(obj, null);
+                        var value = method.Invoke(obj, null);
 
                         if (value != null)
                         {
                             IDictionary<string, object> nestedProperties = null;
-                            bool onlyNested = false;
+                            var onlyNested = false;
 
                             if (properties != null)
                             {
-                                IDictionary<string, object> map = (IDictionary<string, object>)properties[oslcPropertyDefinitionAttribute.value];
+                                var map = (IDictionary<string, object>)properties[oslcPropertyDefinitionAttribute.value];
 
                                 if (map != null)
                                 {
@@ -689,7 +689,7 @@ public class JsonHelper
 
         if (obj is IExtendedResource)
         {
-    	    IExtendedResource extendedResource = (IExtendedResource) obj;
+    	    var extendedResource = (IExtendedResource) obj;
 
     	    AddExtendedProperties(namespaceMappings,
 				                      reverseNamespaceMappings,
@@ -707,18 +707,18 @@ public class JsonHelper
                                                 IDictionary<string, object> properties,
                                                 IDictionary<object, JsonObject> visitedObjects)
 	    {
-        IDictionary<QName, object> extendedProperties = extendedResource.GetExtendedProperties();
+        var extendedProperties = extendedResource.GetExtendedProperties();
 
-		    foreach (QName qname in extendedProperties.Keys)
+		    foreach (var qname in extendedProperties.Keys)
 		    {
-            string ns = qname.GetNamespaceURI();
-            string localName = qname.GetLocalPart();
+            var ns = qname.GetNamespaceURI();
+            var localName = qname.GetLocalPart();
             IDictionary<string, object> nestedProperties = null;
-            bool onlyNested = false;
+            var onlyNested = false;
 
             if (properties != null)
             {
-                IDictionary<string, object> map = (IDictionary<string, object>)properties[ns + localName];
+                var map = (IDictionary<string, object>)properties[ns + localName];
 
                 if (map != null)
                 {
@@ -740,7 +740,7 @@ public class JsonHelper
                 }
             }
 
-			    JsonValue value = GetExtendedPropertyJsonValue(namespaceMappings,
+			    var value = GetExtendedPropertyJsonValue(namespaceMappings,
 			                                                   reverseNamespaceMappings,
 			                                                   extendedProperties[qname],
 			                                                   nestedProperties,
@@ -753,7 +753,7 @@ public class JsonHelper
 			    }
 			    else
 			    {
-                string prefix = reverseNamespaceMappings[ns];
+                var prefix = reverseNamespaceMappings[ns];
 
 	                if (prefix == null)
 	                {
@@ -777,16 +777,16 @@ public class JsonHelper
 												              bool                              onlyNested,
 					                                          IDictionary<object,JsonObject>    visitedObjects)
 	    {
-		    Type resourceType = obj.GetType();
+		    var resourceType = obj.GetType();
 
 		    if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(ICollection<>), resourceType))
 		    {
-			    JsonArray jsonArray = new JsonArray();
-			    ICollection<object> c = (ICollection<object>) obj;
+			    var jsonArray = new JsonArray();
+			    var c = (ICollection<object>) obj;
 
-			    foreach (object next in c)
+			    foreach (var next in c)
 			    {
-				    JsonValue nextJson = GetExtendedPropertyJsonValue(namespaceMappings,
+				    var nextJson = GetExtendedPropertyJsonValue(namespaceMappings,
 				                                                      reverseNamespaceMappings,
 				                                                      next,
 				                                                      nestedProperties,
@@ -856,7 +856,7 @@ public class JsonHelper
 				                            visitedObjects);
 		    } else if (visitedObjects.ContainsKey(obj))
 		    {
-			    JsonObject returnObject = visitedObjects[obj];
+			    var returnObject = visitedObjects[obj];
 			    if (returnObject.Count == 0)
             {
 				    return returnObject;
@@ -868,12 +868,12 @@ public class JsonHelper
 
     private static string GetDefaultPropertyName(MethodInfo method)
     {
-        string methodName    = method.Name;
-        int    startingIndex = methodName.StartsWith(METHOD_NAME_START_GET) ? METHOD_NAME_START_GET_LENGTH : METHOD_NAME_START_IS_LENGTH;
-        int    endingIndex   = startingIndex + 1;
+        var methodName    = method.Name;
+        var    startingIndex = methodName.StartsWith(METHOD_NAME_START_GET) ? METHOD_NAME_START_GET_LENGTH : METHOD_NAME_START_IS_LENGTH;
+        var    endingIndex   = startingIndex + 1;
 
         // We want the name to start with a lower-case letter
-        string lowercasedFirstCharacter = methodName.Substring(startingIndex,
+        var lowercasedFirstCharacter = methodName.Substring(startingIndex,
                                                                1).ToLower(CultureInfo.GetCultureInfo("en"));
 
         if (methodName.Length == endingIndex)
@@ -965,7 +965,7 @@ public class JsonHelper
 			                                           object                       reifiedResource,
 	                                                   IDictionary<string, object>  properties)
 	    {
-        object value = reifiedResource.GetType().GetMethod("GetValue", Type.EmptyTypes).Invoke(reifiedResource, null);
+        var value = reifiedResource.GetType().GetMethod("GetValue", Type.EmptyTypes).Invoke(reifiedResource, null);
 		    if (value == null)
 		    {
 			    return null;
@@ -983,7 +983,7 @@ public class JsonHelper
 		    }
 
 		    // Add the resource reference value.
-		    JsonObject jsonObject = HandleResourceReference(namespaceMappings,
+		    var jsonObject = HandleResourceReference(namespaceMappings,
 		                                                    reverseNamespaceMappings,
 		                                                    resourceType,
 		                                                    method,
@@ -1016,10 +1016,10 @@ public class JsonHelper
 		    }
 
 		    // Special nested JsonObject for Uri
-		    JsonObject jsonObject = new JsonObject();
+		    var jsonObject = new JsonObject();
 
 		    // Ensure we have an rdf prefix
-		    string rdfPrefix = EnsureNamespacePrefix(OslcConstants.RDF_NAMESPACE_PREFIX,
+		    var rdfPrefix = EnsureNamespacePrefix(OslcConstants.RDF_NAMESPACE_PREFIX,
 		                                             OslcConstants.RDF_NAMESPACE,
 		                                             namespaceMappings,
 		                                             reverseNamespaceMappings);
@@ -1037,7 +1037,7 @@ public class JsonHelper
                                                    IDictionary<string, object>      properties,
                                                    IDictionary<object,JsonObject>   visitedObjects)
     {
-        Type objectType = obj.GetType();
+        var objectType = obj.GetType();
 
         // Collect the namespace prefix -> namespace mappings
         RecursivelyCollectNamespaceMappings(namespaceMappings,
@@ -1046,7 +1046,7 @@ public class JsonHelper
 
         if (obj is IResource)
         {
-            Uri aboutURI = ((IResource) obj).GetAbout();
+            var aboutURI = ((IResource) obj).GetAbout();
 
             AddAboutURI(jsonObject,
 				            namespaceMappings,
@@ -1082,7 +1082,7 @@ public class JsonHelper
 		        }
 
 		        // Ensure we have an rdf prefix
-		        string rdfPrefix = EnsureNamespacePrefix(OslcConstants.RDF_NAMESPACE_PREFIX,
+		        var rdfPrefix = EnsureNamespacePrefix(OslcConstants.RDF_NAMESPACE_PREFIX,
 		                                                 OslcConstants.RDF_NAMESPACE,
 		                                                 namespaceMappings,
 		                                                 reverseNamespaceMappings);
@@ -1097,14 +1097,14 @@ public class JsonHelper
                                                 IDictionary<string, string> namespaceMappings,
                                                 IDictionary<string, string> reverseNamespaceMappings)
     {
-        string existingPrefix = reverseNamespaceMappings[ns];
+        var existingPrefix = reverseNamespaceMappings[ns];
 
         if (existingPrefix != null)
         {
             return existingPrefix;
         }
 
-        string existingNamespace = namespaceMappings[prefix];
+        var existingNamespace = namespaceMappings[prefix];
 
         if (existingNamespace == null)
         {
@@ -1118,12 +1118,12 @@ public class JsonHelper
         }
 
         // There is already a namespace for this prefix.  We need to generate a new unique prefix.
-        int index = 1;
+        var index = 1;
 
         while (true)
         {
-            string newPrefix = prefix +
-                                     index;
+            var newPrefix = prefix +
+                            index;
 
             if (! namespaceMappings.ContainsKey(newPrefix))
             {
@@ -1144,23 +1144,23 @@ public class JsonHelper
                                                             IDictionary<string, string>     reverseNamespaceMappings,
                                                             Type objectType)
     {
-        OslcSchema[] oslcSchemaAttribute = (OslcSchema[])objectType.Assembly.GetCustomAttributes(typeof(OslcSchema), false);
+        var oslcSchemaAttribute = (OslcSchema[])objectType.Assembly.GetCustomAttributes(typeof(OslcSchema), false);
 
         if (oslcSchemaAttribute.Length > 0)
         {
-            OslcNamespaceDefinition[] oslcNamespaceDefinitionAnnotations =
+            var oslcNamespaceDefinitionAnnotations =
                 (OslcNamespaceDefinition[])oslcSchemaAttribute[0].namespaceType.GetMethod("GetNamespaces", Type.EmptyTypes).Invoke(null, null);
 
-            foreach (OslcNamespaceDefinition oslcNamespaceDefinitionAnnotation in oslcNamespaceDefinitionAnnotations)
+            foreach (var oslcNamespaceDefinitionAnnotation in oslcNamespaceDefinitionAnnotations)
             {
-                string prefix       = oslcNamespaceDefinitionAnnotation.prefix;
+                var prefix       = oslcNamespaceDefinitionAnnotation.prefix;
 
                 if (namespaceMappings.ContainsKey(prefix))
                 {
                     continue;
                 }
 
-                string namespaceURI = oslcNamespaceDefinitionAnnotation.namespaceURI;
+                var namespaceURI = oslcNamespaceDefinitionAnnotation.namespaceURI;
 
                 namespaceMappings.Add(prefix,
                                       namespaceURI);
@@ -1170,7 +1170,7 @@ public class JsonHelper
             }
         }
 
-        Type superType = objectType.BaseType;
+        var superType = objectType.BaseType;
         if (superType != null)
         {
             RecursivelyCollectNamespaceMappings(namespaceMappings,
@@ -1178,10 +1178,10 @@ public class JsonHelper
                                                 superType);
         }
 
-        Type[] interfaces = objectType.GetInterfaces();
+        var interfaces = objectType.GetInterfaces();
         if (interfaces != null)
         {
-            foreach (Type interfac in interfaces)
+            foreach (var interfac in interfaces)
             {
                 RecursivelyCollectNamespaceMappings(namespaceMappings,
                                                     reverseNamespaceMappings,
@@ -1211,16 +1211,16 @@ public class JsonHelper
             setMethodMap = classPropertyDefinitionsToSetMethods[beanType];
         }
 
-        bool isIReifiedResource = false;
+        var isIReifiedResource = false;
 
         if (bean is IResource)
         {
-            string aboutURIObject = jsonObject.ContainsKey(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_ABOUT) ?
+            var aboutURIObject = jsonObject.ContainsKey(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_ABOUT) ?
                 (string)jsonObject[rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_ABOUT] : null;
 
             if (aboutURIObject != null)
             {
-                Uri aboutURI = new Uri(aboutURIObject);
+                var aboutURI = new Uri(aboutURIObject);
 
                 if (!aboutURI.IsAbsoluteUri)
                 {
@@ -1236,7 +1236,7 @@ public class JsonHelper
 	    {
             isIReifiedResource = true;
 
-            string resourceReference = (string)jsonObject[rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE];
+            var resourceReference = (string)jsonObject[rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE];
 
 		    beanType.GetMethod("SetValue",  new Type[] { typeof(Uri) }).Invoke(bean, new object[] { new Uri(resourceReference) });
 	    }
@@ -1256,10 +1256,10 @@ public class JsonHelper
     	    extendedProperties = null;
         }
 
-        foreach (string prefixedName in jsonObject.Keys)
+        foreach (var prefixedName in jsonObject.Keys)
         {
             object jsonValue    = jsonObject[prefixedName];
-            string[] split      = prefixedName.Split(JSON_PROPERTY_DELIMITER_ARRAY);
+            var split      = prefixedName.Split(JSON_PROPERTY_DELIMITER_ARRAY);
 
             if (split.Length != 2)
             {
@@ -1270,16 +1270,16 @@ public class JsonHelper
             }
             else
             {
-                string namespacePrefix = split[0];
-                string name            = split[1];
-                string ns              = jsonNamespaceMappings[namespacePrefix];
+                var namespacePrefix = split[0];
+                var name            = split[1];
+                var ns              = jsonNamespaceMappings[namespacePrefix];
 
                 if (ns == null)
                 {
                     throw new OslcCoreMissingNamespacePrefixException(namespacePrefix);
                 }
 
-                string propertyDefinition = ns + name;
+                var propertyDefinition = ns + name;
                 MethodInfo setMethod;
 
                 if (! setMethodMap.ContainsKey(propertyDefinition))
@@ -1309,11 +1309,11 @@ public class JsonHelper
                         }
                         else
                         {
-                            object value = FromExtendedJSONValue(jsonValue,
+                            var value = FromExtendedJSONValue(jsonValue,
                                                                  rdfPrefix,
                                                                  jsonNamespaceMappings,
                                                                  beanType);
-                            QName qName = new QName(ns,
+                            var qName = new QName(ns,
                                                           name,
                                                           namespacePrefix);
 
@@ -1325,8 +1325,8 @@ public class JsonHelper
                 {
                     setMethod = setMethodMap[propertyDefinition];
 
-                    Type setMethodParameterType = setMethod.GetParameters()[0].ParameterType;
-                    Type setMethodComponentParameterType = setMethodParameterType;
+                    var setMethodParameterType = setMethod.GetParameters()[0].ParameterType;
+                    var setMethodComponentParameterType = setMethodParameterType;
 
                     if (setMethodComponentParameterType.IsArray)
                     {
@@ -1337,7 +1337,7 @@ public class JsonHelper
                         setMethodComponentParameterType = setMethodComponentParameterType.GetGenericArguments()[0];
                     }
 
-                    object parameter = FromJSONValue(rdfPrefix,
+                    var parameter = FromJSONValue(rdfPrefix,
                                                      jsonNamespaceMappings,
                                                      classPropertyDefinitionsToSetMethods,
                                                      beanType,
@@ -1368,10 +1368,10 @@ public class JsonHelper
 	    {
 		    if (jsonValue is JsonArray)
 		    {
-			    JsonArray jsonArray = (JsonArray) jsonValue;
+			    var jsonArray = (JsonArray) jsonValue;
 			    IList<object> collection = new List<object>();
 
-			    foreach (JsonValue value in jsonArray)
+			    foreach (var value in jsonArray)
 			    {
 				    collection.Add(FromExtendedJSONValue(value, rdfPrefix, jsonNamespaceMappings, beanType));
 			    }
@@ -1380,7 +1380,7 @@ public class JsonHelper
 		    }
 		    else if (jsonValue is JsonObject)
 		    {
-			    JsonObject o = (JsonObject) jsonValue;
+			    var o = (JsonObject) jsonValue;
 
 			    // Is it a resource reference?
 			    object resourceURIValue = o.ContainsKey(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE) ?
@@ -1388,7 +1388,7 @@ public class JsonHelper
 
 			    if (resourceURIValue != null)
 			    {
-				    Uri uri = new Uri((string) resourceURIValue);
+				    var uri = new Uri((string) resourceURIValue);
 
 				    if (!uri.IsAbsoluteUri)
 	                {
@@ -1411,17 +1411,17 @@ public class JsonHelper
 
 			    return any;
 		    }
-		    else if (jsonValue is string jsonString)
+		    else if (jsonValue is string)
 		    {
 			    // Check if it's in the OSLC date format.
 			    try
 			    {
-				    return DateTime.Parse(jsonString);
+				    return DateTime.Parse((string)jsonValue);
 			    }
 			    catch (FormatException e)
 			    {
 				    // It's not a date. Treat it as a string.
-				    return jsonString;
+				    return jsonValue;
 			    }
 		    }
 
@@ -1432,13 +1432,13 @@ public class JsonHelper
 			                                JsonObject          jsonObject,
 			                                IExtendedResource   resource)
 	    {
-		    string typeProperty = rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_TYPE;
+		    var typeProperty = rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_TYPE;
 
 		    if (jsonObject.ContainsKey(typeProperty))
 		    {
-            JsonArray types = (JsonArray)jsonObject[typeProperty];
+            var types = (JsonArray)jsonObject[typeProperty];
 
-				foreach (JsonValue typeObj in types)
+				foreach (var typeObj in types)
 				{
 					resource.AddType(new Uri((string)typeObj[rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE]));
 				}
@@ -1455,9 +1455,9 @@ public class JsonHelper
             return false;
         }
 
-        var jsonObject = jsonValue as JsonObject;
+        var jsonObject = (JsonObject)jsonValue;
 
-        bool isListNode =
+        var isListNode =
                 jsonObject.ContainsKey(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_FIRST)
                 && jsonObject.ContainsKey(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_REST);
 
@@ -1466,7 +1466,7 @@ public class JsonHelper
             return true;
         }
 
-        bool isNilResource = RDF_NIL_URI.Equals(
+        var isNilResource = RDF_NIL_URI.Equals(
                 jsonObject.ContainsKey(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE) ?
                 jsonObject[rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE] : null);
 
@@ -1475,16 +1475,16 @@ public class JsonHelper
             return false;
         }
 
-        string setMethodName = setMethod.Name;
+        var setMethodName = setMethod.Name;
 
         if (setMethodName.StartsWith(METHOD_NAME_START_SET))
         {
-            string getMethodName = METHOD_NAME_START_GET + setMethodName.Substring(METHOD_NAME_START_GET_LENGTH);
-            MethodInfo getMethod = beanType.GetMethod(getMethodName, Type.EmptyTypes);
+            var getMethodName = METHOD_NAME_START_GET + setMethodName.Substring(METHOD_NAME_START_GET_LENGTH);
+            var getMethod = beanType.GetMethod(getMethodName, Type.EmptyTypes);
 
             if (getMethod == null)
             {
-                string isMethodName = METHOD_NAME_START_IS + setMethodName.Substring(METHOD_NAME_START_GET_LENGTH);
+                var isMethodName = METHOD_NAME_START_IS + setMethodName.Substring(METHOD_NAME_START_GET_LENGTH);
 
                 getMethod = beanType.GetMethod(isMethodName, Type.EmptyTypes);
 
@@ -1494,7 +1494,7 @@ public class JsonHelper
                 }
             }
 
-            OslcRdfCollectionType collectionType =
+            var collectionType =
                 InheritedMethodAttributeHelper.GetAttribute<OslcRdfCollectionType>(getMethod);
 
             if (collectionType != null &&
@@ -1517,12 +1517,12 @@ public class JsonHelper
                                         Type                                                setMethodComponentParameterType,
                                         object                                              jsonValue)
     {
-        bool isRdfContainerNode = IsRdfListNode(rdfPrefix, beanType, setMethod, jsonValue);
+        var isRdfContainerNode = IsRdfListNode(rdfPrefix, beanType, setMethod, jsonValue);
         JsonArray container = null;
 
         if (! isRdfContainerNode && jsonValue is JsonObject)
         {
-            JsonObject parent = (JsonObject)jsonValue;
+            var parent = (JsonObject)jsonValue;
 
             try
             {
@@ -1551,17 +1551,17 @@ public class JsonHelper
 
         if (! isRdfContainerNode && jsonValue is JsonObject)
         {
-            JsonObject nestedJsonObject = (JsonObject) jsonValue;
+            var nestedJsonObject = (JsonObject) jsonValue;
 
             if (! InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IReifiedResource<>), setMethodComponentParameterType))
             {
         	    // If this is the special case for an rdf:resource?
-        	    string uriObject = nestedJsonObject.ContainsKey(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE) ?
+        	    var uriObject = nestedJsonObject.ContainsKey(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE) ?
                     (string) nestedJsonObject[rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE] : null;
 
         	    if (uriObject != null)
         	    {
-        		    Uri uri = new Uri(uriObject);
+        		    var uri = new Uri(uriObject);
 
         		    if (!uri.IsAbsoluteUri)
         		    {
@@ -1606,14 +1606,14 @@ public class JsonHelper
             {
                 jsonArray = new List<JsonValue>();
 
-                JsonObject listNode = (JsonObject) jsonValue;
+                var listNode = (JsonObject) jsonValue;
 
                 while (listNode != null
                         && ! RDF_NIL_URI.Equals(
                                  listNode.ContainsKey(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE) ?
                                     listNode[rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_RESOURCE] : null))
                 {
-                    JsonValue o = listNode.ContainsKey(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_FIRST) ?
+                    var o = listNode.ContainsKey(rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_FIRST) ?
                         listNode[rdfPrefix + JSON_PROPERTY_DELIMITER + JSON_PROPERTY_SUFFIX_FIRST] : null;
 
                     jsonArray.Add(o);
@@ -1637,9 +1637,9 @@ public class JsonHelper
 
             IList<object> tempList = new List<object>();
 
-            foreach (JsonValue jsonArrayEntryObject in jsonArray)
+            foreach (var jsonArrayEntryObject in jsonArray)
             {
-                object parameterArrayObject = FromJSONValue(rdfPrefix,
+                var parameterArrayObject = FromJSONValue(rdfPrefix,
                                                             jsonNamespaceMappings,
                                                             classPropertyDefinitionsToSetMethods,
                                                             beanType,
@@ -1655,11 +1655,11 @@ public class JsonHelper
             {
                 // To support primitive arrays, we have to use Array reflection to set individual elements.  We cannot use Collection.toArray.
                 // Array.set will unwrap objects to their corresponding primitives.
-                Array array = Array.CreateInstance(setMethodComponentParameterType,
+                var array = Array.CreateInstance(setMethodComponentParameterType,
                                                    jsonArray.Count());
-                int index = 0;
+                var index = 0;
 
-                foreach (object parameterArrayObject in tempList)
+                foreach (var parameterArrayObject in tempList)
                 {
                     array.SetValue(parameterArrayObject, index);
 
@@ -1671,14 +1671,14 @@ public class JsonHelper
 
             // This has to be a Collection
 
-            object collection = Activator.CreateInstance(setMethodComponentParameterType);
-            ICollection<object> values = (ICollection<object>)jsonValue;
+            var collection = Activator.CreateInstance(setMethodComponentParameterType);
+            var values = (ICollection<object>)jsonValue;
 
             if (values.Count > 0)
             {
-                MethodInfo add = collection.GetType().GetMethod("Add", new Type[] { values.First().GetType() });
+                var add = collection.GetType().GetMethod("Add", new Type[] { values.First().GetType() });
 
-                foreach (object value in values)
+                foreach (var value in values)
                 {
                     add.Invoke(collection, new object[] { value });
                 }
@@ -1688,112 +1688,59 @@ public class JsonHelper
         }
         else
         {
-            // TODO: JsonPrimitive<JsonValue can be a ready-made boolean
-            JsonPrimitive jsonPrimitive = jsonValue as JsonPrimitive;
-            if (jsonPrimitive == null)
-            {
-                logger.Warn($"JSON value is not a primitive: '{jsonValue}'");
-                throw new ArgumentException();
-            }
+            var stringValue = (string)(JsonValue)jsonValue;
 
             if (typeof(string) == setMethodComponentParameterType)
             {
-                return (string)jsonPrimitive;
+                return stringValue;
             }
             else if (typeof(bool) == setMethodComponentParameterType || typeof(bool?) == setMethodComponentParameterType)
             {
-                if (jsonPrimitive.JsonType == JsonType.Boolean)
+                // Cannot use Boolean.parseBoolean since it supports case-insensitive TRUE.
+                if (bool.TrueString.ToUpper().Equals(stringValue.ToUpper()))
                 {
-                    return (bool)jsonPrimitive;
-                } else if (jsonPrimitive.JsonType == JsonType.String)
+                    return true;
+                }
+                else if (bool.FalseString.ToUpper().Equals(stringValue.ToUpper()))
                 {
-                    var boolString = (string)jsonPrimitive;
-                    // TODO: revisit the decision not to use Boolean.TryParse()
-                    // Cannot use Boolean.parseBoolean since it supports case-insensitive TRUE.
-                    if (bool.TrueString.ToUpper().Equals(boolString.ToUpper()))
-                    {
-                        return true;
-                    }
-                    else if (bool.FalseString.ToUpper().Equals(boolString.ToUpper()))
-                    {
-                        return false;
-                    }
+                    return false;
                 }
                 else
                 {
-                    throw new ArgumentException($"'{jsonPrimitive}' has wrong format for Boolean.");
+                    throw new InvalidOperationException("'" + stringValue + "' has wrong format for Boolean.");
                 }
             }
             else if (typeof(byte) == setMethodComponentParameterType || typeof(byte?) == setMethodComponentParameterType)
             {
-                return byte.Parse(jsonPrimitive);
+                return byte.Parse(stringValue);
             }
             else if (typeof(short) == setMethodComponentParameterType || typeof(short?) == setMethodComponentParameterType)
             {
-                return short.Parse(jsonPrimitive);
+                return short.Parse(stringValue);
             }
             else if (typeof(int) == setMethodComponentParameterType || typeof(int?) == setMethodComponentParameterType)
             {
-                if (jsonPrimitive.JsonType == JsonType.Number)
-                {
-                    return (int)jsonPrimitive;
-                }
-                else
-                {
-                    return int.Parse((string)jsonPrimitive);
-                }
+                return int.Parse(stringValue);
             }
             else if (typeof(long) == setMethodComponentParameterType || typeof(long?) == setMethodComponentParameterType)
             {
-                if (jsonPrimitive.JsonType == JsonType.Number)
-                {
-                    return (long)jsonPrimitive;
-                }
-                else
-                {
-                    return long.Parse((string)jsonPrimitive);
-                }
+                return long.Parse(stringValue);
             }
             else if (typeof(float) == setMethodComponentParameterType || typeof(float?) == setMethodComponentParameterType)
             {
-                if (jsonPrimitive.JsonType == JsonType.Number)
-                {
-                    return (float)jsonPrimitive;
-                }
-                else
-                {
-                    return float.Parse((string)jsonPrimitive);
-                }
+                return float.Parse(stringValue);
             }
             else if (typeof(decimal) == setMethodComponentParameterType || typeof(decimal?) == setMethodComponentParameterType)
             {
-                if (jsonPrimitive.JsonType == JsonType.Number)
-                {
-                    return (decimal)jsonPrimitive;
-                }
-                else
-                {
-                    return decimal.Parse((string)jsonPrimitive);
-                }
+                return decimal.Parse(stringValue);
             }
             else if (typeof(double) == setMethodComponentParameterType || typeof(double?) == setMethodComponentParameterType)
             {
-                if (jsonPrimitive.JsonType == JsonType.Number)
-                {
-                    return (double)jsonPrimitive;
-                }
-                else
-                {
-                    return double.Parse((string)jsonPrimitive);
-                }
+                return double.Parse(stringValue);
             }
             else if (typeof(DateTime) == setMethodComponentParameterType || typeof(DateTime?) == setMethodComponentParameterType)
             {
-                if (!DateTime.TryParse(jsonPrimitive, out var parsedDate))
-                {
-                    logger.Warn($"Cannot parse '{jsonPrimitive}' as a DateTime");
-                }
-                return parsedDate;
+                return DateTime.Parse(stringValue);
             }
         }
 
@@ -1803,19 +1750,19 @@ public class JsonHelper
     private static IDictionary<string, MethodInfo> CreatePropertyDefinitionToSetMethods(Type beanType)
     {
         IDictionary<string, MethodInfo> result = new Dictionary<string, MethodInfo>();
-        MethodInfo[] methods = beanType.GetMethods();
+        var methods = beanType.GetMethods();
 
-        foreach (MethodInfo method in methods)
+        foreach (var method in methods)
         {
             if (method.GetParameters().Length == 0)
             {
-                string getMethodName = method.Name;
+                var getMethodName = method.Name;
                 if (((getMethodName.StartsWith(METHOD_NAME_START_GET)) &&
                      (getMethodName.Length > METHOD_NAME_START_GET_LENGTH)) ||
                     ((getMethodName.StartsWith(METHOD_NAME_START_IS)) &&
                      (getMethodName.Length > METHOD_NAME_START_IS_LENGTH)))
                 {
-                    OslcPropertyDefinition oslcPropertyDefinitionAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcPropertyDefinition>(method);
+                    var oslcPropertyDefinitionAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcPropertyDefinition>(method);
 
                     if (oslcPropertyDefinitionAttribute != null)
                     {
@@ -1833,9 +1780,9 @@ public class JsonHelper
                                             getMethodName.Substring(METHOD_NAME_START_IS_LENGTH);
                         }
 
-                        Type getMethodReturnType = method.ReturnType;
+                        var getMethodReturnType = method.ReturnType;
 
-                        MethodInfo setMethod = beanType.GetMethod(setMethodName,
+                        var setMethod = beanType.GetMethod(setMethodName,
                                                                   new Type[] { getMethodReturnType });
 
                         if (setMethod == null)

@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -33,14 +33,14 @@ public static class TypeFactory
 
     public static string GetNamespace(Type objectType)
     {
-        OslcNamespace[] oslcNamespaceAnnotation = (OslcNamespace[])(objectType.GetCustomAttributes(typeof(OslcNamespace), false));
+        var oslcNamespaceAnnotation = (OslcNamespace[])(objectType.GetCustomAttributes(typeof(OslcNamespace), false));
 
         return oslcNamespaceAnnotation.Length > 0 ? oslcNamespaceAnnotation[0].value : OslcConstants.OSLC_DATA_NAMESPACE;
     }
 
     public static string GetName(Type objectType)
     {
-        OslcName[] oslcNameAnnotation = (OslcName[])(objectType.GetCustomAttributes(typeof(OslcName), false));
+        var oslcNameAnnotation = (OslcName[])(objectType.GetCustomAttributes(typeof(OslcName), false));
 
         return oslcNameAnnotation.Length > 0 ? oslcNameAnnotation[0].value : objectType.Name;
     }

@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -38,13 +38,13 @@ internal class InTermImpl : SimpleTermImpl, InTerm
         {
             if (values == null)
             {
-                IList<ITree> treeValues =  ((CommonTree)tree.GetChild(1)).Children;
+                var treeValues =  ((CommonTree)tree.GetChild(1)).Children;
 
                 values = new List<Value>(treeValues.Count - 1);
 
                 foreach (CommonTree treeValue in treeValues) {
 
-                    Value value =
+                    var value =
                         ComparisonTermImpl.CreateValue(
                                 treeValue, "unspported literal value type",
                                 prefixMap);
@@ -59,14 +59,14 @@ internal class InTermImpl : SimpleTermImpl, InTerm
 
     public override string ToString()
     {
-        StringBuilder buffer = new StringBuilder();
+        var buffer = new StringBuilder();
 
         buffer.Append(Property.ToString());
         buffer.Append(" in [");
 
-        bool first = true;
+        var first = true;
 
-        foreach (Value value in Values) {
+        foreach (var value in Values) {
 
             if (first) {
                 first = false;

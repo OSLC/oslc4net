@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -46,7 +46,7 @@ public class ServiceProviderCatalog : AbstractResource
 	    }
 
 	    public void AddDomains(ICollection<Uri> domains) {
-	        foreach (Uri domain in domains) {
+	        foreach (var domain in domains) {
 	            AddDomain(domain);
 	        }
 	    }
@@ -135,7 +135,7 @@ public class ServiceProviderCatalog : AbstractResource
 	    }
 
 	    public void RemoveDomains(ICollection<Uri> domains) {
-	        foreach (Uri domain in domains) {
+	        foreach (var domain in domains) {
 	            RemoveDomain(domain);
 	        }
 	    }

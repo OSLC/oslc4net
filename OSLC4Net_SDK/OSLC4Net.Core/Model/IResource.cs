@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -34,7 +34,7 @@ public static class AddAllExtension
         IEnumerable<T> source
     )
     {
-        foreach (T item in source)
+        foreach (var item in source)
         {
             target.Add(item);
         }
