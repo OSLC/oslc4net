@@ -15,21 +15,19 @@
  *******************************************************************************/
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
 using OSLC4Net.ChangeManagement;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
-
-using VDS.RDF;
 using Xunit;
 
-namespace DotNetRdfProviderTests;
+namespace OSLC4Net.Core.DotNetRdfProviderTests;
 
 public class RdfXmlMediaTypeFormatterTests
 {
@@ -106,8 +104,7 @@ public class RdfXmlMediaTypeFormatterTests
             }
             else
             {
-                // TODO: replace with a proper assert
-                Assert.True(false, "Deserialized ChangeRequest about attribute not recognized: " + crAboutUri);
+                Assert.Fail("Deserialized ChangeRequest about attribute not recognized: " + crAboutUri);
             }
         }
 
@@ -157,7 +154,7 @@ public class RdfXmlMediaTypeFormatterTests
         Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
     }
 
-    private string Serialize<T>(MediaTypeFormatter formatter, T value, MediaTypeHeaderValue mediaType)
+    private static string Serialize<T>(MediaTypeFormatter formatter, T value, MediaTypeHeaderValue mediaType)
     {
         Stream stream = new MemoryStream();
         HttpContent content = new StreamContent(stream);
@@ -170,7 +167,7 @@ public class RdfXmlMediaTypeFormatterTests
         return content.ReadAsStringAsync().Result;
     }
 
-    private string SerializeCollection<T>(MediaTypeFormatter formatter, IEnumerable<T> value, MediaTypeHeaderValue mediaType)
+    private static string SerializeCollection<T>(MediaTypeFormatter formatter, IEnumerable<T> value, MediaTypeHeaderValue mediaType)
     {
         Stream stream = new MemoryStream();
         HttpContent content = new StreamContent(stream);
@@ -183,7 +180,7 @@ public class RdfXmlMediaTypeFormatterTests
         return content.ReadAsStringAsync().Result;
     }
 
-    private T Deserialize<T>(MediaTypeFormatter formatter, string str, MediaTypeHeaderValue mediaType) where T : class
+    private static T Deserialize<T>(MediaTypeFormatter formatter, string str, MediaTypeHeaderValue mediaType) where T : class
     {
         Stream stream = new MemoryStream();
         var writer = new StreamWriter(stream);
@@ -199,7 +196,7 @@ public class RdfXmlMediaTypeFormatterTests
         return formatter.ReadFromStreamAsync(typeof(T), stream, content, null).Result as T;
     }
 
-    private IEnumerable<T> DeserializeCollection<T>(MediaTypeFormatter formatter, string str, MediaTypeHeaderValue mediaType) where T : class
+    private static IEnumerable<T> DeserializeCollection<T>(MediaTypeFormatter formatter, string str, MediaTypeHeaderValue mediaType) where T : class
     {
         Stream stream = new MemoryStream();
         var writer = new StreamWriter(stream);

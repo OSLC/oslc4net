@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -14,9 +14,7 @@
  *******************************************************************************/
 
 
-using System.Net.Http.Formatting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OSLC4Net.Client;
 using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.ChangeManagementTest;
