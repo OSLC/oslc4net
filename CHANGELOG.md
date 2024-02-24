@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking changes; 👉 important notes.
 
-## UNRELEASED
+## [UNRELEASED] - YYYY-MM-DD
 
 ### Security
 
@@ -28,6 +28,7 @@ Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking c
   - ❗️ `RemoteCertificateValidationCallback` was replaced with a lambda function.
 - `OSLC4Net.Query` now targets `netstandard2.0`. The Antlr3 runtime package targeting PCL was replaced with a package targeting NETStandard1.0 (Antlr 4 targets NETStandard2.0).
 - ❗️ `JsonMediaTypeFormatter` was renamed into `OslcJsonMediaTypeFormatter` to better reflect its purpose (support a bespoke OSLC JSON format) and avoid conflict with `System.Net.Http.Formatting.MediaTypeFormatter`.
+- Test projects were migrated from MSTestV2 to xUnit (except for integration tests for OSLC CM)
 
 ### Deprecated
 
@@ -130,5 +131,6 @@ This release does not remove any features.
 This release does not contain bug fixes.
 
 
-[unreleased]: https://github.com/OSLC/oslc4net/compare/v0.2.3...HEAD
+[UNRELEASED]: https://github.com/OSLC/oslc4net/compare/v0.3.0-alpha...HEAD
+[0.3.0-alpha]: https://github.com/OSLC/oslc4net/releases/tag/v0.3.0-alpha
 [0.2.3]: https://github.com/OSLC/oslc4net/releases/tag/v0.2.3

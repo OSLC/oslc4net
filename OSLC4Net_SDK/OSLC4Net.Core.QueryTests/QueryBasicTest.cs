@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -14,69 +14,65 @@
  *******************************************************************************/
 
 using System.Diagnostics;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+//using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OSLC4Net.Core.Query;
+using Xunit;
 using ParseException = OSLC4Net.Core.Query.ParseException;
 
 namespace OSLC4Net.Core.QueryTests;
 
-[TestClass]
 public class QueryBasicTest
 {
-	    static string PREFIXES = "qm=<http://qm.example.com/ns/>," +
-			    "olsc=<http://open-services.net/ns/core#>," +
-			    "xs=<http://www.w3.org/2001/XMLSchema>";
+    static string PREFIXES = "qm=<http://qm.example.com/ns/>," +
+                             "olsc=<http://open-services.net/ns/core#>," +
+                             "xs=<http://www.w3.org/2001/XMLSchema>";
 
-    [TestMethod]
+    [Fact]
     public void BasicPrefixesTest()
     {
-        Trial[] trials = {
-                new Trial("qm=<http://qm.example.com/ns/>," +
-                            "olsc=<http://open-services.net/ns/core#>," +
-                            "xs=<http://www.w3.org/2001/XMLSchema>",
-                          true),
-                new Trial("qm=<http://qm.example.com/ns/>," +
-                             "XXX>",
-                          false)
-            };
+        Trial[] trials =
+        {
+            new("qm=<http://qm.example.com/ns/>," +
+                "olsc=<http://open-services.net/ns/core#>," +
+                "xs=<http://www.w3.org/2001/XMLSchema>",
+                true),
+            new("qm=<http://qm.example.com/ns/>," +
+                "XXX>",
+                false)
+        };
 
         foreach (var trial in trials)
         {
             try
             {
-
                 var prefixMap =
                     QueryUtils.ParsePrefixes(trial.Expression);
 
                 Debug.WriteLine(prefixMap.ToString());
 
-                Assert.IsTrue(trial.ShouldSucceed);
-
+                Assert.True(trial.ShouldSucceed);
             }
             catch (ParseException e)
             {
                 Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
-                Assert.IsFalse(trial.ShouldSucceed);
+                Assert.False(trial.ShouldSucceed);
             }
         }
     }
 
-    [TestMethod]
+    [Fact]
     public void BasicOrderByTest()
     {
         var prefixes = "qm=<http://qm.example.com/ns/>," +
                        "oslc=<http://open-services.net/ns/core#>";
         var prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
-        Trial[] trials = {
-                new Trial("-qm:priority", true),
-                new Trial("+qm:priority,-oslc:name", true),
-                new Trial("qm:tested_by{+oslc:description}", true),
-                new Trial("?qm:blah", false)
-            };
+        Trial[] trials =
+        {
+            new(expression: "-qm:priority", shouldSucceed: true), new("+qm:priority,-oslc:name", true),
+            new("qm:tested_by{+oslc:description}", true), new("?qm:blah", false)
+        };
 
         foreach (var trial in trials)
         {
@@ -87,26 +83,25 @@ public class QueryBasicTest
 
                 Debug.WriteLine(orderByClause);
 
-                Assert.IsTrue(trial.ShouldSucceed);
-
+                Assert.True(trial.ShouldSucceed);
             }
             catch (ParseException e)
             {
                 Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
-                Assert.IsFalse(trial.ShouldSucceed);
+                Assert.False(trial.ShouldSucceed);
             }
         }
     }
 
-    [TestMethod]
+    [Fact]
     public void BasicSearchTermsTest()
     {
-        Trial[] trials = {
-                new Trial("\"foobar\"", true),
-                new Trial("\"foobar\",\"whatsis\",\"yousa\"", true),
-                new Trial("", false)
-            };
+        Trial[] trials =
+        {
+            new("\"foobar\"", true), new("\"foobar\",\"whatsis\",\"yousa\"", true),
+            new("", false)
+        };
 
         foreach (var trial in trials)
         {
@@ -117,36 +112,32 @@ public class QueryBasicTest
 
                 Debug.WriteLine(searchTermsClause);
 
-                Assert.IsTrue(trial.ShouldSucceed);
-
+                Assert.True(trial.ShouldSucceed);
             }
             catch (ParseException e)
             {
                 Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
-                Assert.IsFalse(trial.ShouldSucceed);
+                Assert.False(trial.ShouldSucceed);
             }
         }
     }
 
-    [TestMethod]
+    [Fact]
     public void BasicSelectTest()
     {
         var prefixes = "qm=<http://qm.example.com/ns/>," +
                        "oslc=<http://open-services.net/ns/core#>";
         var prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
-        Trial[] trials = {
-                new Trial("*{*}", true),
-                new Trial("qm:testcase", true),
-                new Trial("*", true),
-                new Trial("oslc:create,qm:verified", true),
-                new Trial("qm:state{oslc:verified_by{oslc:owner,qm:duration}}", true),
-                new Trial("qm:submitted{*}", true),
-                new Trial("qm:testcase,*", true),
-                new Trial("*,qm:state{*}", true),
-                new Trial("XXX", false)
-            };
+        Trial[] trials =
+        {
+            new("*{*}", true), new("qm:testcase", true), new("*", true),
+            new("oslc:create,qm:verified", true),
+            new("qm:state{oslc:verified_by{oslc:owner,qm:duration}}", true),
+            new("qm:submitted{*}", true), new("qm:testcase,*", true),
+            new("*,qm:state{*}", true), new("XXX", false)
+        };
 
         foreach (var trial in trials)
         {
@@ -157,19 +148,18 @@ public class QueryBasicTest
 
                 Debug.WriteLine(selectClause);
 
-                Assert.IsTrue(trial.ShouldSucceed);
-
+                Assert.True(trial.ShouldSucceed);
             }
             catch (ParseException e)
             {
                 Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
-                Assert.IsFalse(trial.ShouldSucceed);
+                Assert.False(trial.ShouldSucceed);
             }
         }
     }
 
-    [TestMethod]
+    [Fact]
     public void BasicWhereTest()
     {
         var prefixes = "qm=<http://qm.example.com/ns/>," +
@@ -177,16 +167,18 @@ public class QueryBasicTest
                        "xs=<http://www.w3.org/2001/XMLSchema>";
         var prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
-        Trial[] trials = {
-                new Trial("qm:testcase=<http://example.com/tests/31459>", true),
-                new Trial("qm:duration>=10.4", true),
-                new Trial("oslc:create!=\"Bob\" and qm:verified!=true", true),
-                new Trial("qm:state in [\"Done\",\"Open\"]", true),
-                new Trial("oslc:verified_by{oslc:owner=\"Steve\" and qm:duration=-47.0} and oslc:description=\"very hairy expression\"", true),
-                new Trial("qm:submitted<\"2011-10-10T07:00:00Z\"^^xs:dateTime", true),
-                new Trial("oslc:label>\"The End\"@en-US", true),
-                new Trial("XXX", false)
-            };
+        Trial[] trials =
+        {
+            new("qm:testcase=<http://example.com/tests/31459>", true),
+            new("qm:duration>=10.4", true),
+            new("oslc:create!=\"Bob\" and qm:verified!=true", true),
+            new("qm:state in [\"Done\",\"Open\"]", true),
+            new(
+                "oslc:verified_by{oslc:owner=\"Steve\" and qm:duration=-47.0} and oslc:description=\"very hairy expression\"",
+                true),
+            new("qm:submitted<\"2011-10-10T07:00:00Z\"^^xs:dateTime", true),
+            new("oslc:label>\"The End\"@en-US", true), new("XXX", false)
+        };
 
         foreach (var trial in trials)
         {
@@ -197,35 +189,32 @@ public class QueryBasicTest
 
                 Debug.WriteLine(whereClause);
 
-                Assert.IsTrue(trial.ShouldSucceed);
-
+                Assert.True(trial.ShouldSucceed);
             }
             catch (ParseException e)
             {
                 Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
-                Assert.IsFalse(trial.ShouldSucceed);
+                Assert.False(trial.ShouldSucceed);
             }
         }
     }
 
-    [TestMethod]
+    [Fact]
     public void BasicInvertTest()
     {
-        var prefixes = "qm=<http://qm.example.com/ns/>," +
-                       "oslc=<http://open-services.net/ns/core#>";
+        const string prefixes = "qm=<http://qm.example.com/ns/>," +
+                                "oslc=<http://open-services.net/ns/core#>";
         var prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
-        Trial[] trials = {
-                new Trial("*{*}", true),
-                new Trial("qm:testcase", true),
-                new Trial("*", true),
-                new Trial("oslc:create,qm:verified", true),
-                new Trial("qm:state{oslc:verified_by{oslc:owner,qm:duration}}", true),
-                new Trial("qm:submitted{*}", true),
-                new Trial("qm:testcase,*", true),
-                new Trial("*,qm:state{*}", true),
-            };
+        Trial[] trials =
+        {
+            new(expression: "*{*}", shouldSucceed: true), new("qm:testcase", true), new("*", true),
+            new("oslc:create,qm:verified", true),
+            new("qm:state{oslc:verified_by{oslc:owner,qm:duration}}", true),
+            new("qm:submitted{*}", true), new("qm:testcase,*", true),
+            new("*,qm:state{*}", true),
+        };
 
         foreach (var trial in trials)
         {
@@ -236,43 +225,44 @@ public class QueryBasicTest
 
                 Debug.WriteLine(selectClause);
 
-                Assert.IsTrue(trial.ShouldSucceed);
+                Assert.True(trial.ShouldSucceed);
 
-                var invertedProperties = QueryUtils.InvertSelectedProperties(selectClause);
+                var _ = QueryUtils.InvertSelectedProperties(selectClause);
             }
             catch (ParseException e)
             {
                 Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
-                Assert.IsFalse(trial.ShouldSucceed);
+                Assert.False(trial.ShouldSucceed);
             }
         }
     }
 
-    [TestMethod]
-	    public void TestUriRef()
+    [Fact]
+    public void TestUriRef()
     {
-		    var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
-		    var where = QueryUtils.ParseWhere(
-				    "qm:testCase=<http://example.org/tests/24>", prefixMap);
+        var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
+        var where = QueryUtils.ParseWhere(
+            "qm:testCase=<http://example.org/tests/24>", prefixMap);
 
-		    var children = where.Children;
-		    Assert.AreEqual(1, children.Count, "Where clause should only have one term");
+        var children = where.Children;
+        // Where clause should only have one term
+        Assert.Single(children);
 
-		    var simpleTerm = children[0];
-		    var prop = simpleTerm.Property;
-        Assert.AreEqual(prop.ns + prop.local, "http://qm.example.com/ns/testCase");
-		    Assert.IsTrue(simpleTerm is ComparisonTerm);
+        var simpleTerm = children[0];
+        var prop = simpleTerm.Property;
+        Assert.Equal("http://qm.example.com/ns/testCase", prop.ns + prop.local);
+        Assert.True(simpleTerm is ComparisonTerm);
 
-		    var comparison = (ComparisonTerm) simpleTerm;
-        Assert.AreEqual(comparison.Operator, Operator.EQUALS);
+        var comparison = (ComparisonTerm)simpleTerm;
+        Assert.Equal(Operator.EQUALS, comparison.Operator);
 
-		    var v = comparison.Operand;
-		    Assert.IsTrue(v is UriRefValue);
+        var v = comparison.Operand;
+        Assert.True(v is UriRefValue);
 
-		    var uriRef = (UriRefValue) v;
-        Assert.AreEqual("http://example.org/tests/24", uriRef.Value);
-	    }
+        var uriRef = (UriRefValue)v;
+        Assert.Equal("http://example.org/tests/24", uriRef.Value);
+    }
 }
 
 public class Trial
@@ -282,16 +272,13 @@ public class Trial
         bool shouldSucceed
     )
     {
-        this.expression = expression;
-        this.shouldSucceed = shouldSucceed;
+        Expression = expression;
+        ShouldSucceed = shouldSucceed;
     }
 
     public string
-    Expression { get { return expression; } }
+        Expression { get; }
 
     public bool
-    ShouldSucceed { get { return shouldSucceed; } }
-
-    private string expression;
-    private bool shouldSucceed;
+        ShouldSucceed { get; }
 }

@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
  * Copyright (c) 2012 IBM Corporation.
  *
@@ -15,7 +15,6 @@
  *******************************************************************************/
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
