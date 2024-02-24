@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -40,7 +40,7 @@ public static class MessageExtractor
     {
 
         try {
-            var message = rm.GetString( key );
+            string message = rm.GetString( key );
             return string.Format(message, args);
         } catch (Exception missingResourceException ) {
             logger.Fatal(missingResourceException.Message, missingResourceException);

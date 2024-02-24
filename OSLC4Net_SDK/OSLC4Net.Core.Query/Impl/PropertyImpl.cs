@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -60,11 +60,11 @@ internal class PropertyImpl : Property
                 throw new InvalidOperationException("wildcard has no identifier");
             }
 
-            var rawIdentifier = tree.Text;
+            string rawIdentifier = tree.Text;
 
             identifier = new PName();
 
-            var colon = rawIdentifier.IndexOf(':');
+            int colon = rawIdentifier.IndexOf(':');
 
             if (colon < 0) {
                 identifier.local = rawIdentifier;

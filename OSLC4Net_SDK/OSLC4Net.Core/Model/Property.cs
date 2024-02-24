@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -266,7 +266,7 @@ public sealed class Property : AbstractResource, IComparable<Property>
 	        this.allowedValues.Clear();
 	        if (allowedValues != null) {
 
-            foreach (var av in allowedValues) {
+            foreach (string av in allowedValues) {
 	                this.allowedValues.Add(av);
             }
 	        }
@@ -323,7 +323,7 @@ public sealed class Property : AbstractResource, IComparable<Property>
 	    public void SetRange(Uri[] ranges) {
 	        this.range.Clear();
 	        if (ranges != null) {
-            foreach (var value in ranges) {
+            foreach (Uri value in ranges) {
 	                this.range.Add(value);
             }
 	        }

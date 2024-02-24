@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -38,7 +38,7 @@ class SeverityExtension
     {
         foreach (Severity severity in Enum.GetValues(typeof(Severity)))
         {
-            var stringValue = ToString(severity);
+            string stringValue = ToString(severity);
 
             if (stringValue.Equals(value))
             {

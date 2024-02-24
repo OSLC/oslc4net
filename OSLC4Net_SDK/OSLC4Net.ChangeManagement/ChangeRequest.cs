@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -279,11 +279,11 @@ public class ChangeRequest : AbstractResource
     [OslcTitle("Types")]
     public string[] GetDctermsTypes()
     {
-        var result = new string[dctermsTypes.Count];
+        string[] result = new string[dctermsTypes.Count];
 
-        var index = 0;
+        int index = 0;
 
-        foreach (var type in dctermsTypes)
+        foreach (Type type in dctermsTypes)
         {
             result[index++] = TypeExtension.ToString(type);
         }
@@ -661,7 +661,7 @@ public class ChangeRequest : AbstractResource
 
         if (dctermsTypes != null)
         {
-            foreach (var type in dctermsTypes)
+            foreach (string type in dctermsTypes)
             {
                 this.dctermsTypes.Add(TypeExtension.FromString(type));
             }

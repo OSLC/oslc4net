@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -42,12 +42,12 @@ public class QueryBasicTest
                           false)
             };
 
-        foreach (var trial in trials)
+        foreach (Trial trial in trials)
         {
             try
             {
 
-                var prefixMap =
+                IDictionary<string, string> prefixMap =
                     QueryUtils.ParsePrefixes(trial.Expression);
 
                 Debug.WriteLine(prefixMap.ToString());
@@ -67,9 +67,9 @@ public class QueryBasicTest
     [TestMethod]
     public void BasicOrderByTest()
     {
-        var prefixes = "qm=<http://qm.example.com/ns/>," +
-                       "oslc=<http://open-services.net/ns/core#>";
-        var prefixMap = QueryUtils.ParsePrefixes(prefixes);
+        string prefixes = "qm=<http://qm.example.com/ns/>," +
+            "oslc=<http://open-services.net/ns/core#>";
+        IDictionary<string, string> prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
         Trial[] trials = {
                 new Trial("-qm:priority", true),
@@ -78,11 +78,11 @@ public class QueryBasicTest
                 new Trial("?qm:blah", false)
             };
 
-        foreach (var trial in trials)
+        foreach (Trial trial in trials)
         {
             try
             {
-                var orderByClause =
+                OrderByClause orderByClause =
                     QueryUtils.ParseOrderBy(trial.Expression, prefixMap);
 
                 Debug.WriteLine(orderByClause);
@@ -108,11 +108,11 @@ public class QueryBasicTest
                 new Trial("", false)
             };
 
-        foreach (var trial in trials)
+        foreach (Trial trial in trials)
         {
             try
             {
-                var searchTermsClause =
+                SearchTermsClause searchTermsClause =
                     QueryUtils.ParseSearchTerms(trial.Expression);
 
                 Debug.WriteLine(searchTermsClause);
@@ -132,9 +132,9 @@ public class QueryBasicTest
     [TestMethod]
     public void BasicSelectTest()
     {
-        var prefixes = "qm=<http://qm.example.com/ns/>," +
-                       "oslc=<http://open-services.net/ns/core#>";
-        var prefixMap = QueryUtils.ParsePrefixes(prefixes);
+        string prefixes = "qm=<http://qm.example.com/ns/>," +
+            "oslc=<http://open-services.net/ns/core#>";
+        IDictionary<string, string> prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
         Trial[] trials = {
                 new Trial("*{*}", true),
@@ -148,11 +148,11 @@ public class QueryBasicTest
                 new Trial("XXX", false)
             };
 
-        foreach (var trial in trials)
+        foreach (Trial trial in trials)
         {
             try
             {
-                var selectClause =
+                SelectClause selectClause =
                     QueryUtils.ParseSelect(trial.Expression, prefixMap);
 
                 Debug.WriteLine(selectClause);
@@ -172,10 +172,10 @@ public class QueryBasicTest
     [TestMethod]
     public void BasicWhereTest()
     {
-        var prefixes = "qm=<http://qm.example.com/ns/>," +
-                       "oslc=<http://open-services.net/ns/core#>," +
-                       "xs=<http://www.w3.org/2001/XMLSchema>";
-        var prefixMap = QueryUtils.ParsePrefixes(prefixes);
+        string prefixes = "qm=<http://qm.example.com/ns/>," +
+            "oslc=<http://open-services.net/ns/core#>," +
+            "xs=<http://www.w3.org/2001/XMLSchema>";
+        IDictionary<string, string> prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
         Trial[] trials = {
                 new Trial("qm:testcase=<http://example.com/tests/31459>", true),
@@ -188,11 +188,11 @@ public class QueryBasicTest
                 new Trial("XXX", false)
             };
 
-        foreach (var trial in trials)
+        foreach (Trial trial in trials)
         {
             try
             {
-                var whereClause =
+                WhereClause whereClause =
                     QueryUtils.ParseWhere(trial.Expression, prefixMap);
 
                 Debug.WriteLine(whereClause);
@@ -212,9 +212,9 @@ public class QueryBasicTest
     [TestMethod]
     public void BasicInvertTest()
     {
-        var prefixes = "qm=<http://qm.example.com/ns/>," +
-                       "oslc=<http://open-services.net/ns/core#>";
-        var prefixMap = QueryUtils.ParsePrefixes(prefixes);
+        string prefixes = "qm=<http://qm.example.com/ns/>," +
+            "oslc=<http://open-services.net/ns/core#>";
+        IDictionary<string, string> prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
         Trial[] trials = {
                 new Trial("*{*}", true),
@@ -227,18 +227,18 @@ public class QueryBasicTest
                 new Trial("*,qm:state{*}", true),
             };
 
-        foreach (var trial in trials)
+        foreach (Trial trial in trials)
         {
             try
             {
-                var selectClause =
+                SelectClause selectClause =
                     QueryUtils.ParseSelect(trial.Expression, prefixMap);
 
                 Debug.WriteLine(selectClause);
 
                 Assert.IsTrue(trial.ShouldSucceed);
 
-                var invertedProperties = QueryUtils.InvertSelectedProperties(selectClause);
+                IDictionary<string, object> invertedProperties = QueryUtils.InvertSelectedProperties(selectClause);
             }
             catch (ParseException e)
             {
@@ -252,25 +252,25 @@ public class QueryBasicTest
     [TestMethod]
 	    public void TestUriRef()
     {
-		    var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
-		    var where = QueryUtils.ParseWhere(
+		    IDictionary<string, string> prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
+		    WhereClause where = QueryUtils.ParseWhere(
 				    "qm:testCase=<http://example.org/tests/24>", prefixMap);
 
-		    var children = where.Children;
+		    IList<SimpleTerm> children = where.Children;
 		    Assert.AreEqual(1, children.Count, "Where clause should only have one term");
 
-		    var simpleTerm = children[0];
-		    var prop = simpleTerm.Property;
+		    SimpleTerm simpleTerm = children[0];
+		    PName prop = simpleTerm.Property;
         Assert.AreEqual(prop.ns + prop.local, "http://qm.example.com/ns/testCase");
 		    Assert.IsTrue(simpleTerm is ComparisonTerm);
 
-		    var comparison = (ComparisonTerm) simpleTerm;
+		    ComparisonTerm comparison = (ComparisonTerm) simpleTerm;
         Assert.AreEqual(comparison.Operator, Operator.EQUALS);
 
-		    var v = comparison.Operand;
+		    Value v = comparison.Operand;
 		    Assert.IsTrue(v is UriRefValue);
 
-		    var uriRef = (UriRefValue) v;
+		    UriRefValue uriRef = (UriRefValue) v;
         Assert.AreEqual("http://example.org/tests/24", uriRef.Value);
 	    }
 }

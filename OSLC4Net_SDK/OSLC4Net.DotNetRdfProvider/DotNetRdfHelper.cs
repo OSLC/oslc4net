@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2012, 2013 IBM Corporation.
  * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
  *
@@ -95,7 +95,7 @@ public static class DotNetRdfHelper
                                               IDictionary<string, object> properties)
     {
         IGraph              graph             = new Graph();
-        var    namespaceMappings = graph.NamespaceMap;
+        INamespaceMapper    namespaceMappings = graph.NamespaceMap;
 
         IUriNode descriptionResource = null;
 
@@ -119,7 +119,7 @@ public static class DotNetRdfHelper
             graph.Assert(new Triple(responseInfoResource, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType)),
                                     graph.CreateUriNode(new Uri(OslcConstants.TYPE_RESPONSE_INFO))));
 
-            var countValue = totalCount ?? objects.Count();
+            long countValue = totalCount ?? objects.Count();
             graph.Assert(new Triple(responseInfoResource, graph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + PROPERTY_TOTAL_COUNT)),
                                     graph.CreateLiteralNode(countValue.ToString())));
 
@@ -131,7 +131,7 @@ public static class DotNetRdfHelper
 
         }
 
-        foreach (var obj in objects)
+        foreach (object obj in objects)
         {
             HandleSingleResource(descriptionResource,
                                  obj,
@@ -171,7 +171,7 @@ public static class DotNetRdfHelper
                                               INamespaceMapper              namespaceMappings,
                                               IDictionary<string, object>   properties)
     {
-        var objType = obj.GetType();
+        Type objType = obj.GetType();
 
         // Collect the namespace prefix -> namespace mappings
         RecursivelyCollectNamespaceMappings(namespaceMappings,
@@ -203,8 +203,8 @@ public static class DotNetRdfHelper
 
         if (objType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
         {
-            var ns        = TypeFactory.GetNamespace(objType);
-            var name      = TypeFactory.GetName(objType);
+            string ns        = TypeFactory.GetNamespace(objType);
+            string name      = TypeFactory.GetName(objType);
 
             graph.Assert(new Triple(mainResource, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType)),
                                     graph.CreateUriNode(new Uri(ns + name))));
@@ -233,7 +233,7 @@ public static class DotNetRdfHelper
                                            IGraph   graph,
                                            Type     beanType)
     {
-        var   newInstance = Activator.CreateInstance(beanType);
+        object   newInstance = Activator.CreateInstance(beanType);
         IDictionary<Type, IDictionary<string, MethodInfo>> typePropertyDefinitionsToSetMethods = new Dictionary<Type, IDictionary<string, MethodInfo>>();
         // TODO: check that all .Add() calls were converted into [k] = v
         //IDictionary<string, object> visitedResources = new DictionaryWithReplacement<string, object>();
@@ -259,26 +259,26 @@ public static class DotNetRdfHelper
                                             Type      beanType)
     {
         Type[] types = { beanType };
-        var results = Activator.CreateInstance(typeof(List<>).MakeGenericType(types));
+        object results = Activator.CreateInstance(typeof(List<>).MakeGenericType(types));
 
         if (beanType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
         {
-            var qualifiedName = TypeFactory.GetQualifiedName(beanType);
+            string qualifiedName = TypeFactory.GetQualifiedName(beanType);
 
-            var triples = graph.GetTriplesWithPredicateObject(graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType)),
+            IEnumerable<Triple> triples = graph.GetTriplesWithPredicateObject(graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType)),
                                                                               graph.CreateUriNode(new Uri(qualifiedName)));
 
             if (triples.Count() > 0)
             {
                 triples = new List<Triple>(triples);
 
-                var add = results.GetType().GetMethod("Add", types);
+                MethodInfo add = results.GetType().GetMethod("Add", types);
                 IDictionary<Type, IDictionary<string, MethodInfo>> typePropertyDefinitionsToSetMethods = new Dictionary<Type, IDictionary<string, MethodInfo>>();
 
-                foreach (var triple in triples)
+                foreach (Triple triple in triples)
                 {
-                    var   resource = triple.Subject;
-                    var  newInstance = Activator.CreateInstance(beanType);
+                    INode   resource = triple.Subject;
+                    object  newInstance = Activator.CreateInstance(beanType);
                     //IDictionary<string, object> visitedResources = new DictionaryWithReplacement<string, object>();
                     IDictionary<string, object> visitedResources = new Dictionary<string, object>();
 
@@ -322,7 +322,7 @@ public static class DotNetRdfHelper
 
         if (bean is IResource)
         {
-            var aboutURI = resource is IUriNode ? ((IUriNode)resource).Uri : null;
+            Uri aboutURI = resource is IUriNode ? ((IUriNode)resource).Uri : null;
             if (aboutURI != null)
             {
                 if (!aboutURI.IsAbsoluteUri)
@@ -343,7 +343,7 @@ public static class DotNetRdfHelper
         // Ensure a single-value property is not set more than once
         ISet<MethodInfo> singleValueMethodsUsed = new HashSet<MethodInfo>();
 
-        var triples = graph.GetTriplesWithSubject(resource);
+        IEnumerable<Triple> triples = graph.GetTriplesWithSubject(resource);
 
         IExtendedResource extendedResource;
         IDictionary<QName, object> extendedProperties;
@@ -360,11 +360,11 @@ public static class DotNetRdfHelper
     	    extendedProperties = null;
         }
 
-        foreach (var triple in triples)
+        foreach (Triple triple in triples)
         {
-            var    predicate = (IUriNode)triple.Predicate;
-            var       obj       = triple.Object;
-            var      uri       = predicate.Uri.ToString();
+            IUriNode    predicate = (IUriNode)triple.Predicate;
+            INode       obj       = triple.Object;
+            string      uri       = predicate.Uri.ToString();
 
             if (! setMethodMap.ContainsKey(uri))
             {
@@ -372,7 +372,7 @@ public static class DotNetRdfHelper
                 {
                     if (extendedResource != null)
                     {
-                        var type = ((IUriNode)obj).Uri;
+                        Uri type = ((IUriNode)obj).Uri;
                         extendedResource.AddType(type);
                     }
                     // Otherwise ignore missing propertyDefinition for rdf:type.
@@ -388,7 +388,7 @@ public static class DotNetRdfHelper
             	    }
             	    else
             	    {
-                        var predicateUri = predicate.Uri.ToString();
+                        string predicateUri = predicate.Uri.ToString();
                         string prefix;
                         string localPart;
                         string ns;
@@ -396,16 +396,16 @@ public static class DotNetRdfHelper
 
                         if (graph.NamespaceMap.ReduceToQName(predicateUri, out qname))
                         {
-                            var colon = qname.IndexOf(':');
+                            int colon = qname.IndexOf(':');
                             prefix = qname.Substring(0, colon);
                             localPart = qname.Substring(colon + 1);
                             ns = predicateUri.Substring(0, predicateUri.Length - localPart.Length);
                         }
                         else
                         {
-                            var hash = predicateUri.LastIndexOf('#');
-                            var slash = predicateUri.LastIndexOf('/');
-                            var idx = hash > slash ? hash : slash;
+                            int hash = predicateUri.LastIndexOf('#');
+                            int slash = predicateUri.LastIndexOf('/');
+                            int idx = hash > slash ? hash : slash;
 
                             localPart = predicateUri.Substring(idx + 1);
                             ns = predicateUri.Substring(0, idx + 1);
@@ -415,15 +415,15 @@ public static class DotNetRdfHelper
                                 prefix = GeneratePrefix(graph, ns);
                             }
                         }
-            		    var key = new QName(ns, localPart, prefix);
-            		    var value = HandleExtendedPropertyValue(beanType, obj, graph, visitedResources);
+            		    QName key = new QName(ns, localPart, prefix);
+            		    object value = HandleExtendedPropertyValue(beanType, obj, graph, visitedResources);
                         if (!extendedProperties.ContainsKey(key))
             		    {
             			    extendedProperties[key] = value;
             		    }
             		    else
             		    {
-                            var previous = extendedProperties[key];
+                            object previous = extendedProperties[key];
                             // TODO: untangle this mess (Andrew 2023-09)
                             // I think the idea was to store the property object directly if the property has
                             // a cardinality of 1, when a new object is added, the backing object shall switch to
@@ -450,10 +450,10 @@ public static class DotNetRdfHelper
             }
             else
             {
-                var setMethod = setMethodMap[uri];
-                var setMethodComponentParameterType = setMethod.GetParameters()[0].ParameterType;
+                MethodInfo setMethod = setMethodMap[uri];
+                Type setMethodComponentParameterType = setMethod.GetParameters()[0].ParameterType;
 
-                var multiple = setMethodComponentParameterType.IsArray;
+                bool multiple = setMethodComponentParameterType.IsArray;
                 if (multiple)
                 {
                     setMethodComponentParameterType = setMethodComponentParameterType.GetElementType();
@@ -465,7 +465,7 @@ public static class DotNetRdfHelper
                     setMethodComponentParameterType = setMethodComponentParameterType.GetGenericArguments()[0];
                 }
 
-                var nil = new Uri(OslcConstants.RDF_NAMESPACE + RDF_NIL);
+                Uri nil = new Uri(OslcConstants.RDF_NAMESPACE + RDF_NIL);
                 IList<INode> objects;
 
                 if (multiple && obj is IUriNode && (
@@ -475,13 +475,13 @@ public static class DotNetRdfHelper
                        || (((IUriNode)obj).IsListRoot(graph))))
                 {
                     objects = new List<INode>();
-                    var listNode = obj as IUriNode;
+                    IUriNode listNode = obj as IUriNode;
 
                     while (listNode != null && ! nil.Equals(listNode.Uri))
                     {
                         visitedResources[GetVisitedResourceName(listNode)] = new object();
 
-                        var o = (IUriNode)graph.GetTriplesWithSubjectPredicate(listNode, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListFirst))).First().Object;
+                        IUriNode o = (IUriNode)graph.GetTriplesWithSubjectPredicate(listNode, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListFirst))).First().Object;
                         objects.Add(o);
 
                         listNode = (IUriNode)graph.GetTriplesWithSubjectPredicate(listNode, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListRest))).First().Object;
@@ -492,11 +492,11 @@ public static class DotNetRdfHelper
                 else if (multiple && IsRdfCollectionResource(graph, obj))
                 {
                     objects = new List<INode>();
-                    var trips = graph.GetTriplesWithSubjectPredicate(obj, graph.CreateUriNode(new Uri(OslcConstants.RDF_NAMESPACE + "li")));
+                    IEnumerable<Triple> trips = graph.GetTriplesWithSubjectPredicate(obj, graph.CreateUriNode(new Uri(OslcConstants.RDF_NAMESPACE + "li")));
 
-                    foreach (var trip in trips)
+                    foreach (Triple trip in trips)
                     {
-                        var o = trip.Object;
+                        INode o = trip.Object;
 
                         if (o is IUriNode)
                         {
@@ -531,13 +531,13 @@ public static class DotNetRdfHelper
                     setMethodComponentParameterType = setMethodComponentParameterType.GetGenericArguments()[0];
                 }
 
-                foreach (var o in objects)
+                foreach (INode o in objects)
                 {
                     object parameter = null;
                     if (o is ILiteralNode)
                     {
-                        var literal    = o as ILiteralNode;
-                        var stringValue = literal.Value;
+                        ILiteralNode literal    = o as ILiteralNode;
+                        string stringValue = literal.Value;
 
                         if (typeof(string) == setMethodComponentParameterType)
                         {
@@ -611,15 +611,15 @@ public static class DotNetRdfHelper
                     }
                     else if (o is IUriNode)
                     {
-                        var nestedResource = o as IUriNode;
+                        IUriNode nestedResource = o as IUriNode;
 
                         if (typeof(Uri) == setMethodComponentParameterType)
                         {
-                            var nestedResourceURIString = nestedResource.Uri.ToString();
+                            string nestedResourceURIString = nestedResource.Uri.ToString();
 
                             if (nestedResourceURIString != null)
                             {
-                                var nestedResourceURI =  nestedResource.Uri;
+                                Uri nestedResourceURI =  nestedResource.Uri;
 
                                 if (!nestedResourceURI.IsAbsoluteUri)
                      	        {
@@ -660,7 +660,7 @@ public static class DotNetRdfHelper
                     }
                     else if (o is IBlankNode)
                     {
-                        var nestedResource = o as IBlankNode;
+                        IBlankNode nestedResource = o as IBlankNode;
                         object nestedBean;
 
                         if (setMethodComponentParameterType == typeof(string))
@@ -692,16 +692,16 @@ public static class DotNetRdfHelper
                         {
                             // This property supports reified statements. Create the
                             // new resource to hold the value and any metadata.
-                            var reifiedResource = Activator.CreateInstance(reifiedType);
+                            object reifiedResource = Activator.CreateInstance(reifiedType);
 
                             // Find a setter for the actual value.
-                            foreach (var method in reifiedType.GetMethods())
+                            foreach (MethodInfo method in reifiedType.GetMethods())
                             {
                                 if (!"SetValue".Equals(method.Name))
                                 {
                                     continue;
                                 }
-                                var parameters = method.GetParameters();
+                                ParameterInfo[] parameters = method.GetParameters();
                                 if (parameters.Length == 1 && parameters[0].ParameterType.IsAssignableFrom(setMethodComponentParameterType))
                                 {
                                     method.Invoke(reifiedResource, new object[] { parameter });
@@ -710,9 +710,9 @@ public static class DotNetRdfHelper
                             }
 
                             // Fill in any reified statements.
-                            var reifiedTriples = GetReifiedTriples(triple, graph);
+                            IEnumerable<Triple> reifiedTriples = GetReifiedTriples(triple, graph);
 
-                            foreach (var reifiedTriple in reifiedTriples)
+                            foreach (Triple reifiedTriple in reifiedTriples)
                             {
                                 FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
                                                   reifiedType,
@@ -761,24 +761,24 @@ public static class DotNetRdfHelper
         }
 
         // Now, handle array and collection values since all are collected.
-        foreach (var uri in propertyDefinitionsToArrayValues.Keys)
+        foreach (string uri in propertyDefinitionsToArrayValues.Keys)
         {
-            var values         = propertyDefinitionsToArrayValues[uri];
-            var  setMethod       = setMethodMap[uri];
-            var     parameterType      = setMethod.GetParameters()[0].ParameterType;
+            List<object> values         = propertyDefinitionsToArrayValues[uri];
+            MethodInfo  setMethod       = setMethodMap[uri];
+            Type     parameterType      = setMethod.GetParameters()[0].ParameterType;
 
             if (parameterType.IsArray)
             {
-                var setMethodComponentParameterType = parameterType.GetElementType();
+                Type setMethodComponentParameterType = parameterType.GetElementType();
 
                 // To support primitive arrays, we have to use Array reflection to
                 // set individual elements. We cannot use Collection.toArray.
                 // Array.set will unwrap objects to their corresponding primitives.
-                var array = Array.CreateInstance(setMethodComponentParameterType,
+                Array array = Array.CreateInstance(setMethodComponentParameterType,
                                                    values.Count);
 
-                var index = 0;
-                foreach (var value in values)
+                int index = 0;
+                foreach (object value in values)
                 {
                     array.SetValue(value,
                                    index++);
@@ -790,13 +790,13 @@ public static class DotNetRdfHelper
             // Else - we are dealing with a collection or a subclass of collection
             else
             {
-                var collection = Activator.CreateInstance(parameterType);
+                object collection = Activator.CreateInstance(parameterType);
 
                 if (values.Count > 0)
                 {
-                    var add = collection.GetType().GetMethod("Add", new Type[] { values[0].GetType() });
+                    MethodInfo add = collection.GetType().GetMethod("Add", new Type[] { values[0].GetType() });
 
-                    foreach (var value in values)
+                    foreach (object value in values)
                     {
                         add.Invoke(collection, new object[] { value });
                     }
@@ -812,7 +812,7 @@ public static class DotNetRdfHelper
     {
         if (obj is IUriNode)
         {
-            var resource = (IUriNode)obj;
+            IUriNode resource = (IUriNode)obj;
             if (graph.GetTriplesWithSubjectPredicate(resource, graph.CreateUriNode(new Uri(OslcConstants.RDF_NAMESPACE + RDF_ALT))).Count() > 0
                 || graph.GetTriplesWithSubjectPredicate(resource, graph.CreateUriNode(new Uri(OslcConstants.RDF_NAMESPACE + RDF_BAG))).Count() > 0
                 || graph.GetTriplesWithSubjectPredicate(resource, graph.CreateUriNode(new Uri(OslcConstants.RDF_NAMESPACE + RDF_SEQ))).Count() > 0)
@@ -827,8 +827,8 @@ public static class DotNetRdfHelper
     // TODO: check if the RDF 1.1 reification works correctly and cover with basic tests.
     private static IEnumerable<Triple> GetReifiedTriples(Triple source, IGraph graph)
     {
-        var rdfSubject = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfSubject));
-        var reifiedSubjects =
+        IUriNode rdfSubject = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfSubject));
+        IEnumerable<Triple> reifiedSubjects =
             graph.GetTriplesWithPredicateObject(rdfSubject, source.Subject);
 
         if (reifiedSubjects.Count() == 0)
@@ -836,19 +836,19 @@ public static class DotNetRdfHelper
             return new Triple[0];
         }
 
-        var rdfPredicate = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfPredicate));
-        var rdfObject = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfObject));
-        var rdfType = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
-        var rdfStatement = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfStatement));
+        IUriNode rdfPredicate = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfPredicate));
+        IUriNode rdfObject = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfObject));
+        IUriNode rdfType = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
+        IUriNode rdfStatement = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfStatement));
 
         IList<Triple> reificationTriples = new List<Triple>(4);
-        var result = new Triple[1];
+        Triple[] result = new Triple[1];
 
-        foreach (var candidate in reifiedSubjects)
+        foreach (Triple candidate in reifiedSubjects)
         {
-            var blankNodes = graph.GetTriplesWithSubject(candidate.Subject);
+            IEnumerable<Triple> blankNodes = graph.GetTriplesWithSubject(candidate.Subject);
 
-            foreach (var nodeChild in blankNodes)
+            foreach (Triple nodeChild in blankNodes)
             {
                 if ((nodeChild.Predicate.Equals(rdfSubject) && nodeChild.Object.Equals(source.Subject)) ||
                     (nodeChild.Predicate.Equals(rdfPredicate) && nodeChild.Object.Equals(source.Predicate)) ||
@@ -889,8 +889,8 @@ public static class DotNetRdfHelper
 	     */
 	    private static string GeneratePrefix(IGraph graph, string ns)
 	    {
-		    var map = graph.NamespaceMap;
-		    var i = 0;
+		    INamespaceMapper map = graph.NamespaceMap;
+		    int i = 0;
 		    string candidatePrefix;
 		    do {
 			    candidatePrefix = GENERATED_PREFIX_START + i;
@@ -959,7 +959,7 @@ public static class DotNetRdfHelper
             }
 		    }
 
-        var nestedResource = obj as IUriNode;
+        IUriNode nestedResource = obj as IUriNode;
 
 		    // TODO: Is this an inline resource? AND we have not visited it yet?
 		    if ((obj is IBlankNode || graph.GetTriplesWithSubject(nestedResource).Count() > 0) &&
@@ -984,7 +984,7 @@ public static class DotNetRdfHelper
         else
         {
             // It's a resource reference.
-            var nestedResourceURI = nestedResource.Uri;
+            Uri nestedResourceURI = nestedResource.Uri;
             if (!nestedResourceURI.IsAbsoluteUri)
             {
                 throw new OslcCoreRelativeURIException(beanType, "<none>",
@@ -999,20 +999,20 @@ public static class DotNetRdfHelper
     {
         IDictionary<string, MethodInfo> result = new Dictionary<string, MethodInfo>();
 
-        var methods = beanType.GetMethods();
+        MethodInfo[] methods = beanType.GetMethods();
 
-        foreach (var method in methods)
+        foreach (MethodInfo method in methods)
         {
             if (method.GetParameters().Length == 0)
             {
-                var getMethodName = method.Name;
+                string getMethodName = method.Name;
 
                 if (((getMethodName.StartsWith(METHOD_NAME_START_GET)) &&
                      (getMethodName.Length > METHOD_NAME_START_GET_LENGTH)) ||
                     ((getMethodName.StartsWith(METHOD_NAME_START_IS)) &&
                      (getMethodName.Length > METHOD_NAME_START_IS_LENGTH)))
                 {
-                    var oslcPropertyDefinitionAnnotation = InheritedMethodAttributeHelper.GetAttribute<OslcPropertyDefinition>(method);
+                    OslcPropertyDefinition oslcPropertyDefinitionAnnotation = InheritedMethodAttributeHelper.GetAttribute<OslcPropertyDefinition>(method);
 
                     if (oslcPropertyDefinitionAnnotation != null)
                     {
@@ -1029,9 +1029,9 @@ public static class DotNetRdfHelper
                                             getMethodName.Substring(METHOD_NAME_START_IS_LENGTH);
                         }
 
-                        var getMethodReturnType = method.ReturnType;
+                        Type getMethodReturnType = method.ReturnType;
 
-                        var setMethod = beanType.GetMethod(setMethodName,
+                        MethodInfo setMethod = beanType.GetMethod(setMethodName,
                                                                   new Type[] { getMethodReturnType });
 
                         if (setMethod != null)
@@ -1063,31 +1063,31 @@ public static class DotNetRdfHelper
             return;
         }
 
-        foreach (var method in resourceType.GetMethods())
+        foreach (MethodInfo method in resourceType.GetMethods())
         {
             if (method.GetParameters().Length == 0)
             {
-                var methodName = method.Name;
+                string methodName = method.Name;
 
                 if (((methodName.StartsWith(METHOD_NAME_START_GET)) &&
                      (methodName.Length > METHOD_NAME_START_GET_LENGTH)) ||
                     ((methodName.StartsWith(METHOD_NAME_START_IS)) &&
                      (methodName.Length > METHOD_NAME_START_IS_LENGTH)))
                 {
-                    var oslcPropertyDefinitionAnnotation = InheritedMethodAttributeHelper.GetAttribute<OslcPropertyDefinition>(method);
+                    OslcPropertyDefinition oslcPropertyDefinitionAnnotation = InheritedMethodAttributeHelper.GetAttribute<OslcPropertyDefinition>(method);
 
                     if (oslcPropertyDefinitionAnnotation != null)
                     {
-                        var value = method.Invoke(obj, null);
+                        object value = method.Invoke(obj, null);
 
                         if (value != null)
                         {
                             IDictionary<string, object> nestedProperties = null;
-                            var onlyNested = false;
+                            bool onlyNested = false;
 
                             if (properties != null)
                             {
-                                var map = (IDictionary<string, object>)properties[oslcPropertyDefinitionAnnotation.value];
+                                IDictionary<string, object> map = (IDictionary<string, object>)properties[oslcPropertyDefinitionAnnotation.value];
 
                                 if (map != null)
                                 {
@@ -1126,7 +1126,7 @@ public static class DotNetRdfHelper
         // Handle any extended properties.
         if (obj is IExtendedResource)
         {
-    	    var extendedResource = (IExtendedResource) obj;
+    	    IExtendedResource extendedResource = (IExtendedResource) obj;
     	    HandleExtendedProperties(resourceType,
 				                         graph,
 				                         mainResource,
@@ -1141,9 +1141,9 @@ public static class DotNetRdfHelper
 					                                 IExtendedResource extendedResource,
 					                                 IDictionary<string, object> properties)
 	    {
-	        foreach (var type in extendedResource.GetTypes())
+	        foreach (Uri type in extendedResource.GetTypes())
 	        {
-	            var propertyName = type.ToString();
+	            string propertyName = type.ToString();
 
             if (properties != null &&
                 properties[propertyName]== null &&
@@ -1153,25 +1153,25 @@ public static class DotNetRdfHelper
                 continue;
             }
 
-	            var typeResource = graph.CreateUriNode(new Uri(propertyName));
-	            var rdfType = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
+	            IUriNode typeResource = graph.CreateUriNode(new Uri(propertyName));
+	            IUriNode rdfType = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
 	            if (graph.GetTriplesWithPredicateObject(rdfType, typeResource).Count() == 0)
 	            {
 	                graph.Assert(new Triple(mainResource, rdfType, typeResource));
 	            }
 	        }
 
-        var extendedProperties = extendedResource.GetExtendedProperties();
+        IDictionary<QName, object> extendedProperties = extendedResource.GetExtendedProperties();
 
-		    foreach (var qName in extendedProperties.Keys)
+		    foreach (QName qName in extendedProperties.Keys)
 		    {
-			    var propertyName = qName.GetNamespaceURI() + qName.GetLocalPart();
+			    string propertyName = qName.GetNamespaceURI() + qName.GetLocalPart();
             IDictionary<string, object> nestedProperties = null;
-            var onlyNested = false;
+            bool onlyNested = false;
 
             if (properties != null)
             {
-                var map = (IDictionary<string, object>)properties[propertyName];
+                IDictionary<string, object> map = (IDictionary<string, object>)properties[propertyName];
 
                 if (map != null)
                 {
@@ -1193,13 +1193,13 @@ public static class DotNetRdfHelper
                 }
             }
 
-			    var property = graph.CreateUriNode(new Uri(propertyName));
-			    var value = extendedProperties[qName];
+			    IUriNode property = graph.CreateUriNode(new Uri(propertyName));
+			    object value = extendedProperties[qName];
 
 			    if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(ICollection<>), value.GetType()))
 			    {
 				    IEnumerable<object> collection = new EnumerableWrapper(value);
-				    foreach (var next in collection)
+				    foreach (object next in collection)
 				    {
 					    HandleExtendedValue(resourceType,
 					                        next,
@@ -1233,9 +1233,9 @@ public static class DotNetRdfHelper
     {
 	    if (value is AnyResource)
 	    {
-		    var any = (AbstractResource) value;
+		    AbstractResource any = (AbstractResource) value;
 		    INode nestedResource;
-		    var aboutURI = any.GetAbout();
+		    Uri aboutURI = any.GetAbout();
 		    if (aboutURI != null)
 		    {
 			    if (!aboutURI.IsAbsoluteUri)
@@ -1252,9 +1252,9 @@ public static class DotNetRdfHelper
 			    nestedResource = graph.CreateBlankNode();
 		    }
 
-		    foreach (var type in any.GetTypes())
+		    foreach (Uri type in any.GetTypes())
 		    {
-                var propertyName = type.ToString();
+                string propertyName = type.ToString();
 
                 if (nestedProperties == null ||
                     nestedProperties[propertyName] != null ||
@@ -1272,7 +1272,7 @@ public static class DotNetRdfHelper
 	    else if (value.GetType().GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0 || value is Uri)
 	    {
 		    //TODO:  Until we handle XMLLiteral for incoming unknown resources, need to assume it is not XMLLiteral
-		    var xmlliteral = false;
+		    bool xmlliteral = false;
 			    HandleLocalResource(objType,
 			                        null,
 			                        xmlliteral,
@@ -1292,7 +1292,7 @@ public static class DotNetRdfHelper
 	        }
 
             ILiteralNode literal;
-            var valueType = value.GetType();
+            Type valueType = value.GetType();
 
             if (typeof(string) == valueType)
             {
@@ -1360,9 +1360,9 @@ public static class DotNetRdfHelper
                                               IDictionary<string, object>   nestedProperties,
                                               bool                          onlyNested)
     {
-        var propertyDefinition = propertyDefinitionAnnotation.value;
+        string propertyDefinition = propertyDefinitionAnnotation.value;
 
-        var nameAnnotation = InheritedMethodAttributeHelper.GetAttribute<OslcName>(method);
+        OslcName nameAnnotation = InheritedMethodAttributeHelper.GetAttribute<OslcName>(method);
 
         string name;
         if (nameAnnotation != null)
@@ -1381,14 +1381,14 @@ public static class DotNetRdfHelper
                                                                  propertyDefinitionAnnotation);
         }
 
-        var valueTypeAnnotation = InheritedMethodAttributeHelper.GetAttribute<OslcValueType>(method);
+        OslcValueType valueTypeAnnotation = InheritedMethodAttributeHelper.GetAttribute<OslcValueType>(method);
 
-        var xmlLiteral = valueTypeAnnotation == null ? false : Model.ValueType.XMLLiteral.Equals(valueTypeAnnotation.value);
+        bool xmlLiteral = valueTypeAnnotation == null ? false : Model.ValueType.XMLLiteral.Equals(valueTypeAnnotation.value);
 
-        var attribute = graph.CreateUriNode(new Uri(propertyDefinition));
+        IUriNode attribute = graph.CreateUriNode(new Uri(propertyDefinition));
 
-        var returnType = method.ReturnType;
-        var collectionType =
+        Type returnType = method.ReturnType;
+        OslcRdfCollectionType collectionType =
             InheritedMethodAttributeHelper.GetAttribute<OslcRdfCollectionType>(method);
         List<INode> rdfNodeContainer;
 
@@ -1415,15 +1415,15 @@ public static class DotNetRdfHelper
             // via Array.get does not return primitives, but the primitive
             // object wrapping counterparts like Integer, Byte, Double, etc.
 
-            var length =
+            int length =
                 (int)value.GetType().GetProperty("Length").GetValue(value, null);
-            var getValue = value.GetType().GetMethod("GetValue", new Type[] { typeof(int) });
+            MethodInfo getValue = value.GetType().GetMethod("GetValue", new Type[] { typeof(int) });
 
-            for (var index = 0;
+            for (int index = 0;
                  index < length;
                  index++)
             {
-                var obj = getValue.Invoke(value, new object[] { index });
+                object obj = getValue.Invoke(value, new object[] { index });
 
                 HandleLocalResource(resourceType,
                                     method,
@@ -1439,7 +1439,7 @@ public static class DotNetRdfHelper
 
             if (rdfNodeContainer != null)
             {
-                var container = CreateRdfContainer(collectionType,
+                INode container = CreateRdfContainer(collectionType,
                                                      rdfNodeContainer,
                                                      graph);
                 graph.Assert(new Triple(resource, attribute, container));
@@ -1449,7 +1449,7 @@ public static class DotNetRdfHelper
         {
             IEnumerable<object> collection = new EnumerableWrapper(value);
 
-            foreach (var obj in collection)
+            foreach (object obj in collection)
             {
                 HandleLocalResource(resourceType,
                                     method,
@@ -1465,7 +1465,7 @@ public static class DotNetRdfHelper
 
             if (rdfNodeContainer != null)
             {
-                var container = CreateRdfContainer(collectionType,
+                INode container = CreateRdfContainer(collectionType,
                                                      rdfNodeContainer,
                                                      graph);
                 graph.Assert(new Triple(resource, attribute, container));
@@ -1493,11 +1493,11 @@ public static class DotNetRdfHelper
         if (RDF_LIST.Equals(collectionType.collectionType))
         {
             INode root = graph.CreateBlankNode();
-            var current = root;
+            INode current = root;
 
-            for (var i = 0; i < rdfNodeContainer.Count() - 1; i++)
+            for (int i = 0; i < rdfNodeContainer.Count() - 1; i++)
             {
-                var node = rdfNodeContainer[i];
+                INode node = rdfNodeContainer[i];
 
                 graph.Assert(new Triple(current, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListFirst)), node));
 
@@ -1538,7 +1538,7 @@ public static class DotNetRdfHelper
                                     graph.CreateUriNode(OslcConstants.RDF_NAMESPACE + RDF_SEQ)));
         }
 
-        foreach (var node in rdfNodeContainer)
+        foreach (INode node in rdfNodeContainer)
         {
             graph.Assert(new Triple(container, graph.CreateUriNode(OslcConstants.RDF_NAMESPACE + "li"),
                                     node));
@@ -1558,11 +1558,11 @@ public static class DotNetRdfHelper
                                             bool                        onlyNested,
                                             List<INode>                 rdfNodeContainer)
     {
-        var objType = obj.GetType();
+        Type objType = obj.GetType();
 
         INode nestedNode = null;
-        var isReifiedResource = InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IReifiedResource<>), obj.GetType());
-        var value = (! isReifiedResource) ? obj : obj.GetType().GetMethod("GetValue", Type.EmptyTypes).Invoke(obj, null);
+        bool isReifiedResource = InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IReifiedResource<>), obj.GetType());
+        object value = (! isReifiedResource) ? obj : obj.GetType().GetMethod("GetValue", Type.EmptyTypes).Invoke(obj, null);
 
         if (value is string)
         {
@@ -1595,7 +1595,7 @@ public static class DotNetRdfHelper
                 return;
             }
 
-            var valueType = value.GetType();
+            Type valueType = value.GetType();
 
             if (value is bool)
             {
@@ -1641,7 +1641,7 @@ public static class DotNetRdfHelper
                 return;
             }
 
-            var uri = (Uri) value;
+            Uri uri = (Uri) value;
 
             if (!uri.IsAbsoluteUri)
             {
@@ -1664,8 +1664,8 @@ public static class DotNetRdfHelper
         }
         else if (objType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
         {
-            var ns        = TypeFactory.GetNamespace(objType);
-            var name      = TypeFactory.GetName(objType);
+            string ns        = TypeFactory.GetNamespace(objType);
+            string name      = TypeFactory.GetName(objType);
 
             Uri aboutURI = null;
             if (value is IResource)
@@ -1719,7 +1719,7 @@ public static class DotNetRdfHelper
             }
             else
             {
-                var triple = new Triple(resource, attribute, nestedNode);
+                Triple triple = new Triple(resource, attribute, nestedNode);
 
                 if (isReifiedResource &&
                     nestedProperties != OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON)
@@ -1738,7 +1738,7 @@ public static class DotNetRdfHelper
 			                                     object                         reifiedResource,
 	                                             IDictionary<string, object>    nestedProperties)
     {
-        var reifiedResourceType = reifiedResource.GetType();
+        Type reifiedResourceType = reifiedResource.GetType();
         INode uriref = graph.CreateBlankNode();
 
         graph.Assert(new Triple(uriref, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfSubject)), triple.Subject));
@@ -1755,12 +1755,12 @@ public static class DotNetRdfHelper
 
     private static string GetDefaultPropertyName(MethodInfo method)
     {
-        var methodName    = method.Name;
-        var    startingIndex = methodName.StartsWith(METHOD_NAME_START_GET) ? METHOD_NAME_START_GET_LENGTH : METHOD_NAME_START_IS_LENGTH;
-        var    endingIndex   = startingIndex + 1;
+        string methodName    = method.Name;
+        int    startingIndex = methodName.StartsWith(METHOD_NAME_START_GET) ? METHOD_NAME_START_GET_LENGTH : METHOD_NAME_START_IS_LENGTH;
+        int    endingIndex   = startingIndex + 1;
 
         // We want the name to start with a lower-case letter
-        var lowercasedFirstCharacter = methodName.Substring(startingIndex,
+        string lowercasedFirstCharacter = methodName.Substring(startingIndex,
                                                                1).ToLower(CultureInfo.GetCultureInfo("en"));
 
         if (methodName.Length == endingIndex)
@@ -1775,24 +1775,24 @@ public static class DotNetRdfHelper
     private static void RecursivelyCollectNamespaceMappings(INamespaceMapper    namespaceMappings,
                                                             Type                resourceType)
     {
-        var oslcSchemaAttribute = (OslcSchema[])resourceType.Assembly.GetCustomAttributes(typeof(OslcSchema), false);
+        OslcSchema[] oslcSchemaAttribute = (OslcSchema[])resourceType.Assembly.GetCustomAttributes(typeof(OslcSchema), false);
 
         if (oslcSchemaAttribute.Length > 0)
         {
-            var oslcNamespaceDefinitionAnnotations =
+            OslcNamespaceDefinition[] oslcNamespaceDefinitionAnnotations =
                 (OslcNamespaceDefinition[])oslcSchemaAttribute[0].namespaceType.GetMethod("GetNamespaces", Type.EmptyTypes).Invoke(null, null);
 
-            foreach (var oslcNamespaceDefinitionAnnotation in oslcNamespaceDefinitionAnnotations)
+            foreach (OslcNamespaceDefinition oslcNamespaceDefinitionAnnotation in oslcNamespaceDefinitionAnnotations)
             {
-                var prefix       = oslcNamespaceDefinitionAnnotation.prefix;
-                var namespaceURI = oslcNamespaceDefinitionAnnotation.namespaceURI;
+                string prefix       = oslcNamespaceDefinitionAnnotation.prefix;
+                string namespaceURI = oslcNamespaceDefinitionAnnotation.namespaceURI;
 
                 namespaceMappings.AddNamespace(prefix,
                                                new Uri(namespaceURI));
             }
         }
 
-        var baseType = resourceType.BaseType;
+        Type baseType = resourceType.BaseType;
 
         if (baseType != null)
         {
@@ -1800,11 +1800,11 @@ public static class DotNetRdfHelper
                                                 baseType);
         }
 
-        var interfaces = resourceType.GetInterfaces();
+        Type[] interfaces = resourceType.GetInterfaces();
 
         if (interfaces != null)
         {
-            foreach (var interfac in interfaces)
+            foreach (Type interfac in interfaces)
             {
                 RecursivelyCollectNamespaceMappings(namespaceMappings,
                                                     interfac);
@@ -1816,7 +1816,7 @@ public static class DotNetRdfHelper
                                               string            ns,
                                               INamespaceMapper  namespaceMappings)
     {
-        var uri = new Uri(ns);
+        Uri uri = new Uri(ns);
 
         if (namespaceMappings.GetPrefix(uri) == null)
         {
@@ -1828,11 +1828,11 @@ public static class DotNetRdfHelper
             else
             {
                 // There is already a namespace for this prefix.  We need to generate a new unique prefix.
-                var index = 1;
+                int index = 1;
 
                 while (true)
                 {
-                    var newPrefix = prefix + index;
+                    string newPrefix = prefix + index;
 
                     if (!namespaceMappings.HasNamespace(newPrefix))
                     {

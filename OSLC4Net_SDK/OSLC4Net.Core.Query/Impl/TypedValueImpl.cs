@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -52,11 +52,11 @@ internal class TypedValueImpl : ValueImpl, TypedValue
         {
             if (prefixedName == null)
             {
-                var rawPName = tree.GetChild(1).Text;
+                string rawPName = tree.GetChild(1).Text;
 
                 prefixedName = new PName();
 
-                var colon = rawPName.IndexOf(':');
+                int colon = rawPName.IndexOf(':');
 
                 if (colon < 0) {
                     prefixedName.local = rawPName;

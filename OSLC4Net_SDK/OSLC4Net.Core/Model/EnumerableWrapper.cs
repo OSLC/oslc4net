@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -28,7 +28,7 @@ public class EnumerableWrapper : IEnumerable<object>
 
     public IEnumerator<object> GetEnumerator()
     {
-        var method = opaqueObj.GetType().GetMethod("GetEnumerator", Type.EmptyTypes);
+        MethodInfo method = opaqueObj.GetType().GetMethod("GetEnumerator", Type.EmptyTypes);
 
         method = method.MakeGenericMethod();
 

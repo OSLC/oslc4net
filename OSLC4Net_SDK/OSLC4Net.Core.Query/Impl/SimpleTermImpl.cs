@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -49,11 +49,11 @@ internal abstract class SimpleTermImpl : SimpleTerm
         {
             if (property == null)
             {
-                var rawPName = tree.GetChild(0).Text;
+                string rawPName = tree.GetChild(0).Text;
 
                 property = new PName();
 
-                var colon = rawPName.IndexOf(':');
+                int colon = rawPName.IndexOf(':');
 
                 if (colon < 0) {
                     property.local = rawPName;

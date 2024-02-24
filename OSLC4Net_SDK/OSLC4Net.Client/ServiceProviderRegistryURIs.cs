@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -34,7 +34,7 @@ public static class ServiceProviderRegistryURIs
     static ServiceProviderRegistryURIs()
     {
         LOGGER.Debug($"Checking {SYSTEM_PROPERTY_NAME_REGISTRY_URI} env var for OSLC SPC URI");
-        var registryURI = Environment.GetEnvironmentVariable(SYSTEM_PROPERTY_NAME_REGISTRY_URI);
+        string registryURI = Environment.GetEnvironmentVariable(SYSTEM_PROPERTY_NAME_REGISTRY_URI);
 
         string defaultBase = null;
 
@@ -42,7 +42,7 @@ public static class ServiceProviderRegistryURIs
         {
             // We need at least one default URI
 
-            var hostName = "localhost";
+            string hostName = "localhost";
 
             try
             {

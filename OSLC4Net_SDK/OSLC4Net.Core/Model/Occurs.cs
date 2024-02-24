@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -39,7 +39,7 @@ public static class OccursExtension
 {
     public static string ToString(Occurs occurs)
     {
-        var attributes = (URI[])occurs.GetType().GetField(occurs.ToString()).GetCustomAttributes(typeof(URI), false);
+        URI[] attributes = (URI[])occurs.GetType().GetField(occurs.ToString()).GetCustomAttributes(typeof(URI), false);
 
         return attributes.Length > 0 ? attributes[0].uri : string.Empty;
 	    }
@@ -48,7 +48,7 @@ public static class OccursExtension
     {
 	        foreach (Occurs occurs in Enum.GetValues(typeof(Occurs)))
         {
-            var uri = ToString(occurs);
+            string uri = ToString(occurs);
 
             if (uri.Equals(value))
             {

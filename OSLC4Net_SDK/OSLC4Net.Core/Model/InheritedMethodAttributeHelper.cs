@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -27,7 +27,7 @@ public static class InheritedMethodAttributeHelper
     /// <returns></returns>
     public static T GetAttribute<T>(MethodInfo method) where T : System.Attribute
     {
-        var attributes = (T[])method.GetCustomAttributes(typeof(T), true);
+        T[] attributes = (T[])method.GetCustomAttributes(typeof(T), true);
 
         if (attributes.Length > 0)
         {

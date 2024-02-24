@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -35,7 +35,7 @@ class TypeExtension
 {
     public static string ToString(Type type)
     {
-        var attributes = (Description[])type.GetType().GetField(type.ToString()).GetCustomAttributes(typeof(Description), false);
+        Description[] attributes = (Description[])type.GetType().GetField(type.ToString()).GetCustomAttributes(typeof(Description), false);
 
         return attributes.Length > 0 ? attributes[0].value : string.Empty;
     }
@@ -44,7 +44,7 @@ class TypeExtension
     {
         foreach (Type type in Enum.GetValues(typeof(Type)))
         {
-            var description = ToString(type);
+            string description = ToString(type);
 
             if (description.Equals(value))
             {

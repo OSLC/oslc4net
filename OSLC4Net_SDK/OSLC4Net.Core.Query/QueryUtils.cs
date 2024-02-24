@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -42,11 +42,11 @@ public class QueryUtils
             return new Dictionary<string, string>();
         }
 
-        var parser = new OslcPrefixParser(prefixExpression);
-        var rawTree = (CommonTree)parser.Result;
+        OslcPrefixParser parser = new OslcPrefixParser(prefixExpression);
+        CommonTree rawTree = (CommonTree)parser.Result;
 
-        var rawPrefixes = rawTree.Children;
-        var prefixMap =
+        IList<ITree> rawPrefixes = rawTree.Children;
+        PrefixMap prefixMap =
             new PrefixMap(rawPrefixes.Count);
 
          foreach (CommonTree rawPrefix in rawPrefixes) {
@@ -55,8 +55,8 @@ public class QueryUtils
                  throw new ParseException(rawPrefix.ToString());
              }
 
-            var pn = rawPrefix.GetChild(0).Text;
-            var uri = rawPrefix.GetChild(1).Text;
+            string pn = rawPrefix.GetChild(0).Text;
+            string uri = rawPrefix.GetChild(1).Text;
 
              uri = uri.Substring(1, uri.Length - 2);
 
@@ -82,9 +82,9 @@ public class QueryUtils
     {
         try
         {
-            var parser = new OslcWhereParser(whereExpression);
-            var rawTree = (CommonTree)parser.Result;
-            var child = rawTree.GetChild(0);
+            OslcWhereParser parser = new OslcWhereParser(whereExpression);
+            CommonTree rawTree = (CommonTree)parser.Result;
+            ITree child = rawTree.GetChild(0);
 
             if (child is CommonErrorNode)
             {
@@ -114,9 +114,9 @@ public class QueryUtils
     {
         try
         {
-            var parser = new OslcSelectParser(selectExpression);
-            var rawTree = (CommonTree)parser.Result;
-            var child = rawTree.GetChild(0);
+            OslcSelectParser parser = new OslcSelectParser(selectExpression);
+            CommonTree rawTree = (CommonTree)parser.Result;
+            ITree child = rawTree.GetChild(0);
 
             if (child is CommonErrorNode)
             {
@@ -146,9 +146,9 @@ public class QueryUtils
     {
         try
         {
-            var parser = new OslcSelectParser(propertiesExpression);
-            var rawTree = (CommonTree)parser.Result;
-            var child = rawTree.GetChild(0);
+            OslcSelectParser parser = new OslcSelectParser(propertiesExpression);
+            CommonTree rawTree = (CommonTree)parser.Result;
+            ITree child = rawTree.GetChild(0);
 
             if (child is CommonErrorNode)
             {
@@ -180,9 +180,9 @@ public class QueryUtils
     {
         try {
 
-            var parser = new OslcOrderByParser(orderByExpression);
-            var rawTree = (CommonTree)parser.Result;
-            var child = rawTree.GetChild(0);
+            OslcOrderByParser parser = new OslcOrderByParser(orderByExpression);
+            CommonTree rawTree = (CommonTree)parser.Result;
+            ITree child = rawTree.GetChild(0);
 
             if (child is CommonErrorNode) {
                 throw new ParseException(child.ToString());
@@ -220,10 +220,10 @@ public class QueryUtils
     public static IDictionary<string, object>
     InvertSelectedProperties(Properties properties)
     {
-        var children = properties.Children;
+        IList<Property> children = properties.Children;
         IDictionary<string, object> result = new Dictionary<string, object>(children.Count);
 
-        foreach (var property in children) {
+        foreach (Property property in children) {
 
             PName pname = null;
             string propertyName = null;
@@ -296,12 +296,12 @@ public class QueryUtils
             return result;
         }
 
-        var commonNestedProperties =
+        IDictionary<string, object> commonNestedProperties =
             ((NestedWildcardProperties)result).CommonNestedProperties();
 
-        foreach (var propertyName in result.Keys) {
+        foreach (string propertyName in result.Keys) {
 
-            var nestedProperties =
+            IDictionary<string, object> nestedProperties =
                 (IDictionary<string, object>)result[propertyName];
 
             if (nestedProperties == OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON) {
@@ -330,20 +330,20 @@ public class QueryUtils
     {
         try {
 
-            var parser = new OslcSearchTermsParser(searchTermsExpression);
-            var rawTree = (CommonTree)parser.Result;
-            var child = (CommonTree)rawTree.GetChild(0);
+            OslcSearchTermsParser parser = new OslcSearchTermsParser(searchTermsExpression);
+            CommonTree rawTree = (CommonTree)parser.Result;
+            CommonTree child = (CommonTree)rawTree.GetChild(0);
 
             if (child is CommonErrorNode) {
                 throw ((CommonErrorNode)child).trappedException;
             }
 
-            var rawList = rawTree.Children;
-            var stringList = new StringList(rawList.Count);
+            IList<ITree> rawList = rawTree.Children;
+            StringList stringList = new StringList(rawList.Count);
 
             foreach (CommonTree str in rawList) {
 
-                var rawString = str.Text;
+                string rawString = str.Text;
 
                 stringList.Add(rawString.Substring(1, rawString.Length-2));
             }
@@ -369,10 +369,10 @@ public class QueryUtils
         public override string
         ToString()
         {
-            var buffer = new StringBuilder();
-            var first = true;
+            StringBuilder buffer = new StringBuilder();
+            bool first = true;
 
-            foreach (var key in Keys)
+            foreach (string key in Keys)
             {
 
                 if (first)
@@ -408,10 +408,10 @@ public class QueryUtils
         public override string
         ToString()
         {
-            var buffer = new StringBuilder();
-            var first = true;
+            StringBuilder buffer = new StringBuilder();
+            bool first = true;
 
-            foreach (var str in this) {
+            foreach (string str in this) {
 
                 if (first) {
                     first = false;
@@ -500,13 +500,13 @@ public class QueryUtils
         IDictionary<string, object> rhs
     )
     {
-        var propertyNames = rhs.Keys;
+        ICollection<string> propertyNames = rhs.Keys;
 
-        foreach (var propertyName in propertyNames) {
+        foreach (string propertyName in propertyNames) {
 
-            var lhsNestedProperties =
+            IDictionary<string, object> lhsNestedProperties =
                 (IDictionary<string, object>)lhs[propertyName];
-            var rhsNestedProperties =
+            IDictionary<string, object> rhsNestedProperties =
                 (IDictionary<string, object>)rhs[propertyName];
 
             if (lhsNestedProperties == rhsNestedProperties) {

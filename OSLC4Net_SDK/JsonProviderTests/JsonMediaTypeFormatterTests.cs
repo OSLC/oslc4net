@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -48,12 +48,12 @@ public class JsonMediaTypeFormatterTests
         OslcJsonMediaTypeFormatter formatter = new();
 
         Assert.IsNotNull(changeRequest1);
-        var json = Serialize<ChangeRequest>(formatter, changeRequest1, OslcMediaType.APPLICATION_JSON_TYPE);
+        string json = Serialize<ChangeRequest>(formatter, changeRequest1, OslcMediaType.APPLICATION_JSON_TYPE);
 
         Assert.IsNotNull(json);
         Debug.WriteLine(json);
 
-        var changeRequest2 = await Deserialize<ChangeRequest>(formatter, json, OslcMediaType.APPLICATION_JSON_TYPE);
+        ChangeRequest changeRequest2 = await Deserialize<ChangeRequest>(formatter, json, OslcMediaType.APPLICATION_JSON_TYPE);
 
         Assert.IsNotNull(changeRequest2);
         Assert.AreEqual(changeRequest1.GetAbout(), changeRequest2.GetAbout());
@@ -86,15 +86,15 @@ public class JsonMediaTypeFormatterTests
                                                null);
         OSLC4Net.Core.JsonProvider.OslcJsonMediaTypeFormatter formatter = new(json, false);
 
-        var jsonString = SerializeCollection<ChangeRequest>(formatter, crListOut, OslcMediaType.APPLICATION_JSON_TYPE);
+        string jsonString = SerializeCollection<ChangeRequest>(formatter, crListOut, OslcMediaType.APPLICATION_JSON_TYPE);
 
-        var crListIn = DeserializeCollection<ChangeRequest>(formatter, jsonString, OslcMediaType.APPLICATION_JSON_TYPE).ToList();
+        List<ChangeRequest> crListIn = DeserializeCollection<ChangeRequest>(formatter, jsonString, OslcMediaType.APPLICATION_JSON_TYPE).ToList();
         Assert.AreEqual(crListOut.Count, crListIn.Count);
 
         //No guarantees of order in a collection, use the "about" attribute to identify individual ChangeRequests
-        foreach (var cr in crListIn)
+        foreach (ChangeRequest cr in crListIn)
         {
-            var crAboutUri = cr.GetAbout().AbsoluteUri;
+            string crAboutUri = cr.GetAbout().AbsoluteUri;
 
             if (crAboutUri.Equals("http://com/somewhere/changeRequest1"))
             {

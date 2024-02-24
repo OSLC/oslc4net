@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -44,7 +44,7 @@ internal class CompoundTermImpl : SimpleTermImpl, CompoundTerm
         {
             if (children == null)
             {
-                var treeChildren =
+                IList<ITree> treeChildren =
                     isTopLevel ?
                         tree.Children :
                         ((CommonTree)tree.GetChild(1)).Children;
@@ -81,16 +81,16 @@ internal class CompoundTermImpl : SimpleTermImpl, CompoundTerm
 
     public override string ToString()
     {
-         var builder = new StringBuilder();
+         StringBuilder builder = new StringBuilder();
 
         if (! isTopLevel) {
             builder.Append(Property.ToString());
             builder.Append('{');
         }
 
-        var first = true;
+        bool first = true;
 
-        foreach (var term in Children) {
+        foreach (SimpleTerm term in Children) {
 
             if (first) {
                 first = false;

@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -80,7 +80,7 @@ public class ResourceShape : AbstractResource
 	    public void SetDescribes(Uri[] describes) {
 	        this.describes.Clear();
 	        if (describes != null) {
-            foreach (var desc in describes) {
+            foreach (Uri desc in describes) {
 	                this.describes.Add(desc);
             }
 	        }
@@ -89,7 +89,7 @@ public class ResourceShape : AbstractResource
 	    public void SetProperties(Property[] properties) {
 	        this.properties.Clear();
 	        if (properties != null) {
-            foreach (var prop in properties) {
+            foreach (Property prop in properties) {
 	                this.properties.Add(prop);
             }
 	        }

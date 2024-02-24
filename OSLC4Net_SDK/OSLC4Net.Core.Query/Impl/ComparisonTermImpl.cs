@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -67,7 +67,7 @@ internal class ComparisonTermImpl : SimpleTermImpl, ComparisonTerm
         {
             if (operand == null)
             {
-                var treeOperand = (CommonTree)tree.GetChild(2);
+                CommonTree treeOperand = (CommonTree)tree.GetChild(2);
 
                 operand = CreateValue(treeOperand, "unspported literal value type",
                                       prefixMap);

@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -50,7 +50,7 @@ internal class NestedPropertyImpl : PropertyImpl, NestedProperty
 
     public override string ToString()
     {
-        var buffer = new StringBuilder();
+        StringBuilder buffer = new StringBuilder();
 
         buffer.Append(IsWildcard ?
                             "*" :
