@@ -60,11 +60,11 @@ internal class PropertyImpl : Property
                 throw new InvalidOperationException("wildcard has no identifier");
             }
 
-            string rawIdentifier = tree.Text;
+            var rawIdentifier = tree.Text;
 
             identifier = new PName();
 
-            int colon = rawIdentifier.IndexOf(':');
+            var colon = rawIdentifier.IndexOf(':');
 
             if (colon < 0) {
                 identifier.local = rawIdentifier;

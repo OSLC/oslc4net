@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -23,7 +23,6 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
-using System.Reflection;
 using System.Threading.Tasks;
 
 using OSLC4Net.Core.Attribute;
@@ -93,7 +92,7 @@ public class OslcJsonMediaTypeFormatter : MediaTypeFormatter
 
         if (ImplementsGenericType(typeof(FilteredResource<>), type))
         {
-            Type[] actualTypeArguments = GetChildClassParameterArguments(typeof(FilteredResource<>), type);
+            var actualTypeArguments = GetChildClassParameterArguments(typeof(FilteredResource<>), type);
 
             if (actualTypeArguments.Count() != 1)
             {
@@ -126,7 +125,7 @@ public class OslcJsonMediaTypeFormatter : MediaTypeFormatter
             return true;
         }
 
-        Type memberType = GetMemberType(type);
+        var memberType = GetMemberType(type);
 
         if (memberType == null)
         {
@@ -159,10 +158,10 @@ public class OslcJsonMediaTypeFormatter : MediaTypeFormatter
                 {
                     if (ImplementsGenericType(typeof(FilteredResource<>), type))
                     {
-                        PropertyInfo resourceProp = value.GetType().GetProperty("Resource");
-                        Type[] actualTypeArguments = GetChildClassParameterArguments(typeof(FilteredResource<>), type);
-                        object objects = resourceProp.GetValue(value, null);
-                        PropertyInfo propertiesProp = value.GetType().GetProperty("Properties");
+                        var resourceProp = value.GetType().GetProperty("Resource");
+                        var actualTypeArguments = GetChildClassParameterArguments(typeof(FilteredResource<>), type);
+                        var objects = resourceProp.GetValue(value, null);
+                        var propertiesProp = value.GetType().GetProperty("Properties");
 
                         if (!ImplementsICollection(actualTypeArguments[0]))
                         {
@@ -173,7 +172,7 @@ public class OslcJsonMediaTypeFormatter : MediaTypeFormatter
                         {
                             //Subject URI for the collection is the query capability
                             //TODO:  should this be set by the app based on service provider info
-                            int portNum = httpRequest.RequestUri.Port;
+                            var portNum = httpRequest.RequestUri.Port;
                             string portString = null;
                             if (portNum == 80 || portNum == 443)
                             {
@@ -184,16 +183,16 @@ public class OslcJsonMediaTypeFormatter : MediaTypeFormatter
                                 portString = ":" + portNum.ToString();
                             }
 
-                            string descriptionAbout = httpRequest.RequestUri.Scheme + "://" +
-                                                      httpRequest.RequestUri.Host +
-                                                      portString +
-                                                      httpRequest.RequestUri.LocalPath;
+                            var descriptionAbout = httpRequest.RequestUri.Scheme + "://" +
+                                                   httpRequest.RequestUri.Host +
+                                                   portString +
+                                                   httpRequest.RequestUri.LocalPath;
 
                             //Subject URI for the responseInfo is the full request URI
-                            string responseInfoAbout = httpRequest.RequestUri.ToString();
+                            var responseInfoAbout = httpRequest.RequestUri.ToString();
 
-                            PropertyInfo totalCountProp = value.GetType().GetProperty("TotalCount");
-                            PropertyInfo nextPageProp = value.GetType().GetProperty("NextPage");
+                            var totalCountProp = value.GetType().GetProperty("TotalCount");
+                            var nextPageProp = value.GetType().GetProperty("NextPage");
 
                             Json = JsonHelper.CreateJson(descriptionAbout, responseInfoAbout,
                                                                (string)nextPageProp.GetValue(value, null),
@@ -239,7 +238,7 @@ public class OslcJsonMediaTypeFormatter : MediaTypeFormatter
             return true;
         }
 
-        Type memberType = GetMemberType(type);
+        var memberType = GetMemberType(type);
 
         if (memberType == null)
         {
@@ -275,15 +274,16 @@ public class OslcJsonMediaTypeFormatter : MediaTypeFormatter
             // readStream.Position = 0;
             // Debug.WriteLine("HTTP response body" + httpResponseBody);
 
-            JsonObject jsonObject = (JsonObject)JsonObject.Load(readStream);
+
+            var jsonObject = (JsonObject)JsonObject.Load(readStream);
             // Debug.WriteLine("JsonMediaTypeFormatter.ReadFromStreamAsync(): Loaded JSON: " + jsonObject?.ToString());
 
-            bool isSingleton = IsSinglton(type);
-            object output = JsonHelper.FromJson(jsonObject, isSingleton ? type : GetMemberType(type));
+            var isSingleton = IsSinglton(type);
+            var output = JsonHelper.FromJson(jsonObject, isSingleton ? type : GetMemberType(type));
 
             if (isSingleton)
             {
-                bool haveOne = (int)output.GetType().GetProperty("Count").GetValue(output, null) > 0;
+                var haveOne = (int)output.GetType().GetProperty("Count").GetValue(output, null) > 0;
 
                 tcs.SetResult(haveOne ? output.GetType().GetProperty("Item").GetValue(output, new object[] { 0 }): null);
             }
@@ -322,13 +322,13 @@ public class OslcJsonMediaTypeFormatter : MediaTypeFormatter
 
         if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IEnumerable<>), type))
         {
-            Type[] interfaces = type.GetInterfaces();
+            var interfaces = type.GetInterfaces();
 
-            foreach (Type interfac in interfaces)
+            foreach (var interfac in interfaces)
             {
                 if (interfac.IsGenericType && interfac.GetGenericTypeDefinition() == typeof(IEnumerable<object>).GetGenericTypeDefinition())
                 {
-                    Type memberType = interfac.GetGenericArguments()[0];
+                    var memberType = interfac.GetGenericArguments()[0];
 
                     if (memberType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
                     {
@@ -345,7 +345,7 @@ public class OslcJsonMediaTypeFormatter : MediaTypeFormatter
 
     private static bool ImplementsGenericType(Type genericType, Type typeToTest)
     {
-        bool isParentGeneric = genericType.IsGenericType;
+        var isParentGeneric = genericType.IsGenericType;
 
         return ImplementsGenericType(genericType, typeToTest, isParentGeneric);
     }
@@ -369,12 +369,12 @@ public class OslcJsonMediaTypeFormatter : MediaTypeFormatter
 
     private static Type[] GetChildClassParameterArguments(Type genericType, Type typeToTest)
     {
-        bool isParentGeneric = genericType.IsGenericType;
+        var isParentGeneric = genericType.IsGenericType;
 
         while (true)
         {
-            Type parentType = typeToTest.BaseType;
-            Type parentToTest = isParentGeneric && parentType.IsGenericType ? parentType.GetGenericTypeDefinition() : parentType;
+            var parentType = typeToTest.BaseType;
+            var parentToTest = isParentGeneric && parentType.IsGenericType ? parentType.GetGenericTypeDefinition() : parentType;
 
             if (parentToTest == genericType)
             {

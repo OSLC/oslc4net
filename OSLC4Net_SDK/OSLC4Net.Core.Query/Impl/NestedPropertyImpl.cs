@@ -50,7 +50,7 @@ internal class NestedPropertyImpl : PropertyImpl, NestedProperty
 
     public override string ToString()
     {
-        StringBuilder buffer = new StringBuilder();
+        var buffer = new StringBuilder();
 
         buffer.Append(IsWildcard ?
                             "*" :

@@ -38,7 +38,7 @@ class SeverityExtension
     {
         foreach (Severity severity in Enum.GetValues(typeof(Severity)))
         {
-            string stringValue = ToString(severity);
+            var stringValue = ToString(severity);
 
             if (stringValue.Equals(value))
             {

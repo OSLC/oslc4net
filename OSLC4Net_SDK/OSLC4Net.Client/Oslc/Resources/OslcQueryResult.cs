@@ -68,9 +68,9 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
 		    if (!rdfInitialized) {
 			    rdfInitialized = true;
 			    rdfGraph = new Graph();
-			    Stream stream = response.Content.ReadAsStreamAsync().Result;
+			    var stream = response.Content.ReadAsStreamAsync().Result;
             IRdfReader parser = new RdfXmlParser();
-            StreamReader streamReader = new StreamReader(stream);
+            var streamReader = new StreamReader(stream);
 
             using (streamReader)
             {
@@ -78,8 +78,8 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
 
 			        //Find a resource with rdf:type of oslc:ResourceInfo
                 rdfType = rdfGraph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
-                IUriNode responseInfo = rdfGraph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + "ResponseInfo"));
-                IEnumerable<Triple> triples = rdfGraph.GetTriplesWithPredicateObject(rdfType, responseInfo);
+                var responseInfo = rdfGraph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + "ResponseInfo"));
+                var triples = rdfGraph.GetTriplesWithPredicateObject(rdfType, responseInfo);
 
 			        //There should only be one - take the first
                 infoResource = triples.Count() == 0 ? null : (triples.First().Subject as IUriNode);
@@ -92,8 +92,8 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
 		    InitializeRdf();
 
 		    if ((nextPageUrl == null || nextPageUrl.Length == 0) && infoResource != null) {
-            IUriNode predicate = rdfGraph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + "nextPage"));
-            IEnumerable<Triple> triples = rdfGraph.GetTriplesWithSubjectPredicate(infoResource, predicate);
+            var predicate = rdfGraph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + "nextPage"));
+            var triples = rdfGraph.GetTriplesWithSubjectPredicate(infoResource, predicate);
 			    if (triples.Count() == 1 && triples.First().Object is IUriNode) {
                 nextPageUrl = (triples.First().Object as IUriNode).Uri.OriginalString;
 			    } else {
@@ -171,10 +171,10 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
 		    InitializeRdf();
 
 		    IList<string> membersUrls = new List<string>();
-        IUriNode membersResource = rdfGraph.CreateUriNode(new Uri(query.GetCapabilityUrl()));
-        IEnumerable<Triple> triples = rdfGraph.GetTriplesWithSubject(membersResource);
+        var membersResource = rdfGraph.CreateUriNode(new Uri(query.GetCapabilityUrl()));
+        var triples = rdfGraph.GetTriplesWithSubject(membersResource);
 
-		    foreach (Triple triple in triples) {
+		    foreach (var triple in triples) {
             try
             {
 				    membersUrls.Add((triple.Object as IUriNode).Uri.ToString());
@@ -197,8 +197,8 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     {
         InitializeRdf();
 
-        IUriNode membersResource = rdfGraph.CreateUriNode(new Uri(query.GetCapabilityUrl()));
-        IEnumerable<Triple> triples = rdfGraph.GetTriplesWithSubject(membersResource);
+        var membersResource = rdfGraph.CreateUriNode(new Uri(query.GetCapabilityUrl()));
+        var triples = rdfGraph.GetTriplesWithSubject(membersResource);
         IEnumerable<T> result = new TripleEnumerableWrapper<T>(triples, rdfGraph);
 
         return result;
@@ -243,7 +243,7 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
             {
                 get
                 {
-                    Triple member = triples.Current;
+                    var member = triples.Current;
 
                     return (T)DotNetRdfHelper.FromDotNetRdfNode((IUriNode)member.Object, graph, typeof(T));
                 }

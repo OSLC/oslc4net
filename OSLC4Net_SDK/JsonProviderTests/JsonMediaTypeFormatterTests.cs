@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -14,55 +14,54 @@
  *******************************************************************************/
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Json;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using System.Threading.Tasks;
+using log4net;
 using OSLC4Net.ChangeManagement;
 using OSLC4Net.Core.JsonProvider;
 using OSLC4Net.Core.Model;
+using Xunit;
 
-using log4net;
-using System.Threading.Tasks;
+namespace OSLC4Net.Core.JsonProviderTests;
 
-namespace JsonProviderTests;
-
-[TestClass]
 public class JsonMediaTypeFormatterTests
 {
-    [TestMethod]
+    [Fact]
     public async Task TestJsonSerialization()
     {
         ChangeRequest changeRequest1 = new(new Uri("http://com/somewhere/changeReuest"));
 
         changeRequest1.SetFixed(true);
-        changeRequest1.AddAffectedByDefect(new Link(new Uri("http://com/somewhere/changeRequest2"), "Test of links"));
+        changeRequest1.AddAffectedByDefect(new Link(new Uri("http://com/somewhere/changeRequest2"),
+            label: "Test of links"));
 
         OslcJsonMediaTypeFormatter formatter = new();
 
-        Assert.IsNotNull(changeRequest1);
-        string json = Serialize<ChangeRequest>(formatter, changeRequest1, OslcMediaType.APPLICATION_JSON_TYPE);
+        Assert.NotNull(changeRequest1);
+        var json = Serialize<ChangeRequest>(formatter, changeRequest1, OslcMediaType.APPLICATION_JSON_TYPE);
 
-        Assert.IsNotNull(json);
+        Assert.NotNull(json);
         Debug.WriteLine(json);
 
-        ChangeRequest changeRequest2 = await Deserialize<ChangeRequest>(formatter, json, OslcMediaType.APPLICATION_JSON_TYPE);
+        var changeRequest2 = await Deserialize<ChangeRequest>(formatter, json, OslcMediaType.APPLICATION_JSON_TYPE);
 
-        Assert.IsNotNull(changeRequest2);
-        Assert.AreEqual(changeRequest1.GetAbout(), changeRequest2.GetAbout());
-        Assert.AreEqual(changeRequest1.IsFixed(), changeRequest2.IsFixed());
-        Assert.AreEqual(changeRequest1.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
-        Assert.AreEqual(changeRequest1.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
+        Assert.NotNull(changeRequest2);
+        Assert.Equal(changeRequest1.GetAbout(), changeRequest2.GetAbout());
+        Assert.Equal(changeRequest1.IsFixed(), changeRequest2.IsFixed());
+        Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetValue(),
+            changeRequest2.GetAffectedByDefects()[0].GetValue());
+        Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetLabel(),
+            changeRequest2.GetAffectedByDefects()[0].GetLabel());
     }
 
-    [TestMethod]
+    [Fact]
     public void TestJsonCollectionSerialization()
     {
         List<ChangeRequest> crListOut = new();
@@ -86,27 +85,27 @@ public class JsonMediaTypeFormatterTests
                                                null);
         OSLC4Net.Core.JsonProvider.OslcJsonMediaTypeFormatter formatter = new(json, false);
 
-        string jsonString = SerializeCollection<ChangeRequest>(formatter, crListOut, OslcMediaType.APPLICATION_JSON_TYPE);
+        var jsonString = SerializeCollection<ChangeRequest>(formatter, crListOut, OslcMediaType.APPLICATION_JSON_TYPE);
 
-        List<ChangeRequest> crListIn = DeserializeCollection<ChangeRequest>(formatter, jsonString, OslcMediaType.APPLICATION_JSON_TYPE).ToList();
-        Assert.AreEqual(crListOut.Count, crListIn.Count);
+        var crListIn = DeserializeCollection<ChangeRequest>(formatter, jsonString, OslcMediaType.APPLICATION_JSON_TYPE).ToList();
+        Assert.Equal(crListOut.Count, crListIn.Count);
 
         //No guarantees of order in a collection, use the "about" attribute to identify individual ChangeRequests
-        foreach (ChangeRequest cr in crListIn)
+        foreach (var cr in crListIn)
         {
-            string crAboutUri = cr.GetAbout().AbsoluteUri;
+            var crAboutUri = cr.GetAbout().AbsoluteUri;
 
             if (crAboutUri.Equals("http://com/somewhere/changeRequest1"))
             {
-                Assert.AreEqual(cr.IsFixed(), changeRequest1.IsFixed());
-                Assert.AreEqual(cr.GetAffectedByDefects()[0].GetValue(), changeRequest1.GetAffectedByDefects()[0].GetValue());
-                Assert.AreEqual(cr.GetAffectedByDefects()[0].GetLabel(), changeRequest1.GetAffectedByDefects()[0].GetLabel());
+                Assert.Equal(cr.IsFixed(), changeRequest1.IsFixed());
+                Assert.Equal(cr.GetAffectedByDefects()[0].GetValue(), changeRequest1.GetAffectedByDefects()[0].GetValue());
+                Assert.Equal(cr.GetAffectedByDefects()[0].GetLabel(), changeRequest1.GetAffectedByDefects()[0].GetLabel());
             }
             else if (crAboutUri.Equals("http://com/somewhere/changeRequest2"))
             {
-                Assert.AreEqual(cr.IsFixed(), changeRequest2.IsFixed());
-                Assert.AreEqual(cr.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
-                Assert.AreEqual(cr.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
+                Assert.Equal(cr.IsFixed(), changeRequest2.IsFixed());
+                Assert.Equal(cr.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
+                Assert.Equal(cr.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
             }
             else
             {

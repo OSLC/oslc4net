@@ -27,7 +27,7 @@ public static class InheritedMethodAttributeHelper
     /// <returns></returns>
     public static T GetAttribute<T>(MethodInfo method) where T : System.Attribute
     {
-        T[] attributes = (T[])method.GetCustomAttributes(typeof(T), true);
+        var attributes = (T[])method.GetCustomAttributes(typeof(T), true);
 
         if (attributes.Length > 0)
         {

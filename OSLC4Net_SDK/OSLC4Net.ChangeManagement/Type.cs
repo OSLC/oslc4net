@@ -35,7 +35,7 @@ class TypeExtension
 {
     public static string ToString(Type type)
     {
-        Description[] attributes = (Description[])type.GetType().GetField(type.ToString()).GetCustomAttributes(typeof(Description), false);
+        var attributes = (Description[])type.GetType().GetField(type.ToString()).GetCustomAttributes(typeof(Description), false);
 
         return attributes.Length > 0 ? attributes[0].value : string.Empty;
     }
@@ -44,7 +44,7 @@ class TypeExtension
     {
         foreach (Type type in Enum.GetValues(typeof(Type)))
         {
-            string description = ToString(type);
+            var description = ToString(type);
 
             if (description.Equals(value))
             {

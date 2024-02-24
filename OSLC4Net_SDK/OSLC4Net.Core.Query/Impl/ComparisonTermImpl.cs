@@ -67,7 +67,7 @@ internal class ComparisonTermImpl : SimpleTermImpl, ComparisonTerm
         {
             if (operand == null)
             {
-                CommonTree treeOperand = (CommonTree)tree.GetChild(2);
+                var treeOperand = (CommonTree)tree.GetChild(2);
 
                 operand = CreateValue(treeOperand, "unspported literal value type",
                                       prefixMap);

@@ -45,11 +45,11 @@ public class ServiceProviderFactory
         serviceProvider.SetDescription(description);
         serviceProvider.SetPublisher(publisher);
 
-        Dictionary<string, Service> serviceMap = new Dictionary<string, Service>();
+        var serviceMap = new Dictionary<string, Service>();
 
-        foreach (Type resourceType in resourceTypes)
+        foreach (var resourceType in resourceTypes)
         {
-            OslcService[] serviceAttribute = (OslcService[]) resourceType.GetCustomAttributes(typeof(OslcService),false);
+            var serviceAttribute = (OslcService[]) resourceType.GetCustomAttributes(typeof(OslcService),false);
 
             if (serviceAttribute == null || serviceAttribute.Length == 0)
             {
@@ -59,9 +59,9 @@ public class ServiceProviderFactory
                 throw new OslcCoreInvalidAttributeException(resourceType, typeof(OslcService));
             }
 
-            string domain = serviceAttribute[0].value;
+            var domain = serviceAttribute[0].value;
             Service service;
-            bool serviceExists = serviceMap.TryGetValue(domain, out service);
+            var serviceExists = serviceMap.TryGetValue(domain, out service);
             if (!serviceExists && service == null) {
                 service = new Service(new Uri(domain));
                 serviceMap[domain] =  service;
@@ -71,7 +71,7 @@ public class ServiceProviderFactory
         }
 
         // add the services to the provider
-        foreach (Service service in serviceMap.Values)
+        foreach (var service in serviceMap.Values)
         {
             serviceProvider.AddService(service);
         }
@@ -90,27 +90,27 @@ public class ServiceProviderFactory
     private static void HandleResourceType(string baseURI, Type resourceType,
             Service service, Dictionary<string,object> pathParameterValues)
     {
-        foreach (MethodInfo method in resourceType.GetMethods())
+        foreach (var method in resourceType.GetMethods())
         {
 
             if (method.Name.StartsWith("Get"))
             {
-                OslcQueryCapability [] queryCapabilityAttribute = (OslcQueryCapability [])method.GetCustomAttributes(typeof(OslcQueryCapability), false);
+                var queryCapabilityAttribute = (OslcQueryCapability [])method.GetCustomAttributes(typeof(OslcQueryCapability), false);
                 string[] resourceShapes = null;
                 if (queryCapabilityAttribute != null && queryCapabilityAttribute.Length > 0)
                 {
                     service.AddQueryCapability(CreateQueryCapability(baseURI, method, pathParameterValues));
-                    string resourceShape = queryCapabilityAttribute[0].resourceShape;
+                    var resourceShape = queryCapabilityAttribute[0].resourceShape;
                     if ((resourceShape != null) && (resourceShape.Length > 0))
                     {
                         resourceShapes = new string[] {resourceShape};
                     }
                 }
-                OslcDialogs [] dialogsAttribute = (OslcDialogs [])method.GetCustomAttributes(typeof(OslcDialogs), false);
+                var dialogsAttribute = (OslcDialogs [])method.GetCustomAttributes(typeof(OslcDialogs), false);
                 if (dialogsAttribute != null && dialogsAttribute.Length > 0)
                 {
-                    OslcDialog [] dialogs = dialogsAttribute[0].value;
-                    foreach (OslcDialog dialog in dialogs)
+                    var dialogs = dialogsAttribute[0].value;
+                    foreach (var dialog in dialogs)
                     {
                         if (dialog != null) {
                             service.AddSelectionDialog(CreateSelectionDialog(baseURI, method, dialog, resourceShapes, pathParameterValues));
@@ -119,7 +119,7 @@ public class ServiceProviderFactory
                 }
                 else
                 {
-                    OslcDialog [] dialogAttribute = (OslcDialog [])method.GetCustomAttributes(typeof(OslcDialog), false);
+                    var dialogAttribute = (OslcDialog [])method.GetCustomAttributes(typeof(OslcDialog), false);
                     if (dialogAttribute != null && dialogAttribute.Length > 0)
                     {
                         service.AddSelectionDialog(CreateSelectionDialog(baseURI, method, dialogAttribute[0], resourceShapes, pathParameterValues));
@@ -127,18 +127,18 @@ public class ServiceProviderFactory
                 }
             } else {
                 if (method.Name.StartsWith("Post")) {
-                    OslcCreationFactory [] creationFactoryAttribute =(OslcCreationFactory []) method.GetCustomAttributes(typeof(OslcCreationFactory), false);
+                    var creationFactoryAttribute =(OslcCreationFactory []) method.GetCustomAttributes(typeof(OslcCreationFactory), false);
                     string[] resourceShapes = null;
                     if (creationFactoryAttribute != null && creationFactoryAttribute.Length > 0)
                     {
                         service.AddCreationFactory(CreateCreationFactory(baseURI, method, pathParameterValues));
                         resourceShapes = creationFactoryAttribute[0].resourceShapes;
                     }
-                    OslcDialogs [] dialogsAttribute = (OslcDialogs []) method.GetCustomAttributes(typeof(OslcDialogs), false);
+                    var dialogsAttribute = (OslcDialogs []) method.GetCustomAttributes(typeof(OslcDialogs), false);
                     if (dialogsAttribute != null && dialogsAttribute.Length > 0)
                     {
-                        OslcDialog[] dialogs = dialogsAttribute[0].value;
-                        foreach (OslcDialog dialog in dialogs)
+                        var dialogs = dialogsAttribute[0].value;
+                        foreach (var dialog in dialogs)
                         {
                             if (dialog != null)
                             {
@@ -148,7 +148,7 @@ public class ServiceProviderFactory
                     }
                     else
                     {
-                        OslcDialog [] dialogAttribute = (OslcDialog []) method.GetCustomAttributes(typeof(OslcDialog), false);
+                        var dialogAttribute = (OslcDialog []) method.GetCustomAttributes(typeof(OslcDialog), false);
                         if (dialogAttribute != null && dialogAttribute.Length > 0)
                         {
                             service.AddCreationDialog(CreateCreationDialog(baseURI, method, dialogAttribute[0], resourceShapes, pathParameterValues));
@@ -161,21 +161,21 @@ public class ServiceProviderFactory
 
     private static CreationFactory CreateCreationFactory(string baseURI, MethodInfo method, Dictionary<string,object> pathParameterValues)
     {
-        OslcCreationFactory [] creationFactoryAttribute = (OslcCreationFactory [])method.GetCustomAttributes(typeof(OslcCreationFactory), false);
+        var creationFactoryAttribute = (OslcCreationFactory [])method.GetCustomAttributes(typeof(OslcCreationFactory), false);
 
-        string title = creationFactoryAttribute[0].title;
-        string label = creationFactoryAttribute[0].label;
-        string[] resourceShapes = creationFactoryAttribute[0].resourceShapes;
-        string[] resourceTypes = creationFactoryAttribute[0].resourceTypes;
-        string[] usages = creationFactoryAttribute[0].usages;
+        var title = creationFactoryAttribute[0].title;
+        var label = creationFactoryAttribute[0].label;
+        var resourceShapes = creationFactoryAttribute[0].resourceShapes;
+        var resourceTypes = creationFactoryAttribute[0].resourceTypes;
+        var usages = creationFactoryAttribute[0].usages;
 
 
-        string typeName = method.DeclaringType.Name;
+        var typeName = method.DeclaringType.Name;
         //controller names must end with Controller
-        int pos = typeName.IndexOf("Controller");
-        string controllerName = typeName.Substring(0, pos);
+        var pos = typeName.IndexOf("Controller");
+        var controllerName = typeName.Substring(0, pos);
 
-        string creation = ResolvePathParameters(baseURI, controllerName.ToLower(), pathParameterValues);
+        var creation = ResolvePathParameters(baseURI, controllerName.ToLower(), pathParameterValues);
         /* TODO Path methodPathAttribute = method.getAttribute(Path.class);
         if (methodPathAttribute != null) {
             creation = creation + '/' + methodPathAttribute.value();
@@ -190,17 +190,17 @@ public class ServiceProviderFactory
             creationFactory.SetLabel(label);
         }
 
-        foreach (string resourceShape in resourceShapes)
+        foreach (var resourceShape in resourceShapes)
         {
             creationFactory.AddResourceShape(new Uri(baseURI + "/" + resourceShape));
         }
 
-        foreach (string resourceType in resourceTypes)
+        foreach (var resourceType in resourceTypes)
         {
             creationFactory.AddResourceType(new Uri(resourceType));
         }
 
-        foreach (string usage in usages)
+        foreach (var usage in usages)
         {
             creationFactory.AddUsage(new Uri(usage));
         }
@@ -210,20 +210,20 @@ public class ServiceProviderFactory
 
     private static QueryCapability CreateQueryCapability(string baseURI, MethodInfo method, Dictionary<string,object> pathParameterValues)
     {
-        OslcQueryCapability [] queryCapabilityAttribute = (OslcQueryCapability [])method.GetCustomAttributes(typeof(OslcQueryCapability), false);
+        var queryCapabilityAttribute = (OslcQueryCapability [])method.GetCustomAttributes(typeof(OslcQueryCapability), false);
 
-        string title = queryCapabilityAttribute[0].title;
-        string label = queryCapabilityAttribute[0].label;
-        string resourceShape = queryCapabilityAttribute[0].resourceShape;
-        string[] resourceTypes = queryCapabilityAttribute[0].resourceTypes;
-        string[] usages = queryCapabilityAttribute[0].usages;
+        var title = queryCapabilityAttribute[0].title;
+        var label = queryCapabilityAttribute[0].label;
+        var resourceShape = queryCapabilityAttribute[0].resourceShape;
+        var resourceTypes = queryCapabilityAttribute[0].resourceTypes;
+        var usages = queryCapabilityAttribute[0].usages;
 
-        string typeName = method.DeclaringType.Name;
+        var typeName = method.DeclaringType.Name;
         //controller names must end with Controller
-        int pos = typeName.IndexOf("Controller");
-        string controllerName = typeName.Substring(0, pos);
+        var pos = typeName.IndexOf("Controller");
+        var controllerName = typeName.Substring(0, pos);
 
-        string query = ResolvePathParameters(baseURI, controllerName.ToLower(), pathParameterValues);
+        var query = ResolvePathParameters(baseURI, controllerName.ToLower(), pathParameterValues);
         /* TODO
         Path methodPathAttribute = method.getAttribute(Path.class);
         if (methodPathAttribute != null) {
@@ -242,12 +242,12 @@ public class ServiceProviderFactory
             queryCapability.SetResourceShape(new Uri(baseURI + resourceShape));
         }
 
-        foreach (string resourceType in resourceTypes)
+        foreach (var resourceType in resourceTypes)
         {
             queryCapability.AddResourceType(new Uri(resourceType));
         }
 
-        foreach (string usage in usages)
+        foreach (var usage in usages)
         {
             queryCapability.AddUsage(new Uri(usage));
         }
@@ -271,17 +271,17 @@ public class ServiceProviderFactory
             Dictionary<string,object> pathParameterValues)
     {
 
-        string title = dialogAttribute.title;
-        string label = dialogAttribute.label;
-        string dialogURI = dialogAttribute.uri;
-        string hintWidth = dialogAttribute.hintWidth;
-        string hintHeight = dialogAttribute.hintHeight;
-        string[] resourceTypes = dialogAttribute.resourceTypes;
-        string[] usages = dialogAttribute.usages;
-        string typeName = method.DeclaringType.Name;
+        var title = dialogAttribute.title;
+        var label = dialogAttribute.label;
+        var dialogURI = dialogAttribute.uri;
+        var hintWidth = dialogAttribute.hintWidth;
+        var hintHeight = dialogAttribute.hintHeight;
+        var resourceTypes = dialogAttribute.resourceTypes;
+        var usages = dialogAttribute.usages;
+        var typeName = method.DeclaringType.Name;
         //controller names must end with Controller
-        int pos = typeName.IndexOf("Controller");
-        string controllerName = typeName.Substring(0, pos);
+        var pos = typeName.IndexOf("Controller");
+        var controllerName = typeName.Substring(0, pos);
 
 
         string uri;
@@ -312,12 +312,12 @@ public class ServiceProviderFactory
             dialog.SetHintHeight(hintHeight);
         }
 
-        foreach (string resourceType in resourceTypes)
+        foreach (var resourceType in resourceTypes)
         {
             dialog.AddResourceType(new Uri(resourceType));
         }
 
-        foreach (string usage in usages)
+        foreach (var usage in usages)
         {
             dialog.AddUsage(new Uri(usage));
         }

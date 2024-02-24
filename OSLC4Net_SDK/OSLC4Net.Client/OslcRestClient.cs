@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
  * Copyright (c) 2012 IBM Corporation.
  *
@@ -15,7 +15,6 @@
  *******************************************************************************/
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -202,8 +201,8 @@ public sealed class OslcRestClient
         // _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(_mediaType, 1.0));
         // _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*", 0.9));
 
-        HttpResponseMessage response = await _client.GetAsync(_uri);
-        HttpStatusCode statusCode = response.StatusCode;
+        var response = await _client.GetAsync(_uri);
+        var statusCode = response.StatusCode;
 
         return statusCode switch
         {
@@ -223,8 +222,8 @@ public sealed class OslcRestClient
         // _client.DefaultRequestHeaders.Clear();
         // _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(_mediaType));
 
-        HttpResponseMessage response = await _client.GetAsync(_uri);
-        HttpStatusCode statusCode = response.StatusCode;
+        var response = await _client.GetAsync(_uri);
+        var statusCode = response.StatusCode;
 
         switch (statusCode)
         {
@@ -257,11 +256,11 @@ public sealed class OslcRestClient
         // _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(_mediaType, 1.0));
         // _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*", 0.9));
 
-        MediaTypeHeaderValue mediaTypeValue = new MediaTypeHeaderValue(_mediaType);
-        MediaTypeFormatter formatter =
+        var mediaTypeValue = new MediaTypeHeaderValue(_mediaType);
+        var formatter =
             new MediaTypeFormatterCollection(_formatters).FindWriter(oslcResource.GetType(),
                 mediaTypeValue);
-        ObjectContent<T> content = new ObjectContent<T>(oslcResource, formatter);
+        var content = new ObjectContent<T>(oslcResource, formatter);
 
         content.Headers.ContentType = mediaTypeValue;
 
@@ -295,16 +294,16 @@ public sealed class OslcRestClient
         // _client.DefaultRequestHeaders.Clear();
         // _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
 
-        MediaTypeHeaderValue mediaTypeValue = new MediaTypeHeaderValue(_mediaType);
-        MediaTypeFormatter formatter =
+        var mediaTypeValue = new MediaTypeHeaderValue(_mediaType);
+        var formatter =
             new MediaTypeFormatterCollection(_formatters).FindWriter(oslcResource.GetType(),
                 mediaTypeValue);
-        ObjectContent content = new ObjectContent(oslcResource.GetType(), oslcResource, formatter);
+        var content = new ObjectContent(oslcResource.GetType(), oslcResource, formatter);
 
         content.Headers.ContentType = mediaTypeValue;
 
-        HttpResponseMessage response = _client.PostAsync(_uri, content).Result;
-        HttpStatusCode statusCode = response.StatusCode;
+        var response = _client.PostAsync(_uri, content).Result;
+        var statusCode = response.StatusCode;
 
         switch (statusCode)
         {
@@ -327,14 +326,14 @@ public sealed class OslcRestClient
         // _client.DefaultRequestHeaders.Clear();
         // _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
 
-        MediaTypeFormatter formatter =
+        var formatter =
             new MediaTypeFormatterCollection(_formatters).FindWriter(oslcResource.GetType(),
                 new MediaTypeHeaderValue(_mediaType));
-        ObjectContent content = new ObjectContent(oslcResource.GetType(), oslcResource, formatter);
+        var content = new ObjectContent(oslcResource.GetType(), oslcResource, formatter);
 
         content.Headers.ContentType = new MediaTypeHeaderValue(_mediaType);
 
-        HttpResponseMessage response = _client.PutAsync(_uri, content).Result;
+        var response = _client.PutAsync(_uri, content).Result;
 
         return response;
     }
@@ -348,7 +347,7 @@ public sealed class OslcRestClient
         // _client.DefaultRequestHeaders.Clear();
         // _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
 
-        HttpResponseMessage response = _client.DeleteAsync(_uri).Result;
+        var response = _client.DeleteAsync(_uri).Result;
 
         return response;
     }
