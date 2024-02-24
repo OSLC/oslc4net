@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012, 2013 IBM Corporation.
  * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
  *
@@ -22,141 +22,139 @@ using System.Net.Http.Headers;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using OSLC4Net.ChangeManagement;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
 
 using VDS.RDF;
+using Xunit;
 
 namespace DotNetRdfProviderTests;
 
-[TestClass]
 public class RdfXmlMediaTypeFormatterTests
 {
-    [TestMethod]
+    [Fact]
     public void TestRdfXmlSerialization()
     {
-        ChangeRequest changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeReuest"));
+        var changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeReuest"));
 
         changeRequest1.SetFixed(true);
         changeRequest1.AddAffectedByDefect(new Link(new Uri("http://com/somewhere/changeRequest2"), "Test of links"));
 
-        RdfXmlMediaTypeFormatter formatter = new RdfXmlMediaTypeFormatter();
+        var formatter = new RdfXmlMediaTypeFormatter();
 
-        string rdfXml = Serialize(formatter, changeRequest1, OslcMediaType.APPLICATION_RDF_XML_TYPE);
+        var rdfXml = Serialize(formatter, changeRequest1, OslcMediaType.APPLICATION_RDF_XML_TYPE);
 
         Debug.WriteLine(rdfXml);
 
-        ChangeRequest changeRequest2 = Deserialize<ChangeRequest>(formatter, rdfXml, OslcMediaType.APPLICATION_RDF_XML_TYPE);
+        var changeRequest2 = Deserialize<ChangeRequest>(formatter, rdfXml, OslcMediaType.APPLICATION_RDF_XML_TYPE);
 
-        Assert.AreEqual(changeRequest1.GetAbout(), changeRequest2.GetAbout());
-        Assert.AreEqual(changeRequest1.IsFixed(), changeRequest2.IsFixed());
-        Assert.AreEqual(changeRequest1.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
-        Assert.AreEqual(changeRequest1.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
+        Assert.Equal(changeRequest1.GetAbout(), changeRequest2.GetAbout());
+        Assert.Equal(changeRequest1.IsFixed(), changeRequest2.IsFixed());
+        Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
+        Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
     }
 
-    [TestMethod]
+    [Fact]
     public void TestRdfXmlCollectionSerialization()
     {
-        List<ChangeRequest> crListOut = new List<ChangeRequest>();
-        ChangeRequest changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeRequest1"));
+        var crListOut = new List<ChangeRequest>();
+        var changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeRequest1"));
         changeRequest1.SetFixed(true);
         changeRequest1.AddAffectedByDefect(new Link(new Uri("http://com/somewhere/changeRequest2"), "Test of links"));
 
         crListOut.Add(changeRequest1);
 
-        ChangeRequest changeRequest2 = new ChangeRequest(new Uri("http://com/somewhere/changeRequest2"));
+        var changeRequest2 = new ChangeRequest(new Uri("http://com/somewhere/changeRequest2"));
         changeRequest2.SetFixed(false);
         changeRequest2.AddAffectedByDefect(new Link(new Uri("http://com/somewhere/changeRequest1"), "Test of links"));
 
         crListOut.Add(changeRequest2);
 
-        IGraph rdfGraph = DotNetRdfHelper.CreateDotNetRdfGraph("http://com/somewhere/changerequests",
+        var rdfGraph = DotNetRdfHelper.CreateDotNetRdfGraph("http://com/somewhere/changerequests",
                                                                "http://com/somewhere/changerequests?page=20",
                                                                "http://com/somewhere/changerequests?page=21",
                                                                null,
                                                                crListOut,
                                                                null);
         // TODO: fix overload confusion with one arg
-        RdfXmlMediaTypeFormatter formatter = new RdfXmlMediaTypeFormatter(rdfGraph, true);
+        var formatter = new RdfXmlMediaTypeFormatter(rdfGraph, true);
 
-        string rdfXml = SerializeCollection(formatter, crListOut, OslcMediaType.APPLICATION_RDF_XML_TYPE);
+        var rdfXml = SerializeCollection(formatter, crListOut, OslcMediaType.APPLICATION_RDF_XML_TYPE);
 
         Debug.WriteLine(rdfXml);
 
-        List<ChangeRequest> crListIn = DeserializeCollection<ChangeRequest>(formatter, rdfXml, OslcMediaType.APPLICATION_RDF_XML_TYPE).ToList();
-        Assert.AreEqual(crListOut.Count, crListIn.Count);
+        var crListIn = DeserializeCollection<ChangeRequest>(formatter, rdfXml, OslcMediaType.APPLICATION_RDF_XML_TYPE).ToList();
+        Assert.Equal(crListOut.Count, crListIn.Count);
 
         //No guarantees of order in a collection, use the "about" attribute to identify individual ChangeRequests
-        foreach (ChangeRequest cr in crListIn)
+        foreach (var cr in crListIn)
         {
-            string crAboutUri = cr.GetAbout().AbsoluteUri;
+            var crAboutUri = cr.GetAbout().AbsoluteUri;
 
             if (crAboutUri.Equals("http://com/somewhere/changeRequest1"))
             {
-                Assert.AreEqual(cr.IsFixed(), changeRequest1.IsFixed());
-                Assert.AreEqual(cr.GetAffectedByDefects()[0].GetValue(), changeRequest1.GetAffectedByDefects()[0].GetValue());
-                Assert.AreEqual(cr.GetAffectedByDefects()[0].GetLabel(), changeRequest1.GetAffectedByDefects()[0].GetLabel());
+                Assert.Equal(cr.IsFixed(), changeRequest1.IsFixed());
+                Assert.Equal(cr.GetAffectedByDefects()[0].GetValue(), changeRequest1.GetAffectedByDefects()[0].GetValue());
+                Assert.Equal(cr.GetAffectedByDefects()[0].GetLabel(), changeRequest1.GetAffectedByDefects()[0].GetLabel());
             }
             else if (crAboutUri.Equals("http://com/somewhere/changeRequest2"))
             {
-                Assert.AreEqual(cr.IsFixed(), changeRequest2.IsFixed());
-                Assert.AreEqual(cr.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
-                Assert.AreEqual(cr.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
+                Assert.Equal(cr.IsFixed(), changeRequest2.IsFixed());
+                Assert.Equal(cr.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
+                Assert.Equal(cr.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
             }
             else
             {
-                Assert.Fail("Deserialized ChangeRequest about attribute not recognized: " + crAboutUri);
+                // TODO: replace with a proper assert
+                Assert.True(false, "Deserialized ChangeRequest about attribute not recognized: " + crAboutUri);
             }
         }
 
     }
 
-    [TestMethod]
+    [Fact]
     public void TestXmlSerialization()
     {
-        ChangeRequest changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeReuest"));
+        var changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeReuest"));
 
         changeRequest1.SetFixed(true);
         changeRequest1.AddAffectedByDefect(new Link(new Uri("http://com/somewhere/changeRequest2"), "Test of links"));
 
-        RdfXmlMediaTypeFormatter formatter = new RdfXmlMediaTypeFormatter();
+        var formatter = new RdfXmlMediaTypeFormatter();
 
-        string rdfXml = Serialize(formatter, changeRequest1, OslcMediaType.APPLICATION_XML_TYPE);
+        var rdfXml = Serialize(formatter, changeRequest1, OslcMediaType.APPLICATION_XML_TYPE);
 
         Debug.WriteLine(rdfXml);
 
-        ChangeRequest changeRequest2 = Deserialize<ChangeRequest>(formatter, rdfXml, OslcMediaType.APPLICATION_XML_TYPE);
+        var changeRequest2 = Deserialize<ChangeRequest>(formatter, rdfXml, OslcMediaType.APPLICATION_XML_TYPE);
 
-        Assert.AreEqual(changeRequest1.GetAbout(), changeRequest2.GetAbout());
-        Assert.AreEqual(changeRequest1.IsFixed(), changeRequest2.IsFixed());
-        Assert.AreEqual(changeRequest1.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
-        Assert.AreEqual(changeRequest1.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
+        Assert.Equal(changeRequest1.GetAbout(), changeRequest2.GetAbout());
+        Assert.Equal(changeRequest1.IsFixed(), changeRequest2.IsFixed());
+        Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
+        Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
     }
 
-    [TestMethod]
+    [Fact]
     public void TestTurtleSerialization()
     {
-        ChangeRequest changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeReuest"));
+        var changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeReuest"));
 
         changeRequest1.SetFixed(true);
         changeRequest1.AddAffectedByDefect(new Link(new Uri("http://com/somewhere/changeRequest2"), "Test of links"));
 
-        RdfXmlMediaTypeFormatter formatter = new RdfXmlMediaTypeFormatter();
+        var formatter = new RdfXmlMediaTypeFormatter();
 
-        string turtle = Serialize(formatter, changeRequest1, OslcMediaType.TEXT_TURTLE_TYPE);
+        var turtle = Serialize(formatter, changeRequest1, OslcMediaType.TEXT_TURTLE_TYPE);
 
         Debug.WriteLine(turtle);
 
-        ChangeRequest changeRequest2 = Deserialize<ChangeRequest>(formatter, turtle, OslcMediaType.TEXT_TURTLE_TYPE);
+        var changeRequest2 = Deserialize<ChangeRequest>(formatter, turtle, OslcMediaType.TEXT_TURTLE_TYPE);
 
-        Assert.AreEqual(changeRequest1.GetAbout(), changeRequest2.GetAbout());
-        Assert.AreEqual(changeRequest1.IsFixed(), changeRequest2.IsFixed());
-        Assert.AreEqual(changeRequest1.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
-        Assert.AreEqual(changeRequest1.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
+        Assert.Equal(changeRequest1.GetAbout(), changeRequest2.GetAbout());
+        Assert.Equal(changeRequest1.IsFixed(), changeRequest2.IsFixed());
+        Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
+        Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
     }
 
     private string Serialize<T>(MediaTypeFormatter formatter, T value, MediaTypeHeaderValue mediaType)
@@ -188,7 +186,7 @@ public class RdfXmlMediaTypeFormatterTests
     private T Deserialize<T>(MediaTypeFormatter formatter, string str, MediaTypeHeaderValue mediaType) where T : class
     {
         Stream stream = new MemoryStream();
-        StreamWriter writer = new StreamWriter(stream);
+        var writer = new StreamWriter(stream);
         HttpContent content = new StreamContent(stream);
 
         content.Headers.ContentType = mediaType;
@@ -204,7 +202,7 @@ public class RdfXmlMediaTypeFormatterTests
     private IEnumerable<T> DeserializeCollection<T>(MediaTypeFormatter formatter, string str, MediaTypeHeaderValue mediaType) where T : class
     {
         Stream stream = new MemoryStream();
-        StreamWriter writer = new StreamWriter(stream);
+        var writer = new StreamWriter(stream);
         HttpContent content = new StreamContent(stream);
 
         content.Headers.ContentType = mediaType;
