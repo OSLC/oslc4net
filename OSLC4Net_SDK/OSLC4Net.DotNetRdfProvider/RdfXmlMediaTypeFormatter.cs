@@ -343,10 +343,10 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 
             using (streamReader)
             {
-                var rdfString = streamReader.ReadToEnd();
-                Debug.Write(rdfString);
-                readStream.Position = 0; // reset stream
-                streamReader.DiscardBufferedData();
+                // var rdfString = streamReader.ReadToEnd();
+                // Debug.Write(rdfString);
+                // readStream.Position = 0; // reset stream
+                // streamReader.DiscardBufferedData();
 
                 rdfParser.Load(graph, streamReader);
 
