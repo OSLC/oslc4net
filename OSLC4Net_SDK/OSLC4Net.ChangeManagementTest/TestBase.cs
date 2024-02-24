@@ -85,17 +85,17 @@ public abstract class TestBase
         {
             var services = serviceProvider.GetServices();
 
-            foreach (Service service in services)
+            foreach (var service in services)
             {
                 if (Constants.CHANGE_MANAGEMENT_DOMAIN.Equals(service.GetDomain().ToString()))
                 {
                     QueryCapability[] queryCapabilities = service.GetQueryCapabilities();
 
-                    foreach (QueryCapability queryCapability in queryCapabilities)
+                    foreach (var queryCapability in queryCapabilities)
                     {
                         Uri[] resourceTypes = queryCapability.GetResourceTypes();
 
-                        foreach (Uri resourceType in resourceTypes)
+                        foreach (var resourceType in resourceTypes)
                         {
                             if (resourceType.ToString().Equals(type))
                             {
@@ -120,19 +120,19 @@ public abstract class TestBase
         foreach (var serviceProvider in serviceProviders)
         {
             Service[] services = serviceProvider.GetServices();
-            foreach (Service service in services)
+            foreach (var service in services)
             {
                 if (Constants.CHANGE_MANAGEMENT_DOMAIN.Equals(service.GetDomain().ToString()))
                 {
                     QueryCapability[] queryCapabilities = service.GetQueryCapabilities();
-                    foreach (QueryCapability queryCapability in queryCapabilities)
+                    foreach (var queryCapability in queryCapabilities)
                     {
                         Uri[] resourceTypes = queryCapability.GetResourceTypes();
-                        foreach (Uri resourceType in resourceTypes)
+                        foreach (var resourceType in resourceTypes)
                         {
                             if (resourceType.ToString().Equals(type))
                             {
-                                Uri resourceShape = queryCapability.GetResourceShape();
+                                var resourceShape = queryCapability.GetResourceShape();
                                 if (resourceShape != null)
                                 {
                                     OslcRestClient oslcRestClient = new(
@@ -155,12 +155,12 @@ public abstract class TestBase
     {
         Assert.IsNotNull(changeRequest);
 
-        Uri aboutURI = changeRequest.GetAbout();
-        DateTime? createdDate = changeRequest.GetCreated();
-        string identifierString = changeRequest.GetIdentifier();
-        DateTime? modifiedDate = changeRequest.GetModified();
+        var aboutURI = changeRequest.GetAbout();
+        var createdDate = changeRequest.GetCreated();
+        var identifierString = changeRequest.GetIdentifier();
+        var modifiedDate = changeRequest.GetModified();
         Uri[] rdfTypesURIs = changeRequest.GetRdfTypes();
-        Uri serviceProviderURI = changeRequest.GetServiceProvider();
+        var serviceProviderURI = changeRequest.GetServiceProvider();
 
         Assert.IsNotNull(aboutURI);
         Assert.IsNotNull(createdDate);
@@ -203,9 +203,9 @@ public abstract class TestBase
     {
         Assert.IsNotNull(compact);
 
-        Uri aboutURI = compact.GetAbout();
-        string shortTitleString = compact.GetShortTitle();
-        string titleString = compact.GetTitle();
+        var aboutURI = compact.GetAbout();
+        var shortTitleString = compact.GetShortTitle();
+        var titleString = compact.GetTitle();
 
         Assert.IsNotNull(aboutURI);
         // TODO: check OSLC Core and print warning otherwise
@@ -242,8 +242,8 @@ public abstract class TestBase
 
         foreach (var property in properties)
         {
-            string name = property.GetName();
-            Uri propertyDefinition = property.GetPropertyDefinition();
+            var name = property.GetName();
+            var propertyDefinition = property.GetPropertyDefinition();
 
             // not mandatory according OSLC CM 3.0
             // Assert.IsNotNull(property.GetDescription());
@@ -260,7 +260,7 @@ public abstract class TestBase
 
     protected async Task TestResourceShapeAsync(string mediaType)
     {
-        ResourceShape resourceShape = await GetResourceShapeAsync(mediaType,
+        var resourceShape = await GetResourceShapeAsync(mediaType,
                                                        Constants.TYPE_CHANGE_REQUEST);
 
         VerifyResourceShape(resourceShape,
@@ -276,7 +276,7 @@ public abstract class TestBase
                                             CREATED_CHANGE_REQUEST_URI,
                                             compactMediaType);
 
-        Compact compact = await oslcRestClient.GetOslcResourceAsync<Compact>();
+        var compact = await oslcRestClient.GetOslcResourceAsync<Compact>();
 
         VerifyCompact(normalMediaType,
                       compact);
@@ -304,13 +304,13 @@ public abstract class TestBase
         changeRequest.AddTracksRequirement(new Link(new Uri("http://myserver/reqtool/req/34ef31af")));
         changeRequest.AddTracksRequirement(new Link(new Uri("http://remoteserver/reqrepo/project1/req456"), "Requirement 456"));
 
-        string creation = await GetCreationAsync(mediaType, Constants.TYPE_CHANGE_REQUEST);
+        var creation = await GetCreationAsync(mediaType, Constants.TYPE_CHANGE_REQUEST);
 
         OslcRestClient oslcRestClient = new(Formatters,
                                             creation,
                                             mediaType);
 
-        ChangeRequest addedChangeRequest = await oslcRestClient.AddOslcResourceAsync(changeRequest);
+        var addedChangeRequest = await oslcRestClient.AddOslcResourceAsync(changeRequest);
 
         CREATED_CHANGE_REQUEST_URI = addedChangeRequest.GetAbout();
 
@@ -321,7 +321,7 @@ public abstract class TestBase
     {
         // Assert.IsNull(CREATED_CHANGE_REQUEST_URI);
 
-        ChangeRequest addedChangeRequest = await MakeChangeRequestAsync(mediaType);
+        var addedChangeRequest = await MakeChangeRequestAsync(mediaType);
 
         VerifyChangeRequest(mediaType,
                             addedChangeRequest,
@@ -354,7 +354,7 @@ public abstract class TestBase
                                             CREATED_CHANGE_REQUEST_URI,
                                             mediaType);
 
-        HttpResponseMessage? clientResponse = DeleteChangeRequest(mediaType);
+        var clientResponse = DeleteChangeRequest(mediaType);
 
         Assert.IsNotNull(clientResponse);
         // OSLC 3.0 allows 200 OK or 204 No Content
@@ -374,7 +374,7 @@ public abstract class TestBase
                                             CREATED_CHANGE_REQUEST_URI,
                                             mediaType);
 
-        ChangeRequest changeRequest = await oslcRestClient.GetOslcResourceAsync<ChangeRequest>();
+        var changeRequest = await oslcRestClient.GetOslcResourceAsync<ChangeRequest>();
 
         VerifyChangeRequest(mediaType,
                             changeRequest,
@@ -385,7 +385,7 @@ public abstract class TestBase
     {
         Assert.IsNotNull(CREATED_CHANGE_REQUEST_URI);
 
-        string queryBase = await GetQueryBaseAsync(mediaType, Constants.TYPE_CHANGE_REQUEST);
+        var queryBase = await GetQueryBaseAsync(mediaType, Constants.TYPE_CHANGE_REQUEST);
 
         Assert.IsNotNull(queryBase);
 
@@ -396,10 +396,10 @@ public abstract class TestBase
         Assert.IsNotNull(changeRequests);
         Assert.IsTrue(changeRequests.Count > 0);
 
-        bool found = false;
+        var found = false;
 
         // FIXME add paging
-        foreach (ChangeRequest changeRequest in changeRequests)
+        foreach (var changeRequest in changeRequests)
         {
             VerifyChangeRequest(mediaType, changeRequest, recurse: true);
 
@@ -420,19 +420,19 @@ public abstract class TestBase
                                             CREATED_CHANGE_REQUEST_URI,
                                             mediaType);
 
-        ChangeRequest changeRequest = await oslcRestClient.GetOslcResourceAsync<ChangeRequest>();
+        var changeRequest = await oslcRestClient.GetOslcResourceAsync<ChangeRequest>();
 
         VerifyChangeRequest(mediaType, changeRequest, recurse: true);
 
         Assert.IsNull(changeRequest.IsApproved());
         Assert.IsNull(changeRequest.GetCloseDate());
 
-        DateTime closeDate = DateTime.Now;
+        var closeDate = DateTime.Now;
 
         changeRequest.SetApproved(true);
         changeRequest.SetCloseDate(closeDate);
 
-        HttpResponseMessage clientResponse = oslcRestClient.UpdateOslcResourceReturnClientResponse(changeRequest);
+        var clientResponse = oslcRestClient.UpdateOslcResourceReturnClientResponse(changeRequest);
 
         Assert.IsNotNull(clientResponse);
         Assert.AreEqual(HttpStatusCode.OK, clientResponse.StatusCode);

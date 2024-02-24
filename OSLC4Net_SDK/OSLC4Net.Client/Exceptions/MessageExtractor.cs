@@ -40,7 +40,7 @@ public static class MessageExtractor
     {
 
         try {
-            string message = rm.GetString( key );
+            var message = rm.GetString( key );
             return string.Format(message, args);
         } catch (Exception missingResourceException ) {
             logger.Fatal(missingResourceException.Message, missingResourceException);

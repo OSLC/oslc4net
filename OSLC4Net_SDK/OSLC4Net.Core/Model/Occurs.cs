@@ -39,7 +39,7 @@ public static class OccursExtension
 {
     public static string ToString(Occurs occurs)
     {
-        URI[] attributes = (URI[])occurs.GetType().GetField(occurs.ToString()).GetCustomAttributes(typeof(URI), false);
+        var attributes = (URI[])occurs.GetType().GetField(occurs.ToString()).GetCustomAttributes(typeof(URI), false);
 
         return attributes.Length > 0 ? attributes[0].uri : string.Empty;
 	    }
@@ -48,7 +48,7 @@ public static class OccursExtension
     {
 	        foreach (Occurs occurs in Enum.GetValues(typeof(Occurs)))
         {
-            string uri = ToString(occurs);
+            var uri = ToString(occurs);
 
             if (uri.Equals(value))
             {

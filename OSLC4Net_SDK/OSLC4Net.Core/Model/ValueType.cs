@@ -53,7 +53,7 @@ public static class ValueTypeExtension
 {
     public static string ToString(ValueType valueType)
     {
-        URI[] attributes = (URI[])valueType.GetType().GetField(valueType.ToString()).GetCustomAttributes(typeof(URI), false);
+        var attributes = (URI[])valueType.GetType().GetField(valueType.ToString()).GetCustomAttributes(typeof(URI), false);
 
         return attributes.Length > 0 ? attributes[0].uri : string.Empty;
 	    }
@@ -62,7 +62,7 @@ public static class ValueTypeExtension
     {
 	        foreach (ValueType valueType in Enum.GetValues(typeof(ValueType)))
         {
-            string uri = ToString(valueType);
+            var uri = ToString(valueType);
 
             if (uri.Equals(value))
             {

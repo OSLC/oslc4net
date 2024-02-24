@@ -48,12 +48,12 @@ public class JsonMediaTypeFormatterTests
         OslcJsonMediaTypeFormatter formatter = new();
 
         Assert.IsNotNull(changeRequest1);
-        string json = Serialize<ChangeRequest>(formatter, changeRequest1, OslcMediaType.APPLICATION_JSON_TYPE);
+        var json = Serialize<ChangeRequest>(formatter, changeRequest1, OslcMediaType.APPLICATION_JSON_TYPE);
 
         Assert.IsNotNull(json);
         Debug.WriteLine(json);
 
-        ChangeRequest changeRequest2 = await Deserialize<ChangeRequest>(formatter, json, OslcMediaType.APPLICATION_JSON_TYPE);
+        var changeRequest2 = await Deserialize<ChangeRequest>(formatter, json, OslcMediaType.APPLICATION_JSON_TYPE);
 
         Assert.IsNotNull(changeRequest2);
         Assert.AreEqual(changeRequest1.GetAbout(), changeRequest2.GetAbout());
@@ -86,15 +86,15 @@ public class JsonMediaTypeFormatterTests
                                                null);
         OSLC4Net.Core.JsonProvider.OslcJsonMediaTypeFormatter formatter = new(json, false);
 
-        string jsonString = SerializeCollection<ChangeRequest>(formatter, crListOut, OslcMediaType.APPLICATION_JSON_TYPE);
+        var jsonString = SerializeCollection<ChangeRequest>(formatter, crListOut, OslcMediaType.APPLICATION_JSON_TYPE);
 
-        List<ChangeRequest> crListIn = DeserializeCollection<ChangeRequest>(formatter, jsonString, OslcMediaType.APPLICATION_JSON_TYPE).ToList();
+        var crListIn = DeserializeCollection<ChangeRequest>(formatter, jsonString, OslcMediaType.APPLICATION_JSON_TYPE).ToList();
         Assert.AreEqual(crListOut.Count, crListIn.Count);
 
         //No guarantees of order in a collection, use the "about" attribute to identify individual ChangeRequests
-        foreach (ChangeRequest cr in crListIn)
+        foreach (var cr in crListIn)
         {
-            string crAboutUri = cr.GetAbout().AbsoluteUri;
+            var crAboutUri = cr.GetAbout().AbsoluteUri;
 
             if (crAboutUri.Equals("http://com/somewhere/changeRequest1"))
             {

@@ -45,11 +45,11 @@ class SortTermImpl : SortTerm
         {
             if (identifier == null) {
 
-                string rawProperty = tree.GetChild(0).Text;
+                var rawProperty = tree.GetChild(0).Text;
 
                 identifier = new PName();
 
-                int colon = rawProperty.IndexOf(':');
+                var colon = rawProperty.IndexOf(':');
 
                 if (colon < 0) {
                     identifier.local = rawProperty;

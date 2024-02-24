@@ -85,7 +85,7 @@ public class OslcClient
     public static HttpClientHandler CreateSSLHandler(Func<HttpRequestMessage, X509Certificate2,
          X509Chain, SslPolicyErrors, bool> certCallback = null)
     {
-        HttpClientHandler handler = new HttpClientHandler();
+        var handler = new HttpClientHandler();
 
         handler.AllowAutoRedirect = false;
         if (certCallback != null)
@@ -196,14 +196,14 @@ public class OslcClient
         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptType));
         client.DefaultRequestHeaders.Add(OSLCConstants.OSLC_CORE_VERSION, "2.0");
 
-        MediaTypeHeaderValue mediaTypeValue = new MediaTypeHeaderValue(mediaType);
-        MediaTypeFormatter formatter =
+        var mediaTypeValue = new MediaTypeHeaderValue(mediaType);
+        var formatter =
             new MediaTypeFormatterCollection(formatters).FindWriter(artifact.GetType(), mediaTypeValue);
         HttpResponseMessage response;
         bool redirect;
         do
         {
-            ObjectContent content = new ObjectContent(artifact.GetType(), artifact, formatter);
+            var content = new ObjectContent(artifact.GetType(), artifact, formatter);
 
             content.Headers.ContentType = mediaTypeValue;
 
@@ -251,14 +251,14 @@ public class OslcClient
         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptType));
         client.DefaultRequestHeaders.Add(OSLCConstants.OSLC_CORE_VERSION, "2.0");
 
-        MediaTypeHeaderValue mediaTypeValue = new MediaTypeHeaderValue(mediaType);
-        MediaTypeFormatter formatter =
+        var mediaTypeValue = new MediaTypeHeaderValue(mediaType);
+        var formatter =
             new MediaTypeFormatterCollection(formatters).FindWriter(artifact.GetType(), mediaTypeValue);
         HttpResponseMessage response;
         bool redirect;
         do
         {
-            ObjectContent content = new ObjectContent(artifact.GetType(), artifact, formatter);
+            var content = new ObjectContent(artifact.GetType(), artifact, formatter);
 
             content.Headers.ContentType = mediaTypeValue;
 
@@ -296,14 +296,14 @@ public class OslcClient
         client.DefaultRequestHeaders.Add(OSLCConstants.OSLC_CORE_VERSION, "2.0");
         client.DefaultRequestHeaders.Add(HttpRequestHeader.IfMatch.ToString(), ifMatch);
 
-        MediaTypeHeaderValue mediaTypeValue = new MediaTypeHeaderValue(mediaType);
-        MediaTypeFormatter formatter =
+        var mediaTypeValue = new MediaTypeHeaderValue(mediaType);
+        var formatter =
             new MediaTypeFormatterCollection(formatters).FindWriter(artifact.GetType(), mediaTypeValue);
         HttpResponseMessage response;
         bool redirect;
         do
         {
-            ObjectContent content = new ObjectContent(artifact.GetType(), artifact, formatter);
+            var content = new ObjectContent(artifact.GetType(), artifact, formatter);
 
             content.Headers.ContentType = mediaTypeValue;
 
@@ -334,18 +334,18 @@ public class OslcClient
     public string LookupServiceProviderUrl(string catalogUrl, string serviceProviderTitle)
     {
         string retval = null;
-        HttpResponseMessage response = GetResource(catalogUrl, OSLCConstants.CT_RDF);
+        var response = GetResource(catalogUrl, OSLCConstants.CT_RDF);
 
         if (response.StatusCode != HttpStatusCode.OK)
         {
             throw new ResourceNotFoundException(catalogUrl, serviceProviderTitle);
         }
 
-        ServiceProviderCatalog catalog = response.Content.ReadAsAsync<ServiceProviderCatalog>(formatters).Result;
+        var catalog = response.Content.ReadAsAsync<ServiceProviderCatalog>(formatters).Result;
 
         if (catalog != null)
         {
-            foreach (ServiceProvider sp in catalog.GetServiceProviders())
+            foreach (var sp in catalog.GetServiceProviders())
             {
                 if (sp.GetTitle() != null && string.Compare(sp.GetTitle(), serviceProviderTitle, true) == 0)
                 {
@@ -376,29 +376,29 @@ public class OslcClient
         QueryCapability defaultQueryCapability = null;
         QueryCapability firstQueryCapability = null;
 
-        HttpResponseMessage response = GetResource(serviceProviderUrl, OSLCConstants.CT_RDF);
+        var response = GetResource(serviceProviderUrl, OSLCConstants.CT_RDF);
 
         if (response.StatusCode != HttpStatusCode.OK)
         {
             throw new ResourceNotFoundException(serviceProviderUrl, "QueryCapability");
         }
 
-        ServiceProvider serviceProvider = response.Content.ReadAsAsync<ServiceProvider>(formatters).Result;
+        var serviceProvider = response.Content.ReadAsAsync<ServiceProvider>(formatters).Result;
 
         if (serviceProvider != null)
         {
-            foreach (Service service in serviceProvider.GetServices())
+            foreach (var service in serviceProvider.GetServices())
             {
-                Uri domain = service.GetDomain();
+                var domain = service.GetDomain();
                 if (domain != null && domain.ToString().Equals(oslcDomain))
                 {
-                    QueryCapability[] queryCapabilities = service.GetQueryCapabilities();
+                    var queryCapabilities = service.GetQueryCapabilities();
                     if (queryCapabilities != null && queryCapabilities.Length > 0)
                     {
                         firstQueryCapability = queryCapabilities[0];
-                        foreach (QueryCapability queryCapability in service.GetQueryCapabilities())
+                        foreach (var queryCapability in service.GetQueryCapabilities())
                         {
-                            foreach (Uri resourceType in queryCapability.GetResourceTypes())
+                            foreach (var resourceType in queryCapability.GetResourceTypes())
                             {
                                 //return as soon as domain + resource type are matched
                                 if (resourceType.ToString() != null && resourceType.ToString().Equals(oslcResourceType))
@@ -407,7 +407,7 @@ public class OslcClient
                                 }
                             }
                             //Check if this is the default capability
-                            foreach (Uri usage in queryCapability.GetUsages())
+                            foreach (var usage in queryCapability.GetUsages())
                             {
                                 if (usage.ToString() != null && usage.ToString().Equals(OSLCConstants.USAGE_DEFAULT_URI))
                                 {
@@ -448,29 +448,29 @@ public class OslcClient
         CreationFactory defaultCreationFactory = null;
         CreationFactory firstCreationFactory = null;
 
-        HttpResponseMessage response = GetResource(serviceProviderUrl, OSLCConstants.CT_RDF);
+        var response = GetResource(serviceProviderUrl, OSLCConstants.CT_RDF);
 
         if (response.StatusCode != HttpStatusCode.OK)
         {
             throw new ResourceNotFoundException(serviceProviderUrl, "CreationFactory");
         }
 
-        ServiceProvider serviceProvider = response.Content.ReadAsAsync<ServiceProvider>(formatters).Result;
+        var serviceProvider = response.Content.ReadAsAsync<ServiceProvider>(formatters).Result;
 
         if (serviceProvider != null)
         {
-            foreach (Service service in serviceProvider.GetServices())
+            foreach (var service in serviceProvider.GetServices())
             {
-                Uri domain = service.GetDomain();
+                var domain = service.GetDomain();
                 if (domain != null && domain.ToString().Equals(oslcDomain))
                 {
-                    CreationFactory[] creationFactories = service.GetCreationFactories();
+                    var creationFactories = service.GetCreationFactories();
                     if (creationFactories != null && creationFactories.Length > 0)
                     {
                         firstCreationFactory = creationFactories[0];
-                        foreach (CreationFactory creationFactory in creationFactories)
+                        foreach (var creationFactory in creationFactories)
                         {
-                            foreach (Uri resourceType in creationFactory.GetResourceTypes())
+                            foreach (var resourceType in creationFactory.GetResourceTypes())
                             {
 
                                 //return as soon as domain + resource type are matched
@@ -480,7 +480,7 @@ public class OslcClient
                                 }
                             }
                             //Check if this is the default factory
-                            foreach (Uri usage in creationFactory.GetUsages())
+                            foreach (var usage in creationFactory.GetUsages())
                             {
                                 if (usage.ToString() != null && usage.ToString().Equals(OSLCConstants.USAGE_DEFAULT_URI))
                                 {

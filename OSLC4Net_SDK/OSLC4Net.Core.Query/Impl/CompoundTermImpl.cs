@@ -44,7 +44,7 @@ internal class CompoundTermImpl : SimpleTermImpl, CompoundTerm
         {
             if (children == null)
             {
-                IList<ITree> treeChildren =
+                var treeChildren =
                     isTopLevel ?
                         tree.Children :
                         ((CommonTree)tree.GetChild(1)).Children;
@@ -81,16 +81,16 @@ internal class CompoundTermImpl : SimpleTermImpl, CompoundTerm
 
     public override string ToString()
     {
-         StringBuilder builder = new StringBuilder();
+         var builder = new StringBuilder();
 
         if (! isTopLevel) {
             builder.Append(Property.ToString());
             builder.Append('{');
         }
 
-        bool first = true;
+        var first = true;
 
-        foreach (SimpleTerm term in Children) {
+        foreach (var term in Children) {
 
             if (first) {
                 first = false;

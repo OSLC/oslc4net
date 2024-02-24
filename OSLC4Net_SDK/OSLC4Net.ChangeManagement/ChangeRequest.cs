@@ -279,11 +279,11 @@ public class ChangeRequest : AbstractResource
     [OslcTitle("Types")]
     public string[] GetDctermsTypes()
     {
-        string[] result = new string[dctermsTypes.Count];
+        var result = new string[dctermsTypes.Count];
 
-        int index = 0;
+        var index = 0;
 
-        foreach (Type type in dctermsTypes)
+        foreach (var type in dctermsTypes)
         {
             result[index++] = TypeExtension.ToString(type);
         }
@@ -661,7 +661,7 @@ public class ChangeRequest : AbstractResource
 
         if (dctermsTypes != null)
         {
-            foreach (string type in dctermsTypes)
+            foreach (var type in dctermsTypes)
             {
                 this.dctermsTypes.Add(TypeExtension.FromString(type));
             }
