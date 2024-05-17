@@ -36,6 +36,7 @@ This release does not introduce deprecations.
 
 ### Removed
 
+- .NET 7 support was removed since the SDK has reached EOL.
 - `Newtonsoft.Json` package was only used in the StockQuoteSample ASP.NET MVC project. Its references were removed from all other projects.
 
 ### Fixed
