@@ -173,7 +173,7 @@ public sealed class ServiceProviderRegistryClient
 
             if (firstCreationFactory != null)
             {
-                var creationFactory = firstDefaultCreationFactory != null ? firstDefaultCreationFactory : firstCreationFactory;
+                var creationFactory = firstDefaultCreationFactory ?? firstCreationFactory;
 
                 var creation = creationFactory.GetCreation();
 

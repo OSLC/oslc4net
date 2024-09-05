@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012, 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -92,7 +92,7 @@ public class QName
 
     public override bool Equals(object obj)
     {
-        if (! (obj is QName))
+        if (!(obj is QName))
         {
             return false;
         }
@@ -106,7 +106,7 @@ public class QName
         return namespaceURI.GetHashCode() * 31 + localPart.GetHashCode();
     }
 
-    private string namespaceURI;
-    private string localPart;
-    private string prefix;
+    private readonly string namespaceURI;
+    private readonly string localPart;
+    private readonly string prefix;
 }

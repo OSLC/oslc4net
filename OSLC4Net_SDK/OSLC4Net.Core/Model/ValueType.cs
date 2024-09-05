@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -26,27 +26,27 @@ public enum ValueType
     [URI(OslcConstants.XML_NAMESPACE + "boolean")]
     Boolean,
     [URI(OslcConstants.XML_NAMESPACE + "dateTime")]
-	    DateTime,
+    DateTime,
     [URI(OslcConstants.XML_NAMESPACE + "decimal")]
-	    Decimal,
+    Decimal,
     [URI(OslcConstants.XML_NAMESPACE + "double")]
-	    Double,
+    Double,
     [URI(OslcConstants.XML_NAMESPACE + "float")]
-	    Float,
+    Float,
     [URI(OslcConstants.XML_NAMESPACE + "integer")]
-	    Integer,
+    Integer,
     [URI(OslcConstants.XML_NAMESPACE + "string")]
-	    String,
+    String,
     [URI(OslcConstants.RDF_NAMESPACE + "XMLLiteral")]
-	    XMLLiteral,
+    XMLLiteral,
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Resource")]
-	    Resource,
+    Resource,
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "LocalResource")]
-	    LocalResource,
+    LocalResource,
     [URI("")]
     Unknown
-//  [URI(OslcConstants.OSLC_CORE_ENUM_NAMESPACE + "AnyResource")]
-//	AnyResource // AnyResource not supported by OSLC4J
+    //  [URI(OslcConstants.OSLC_CORE_ENUM_NAMESPACE + "AnyResource")]
+    //	AnyResource // AnyResource not supported by OSLC4J
 }
 
 public static class ValueTypeExtension
@@ -56,11 +56,11 @@ public static class ValueTypeExtension
         var attributes = (URI[])valueType.GetType().GetField(valueType.ToString()).GetCustomAttributes(typeof(URI), false);
 
         return attributes.Length > 0 ? attributes[0].uri : string.Empty;
-	    }
+    }
 
-	    public static ValueType FromString(string value)
+    public static ValueType FromString(string value)
     {
-	        foreach (ValueType valueType in Enum.GetValues(typeof(ValueType)))
+        foreach (ValueType valueType in Enum.GetValues(typeof(ValueType)))
         {
             var uri = ToString(valueType);
 
@@ -71,10 +71,10 @@ public static class ValueTypeExtension
         }
 
         return ValueType.Unknown; // XXX - Java code does return null;
-	    }
+    }
 
-	    public static ValueType FromURI(URI uri)
+    public static ValueType FromURI(URI uri)
     {
-		    return FromString(uri.ToString());
-	    }
+        return FromString(uri.ToString());
+    }
 }

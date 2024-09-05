@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -28,7 +28,7 @@ public abstract class ResponseInfo<T> : FilteredResource<T>
     /**
      * Total count of resource
      */
-    public int TotalCount { get; private set;  }
+    public int TotalCount { get; private set; }
 
     /**
      * Next page in paged output
@@ -68,7 +68,7 @@ public abstract class ResponseInfo<T> : FilteredResource<T>
         int totalCount,
         Uri nextPage
     ) : this(resource, properties, totalCount,
-             nextPage == null ? null : nextPage.ToString())
+             nextPage?.ToString())
     {
     }
 }

@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -24,19 +24,19 @@ namespace OSLC4Net.Core.Attribute;
 ]
 public class OslcQueryCapability : System.Attribute
 {
-	    /**
-	     * Title string that could be used for display
-	     */
-	    public string title;
-
-	    /**
-	     * Very short label for use in menu items
-	     */
-	    public string label = "";
-
-	    /**
-     * Resource shapes
+    /**
+     * Title string that could be used for display
      */
+    public string title;
+
+    /**
+     * Very short label for use in menu items
+     */
+    public string label = "";
+
+    /**
+ * Resource shapes
+ */
     public string resourceShape = "";
 
     /**

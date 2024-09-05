@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -20,23 +20,25 @@ namespace OSLC4Net.Client.Exceptions;
 /// </summary>
 public class JazzAuthFailedException : OslcClientApplicationException
 {
-	    private const string MESSAGE_KEY = "JazzAuthFailedException";
+    private const string MESSAGE_KEY = "JazzAuthFailedException";
 
-	    private readonly string user;
-	    private readonly string jazzUrl;
+    private readonly string user;
+    private readonly string jazzUrl;
 
-	    public JazzAuthFailedException(string user, string jazzUrl) :
-		    base(MESSAGE_KEY, new object[] {user, jazzUrl})
+    public JazzAuthFailedException(string user, string jazzUrl) :
+        base(MESSAGE_KEY, new object[] { user, jazzUrl })
     {
-		    this.user = user;
-		    this.jazzUrl = jazzUrl;
-	    }
+        this.user = user;
+        this.jazzUrl = jazzUrl;
+    }
 
-	    public string GetUser() {
-		    return user;
-	    }
+    public string GetUser()
+    {
+        return user;
+    }
 
-	    public string GetJazzUrl() {
-		    return jazzUrl;
-	    }
+    public string GetJazzUrl()
+    {
+        return jazzUrl;
+    }
 }

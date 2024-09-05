@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -36,19 +36,22 @@ class SortTermsImpl : OrderByClause
     {
         get
         {
-            if (children == null) {
+            if (children == null)
+            {
 
                 var rawChildren = (IList<CommonTree>)tree.Children;
 
                 children = new List<SortTerm>(rawChildren.Count());
 
-                foreach (var child in rawChildren) {
+                foreach (var child in rawChildren)
+                {
 
                     object simpleTerm;
 
-                    switch(child.Token.Type) {
-                    default:
-                        throw new InvalidOperationException("unimplemented type of sort term: " + child.Token.Text);
+                    switch (child.Token.Type)
+                    {
+                        default:
+                            throw new InvalidOperationException("unimplemented type of sort term: " + child.Token.Text);
                     }
 
                     children.Add((SortTerm)simpleTerm);

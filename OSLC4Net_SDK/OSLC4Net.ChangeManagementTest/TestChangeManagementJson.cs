@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -13,7 +13,6 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-
 using System.Net.Http.Formatting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OSLC4Net.Core.JsonProvider;
@@ -26,7 +25,7 @@ namespace OSLC4Net.ChangeManagementTest;
 public class TestChangeManagementJson : TestBase
 {
     protected override IEnumerable<MediaTypeFormatter> Formatters { get; } =
-        new HashSet<MediaTypeFormatter>() { new OslcJsonMediaTypeFormatter()};
+        new HashSet<MediaTypeFormatter>() { new OslcJsonMediaTypeFormatter() };
 
     public TestContext? TestContext { set; get; }
 

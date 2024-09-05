@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -24,16 +24,16 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// http://open-services.net/bin/view/Main/QmSpecificationV2#Resource_TestResult
 /// </summary>
-[OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] {QmConstants.TYPE_TEST_RESULT})]
+[OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] { QmConstants.TYPE_TEST_RESULT })]
 [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
 public class TestResult : QmResource
 {
-    private readonly ISet<Link>     affectedByChangeRequests       = new HashSet<Link>();
+    private readonly ISet<Link> affectedByChangeRequests = new HashSet<Link>();
 
-    private Link     executesTestScript;
-    private Link     reportsOnTestCase;
-    private Link     reportsOnTestPlan;
-    private Link     producedByTestExecutionRecord;
+    private Link executesTestScript;
+    private Link reportsOnTestCase;
+    private Link reportsOnTestPlan;
+    private Link producedByTestExecutionRecord;
     private string status;
 
     public TestResult() : base()
@@ -42,7 +42,7 @@ public class TestResult : QmResource
 
     protected override Uri GetRdfType()
     {
-	    return new Uri(QmConstants.TYPE_TEST_RESULT);
+        return new Uri(QmConstants.TYPE_TEST_RESULT);
     }
 
     public void AddAffectedByChangeRequest(Link affectingChangeRequest)

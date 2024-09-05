@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -15,7 +15,6 @@
  *******************************************************************************/
 
 namespace OSLC4Net.Core;
-
 
 /// <summary>
 /// Marker interface applied to {@link Map}(String, Object> to

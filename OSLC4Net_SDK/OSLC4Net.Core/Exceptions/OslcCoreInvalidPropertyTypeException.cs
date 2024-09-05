@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -49,7 +49,7 @@ public class OslcCoreInvalidPropertyTypeException : OslcCoreApplicationException
 
     private static readonly string MESSAGE_KEY = "InvalidPropertyTypeException";
 
-    private MethodInfo method;
-    private Type resourceType;
-    private Type returnType;
+    private readonly MethodInfo method;
+    private readonly Type resourceType;
+    private readonly Type returnType;
 }

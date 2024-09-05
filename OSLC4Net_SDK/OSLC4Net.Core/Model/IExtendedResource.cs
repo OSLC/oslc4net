@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -54,15 +54,15 @@ public interface IExtendedResource : IResource
     /// <param name="type"></param>
     void AddType(Uri type);
 
-	    /// <summary>
+    /// <summary>
     ///  Sets extended properties not defined in the bean.
-	    /// </summary>
-	    /// <param name="properties"></param>
-	    void SetExtendedProperties(IDictionary<QName, object> properties);
+    /// </summary>
+    /// <param name="properties"></param>
+    void SetExtendedProperties(IDictionary<QName, object> properties);
 
-	    /// <summary>
+    /// <summary>
     /// Gets back the list of extended properties not defined in this bean.
-	    /// </summary>
-	    /// <returns></returns>
+    /// </summary>
+    /// <returns></returns>
     IDictionary<QName, object> GetExtendedProperties();
 }

@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -30,28 +30,31 @@ public class OslcCoreInvalidOccursException : OslcCoreApplicationException
     /// <param name="method"></param>
     /// <param name="oslcOccurs"></param>
     public OslcCoreInvalidOccursException(Type resourceType, MethodInfo method, OslcOccurs oslcOccurs) :
-        base(MESSAGE_KEY, new object[] {resourceType.Name, method.Name, OccursExtension.ToString(oslcOccurs.value)})
+        base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name, OccursExtension.ToString(oslcOccurs.value) })
     {
-        this.method        = method;
-        this.oslcOccurs    = oslcOccurs;
+        this.method = method;
+        this.oslcOccurs = oslcOccurs;
         this.resourceType = resourceType;
     }
 
-	    public MethodInfo GetMethod() {
+    public MethodInfo GetMethod()
+    {
         return method;
     }
 
-    public OslcOccurs GetOslcOccurs() {
-		    return oslcOccurs;
-	    }
+    public OslcOccurs GetOslcOccurs()
+    {
+        return oslcOccurs;
+    }
 
-    public Type GetResourceType() {
+    public Type GetResourceType()
+    {
         return resourceType;
     }
 
     private static readonly string MESSAGE_KEY = "InvalidOccursException";
 
-    private MethodInfo  method;
-    private OslcOccurs  oslcOccurs;
-    private Type        resourceType;
+    private readonly MethodInfo method;
+    private readonly OslcOccurs oslcOccurs;
+    private readonly Type resourceType;
 }

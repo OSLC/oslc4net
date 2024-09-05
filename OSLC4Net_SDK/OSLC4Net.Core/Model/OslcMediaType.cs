@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012, 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -23,11 +23,11 @@ namespace OSLC4Net.Core.Model;
 /// <seealso cref="System.Net.Http.Headers.MediaTypeHeaderValue"/>
 public class OslcMediaType
 {
-	    public const string APPLICATION = "application";
+    public const string APPLICATION = "application";
     public const string TEXT = "text";
 
-	    public const string RDF_XML = "rdf+xml";
-	    public const string APPLICATION_RDF_XML = APPLICATION + "/" + RDF_XML;
+    public const string RDF_XML = "rdf+xml";
+    public const string APPLICATION_RDF_XML = APPLICATION + "/" + RDF_XML;
     public static readonly MediaTypeHeaderValue APPLICATION_RDF_XML_TYPE = new MediaTypeHeaderValue(APPLICATION_RDF_XML);
 
     public const string APPLICATION_JSON = APPLICATION + "/" + "json";
@@ -39,8 +39,8 @@ public class OslcMediaType
     public const string TEXT_XML = TEXT + "/" + "xml";
     public static readonly MediaTypeHeaderValue TEXT_XML_TYPE = new MediaTypeHeaderValue(TEXT_XML);
 
-	    public const string TURTLE = "turtle";
-	    public const string TEXT_TURTLE = TEXT + "/" + TURTLE;
+    public const string TURTLE = "turtle";
+    public const string TEXT_TURTLE = TEXT + "/" + TURTLE;
     public static readonly MediaTypeHeaderValue TEXT_TURTLE_TYPE = new MediaTypeHeaderValue(TEXT_TURTLE);
 
     public const string X_OSLC_COMPACT_XML = "x-oslc-compact+xml";

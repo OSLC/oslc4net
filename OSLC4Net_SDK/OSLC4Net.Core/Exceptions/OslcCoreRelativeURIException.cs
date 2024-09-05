@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -23,16 +23,16 @@ namespace OSLC4Net.Core.Exceptions;
 public class OslcCoreRelativeURIException : OslcCoreApplicationException
 {
     public OslcCoreRelativeURIException(Type resourceType, string methodName, Uri relativeURI) :
-        base(MESSAGE_KEY, new object[] {resourceType.Name, methodName, relativeURI.ToString()})
+        base(MESSAGE_KEY, new object[] { resourceType.Name, methodName, relativeURI.ToString() })
     {
-        this.methodName    = methodName;
-        this.relativeURI   = relativeURI;
+        this.methodName = methodName;
+        this.relativeURI = relativeURI;
         this.resourceType = resourceType;
     }
 
     private static readonly string MESSAGE_KEY = "RelativeURIException";
 
-    private string methodName;
-    private Uri         relativeURI;
-    private Type        resourceType;
+    private readonly string methodName;
+    private readonly Uri relativeURI;
+    private readonly Type resourceType;
 }

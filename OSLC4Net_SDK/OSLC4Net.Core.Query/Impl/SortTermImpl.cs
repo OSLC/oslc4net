@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -43,7 +43,8 @@ class SortTermImpl : SortTerm
     {
         get
         {
-            if (identifier == null) {
+            if (identifier == null)
+            {
 
                 var rawProperty = tree.GetChild(0).Text;
 
@@ -51,10 +52,14 @@ class SortTermImpl : SortTerm
 
                 var colon = rawProperty.IndexOf(':');
 
-                if (colon < 0) {
+                if (colon < 0)
+                {
                     identifier.local = rawProperty;
-                } else {
-                    if (colon > 0) {
+                }
+                else
+                {
+                    if (colon > 0)
+                    {
                         identifier.prefix = rawProperty.Substring(0, colon);
                         identifier.ns = prefixMap[identifier.prefix];
                     }

@@ -38,7 +38,7 @@ public abstract class TestBase
     {
         _config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.Development.json")
-                //  .AddEnvironmentVariables()
+                 //  .AddEnvironmentVariables()
                  .Build();
         _serviceProviderCatalogURI = _config["serviceProviderCatalog:uri"]!;
     }
@@ -158,7 +158,7 @@ public abstract class TestBase
         var aboutURI = changeRequest.GetAbout();
         var createdDate = changeRequest.GetCreated();
         var identifierString = changeRequest.GetIdentifier();
-        var modifiedDate = changeRequest.GetModified();
+        _ = changeRequest.GetModified();
         Uri[] rdfTypesURIs = changeRequest.GetRdfTypes();
         var serviceProviderURI = changeRequest.GetServiceProvider();
 
@@ -186,7 +186,8 @@ public abstract class TestBase
             VerifyChangeRequest(mediaType,
                                 await aboutOSLCRestClient.GetOslcResourceAsync<ChangeRequest>(),
                                 recurse: false);
-            if(serviceProviderURI != null) {
+            if (serviceProviderURI != null)
+            {
                 OslcRestClient serviceProviderOSLCRestClient = new(Formatters,
                                                                 serviceProviderURI,
                                                                 mediaType);
@@ -204,7 +205,7 @@ public abstract class TestBase
         Assert.IsNotNull(compact);
 
         var aboutURI = compact.GetAbout();
-        var shortTitleString = compact.GetShortTitle();
+        _ = compact.GetShortTitle();
         var titleString = compact.GetTitle();
 
         Assert.IsNotNull(aboutURI);

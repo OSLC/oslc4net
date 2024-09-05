@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -16,7 +16,6 @@
 
 using System.Collections.Generic;
 
-
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
@@ -29,12 +28,12 @@ public class FilteredResource<T>
     /**
      * Resource.
      */
-   public T Resource { get; private set; }
+    public T Resource { get; private set; }
 
     /**
      * properties
      */
-   public IDictionary<string, object> Properties { get; private set; }
+    public IDictionary<string, object> Properties { get; private set; }
 
     public FilteredResource(
         T resource,

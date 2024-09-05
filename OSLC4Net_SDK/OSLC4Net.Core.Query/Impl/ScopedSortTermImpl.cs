@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -33,7 +33,8 @@ class ScopedSortTermImpl : SortTermImpl, ScopedSortTerm
     {
         get
         {
-            if (sortTerms == null) {
+            if (sortTerms == null)
+            {
                 sortTerms = new SortTermsImpl((CommonTree)tree.GetChild(1), prefixMap);
             }
 

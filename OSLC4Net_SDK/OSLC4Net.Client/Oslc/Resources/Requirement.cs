@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -16,67 +16,67 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OSLC4Net.Core.Model;
 using OSLC4Net.Core.Attribute;
+using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client.Oslc.Resources;
 
 [OslcNamespace(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE)]
-[OslcResourceShape(title = "Requirement Resource Shape", describes = new string[] {RmConstants.TYPE_REQUIREMENT})]
+[OslcResourceShape(title = "Requirement Resource Shape", describes = new string[] { RmConstants.TYPE_REQUIREMENT })]
 public class Requirement : AbstractResource
 {
-	    private string title;
-	    private string description;
-	    private string identifier;
+    private string title;
+    private string description;
+    private string identifier;
     private string shortTitle;
-    private readonly ISet<string>   subjects                    = new HashSet<string>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-	    private DateTime? created;
+    private readonly ISet<string> subjects = new HashSet<string>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private DateTime? created;
     private DateTime? modified;
-    private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-	    private Uri      serviceProvider;
-	    private Uri      instanceShape;
-
+    private readonly ISet<Uri> rdfTypes = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private Uri serviceProvider;
+    private Uri instanceShape;
 
     // OSLC Links
-    private readonly ISet<Link>     elaboratedBy	            = new HashSet<Link>();
-    private readonly ISet<Link>     elaborates         			= new HashSet<Link>();
+    private readonly ISet<Link> elaboratedBy = new HashSet<Link>();
+    private readonly ISet<Link> elaborates = new HashSet<Link>();
 
-    private readonly ISet<Link>     specifiedBy           		= new HashSet<Link>();
-    private readonly ISet<Link>     specifies  					= new HashSet<Link>();
+    private readonly ISet<Link> specifiedBy = new HashSet<Link>();
+    private readonly ISet<Link> specifies = new HashSet<Link>();
 
-    private readonly ISet<Link>     affectedBy		        	= new HashSet<Link>();
+    private readonly ISet<Link> affectedBy = new HashSet<Link>();
 
-    private readonly ISet<Link>     trackedBy		      	  	= new HashSet<Link>();
+    private readonly ISet<Link> trackedBy = new HashSet<Link>();
 
-    private readonly ISet<Link>     implementedBy		        = new HashSet<Link>();
+    private readonly ISet<Link> implementedBy = new HashSet<Link>();
 
-    private readonly ISet<Link>     validatedBy		        	= new HashSet<Link>();
+    private readonly ISet<Link> validatedBy = new HashSet<Link>();
 
-    private readonly ISet<Link>     satisfiedBy		        	= new HashSet<Link>();
-    private readonly ISet<Link>     satisfies		        	= new HashSet<Link>();
+    private readonly ISet<Link> satisfiedBy = new HashSet<Link>();
+    private readonly ISet<Link> satisfies = new HashSet<Link>();
 
-    private readonly ISet<Link>     decomposedBy		        = new HashSet<Link>();
-    private readonly ISet<Link>     decomposes		        	= new HashSet<Link>();
+    private readonly ISet<Link> decomposedBy = new HashSet<Link>();
+    private readonly ISet<Link> decomposes = new HashSet<Link>();
 
-    private readonly ISet<Link>     constrainedBy		        = new HashSet<Link>();
-    private readonly ISet<Link>     constrains		        	= new HashSet<Link>();
-
+    private readonly ISet<Link> constrainedBy = new HashSet<Link>();
+    private readonly ISet<Link> constrains = new HashSet<Link>();
 
     public Requirement() : base()
     {
         // Only Add the type if Requirement is the created object
-        if ( ! ( this is RequirementCollection ) ) {
-    	    rdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
+        if (!(this is RequirementCollection))
+        {
+            rdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
         }
     }
 
     public Requirement(Uri about) : base(about)
     {
         // Only Add the type if Requirement is the created object
-        if ( ! ( this is RequirementCollection ) ) {
-    	    rdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
+        if (!(this is RequirementCollection))
+        {
+            rdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
         }
     }
 
@@ -224,7 +224,6 @@ public class Requirement : AbstractResource
         return specifies.ToArray();
     }
 
-
     [OslcDescription("Resource, such as a change request, which implements this requirement.")]
     [OslcName("implementedBy")]
     [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "implementedBy")]
@@ -364,7 +363,6 @@ public class Requirement : AbstractResource
         return creators.ToArray();
     }
 
-
     [OslcDescription("Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
     [OslcTitle("Description")]
@@ -373,7 +371,6 @@ public class Requirement : AbstractResource
     {
         return description;
     }
-
 
     [OslcDescription("A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
     [OslcOccurs(Occurs.ExactlyOne)]
@@ -384,7 +381,6 @@ public class Requirement : AbstractResource
     {
         return identifier;
     }
-
 
     [OslcDescription("Resource Shape that provides hints as to resource property value-types and allowed values. ")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "instanceShape")]
@@ -413,7 +409,6 @@ public class Requirement : AbstractResource
         return rdfTypes.ToArray();
     }
 
-
     [OslcDescription("The scope of a resource is a Uri for the resource's OSLC Service Provider.")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "serviceProvider")]
     [OslcRange(OslcConstants.TYPE_SERVICE_PROVIDER)]
@@ -431,7 +426,6 @@ public class Requirement : AbstractResource
     {
         return shortTitle;
     }
-
 
     [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
     [OslcOccurs(Occurs.ExactlyOne)]
@@ -573,7 +567,6 @@ public class Requirement : AbstractResource
         }
     }
 
-
     public void SetSpecifies(Link[] specifies)
     {
         this.specifies.Clear();
@@ -609,18 +602,15 @@ public class Requirement : AbstractResource
         }
     }
 
-
     public void SetDescription(string description)
     {
         this.description = description;
     }
 
-
     public void SetIdentifier(string identifier)
     {
         this.identifier = identifier;
     }
-
 
     public void SetInstanceShape(Uri instanceShape)
     {
@@ -642,7 +632,6 @@ public class Requirement : AbstractResource
         }
     }
 
-
     public void SetServiceProvider(Uri serviceProvider)
     {
         this.serviceProvider = serviceProvider;
@@ -653,12 +642,10 @@ public class Requirement : AbstractResource
         this.shortTitle = shortTitle;
     }
 
-
     public void SetTitle(string title)
     {
         this.title = title;
     }
-
 
     public void SetSubjects(string[] subjects)
     {

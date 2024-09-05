@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -30,10 +30,10 @@ public class OslcCoreDuplicatePropertyDefinitionException : OslcCoreApplicationE
     /// <param name="resourceType"></param>
     /// <param name="oslcPropertyDefinition"></param>
     public OslcCoreDuplicatePropertyDefinitionException(Type resourceType, OslcPropertyDefinition oslcPropertyDefinition) :
-        base(MESSAGE_KEY, new object[] {resourceType.Name, oslcPropertyDefinition.value})
+        base(MESSAGE_KEY, new object[] { resourceType.Name, oslcPropertyDefinition.value })
     {
         this.oslcPropertyDefinition = oslcPropertyDefinition;
-        this.resourceType          = resourceType;
+        this.resourceType = resourceType;
     }
 
     public OslcPropertyDefinition GetOslcPropertyDefinition()
@@ -43,6 +43,6 @@ public class OslcCoreDuplicatePropertyDefinitionException : OslcCoreApplicationE
 
     private static readonly string MESSAGE_KEY = "DuplicatePropertyDefinitionException";
 
-    private OslcPropertyDefinition oslcPropertyDefinition;
-    private Type               resourceType;
+    private readonly OslcPropertyDefinition oslcPropertyDefinition;
+    private readonly Type resourceType;
 }

@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
  *
@@ -17,48 +17,48 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OSLC4Net.Core.Model;
 using OSLC4Net.Core.Attribute;
+using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client.Oslc.Resources;
 
 /// <summary>
 /// http://open-services.net/wiki/automation/OSLC-Automation-Specification-Version-2.0/#Resource_AutomationRequest
 /// </summary>
-[OslcResourceShape(title = "Automation Request Resource Shape", describes = new string[] {AutomationConstants.TYPE_AUTOMATION_REQUEST})]
+[OslcResourceShape(title = "Automation Request Resource Shape", describes = new string[] { AutomationConstants.TYPE_AUTOMATION_REQUEST })]
 [OslcNamespace(AutomationConstants.AUTOMATION_NAMESPACE)]
 public class AutomationRequest : AbstractResource
 {
-	    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<string>   subjects                    = new HashSet<string>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri>      states                      = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<ParameterInstance> inputParameters    = new HashSet<ParameterInstance>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> rdfTypes = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<string> subjects = new HashSet<string>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> states = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<ParameterInstance> inputParameters = new HashSet<ParameterInstance>(); // XXX - TreeSet<> in Java
 
-    private DateTime?   created;
+    private DateTime? created;
     private string description;
     private string identifier;
-    private Uri         instanceShape;
-    private DateTime?   modified;
-    private Uri         serviceProvider;
+    private Uri instanceShape;
+    private DateTime? modified;
+    private Uri serviceProvider;
     private string title;
-    private Uri         desiredState;
-    private Link        executesAutomationPlan;
+    private Uri desiredState;
+    private Link executesAutomationPlan;
 
-	    public AutomationRequest() : base()
-	    {
-		    rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_REQUEST));
-	    }
+    public AutomationRequest() : base()
+    {
+        rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_REQUEST));
+    }
 
     public AutomationRequest(Uri about) : base(about)
-     {
-		    rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_REQUEST));
-     }
+    {
+        rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_REQUEST));
+    }
 
     protected Uri GetRdfType()
     {
-	    return new Uri(AutomationConstants.TYPE_AUTOMATION_REQUEST);
+        return new Uri(AutomationConstants.TYPE_AUTOMATION_REQUEST);
     }
 
     public void AddContributor(Uri contributor)
@@ -180,12 +180,12 @@ public class AutomationRequest : AbstractResource
     [OslcOccurs(Occurs.ZeroOrOne)]
     [OslcTitle("Desired State")]
     [OslcAllowedValue(new string[] {
-	    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_NEW,
-		    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_IN_PROGRESS,
-		    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_QUEUED,
-		    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELING,
-		    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELED,
-		    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_COMPLETE})]
+        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_NEW,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_IN_PROGRESS,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_QUEUED,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELING,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELED,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_COMPLETE})]
     public Uri GetDesiredState()
     {
         return desiredState;
@@ -228,17 +228,16 @@ public class AutomationRequest : AbstractResource
     [OslcPropertyDefinition(AutomationConstants.AUTOMATION_NAMESPACE + "state")]
     [OslcTitle("States")]
     [OslcAllowedValue(new string[] {
-	    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_NEW,
-		    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_IN_PROGRESS,
-		    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_QUEUED,
-		    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELING,
-		    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELED,
-		    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_COMPLETE})]
+        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_NEW,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_IN_PROGRESS,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_QUEUED,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELING,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELED,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_COMPLETE})]
     public Uri[] GetStates()
     {
         return states.ToArray();
     }
-
 
     [OslcDescription("Parameters provided when Automation Requests are created.")]
     [OslcOccurs(Occurs.ZeroOrMany)]

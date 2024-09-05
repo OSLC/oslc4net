@@ -45,7 +45,7 @@ public class JsonMediaTypeFormatterTests
         OslcJsonMediaTypeFormatter formatter = new();
 
         Assert.NotNull(changeRequest1);
-        var json = Serialize<ChangeRequest>(formatter, changeRequest1, OslcMediaType.APPLICATION_JSON_TYPE);
+        var json = Serialize(formatter, changeRequest1, OslcMediaType.APPLICATION_JSON_TYPE);
 
         Assert.NotNull(json);
         Debug.WriteLine(json);
@@ -85,7 +85,7 @@ public class JsonMediaTypeFormatterTests
                                                null);
         OSLC4Net.Core.JsonProvider.OslcJsonMediaTypeFormatter formatter = new(json, false);
 
-        var jsonString = SerializeCollection<ChangeRequest>(formatter, crListOut, OslcMediaType.APPLICATION_JSON_TYPE);
+        var jsonString = SerializeCollection(formatter, crListOut, OslcMediaType.APPLICATION_JSON_TYPE);
 
         var crListIn = DeserializeCollection<ChangeRequest>(formatter, jsonString, OslcMediaType.APPLICATION_JSON_TYPE).ToList();
         Assert.Equal(crListOut.Count, crListIn.Count);
@@ -115,7 +115,7 @@ public class JsonMediaTypeFormatterTests
 
     }
 
-    private string Serialize<T>(MediaTypeFormatter formatter, T value, MediaTypeHeaderValue mediaType) where T : IResource
+    private static string Serialize<T>(MediaTypeFormatter formatter, T value, MediaTypeHeaderValue mediaType) where T : IResource
     {
         Stream stream = new MemoryStream();
         HttpContent content = new StreamContent(stream);
@@ -128,7 +128,7 @@ public class JsonMediaTypeFormatterTests
         return content.ReadAsStringAsync().Result;
     }
 
-    private string SerializeCollection<T>(MediaTypeFormatter formatter, IEnumerable<T> value, MediaTypeHeaderValue mediaType) where T : IResource
+    private static string SerializeCollection<T>(MediaTypeFormatter formatter, IEnumerable<T> value, MediaTypeHeaderValue mediaType) where T : IResource
     {
         Stream stream = new MemoryStream();
         HttpContent content = new StreamContent(stream);
@@ -141,7 +141,7 @@ public class JsonMediaTypeFormatterTests
         return content.ReadAsStringAsync().Result;
     }
 
-    private async Task<T> Deserialize<T>(MediaTypeFormatter formatter, string str, MediaTypeHeaderValue mediaType) where T : class, IResource
+    private static async Task<T> Deserialize<T>(MediaTypeFormatter formatter, string str, MediaTypeHeaderValue mediaType) where T : class, IResource
     {
         Stream stream = new MemoryStream();
         StreamWriter writer = new(stream);
@@ -161,7 +161,7 @@ public class JsonMediaTypeFormatterTests
         return result as T;
     }
 
-    private IEnumerable<T> DeserializeCollection<T>(MediaTypeFormatter formatter, string str, MediaTypeHeaderValue mediaType) where T : class, IResource
+    private static IEnumerable<T> DeserializeCollection<T>(MediaTypeFormatter formatter, string str, MediaTypeHeaderValue mediaType) where T : class, IResource
     {
         Stream stream = new MemoryStream();
         StreamWriter writer = new(stream);
@@ -177,7 +177,7 @@ public class JsonMediaTypeFormatterTests
         return formatter.ReadFromStreamAsync(typeof(List<T>), stream, content, logFormatter).Result as IEnumerable<T>;
     }
 
-    private class LogFormatter : IFormatterLogger
+    private sealed class LogFormatter : IFormatterLogger
     {
         public LogFormatter(ILog logger)
         {
@@ -194,8 +194,8 @@ public class JsonMediaTypeFormatterTests
             logger.Error(errorPath + ": " + errorMessage);
         }
 
-        private ILog logger;
+        private readonly ILog logger;
     }
 
-    private static LogFormatter logFormatter = new(LogManager.GetLogger(typeof(JsonMediaTypeFormatterTests)));
+    private static readonly LogFormatter logFormatter = new(LogManager.GetLogger(typeof(JsonMediaTypeFormatterTests)));
 }

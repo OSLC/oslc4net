@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -24,13 +24,13 @@ namespace OSLC4Net.Core.Model;
 public enum Occurs
 {
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Exactly-one")]
-	    ExactlyOne,
+    ExactlyOne,
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Zero-or-one")]
-	    ZeroOrOne,
+    ZeroOrOne,
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Zero-or-many")]
-	    ZeroOrMany,
+    ZeroOrMany,
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "One-or-many")]
-	    OneOrMany,
+    OneOrMany,
     [URI("")]
     Unknown
 }
@@ -42,11 +42,11 @@ public static class OccursExtension
         var attributes = (URI[])occurs.GetType().GetField(occurs.ToString()).GetCustomAttributes(typeof(URI), false);
 
         return attributes.Length > 0 ? attributes[0].uri : string.Empty;
-	    }
+    }
 
-	    public static Occurs FromString(string value)
+    public static Occurs FromString(string value)
     {
-	        foreach (Occurs occurs in Enum.GetValues(typeof(Occurs)))
+        foreach (Occurs occurs in Enum.GetValues(typeof(Occurs)))
         {
             var uri = ToString(occurs);
 
@@ -56,11 +56,11 @@ public static class OccursExtension
             }
         }
 
-	        throw new ArgumentException();
-	    }
+        throw new ArgumentException();
+    }
 
-	    public static Occurs FromURI(URI uri)
+    public static Occurs FromURI(URI uri)
     {
-		    return FromString(uri.ToString());
-	    }
+        return FromString(uri.ToString());
+    }
 }

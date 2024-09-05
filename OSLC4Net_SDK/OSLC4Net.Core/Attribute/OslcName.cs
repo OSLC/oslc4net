@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -19,8 +19,8 @@ namespace OSLC4Net.Core.Attribute;
 /// <summary>
 /// OSLC Name attribute
 /// </summary>
-[System.AttributeUsage(System.AttributeTargets.Method|
-                       System.AttributeTargets.Class|
+[System.AttributeUsage(System.AttributeTargets.Method |
+                       System.AttributeTargets.Class |
                        System.AttributeTargets.Interface)
 ]
 public class OslcName : System.Attribute

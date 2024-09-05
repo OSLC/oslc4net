@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -53,22 +53,24 @@ internal class CompoundTermImpl : SimpleTermImpl, CompoundTerm
                     new List<SimpleTerm>(
                             treeChildren.Count - (isTopLevel ? 0 : 1));
 
-                foreach (CommonTree child in treeChildren) {
+                foreach (CommonTree child in treeChildren)
+                {
 
                     SimpleTerm simpleTerm;
 
-                    switch(child.Token.Type) {
-                    case OslcWhereParser.SIMPLE_TERM:
-                        simpleTerm = new ComparisonTermImpl(child, prefixMap);
-                        break;
-                    case OslcWhereParser.IN_TERM:
-                        simpleTerm = new InTermImpl(child, prefixMap);
-                        break;
-                    case OslcWhereParser.COMPOUND_TERM:
-                        simpleTerm = new CompoundTermImpl(child, false, prefixMap);
-                        break;
-                    default:
-                        throw new InvalidOperationException("unimplemented type of simple term: " + child.Token.Text);
+                    switch (child.Token.Type)
+                    {
+                        case OslcWhereParser.SIMPLE_TERM:
+                            simpleTerm = new ComparisonTermImpl(child, prefixMap);
+                            break;
+                        case OslcWhereParser.IN_TERM:
+                            simpleTerm = new InTermImpl(child, prefixMap);
+                            break;
+                        case OslcWhereParser.COMPOUND_TERM:
+                            simpleTerm = new CompoundTermImpl(child, false, prefixMap);
+                            break;
+                        default:
+                            throw new InvalidOperationException("unimplemented type of simple term: " + child.Token.Text);
                     }
 
                     children.Add(simpleTerm);
@@ -81,32 +83,38 @@ internal class CompoundTermImpl : SimpleTermImpl, CompoundTerm
 
     public override string ToString()
     {
-         var builder = new StringBuilder();
+        var builder = new StringBuilder();
 
-        if (! isTopLevel) {
+        if (!isTopLevel)
+        {
             builder.Append(Property.ToString());
             builder.Append('{');
         }
 
         var first = true;
 
-        foreach (var term in Children) {
+        foreach (var term in Children)
+        {
 
-            if (first) {
+            if (first)
+            {
                 first = false;
-            } else {
+            }
+            else
+            {
                 builder.Append(" and ");
             }
 
             builder.Append(term.ToString());
         }
 
-        if (! isTopLevel) {
+        if (!isTopLevel)
+        {
             builder.Append('}');
         }
 
         return builder.ToString();
-   }
+    }
 
     private readonly CommonTree tree;
     private readonly bool isTopLevel;

@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -30,27 +30,29 @@ public class OslcCoreInvalidValueTypeException : OslcCoreApplicationException
     public OslcCoreInvalidValueTypeException(Type resourceType, MethodInfo method, Model.ValueType valueType) :
         base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name, ValueTypeExtension.ToString(valueType) })
     {
-        this.method         = method;
-        this.valueType      = valueType;
-        this.resourceType   = resourceType;
+        this.method = method;
+        this.valueType = valueType;
+        this.resourceType = resourceType;
     }
 
-	    public MethodInfo GetMethod() {
+    public MethodInfo GetMethod()
+    {
         return method;
     }
 
     public Model.ValueType GetValueType()
     {
         return valueType;
-	    }
+    }
 
-    public Type GetResourceType() {
+    public Type GetResourceType()
+    {
         return resourceType;
     }
 
     private static readonly string MESSAGE_KEY = "InvalidValueTypeException";
 
-    private MethodInfo      method;
-    private Type            resourceType;
-    private Model.ValueType valueType;
+    private readonly MethodInfo method;
+    private readonly Type resourceType;
+    private readonly Model.ValueType valueType;
 }

@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
  *
@@ -17,45 +17,45 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OSLC4Net.Core.Model;
 using OSLC4Net.Core.Attribute;
+using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client.Oslc.Resources;
 
 /// <summary>
 /// http://open-services.net/wiki/automation/OSLC-Automation-Specification-Version-2.0/#Resource_AutomationPlan
 /// </summary>
-[OslcResourceShape(title = "Automation Plan Resource Shape", describes = new string[] {AutomationConstants.TYPE_AUTOMATION_PLAN})]
+[OslcResourceShape(title = "Automation Plan Resource Shape", describes = new string[] { AutomationConstants.TYPE_AUTOMATION_PLAN })]
 [OslcNamespace(AutomationConstants.AUTOMATION_NAMESPACE)]
 public class AutomationPlan : AbstractResource
 {
-	    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<string>   subjects                    = new HashSet<string>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Property> parameterDefinitions        = new HashSet<Property>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> rdfTypes = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<string> subjects = new HashSet<string>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Property> parameterDefinitions = new HashSet<Property>(); // XXX - TreeSet<> in Java
 
-    private DateTime?   created;
+    private DateTime? created;
     private string description;
     private string identifier;
-    private Uri         instanceShape;
-    private DateTime?   modified;
-    private Uri         serviceProvider;
+    private Uri instanceShape;
+    private DateTime? modified;
+    private Uri serviceProvider;
     private string title;
 
-	    public AutomationPlan() : base()
-	    {
-		    rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_PLAN));
-	    }
+    public AutomationPlan() : base()
+    {
+        rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_PLAN));
+    }
 
     public AutomationPlan(Uri about) : base(about)
     {
-		    rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_PLAN));
+        rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_PLAN));
     }
 
     protected Uri GetRdfType()
     {
-	    return new Uri(AutomationConstants.TYPE_AUTOMATION_PLAN);
+        return new Uri(AutomationConstants.TYPE_AUTOMATION_PLAN);
     }
 
     public void AddContributor(Uri contributor)
@@ -196,7 +196,6 @@ public class AutomationPlan : AbstractResource
     {
         return parameterDefinitions.ToArray();
     }
-
 
     public void SetContributors(Uri[] contributors)
     {

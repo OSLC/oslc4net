@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -28,28 +28,31 @@ public class OslcCoreInvalidRepresentationException : OslcCoreApplicationExcepti
     /// <param name="method"></param>
     /// <param name="representation"></param>
     public OslcCoreInvalidRepresentationException(Type resourceType, MethodInfo method, Representation representation) :
-        base(MESSAGE_KEY, new object[] {resourceType.Name, method.Name, RepresentationExtension.ToString(representation)})
+        base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name, RepresentationExtension.ToString(representation) })
     {
-        this.method         = method;
+        this.method = method;
         this.representation = representation;
-        this.resourceType   = resourceType;
+        this.resourceType = resourceType;
     }
 
-	    public MethodInfo GetMethod() {
+    public MethodInfo GetMethod()
+    {
         return method;
     }
 
-    public Representation GetRepresentation() {
-		    return representation;
-	    }
+    public Representation GetRepresentation()
+    {
+        return representation;
+    }
 
-    public Type GetResourceType() {
+    public Type GetResourceType()
+    {
         return resourceType;
     }
 
     private static readonly string MESSAGE_KEY = "InvalidRepresentationException";
 
-    private MethodInfo      method;
-	    private Representation  representation;
-    private Type            resourceType;
+    private readonly MethodInfo method;
+    private readonly Representation representation;
+    private readonly Type resourceType;
 }

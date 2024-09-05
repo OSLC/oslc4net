@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -24,40 +24,40 @@ namespace OSLC4Net.Core.Model;
 /// </summary>
 public class Link : AbstractReifiedResource<Uri>
 {
-	    private string label;
+    private string label;
 
-	    public Link()
-	    {
-	    }
+    public Link()
+    {
+    }
 
-	    public Link(Uri resource)
-	    {
-		    SetValue(resource);
-	    }
+    public Link(Uri resource)
+    {
+        SetValue(resource);
+    }
 
-	    public Link(Uri resource, string label)
-	    {
-		    SetValue(resource);
-		    this.label = label;
-	    }
+    public Link(Uri resource, string label)
+    {
+        SetValue(resource);
+        this.label = label;
+    }
 
     /// <summary>
     /// Gets the link label.
     /// </summary>
     /// <returns></returns>
-	    [OslcName("title")]
-	    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
-	    public string GetLabel()
-	    {
-		    return label;
-	    }
+    [OslcName("title")]
+    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
+    public string GetLabel()
+    {
+        return label;
+    }
 
-	    /// <summary>
+    /// <summary>
     /// Sets the link label.
-	    /// </summary>
-	    /// <param name="label"></param>
-	    public void SetLabel(string label)
-	    {
-		    this.label = label;
-	    }
+    /// </summary>
+    /// <param name="label"></param>
+    public void SetLabel(string label)
+    {
+        this.label = label;
+    }
 }

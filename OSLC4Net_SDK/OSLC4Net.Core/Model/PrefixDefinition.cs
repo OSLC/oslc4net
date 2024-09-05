@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -26,41 +26,45 @@ namespace OSLC4Net.Core.Model;
 [OslcResourceShape(title = "OSLC Prefix Definition Resource Shape", describes = new string[] { OslcConstants.TYPE_PREFIX_DEFINITION })]
 public class PrefixDefinition : AbstractResource
 {
-	    private string prefix;
-	    private Uri prefixBase;
+    private string prefix;
+    private Uri prefixBase;
 
-	    public PrefixDefinition() : base()
+    public PrefixDefinition() : base()
     {
-	    }
+    }
 
-	    public PrefixDefinition(string prefix, Uri prefixBase) : this()
+    public PrefixDefinition(string prefix, Uri prefixBase) : this()
     {
-		    this.prefix = prefix;
-		    this.prefixBase = prefixBase;
-	    }
+        this.prefix = prefix;
+        this.prefixBase = prefixBase;
+    }
 
-	    [OslcDescription("Namespace prefix to be used for this namespace")]
-	    [OslcOccurs(Occurs.ExactlyOne)]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "prefix")]
-	    [OslcReadOnly]
+    [OslcDescription("Namespace prefix to be used for this namespace")]
+    [OslcOccurs(Occurs.ExactlyOne)]
+    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "prefix")]
+    [OslcReadOnly]
     [OslcTitle("Prefix")]
-	    public string GetPrefix() {
-		    return prefix;
-	    }
+    public string GetPrefix()
+    {
+        return prefix;
+    }
 
-	    [OslcDescription("The base Uri of the namespace")]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "prefixBase")]
-	    [OslcReadOnly]
+    [OslcDescription("The base Uri of the namespace")]
+    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "prefixBase")]
+    [OslcReadOnly]
     [OslcTitle("Prefix Base")]
-	    public Uri GetPrefixBase() {
-	        return prefixBase;
-	    }
+    public Uri GetPrefixBase()
+    {
+        return prefixBase;
+    }
 
-	    public void SetPrefix(string prefix) {
-		    this.prefix = prefix;
-	    }
+    public void SetPrefix(string prefix)
+    {
+        this.prefix = prefix;
+    }
 
-	    public void SetPrefixBase(Uri prefixBase) {
-	        this.prefixBase = prefixBase;
-	    }
+    public void SetPrefixBase(Uri prefixBase)
+    {
+        this.prefixBase = prefixBase;
+    }
 }

@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -29,7 +29,8 @@ public static class InheritedGenericInterfacesHelper
     {
         var interfaces = typeToTest.GetInterfaces();
 
-        foreach (var interfac in interfaces) {
+        foreach (var interfac in interfaces)
+        {
             if (interfac.IsGenericType && genericType == interfac.GetGenericTypeDefinition())
             {
                 return true;

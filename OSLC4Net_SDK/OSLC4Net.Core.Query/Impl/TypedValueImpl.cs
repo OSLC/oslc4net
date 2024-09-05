@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -58,10 +58,14 @@ internal class TypedValueImpl : ValueImpl, TypedValue
 
                 var colon = rawPName.IndexOf(':');
 
-                if (colon < 0) {
+                if (colon < 0)
+                {
                     prefixedName.local = rawPName;
-                } else {
-                    if (colon > 0) {
+                }
+                else
+                {
+                    if (colon > 0)
+                    {
                         prefixedName.prefix = rawPName.Substring(0, colon);
                         prefixedName.ns = prefixMap[prefixedName.prefix];
                     }

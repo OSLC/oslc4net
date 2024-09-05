@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
  *
@@ -17,50 +17,51 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OSLC4Net.Core.Model;
 using OSLC4Net.Core.Attribute;
+using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client.Oslc.Resources;
 
 /// <summary>
 /// http://open-services.net/wiki/automation/OSLC-Automation-Specification-Version-2.0/#Resource_AutomationResult
 /// </summary>
-[OslcResourceShape(title = "Automation Result Resource Shape", describes = new string[] {AutomationConstants.TYPE_AUTOMATION_RESULT})]
+[OslcResourceShape(title = "Automation Result Resource Shape", describes = new string[] { AutomationConstants.TYPE_AUTOMATION_RESULT })]
 [OslcNamespace(AutomationConstants.AUTOMATION_NAMESPACE)]
 public class AutomationResult : AbstractResource
 {
-	    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<string>   subjects                    = new HashSet<string>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri>      states                      = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri>      verdicts                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri>      contributions               = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<ParameterInstance> inputParameters    = new HashSet<ParameterInstance>(); // XXX - TreeSet<> in Java
-    private readonly ISet<ParameterInstance> outputParameters   = new HashSet<ParameterInstance>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> rdfTypes = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<string> subjects = new HashSet<string>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> states = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> verdicts = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> contributions = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<ParameterInstance> inputParameters = new HashSet<ParameterInstance>(); // XXX - TreeSet<> in Java
+    private readonly ISet<ParameterInstance> outputParameters = new HashSet<ParameterInstance>(); // XXX - TreeSet<> in Java
 
-    private DateTime?   created;
+    private DateTime? created;
     private string identifier;
-    private Uri         instanceShape;
-    private DateTime?   modified;
-    private Uri         serviceProvider;
+    private Uri instanceShape;
+    private DateTime? modified;
+    private Uri serviceProvider;
     private string title;
-    private Uri         desiredState;
-    private Link        producedByAutomationRequest;
-    private Link        reportsOnAutomationPlan;
+    private Uri desiredState;
+    private Link producedByAutomationRequest;
+    private Link reportsOnAutomationPlan;
 
-	    public AutomationResult() : base()
-	    {
-		    rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_RESULT));
-	    }
+    public AutomationResult() : base()
+    {
+        rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_RESULT));
+    }
 
     public AutomationResult(Uri about) : base(about)
-     {
-		    rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_RESULT));
-     }
+    {
+        rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_RESULT));
+    }
 
-    protected Uri GetRdfType() {
-	    return new Uri(AutomationConstants.TYPE_AUTOMATION_RESULT);
+    protected Uri GetRdfType()
+    {
+        return new Uri(AutomationConstants.TYPE_AUTOMATION_RESULT);
     }
 
     public void AddContributor(Uri contributor)
@@ -210,12 +211,12 @@ public class AutomationResult : AbstractResource
     [OslcPropertyDefinition(AutomationConstants.AUTOMATION_NAMESPACE + "state")]
     [OslcTitle("State")]
     [OslcAllowedValue(new string[] {
-	    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_NEW,
-		    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_IN_PROGRESS,
-		    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_QUEUED,
-		    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELING,
-		    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELED,
-		    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_COMPLETE})]
+        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_NEW,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_IN_PROGRESS,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_QUEUED,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELING,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELED,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_COMPLETE})]
     public Uri[] GetStates()
     {
         return states.ToArray();
@@ -237,11 +238,11 @@ public class AutomationResult : AbstractResource
     [OslcPropertyDefinition(AutomationConstants.AUTOMATION_NAMESPACE + "verdict")]
     [OslcTitle("Verdict")]
     [OslcAllowedValue(new string[] {
-	    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.VERDICT_PASSED,
-	    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.VERDICT_FAILED,
-	    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.VERDICT_WARNING,
-	    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.VERDICT_ERROR,
-	    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.VERDICT_UNAVAILABLE})]
+        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.VERDICT_PASSED,
+        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.VERDICT_FAILED,
+        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.VERDICT_WARNING,
+        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.VERDICT_ERROR,
+        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.VERDICT_UNAVAILABLE})]
     public Uri[] GetVerdicts()
     {
         return verdicts.ToArray();
@@ -253,12 +254,12 @@ public class AutomationResult : AbstractResource
     [OslcOccurs(Occurs.ZeroOrOne)]
     [OslcTitle("Desired State")]
     [OslcAllowedValue(new string[] {
-	    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_NEW,
-		    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_IN_PROGRESS,
-		    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_QUEUED,
-		    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELING,
-		    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELED,
-		    AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_COMPLETE})]
+        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_NEW,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_IN_PROGRESS,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_QUEUED,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELING,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELED,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_COMPLETE})]
     public Uri GetDesiredState()
     {
         return desiredState;

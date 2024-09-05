@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -47,7 +47,7 @@ public class OslcCoreRegistrationException : OslcCoreApplicationException
 
     private static readonly string MESSAGE_KEY = "RegistrationException";
 
-    private string responseMessage;
-	    private ServiceProvider serviceProvider;
-	    private int             statusCode;
+    private readonly string responseMessage;
+    private readonly ServiceProvider serviceProvider;
+    private readonly int statusCode;
 }

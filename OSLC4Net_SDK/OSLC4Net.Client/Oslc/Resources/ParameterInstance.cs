@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
  *
@@ -17,39 +17,39 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OSLC4Net.Core.Model;
 using OSLC4Net.Core.Attribute;
+using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client.Oslc.Resources;
 
 /// <summary>
 /// http://open-services.net/wiki/automation/OSLC-Automation-Specification-Version-2.0/#Resource_ParameterInstance
 /// </summary>
-[OslcResourceShape(title = "Parameter Instance Resource Shape", describes = new string[] {AutomationConstants.TYPE_PARAMETER_INSTANCE})]
+[OslcResourceShape(title = "Parameter Instance Resource Shape", describes = new string[] { AutomationConstants.TYPE_PARAMETER_INSTANCE })]
 [OslcNamespace(AutomationConstants.AUTOMATION_NAMESPACE)]
 public class ParameterInstance : AbstractResource
 {
-    private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> rdfTypes = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
     private string name;
     private string value;
     private string description;
-    private Uri      instanceShape;
-    private Uri      serviceProvider;
+    private Uri instanceShape;
+    private Uri serviceProvider;
 
-	    public ParameterInstance() : base()
-	    {
-		    rdfTypes.Add(new Uri(AutomationConstants.TYPE_PARAMETER_INSTANCE));
-	    }
+    public ParameterInstance() : base()
+    {
+        rdfTypes.Add(new Uri(AutomationConstants.TYPE_PARAMETER_INSTANCE));
+    }
 
     public ParameterInstance(Uri about) : base(about)
     {
-		    rdfTypes.Add(new Uri(AutomationConstants.TYPE_PARAMETER_INSTANCE));
-     }
+        rdfTypes.Add(new Uri(AutomationConstants.TYPE_PARAMETER_INSTANCE));
+    }
 
     protected Uri GetRdfType()
     {
-	    return new Uri(AutomationConstants.TYPE_PARAMETER_INSTANCE);
+        return new Uri(AutomationConstants.TYPE_PARAMETER_INSTANCE);
     }
 
     public void addRdfType(Uri rdfType)
@@ -146,7 +146,8 @@ public class ParameterInstance : AbstractResource
         this.serviceProvider = serviceProvider;
     }
 
-	    public int CompareTo(ParameterInstance o) {
-		    return o.GetName().CompareTo(name);
-	    }
+    public int CompareTo(ParameterInstance o)
+    {
+        return o.GetName().CompareTo(name);
+    }
 }

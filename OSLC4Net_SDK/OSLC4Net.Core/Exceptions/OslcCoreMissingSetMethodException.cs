@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -50,6 +50,6 @@ public class OslcCoreMissingSetMethodException : OslcCoreApplicationException
 
     private static readonly string MESSAGE_KEY = "MissingSetMethodException";
 
-    private Type        resourceType;
-    private MethodInfo  getMethod;
+    private readonly Type resourceType;
+    private readonly MethodInfo getMethod;
 }

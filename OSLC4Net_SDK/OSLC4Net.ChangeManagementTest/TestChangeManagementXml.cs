@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -12,7 +12,6 @@
  * Contributors:
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
-
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -24,7 +24,7 @@ namespace OSLC4Net.Core.Model;
 public enum Representation
 {
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Reference")]
-	    Reference,
+    Reference,
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Inline")]
     Inline,
     [URI("")]
@@ -38,11 +38,11 @@ public static class RepresentationExtension
         var attributes = (URI[])representation.GetType().GetField(representation.ToString()).GetCustomAttributes(typeof(URI), false);
 
         return attributes.Length > 0 ? attributes[0].uri : string.Empty;
-	    }
+    }
 
-	    public static Representation FromString(string value)
+    public static Representation FromString(string value)
     {
-	        foreach (Representation representation in Enum.GetValues(typeof(Representation)))
+        foreach (Representation representation in Enum.GetValues(typeof(Representation)))
         {
             var uri = ToString(representation);
 
@@ -52,11 +52,11 @@ public static class RepresentationExtension
             }
         }
 
-	        throw new ArgumentException();
-	    }
+        throw new ArgumentException();
+    }
 
-	    public static Representation FromURI(URI uri)
+    public static Representation FromURI(URI uri)
     {
-		    return FromString(uri.ToString());
-	    }
+        return FromString(uri.ToString());
+    }
 }

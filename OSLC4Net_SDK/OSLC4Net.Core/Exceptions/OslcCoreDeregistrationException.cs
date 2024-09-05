@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -50,7 +50,7 @@ public class OslcCoreDeregistrationException : OslcCoreApplicationException
 
     private static readonly string MESSAGE_KEY = "DeregistrationException";
 
-    private string responseMessage;
-    private Uri             serviceProviderURI;
-	    private int             statusCode;
+    private readonly string responseMessage;
+    private readonly Uri serviceProviderURI;
+    private readonly int statusCode;
 }

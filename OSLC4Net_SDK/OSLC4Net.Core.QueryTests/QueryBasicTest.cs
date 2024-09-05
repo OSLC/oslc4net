@@ -23,7 +23,7 @@ namespace OSLC4Net.Core.QueryTests;
 
 public class QueryBasicTest
 {
-    static string PREFIXES = "qm=<http://qm.example.com/ns/>," +
+    const string PREFIXES = "qm=<http://qm.example.com/ns/>," +
                              "olsc=<http://open-services.net/ns/core#>," +
                              "xs=<http://www.w3.org/2001/XMLSchema>";
 
@@ -277,8 +277,10 @@ public class Trial
     }
 
     public string
-        Expression { get; }
+        Expression
+    { get; }
 
     public bool
-        ShouldSucceed { get; }
+        ShouldSucceed
+    { get; }
 }

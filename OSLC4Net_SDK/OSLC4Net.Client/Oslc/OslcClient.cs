@@ -20,14 +20,12 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
 using System.Reflection;
-
+using System.Security.Cryptography.X509Certificates;
+using log4net;
 using OSLC4Net.Client.Exceptions;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
-
-using log4net;
 
 namespace OSLC4Net.Client.Oslc;
 

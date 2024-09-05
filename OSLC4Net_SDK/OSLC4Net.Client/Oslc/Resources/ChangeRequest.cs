@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -16,49 +16,49 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OSLC4Net.Core.Model;
 using OSLC4Net.Core.Attribute;
+using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client.Oslc.Resources;
 
 [OslcNamespace(CmConstants.CHANGE_MANAGEMENT_NAMESPACE)]
-[OslcResourceShape(title = "Change Request Resource Shape", describes = new string[] {CmConstants.TYPE_CHANGE_REQUEST})]
+[OslcResourceShape(title = "Change Request Resource Shape", describes = new string[] { CmConstants.TYPE_CHANGE_REQUEST })]
 public class ChangeRequest : AbstractResource
 {
-    private readonly ISet<Link>     affectedByDefects           = new HashSet<Link>();
-    private readonly ISet<Link>     affectsPlanItems            = new HashSet<Link>();
-    private readonly ISet<Link>     affectsRequirements         = new HashSet<Link>();
-    private readonly ISet<Link>     affectsTestResults          = new HashSet<Link>();
-    private readonly ISet<Link>     blocksTestExecutionRecords  = new HashSet<Link>();
-    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<string>   dctermsTypes                = new HashSet<string>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Link>     implementsRequirements      = new HashSet<Link>();
-    private readonly ISet<Link>     relatedChangeRequests       = new HashSet<Link>();
-    private readonly ISet<Link>     relatedResources            = new HashSet<Link>(); // TODO - Extension to point to any other OSLC resource(s).
-    private readonly ISet<Link>     relatedTestCases            = new HashSet<Link>();
-    private readonly ISet<Link>     relatedTestExecutionRecords = new HashSet<Link>();
-    private readonly ISet<Link>     relatedTestPlans            = new HashSet<Link>();
-    private readonly ISet<Link>     relatedTestScripts          = new HashSet<Link>();
-    private readonly ISet<string>   subjects                    = new HashSet<string>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Link>     testedByTestCases           = new HashSet<Link>();
-    private readonly ISet<Link>     tracksChangeSets            = new HashSet<Link>();
-    private readonly ISet<Link>     tracksRequirements          = new HashSet<Link>();
-    private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Link> affectedByDefects = new HashSet<Link>();
+    private readonly ISet<Link> affectsPlanItems = new HashSet<Link>();
+    private readonly ISet<Link> affectsRequirements = new HashSet<Link>();
+    private readonly ISet<Link> affectsTestResults = new HashSet<Link>();
+    private readonly ISet<Link> blocksTestExecutionRecords = new HashSet<Link>();
+    private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<string> dctermsTypes = new HashSet<string>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Link> implementsRequirements = new HashSet<Link>();
+    private readonly ISet<Link> relatedChangeRequests = new HashSet<Link>();
+    private readonly ISet<Link> relatedResources = new HashSet<Link>(); // TODO - Extension to point to any other OSLC resource(s).
+    private readonly ISet<Link> relatedTestCases = new HashSet<Link>();
+    private readonly ISet<Link> relatedTestExecutionRecords = new HashSet<Link>();
+    private readonly ISet<Link> relatedTestPlans = new HashSet<Link>();
+    private readonly ISet<Link> relatedTestScripts = new HashSet<Link>();
+    private readonly ISet<string> subjects = new HashSet<string>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Link> testedByTestCases = new HashSet<Link>();
+    private readonly ISet<Link> tracksChangeSets = new HashSet<Link>();
+    private readonly ISet<Link> tracksRequirements = new HashSet<Link>();
+    private readonly ISet<Uri> rdfTypes = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
     private bool approved;
     private bool closed;
-    private DateTime?   closeDate;
-    private DateTime?   created;
+    private DateTime? closeDate;
+    private DateTime? created;
     private string description;
-    private Uri         discussedBy;
+    private Uri discussedBy;
     private bool isFixedValue;
     private string identifier;
     private bool inProgress;
-    private Uri         instanceShape;
-    private DateTime?   modified;
+    private Uri instanceShape;
+    private DateTime? modified;
     private bool reviewed;
-    private Uri         serviceProvider;
+    private Uri serviceProvider;
     private string shortTitle;
     private string status;
     private string title;
@@ -267,7 +267,7 @@ public class ChangeRequest : AbstractResource
         return creators.ToArray();
     }
 
-    [OslcAllowedValue(new string[] {"Defect", "Task", "Story", "Bug Report", "Feature Request"})]
+    [OslcAllowedValue(new string[] { "Defect", "Task", "Story", "Bug Report", "Feature Request" })]
     [OslcDescription("A short string representation for the type, example 'Defect'.")]
     [OslcName("type")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "type")]
@@ -637,7 +637,7 @@ public class ChangeRequest : AbstractResource
 
         if (dctermsTypes != null)
         {
-    	    this.dctermsTypes.AddAll(dctermsTypes);
+            this.dctermsTypes.AddAll(dctermsTypes);
         }
     }
 

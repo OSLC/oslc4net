@@ -15,7 +15,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Json;
 using System.Linq;
@@ -144,7 +143,7 @@ public class OslcJsonMediaTypeFormatter : MediaTypeFormatter
     /// <param name="content"></param>
     /// <param name="transportContext"></param>
     /// <returns></returns>
-    public override Task  WriteToStreamAsync(
+    public override Task WriteToStreamAsync(
         Type type,
         object value,
         Stream writeStream,
@@ -265,7 +264,10 @@ public class OslcJsonMediaTypeFormatter : MediaTypeFormatter
     {
         var tcs = new TaskCompletionSource<object>();
 
-        if (content != null && content.Headers != null && content.Headers.ContentLength == 0) return null;
+        if (content != null && content.Headers != null && content.Headers.ContentLength == 0)
+        {
+            return null;
+        }
 
         try
         {
@@ -273,7 +275,6 @@ public class OslcJsonMediaTypeFormatter : MediaTypeFormatter
             // var httpResponseBody = sr.ReadToEnd();
             // readStream.Position = 0;
             // Debug.WriteLine("HTTP response body" + httpResponseBody);
-
 
             var jsonObject = (JsonObject)JsonObject.Load(readStream);
             // Debug.WriteLine("JsonMediaTypeFormatter.ReadFromStreamAsync(): Loaded JSON: " + jsonObject?.ToString());
@@ -285,7 +286,7 @@ public class OslcJsonMediaTypeFormatter : MediaTypeFormatter
             {
                 var haveOne = (int)output.GetType().GetProperty("Count").GetValue(output, null) > 0;
 
-                tcs.SetResult(haveOne ? output.GetType().GetProperty("Item").GetValue(output, new object[] { 0 }): null);
+                tcs.SetResult(haveOne ? output.GetType().GetProperty("Item").GetValue(output, new object[] { 0 }) : null);
             }
             else if (type.IsArray)
             {
@@ -298,7 +299,10 @@ public class OslcJsonMediaTypeFormatter : MediaTypeFormatter
         }
         catch (Exception e)
         {
-            if (formatterLogger == null) throw;
+            if (formatterLogger == null)
+            {
+                throw;
+            }
 
             formatterLogger.LogError(string.Empty, e.Message);
 

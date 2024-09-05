@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -31,7 +31,6 @@ public static class QmConstants
     public const string REQUIREMENTS_MANAGEMENT_PREFIX = "oslc_rm";
     public const string SOFTWARE_CONFIGURATION_MANAGEMENT_NAMESPACE = "http://open-services.net/ns/scm#";
     public const string SOFTWARE_CONFIGURATION_MANAGEMENT_PREFIX = "oslc_scm";
-
 
     public const string TYPE_CHANGE_REQUEST = CHANGE_MANAGEMENT_NAMESPACE + "ChangeRequest";
     public const string TYPE_CHANGE_SET = SOFTWARE_CONFIGURATION_MANAGEMENT_NAMESPACE + "ChangeSet";

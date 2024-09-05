@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
  *
@@ -29,33 +29,32 @@ namespace OSLC4Net.Client.Oslc.Resources;
 [OslcNamespace(ArchitectureConstants.ARCHITECTURE_NAMESPACE)]
 public class ArchitectureLinkType : AbstractResource
 {
-	    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> rdfTypes = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
-
-    private DateTime?   created;
+    private DateTime? created;
     private string comment;
     private string label;
     private string identifier;
-    private Uri         instanceShape;
-    private DateTime?   modified;
-    private Uri         serviceProvider;
+    private Uri instanceShape;
+    private DateTime? modified;
+    private Uri serviceProvider;
 
+    public ArchitectureLinkType() : base()
+    {
 
-	    public ArchitectureLinkType() : base()
-	    {
-
-		    rdfTypes.Add(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE));
-	    }
+        rdfTypes.Add(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE));
+    }
 
     public ArchitectureLinkType(Uri about) : base(about)
-     {
-		    rdfTypes.Add(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE));
-     }
+    {
+        rdfTypes.Add(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE));
+    }
 
-    protected Uri GetRdfType() {
-	    return new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE);
+    protected Uri GetRdfType()
+    {
+        return new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE);
     }
 
     public void AddContributor(Uri contributor)

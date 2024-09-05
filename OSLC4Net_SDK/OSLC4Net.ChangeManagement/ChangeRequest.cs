@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -29,45 +29,45 @@ namespace OSLC4Net.ChangeManagement;
 [OslcResourceShape(title = "Change Request Resource Shape", describes = new string[] { Constants.TYPE_CHANGE_REQUEST })]
 public class ChangeRequest : AbstractResource
 {
-    private readonly ISet<Link>     affectedByDefects           = new HashSet<Link>();
-    private readonly ISet<Link>     affectsPlanItems            = new HashSet<Link>();
-    private readonly ISet<Link>     affectsRequirements         = new HashSet<Link>();
-    private readonly ISet<Link>     affectsTestResults          = new HashSet<Link>();
-    private readonly ISet<Link>     blocksTestExecutionRecords  = new HashSet<Link>();
-    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Type>     dctermsTypes                = new HashSet<Type>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Link>     implementsRequirements      = new HashSet<Link>();
-    private readonly ISet<Link>     relatedChangeRequests       = new HashSet<Link>();
-    private readonly ISet<Link>     relatedResources            = new HashSet<Link>(); // TODO - Extension to point to any other OSLC resource(s).
-    private readonly ISet<Link>     relatedTestCases            = new HashSet<Link>();
-    private readonly ISet<Link>     relatedTestExecutionRecords = new HashSet<Link>();
-    private readonly ISet<Link>     relatedTestPlans            = new HashSet<Link>();
-    private readonly ISet<Link>     relatedTestScripts          = new HashSet<Link>();
-    private readonly ISet<string>   subjects                    = new HashSet<string>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Link>     testedByTestCases           = new HashSet<Link>();
-    private readonly ISet<Link>     tracksChangeSets            = new HashSet<Link>();
-    private readonly ISet<Link>     tracksRequirements          = new HashSet<Link>();
-    private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Link> affectedByDefects = new HashSet<Link>();
+    private readonly ISet<Link> affectsPlanItems = new HashSet<Link>();
+    private readonly ISet<Link> affectsRequirements = new HashSet<Link>();
+    private readonly ISet<Link> affectsTestResults = new HashSet<Link>();
+    private readonly ISet<Link> blocksTestExecutionRecords = new HashSet<Link>();
+    private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Type> dctermsTypes = new HashSet<Type>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Link> implementsRequirements = new HashSet<Link>();
+    private readonly ISet<Link> relatedChangeRequests = new HashSet<Link>();
+    private readonly ISet<Link> relatedResources = new HashSet<Link>(); // TODO - Extension to point to any other OSLC resource(s).
+    private readonly ISet<Link> relatedTestCases = new HashSet<Link>();
+    private readonly ISet<Link> relatedTestExecutionRecords = new HashSet<Link>();
+    private readonly ISet<Link> relatedTestPlans = new HashSet<Link>();
+    private readonly ISet<Link> relatedTestScripts = new HashSet<Link>();
+    private readonly ISet<string> subjects = new HashSet<string>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Link> testedByTestCases = new HashSet<Link>();
+    private readonly ISet<Link> tracksChangeSets = new HashSet<Link>();
+    private readonly ISet<Link> tracksRequirements = new HashSet<Link>();
+    private readonly ISet<Uri> rdfTypes = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
-    private bool?       approved;
-    private bool?       closed;
-    private DateTime?   closeDate;
-    private DateTime?   created;
-    private string      description;
-    private Uri         discussedBy;
-    private bool?       isFixed;
-    private string      identifier;
-    private bool?       inProgress;
-    private Uri         instanceShape;
-    private DateTime?   modified;
-    private bool?       reviewed;
-    private Uri         serviceProvider;
-    private Severity    severity = Severity.Unclassified; // TODO - Added severity for demo
-    private string      shortTitle;
-    private string      status;
-    private string      title;
-    private bool?       verified;
+    private bool? approved;
+    private bool? closed;
+    private DateTime? closeDate;
+    private DateTime? created;
+    private string description;
+    private Uri discussedBy;
+    private bool? isFixed;
+    private string identifier;
+    private bool? inProgress;
+    private Uri instanceShape;
+    private DateTime? modified;
+    private bool? reviewed;
+    private Uri serviceProvider;
+    private Severity severity = Severity.Unclassified; // TODO - Added severity for demo
+    private string shortTitle;
+    private string status;
+    private string title;
+    private bool? verified;
 
     public ChangeRequest() : base()
     {
@@ -272,7 +272,7 @@ public class ChangeRequest : AbstractResource
         return creators.ToArray();
     }
 
-    [OslcAllowedValue(new string[] {"Defect", "Task", "Story", "Bug Report", "Feature Request"})]
+    [OslcAllowedValue(new string[] { "Defect", "Task", "Story", "Bug Report", "Feature Request" })]
     [OslcDescription("A short string representation for the type, example 'Defect'.")]
     [OslcName("type")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "type")]
@@ -430,7 +430,7 @@ public class ChangeRequest : AbstractResource
         return serviceProvider;
     }
 
-    [OslcAllowedValue(new string[] {"Unclassified", "Minor", "Normal", "Major", "Critical", "Blocker"})]
+    [OslcAllowedValue(new string[] { "Unclassified", "Minor", "Normal", "Major", "Critical", "Blocker" })]
     [OslcDescription("Severity of change request.")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "severity")]

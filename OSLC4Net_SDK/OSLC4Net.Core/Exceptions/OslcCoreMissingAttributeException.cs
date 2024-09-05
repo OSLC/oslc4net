@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -38,9 +38,10 @@ public class OslcCoreMissingAttributeException : OslcCoreApplicationException
     ///
     /// </summary>
     /// <returns></returns>
-	    public Type GetAnnotationType() {
-		    return annotationType;
-	    }
+    public Type GetAnnotationType()
+    {
+        return annotationType;
+    }
 
     /// <summary>
     ///
@@ -48,11 +49,11 @@ public class OslcCoreMissingAttributeException : OslcCoreApplicationException
     /// <returns></returns>
     public Type GetResourceType()
     {
-		    return resourceType;
+        return resourceType;
     }
 
     private static readonly string MESSAGE_KEY = "MissingAnnotationException";
 
-	    private Type annotationType;
-    private Type resourceType;
+    private readonly Type annotationType;
+    private readonly Type resourceType;
 }

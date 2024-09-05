@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;

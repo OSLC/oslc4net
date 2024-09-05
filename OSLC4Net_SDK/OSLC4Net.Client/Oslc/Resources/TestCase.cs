@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
  *
@@ -25,17 +25,17 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// http://open-services.net/bin/view/Main/QmSpecificationV2#Resource_TestCase
 /// </summary>
-[OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] {QmConstants.TYPE_TEST_CASE})]
+[OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] { QmConstants.TYPE_TEST_CASE })]
 [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
 public class TestCase : QmResource
 {
-    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Link>     relatedChangeRequests       = new HashSet<Link>();
-    private readonly ISet<string>   subjects                    = new HashSet<string>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Link>     testsChangeRequests         = new HashSet<Link>();
-    private readonly ISet<Link>     usesTestScripts             = new HashSet<Link>();
-    private readonly ISet<Link>     validatesRequirements       = new HashSet<Link>();
+    private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Link> relatedChangeRequests = new HashSet<Link>();
+    private readonly ISet<string> subjects = new HashSet<string>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Link> testsChangeRequests = new HashSet<Link>();
+    private readonly ISet<Link> usesTestScripts = new HashSet<Link>();
+    private readonly ISet<Link> validatesRequirements = new HashSet<Link>();
 
     private string description;
 
@@ -45,7 +45,7 @@ public class TestCase : QmResource
 
     protected override Uri GetRdfType()
     {
-	    return new Uri(QmConstants.TYPE_TEST_CASE);
+        return new Uri(QmConstants.TYPE_TEST_CASE);
     }
 
     public void AddContributor(Uri contributor)
@@ -198,7 +198,7 @@ public class TestCase : QmResource
         if (relatedChangeRequests != null)
         {
             this.relatedChangeRequests.AddAll(relatedChangeRequests);
-       }
+        }
     }
 
     public void SetSubjects(string[] subjects)

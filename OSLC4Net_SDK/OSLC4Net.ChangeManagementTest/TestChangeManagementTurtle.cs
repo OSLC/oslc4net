@@ -13,7 +13,6 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OSLC4Net.Core.Model;
 
@@ -68,7 +67,7 @@ public class TestChangeManagementTurtle : TestBase
         const string mediaType = OslcMediaType.TEXT_TURTLE;
         await TestResourceShapeAsync(mediaType);
         await TestCreateAsync(mediaType);
-        await Task.WhenAll(new [] {
+        await Task.WhenAll(new[] {
             TestRetrieveAsync(mediaType),
             TestRetrievesAsync(mediaType),
             TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,

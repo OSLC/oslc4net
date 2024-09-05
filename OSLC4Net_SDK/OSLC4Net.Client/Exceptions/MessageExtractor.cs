@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012, 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -27,7 +27,7 @@ namespace OSLC4Net.Client.Exceptions;
 /// </summary>
 public static class MessageExtractor
 {
-    private static ResourceManager rm = Resources.ResourceManager;
+    private static readonly ResourceManager rm = Resources.ResourceManager;
     private static readonly ILog logger = LogManager.GetLogger(typeof(MessageExtractor));
 
     /// <summary>
@@ -39,10 +39,13 @@ public static class MessageExtractor
     public static string GetMessage(string key, object[] args)
     {
 
-        try {
-            var message = rm.GetString( key );
+        try
+        {
+            var message = rm.GetString(key);
             return string.Format(message, args);
-        } catch (Exception missingResourceException ) {
+        }
+        catch (Exception missingResourceException)
+        {
             logger.Fatal(missingResourceException.Message, missingResourceException);
             return "???" + key + "???";
         }

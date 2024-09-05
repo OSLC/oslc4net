@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -72,10 +72,10 @@ public class EnumerableWrapper : IEnumerable<object>
             opaqueEnumerator.GetType().GetMethod("Reset", Type.EmptyTypes).Invoke(opaqueEnumerator, Type.EmptyTypes);
         }
 
-        private object opaqueEnumerator;
-        private PropertyInfo currentInfo;
-        private MethodInfo moveNext;
+        private readonly object opaqueEnumerator;
+        private readonly PropertyInfo currentInfo;
+        private readonly MethodInfo moveNext;
     }
 
-    private object opaqueObj;
+    private readonly object opaqueObj;
 }

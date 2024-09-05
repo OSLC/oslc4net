@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -29,7 +29,7 @@ public static class ServiceProviderRegistryURIs
 
     private static readonly string SYSTEM_PROPERTY_NAME_REGISTRY_URI = typeof(ServiceProviderRegistryURIs).Assembly.FullName + ".registryuri";
 
-    private static string SERVICE_PROVIDER_REGISTRY_URI;
+    private static readonly string SERVICE_PROVIDER_REGISTRY_URI;
 
     static ServiceProviderRegistryURIs()
     {

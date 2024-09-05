@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -30,26 +30,27 @@ internal class ComparisonTermImpl : SimpleTermImpl, ComparisonTerm
         IDictionary<string, string> prefixMap
     ) : base(tree, TermType.COMPARISON, prefixMap)
     {
-        switch (((CommonTree)tree.GetChild(1)).Token.Type) {
-        case OslcWhereParser.EQUAL:
-            op = Operator.EQUALS;
-            break;
-        case OslcWhereParser.NOT_EQUAL:
-            op = Operator.NOT_EQUALS;
-            break;
-        case OslcWhereParser.LESS:
-            op = Operator.LESS_THAN;
-            break;
-        case OslcWhereParser.LESS_EQUAL:
-            op = Operator.LESS_EQUALS;
-            break;
-        case OslcWhereParser.GREATER:
-            op = Operator.GREATER_THAN;
-            break;
-        default:
-        case OslcWhereParser.GREATER_EQUAL:
-            op = Operator.GREATER_EQUALS;
-            break;
+        switch (((CommonTree)tree.GetChild(1)).Token.Type)
+        {
+            case OslcWhereParser.EQUAL:
+                op = Operator.EQUALS;
+                break;
+            case OslcWhereParser.NOT_EQUAL:
+                op = Operator.NOT_EQUALS;
+                break;
+            case OslcWhereParser.LESS:
+                op = Operator.LESS_THAN;
+                break;
+            case OslcWhereParser.LESS_EQUAL:
+                op = Operator.LESS_EQUALS;
+                break;
+            case OslcWhereParser.GREATER:
+                op = Operator.GREATER_THAN;
+                break;
+            default:
+            case OslcWhereParser.GREATER_EQUAL:
+                op = Operator.GREATER_EQUALS;
+                break;
         }
     }
 
@@ -82,30 +83,31 @@ internal class ComparisonTermImpl : SimpleTermImpl, ComparisonTerm
         return Property.ToString() + OperatorExtension.ToString(op) + Operand.ToString();
     }
 
-    static internal Value
+    internal static Value
     CreateValue(
         CommonTree treeOperand,
         string errorPrefix,
         IDictionary<string, string> prefixMap
     )
     {
-        switch (treeOperand.Token.Type) {
-        case OslcWhereParser.IRI_REF:
-            return new UriRefValueImpl(treeOperand);
-        case OslcWhereParser.BOOLEAN:
-            return new BooleanValueImpl(treeOperand);
-        case OslcWhereParser.DECIMAL:
-            return new DecimalValueImpl(treeOperand);
-        case OslcWhereParser.STRING_LITERAL:
-            return new StringValueImpl(treeOperand);
-        case OslcWhereParser.TYPED_VALUE:
-            return new TypedValueImpl(treeOperand, prefixMap);
-        case OslcWhereParser.LANGED_VALUE:
-            return new LangedStringValueImpl(treeOperand);
-        default:
-            throw new InvalidOperationException(
-                    errorPrefix + ": " +
-                        treeOperand.Token.Text);
+        switch (treeOperand.Token.Type)
+        {
+            case OslcWhereParser.IRI_REF:
+                return new UriRefValueImpl(treeOperand);
+            case OslcWhereParser.BOOLEAN:
+                return new BooleanValueImpl(treeOperand);
+            case OslcWhereParser.DECIMAL:
+                return new DecimalValueImpl(treeOperand);
+            case OslcWhereParser.STRING_LITERAL:
+                return new StringValueImpl(treeOperand);
+            case OslcWhereParser.TYPED_VALUE:
+                return new TypedValueImpl(treeOperand, prefixMap);
+            case OslcWhereParser.LANGED_VALUE:
+                return new LangedStringValueImpl(treeOperand);
+            default:
+                throw new InvalidOperationException(
+                        errorPrefix + ": " +
+                            treeOperand.Token.Text);
         }
     }
 

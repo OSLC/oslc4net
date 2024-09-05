@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -50,13 +50,16 @@ internal class PropertyImpl : Property
 
     public PName Identifier
     {
-        get {
+        get
+        {
 
-            if (identifier != null) {
+            if (identifier != null)
+            {
                 return identifier;
             }
 
-            if (isWildcard) {
+            if (isWildcard)
+            {
                 throw new InvalidOperationException("wildcard has no identifier");
             }
 
@@ -66,10 +69,14 @@ internal class PropertyImpl : Property
 
             var colon = rawIdentifier.IndexOf(':');
 
-            if (colon < 0) {
+            if (colon < 0)
+            {
                 identifier.local = rawIdentifier;
-            } else {
-                if (colon > 0) {
+            }
+            else
+            {
+                if (colon > 0)
+                {
                     identifier.prefix = rawIdentifier.Substring(0, colon);
                     identifier.ns = prefixMap[identifier.prefix];
                 }

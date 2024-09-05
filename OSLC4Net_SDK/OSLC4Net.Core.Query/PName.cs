@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -17,9 +17,9 @@ namespace OSLC4Net.Core.Query;
 
 public class PName
 {
-	    public string ns;
-	    public string prefix;
-	    public string local;
+    public string ns;
+    public string prefix;
+    public string local;
 
-	    public override string ToString() { return prefix + ':' + local; }
+    public override string ToString() { return prefix + ':' + local; }
 }

@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -20,25 +20,25 @@ namespace OSLC4Net.Client.Exceptions;
 /// </summary>
 public class ResourceNotFoundException : OslcClientApplicationException
 {
-	    private const string MESSAGE_KEY = "ResourceNotFoundException";
+    private const string MESSAGE_KEY = "ResourceNotFoundException";
 
-	    private readonly string resource;
-	    private readonly string value;
+    private readonly string resource;
+    private readonly string value;
 
-	    public ResourceNotFoundException(string resource, string value) :
-		    base(MESSAGE_KEY, new object[] {resource, value})
+    public ResourceNotFoundException(string resource, string value) :
+        base(MESSAGE_KEY, new object[] { resource, value })
     {
-		    this.resource = resource;
-		    this.value = value;
-	    }
+        this.resource = resource;
+        this.value = value;
+    }
 
-	    public string GetResource()
+    public string GetResource()
     {
-		    return resource;
-	    }
+        return resource;
+    }
 
-	    public string GetValue()
+    public string GetValue()
     {
-		    return value;
-	    }
+        return value;
+    }
 }

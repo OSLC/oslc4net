@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -12,7 +12,6 @@
  * Contributors:
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
-
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -59,7 +58,7 @@ public class TestChangeManagementRdfXml : TestBase
         const string mediaType = OslcMediaType.APPLICATION_RDF_XML;
         await TestResourceShapeAsync(mediaType);
         await TestCreateAsync(mediaType);
-        await Task.WhenAll(new [] {
+        await Task.WhenAll(new[] {
             TestRetrieveAsync(mediaType),
             TestRetrievesAsync(mediaType),
             TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,

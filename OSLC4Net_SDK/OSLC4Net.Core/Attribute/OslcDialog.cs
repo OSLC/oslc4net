@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -23,20 +23,20 @@ namespace OSLC4Net.Core.Attribute;
 ]
 public class OslcDialog : System.Attribute
 {
-	    /**
-	     * Title string that could be used for display
-	     */
-	    public string title;
+    /**
+     * Title string that could be used for display
+     */
+    public string title;
 
-	    /**
-	     * Very short label for use in menu items
-	     */
-	    public string label = "";
+    /**
+     * Very short label for use in menu items
+     */
+    public string label = "";
 
-	    /**
-	     * The URI of the dialog
-	     */
-	    public string uri;
+    /**
+     * The URI of the dialog
+     */
+    public string uri;
 
     /**
      * Values MUST be expressed in relative length units.  Em and ex units are interpreted relative to the default system font (at 100% size).

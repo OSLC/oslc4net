@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -22,11 +22,11 @@ using OSLC4Net.Core.Model;
 namespace OSLC4Net.Client.Oslc.Resources;
 
 [OslcNamespace(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE)]
-[OslcResourceShape(title = "Requirement Collection Resource Shape", describes = new string[] {RmConstants.TYPE_REQUIREMENT_COLLECTION})]
+[OslcResourceShape(title = "Requirement Collection Resource Shape", describes = new string[] { RmConstants.TYPE_REQUIREMENT_COLLECTION })]
 public class RequirementCollection : Requirement
 {
-	    // The only extra field is uses
-	    private readonly ISet<Uri>      uses	 = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    // The only extra field is uses
+    private readonly ISet<Uri> uses = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
     public RequirementCollection() : base()
     {

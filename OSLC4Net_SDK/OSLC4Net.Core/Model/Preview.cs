@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -26,33 +26,34 @@ namespace OSLC4Net.Core.Model;
 [OslcResourceShape(title = "OSLC Preview Resource Shape", describes = new string[] { OslcConstants.TYPE_PREVIEW })]
 public class Preview : AbstractResource
 {
-	    private Uri document;
+    private Uri document;
     private string hintHeight;
-	    private string hintWidth;
-	    private string initialHeight;
+    private string hintWidth;
+    private string initialHeight;
 
-	    public Preview() : base()
+    public Preview() : base()
     {
-	    }
+    }
 
-	    [OslcDescription("The Uri of an HTML document to be used for the preview")]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "document")]
-	    [OslcReadOnly]
+    [OslcDescription("The Uri of an HTML document to be used for the preview")]
+    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "document")]
+    [OslcReadOnly]
     [OslcTitle("Document")]
-    public Uri GetDocument() {
-	        return document;
-	    }
+    public Uri GetDocument()
+    {
+        return document;
+    }
 
-	    [OslcDescription("Recommended height of the preview. Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1). Em and ex units are interpreted relative to the default system font (at 100% size).")]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintHeight")]
-	    [OslcReadOnly]
+    [OslcDescription("Recommended height of the preview. Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1). Em and ex units are interpreted relative to the default system font (at 100% size).")]
+    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintHeight")]
+    [OslcReadOnly]
     [OslcTitle("Hint Height")]
-	    public string GetHintHeight()
+    public string GetHintHeight()
     {
         return hintHeight;
     }
 
-	    [OslcDescription("Recommended width of the preview. Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1). Em and ex units are interpreted relative to the default system font (at 100% size).")]
+    [OslcDescription("Recommended width of the preview. Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1). Em and ex units are interpreted relative to the default system font (at 100% size).")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintWidth")]
     [OslcReadOnly]
     [OslcTitle("Hint Width")]
@@ -61,7 +62,7 @@ public class Preview : AbstractResource
         return hintWidth;
     }
 
-	    [OslcDescription("Recommended initial height of the preview. The presence of this property indicates that the preview supports dynamically computing its size. Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1). Em and ex units are interpreted relative to the default system font (at 100% size).")]
+    [OslcDescription("Recommended initial height of the preview. The presence of this property indicates that the preview supports dynamically computing its size. Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1). Em and ex units are interpreted relative to the default system font (at 100% size).")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "initialHeight")]
     [OslcReadOnly]
     [OslcTitle("Initial Height")]
@@ -70,9 +71,10 @@ public class Preview : AbstractResource
         return initialHeight;
     }
 
-    public void SetDocument(Uri document) {
-	        this.document = document;
-	    }
+    public void SetDocument(Uri document)
+    {
+        this.document = document;
+    }
 
     public void SetHintHeight(string hintHeight)
     {

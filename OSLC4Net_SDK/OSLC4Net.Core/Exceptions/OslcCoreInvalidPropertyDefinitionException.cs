@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -38,7 +38,7 @@ public class OslcCoreInvalidPropertyDefinitionException : OslcCoreApplicationExc
 
     private static readonly string MESSAGE_KEY = "InvalidPropertyDefinitionException";
 
-    private MethodInfo              method;
-    private OslcPropertyDefinition  oslcPropertyDefinition;
-    private Type                    resourceType;
+    private readonly MethodInfo method;
+    private readonly OslcPropertyDefinition oslcPropertyDefinition;
+    private readonly Type resourceType;
 }

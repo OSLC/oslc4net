@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012, 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -15,7 +15,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -150,7 +149,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     /// <param name="content"></param>
     /// <param name="transportContext"></param>
     /// <returns></returns>
-    public override Task  WriteToStreamAsync(
+    public override Task WriteToStreamAsync(
         Type type,
         object value,
         Stream writeStream,
@@ -169,7 +168,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                         object objects = resourceProp.GetValue(value, null);
                         PropertyInfo propertiesProp = value.GetType().GetProperty("Properties");
 
-                        if (! ImplementsICollection(actualTypeArguments[0]))
+                        if (!ImplementsICollection(actualTypeArguments[0]))
                         {
                             objects = new EnumerableWrapper(objects);
                         }
@@ -308,7 +307,10 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     {
         var tcs = new TaskCompletionSource<object>();
 
-        if (content == null || content.Headers == null || content.Headers.ContentLength == 0) return null;
+        if (content == null || content.Headers == null || content.Headers.ContentLength == 0)
+        {
+            return null;
+        }
 
         try
         {
@@ -357,7 +359,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                 {
                     bool haveOne = (int)output.GetType().GetProperty("Count").GetValue(output, null) > 0;
 
-                    tcs.SetResult(haveOne ? output.GetType().GetProperty("Item").GetValue(output, new object[] { 0 }): null);
+                    tcs.SetResult(haveOne ? output.GetType().GetProperty("Item").GetValue(output, new object[] { 0 }) : null);
                 }
                 else if (type.IsArray)
                 {
@@ -371,7 +373,10 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         }
         catch (Exception e)
         {
-            if (formatterLogger == null) throw;
+            if (formatterLogger == null)
+            {
+                throw;
+            }
 
             formatterLogger.LogError(string.Empty, e.Message);
 

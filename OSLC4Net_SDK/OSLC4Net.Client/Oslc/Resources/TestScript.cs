@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -24,16 +24,16 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// http://open-services.net/bin/view/Main/QmSpecificationV2#Resource_TestScript
 /// </summary>
-[OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] {QmConstants.TYPE_TEST_SCRIPT})]
+[OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] { QmConstants.TYPE_TEST_SCRIPT })]
 [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
 public class TestScript : QmResource
 {
-    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Link>     relatedChangeRequests       = new HashSet<Link>();
-    private readonly ISet<Link>     validatesRequirements       = new HashSet<Link>();
+    private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Link> relatedChangeRequests = new HashSet<Link>();
+    private readonly ISet<Link> validatesRequirements = new HashSet<Link>();
 
-    private Uri      executionInstructions;
+    private Uri executionInstructions;
     private string description;
 
     public TestScript() : base()
@@ -42,7 +42,7 @@ public class TestScript : QmResource
 
     protected override Uri GetRdfType()
     {
-	    return new Uri(QmConstants.TYPE_TEST_SCRIPT);
+        return new Uri(QmConstants.TYPE_TEST_SCRIPT);
     }
 
     public void AddContributor(Uri contributor)

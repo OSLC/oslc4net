@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -38,11 +38,12 @@ internal class InTermImpl : SimpleTermImpl, InTerm
         {
             if (values == null)
             {
-                var treeValues =  ((CommonTree)tree.GetChild(1)).Children;
+                var treeValues = ((CommonTree)tree.GetChild(1)).Children;
 
                 values = new List<Value>(treeValues.Count - 1);
 
-                foreach (CommonTree treeValue in treeValues) {
+                foreach (CommonTree treeValue in treeValues)
+                {
 
                     var value =
                         ComparisonTermImpl.CreateValue(
@@ -66,11 +67,15 @@ internal class InTermImpl : SimpleTermImpl, InTerm
 
         var first = true;
 
-        foreach (var value in Values) {
+        foreach (var value in Values)
+        {
 
-            if (first) {
+            if (first)
+            {
                 first = false;
-            } else {
+            }
+            else
+            {
                 buffer.Append(',');
             }
 

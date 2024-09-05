@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -16,8 +16,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OSLC4Net.Core.Model;
 using OSLC4Net.Core.Attribute;
+using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client.Oslc.Resources;
 
@@ -26,23 +26,23 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// </summary>
 public abstract class QmResource : AbstractResource
 {
-    private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> rdfTypes = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
-    private DateTime?   created;
+    private DateTime? created;
     private string identifier;
-    private Uri         instanceShape;
-    private DateTime?   modified;
-    private Uri         serviceProvider;
+    private Uri instanceShape;
+    private DateTime? modified;
+    private Uri serviceProvider;
     private string title;
 
     public QmResource() : base()
     {
-         rdfTypes.Add(GetRdfType());
+        rdfTypes.Add(GetRdfType());
     }
 
     public QmResource(Uri about) : base(about)
     {
-         rdfTypes.Add(GetRdfType());
+        rdfTypes.Add(GetRdfType());
     }
 
     protected abstract Uri GetRdfType();

@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -24,9 +24,9 @@ namespace OSLC4Net.Core.Attribute;
 ]
 public class OslcDescription : System.Attribute
 {
-	    /**
-	     * A default value for property, inlined into property definition.
-	     */
+    /**
+     * A default value for property, inlined into property definition.
+     */
     public readonly string value;
 
     public OslcDescription(string value)

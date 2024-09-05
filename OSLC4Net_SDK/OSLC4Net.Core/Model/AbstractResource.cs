@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -43,8 +43,8 @@ public abstract class AbstractResource : IExtendedResource
     /// <returns></returns>
     public Uri GetAbout()
     {
-		    return about;
-	    }
+        return about;
+    }
 
     /// <summary>
     /// Set the subject URI
@@ -52,23 +52,23 @@ public abstract class AbstractResource : IExtendedResource
     /// <param name="about"></param>
     public void SetAbout(Uri about)
     {
-		    this.about = about;
-	    }
+        this.about = about;
+    }
 
     /// <param name="properties"></param>
-	    public void SetExtendedProperties(IDictionary<QName, object> properties)
-	    {
-		    this.extendedProperties = properties;
-	    }
+    public void SetExtendedProperties(IDictionary<QName, object> properties)
+    {
+        this.extendedProperties = properties;
+    }
 
     /// <summary>
     /// Get all extended properties
     /// </summary>
     /// <returns></returns>
-	    public IDictionary<QName, object> GetExtendedProperties()
-	    {
-		    return extendedProperties;
-	    }
+    public IDictionary<QName, object> GetExtendedProperties()
+    {
+        return extendedProperties;
+    }
 
     /// <summary>
     /// Get the RDF types
@@ -76,7 +76,7 @@ public abstract class AbstractResource : IExtendedResource
     /// <returns></returns>
     public ICollection<Uri> GetTypes()
     {
-	    return types;
+        return types;
     }
 
     /// <summary>
@@ -85,7 +85,7 @@ public abstract class AbstractResource : IExtendedResource
     /// <param name="types"></param>
     public void SetTypes(ICollection<Uri> types)
     {
-	    this.types = types;
+        this.types = types;
     }
 
     /// <summary>
@@ -94,6 +94,6 @@ public abstract class AbstractResource : IExtendedResource
     /// <param name="type"></param>
     public void AddType(Uri type)
     {
-	    this.types.Add(type);
+        this.types.Add(type);
     }
 }

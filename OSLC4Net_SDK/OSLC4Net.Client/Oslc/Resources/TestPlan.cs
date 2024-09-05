@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
  *
@@ -25,27 +25,27 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// http://open-services.net/bin/view/Main/QmSpecificationV2#Resource_TestPlan
 /// </summary>
-[OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] {QmConstants.TYPE_TEST_PLAN})]
+[OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] { QmConstants.TYPE_TEST_PLAN })]
 [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
 public class TestPlan : QmResource
 {
-	    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Link>     relatedChangeRequests       = new HashSet<Link>();
-    private readonly ISet<string>   subjects                    = new HashSet<string>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Link>     usesTestCases               = new HashSet<Link>();
-    private readonly ISet<Link>     validatesRequirementCollections = new HashSet<Link>();
+    private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Link> relatedChangeRequests = new HashSet<Link>();
+    private readonly ISet<string> subjects = new HashSet<string>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Link> usesTestCases = new HashSet<Link>();
+    private readonly ISet<Link> validatesRequirementCollections = new HashSet<Link>();
 
     private string description;
 
-	    public TestPlan() : base()
-	    {
+    public TestPlan() : base()
+    {
 
     }
 
     protected override Uri GetRdfType()
     {
-	    return new Uri(QmConstants.TYPE_TEST_PLAN);
+        return new Uri(QmConstants.TYPE_TEST_PLAN);
     }
 
     public void AddContributor(Uri contributor)

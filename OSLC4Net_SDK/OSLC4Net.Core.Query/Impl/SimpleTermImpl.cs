@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -55,10 +55,14 @@ internal abstract class SimpleTermImpl : SimpleTerm
 
                 var colon = rawPName.IndexOf(':');
 
-                if (colon < 0) {
+                if (colon < 0)
+                {
                     property.local = rawPName;
-                } else {
-                    if (colon > 0) {
+                }
+                else
+                {
+                    if (colon > 0)
+                    {
                         property.prefix = rawPName.Substring(0, colon);
                         property.ns = prefixMap[property.prefix];
                     }

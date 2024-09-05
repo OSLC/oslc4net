@@ -1,27 +1,28 @@
-﻿using System;
+using System;
 
 using OSLC4Net.Core.Attribute;
 
 namespace OSLC4Net.Core.Model;
 
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Extended Error Resource Shape", describes = new string[]{OslcConstants.TYPE_EXTENDED_ERROR})]
+[OslcResourceShape(title = "OSLC Extended Error Resource Shape", describes = new string[] { OslcConstants.TYPE_EXTENDED_ERROR })]
 class ExtendedError
 {
-    private string        hintHeight;
-    private string        hintWidth;
-    private Uri           moreInfo;
-    private string        rel;
+    private string hintHeight;
+    private string hintWidth;
+    private Uri moreInfo;
+    private string rel;
 
-	    public ExtendedError():base()
+    public ExtendedError() : base()
     {
-	    }
+    }
 
-	    [OslcDescription("Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1) Em and ex units are interpreted relative to the default system font (at 100% size).")]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintHeight")]
+    [OslcDescription("Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1) Em and ex units are interpreted relative to the default system font (at 100% size).")]
+    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintHeight")]
     [OslcReadOnly]
-	    [OslcTitle("Hint Height")]
-    public string GetHintHeight() {
+    [OslcTitle("Hint Height")]
+    public string GetHintHeight()
+    {
         return hintHeight;
     }
 
@@ -67,7 +68,8 @@ class ExtendedError
         this.moreInfo = moreInfo;
     }
 
-    public void SetRel(string rel) {
+    public void SetRel(string rel)
+    {
         this.rel = rel;
     }
 }

@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -29,17 +29,18 @@ public class OslcCoreMissingNamespaceDeclarationException : OslcCoreApplicationE
         base(MESSAGE_KEY, new object[] { ns })
     {
         this.ns = ns;
-     }
+    }
 
     /// <summary>
     ///
     /// </summary>
     /// <returns></returns>
-	    public string GetNamespace() {
+    public string GetNamespace()
+    {
         return ns;
-	    }
+    }
 
     private static readonly string MESSAGE_KEY = "MissingNamespaceDeclarationException";
 
-	    private string ns;
+    private readonly string ns;
 }

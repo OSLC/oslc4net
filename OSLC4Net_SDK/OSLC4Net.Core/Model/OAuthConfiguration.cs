@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -26,16 +26,16 @@ namespace OSLC4Net.Core.Model;
 [OslcResourceShape(title = "OSLC OAuth Configuration Resource Shape", describes = new string[] { OslcConstants.TYPE_O_AUTH_CONFIGURATION })]
 public class OAuthConfiguration : AbstractResource
 {
-	    private Uri authorizationURI;
-	    private Uri oauthAccessTokenURI;
-	    private Uri oauthRequestTokenURI;
+    private Uri authorizationURI;
+    private Uri oauthAccessTokenURI;
+    private Uri oauthRequestTokenURI;
 
     /// <summary>
     ///
     /// </summary>
-	    public OAuthConfiguration() : base()
+    public OAuthConfiguration() : base()
     {
-	    }
+    }
 
     /// <summary>
     ///
@@ -43,49 +43,55 @@ public class OAuthConfiguration : AbstractResource
     /// <param name="oauthRequestTokenURI"></param>
     /// <param name="authorizationURI"></param>
     /// <param name="oauthAccessTokenURI"></param>
-	    public OAuthConfiguration(Uri oauthRequestTokenURI, Uri authorizationURI,  Uri oauthAccessTokenURI) : this()
+    public OAuthConfiguration(Uri oauthRequestTokenURI, Uri authorizationURI, Uri oauthAccessTokenURI) : this()
     {
-		    this.oauthRequestTokenURI = oauthRequestTokenURI;
-		    this.authorizationURI =  authorizationURI;
-		    this.oauthAccessTokenURI = oauthAccessTokenURI;
-	    }
+        this.oauthRequestTokenURI = oauthRequestTokenURI;
+        this.authorizationURI = authorizationURI;
+        this.oauthAccessTokenURI = oauthAccessTokenURI;
+    }
 
-	    [OslcDescription("Uri for obtaining OAuth authorization")]
-	    [OslcOccurs(Occurs.ExactlyOne)]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "authorizationURI")]
-	    [OslcReadOnly]
-	    [OslcTitle("Authorization Uri")]
-    public Uri GetAuthorizationURI() {
-	        return authorizationURI;
-	    }
+    [OslcDescription("Uri for obtaining OAuth authorization")]
+    [OslcOccurs(Occurs.ExactlyOne)]
+    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "authorizationURI")]
+    [OslcReadOnly]
+    [OslcTitle("Authorization Uri")]
+    public Uri GetAuthorizationURI()
+    {
+        return authorizationURI;
+    }
 
-	    [OslcDescription("Uri for obtaining OAuth access token")]
-	    [OslcOccurs(Occurs.ExactlyOne)]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "oauthAccessTokenURI")]
-	    [OslcReadOnly]
-	    [OslcTitle("Access Token Uri")]
-    public Uri GetOauthAccessTokenURI() {
-	        return oauthAccessTokenURI;
-	    }
+    [OslcDescription("Uri for obtaining OAuth access token")]
+    [OslcOccurs(Occurs.ExactlyOne)]
+    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "oauthAccessTokenURI")]
+    [OslcReadOnly]
+    [OslcTitle("Access Token Uri")]
+    public Uri GetOauthAccessTokenURI()
+    {
+        return oauthAccessTokenURI;
+    }
 
-	    [OslcDescription("Uri for obtaining OAuth request token")]
-	    [OslcOccurs(Occurs.ExactlyOne)]
-	    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "oauthRequestTokenURI")]
-	    [OslcReadOnly]
-	    [OslcTitle("Request Token Uri")]
-    public Uri GetOauthRequestTokenURI() {
-	        return oauthRequestTokenURI;
-	    }
+    [OslcDescription("Uri for obtaining OAuth request token")]
+    [OslcOccurs(Occurs.ExactlyOne)]
+    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "oauthRequestTokenURI")]
+    [OslcReadOnly]
+    [OslcTitle("Request Token Uri")]
+    public Uri GetOauthRequestTokenURI()
+    {
+        return oauthRequestTokenURI;
+    }
 
-	    public void SetAuthorizationURI(Uri authorizationURI) {
-	        this.authorizationURI = authorizationURI;
-	    }
+    public void SetAuthorizationURI(Uri authorizationURI)
+    {
+        this.authorizationURI = authorizationURI;
+    }
 
-	    public void SetOauthAccessTokenURI(Uri oauthAccessTokenURI) {
-	        this.oauthAccessTokenURI = oauthAccessTokenURI;
-	    }
+    public void SetOauthAccessTokenURI(Uri oauthAccessTokenURI)
+    {
+        this.oauthAccessTokenURI = oauthAccessTokenURI;
+    }
 
-	    public void SetOauthRequestTokenURI(Uri oauthRequestTokenURI) {
-	        this.oauthRequestTokenURI = oauthRequestTokenURI;
-	    }
+    public void SetOauthRequestTokenURI(Uri oauthRequestTokenURI)
+    {
+        this.oauthRequestTokenURI = oauthRequestTokenURI;
+    }
 }

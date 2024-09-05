@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -78,7 +78,7 @@ internal class PropertiesImpl : Properties
      *
      * @return the resulting property list
      */
-    static internal IList<Property>
+    internal static IList<Property>
     CreateChildren(
         CommonTree tree,
         IDictionary<string, string> prefixMap
@@ -87,23 +87,24 @@ internal class PropertiesImpl : Properties
         var treeChildren = tree.Children;
         IList<Property> children = new List<Property>(treeChildren.Count);
 
-        foreach (CommonTree treeChild in treeChildren) {
+        foreach (CommonTree treeChild in treeChildren)
+        {
 
             Property property;
 
             switch (treeChild.Token.Type)
             {
-            case OslcSelectParser.WILDCARD:
-                property = (Property) new WildcardImpl();
-                break;
-            case OslcSelectParser.PREFIXED_NAME:
-                property = (Property)new PropertyImpl((CommonTree)treeChild.GetChild(0),
-                                                      PropertyType.IDENTIFIER, prefixMap, false);
-                break;
-            default:
-            case OslcSelectParser.NESTED_PROPERTIES:
-                property = (Property)new NestedPropertyImpl(treeChild, prefixMap);
-                break;
+                case OslcSelectParser.WILDCARD:
+                    property = (Property)new WildcardImpl();
+                    break;
+                case OslcSelectParser.PREFIXED_NAME:
+                    property = (Property)new PropertyImpl((CommonTree)treeChild.GetChild(0),
+                                                          PropertyType.IDENTIFIER, prefixMap, false);
+                    break;
+                default:
+                case OslcSelectParser.NESTED_PROPERTIES:
+                    property = (Property)new NestedPropertyImpl(treeChild, prefixMap);
+                    break;
             }
 
             children.Add(property);
@@ -122,7 +123,7 @@ internal class PropertiesImpl : Properties
      *
      * @return the builder representation of the property list
      */
-    static internal StringBuilder
+    internal static StringBuilder
     ChildrenToString(
         StringBuilder builder,
         IList<Property> children
@@ -130,18 +131,22 @@ internal class PropertiesImpl : Properties
     {
         var first = true;
 
-         foreach (var property in children) {
+        foreach (var property in children)
+        {
 
-             if (first) {
-                 first = false;
-             } else {
-                 builder.Append(',');
-             }
+            if (first)
+            {
+                first = false;
+            }
+            else
+            {
+                builder.Append(',');
+            }
 
-             builder.Append(property.ToString());
-         }
+            builder.Append(property.ToString());
+        }
 
-         return builder;
+        return builder;
     }
 
     private readonly CommonTree tree;

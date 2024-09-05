@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -21,32 +21,32 @@ namespace OSLC4Net.Core.Model;
 /// <typeparam name="T"></typeparam>
 public abstract class AbstractReifiedResource<T> : IReifiedResource<T>
 {
-	    private T value;
+    private T value;
 
-	    protected AbstractReifiedResource()
-	    {
-	    }
+    protected AbstractReifiedResource()
+    {
+    }
 
-	    protected AbstractReifiedResource(T value)
-	    {
-		    this.value = value;
-	    }
+    protected AbstractReifiedResource(T value)
+    {
+        this.value = value;
+    }
 
     /// <summary>
     ///
     /// </summary>
     /// <returns></returns>
-	    public T GetValue()
-	    {
-		    return value;
-	    }
+    public T GetValue()
+    {
+        return value;
+    }
 
     /// <summary>
     ///
     /// </summary>
     /// <param name="value"></param>
-	    public void SetValue(T value)
-	    {
-		    this.value = value;
-	    }
+    public void SetValue(T value)
+    {
+        this.value = value;
+    }
 }

@@ -1,57 +1,64 @@
-﻿using OSLC4Net.Core.Attribute;
+using OSLC4Net.Core.Attribute;
 
 namespace OSLC4Net.Core.Model;
 
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Error Resource Shape", describes = new string[]{OslcConstants.TYPE_ERROR})]
+[OslcResourceShape(title = "OSLC Error Resource Shape", describes = new string[] { OslcConstants.TYPE_ERROR })]
 class Error
 {
     private ExtendedError extendedError;
-    private string        message;
-    private string        statusCode;
+    private string message;
+    private string statusCode;
 
-	    public Error():base() {
-	    }
+    public Error() : base()
+    {
+    }
 
-	    [OslcDescription("Extended error information.")]
+    [OslcDescription("Extended error information.")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "extendedError")]
-	    [OslcRange(OslcConstants.TYPE_EXTENDED_ERROR)]
+    [OslcRange(OslcConstants.TYPE_EXTENDED_ERROR)]
     [OslcReadOnly]
     [OslcRepresentation(Representation.Inline)]
     [OslcTitle("Extended Error")]
-	    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_EXTENDED_ERROR)]
+    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_EXTENDED_ERROR)]
     [OslcValueType(ValueType.LocalResource)]
-    public ExtendedError GetExtendedError() {
+    public ExtendedError GetExtendedError()
+    {
         return extendedError;
     }
 
-	    [OslcDescription("An informative message describing the error that occurred.")]
-	    [OslcOccurs(Occurs.ExactlyOne)]
+    [OslcDescription("An informative message describing the error that occurred.")]
+    [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "message")]
     [OslcReadOnly]
     [OslcTitle("Message")]
-    public string GetMessage() {
+    public string GetMessage()
+    {
         return message;
     }
 
-	    [OslcDescription("The HTTP status code reported with the error.")]
+    [OslcDescription("The HTTP status code reported with the error.")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "statusCode")]
     [OslcReadOnly]
     [OslcTitle("Status Code")]
-    public string GetStatusCode() {
+    public string GetStatusCode()
+    {
         return statusCode;
     }
 
-    public void SetExtendedError(ExtendedError extendedError) {
+    public void SetExtendedError(ExtendedError extendedError)
+    {
         this.extendedError = extendedError;
     }
 
-    public void SetMessage(string message) {
+    public void SetMessage(string message)
+    {
         this.message = message;
     }
 
-    public void SetStatusCode(string statusCode) {
+    public void SetStatusCode(string statusCode)
+    {
         this.statusCode = statusCode;
     }
 }

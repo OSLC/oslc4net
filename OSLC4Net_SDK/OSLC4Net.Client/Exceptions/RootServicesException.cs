@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -21,16 +21,16 @@ public class RootServicesException : OslcClientApplicationException
 {
     private const string MESSAGE_KEY = "RootServicesException";
 
-	    private readonly string jazzUrl;
+    private readonly string jazzUrl;
 
-
-	    public RootServicesException(string jazzUrl, Exception exception) :
-		    base(MESSAGE_KEY, new object[] {jazzUrl}, exception)
+    public RootServicesException(string jazzUrl, Exception exception) :
+        base(MESSAGE_KEY, new object[] { jazzUrl }, exception)
     {
-		    this.jazzUrl = jazzUrl;
-	    }
+        this.jazzUrl = jazzUrl;
+    }
 
-	    public string GetJazzUrl() {
-		    return jazzUrl;
-	    }
+    public string GetJazzUrl()
+    {
+        return jazzUrl;
+    }
 }

@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -17,7 +17,6 @@
 using System.Collections.Generic;
 
 namespace OSLC4Net.Core;
-
 
 /// <summary>
 ///  Marker interface applied to a Map(String, Object> to

@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
  *
@@ -25,18 +25,18 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// http://open-services.net/bin/view/Main/QmSpecificationV2#Resource_TestExecutionRecord
 /// </summary>
-[OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] {QmConstants.TYPE_TEST_EXECUTION_RECORD})]
+[OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] { QmConstants.TYPE_TEST_EXECUTION_RECORD })]
 [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
 public class TestExecutionRecord : QmResource
 {
-    private readonly ISet<Link>     blockedByChangeRequests     = new HashSet<Link>();
-    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Link>     relatedChangeRequests       = new HashSet<Link>();
+    private readonly ISet<Link> blockedByChangeRequests = new HashSet<Link>();
+    private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Link> relatedChangeRequests = new HashSet<Link>();
 
-    private Link     reportsOnTestPlan;
-    private Uri      runsOnTestEnvironment;
-    private Link     runsTestCase;
+    private Link reportsOnTestPlan;
+    private Uri runsOnTestEnvironment;
+    private Link runsTestCase;
 
     public TestExecutionRecord() : base()
     {
@@ -44,7 +44,7 @@ public class TestExecutionRecord : QmResource
 
     protected override Uri GetRdfType()
     {
-	    return new Uri(QmConstants.TYPE_TEST_EXECUTION_RECORD);
+        return new Uri(QmConstants.TYPE_TEST_EXECUTION_RECORD);
     }
 
     public void AddBlockedByChangeRequest(Link blockingChangeRequest)

@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -29,17 +29,18 @@ public class OslcCoreMissingNamespacePrefixException : OslcCoreApplicationExcept
         base(MESSAGE_KEY, new object[] { prefix })
     {
         this.prefix = prefix;
-     }
+    }
 
     /// <summary>
     ///
     /// </summary>
     /// <returns></returns>
-	    public string GetPrefix() {
+    public string GetPrefix()
+    {
         return prefix;
-	    }
+    }
 
     private static readonly string MESSAGE_KEY = "MissingNamespacePrefixException";
 
-	    private string prefix;
+    private readonly string prefix;
 }

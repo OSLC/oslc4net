@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  * Copyright (c) 2023 Andrii Berezovskyi and OSLC4Net contributors.
  *
@@ -17,46 +17,45 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OSLC4Net.Core.Model;
 using OSLC4Net.Core.Attribute;
+using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client.Oslc.Resources;
 
 /// <summary>
 /// http://open-services.net/wiki/architecture-management/OSLC-Architecture-Management-Specification-Version-2.0/
 /// </summary>
-[OslcResourceShape(title = "Architecture Management Resource Resource Shape", describes = new string[] {ArchitectureConstants.TYPE_ARCHITECTURE_RESOURCE})]
+[OslcResourceShape(title = "Architecture Management Resource Resource Shape", describes = new string[] { ArchitectureConstants.TYPE_ARCHITECTURE_RESOURCE })]
 [OslcNamespace(ArchitectureConstants.ARCHITECTURE_NAMESPACE)]
 public class ArchitectureResource : AbstractResource
 {
-	    private readonly ISet<Uri>      contributors                = new HashSet<Uri>(); // XXX - TreeISet<> in Java
-    private readonly ISet<Uri>      creators                    = new HashSet<Uri>(); // XXX - TreeISet<> in Java
-    private readonly ISet<string>   dctermsTypes                = new HashSet<string>(); // XXX - TreeISet<> in
-    private readonly ISet<Uri>      rdfTypes                    = new HashSet<Uri>(); // XXX - TreeISet<> in Java
+    private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeISet<> in Java
+    private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeISet<> in Java
+    private readonly ISet<string> dctermsTypes = new HashSet<string>(); // XXX - TreeISet<> in
+    private readonly ISet<Uri> rdfTypes = new HashSet<Uri>(); // XXX - TreeISet<> in Java
 
-
-    private DateTime?   created;
+    private DateTime? created;
     private string description;
     private string identifier;
-    private Uri         source;
-    private Uri         instanceShape;
-    private DateTime?   modified;
-    private Uri         serviceProvider;
+    private Uri source;
+    private Uri instanceShape;
+    private DateTime? modified;
+    private Uri serviceProvider;
     private string title;
 
-	    public ArchitectureResource() : base()
-	    {
-		    rdfTypes.Add(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_RESOURCE));
-	    }
+    public ArchitectureResource() : base()
+    {
+        rdfTypes.Add(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_RESOURCE));
+    }
 
     public ArchitectureResource(Uri about) : base(about)
-     {
-		    rdfTypes.Add(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_RESOURCE));
-     }
+    {
+        rdfTypes.Add(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_RESOURCE));
+    }
 
     protected Uri GetRdfType()
     {
-	    return new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_RESOURCE);
+        return new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_RESOURCE);
     }
 
     public void AddContributor(Uri contributor)
@@ -78,7 +77,6 @@ public class ArchitectureResource : AbstractResource
     {
         this.dctermsTypes.Add(dctermsType);
     }
-
 
     [OslcDescription("The person(s) who are responsible for the work needed to complete the automation plan.")]
     [OslcName("contributor")]
@@ -181,7 +179,6 @@ public class ArchitectureResource : AbstractResource
         return serviceProvider;
     }
 
-
     [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
@@ -191,7 +188,6 @@ public class ArchitectureResource : AbstractResource
     {
         return title;
     }
-
 
     public void SetContributors(Uri[] contributors)
     {

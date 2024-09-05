@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -30,22 +30,24 @@ public class OslcCoreMisusedOccursException : OslcCoreApplicationException
     /// <param name="resourceType"></param>
     /// <param name="method"></param>
     public OslcCoreMisusedOccursException(Type resourceType, MethodInfo method) :
-        base(MESSAGE_KEY, new object[] {resourceType.Name, method.Name})
+        base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name })
     {
-        this.method        = method;
+        this.method = method;
         this.resourceType = resourceType;
     }
 
-	    public MethodInfo GetMethod() {
+    public MethodInfo GetMethod()
+    {
         return method;
     }
 
-    public Type GetResourceType() {
+    public Type GetResourceType()
+    {
         return resourceType;
     }
 
     private static readonly string MESSAGE_KEY = "MisusedOccursException";
 
-    private MethodInfo     method;
-    private Type   resourceType;
+    private readonly MethodInfo method;
+    private readonly Type resourceType;
 }

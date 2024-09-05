@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -15,11 +15,9 @@
 
 using System.Collections.Generic;
 using System.Text;
-
-using OSLC4Net.Core.Query.Impl;
-
 using Antlr.Runtime;
 using Antlr.Runtime.Tree;
+using OSLC4Net.Core.Query.Impl;
 
 namespace OSLC4Net.Core.Query;
 
@@ -38,7 +36,8 @@ public class QueryUtils
         string prefixExpression
     )
     {
-        if (prefixExpression == null) {
+        if (prefixExpression == null)
+        {
             return new Dictionary<string, string>();
         }
 
@@ -49,19 +48,21 @@ public class QueryUtils
         var prefixMap =
             new PrefixMap(rawPrefixes.Count);
 
-         foreach (CommonTree rawPrefix in rawPrefixes) {
+        foreach (CommonTree rawPrefix in rawPrefixes)
+        {
 
-            if (rawPrefix.Token == Tokens.Skip || rawPrefix is CommonErrorNode) {
-                 throw new ParseException(rawPrefix.ToString());
-             }
+            if (rawPrefix.Token == Tokens.Skip || rawPrefix is CommonErrorNode)
+            {
+                throw new ParseException(rawPrefix.ToString());
+            }
 
             var pn = rawPrefix.GetChild(0).Text;
             var uri = rawPrefix.GetChild(1).Text;
 
-             uri = uri.Substring(1, uri.Length - 2);
+            uri = uri.Substring(1, uri.Length - 2);
 
-             prefixMap.Add(pn, uri);
-         }
+            prefixMap.Add(pn, uri);
+        }
 
         return prefixMap;
     }
@@ -91,9 +92,11 @@ public class QueryUtils
                 throw new ParseException(child.ToString());
             }
 
-            return (WhereClause) new WhereClauseImpl(rawTree, prefixMap);
+            return (WhereClause)new WhereClauseImpl(rawTree, prefixMap);
 
-        } catch (RecognitionException e) {
+        }
+        catch (RecognitionException e)
+        {
             throw new ParseException(e);
         }
     }
@@ -125,7 +128,9 @@ public class QueryUtils
 
             return new SelectClauseImpl(rawTree, prefixMap);
 
-        } catch (RecognitionException e) {
+        }
+        catch (RecognitionException e)
+        {
             throw new ParseException(e);
         }
     }
@@ -178,23 +183,26 @@ public class QueryUtils
         IDictionary<string, string> prefixMap
     )
     {
-        try {
+        try
+        {
 
             var parser = new OslcOrderByParser(orderByExpression);
             var rawTree = (CommonTree)parser.Result;
             var child = rawTree.GetChild(0);
 
-            if (child is CommonErrorNode) {
+            if (child is CommonErrorNode)
+            {
                 throw new ParseException(child.ToString());
             }
 
             return (OrderByClause)new SortTermsImpl(rawTree, prefixMap);
 
-        } catch (RecognitionException e) {
+        }
+        catch (RecognitionException e)
+        {
             throw new ParseException(e);
         }
     }
-
 
     /// <summary>
     /// Create a map representation of the Properties returned
@@ -223,90 +231,113 @@ public class QueryUtils
         var children = properties.Children;
         IDictionary<string, object> result = new Dictionary<string, object>(children.Count);
 
-        foreach (var property in children) {
+        foreach (var property in children)
+        {
 
             PName pname = null;
             string propertyName = null;
 
-            if (! property.IsWildcard) {
+            if (!property.IsWildcard)
+            {
                 pname = property.Identifier;
                 propertyName = pname.ns + pname.local;
             }
 
-            switch (property.Type) {
-            case PropertyType.IDENTIFIER:
-                if (property.IsWildcard) {
+            switch (property.Type)
+            {
+                case PropertyType.IDENTIFIER:
+                    if (property.IsWildcard)
+                    {
 
-                    if (result is SingletonWildcardProperties) {
-                        break;
-                    }
-
-                    if (result is NestedWildcardProperties) {
-                        result = new BothWildcardPropertiesImpl(
-                                (NestedWildcardPropertiesImpl)result);
-                    } else {
-                        result = new SingletonWildcardPropertiesImpl();
-                    }
-
-                    break;
-
-                } else {
-
-                    if (result is SingletonWildcardProperties) {
-                        break;
-                    }
-                }
-
-                result.Add(propertyName,
-                           OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON);
-
-                break;
-
-            case PropertyType.NESTED_PROPERTY:
-                if (property.IsWildcard) {
-
-                    if (! (result is NestedWildcardProperties)) {
-                        if (result is SingletonWildcardProperties) {
-                            result = new BothWildcardPropertiesImpl();
-                        } else {
-                            result = new NestedWildcardPropertiesImpl(result);
+                        if (result is SingletonWildcardProperties)
+                        {
+                            break;
                         }
 
-                        ((NestedWildcardPropertiesImpl)result).commonNestedProperties =
-                            InvertSelectedProperties((NestedProperty)property);
+                        if (result is NestedWildcardProperties)
+                        {
+                            result = new BothWildcardPropertiesImpl(
+                                    (NestedWildcardPropertiesImpl)result);
+                        }
+                        else
+                        {
+                            result = new SingletonWildcardPropertiesImpl();
+                        }
 
-                   } else {
-                        MergePropertyMaps(
-                            ((NestedWildcardProperties)result).CommonNestedProperties(),
-                            InvertSelectedProperties((NestedProperty)property));
-                   }
+                        break;
+
+                    }
+                    else
+                    {
+
+                        if (result is SingletonWildcardProperties)
+                        {
+                            break;
+                        }
+                    }
+
+                    result.Add(propertyName,
+                               OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON);
 
                     break;
-                }
 
-                result.Add(propertyName,
-                           InvertSelectedProperties(
-                                   (NestedProperty)property));
+                case PropertyType.NESTED_PROPERTY:
+                    if (property.IsWildcard)
+                    {
 
-                break;
+                        if (!(result is NestedWildcardProperties))
+                        {
+                            if (result is SingletonWildcardProperties)
+                            {
+                                result = new BothWildcardPropertiesImpl();
+                            }
+                            else
+                            {
+                                result = new NestedWildcardPropertiesImpl(result);
+                            }
+
+                            ((NestedWildcardPropertiesImpl)result).commonNestedProperties =
+                                InvertSelectedProperties((NestedProperty)property);
+
+                        }
+                        else
+                        {
+                            MergePropertyMaps(
+                                ((NestedWildcardProperties)result).CommonNestedProperties(),
+                                InvertSelectedProperties((NestedProperty)property));
+                        }
+
+                        break;
+                    }
+
+                    result.Add(propertyName,
+                               InvertSelectedProperties(
+                                       (NestedProperty)property));
+
+                    break;
             }
         }
 
-        if (! (result is NestedWildcardProperties)) {
+        if (!(result is NestedWildcardProperties))
+        {
             return result;
         }
 
         var commonNestedProperties =
             ((NestedWildcardProperties)result).CommonNestedProperties();
 
-        foreach (var propertyName in result.Keys) {
+        foreach (var propertyName in result.Keys)
+        {
 
             var nestedProperties =
                 (IDictionary<string, object>)result[propertyName];
 
-            if (nestedProperties == OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON) {
+            if (nestedProperties == OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON)
+            {
                 result.Add(propertyName, commonNestedProperties);
-            } else {
+            }
+            else
+            {
                 MergePropertyMaps(nestedProperties, commonNestedProperties);
             }
         }
@@ -328,29 +359,34 @@ public class QueryUtils
         string searchTermsExpression
     )
     {
-        try {
+        try
+        {
 
             var parser = new OslcSearchTermsParser(searchTermsExpression);
             var rawTree = (CommonTree)parser.Result;
             var child = (CommonTree)rawTree.GetChild(0);
 
-            if (child is CommonErrorNode) {
+            if (child is CommonErrorNode)
+            {
                 throw ((CommonErrorNode)child).trappedException;
             }
 
             var rawList = rawTree.Children;
             var stringList = new StringList(rawList.Count);
 
-            foreach (CommonTree str in rawList) {
+            foreach (CommonTree str in rawList)
+            {
 
                 var rawString = str.Text;
 
-                stringList.Add(rawString.Substring(1, rawString.Length-2));
+                stringList.Add(rawString.Substring(1, rawString.Length - 2));
             }
 
             return stringList;
 
-        } catch (RecognitionException e) {
+        }
+        catch (RecognitionException e)
+        {
             throw new ParseException(e);
         }
     }
@@ -411,11 +447,15 @@ public class QueryUtils
             var buffer = new StringBuilder();
             var first = true;
 
-            foreach (var str in this) {
+            foreach (var str in this)
+            {
 
-                if (first) {
+                if (first)
+                {
                     first = false;
-                } else {
+                }
+                else
+                {
                     buffer.Append(',');
                 }
 
@@ -439,14 +479,14 @@ public class QueryUtils
         SingletonWildcardPropertiesImpl() : base(0)
         {
         }
-   }
+    }
 
     /// <summary>
     /// Implementation of NestedWildcardProperties
     /// </summary>
-   private class NestedWildcardPropertiesImpl :
-        Dictionary<string, object>,
-        NestedWildcardProperties
+    private class NestedWildcardPropertiesImpl :
+         Dictionary<string, object>,
+         NestedWildcardProperties
     {
         public
         NestedWildcardPropertiesImpl(IDictionary<string, object> accumulated) : base(accumulated)
@@ -502,19 +542,22 @@ public class QueryUtils
     {
         var propertyNames = rhs.Keys;
 
-        foreach (var propertyName in propertyNames) {
+        foreach (var propertyName in propertyNames)
+        {
 
             var lhsNestedProperties =
                 (IDictionary<string, object>)lhs[propertyName];
             var rhsNestedProperties =
                 (IDictionary<string, object>)rhs[propertyName];
 
-            if (lhsNestedProperties == rhsNestedProperties) {
+            if (lhsNestedProperties == rhsNestedProperties)
+            {
                 continue;
             }
 
             if (lhsNestedProperties == null ||
-                lhsNestedProperties == OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON) {
+                lhsNestedProperties == OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON)
+            {
 
                 lhs.Add(propertyName, rhsNestedProperties);
 
@@ -523,20 +566,5 @@ public class QueryUtils
 
             MergePropertyMaps(lhsNestedProperties, rhsNestedProperties);
         }
-    }
-
-    /// <summary>
-    /// Check list of errors from parsing some expression, generating
-    /// @{link {@link ParseException} if there are any.
-    /// </summary>
-    /// <param name="parser"></param>
-    private static void
-    CheckErrors(Parser parser)
-    {
-        if (! parser.Failed) {
-            return;
-        }
-
-        throw new ParseException("error");
     }
 }
