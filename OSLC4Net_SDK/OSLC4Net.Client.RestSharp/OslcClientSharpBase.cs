@@ -75,7 +75,6 @@ public abstract class OslcClientSharpBasic : OslcClientSharpBase
     }
 }
 
-
 // TODO: implement an ASP.NET Core server to test the dance
 public abstract class OslcClientSharpOauth10a : OslcClientSharpBase
 {

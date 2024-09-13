@@ -10,7 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OSLC4Net.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj" />
+    <ProjectReference
+      Include="..\OSLC4Net.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj" />
   </ItemGroup>
 
 </Project>
