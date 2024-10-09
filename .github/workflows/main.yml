@@ -8,6 +8,9 @@ on:
     branches: [ 'main', 'master' ]
   pull_request:
     branches: [ 'main', 'master' ]
+  release:
+    types:
+      - published    # Run the workflow when a new GitHub release is published
   workflow_dispatch:
 
 env:
