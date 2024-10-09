@@ -23,7 +23,7 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
   # NuGetDirectory: ${{ github.workspace}}/nuget
-  NuGetDirectory: '.\nupkg_out'
+  NuGetDirectory: './nupkg_out'
 
 jobs:
   test:
@@ -100,24 +100,24 @@ jobs:
       - name: Pack NuGet packages (release)
         shell: pwsh
         run: |
-          dotnet pack -c Release -o ./nupkg_out
+          dotnet pack -c Release -o ${{ env.NuGetDirectory }}
         if: |
           success()
           && matrix.version.target == 'net6.0' && matrix.os == 'windows-latest'
           && (github.event_name == 'release' || inputs.release )
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: nuget
           # if-no-files-found: error
           retention-days: 7
-          path: ${{ env.NuGetDirectory }}/*.nupkg
+          path: "${{ env.NuGetDirectory }}/*.nupkg"
         if: |
           success()
           && matrix.version.target == 'net6.0' && matrix.os == 'windows-latest'
       - name: Publish NuGet packages (GH/always)
         shell: pwsh
         run: |
-          dotnet nuget push '${{ env.NuGetDirectory }}\*.nupkg' --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate --no-symbols
+          dotnet nuget push '${{ env.NuGetDirectory }}/*.nupkg' --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate --no-symbols
         if: |
           success()
           && matrix.version.target == 'net6.0' && matrix.os == 'windows-latest'
