@@ -12,6 +12,12 @@ on:
     types:
       - published    # Run the workflow when a new GitHub release is published
   workflow_dispatch:
+    inputs:
+      release:
+        description: 'Make the release build'
+        required: false
+        type: boolean
+        default: false
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -91,9 +97,9 @@ jobs:
       run: |
         dotnet pack -c Release -o ./nupkg_out
       if: |
-        success() && github.ref == 'refs/heads/main'
+        success()
         && matrix.version.target == 'net6.0' && matrix.os == 'windows-latest'
-        && github.event_name == 'release'
+        && (github.event_name == 'release' || inputs.release )
     - name: Publish NuGet packages (GH/always)
       shell: pwsh
       run: |
@@ -107,6 +113,6 @@ jobs:
         dotnet pack -c Release --version-suffix "ts.$(Get-Date -Format 'yyyyMMddHHmm')" -o ./nupkg_out
         dotnet nuget push '${{ env.NuGetDirectory }}\*.nupkg' --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols
       if: |
-        success() && github.ref == 'refs/heads/main'
+        success()
         && matrix.version.target == 'net6.0' && matrix.os == 'windows-latest'
-        && github.event_name == 'release'
+        && (github.event_name == 'release' || inputs.release )
