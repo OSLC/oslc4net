@@ -23,7 +23,7 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
   # NuGetDirectory: ${{ github.workspace}}/nuget
-  NuGetDirectory: './nupkg_out'
+  NuGetDirectory: '${{ github.workspace}}/nupkg_out'
 
 jobs:
   test:
@@ -117,7 +117,9 @@ jobs:
       - name: Publish NuGet packages (GH/always)
         shell: pwsh
         run: |
-          dotnet nuget push '${{ env.NuGetDirectory }}/*.nupkg' --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate --no-symbols
+          foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.nupkg)) {
+              dotnet nuget push $file --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate --no-symbols
+          }
         if: |
           success()
           && matrix.version.target == 'net6.0' && matrix.os == 'windows-latest'
@@ -125,7 +127,9 @@ jobs:
       - name: Publish NuGet packages (NuGet.org/release)
         shell: pwsh
         run: |
-          dotnet nuget push '${{ env.NuGetDirectory }}\*.nupkg' --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols
+          foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.nupkg)) {
+              dotnet nuget push $file --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols
+          }
         if: |
           success()
           && matrix.version.target == 'net6.0' && matrix.os == 'windows-latest'
