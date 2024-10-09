@@ -5,16 +5,16 @@ name: CI
 
 on:
   push:
-    branches: [ 'main', 'master' ]
+    branches: ["main", "master"]
   pull_request:
-    branches: [ 'main', 'master' ]
+    branches: ["main", "master"]
   release:
     types:
-      - published    # Run the workflow when a new GitHub release is published
+      - published # Run the workflow when a new GitHub release is published
   workflow_dispatch:
     inputs:
       release:
-        description: 'Make the release build'
+        description: "Make the release build"
         required: false
         type: boolean
         default: false
@@ -31,7 +31,12 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        version: [ {setup: '6.x', target: "net6.0"}, {setup: '8.x', target: "net8.0"}, {setup: '9.x', target: "net9.0"}]
+        version:
+          [
+            { setup: "6.x", target: "net6.0" },
+            { setup: "8.x", target: "net8.0" },
+            { setup: "9.x", target: "net9.0" },
+          ]
     runs-on: ${{ matrix.os }}
     defaults:
       run:
@@ -39,80 +44,86 @@ jobs:
     env:
       NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-      with:
-        show-progress: false
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: ${{ matrix.version.setup }}
-        source-url: https://nuget.pkg.github.com/oslc/index.json
-      env:
-        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-    - name: Target ${{ matrix.version.target }} only
-      shell: pwsh
-      run: |
-        (Get-Content JsonProviderTests/OSLC4Net.Core.JsonProviderTests.csproj) |
-          ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
-          Set-Content JsonProviderTests/OSLC4Net.Core.JsonProviderTests.csproj
-        (Get-Content OSLC4Net.ChangeManagementTest/OSLC4Net.ChangeManagementTest.csproj) |
-          ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
-          Set-Content OSLC4Net.ChangeManagementTest/OSLC4Net.ChangeManagementTest.csproj
-        (Get-Content OSLC4Net.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj) |
-          ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
-          Set-Content OSLC4Net.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj
-    - name: Cache NuGet
-      # id: cache-nuget
-      uses: actions/cache@v4
-      # env:
-      #   cache-name: cache-node-modules
-      with:
-        # npm cache files are stored in `~/.npm` on Linux/macOS
-        path: ${{ env.NUGET_PACKAGES }}
-        key: ${{ runner.os }}-nuget-${{ matrix.version.target }}-${{ hashFiles('.github/workflows/main.yml', '**/Directory.Build.props', '**/packages.config', '**/packages.lock.json', '**/*.sln', '**/*.csproj') }}
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal  --filter TestCategory!=RunningOslcServerRequired --collect:"XPlat Code Coverage"
-    # - name: Set version suffix
-    #   id: version
-    #   run: echo "::set-output name=suffix::$(date +'-ts.%y%m%d%H%M')"
-    - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v4
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-    - name: Pack NuGet packages (snapshot)
-      shell: pwsh
-      run: |
-        dotnet pack -c Release --version-suffix "ts.$(Get-Date -Format 'yyyyMMddHHmm')" -o ${{ env.NuGetDirectory }}
-      if: |
-        success() && github.ref == 'refs/heads/main'
-        && matrix.version.target == 'net6.0' && matrix.os == 'windows-latest'
-        && ! (github.event_name == 'release' || inputs.release )
-    - name: Pack NuGet packages (release)
-      shell: pwsh
-      run: |
-        dotnet pack -c Release -o ./nupkg_out
-      if: |
-        success()
-        && matrix.version.target == 'net6.0' && matrix.os == 'windows-latest'
-        && (github.event_name == 'release' || inputs.release )
-    - name: Publish NuGet packages (GH/always)
-      shell: pwsh
-      run: |
-        dotnet nuget push '${{ env.NuGetDirectory }}\*.nupkg' --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate --no-symbols
-      if: |
-        success()
-        && matrix.version.target == 'net6.0' && matrix.os == 'windows-latest'
-        && (github.ref == 'refs/heads/main' || github.event_name == 'release' || inputs.release)
-    - name: Publish NuGet packages (NuGet.org/release)
-      shell: pwsh
-      run: |
-        dotnet nuget push '${{ env.NuGetDirectory }}\*.nupkg' --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols
-      if: |
-        success()
-        && matrix.version.target == 'net6.0' && matrix.os == 'windows-latest'
-        && (github.event_name == 'release' || inputs.release )
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          show-progress: false
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.version.setup }}
+          source-url: https://nuget.pkg.github.com/oslc/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Target ${{ matrix.version.target }} only
+        shell: pwsh
+        run: |
+          (Get-Content JsonProviderTests/OSLC4Net.Core.JsonProviderTests.csproj) |
+            ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
+            Set-Content JsonProviderTests/OSLC4Net.Core.JsonProviderTests.csproj
+          (Get-Content OSLC4Net.ChangeManagementTest/OSLC4Net.ChangeManagementTest.csproj) |
+            ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
+            Set-Content OSLC4Net.ChangeManagementTest/OSLC4Net.ChangeManagementTest.csproj
+          (Get-Content OSLC4Net.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj) |
+            ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
+            Set-Content OSLC4Net.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj
+      - name: Cache NuGet
+        # id: cache-nuget
+        uses: actions/cache@v4
+        # env:
+        #   cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ${{ env.NUGET_PACKAGES }}
+          key: ${{ runner.os }}-nuget-${{ matrix.version.target }}-${{ hashFiles('.github/workflows/main.yml', '**/Directory.Build.props', '**/packages.config', '**/packages.lock.json', '**/*.sln', '**/*.csproj') }}
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Test
+        run: dotnet test --no-build --verbosity normal  --filter TestCategory!=RunningOslcServerRequired --collect:"XPlat Code Coverage"
+      # - name: Set version suffix
+      #   id: version
+      #   run: echo "::set-output name=suffix::$(date +'-ts.%y%m%d%H%M')"
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Pack NuGet packages (snapshot)
+        shell: pwsh
+        run: |
+          dotnet pack -c Release --version-suffix "ts.$(Get-Date -Format 'yyyyMMddHHmm')" -o ${{ env.NuGetDirectory }}
+        if: |
+          success() && github.ref == 'refs/heads/main'
+          && matrix.version.target == 'net6.0' && matrix.os == 'windows-latest'
+          && ! (github.event_name == 'release' || inputs.release )
+      - name: Pack NuGet packages (release)
+        shell: pwsh
+        run: |
+          dotnet pack -c Release -o ./nupkg_out
+        if: |
+          success()
+          && matrix.version.target == 'net6.0' && matrix.os == 'windows-latest'
+          && (github.event_name == 'release' || inputs.release )
+      - uses: actions/upload-artifact@v3
+        with:
+          name: nuget
+          # if-no-files-found: error
+          retention-days: 7
+          path: ${{ env.NuGetDirectory }}/*.nupkg
+      - name: Publish NuGet packages (GH/always)
+        shell: pwsh
+        run: |
+          dotnet nuget push '${{ env.NuGetDirectory }}\*.nupkg' --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate --no-symbols
+        if: |
+          success()
+          && matrix.version.target == 'net6.0' && matrix.os == 'windows-latest'
+          && (github.ref == 'refs/heads/main' || github.event_name == 'release' || inputs.release)
+      - name: Publish NuGet packages (NuGet.org/release)
+        shell: pwsh
+        run: |
+          dotnet nuget push '${{ env.NuGetDirectory }}\*.nupkg' --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols
+        if: |
+          success()
+          && matrix.version.target == 'net6.0' && matrix.os == 'windows-latest'
+          && (github.event_name == 'release' || inputs.release )
