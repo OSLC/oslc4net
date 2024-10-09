@@ -1,7 +1,7 @@
 # OSLC4Net, an OSLC SDK for .NET
 
 [![CI](https://github.com/OSLC/oslc4net/workflows/CI/badge.svg)](https://github.com/OSLC/oslc4net/actions?query=workflow%3ACI)
-![NuGet Version](https://img.shields.io/nuget/v/OSLC4Net.Core)
+[![NuGet Version](https://img.shields.io/nuget/v/OSLC4Net.Core)](https://www.nuget.org/packages/OSLC4Net.Core#versions-body-tab)
 [![Discourse forum](https://img.shields.io/discourse/users?color=28bd84&server=https%3A%2F%2Fforum.open-services.net%2F)](https://forum.open-services.net/c/sdks/oslc4net/10)
 
 ## What is OSLC4NET?
