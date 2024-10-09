@@ -105,8 +105,9 @@ jobs:
       run: |
         dotnet nuget push '${{ env.NuGetDirectory }}\*.nupkg' --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate --no-symbols
       if: |
-        success() && github.ref == 'refs/heads/main'
+        success()
         && matrix.version.target == 'net6.0' && matrix.os == 'windows-latest'
+        && (github.ref == 'refs/heads/main' || github.event_name == 'release' || inputs.release)
     - name: Publish NuGet packages (NuGet.org/release)
       shell: pwsh
       run: |
