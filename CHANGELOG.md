@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking changes; 👉 important notes.
 
-## [0.4.1] - 2024-10-09
+## [0.4.2] - 2024-10-09
 
 ### Security
 
@@ -45,7 +45,11 @@ Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking c
 
 This release does not contain bug fixes.
 
-## [0.4.0-alpha] - YANKED
+## [0.4.1] - YANKED
+
+YANKED due to NuGet deployment issues.
+
+## [0.4.0] - YANKED
 
 YANKED due to NuGet deployment issues.
 
