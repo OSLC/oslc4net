@@ -111,7 +111,6 @@ jobs:
     - name: Publish NuGet packages (NuGet.org/release)
       shell: pwsh
       run: |
-        dotnet pack -c Release --version-suffix "ts.$(Get-Date -Format 'yyyyMMddHHmm')" -o ./nupkg_out
         dotnet nuget push '${{ env.NuGetDirectory }}\*.nupkg' --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols
       if: |
         success()
