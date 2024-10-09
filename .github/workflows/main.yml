@@ -84,7 +84,7 @@ jobs:
         dotnet pack -c Release --version-suffix "ts.$(Get-Date -Format 'yyyyMMddHHmm')" -o ${{ env.NuGetDirectory }}
       if: |
         success() && github.ref == 'refs/heads/main'
-        && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
+        && matrix.version.target == 'net6.0' && matrix.os == 'windows-latest'
         && github.event_name != 'release'
     - name: Pack NuGet packages (release)
       shell: pwsh
@@ -92,7 +92,7 @@ jobs:
         dotnet pack -c Release -o ./nupkg_out
       if: |
         success() && github.ref == 'refs/heads/main'
-        && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
+        && matrix.version.target == 'net6.0' && matrix.os == 'windows-latest'
         && github.event_name == 'release'
     - name: Publish NuGet packages (GH/always)
       shell: pwsh
@@ -100,7 +100,7 @@ jobs:
         dotnet nuget push '${{ env.NuGetDirectory }}\*.nupkg' --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate --no-symbols
       if: |
         success() && github.ref == 'refs/heads/main'
-        && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
+        && matrix.version.target == 'net6.0' && matrix.os == 'windows-latest'
     - name: Publish NuGet packages (NuGet.org/release)
       shell: pwsh
       run: |
@@ -108,5 +108,5 @@ jobs:
         dotnet nuget push '${{ env.NuGetDirectory }}\*.nupkg' --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols
       if: |
         success() && github.ref == 'refs/heads/main'
-        && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
+        && matrix.version.target == 'net6.0' && matrix.os == 'windows-latest'
         && github.event_name == 'release'
