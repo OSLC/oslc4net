@@ -10,6 +10,12 @@ on:
     branches: [ 'main', 'master' ]
   workflow_dispatch:
 
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  # NuGetDirectory: ${{ github.workspace}}/nuget
+  NuGetDirectory: '.\nupkg_out'
+
 jobs:
   test:
     strategy:
@@ -69,11 +75,35 @@ jobs:
       uses: codecov/codecov-action@v4
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-    - name: Build and publish NuGet package
+    - name: Pack NuGet packages (snapshot)
       shell: pwsh
       run: |
-        dotnet pack -c Release --version-suffix "ts.$(Get-Date -Format 'yyyyMMddHHmm')" -o ./nupkg_out
-        dotnet nuget push '.\nupkg_out\*.nupkg' --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate --no-symbols
+        dotnet pack -c Release --version-suffix "ts.$(Get-Date -Format 'yyyyMMddHHmm')" -o ${{ env.NuGetDirectory }}
       if: |
         success() && github.ref == 'refs/heads/main'
         && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
+        && github.event_name != 'release'
+    - name: Pack NuGet packages (release)
+      shell: pwsh
+      run: |
+        dotnet pack -c Release -o ./nupkg_out
+      if: |
+        success() && github.ref == 'refs/heads/main'
+        && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
+        && github.event_name == 'release'
+    - name: Publish NuGet packages (GH/always)
+      shell: pwsh
+      run: |
+        dotnet nuget push '${{ env.NuGetDirectory }}\*.nupkg' --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate --no-symbols
+      if: |
+        success() && github.ref == 'refs/heads/main'
+        && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
+    - name: Publish NuGet packages (NuGet.org/release)
+      shell: pwsh
+      run: |
+        dotnet pack -c Release --version-suffix "ts.$(Get-Date -Format 'yyyyMMddHHmm')" -o ./nupkg_out
+        dotnet nuget push '${{ env.NuGetDirectory }}\*.nupkg' --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols
+      if: |
+        success() && github.ref == 'refs/heads/main'
+        && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
+        && github.event_name == 'release'
