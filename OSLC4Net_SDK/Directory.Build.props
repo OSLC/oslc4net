@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/OSLC/oslc4net/</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="$(SolutionDir)\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="$(SolutionDir)\..\README.md" Pack="true" PackagePath="README.md" />
   </ItemGroup>
   <PropertyGroup>
     <LangVersion>10</LangVersion>
