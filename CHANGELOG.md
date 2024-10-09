@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking changes; 👉 important notes.
 
-## [0.4.0-alpha] - 2024-10-09
+## [0.4.1] - 2024-10-09
 
 ### Security
 
@@ -32,7 +32,7 @@ Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking c
 
 ### Deprecated
 
-- .NET 6 support is deprecated as the EOL is approaching soon. Given that all 
+- .NET 6 support is deprecated as the EOL is approaching soon. Given that all
   non-Framework libraries target `netstandard2.0`, this should have no impact
   on the users.
 
@@ -44,6 +44,10 @@ Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking c
 ### Fixed
 
 This release does not contain bug fixes.
+
+## [0.4.0-alpha] - YANKED
+
+YANKED due to NuGet deployment issues.
 
 ## [0.3.0-alpha] - 2023-04-29
 
