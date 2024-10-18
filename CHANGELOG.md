@@ -15,8 +15,8 @@ This release does not contain security updates.
 
 ### Added
 
-This release does not contain new features.
-
+- OSLC Query results now expose a `.TotalCount` property.
+ 
 ### Changed
 
 - Upgraded dotNetRDF to [v3.3.0](https://github.com/dotnetrdf/dotnetrdf/releases/tag/v3.3.0)
