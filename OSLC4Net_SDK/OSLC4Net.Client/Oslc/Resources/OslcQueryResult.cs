@@ -32,16 +32,16 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// </summary>
 public class OslcQueryResult : IEnumerator<OslcQueryResult>
 {
-    // FIXME: find a correct way to do this, dotNetRDF must have a built-in (@berezovskyi 2024-10)
     private static readonly Uri _rdfsMemberUri = new("http://www.w3.org/2000/01/rdf-schema#member");
+    private static readonly Uri _responsePredicateUri = new(OslcConstants.OSLC_CORE_NAMESPACE +
+                                                     "ResponseInfo");
+    private static readonly Uri _totalCountPredicateUri = new Uri("http://open-services.net/ns/core#totalCount");
 
     private readonly int _pageNumber;
     private readonly OslcQuery _query;
 
     private readonly HttpResponseMessage _response;
 
-    private readonly Uri _responsePredicateUri = new(OslcConstants.OSLC_CORE_NAMESPACE +
-                                                     "ResponseInfo");
 
     private IUriNode? _infoResource;
     private bool _nextPageChecked = false;
@@ -56,7 +56,6 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     private IUriNode? _resultsMemberContainer;
 
     private long? _totalCount;
-    private Uri _totalCountPredicateUri;
 
 
     public OslcQueryResult(OslcQuery query, HttpResponseMessage response)
@@ -128,7 +127,6 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     private long? GetTotalCount()
     {
         InitializeRdf();
-        _totalCountPredicateUri = new Uri("http://open-services.net/ns/core#totalCount");
         var triples = _rdfGraph!.GetTriplesWithSubjectPredicate(_infoResource,
             _rdfGraph.CreateUriNode(_totalCountPredicateUri));
         var totalCountObject = triples.SingleOrDefault()?.Object;
@@ -163,9 +161,6 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
             var triples = _rdfGraph.GetTriplesWithPredicateObject(_rdfType, responseInfo)
                 ?.ToArray();
 
-            //There should only be one - take the first
-            // FIXME: shall be single or use the same logic as in Lyo
-            // _infoResource = triples.FirstOrDefault().Subject as IUriNode;
             _infoResource ??= GetSingleInfoResource(triples);
             _infoResource ??= GetInfoResourceExactQueryMatch(triples);
             _infoResource ??= GetInfoResourceSubjectStartsWithQueryUri(triples);
