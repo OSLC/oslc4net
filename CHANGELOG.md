@@ -19,11 +19,12 @@ This release does not contain new features.
 
 ### Changed
 
-This release does not contain significant changes.
+- Upgraded dotNetRDF to [v3.3.0](https://github.com/dotnetrdf/dotnetrdf/releases/tag/v3.3.0)
 
 ### Deprecated
 
-This release does not introduce deprecations.
+- Direct use of `IEnumerator` properties on `OslcQueryResponse` to iterate over response pages.
+- Multiple symbols on OSLC Query related code with Java-like signatures (various `Get*` methods) and string types. Prefer C# props of type `Uri`.
 
 ### Removed
 
@@ -31,7 +32,7 @@ This release does not remove any features.
 
 ### Fixed
 
-This release does not contain bug fixes.
+- Ensure OSLC Query responses are processed correctly when they contain multiple `oslc:ResponseInfo` objects ([!203](https://github.com/OSLC/oslc4net/pull/203)).
 
 
 ## [0.4.2] - 2024-10-09
