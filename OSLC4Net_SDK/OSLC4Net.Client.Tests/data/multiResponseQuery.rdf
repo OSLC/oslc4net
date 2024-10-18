@@ -983,7 +983,7 @@
     <oslc:totalCount>1</oslc:totalCount>
     <rdf:type rdf:resource="http://open-services.net/ns/core#ResponseInfo"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://nordic.clm.ibmcloud.com/ccm/oslc/contexts/_2nC4UBNvEeutmoeSPr3-Ag/workitems?oslc.select=*&amp;oslc.pageSize=20&amp;_srtartIndex=10">
+  <rdf:Description rdf:about="https://nordic.clm.ibmcloud.com/ccm/oslc/contexts/_2nC4UBNvEeutmoeSPr3-Ag/workitems?oslc.select=*&amp;oslc.pageSize=20&amp;_startIndex=10">
     <oslc:nextPage rdf:resource="https://nordic.clm.ibmcloud.com/ccm/oslc/contexts/_2nC4UBNvEeutmoeSPr3-Ag/workitems?_resultToken=_PVjXQIAxEe-su-5EYbIgqQ&amp;oslc.pageSize=20&amp;oslc.select=*&amp;_startIndex=20"/>
     <dcterms:title>Work Items</dcterms:title>
     <oslc:totalCount>537</oslc:totalCount>

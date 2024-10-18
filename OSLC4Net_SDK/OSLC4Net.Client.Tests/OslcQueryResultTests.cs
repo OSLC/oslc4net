@@ -11,19 +11,64 @@
  *
  *******************************************************************************/
 
-using System.Diagnostics;
-using OSLC4Net.Core.Query;
+using System.Net;
 using Xunit;
-using ParseException = OSLC4Net.Core.Query.ParseException;
+using Xunit.Abstractions;
 
 namespace OSLC4Net.Client.Oslc.Resources;
 
 public class OslcQueryResultTests
 {
+    private readonly ITestOutputHelper _testOutputHelper;
+
+    public OslcQueryResultTests(ITestOutputHelper testOutputHelper)
+    {
+        _testOutputHelper = testOutputHelper;
+    }
 
     [Fact]
-    public void OslcQueryMultiResponseTest()
+    public async Task OslcQueryMultiResponseTest()
     {
-        Assert.True(false);
+        var oslcQueryResult = await GetMockOslcQueryResultMulti();
+
+        Assert.Equal(20, oslcQueryResult.GetMembersUrls().Length);
+    }
+
+    [Fact(Skip =
+        "TODO: figure out if .Current is supposed to work only if the next page is present")]
+    public async Task OslcQueryMultiResponsePagingTest()
+    {
+        var oslcQueryResult = await GetMockOslcQueryResultMulti();
+        Assert.Equal(20, oslcQueryResult.Current?.GetMembersUrls().Length);
+    }
+
+
+    [Fact]
+    public async Task OslcQueryMultiResponseIterTest()
+    {
+        var oslcQueryResult = await GetMockOslcQueryResultMulti();
+
+        // oslcQueryResult.
+        foreach (var resultItem in oslcQueryResult.GetMembers<ChangeRequest>())
+        {
+            _testOutputHelper.WriteLine(resultItem.GetAbout().ToString());
+        }
+
+        _testOutputHelper.WriteLine($"Total: {oslcQueryResult.TotalCount}");
+
+        Assert.Equal(20, oslcQueryResult.GetMembersUrls().Length);
+    }
+
+    private static async Task<OslcQueryResult> GetMockOslcQueryResultMulti()
+    {
+        var responseText = await File.ReadAllTextAsync("data/multiResponseQuery.rdf");
+        var testQuery = new OslcQuery(new OslcClient(),
+            "https://nordic.clm.ibmcloud.com/ccm/oslc/contexts/_2nC4UBNvEeutmoeSPr3-Ag/workitems");
+        var httpResponseMessage = new HttpResponseMessage
+        {
+            StatusCode = HttpStatusCode.OK, Content = new StringContent(responseText)
+        };
+        var oslcQueryResult = new OslcQueryResult(testQuery, httpResponseMessage);
+        return oslcQueryResult;
     }
 }
