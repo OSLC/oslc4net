@@ -44,7 +44,7 @@
   <ItemGroup>
     <ProjectReference Include="..\OSLC4Net.Core.Query\OSLC4Net.Core.Query.csproj" />
     <ProjectReference Include="..\OSLC4Net.Core\OSLC4Net.Core.csproj" />
-    <ProjectReference Include="..\OSLC4Net.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj" />
+    <ProjectReference Include="..\OSLC4Net.Core.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="log4net">
