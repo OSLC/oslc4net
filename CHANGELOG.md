@@ -21,6 +21,8 @@ This release does not contain new features.
 ### Changed
 
 - Significant build changes to manage package versions centrally.
+- NuGet/assembly versions are now set based on the git tag name.
+- 👉 "snapshot" builds how have the version similar to 999.9.9-ts.202410192025, where 202410192025 is a timestamp; please note that such snapshot builds are only available via [Github Packages](https://github.com/orgs/OSLC/packages?repo_name=oslc4net).
 
 ### Deprecated
 
