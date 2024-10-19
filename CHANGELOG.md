@@ -31,7 +31,7 @@ This release does not remove any features.
 
 ### Fixed
 
-This release does not contain bug fixes.
+- `Requirement.SetDecomposes()` cleared `affectedBy` by mistake.
 
 ## [0.4.5] - 2024-10-19
 

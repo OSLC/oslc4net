@@ -459,7 +459,7 @@ public class Requirement : AbstractResource
 
     public void SetDecomposes(Link[] decomposes)
     {
-        this.affectedBy.Clear();
+        this.decomposes.Clear();
 
         if (decomposes != null)
         {
