@@ -169,7 +169,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                     if (ImplementsGenericType(typeof(ResponseInfo<>), type))
                     {
                         //Subject URI for the collection is the query capability
-                        //TODO:  should this be set by the app based on service provider info
+                        // FIXME: should this be set by the app based on service provider info
                         var portNum = httpRequest.RequestUri.Port;
                         string portString = null;
                         if (portNum == 80 || portNum == 443)

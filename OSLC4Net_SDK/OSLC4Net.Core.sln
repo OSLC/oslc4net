@@ -29,6 +29,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.JsonProvider"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.JsonProviderTests", "JsonProviderTests\OSLC4Net.Core.JsonProviderTests.csproj", "{15D4CC4A-5B79-4997-8D97-0B5C190C7682}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{798E9CDD-103C-4972-BC15-C5AAAF75C37D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oslc4NetExamples.Client", "Examples\Oslc4NetExamples.Client\Oslc4NetExamples.Client.csproj", "{96071622-1783-4274-80D0-C1A3E80FEEC8}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Client.Tests", "OSLC4Net.Client.Tests\OSLC4Net.Client.Tests.csproj", "{15A462FC-81F1-47F1-A323-61DF9E6E2EC8}"
 EndProject
 Global
@@ -145,6 +149,18 @@ Global
 		{15D4CC4A-5B79-4997-8D97-0B5C190C7682}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{15D4CC4A-5B79-4997-8D97-0B5C190C7682}.Release|x86.ActiveCfg = Release|Any CPU
 		{15D4CC4A-5B79-4997-8D97-0B5C190C7682}.Release|x86.Build.0 = Release|Any CPU
+		{96071622-1783-4274-80D0-C1A3E80FEEC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96071622-1783-4274-80D0-C1A3E80FEEC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96071622-1783-4274-80D0-C1A3E80FEEC8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{96071622-1783-4274-80D0-C1A3E80FEEC8}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{96071622-1783-4274-80D0-C1A3E80FEEC8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{96071622-1783-4274-80D0-C1A3E80FEEC8}.Debug|x86.Build.0 = Debug|Any CPU
+		{96071622-1783-4274-80D0-C1A3E80FEEC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96071622-1783-4274-80D0-C1A3E80FEEC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96071622-1783-4274-80D0-C1A3E80FEEC8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{96071622-1783-4274-80D0-C1A3E80FEEC8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{96071622-1783-4274-80D0-C1A3E80FEEC8}.Release|x86.ActiveCfg = Release|Any CPU
+		{96071622-1783-4274-80D0-C1A3E80FEEC8}.Release|x86.Build.0 = Release|Any CPU
 		{15A462FC-81F1-47F1-A323-61DF9E6E2EC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{15A462FC-81F1-47F1-A323-61DF9E6E2EC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15A462FC-81F1-47F1-A323-61DF9E6E2EC8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -166,5 +182,8 @@ Global
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = OSLC4Net.Core.vsmdi
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{96071622-1783-4274-80D0-C1A3E80FEEC8} = {798E9CDD-103C-4972-BC15-C5AAAF75C37D}
 	EndGlobalSection
 EndGlobal
