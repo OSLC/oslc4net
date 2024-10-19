@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking changes; 👉 important notes.
 
+## [UNRELEASED] - YYYY-MM-DD
+
+### Security
+
+This release does not contain security updates.
+
+### Added
+
+This release does not contain new features.
+
+### Changed
+
+This release does not contain other significant changes.
+
+### Deprecated
+
+This release does not introduce deprecations.
+
+### Removed
+
+This release does not remove any features.
+
+### Fixed
+
+This release does not contain bug fixes.
+
 ## [0.4.3] - 2024-10-19
 
 ### Security
@@ -149,8 +175,11 @@ This release does not remove any features.
 
 This release does not contain bug fixes.
 
+---
 
-## Template
+**TEMPLATE:**
+
+## [UNRELEASED] - YYYY-MM-DD
 
 ### Security
 
@@ -177,7 +206,7 @@ This release does not remove any features.
 This release does not contain bug fixes.
 
 
-[UNRELEASED]: https://github.com/OSLC/oslc4net/compare/v0.4.2...HEAD
+[UNRELEASED]: https://github.com/OSLC/oslc4net/compare/v0.4.3...HEAD
 [0.4.3]: https://github.com/OSLC/oslc4net/releases/tag/v0.4.3
 [0.4.2]: https://github.com/OSLC/oslc4net/releases/tag/v0.4.2
 [0.3.0-alpha]: https://github.com/OSLC/oslc4net/releases/tag/v0.3.0-alpha
