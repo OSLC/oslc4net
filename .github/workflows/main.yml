@@ -112,9 +112,14 @@ jobs:
         shell: pwsh
         run: |
           Write-Host $env:GITHUB_REF
-          $env:GITHUB_REF -match '^refs/tags/v(.*)$' | Set-Variable VERSION $matches[1]
-          Write-Host $VERSION
-          dotnet pack -c Release -p:RELEASE_VERSION=$VERSION -o ${{ env.NuGetDirectory }}
+          if ( $env:GITHUB_REF -match '^refs/tags/v(.*)$' ) {
+            $VERSION=$matches[1]
+            Write-Host $VERSION
+            dotnet pack -c Release -p:RELEASE_VERSION=$VERSION -o ${{ env.NuGetDirectory }}
+          } else {
+            Write-Error "Failed to extract the version from env:GITHUB_REF"
+            Exit 1
+          }
         if: |
           success()
           && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
