@@ -15,15 +15,19 @@ This release does not contain security updates.
 
 ### Added
 
-This release does not contain new features.
+- ️⚡️ An example project using `OslcClient` and basic auth to retrieve a WorkItem (OSLC ChangeRequest) from Jazz.
+- ``OslcClient::ForBasicAuth()`` factory method.
+- ️️️⚡️ ``OslcClient.GetResourceAsync()`` strongly typed async method that returns `OslcResponse<T>` with either a typed resource or an error.
+- Support for complex MIME type strings for content negotiation. Current `Accept` string is set to ``text/turtle;q=1.0, application/rdf+xml;q=0.9, application/n-triples;q=0.8, text/n3;q=0.7`` by default.
 
 ### Changed
 
-This release does not contain significant changes.
+This release does not contain other significant changes.
 
 ### Deprecated
 
-This release does not introduce deprecations.
+- Some constructors on `OslcClient` were deprecated (around skipping TLS checks).
+- 👉 log4net logging will be replaced with the standard Microsoft [ILogger](https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger?view=net-8.0) in a future release.
 
 ### Removed
 
@@ -31,7 +35,7 @@ This release does not remove any features.
 
 ### Fixed
 
-This release does not contain bug fixes.
+- `OslcClient` no longer overwrites most of the headers (#204). It was a similar issue to #19 (but happening with `OslcRestClient`).
 
 
 ## [0.4.2] - 2024-10-09
@@ -154,7 +158,7 @@ This release does not contain new features.
 
 ### Changed
 
-This release does not contain significant changes.
+This release does not contain other significant changes.
 
 ### Deprecated
 
