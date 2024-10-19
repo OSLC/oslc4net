@@ -11,13 +11,17 @@ on:
   release:
     types:
       - published # Run the workflow when a new GitHub release is published
-  workflow_dispatch:
-    inputs:
-      release:
-        description: "Make the release build"
-        required: false
-        type: boolean
-        default: false
+  # workflow_dispatch:
+  #   inputs:
+  #     release:
+  #       description: "Make the release build"
+  #       required: false
+  #       type: boolean
+  #       default: false
+  #     version:
+  #       description: "Version string"
+  #       required: true
+  #       type: string
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -43,6 +47,7 @@ jobs:
         working-directory: OSLC4Net_SDK/
     env:
       NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
+      # TAG_VALUE: ${{ github.ref_name || inputs.version }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -98,19 +103,20 @@ jobs:
       - name: Pack NuGet packages (snapshot)
         shell: pwsh
         run: |
-          dotnet pack -c Release --version-suffix "ts.$(Get-Date -Format 'yyyyMMddHHmm')" -o ${{ env.NuGetDirectory }}
+          dotnet pack -c Release -o ${{ env.NuGetDirectory }}
         if: |
           success() && github.ref == 'refs/heads/main'
           && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
-          && ! (github.event_name == 'release' || inputs.release )
+          && ! ( github.event_name == 'release' || inputs.release)
       - name: Pack NuGet packages (release)
         shell: pwsh
         run: |
-          dotnet pack -c Release -o ${{ env.NuGetDirectory }}
+          $env:GITHUB_REF -match '^refs/tags/v(.*)$' | Set-Variable VERSION $matches[1]
+          dotnet pack -c Release -p:RELEASE_VERSION=$VERSION -o ${{ env.NuGetDirectory }}
         if: |
           success()
           && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
-          && (github.event_name == 'release' || inputs.release )
+          && ( github.event_name == 'release' || inputs.release )
       - uses: actions/upload-artifact@v4
         with:
           name: nuget
