@@ -7,11 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking changes; 👉 important notes.
 
-## [UNRELEASED] - YYYY-MM-DD
+## [0.4.4] - 2024-10-19
 
 ### Security
 
-This release does not contain security updates.
+-  🔒️  Transitive dependency System.Net.Http was set to version 4.3.4 to avoid failing the build when NU1903 is treated as error.
+-  🔒️  Transitive dependency System.Text.RegularExpressions was set to version 4.3.1 to avoid failing the build when NU1903 is treated as error.
 
 ### Added
 
@@ -19,7 +20,7 @@ This release does not contain new features.
 
 ### Changed
 
-This release does not contain other significant changes.
+- Significant build changes to manage package versions centrally.
 
 ### Deprecated
 
@@ -27,11 +28,14 @@ This release does not introduce deprecations.
 
 ### Removed
 
-This release does not remove any features.
+- Dependencies on "bridge" packages added during the migration from .NET Framework to .NET 6:
+  - System.Configuration.ConfigurationManager
+  - System.Data.DataSetExtensions
+  - Microsoft.CSharp
 
 ### Fixed
 
-This release does not contain bug fixes.
+- Example and test project had `<IsPackable>false</IsPackable>` property set to prevent pushing their packages to NuGet.
 
 ## [0.4.3] - 2024-10-19
 
@@ -206,7 +210,8 @@ This release does not remove any features.
 This release does not contain bug fixes.
 
 
-[UNRELEASED]: https://github.com/OSLC/oslc4net/compare/v0.4.3...HEAD
+[UNRELEASED]: https://github.com/OSLC/oslc4net/compare/v0.4.4...HEAD
+[0.4.4]: https://github.com/OSLC/oslc4net/releases/tag/v0.4.4
 [0.4.3]: https://github.com/OSLC/oslc4net/releases/tag/v0.4.3
 [0.4.2]: https://github.com/OSLC/oslc4net/releases/tag/v0.4.2
 [0.3.0-alpha]: https://github.com/OSLC/oslc4net/releases/tag/v0.3.0-alpha
