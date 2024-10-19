@@ -13,12 +13,12 @@
     <RepositoryUrl>https://github.com/OSLC/oslc4net/</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="$(SolutionDir)\..\README.md" Pack="true" PackagePath="README.md" />
+    <None Include="$(SolutionDir)\..\README.md" Pack="true" PackagePath="README.md"/>
   </ItemGroup>
   <PropertyGroup>
-    <LangVersion>10</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup>
+    <LangVersion>12</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
     <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
   </PropertyGroup>
 </Project>

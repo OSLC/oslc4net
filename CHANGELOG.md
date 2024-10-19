@@ -19,15 +19,18 @@ This release does not contain security updates.
 - ``OslcClient::ForBasicAuth()`` factory method.
 - ️️️⚡️ ``OslcClient.GetResourceAsync()`` strongly typed async method that returns `OslcResponse<T>` with either a typed resource or an error.
 - Support for complex MIME type strings for content negotiation. Current `Accept` string is set to ``text/turtle;q=1.0, application/rdf+xml;q=0.9, application/n-triples;q=0.8, text/n3;q=0.7`` by default.
+- OSLC Query results now expose a `.TotalCount` property.
 
 ### Changed
 
-This release does not contain other significant changes.
+- Upgraded dotNetRDF to [v3.3.0](https://github.com/dotnetrdf/dotnetrdf/releases/tag/v3.3.0)
 
 ### Deprecated
 
 - Some constructors on `OslcClient` were deprecated (around skipping TLS checks).
 - 👉 log4net logging will be replaced with the standard Microsoft [ILogger](https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger?view=net-8.0) in a future release.
+- Direct use of `IEnumerator` properties on `OslcQueryResponse` to iterate over response pages.
+- Multiple symbols on OSLC Query related code with Java-like signatures (various `Get*` methods) and string types. Prefer C# props of type `Uri`.
 
 ### Removed
 
@@ -36,6 +39,7 @@ This release does not remove any features.
 ### Fixed
 
 - `OslcClient` no longer overwrites most of the headers (#204). It was a similar issue to #19 (but happening with `OslcRestClient`).
+- Ensure OSLC Query responses are processed correctly when they contain multiple `oslc:ResponseInfo` objects ([!203](https://github.com/OSLC/oslc4net/pull/203)).
 
 
 ## [0.4.2] - 2024-10-09

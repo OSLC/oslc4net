@@ -33,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{79
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oslc4NetExamples.Client", "Examples\Oslc4NetExamples.Client\Oslc4NetExamples.Client.csproj", "{96071622-1783-4274-80D0-C1A3E80FEEC8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Client.Tests", "OSLC4Net.Client.Tests\OSLC4Net.Client.Tests.csproj", "{15A462FC-81F1-47F1-A323-61DF9E6E2EC8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -159,6 +161,18 @@ Global
 		{96071622-1783-4274-80D0-C1A3E80FEEC8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{96071622-1783-4274-80D0-C1A3E80FEEC8}.Release|x86.ActiveCfg = Release|Any CPU
 		{96071622-1783-4274-80D0-C1A3E80FEEC8}.Release|x86.Build.0 = Release|Any CPU
+		{15A462FC-81F1-47F1-A323-61DF9E6E2EC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15A462FC-81F1-47F1-A323-61DF9E6E2EC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15A462FC-81F1-47F1-A323-61DF9E6E2EC8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{15A462FC-81F1-47F1-A323-61DF9E6E2EC8}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{15A462FC-81F1-47F1-A323-61DF9E6E2EC8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{15A462FC-81F1-47F1-A323-61DF9E6E2EC8}.Debug|x86.Build.0 = Debug|Any CPU
+		{15A462FC-81F1-47F1-A323-61DF9E6E2EC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15A462FC-81F1-47F1-A323-61DF9E6E2EC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15A462FC-81F1-47F1-A323-61DF9E6E2EC8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{15A462FC-81F1-47F1-A323-61DF9E6E2EC8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{15A462FC-81F1-47F1-A323-61DF9E6E2EC8}.Release|x86.ActiveCfg = Release|Any CPU
+		{15A462FC-81F1-47F1-A323-61DF9E6E2EC8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
