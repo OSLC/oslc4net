@@ -5,26 +5,15 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="6.11.1" />
-    <PackageReference Include="System.Json" Version="4.7.1" />
-  </ItemGroup>
-  <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\OSLC4Net.Core\OSLC4Net.Core.csproj">
-      <Project>{C07B57BD-3356-4AD8-8050-D708B023A8EC}</Project>
-      <Name>OSLC4Net.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="log4net">
-      <Version>2.0.17</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.AspNet.WebApi.Client">
-      <Version>5.2.9</Version>
-    </PackageReference>
+    <ProjectReference Include="..\OSLC4Net.Core\OSLC4Net.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NuGet.Build.Tasks.Pack" />
+    <PackageReference Include="System.Json" />
+    <PackageReference Include="log4net" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" />
   </ItemGroup>
 </Project>

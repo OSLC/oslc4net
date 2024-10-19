@@ -20,5 +20,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
+    <!-- TODO: add 'nullable' -->
+    <!-- <WarningsAsErrors>NU1903</WarningsAsErrors> -->
   </PropertyGroup>
 </Project>

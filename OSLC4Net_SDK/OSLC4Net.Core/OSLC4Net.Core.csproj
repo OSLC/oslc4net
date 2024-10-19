@@ -7,18 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="log4net" Version="2.0.17" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="6.11.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
-
-  <ItemGroup>
     <Compile Update="Attribute\OslcAllowedValue.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -108,4 +96,11 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="log4net" />
+    <PackageReference Include="NuGet.Build.Tasks.Pack">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 </Project>

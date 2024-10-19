@@ -8,10 +8,8 @@
     <Product>OSLC4Net.Core.Query</Product>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Antlr3.Runtime">
-      <Version>3.5.1</Version>
-    </PackageReference>
-    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="6.11.1">
+    <PackageReference Include="Antlr3.Runtime" />
+    <PackageReference Include="NuGet.Build.Tasks.Pack">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -23,10 +21,8 @@
     <ProjectReference Include="..\OSLC4Net.Core\OSLC4Net.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="log4net">
-      <Version>2.0.17</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="log4net" />
+    <PackageReference Include="Microsoft.CSharp" />
+    <PackageReference Include="System.Data.DataSetExtensions" />
   </ItemGroup>
 </Project>
