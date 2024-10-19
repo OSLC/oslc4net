@@ -13,7 +13,5 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="log4net" />
-    <PackageReference Include="Microsoft.CSharp" />
-    <PackageReference Include="System.Data.DataSetExtensions" />
   </ItemGroup>
 </Project>

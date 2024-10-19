@@ -8,13 +8,6 @@
     <Product>OSLC4Net.Core.Query</Product>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Antlr3.Runtime" />
-    <PackageReference Include="NuGet.Build.Tasks.Pack">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Impl\GeneratingParsers.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -22,7 +15,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="log4net" />
-    <PackageReference Include="Microsoft.CSharp" />
-    <PackageReference Include="System.Data.DataSetExtensions" />
+    <PackageReference Include="Antlr3.Runtime" />
+    <PackageReference Include="NuGet.Build.Tasks.Pack">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 </Project>

@@ -45,9 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="dotNetRdf.Core"/>
-    <PackageReference Include="System.Configuration.ConfigurationManager"/>
-    <PackageReference Include="System.Data.DataSetExtensions"/>
-    <PackageReference Include="Microsoft.CSharp"/>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client"/>
     <PackageReference Include="log4net"/>
   </ItemGroup>
