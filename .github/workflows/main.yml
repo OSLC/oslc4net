@@ -11,17 +11,17 @@ on:
   release:
     types:
       - published # Run the workflow when a new GitHub release is published
-  # workflow_dispatch:
-  #   inputs:
-  #     release:
-  #       description: "Make the release build"
-  #       required: false
-  #       type: boolean
-  #       default: false
-  #     version:
-  #       description: "Version string"
-  #       required: true
-  #       type: string
+  workflow_dispatch:
+    inputs:
+      release:
+        description: "Make the release build"
+        required: false
+        type: boolean
+        default: false
+      # version:
+      #   description: "Version string"
+      #   required: true
+      #   type: string
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -111,7 +111,9 @@ jobs:
       - name: Pack NuGet packages (release)
         shell: pwsh
         run: |
+          Write-Host $env:GITHUB_REF
           $env:GITHUB_REF -match '^refs/tags/v(.*)$' | Set-Variable VERSION $matches[1]
+          Write-Host $VERSION
           dotnet pack -c Release -p:RELEASE_VERSION=$VERSION -o ${{ env.NuGetDirectory }}
         if: |
           success()
