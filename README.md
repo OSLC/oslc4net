@@ -29,7 +29,7 @@ If you do not have a .NET development environment, start by downloading VS Code
 [C# Dev
 Kit](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit).
 Make sure to install .NET 8 SDK for development. Libraries target NETStandard
-2.0 and should run on .NET Framework 4.8 or .NET 6+ (recommended).
+2.0/2.1 and should run on .NET 6+.
 
 ### A simple OSLC Client
 
