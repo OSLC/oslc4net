@@ -34,8 +34,7 @@ Make sure to install .NET 8 SDK for development. Libraries target NETStandard
 ### A simple OSLC Client
 
 Create a new console application targeting .NET 6+, add a NuGet dependency to
-`OSLC4Net.Client` (make sure the *Include prerelease* is checked if you see an
-empty list) and add the following code:
+`OSLC4Net.Client` and add the following code:
 
 ```csharp
 var oslcClient = OslcClient.ForBasicAuth(username, password);
