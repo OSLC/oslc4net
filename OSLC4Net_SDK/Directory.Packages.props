@@ -5,7 +5,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <!-- Versions used by several individual references below -->
-    <MSTestVersion>3.6.1</MSTestVersion>
+    <MSTestVersion>3.6.2</MSTestVersion>
   </PropertyGroup>
   <ItemGroup>
     <!-- For removal -->
