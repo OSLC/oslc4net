@@ -13,7 +13,6 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
 using log4net;
 
 namespace OSLC4Net.Client.Oslc.Resources;

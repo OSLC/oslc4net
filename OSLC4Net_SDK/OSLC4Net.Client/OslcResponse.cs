@@ -1,6 +1,5 @@
 #nullable enable
 using System.Net;
-using System.Net.Http;
 using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client;

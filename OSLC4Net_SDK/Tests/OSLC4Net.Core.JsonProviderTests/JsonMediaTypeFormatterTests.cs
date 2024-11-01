@@ -13,16 +13,10 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Json;
-using System.Linq;
-using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using log4net;
 using OSLC4Net.ChangeManagement;
 using OSLC4Net.Core.JsonProvider;

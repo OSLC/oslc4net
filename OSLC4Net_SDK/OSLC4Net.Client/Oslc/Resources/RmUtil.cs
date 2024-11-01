@@ -13,7 +13,6 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System.Net.Http;
 using System.Xml.Linq;
 using OSLC4Net.Client.Exceptions;
 using OSLC4Net.Core.Model;

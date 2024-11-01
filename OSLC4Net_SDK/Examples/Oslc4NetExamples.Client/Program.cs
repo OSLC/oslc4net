@@ -6,8 +6,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OSLC4Net.Client;
 using OSLC4Net.Client.Oslc.Resources;
-using VDS.RDF;
-using VDS.RDF.Parsing;
 
 var host = Host.CreateDefaultBuilder()
     .ConfigureLogging(loggingBuilder =>

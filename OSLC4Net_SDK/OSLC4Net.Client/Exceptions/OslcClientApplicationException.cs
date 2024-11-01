@@ -13,8 +13,6 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-
 namespace OSLC4Net.Client.Exceptions;
 
 /// <summary>

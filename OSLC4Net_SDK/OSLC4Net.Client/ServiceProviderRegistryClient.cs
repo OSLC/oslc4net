@@ -14,11 +14,8 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http.Formatting;
-using System.Threading.Tasks;
 using OSLC4Net.Core.Exceptions;
 using OSLC4Net.Core.Model;
 

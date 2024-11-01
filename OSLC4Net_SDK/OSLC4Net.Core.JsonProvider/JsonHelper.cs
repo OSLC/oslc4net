@@ -13,11 +13,8 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Json;
-using System.Linq;
 using System.Reflection;
 using log4net;
 using OSLC4Net.Core.Attribute;

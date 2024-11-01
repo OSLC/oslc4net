@@ -13,8 +13,6 @@
  *     Michael Fiedler  - initial API and implementation
  *******************************************************************************/
 
-using System;
-
 namespace OSLC4Net.Core.Exceptions;
 
 /// <summary>

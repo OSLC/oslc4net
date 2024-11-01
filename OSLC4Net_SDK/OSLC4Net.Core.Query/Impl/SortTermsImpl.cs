@@ -13,10 +13,6 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 using Antlr.Runtime.Tree;
 
 namespace OSLC4Net.Core.Query.Impl;

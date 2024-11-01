@@ -12,8 +12,6 @@
  * Contributors:
  *     Michael Fiedler  - initial API and implementation
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
 using System.Reflection;
 
 using OSLC4Net.Core.Attribute;
