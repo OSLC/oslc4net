@@ -77,6 +77,6 @@ jobs:
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
-        working-directory: ./OSLC4Net_SDK
         with:
+          working-directory: ./OSLC4Net_SDK
           category: "/language:${{matrix.language}}"
