@@ -5,6 +5,13 @@ on:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
+
+permissions: read-all
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'ci:full') }}
+
 jobs:
   build:
     name: Build and analyze

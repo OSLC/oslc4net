@@ -12,6 +12,10 @@ on: [pull_request]
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'ci:full') }}
+
 jobs:
   dependency-review:
     runs-on: ubuntu-latest
