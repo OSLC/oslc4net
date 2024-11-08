@@ -9,7 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- For removal -->
-    <PackageVersion Include="log4net" Version="2.0.17" />
+    <PackageVersion Include="log4net" Version="3.0.3" />
     <PackageVersion Include="NuGet.Build.Tasks.Pack" Version="6.11.1" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageVersion Include="System.Json" Version="4.7.1" />
