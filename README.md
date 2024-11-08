@@ -22,8 +22,8 @@ JSON-LD documents into OSLC .NET objects.
 The [OSLC4Net.Client package](https://www.nuget.org/packages/OSLC4Net.Client/)
 can be used to help create consumer REST requests. On the server side, the
 project offers an RDF-specific `MediaTypeFormatter` that can help process OSLC
-REST requests within an ASP.NET MVC 5 API. **Join the [discussion on the .NET
-Core migration](https://github.com/OSLC/oslc4net/issues/25).**
+REST requests within an ASP.NET MVC 5 API (ASP.NET Core 8+ migration is 
+[ongoing](https://github.com/OSLC/oslc4net/issues/218)).
 
 ## Getting started
 
