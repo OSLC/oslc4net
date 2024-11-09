@@ -160,9 +160,10 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
             rdfWriter = oslcXmlWriter;
         }
 
-        var writer = new HttpResponseStreamWriter(httpContextResponse.BodyWriter.AsStream(), Encoding.UTF8);
-        rdfWriter.Save(graph, writer);
-    }
+        using (var writer = new HttpResponseStreamWriter(httpContextResponse.BodyWriter.AsStream(), Encoding.UTF8))
+        {
+            rdfWriter.Save(graph, writer);
+        }
 }
 
 public static class RdfOutputFormatterExtensions
