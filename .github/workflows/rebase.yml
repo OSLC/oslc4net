@@ -18,7 +18,7 @@ jobs:
           egress-policy: block
           allowed-endpoints: >
             api.github.com:443
-
+            github.com:443
 
       - uses: peter-evans/rebase@87c3fd9344792e51ab1c7494c3369620c84ed852 # v3.1.0
         with:
