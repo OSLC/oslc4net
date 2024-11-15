@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking changes; 👉 important notes.
 
-## [UNRELEASED] - YYYY-MM-DD
+## [0.4.6] - 2024-11-15
 
 ### Security
 
@@ -19,7 +19,7 @@ This release does not contain new features.
 
 ### Changed
 
-This release does not contain other significant changes.
+- Dependency updates in connection with .NET 9 release.
 
 ### Deprecated
 
