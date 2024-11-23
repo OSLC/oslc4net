@@ -13,8 +13,6 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-
 using Antlr.Runtime;
 
 namespace OSLC4Net.Core.Query;

@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <OutputType>Library</OutputType>
     <PackageLicenseExpression>EPL-1.0</PackageLicenseExpression>
     <Authors>Andrii Berezovskyi and OSLC4Net contributors</Authors>
@@ -18,15 +18,12 @@
     <DocumentationFile>bin\Debug\OSLC4Net.Client.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="dotNetRdf.Core">
-      <Version>3.2.1</Version>
-    </PackageReference>
-    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="6.11.0">
+    <PackageReference Include="NuGet.Build.Tasks.Pack">
+      <!-- REVISIT: do we really need all this? (2024-10) -->
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <None Include="../../README.md" Pack="true" PackagePath="" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
@@ -44,16 +41,11 @@
   <ItemGroup>
     <ProjectReference Include="..\OSLC4Net.Core.Query\OSLC4Net.Core.Query.csproj" />
     <ProjectReference Include="..\OSLC4Net.Core\OSLC4Net.Core.csproj" />
-    <ProjectReference Include="..\OSLC4Net.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj" />
+    <ProjectReference Include="..\OSLC4Net.Core.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="log4net">
-      <Version>2.0.17</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.AspNet.WebApi.Client">
-      <Version>5.2.9</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="dotNetRdf.Core"/>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client"/>
+    <PackageReference Include="log4net"/>
   </ItemGroup>
 </Project>

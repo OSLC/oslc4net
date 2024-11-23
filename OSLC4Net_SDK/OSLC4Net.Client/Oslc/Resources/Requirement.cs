@@ -13,9 +13,6 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
 
@@ -459,7 +456,7 @@ public class Requirement : AbstractResource
 
     public void SetDecomposes(Link[] decomposes)
     {
-        this.affectedBy.Clear();
+        this.decomposes.Clear();
 
         if (decomposes != null)
         {

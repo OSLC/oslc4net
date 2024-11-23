@@ -7,7 +7,133 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking changes; 👉 important notes.
 
+
 ## [UNRELEASED] - YYYY-MM-DD
+
+### Security
+
+This release does not contain security updates.
+
+### Added
+
+This release does not contain new features.
+
+### Changed
+
+This release does not contain other significant changes.
+
+### Deprecated
+
+This release does not introduce deprecations.
+
+### Removed
+
+This release does not remove any features.
+
+### Fixed
+
+This release does not contain bug fixes.
+
+
+## [0.4.6] - 2024-11-15
+
+### Security
+
+This release does not contain security updates.
+
+### Added
+
+This release does not contain new features.
+
+### Changed
+
+- Dependency updates in connection with .NET 9 release.
+
+### Deprecated
+
+This release does not introduce deprecations.
+
+### Removed
+
+This release does not remove any features.
+
+### Fixed
+
+- `Requirement.SetDecomposes()` cleared `affectedBy` by mistake.
+
+## [0.4.5] - 2024-10-19
+
+### Security
+
+-  🔒️  Transitive dependency System.Net.Http was set to version 4.3.4 to avoid failing the build when NU1903 is treated as error.
+-  🔒️  Transitive dependency System.Text.RegularExpressions was set to version 4.3.1 to avoid failing the build when NU1903 is treated as error.
+
+### Added
+
+This release does not contain new features.
+
+### Changed
+
+- Significant build changes to manage package versions centrally.
+- NuGet/assembly versions are now set based on the git tag name.
+- 👉 "snapshot" builds how have the version similar to 999.9.9-ts.202410192025, where 202410192025 is a timestamp; please note that such snapshot builds are only available via [Github Packages](https://github.com/orgs/OSLC/packages?repo_name=oslc4net).
+
+### Deprecated
+
+This release does not introduce deprecations.
+
+### Removed
+
+- Dependencies on "bridge" packages added during the migration from .NET Framework to .NET 6:
+  - System.Configuration.ConfigurationManager
+  - System.Data.DataSetExtensions
+  - Microsoft.CSharp
+
+### Fixed
+
+- Example and test project had `<IsPackable>false</IsPackable>` property set to prevent pushing their packages to NuGet.
+
+## [0.4.4] - 2024-10-19
+
+YANKED - deploy to NuGet.org did not succeed.
+
+## [0.4.3] - 2024-10-19
+
+### Security
+
+This release does not contain security updates.
+
+### Added
+
+- ️⚡️ An example project using `OslcClient` and basic auth to retrieve a WorkItem (OSLC ChangeRequest) from Jazz.
+- ``OslcClient::ForBasicAuth()`` factory method.
+- ️️️⚡️ ``OslcClient.GetResourceAsync()`` strongly typed async method that returns `OslcResponse<T>` with either a typed resource or an error.
+- Support for complex MIME type strings for content negotiation. Current `Accept` string is set to ``text/turtle;q=1.0, application/rdf+xml;q=0.9, application/n-triples;q=0.8, text/n3;q=0.7`` by default.
+- OSLC Query results now expose a `.TotalCount` property.
+
+### Changed
+
+- ❗️ `OSLC4Net.Client` now requires `netstandard2.1` (was: `netstandard2.0`)
+- Upgraded dotNetRDF to [v3.3.0](https://github.com/dotnetrdf/dotnetrdf/releases/tag/v3.3.0)
+
+### Deprecated
+
+- Some constructors on `OslcClient` were deprecated (around skipping TLS checks).
+- 👉 log4net logging will be replaced with the standard Microsoft [ILogger](https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger?view=net-8.0) in a future release.
+- Direct use of `IEnumerator` properties on `OslcQueryResponse` to iterate over response pages.
+- Multiple symbols on OSLC Query related code with Java-like signatures (various `Get*` methods) and string types. Prefer C# props of type `Uri`.
+
+### Removed
+
+This release does not remove any features.
+
+### Fixed
+
+- `OslcClient` no longer overwrites most of the headers (#204). It was a similar issue to #19 (but happening with `OslcRestClient`).
+- Ensure OSLC Query responses are processed correctly when they contain multiple `oslc:ResponseInfo` objects ([!203](https://github.com/OSLC/oslc4net/pull/203)).
+
+
+## [0.4.2] - 2024-10-09
 
 ### Security
 
@@ -32,7 +158,9 @@ Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking c
 
 ### Deprecated
 
-This release does not introduce deprecations.
+- .NET 6 support is deprecated as the EOL is approaching soon. Given that all
+  non-Framework libraries target `netstandard2.0`, this should have no impact
+  on the users.
 
 ### Removed
 
@@ -42,6 +170,14 @@ This release does not introduce deprecations.
 ### Fixed
 
 This release does not contain bug fixes.
+
+## [0.4.1] - YANKED
+
+YANKED due to NuGet deployment issues.
+
+## [0.4.0] - YANKED
+
+YANKED due to NuGet deployment issues.
 
 ## [0.3.0-alpha] - 2023-04-29
 
@@ -104,8 +240,11 @@ This release does not remove any features.
 
 This release does not contain bug fixes.
 
+---
 
-## Template
+**TEMPLATE:**
+
+## [UNRELEASED] - YYYY-MM-DD
 
 ### Security
 
@@ -117,7 +256,7 @@ This release does not contain new features.
 
 ### Changed
 
-This release does not contain significant changes.
+This release does not contain other significant changes.
 
 ### Deprecated
 
@@ -132,6 +271,11 @@ This release does not remove any features.
 This release does not contain bug fixes.
 
 
-[UNRELEASED]: https://github.com/OSLC/oslc4net/compare/v0.3.0-alpha...HEAD
+[UNRELEASED]: https://github.com/OSLC/oslc4net/compare/v0.4.6...HEAD
+[0.4.6]: https://github.com/OSLC/oslc4net/releases/tag/v0.4.6
+[0.4.5]: https://github.com/OSLC/oslc4net/releases/tag/v0.4.5
+[0.4.4]: https://github.com/OSLC/oslc4net/releases/tag/v0.4.4
+[0.4.3]: https://github.com/OSLC/oslc4net/releases/tag/v0.4.3
+[0.4.2]: https://github.com/OSLC/oslc4net/releases/tag/v0.4.2
 [0.3.0-alpha]: https://github.com/OSLC/oslc4net/releases/tag/v0.3.0-alpha
 [0.2.3]: https://github.com/OSLC/oslc4net/releases/tag/v0.2.3

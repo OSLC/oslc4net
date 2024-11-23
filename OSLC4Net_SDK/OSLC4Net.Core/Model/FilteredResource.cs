@@ -14,8 +14,6 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System.Collections.Generic;
-
 namespace OSLC4Net.Core.Model;
 
 /// <summary>

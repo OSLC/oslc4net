@@ -13,8 +13,6 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
 using System.Text;
 using Antlr.Runtime.Tree;
 

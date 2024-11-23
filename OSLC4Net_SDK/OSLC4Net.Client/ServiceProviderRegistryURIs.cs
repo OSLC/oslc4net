@@ -13,10 +13,10 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Net.NetworkInformation;
 
 using log4net;
+
+using System.Net.NetworkInformation;
 
 namespace OSLC4Net.Client;
 

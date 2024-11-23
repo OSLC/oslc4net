@@ -14,8 +14,6 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>

@@ -5,10 +5,11 @@ version: 2
 updates:
   - package-ecosystem: "nuget" # See documentation for possible values
     directory: "/OSLC4Net_SDK" # Location of package manifests
-    open-pull-requests-limit: 12
+    open-pull-requests-limit: 99
     schedule:
       interval: "daily"
   - package-ecosystem: "github-actions" # See documentation for possible values
     directory: "/" # Location of package manifests
+    open-pull-requests-limit: 99
     schedule:
       interval: "daily"
