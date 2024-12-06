@@ -119,7 +119,7 @@ jobs:
       - name: Pack NuGet packages (snapshot)
         shell: pwsh
         run: |
-          dotnet pack -c Release -o $env:NuGetDirectory
+          dotnet pack -c Release -o $env:NuGetDirectory --include-symbols -p:SymbolPackageFormat=snupkg
         if: |
           success() && github.ref == 'refs/heads/main'
           && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
@@ -131,7 +131,7 @@ jobs:
           if ( $env:GITHUB_REF -match '^refs/tags/v(.*)$' ) {
             $VERSION=$matches[1]
             Write-Host $VERSION
-            dotnet pack -c Release -p:RELEASE_VERSION=$VERSION -o $env:NuGetDirectory
+            dotnet pack -c Release -p:RELEASE_VERSION=$VERSION -o $env:NuGetDirectory --include-symbols -p:SymbolPackageFormat=snupkg
           } else {
             Write-Error "Failed to extract the version from env:GITHUB_REF"
             Exit 1
