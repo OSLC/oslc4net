@@ -155,7 +155,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           foreach($file in (Get-ChildItem $env:NuGetDirectory -Recurse -Include *.nupkg)) {
-              dotnet nuget push $file --api-key $env:GITHUB_TOKEN --skip-duplicate --no-symbols
+              dotnet nuget push $file --api-key $env:GITHUB_TOKEN --skip-duplicate
           }
         if: |
           success()
@@ -167,7 +167,7 @@ jobs:
           NUGET_APIKEY: ${{ secrets.NUGET_APIKEY }}
         run: |
           foreach($file in (Get-ChildItem $env:NuGetDirectory -Recurse -Include *.nupkg)) {
-              dotnet nuget push $file --api-key $env:NUGET_APIKEY --source https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols
+              dotnet nuget push $file --api-key $env:NUGET_APIKEY --source https://api.nuget.org/v3/index.json --skip-duplicate
           }
         if: |
           success()
