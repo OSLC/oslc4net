@@ -17,7 +17,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
-    <!-- TODO: add 'nullable' -->
-    <WarningsAsErrors>NU1903</WarningsAsErrors>
+    <!-- fail on any NuGet vulnerability audit findings -->
+    <WarningsAsErrors>NU1900;NU1901;NU1902;NU1903;NU1904</WarningsAsErrors>
   </PropertyGroup>
 </Project>
