@@ -16,9 +16,5 @@
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="dotNetRdf.Core" />
-    <PackageReference Include="NuGet.Build.Tasks.Pack">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
 </Project>

@@ -2,10 +2,10 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <OutputType>Library</OutputType>
-    <RootNamespace>OSLC4Net.ChangeManagement</RootNamespace>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <AssemblyTitle>ChangeManagement</AssemblyTitle>
+    <RootNamespace>OSLC4Net.ChangeManagement</RootNamespace>
+    <AssemblyTitle>OSLC4Net.ChangeManagement</AssemblyTitle>
     <Product>OSLC4Net.ChangeManagement</Product>
   </PropertyGroup>
   <ItemGroup>

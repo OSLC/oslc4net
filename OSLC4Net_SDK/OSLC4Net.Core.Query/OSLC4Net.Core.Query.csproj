@@ -16,9 +16,5 @@
   <ItemGroup>
     <PackageReference Include="log4net" />
     <PackageReference Include="Antlr3.Runtime" />
-    <PackageReference Include="NuGet.Build.Tasks.Pack">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
 </Project>

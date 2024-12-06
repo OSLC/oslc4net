@@ -2,27 +2,15 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <OutputType>Library</OutputType>
-    <PackageLicenseExpression>EPL-1.0</PackageLicenseExpression>
-    <Authors>Andrii Berezovskyi and OSLC4Net contributors</Authors>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageOutputPath>MSBuild_Nuget_Pack/</PackageOutputPath>
-    <PackageProjectUrl>https://github.com/OSLC/oslc4net/</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/OSLC/oslc4net/</RepositoryUrl>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyTitle>OSLC4Net.Client</AssemblyTitle>
     <Product>OSLC4Net.Client</Product>
-    <Copyright>Copyright OSLC4Net contributors 2023, IBM 2012</Copyright>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>bin\Debug\OSLC4Net.Client.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NuGet.Build.Tasks.Pack">
-      <!-- REVISIT: do we really need all this? (2024-10) -->
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <None Include="../../README.md" Pack="true" PackagePath="" />
   </ItemGroup>
   <ItemGroup>
