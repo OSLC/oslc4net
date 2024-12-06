@@ -26,7 +26,7 @@ permissions:
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'ci:full') }}
-  
+
 jobs:
   analyze:
     name: Analyze
@@ -48,6 +48,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 2
+          persist-credentials: false
       # https://learn.microsoft.com/en-us/dotnet/devops/dotnet-secure-github-action
       # git checkout HEAD^2 is no longer necessary. Please remove this step as Code Scanning recommends analyzing the merge commit for best results.
       # - run: git checkout HEAD^2
