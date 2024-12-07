@@ -1,7 +1,5 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 
 // TODO: improve for better F# interop
 //[assembly: CLSCompliant(true)]
