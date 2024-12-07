@@ -9,7 +9,7 @@
     <VersionSuffix Condition="'$(RELEASE_VERSION)' == ''">ts.$([System.DateTime]::UtcNow.ToString(`yyyyMMddHHmm`))</VersionSuffix>
     <PackageLicenseExpression>EPL-1.0</PackageLicenseExpression>
     <Authors>Andrii Berezovskyi and OSLC4Net contributors</Authors>
-    <Copyright>Copyright Andrii Berezovskyi and OSLC4Net contributors 2023, IBM 2012</Copyright>
+    <Copyright>© Andrii Berezovskyi and OSLC4Net contributors 2023; © IBM 2012</Copyright>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/OSLC/oslc4net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/OSLC/oslc4net/</RepositoryUrl>
