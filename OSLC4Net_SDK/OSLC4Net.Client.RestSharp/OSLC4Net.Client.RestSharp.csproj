@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RestSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OSLC4Net.Core.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj" />
+  </ItemGroup>
+
+</Project>
