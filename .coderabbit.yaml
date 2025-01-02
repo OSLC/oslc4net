@@ -19,10 +19,12 @@ reviews:
   path_instructions:
     - path: "**/*.cs"
       instructions: |
-        Review the C# code against the Microsoft Framework design guidelines and point out any mismatches
+        Review the C# code against the Microsoft Framework design guidelines as well as 10 guidelines 
+        from "Building Maintainable Software" by Joost Visser. Point out deviations and improvements.
     - path: "**/*.md"
       instructions: |
-        Review the documentation against the Microsoft Writing Style Guide and point out any mismatches
+        Review the documentation against the Microsoft Writing Style Guide and point out any mismatches.
+        Ensure the Oxford English spelling is adhered to.
   abort_on_close: true
   auto_review:
     enabled: true
