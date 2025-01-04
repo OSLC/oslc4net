@@ -60,7 +60,7 @@ jobs:
       # TAG_VALUE: ${{ github.ref_name || inputs.version }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
         with:
           egress-policy: audit
 
@@ -68,8 +68,9 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           show-progress: false
+          persist-credentials: false
       - name: Setup .NET
-        uses: actions/setup-dotnet@3e891b0cb619bf60e2c25674b222b8940e2c1c25 # v4.1.0
+        uses: actions/setup-dotnet@87b7050bc53ea08284295505d98d2aa94301e852 # v4.2.0
         with:
           dotnet-version: ${{ matrix.version.setup }}
           source-url: https://nuget.pkg.github.com/oslc/index.json
@@ -95,7 +96,7 @@ jobs:
             Set-Content Tests/OSLC4Net.Core.QueryTests/OSLC4Net.Core.QueryTests.csproj
       - name: Cache NuGet
         # id: cache-nuget
-        uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
         # env:
         #   cache-name: cache-node-modules
         with:
@@ -112,13 +113,13 @@ jobs:
       #   id: version
       #   run: echo "::set-output name=suffix::$(date +'-ts.%y%m%d%H%M')"
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 # v4.6.0
+        uses: codecov/codecov-action@1e68e06f1dbfde0e4cefc87efeba9e4643565303 # v5.1.2
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       - name: Pack NuGet packages (snapshot)
         shell: pwsh
         run: |
-          dotnet pack -c Release -o ${{ env.NuGetDirectory }}
+          dotnet pack -c Release -o $env:NuGetDirectory --include-symbols -p:SymbolPackageFormat=snupkg
         if: |
           success() && github.ref == 'refs/heads/main'
           && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
@@ -130,7 +131,7 @@ jobs:
           if ( $env:GITHUB_REF -match '^refs/tags/v(.*)$' ) {
             $VERSION=$matches[1]
             Write-Host $VERSION
-            dotnet pack -c Release -p:RELEASE_VERSION=$VERSION -o ${{ env.NuGetDirectory }}
+            dotnet pack -c Release -p:RELEASE_VERSION=$VERSION -o $env:NuGetDirectory --include-symbols -p:SymbolPackageFormat=snupkg
           } else {
             Write-Error "Failed to extract the version from env:GITHUB_REF"
             Exit 1
@@ -139,7 +140,7 @@ jobs:
           success()
           && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
           && ( github.event_name == 'release' || inputs.release )
-      - uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+      - uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
         with:
           name: nuget
           # if-no-files-found: error
@@ -150,9 +151,11 @@ jobs:
           && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
       - name: Publish NuGet packages (GH/always)
         shell: pwsh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.nupkg)) {
-              dotnet nuget push $file --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate --no-symbols
+          foreach($file in (Get-ChildItem $env:NuGetDirectory -Recurse -Include *.nupkg)) {
+              dotnet nuget push $file --api-key $env:GITHUB_TOKEN --skip-duplicate
           }
         if: |
           success()
@@ -160,9 +163,11 @@ jobs:
           && (github.ref == 'refs/heads/main' || github.event_name == 'release' || inputs.release)
       - name: Publish NuGet packages (NuGet.org/release)
         shell: pwsh
+        env:
+          NUGET_APIKEY: ${{ secrets.NUGET_APIKEY }}
         run: |
-          foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.nupkg)) {
-              dotnet nuget push $file --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols
+          foreach($file in (Get-ChildItem $env:NuGetDirectory -Recurse -Include *.nupkg)) {
+              dotnet nuget push $file --api-key $env:NUGET_APIKEY --source https://api.nuget.org/v3/index.json --skip-duplicate
           }
         if: |
           success()
