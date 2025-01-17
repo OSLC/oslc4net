@@ -13,11 +13,20 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Reflection;
+using System.Threading.Tasks;
+
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
+
 using VDS.RDF;
 using VDS.RDF.Parsing;
 using VDS.RDF.Writing;
@@ -25,16 +34,19 @@ using VDS.RDF.Writing;
 namespace OSLC4Net.Core.DotNetRdfProvider;
 
 /// <summary>
-///     A class to
+/// A class to
 ///     - read RDF/XML from an input stream and create .NET objects.
 ///     - write .NET objects to an output stream as RDF/XML
 /// </summary>
 public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 {
+
+    public IGraph Graph { get; set; }
+    public bool RebuildGraph { get; set; }
     private HttpRequestMessage httpRequest;
 
     /// <summary>
-    ///     Defauld RdfXml formatter
+    /// Defauld RdfXml formatter
     /// </summary>
     /// <param name="graph"></param>
     public RdfXmlMediaTypeFormatter(bool rebuildgraph = true)
@@ -49,7 +61,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     }
 
     /// <summary>
-    ///     RdfXml formatter which accepts a pre-built RDF Graph
+    /// RdfXml formatter which accepts a pre-built RDF Graph
     /// </summary>
     /// <param name="graph"></param>
     public RdfXmlMediaTypeFormatter(
@@ -57,28 +69,25 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         bool rebuildgraph = true
     ) : this(rebuildgraph)
     {
-        Graph = graph;
+        this.Graph = graph;
     }
 
-    public IGraph Graph { get; set; }
-    public bool RebuildGraph { get; set; }
-
     /// <summary>
-    ///     Save the HttpRequestMessage locally for use during serialization.
+    /// Save the HttpRequestMessage locally for use during serialization.
     /// </summary>
     /// <param name="type"></param>
     /// <param name="request"></param>
     /// <param name="mediaType"></param>
     /// <returns></returns>
-    public override MediaTypeFormatter GetPerRequestFormatterInstance(Type type,
-        HttpRequestMessage request, MediaTypeHeaderValue mediaType)
+    ///
+    public override MediaTypeFormatter GetPerRequestFormatterInstance(Type type, HttpRequestMessage request, MediaTypeHeaderValue mediaType)
     {
-        httpRequest = request;
+        this.httpRequest = request;
         return base.GetPerRequestFormatterInstance(type, request, mediaType);
     }
 
     /// <summary>
-    ///     Test the write-ability of a type
+    /// Test the write-ability of a type
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
@@ -88,8 +97,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 
         if (ImplementsGenericType(typeof(FilteredResource<>), type))
         {
-            var actualTypeArguments =
-                GetChildClassParameterArguments(typeof(FilteredResource<>), type);
+            Type[] actualTypeArguments = GetChildClassParameterArguments(typeof(FilteredResource<>), type);
 
             if (actualTypeArguments.Count() != 1)
             {
@@ -122,7 +130,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             return true;
         }
 
-        var memberType = GetMemberType(type);
+        Type memberType = GetMemberType(type);
 
         if (memberType == null)
         {
@@ -133,7 +141,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     }
 
     /// <summary>
-    ///     Write a .NET object to an output stream
+    /// Write a .NET object to an output stream
     /// </summary>
     /// <param name="type"></param>
     /// <param name="value"></param>
@@ -150,119 +158,118 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     )
     {
         return Task.Factory.StartNew(() =>
-        {
-            if (Graph == null || Graph.IsEmpty || RebuildGraph)
             {
-                if (ImplementsGenericType(typeof(FilteredResource<>), type))
+                if ((Graph == null) || (Graph.IsEmpty) || RebuildGraph)
                 {
-                    var resourceProp = value.GetType().GetProperty("Resource");
-                    var actualTypeArguments =
-                        GetChildClassParameterArguments(typeof(FilteredResource<>), type);
-                    var objects = resourceProp.GetValue(value, null);
-                    var propertiesProp = value.GetType().GetProperty("Properties");
-
-                    if (!ImplementsICollection(actualTypeArguments[0]))
+                    if (ImplementsGenericType(typeof(FilteredResource<>), type))
                     {
-                        objects = new EnumerableWrapper(objects);
-                    }
+                        PropertyInfo resourceProp = value.GetType().GetProperty("Resource");
+                        Type[] actualTypeArguments = GetChildClassParameterArguments(typeof(FilteredResource<>), type);
+                        object objects = resourceProp.GetValue(value, null);
+                        PropertyInfo propertiesProp = value.GetType().GetProperty("Properties");
 
-                    if (ImplementsGenericType(typeof(ResponseInfo<>), type))
-                    {
-                        //Subject URI for the collection is the query capability
-                        // FIXME: should this be set by the app based on service provider info
-                        var portNum = httpRequest.RequestUri.Port;
-                        string portString = null;
-                        if (portNum == 80 || portNum == 443)
+                        if (!ImplementsICollection(actualTypeArguments[0]))
                         {
-                            portString = "";
+                            objects = new EnumerableWrapper(objects);
+                        }
+
+                        if (ImplementsGenericType(typeof(ResponseInfo<>), type))
+                        {
+                            //Subject URI for the collection is the query capability
+                            //TODO:  should this be set by the app based on service provider info
+                            int portNum = httpRequest.RequestUri.Port;
+                            string portString = null;
+                            if (portNum == 80 || portNum == 443)
+                            {
+                                portString = "";
+                            }
+                            else
+                            {
+                                portString = ":" + portNum.ToString();
+                            }
+
+                            string descriptionAbout = httpRequest.RequestUri.Scheme + "://" +
+                                                      httpRequest.RequestUri.Host +
+                                                      portString +
+                                                      httpRequest.RequestUri.LocalPath;
+
+                            //Subject URI for the responseInfo is the full request URI
+                            string responseInfoAbout = httpRequest.RequestUri.ToString();
+
+                            PropertyInfo totalCountProp = value.GetType().GetProperty("TotalCount");
+                            PropertyInfo nextPageProp = value.GetType().GetProperty("NextPage");
+
+                            Graph = DotNetRdfHelper.CreateDotNetRdfGraph(descriptionAbout, responseInfoAbout,
+                                                                         (string)nextPageProp.GetValue(value, null),
+                                                                         (int)totalCountProp.GetValue(value, null),
+                                                                         objects as IEnumerable<object>,
+                                                                         (IDictionary<string, object>)propertiesProp.GetValue(value, null));
                         }
                         else
                         {
-                            portString = ":" + portNum;
+                            Graph = DotNetRdfHelper.CreateDotNetRdfGraph(null, null, null, null, objects as IEnumerable<object>,
+                                                                         (IDictionary<string, object>)propertiesProp.GetValue(value, null));
                         }
-
-                        var descriptionAbout = httpRequest.RequestUri.Scheme + "://" +
-                                               httpRequest.RequestUri.Host +
-                                               portString +
-                                               httpRequest.RequestUri.LocalPath;
-
-                        //Subject URI for the responseInfo is the full request URI
-                        var responseInfoAbout = httpRequest.RequestUri.ToString();
-
-                        var totalCountProp = value.GetType().GetProperty("TotalCount");
-                        var nextPageProp = value.GetType().GetProperty("NextPage");
-
-                        Graph = DotNetRdfHelper.CreateDotNetRdfGraph(descriptionAbout,
-                            responseInfoAbout,
-                            (string)nextPageProp.GetValue(value, null),
-                            (int)totalCountProp.GetValue(value, null),
-                            objects as IEnumerable<object>,
-                            (IDictionary<string, object>)propertiesProp.GetValue(value, null));
+                    }
+                    else if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IEnumerable<>), value.GetType()))
+                    {
+                        Graph = DotNetRdfHelper.CreateDotNetRdfGraph(value as IEnumerable<object>);
+                    }
+                    else if (type.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
+                    {
+                        Graph = DotNetRdfHelper.CreateDotNetRdfGraph(new object[] { value });
                     }
                     else
                     {
-                        Graph = DotNetRdfHelper.CreateDotNetRdfGraph(null, null, null, null,
-                            objects as IEnumerable<object>,
-                            (IDictionary<string, object>)propertiesProp.GetValue(value, null));
+                        Graph = DotNetRdfHelper.CreateDotNetRdfGraph(new EnumerableWrapper(value));
                     }
                 }
-                else if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(
-                             typeof(IEnumerable<>), value.GetType()))
+
+                IRdfWriter rdfWriter;
+
+                if (content == null || content.Headers == null || content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_RDF_XML))
                 {
-                    Graph = DotNetRdfHelper.CreateDotNetRdfGraph(value as IEnumerable<object>);
+                    RdfXmlWriter rdfXmlWriter = new RdfXmlWriter
+                    {
+                        UseDtd = false,
+                        PrettyPrintMode = false,
+                        CompressionLevel = 20
+                    };
+                    //turtlelWriter.UseTypedNodes = false;
+
+                    rdfWriter = rdfXmlWriter;
                 }
-                else if (type.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
+                else if (content.Headers.ContentType.MediaType.Equals(OslcMediaType.TEXT_TURTLE))
                 {
-                    Graph = DotNetRdfHelper.CreateDotNetRdfGraph(new[] { value });
+                    var turtlelWriter = new CompressingTurtleWriter(TurtleSyntax.W3C)
+                    {
+                        PrettyPrintMode = false
+                    };
+
+                    rdfWriter = turtlelWriter;
                 }
                 else
                 {
-                    Graph = DotNetRdfHelper.CreateDotNetRdfGraph(new EnumerableWrapper(value));
+                    //For now, use the dotNetRDF RdfXmlWriter for application/xml
+                    //OslcXmlWriter oslcXmlWriter = new OslcXmlWriter();
+                    RdfXmlWriter oslcXmlWriter = new RdfXmlWriter
+                    {
+                        UseDtd = false,
+                        PrettyPrintMode = false,
+                        CompressionLevel = 20
+                    };
+
+                    rdfWriter = oslcXmlWriter;
                 }
-            }
 
-            IRdfWriter rdfWriter;
+                StreamWriter streamWriter = new NonClosingStreamWriter(writeStream);
 
-            if (content == null || content.Headers == null ||
-                content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_RDF_XML))
-            {
-                var rdfXmlWriter = new RdfXmlWriter
-                {
-                    UseDtd = false, PrettyPrintMode = false, CompressionLevel = 20
-                };
-                //turtlelWriter.UseTypedNodes = false;
-
-                rdfWriter = rdfXmlWriter;
-            }
-            else if (content.Headers.ContentType.MediaType.Equals(OslcMediaType.TEXT_TURTLE))
-            {
-                var turtlelWriter = new CompressingTurtleWriter(TurtleSyntax.W3C)
-                {
-                    PrettyPrintMode = false
-                };
-
-                rdfWriter = turtlelWriter;
-            }
-            else
-            {
-                //For now, use the dotNetRDF RdfXmlWriter for application/xml
-                //OslcXmlWriter oslcXmlWriter = new OslcXmlWriter();
-                var oslcXmlWriter = new RdfXmlWriter
-                {
-                    UseDtd = false, PrettyPrintMode = false, CompressionLevel = 20
-                };
-
-                rdfWriter = oslcXmlWriter;
-            }
-
-            StreamWriter streamWriter = new NonClosingStreamWriter(writeStream);
-
-            rdfWriter.Save(Graph, streamWriter);
-        });
+                rdfWriter.Save(Graph, streamWriter);
+            });
     }
 
     /// <summary>
-    ///     Test the readability of a type
+    /// Test the readability of a type
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
@@ -273,7 +280,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             return true;
         }
 
-        var memberType = GetMemberType(type);
+        Type memberType = GetMemberType(type);
 
         if (memberType == null)
         {
@@ -284,7 +291,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     }
 
     /// <summary>
-    ///     Read RDF/XML from an HTTP input stream and convert to .NET objects
+    /// Read RDF/XML from an HTTP input stream and convert to .NET objects
     /// </summary>
     /// <param name="type"></param>
     /// <param name="readStream"></param>
@@ -333,8 +340,8 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                     content.Headers.ContentType);
             }
 
-            IGraph? graph = new Graph();
-            var streamReader = new StreamReader(readStream);
+            IGraph graph = new Graph();
+            StreamReader streamReader = new StreamReader(readStream);
 
             using (streamReader)
             {
@@ -345,24 +352,18 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 
                 rdfParser.Load(graph, streamReader);
 
-                var isSingleton = IsSingleton(type);
-                var output =
-                    DotNetRdfHelper.FromDotNetRdfGraph(graph,
-                        isSingleton ? type : GetMemberType(type));
+                bool isSingleton = IsSingleton(type);
+                object output = DotNetRdfHelper.FromDotNetRdfGraph(graph, isSingleton ? type : GetMemberType(type));
 
                 if (isSingleton)
                 {
-                    var haveOne =
-                        (int)output.GetType().GetProperty("Count").GetValue(output, null) > 0;
+                    bool haveOne = (int)output.GetType().GetProperty("Count").GetValue(output, null) > 0;
 
-                    tcs.SetResult(haveOne
-                        ? output.GetType().GetProperty("Item").GetValue(output, new object[] { 0 })
-                        : null);
+                    tcs.SetResult(haveOne ? output.GetType().GetProperty("Item").GetValue(output, new object[] { 0 }) : null);
                 }
                 else if (type.IsArray)
                 {
-                    tcs.SetResult(output.GetType().GetMethod("ToArray", Type.EmptyTypes)
-                        .Invoke(output, null));
+                    tcs.SetResult(output.GetType().GetMethod("ToArray", Type.EmptyTypes).Invoke(output, null));
                 }
                 else
                 {
@@ -397,17 +398,15 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             return type.GetElementType();
         }
 
-        if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IEnumerable<>),
-                type))
+        if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IEnumerable<>), type))
         {
-            var interfaces = type.GetInterfaces();
+            Type[] interfaces = type.GetInterfaces();
 
-            foreach (var iface in interfaces)
+            foreach (Type iface in interfaces)
             {
-                if (iface.IsGenericType && iface.GetGenericTypeDefinition() ==
-                    typeof(IEnumerable<object>).GetGenericTypeDefinition())
+                if (iface.IsGenericType && iface.GetGenericTypeDefinition() == typeof(IEnumerable<object>).GetGenericTypeDefinition())
                 {
-                    var memberType = iface.GetGenericArguments()[0];
+                    Type memberType = iface.GetGenericArguments()[0];
 
                     if (memberType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
                     {
@@ -422,24 +421,35 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         return null;
     }
 
+    private class NonClosingStreamWriter : StreamWriter
+    {
+        public NonClosingStreamWriter(Stream stream)
+            : base(stream)
+        {
+        }
+
+        public override void Close()
+        {
+            // Don't let dotNetRDF writer close the file, but need to flush output.
+            Flush();
+        }
+    }
+
     private static bool ImplementsGenericType(Type genericType, Type typeToTest)
     {
-        var isParentGeneric = genericType.IsGenericType;
+        bool isParentGeneric = genericType.IsGenericType;
 
         return ImplementsGenericType(genericType, typeToTest, isParentGeneric);
     }
 
-    private static bool ImplementsGenericType(Type genericType, Type typeToTest,
-        bool isParentGeneric)
+    private static bool ImplementsGenericType(Type genericType, Type typeToTest, bool isParentGeneric)
     {
         if (typeToTest == null)
         {
             return false;
         }
 
-        typeToTest = isParentGeneric && typeToTest.IsGenericType
-            ? typeToTest.GetGenericTypeDefinition()
-            : typeToTest;
+        typeToTest = isParentGeneric && typeToTest.IsGenericType ? typeToTest.GetGenericTypeDefinition() : typeToTest;
 
         if (typeToTest == genericType)
         {
@@ -451,14 +461,12 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 
     private static Type[] GetChildClassParameterArguments(Type genericType, Type typeToTest)
     {
-        var isParentGeneric = genericType.IsGenericType;
+        bool isParentGeneric = genericType.IsGenericType;
 
         while (true)
         {
-            var parentType = typeToTest.BaseType;
-            var parentToTest = isParentGeneric && parentType.IsGenericType
-                ? parentType.GetGenericTypeDefinition()
-                : parentType;
+            Type parentType = typeToTest.BaseType;
+            Type parentToTest = isParentGeneric && parentType.IsGenericType ? parentType.GetGenericTypeDefinition() : parentType;
 
             if (parentToTest == genericType)
             {
@@ -472,19 +480,5 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     private static bool ImplementsICollection(Type type)
     {
         return type.IsGenericType && typeof(ICollection<>) == type.GetGenericTypeDefinition();
-    }
-
-    private class NonClosingStreamWriter : StreamWriter
-    {
-        public NonClosingStreamWriter(Stream stream)
-            : base(stream)
-        {
-        }
-
-        public override void Close()
-        {
-            // Don't let dotNetRDF writer close the file, but need to flush output.
-            Flush();
-        }
     }
 }
