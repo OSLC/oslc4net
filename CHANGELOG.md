@@ -20,7 +20,7 @@ This release does not contain new features.
 
 ### Changed
 
-This release does not contain other significant changes.
+- dotNetRDF dependency was updated to v3.3.1
 
 ### Deprecated
 
