@@ -27,7 +27,7 @@ namespace OSLC4Net.Core.DotNetRdfProviderTests;
 public class RdfXmlMediaTypeFormatterTests
 {
     [Fact]
-    public void TestRdfXmlSerialization()
+    public async Task TestRdfXmlSerializationAsync()
     {
         var changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeReuest"));
 
@@ -36,12 +36,16 @@ public class RdfXmlMediaTypeFormatterTests
 
         var formatter = new RdfXmlMediaTypeFormatter();
 
-        var rdfXml = Serialize(formatter, changeRequest1, OslcMediaType.APPLICATION_RDF_XML_TYPE);
+        var rdfXml = await SerializeAsync(formatter, changeRequest1,
+            OslcMediaType.APPLICATION_RDF_XML_TYPE);
 
         Debug.WriteLine(rdfXml);
 
-        var changeRequest2 = Deserialize<ChangeRequest>(formatter, rdfXml, OslcMediaType.APPLICATION_RDF_XML_TYPE);
+        var changeRequest2 =
+            await DeserializeAsync<ChangeRequest>(formatter, rdfXml,
+                OslcMediaType.APPLICATION_RDF_XML_TYPE);
 
+        Assert.NotNull(changeRequest2);
         Assert.Equal(changeRequest1.GetAbout(), changeRequest2.GetAbout());
         Assert.Equal(changeRequest1.IsFixed(), changeRequest2.IsFixed());
         Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
@@ -49,7 +53,7 @@ public class RdfXmlMediaTypeFormatterTests
     }
 
     [Fact]
-    public void TestRdfXmlCollectionSerialization()
+    public async Task TestRdfXmlCollectionSerializationAsync()
     {
         var crListOut = new List<ChangeRequest>();
         var changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeRequest1"));
@@ -73,11 +77,16 @@ public class RdfXmlMediaTypeFormatterTests
         // TODO: fix overload confusion with one arg
         var formatter = new RdfXmlMediaTypeFormatter(rdfGraph, true);
 
-        var rdfXml = SerializeCollection(formatter, crListOut, OslcMediaType.APPLICATION_RDF_XML_TYPE);
+        var rdfXml =
+            await SerializeCollectionAsync(formatter, crListOut,
+                OslcMediaType.APPLICATION_RDF_XML_TYPE);
 
         Debug.WriteLine(rdfXml);
 
-        var crListIn = DeserializeCollection<ChangeRequest>(formatter, rdfXml, OslcMediaType.APPLICATION_RDF_XML_TYPE).ToList();
+        var crListIn =
+            (await DeserializeCollectionAsync<ChangeRequest>(formatter, rdfXml,
+                OslcMediaType.APPLICATION_RDF_XML_TYPE) ?? throw new InvalidOperationException())
+            .ToList();
         Assert.Equal(crListOut.Count, crListIn.Count);
 
         //No guarantees of order in a collection, use the "about" attribute to identify individual ChangeRequests
@@ -106,7 +115,7 @@ public class RdfXmlMediaTypeFormatterTests
     }
 
     [Fact]
-    public void TestXmlSerialization()
+    public async Task TestXmlSerializationAsync()
     {
         var changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeReuest"));
 
@@ -115,12 +124,16 @@ public class RdfXmlMediaTypeFormatterTests
 
         var formatter = new RdfXmlMediaTypeFormatter();
 
-        var rdfXml = Serialize(formatter, changeRequest1, OslcMediaType.APPLICATION_XML_TYPE);
+        var rdfXml =
+            await SerializeAsync(formatter, changeRequest1, OslcMediaType.APPLICATION_XML_TYPE);
 
         Debug.WriteLine(rdfXml);
 
-        var changeRequest2 = Deserialize<ChangeRequest>(formatter, rdfXml, OslcMediaType.APPLICATION_XML_TYPE);
+        var changeRequest2 =
+            await DeserializeAsync<ChangeRequest>(formatter, rdfXml,
+                OslcMediaType.APPLICATION_XML_TYPE);
 
+        Assert.NotNull(changeRequest2);
         Assert.Equal(changeRequest1.GetAbout(), changeRequest2.GetAbout());
         Assert.Equal(changeRequest1.IsFixed(), changeRequest2.IsFixed());
         Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
@@ -128,7 +141,7 @@ public class RdfXmlMediaTypeFormatterTests
     }
 
     [Fact]
-    public void TestTurtleSerialization()
+    public async Task TestTurtleSerialization()
     {
         var changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeReuest"));
 
@@ -137,45 +150,52 @@ public class RdfXmlMediaTypeFormatterTests
 
         var formatter = new RdfXmlMediaTypeFormatter();
 
-        var turtle = Serialize(formatter, changeRequest1, OslcMediaType.TEXT_TURTLE_TYPE);
+        var turtle =
+            await SerializeAsync(formatter, changeRequest1, OslcMediaType.TEXT_TURTLE_TYPE);
 
         Debug.WriteLine(turtle);
 
-        var changeRequest2 = Deserialize<ChangeRequest>(formatter, turtle, OslcMediaType.TEXT_TURTLE_TYPE);
+        var changeRequest2 =
+            await DeserializeAsync<ChangeRequest>(formatter, turtle,
+                OslcMediaType.TEXT_TURTLE_TYPE);
 
+        Assert.NotNull(changeRequest2);
         Assert.Equal(changeRequest1.GetAbout(), changeRequest2.GetAbout());
         Assert.Equal(changeRequest1.IsFixed(), changeRequest2.IsFixed());
         Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
         Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
     }
 
-    private static string Serialize<T>(MediaTypeFormatter formatter, T value, MediaTypeHeaderValue mediaType)
+    private static async Task<string> SerializeAsync<T>(MediaTypeFormatter formatter, T value,
+        MediaTypeHeaderValue mediaType)
     {
         Stream stream = new MemoryStream();
         HttpContent content = new StreamContent(stream);
 
         content.Headers.ContentType = mediaType;
 
-        formatter.WriteToStreamAsync(typeof(T), value, stream, content, null).Wait();
+        await formatter.WriteToStreamAsync(typeof(T), value, stream, content, null);
         stream.Position = 0;
 
-        return content.ReadAsStringAsync().Result;
+        return await content.ReadAsStringAsync();
     }
 
-    private static string SerializeCollection<T>(MediaTypeFormatter formatter, IEnumerable<T> value, MediaTypeHeaderValue mediaType)
+    private static async Task<string> SerializeCollectionAsync<T>(MediaTypeFormatter formatter,
+        IEnumerable<T> value, MediaTypeHeaderValue mediaType)
     {
         Stream stream = new MemoryStream();
         HttpContent content = new StreamContent(stream);
 
         content.Headers.ContentType = mediaType;
 
-        formatter.WriteToStreamAsync(typeof(T), value, stream, content, null).Wait();
+        await formatter.WriteToStreamAsync(typeof(T), value, stream, content, null);
         stream.Position = 0;
 
-        return content.ReadAsStringAsync().Result;
+        return await content.ReadAsStringAsync();
     }
 
-    private static T Deserialize<T>(MediaTypeFormatter formatter, string str, MediaTypeHeaderValue mediaType) where T : class
+    private static async Task<T?> DeserializeAsync<T>(MediaTypeFormatter formatter, string str,
+        MediaTypeHeaderValue mediaType) where T : class
     {
         Stream stream = new MemoryStream();
         var writer = new StreamWriter(stream);
@@ -183,15 +203,17 @@ public class RdfXmlMediaTypeFormatterTests
 
         content.Headers.ContentType = mediaType;
 
-        writer.Write(str);
-        writer.Flush();
+        await writer.WriteAsync(str);
+        await writer.FlushAsync();
 
         stream.Position = 0;
 
-        return formatter.ReadFromStreamAsync(typeof(T), stream, content, null).Result as T;
+        return await formatter.ReadFromStreamAsync(typeof(T), stream, content, null) as T;
     }
 
-    private static IEnumerable<T> DeserializeCollection<T>(MediaTypeFormatter formatter, string str, MediaTypeHeaderValue mediaType) where T : class
+    private static async Task<IEnumerable<T>?> DeserializeCollectionAsync<T>(
+        MediaTypeFormatter formatter,
+        string str, MediaTypeHeaderValue mediaType) where T : class
     {
         Stream stream = new MemoryStream();
         var writer = new StreamWriter(stream);
@@ -199,11 +221,12 @@ public class RdfXmlMediaTypeFormatterTests
 
         content.Headers.ContentType = mediaType;
 
-        writer.Write(str);
-        writer.Flush();
+        await writer.WriteAsync(str);
+        await writer.FlushAsync();
 
         stream.Position = 0;
 
-        return formatter.ReadFromStreamAsync(typeof(List<T>), stream, content, null).Result as IEnumerable<T>;
+        return await formatter.ReadFromStreamAsync(typeof(List<T>), stream, content, null) as
+            IEnumerable<T>;
     }
 }
