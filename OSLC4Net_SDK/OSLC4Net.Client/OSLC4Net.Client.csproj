@@ -32,6 +32,7 @@
     <ProjectReference Include="..\OSLC4Net.Core.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Diagnostics" />
     <PackageReference Include="dotNetRdf.Core"/>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client"/>
     <PackageReference Include="log4net"/>

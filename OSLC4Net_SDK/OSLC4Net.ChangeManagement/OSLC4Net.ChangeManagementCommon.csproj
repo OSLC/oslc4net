@@ -12,6 +12,7 @@
     <ProjectReference Include="..\OSLC4Net.Core\OSLC4Net.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Diagnostics" />
     <PackageReference Include="log4net" />
   </ItemGroup>
 </Project>
