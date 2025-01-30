@@ -141,7 +141,7 @@ public class RdfXmlMediaTypeFormatterTests
     }
 
     [Fact]
-    public async Task TestTurtleSerialization()
+    public async Task TestTurtleSerializationAsync()
     {
         var changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeReuest"));
 
