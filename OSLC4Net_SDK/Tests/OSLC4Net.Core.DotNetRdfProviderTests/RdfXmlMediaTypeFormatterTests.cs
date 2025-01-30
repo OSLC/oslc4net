@@ -169,8 +169,8 @@ public class RdfXmlMediaTypeFormatterTests
     private static async Task<string> SerializeAsync<T>(MediaTypeFormatter formatter, T value,
         MediaTypeHeaderValue mediaType)
     {
-        Stream stream = new MemoryStream();
-        HttpContent content = new StreamContent(stream);
+        await using Stream stream = new MemoryStream();
+        using HttpContent content = new StreamContent(stream);
 
         content.Headers.ContentType = mediaType;
 
@@ -183,8 +183,8 @@ public class RdfXmlMediaTypeFormatterTests
     private static async Task<string> SerializeCollectionAsync<T>(MediaTypeFormatter formatter,
         IEnumerable<T> value, MediaTypeHeaderValue mediaType)
     {
-        Stream stream = new MemoryStream();
-        HttpContent content = new StreamContent(stream);
+        await using Stream stream = new MemoryStream();
+        using HttpContent content = new StreamContent(stream);
 
         content.Headers.ContentType = mediaType;
 
@@ -197,9 +197,9 @@ public class RdfXmlMediaTypeFormatterTests
     private static async Task<T?> DeserializeAsync<T>(MediaTypeFormatter formatter, string str,
         MediaTypeHeaderValue mediaType) where T : class
     {
-        Stream stream = new MemoryStream();
-        var writer = new StreamWriter(stream);
-        HttpContent content = new StreamContent(stream);
+        await using Stream stream = new MemoryStream();
+        await using var writer = new StreamWriter(stream);
+        using HttpContent content = new StreamContent(stream);
 
         content.Headers.ContentType = mediaType;
 
@@ -215,9 +215,9 @@ public class RdfXmlMediaTypeFormatterTests
         MediaTypeFormatter formatter,
         string str, MediaTypeHeaderValue mediaType) where T : class
     {
-        Stream stream = new MemoryStream();
-        var writer = new StreamWriter(stream);
-        HttpContent content = new StreamContent(stream);
+        await using Stream stream = new MemoryStream();
+        await using var writer = new StreamWriter(stream);
+        using HttpContent content = new StreamContent(stream);
 
         content.Headers.ContentType = mediaType;
 
