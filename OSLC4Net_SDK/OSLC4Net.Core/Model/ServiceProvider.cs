@@ -22,7 +22,10 @@ namespace OSLC4Net.Core.Model;
 /// OSLC ServiceProvider resource
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Service Provider Resource Shape", describes = new string[] { OslcConstants.TYPE_SERVICE_PROVIDER })]
+[OslcResourceShape(title = "OSLC Service Provider Resource Shape", describes =
+[
+    OslcConstants.TYPE_SERVICE_PROVIDER
+])]
 public class ServiceProvider : AbstractResource
 {
     private readonly SortedSet<Uri> _details = new SortedUriSet();
