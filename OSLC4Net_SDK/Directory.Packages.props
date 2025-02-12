@@ -5,7 +5,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <!-- Versions used by several individual references below -->
-    <MSTestVersion>3.7.3</MSTestVersion>
+    <MSTestVersion>3.8.0</MSTestVersion>
   </PropertyGroup>
   <ItemGroup>
     <!-- For removal -->
@@ -24,7 +24,7 @@
     <PackageVersion Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
     <!-- Test deps -->
     <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.2" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageVersion Include="xunit" Version="2.9.3" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.2" />
     <PackageVersion Include="NSubstitute" Version="5.3.0" />
