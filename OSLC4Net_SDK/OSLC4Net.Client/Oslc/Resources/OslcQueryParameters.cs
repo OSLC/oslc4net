@@ -113,8 +113,8 @@ public class OslcQueryParameters
         catch (UriFormatException e)
         {
             //Should not occur
-            throw new ArgumentOutOfRangeException(nameof(oslcQueryParam),
-                $"Could not UTF-8 encode query parameters: '{oslcQueryParam}'", e);
+            throw new ArgumentOutOfRangeException(nameof(oslcQueryParam), oslcQueryParam,
+                "Could not UTF-8 encode query parameters");
         }
     }
 }
