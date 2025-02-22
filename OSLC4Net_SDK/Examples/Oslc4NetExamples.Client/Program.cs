@@ -1,21 +1,20 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using Microsoft.Extensions.DependencyInjection;
-using OSLC4Net.Client.Oslc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OSLC4Net.Client;
+using OSLC4Net.Client.Oslc;
 using OSLC4Net.Client.Oslc.Resources;
+
+const string jazzCmBase = "https://jazz.net/sandbox01-ccm";
+const string workItemId = "1300";
 
 var host = Host.CreateDefaultBuilder()
     .ConfigureLogging(loggingBuilder =>
     {
         loggingBuilder.AddConsole(); // Add console logging
     })
-    // .ConfigureServices((hostContext, services) =>
-    // {
-    //     services.AddScoped<DatabaseService>();
-    // })
     .Build();
 
 using (var scope = host.Services.CreateScope())
@@ -29,12 +28,13 @@ using (var scope = host.Services.CreateScope())
     var oslcClient = OslcClient.ForBasicAuth(username, password);
 
     var resourceUri =
-        "https://jazz.net/sandbox01-ccm/resource/itemName/com.ibm.team.workitem.WorkItem/1300";
+        $"{jazzCmBase}/resource/itemName/com.ibm.team.workitem.WorkItem/{workItemId}";
     OslcResponse<ChangeRequest> response = await oslcClient.GetResourceAsync<ChangeRequest>(resourceUri);
     if (response.Resource is not null)
     {
-        ChangeRequest wi1300 = response.Resource;
-        logger.LogInformation($"{wi1300.GetShortTitle()} {wi1300.GetTitle()}");
+        var changeRequestResource = response.Resource;
+        logger.LogInformation(
+            $"{changeRequestResource.GetShortTitle()} {changeRequestResource.GetTitle()}");
     }
     else
     {
