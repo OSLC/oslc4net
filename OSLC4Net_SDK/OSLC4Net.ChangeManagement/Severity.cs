@@ -25,7 +25,7 @@ public enum Severity
     Blocker
 }
 
-class SeverityExtension
+internal static class SeverityExtension
 {
     public static string ToString(Severity severity)
     {
@@ -44,6 +44,7 @@ class SeverityExtension
             }
         }
 
-        throw new ArgumentException();
+        throw new ArgumentOutOfRangeException(nameof(value), value,
+            "The string must correspond to one of the Severity enum values");
     }
 }

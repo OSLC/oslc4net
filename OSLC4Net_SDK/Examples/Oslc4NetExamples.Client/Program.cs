@@ -34,11 +34,13 @@ using (var scope = host.Services.CreateScope())
     {
         var changeRequestResource = response.Resource;
         logger.LogInformation(
-            $"{changeRequestResource.GetShortTitle()} {changeRequestResource.GetTitle()}");
+            "{shortTitle} {title}", changeRequestResource.GetShortTitle(),
+            changeRequestResource.GetTitle());
     }
     else
     {
-        logger.LogError("Something went wrong: {} {}", (response.StatusCode as int?) ?? -1,
+        logger.LogError("Something went wrong: {status} {reason}",
+            (int?)response.StatusCode ?? -1,
             response.ResponseMessage?.ReasonPhrase);
     }
 
