@@ -14,14 +14,18 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System.Net;
-using System.Net.Http.Formatting;
+using Aspire.Hosting;
+using Aspire.Hosting.ApplicationModel;
+using Aspire.Hosting.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using OSLC4Net.ChangeManagement;
 using OSLC4Net.Client;
+
 using OSLC4Net.Core.Model;
+using System.Net;
+using System.Net.Http.Formatting;
+using ServiceProvider = OSLC4Net.Core.Model.ServiceProvider;
 
 namespace OSLC4Net.ChangeManagementTest;
 
@@ -32,7 +36,7 @@ public abstract class TestBase
     protected virtual IEnumerable<MediaTypeFormatter> Formatters { get; } = OslcRestClient.DEFAULT_FORMATTERS;
     protected Uri? CREATED_CHANGE_REQUEST_URI;
     protected readonly IConfigurationRoot _config;
-    protected readonly string _serviceProviderCatalogURI;
+    protected static string _serviceProviderCatalogURI;
 
     protected TestBase()
     {
@@ -40,7 +44,35 @@ public abstract class TestBase
                 .AddJsonFile("appsettings.Development.json")
                  //  .AddEnvironmentVariables()
                  .Build();
-        _serviceProviderCatalogURI = _config["serviceProviderCatalog:uri"]!;
+        //_serviceProviderCatalogURI = _config["serviceProviderCatalog:uri"]!;
+    }
+
+    
+    protected static async Task<DistributedApplication> SetupAspireAsync()
+    {
+        var builder = await DistributedApplicationTestingBuilder.CreateAsync<Projects.OSLC4Net_Test_AspireHost>().ConfigureAwait(false);
+
+        var refimplCM = builder.AddDockerfile("refimpl-rm", "../../../../refimpl/src/", "server-cm/Dockerfile")
+             .WithEndpoint(port: 8801, targetPort: 8080, isExternal:true, isProxied: false, scheme: "http", name: "http");
+
+        //builder.Services.ConfigureHttpClientDefaults(clientBuilder =>
+        //{
+        //    clientBuilder.AddStandardResilienceHandler();
+        //});
+
+        // To output logs to the xUnit.net ITestOutputHelper, 
+        // consider adding a package from https://www.nuget.org/packages?q=xunit+logging
+
+        await using var app = await builder.BuildAsync().ConfigureAwait(false);
+
+        await app.StartAsync().ConfigureAwait(false);
+
+        var cmEndpoint = refimplCM.GetEndpoint("http");
+
+        _serviceProviderCatalogURI = cmEndpoint.Url + "/services/catalog/singleton";
+
+
+        return app;
     }
 
     protected async Task<string> GetCreationAsync(string mediaType,
@@ -137,7 +169,7 @@ public abstract class TestBase
                                 {
                                     OslcRestClient oslcRestClient = new(
                                         Formatters, resourceShape, mediaType);
-                                    return await oslcRestClient.GetOslcResourceAsync<ResourceShape>();
+                                    return await oslcRestClient.GetOslcResourceAsync<ResourceShape>().ConfigureAwait(false);
                                 }
                             }
                         }
@@ -149,7 +181,7 @@ public abstract class TestBase
         throw new AssertFailedException("Unable to retrieve resource shape for type '" + type + "'");
     }
 
-    protected async void VerifyChangeRequest(string mediaType,
+    protected async Task VerifyChangeRequestAsync(string mediaType,
                                             ChangeRequest changeRequest,
                                             bool recurse)
     {
@@ -183,23 +215,23 @@ public abstract class TestBase
                                                     aboutURI,
                                                     mediaType);
 
-            VerifyChangeRequest(mediaType,
-                                await aboutOSLCRestClient.GetOslcResourceAsync<ChangeRequest>(),
-                                recurse: false);
+            await VerifyChangeRequestAsync(mediaType,
+                                await aboutOSLCRestClient.GetOslcResourceAsync<ChangeRequest>().ConfigureAwait(false),
+                                recurse: false).ConfigureAwait(false);
             if (serviceProviderURI != null)
             {
                 OslcRestClient serviceProviderOSLCRestClient = new(Formatters,
                                                                 serviceProviderURI,
                                                                 mediaType);
 
-                var serviceProvider = await serviceProviderOSLCRestClient.GetOslcResourceAsync<ServiceProvider>();
+                var serviceProvider = await serviceProviderOSLCRestClient.GetOslcResourceAsync<ServiceProvider>().ConfigureAwait(false);
 
                 Assert.IsNotNull(serviceProvider);
             }
         }
     }
 
-    protected async void VerifyCompact(string mediaType,
+    protected async Task VerifyCompact(string mediaType,
                                       Compact compact)
     {
         Assert.IsNotNull(compact);
@@ -217,9 +249,9 @@ public abstract class TestBase
                                                 aboutURI,
                                                 mediaType);
 
-        VerifyChangeRequest(mediaType,
-                            await aboutOSLCRestClient.GetOslcResourceAsync<ChangeRequest>(),
-                            false);
+        await VerifyChangeRequestAsync(mediaType,
+                            await aboutOSLCRestClient.GetOslcResourceAsync<ChangeRequest>().ConfigureAwait(false),
+                            false).ConfigureAwait(false);
     }
 
     protected void VerifyResourceShape(ResourceShape resourceShape,
@@ -262,7 +294,7 @@ public abstract class TestBase
     protected async Task TestResourceShapeAsync(string mediaType)
     {
         var resourceShape = await GetResourceShapeAsync(mediaType,
-                                                       Constants.TYPE_CHANGE_REQUEST);
+                                                       Constants.TYPE_CHANGE_REQUEST).ConfigureAwait(false);
 
         VerifyResourceShape(resourceShape,
                             Constants.TYPE_CHANGE_REQUEST);
@@ -277,10 +309,10 @@ public abstract class TestBase
                                             CREATED_CHANGE_REQUEST_URI,
                                             compactMediaType);
 
-        var compact = await oslcRestClient.GetOslcResourceAsync<Compact>();
+        var compact = await oslcRestClient.GetOslcResourceAsync<Compact>().ConfigureAwait(false);
 
-        VerifyCompact(normalMediaType,
-                      compact);
+        await VerifyCompact(normalMediaType,
+                      compact).ConfigureAwait(false);
     }
 
     protected async Task<ChangeRequest> MakeChangeRequestAsync(string mediaType)
@@ -305,13 +337,13 @@ public abstract class TestBase
         changeRequest.AddTracksRequirement(new Link(new Uri("http://myserver/reqtool/req/34ef31af")));
         changeRequest.AddTracksRequirement(new Link(new Uri("http://remoteserver/reqrepo/project1/req456"), "Requirement 456"));
 
-        var creation = await GetCreationAsync(mediaType, Constants.TYPE_CHANGE_REQUEST);
+        var creation = await GetCreationAsync(mediaType, Constants.TYPE_CHANGE_REQUEST).ConfigureAwait(false);
 
         OslcRestClient oslcRestClient = new(Formatters,
                                             creation,
                                             mediaType);
 
-        var addedChangeRequest = await oslcRestClient.AddOslcResourceAsync(changeRequest);
+        var addedChangeRequest = await oslcRestClient.AddOslcResourceAsync(changeRequest).ConfigureAwait(false);
 
         CREATED_CHANGE_REQUEST_URI = addedChangeRequest.GetAbout();
 
@@ -324,13 +356,14 @@ public abstract class TestBase
 
         var addedChangeRequest = await MakeChangeRequestAsync(mediaType);
 
-        VerifyChangeRequest(mediaType,
+        await VerifyChangeRequestAsync(mediaType,
                             addedChangeRequest,
-                            true);
+                            true).ConfigureAwait(false);
     }
 
     protected HttpResponseMessage? DeleteChangeRequest(string mediaType)
     {
+        ArgumentNullException.ThrowIfNull(CREATED_CHANGE_REQUEST_URI);
         try
         {
             OslcRestClient oslcRestClient = new(Formatters,
@@ -364,7 +397,7 @@ public abstract class TestBase
             clientResponse?.StatusCode);
         // Assert.Equals(HttpStatusCode.NoContent, clientResponse?.StatusCode);
 
-        Assert.IsNull(await oslcRestClient.GetOslcResourceAsync<ChangeRequest>());
+        Assert.IsNull(await oslcRestClient.GetOslcResourceAsync<ChangeRequest>().ConfigureAwait(false));
     }
 
     protected async Task TestRetrieveAsync(string mediaType)
@@ -375,24 +408,24 @@ public abstract class TestBase
                                             CREATED_CHANGE_REQUEST_URI,
                                             mediaType);
 
-        var changeRequest = await oslcRestClient.GetOslcResourceAsync<ChangeRequest>();
+        var changeRequest = await oslcRestClient.GetOslcResourceAsync<ChangeRequest>().ConfigureAwait(false);
 
-        VerifyChangeRequest(mediaType,
+        await VerifyChangeRequestAsync(mediaType,
                             changeRequest,
-                            recurse: true);
+                            recurse: true).ConfigureAwait(false);
     }
 
     protected async Task TestRetrievesAsync(string mediaType)
     {
         Assert.IsNotNull(CREATED_CHANGE_REQUEST_URI);
 
-        var queryBase = await GetQueryBaseAsync(mediaType, Constants.TYPE_CHANGE_REQUEST);
+        var queryBase = await GetQueryBaseAsync(mediaType, Constants.TYPE_CHANGE_REQUEST).ConfigureAwait(false);
 
         Assert.IsNotNull(queryBase);
 
         var client = new OslcRestClient(Formatters, queryBase, mediaType);
 
-        ICollection<ChangeRequest> changeRequests = await client.GetOslcResourcesAsync<ChangeRequest>();
+        ICollection<ChangeRequest> changeRequests = await client.GetOslcResourcesAsync<ChangeRequest>().ConfigureAwait(false);
 
         Assert.IsNotNull(changeRequests);
         Assert.IsTrue(changeRequests.Count > 0);
@@ -402,7 +435,7 @@ public abstract class TestBase
         // FIXME add paging
         foreach (var changeRequest in changeRequests)
         {
-            VerifyChangeRequest(mediaType, changeRequest, recurse: true);
+            await VerifyChangeRequestAsync(mediaType, changeRequest, recurse: true).ConfigureAwait(false);
 
             if (CREATED_CHANGE_REQUEST_URI.Equals(changeRequest.GetAbout()))
             {
@@ -423,7 +456,7 @@ public abstract class TestBase
 
         var changeRequest = await oslcRestClient.GetOslcResourceAsync<ChangeRequest>();
 
-        VerifyChangeRequest(mediaType, changeRequest, recurse: true);
+        VerifyChangeRequestAsync(mediaType, changeRequest, recurse: true);
 
         Assert.IsNull(changeRequest.IsApproved());
         Assert.IsNull(changeRequest.GetCloseDate());
@@ -440,7 +473,7 @@ public abstract class TestBase
 
         var updatedChangeRequest = await oslcRestClient.GetOslcResourceAsync<ChangeRequest>();
 
-        VerifyChangeRequest(mediaType,
+        VerifyChangeRequestAsync(mediaType,
                             updatedChangeRequest,
                             true);
 

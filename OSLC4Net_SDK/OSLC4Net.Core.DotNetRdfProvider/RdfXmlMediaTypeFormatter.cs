@@ -291,14 +291,14 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     /// <param name="content"></param>
     /// <param name="formatterLogger"></param>
     /// <returns></returns>
-    public override Task<object> ReadFromStreamAsync(
+    public override async Task<object?> ReadFromStreamAsync(
         Type type,
         Stream readStream,
         HttpContent content,
         IFormatterLogger formatterLogger
     )
     {
-        var tcs = new TaskCompletionSource<object>();
+        //var tcs = new TaskCompletionSource<object>();
 
         if (content == null || content.Headers == null || content.Headers.ContentLength == 0)
         {
@@ -355,18 +355,18 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                     var haveOne =
                         (int)output.GetType().GetProperty("Count").GetValue(output, null) > 0;
 
-                    tcs.SetResult(haveOne
+                    return haveOne
                         ? output.GetType().GetProperty("Item").GetValue(output, new object[] { 0 })
-                        : null);
+                        : null;
                 }
                 else if (type.IsArray)
                 {
-                    tcs.SetResult(output.GetType().GetMethod("ToArray", Type.EmptyTypes)
-                        .Invoke(output, null));
+                    return output.GetType().GetMethod("ToArray", Type.EmptyTypes)
+                        .Invoke(output, null);
                 }
                 else
                 {
-                    tcs.SetResult(output);
+                    return output;
                 }
             }
         }
@@ -379,10 +379,8 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 
             formatterLogger.LogError(string.Empty, e.Message);
 
-            tcs.SetResult(GetDefaultValueForType(type));
+            return GetDefaultValueForType(type);
         }
-
-        return tcs.Task;
     }
 
     private bool IsSingleton(Type type)

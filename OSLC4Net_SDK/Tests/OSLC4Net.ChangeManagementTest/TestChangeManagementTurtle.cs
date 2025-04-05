@@ -13,6 +13,7 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
+using Aspire.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OSLC4Net.Core.Model;
 
@@ -24,6 +25,25 @@ public class TestChangeManagementTurtle : TestBase
     // protected new readonly ISet<MediaTypeFormatter> FORMATTERS = OslcRestClient.DEFAULT_FORMATTERS;
     public TestContext? TestContext { set; get; }
 
+    static DistributedApplication? _distributedApplication;
+
+    [ClassInitialize]
+    public static async Task ClassSetupAsync(TestContext ctx)
+    {
+        _distributedApplication = await SetupAspireAsync().ConfigureAwait(false);
+
+        Thread.Sleep(30000); // Wait for the server to start
+    }
+
+    [ClassCleanup]
+    public static async Task ClassCleanupAsync()
+    {
+        if (_distributedApplication is not null)
+        {
+            await _distributedApplication.DisposeAsync().ConfigureAwait(false);
+        }
+    }
+
     [TestInitialize]
     public async Task TestSetup()
     {
@@ -33,22 +53,28 @@ public class TestChangeManagementTurtle : TestBase
             case "TestCreate":
                 break;
             default:
-                await MakeChangeRequestAsync(OslcMediaType.TEXT_TURTLE);
+                await MakeChangeRequestAsync(OslcMediaType.TEXT_TURTLE).ConfigureAwait(false);
                 break;
         }
     }
 
     [TestCleanup]
-    public void TestTeardown()
+    public async Task TestTeardown()
     {
-        switch (TestContext!.TestName)
+        if ((TestContext!.TestName == "TestResourceShape") || (TestContext!.TestName == "TestDelete"))
         {
-            case "TestResourceShape":
-            case "TestDelete":
-                break;
-            default:
+            // they remove the resource at the end
+        }
+        else
+        {
+            if (CREATED_CHANGE_REQUEST_URI is not null)
+            {
                 DeleteChangeRequest(OslcMediaType.TEXT_TURTLE);
-                break;
+            }
+            else
+            {
+                // TODO: log warning
+            }
         }
     }
 

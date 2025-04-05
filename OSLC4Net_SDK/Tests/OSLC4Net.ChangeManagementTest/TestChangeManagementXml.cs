@@ -41,21 +41,27 @@ public class TestChangeManagementXml : TestBase
     [TestCleanup]
     public void TestTeardown()
     {
-        switch (TestContext.TestName)
+        if ((TestContext!.TestName == "TestResourceShape") || (TestContext!.TestName == "TestDelete"))
         {
-            case "TestResourceShape":
-            case "TestDelete":
-                break;
-            default:
+            // they remove the resource at the end
+        }
+        else
+        {
+            if (CREATED_CHANGE_REQUEST_URI is not null)
+            {
                 DeleteChangeRequest(OslcMediaType.APPLICATION_XML);
-                break;
+            }
+            else
+            {
+                // TODO: log warning
+            }
         }
     }
 
     [TestMethod]
-    public void TestResourceShape()
+    public async Task TestResourceShape()
     {
-        TestResourceShapeAsync(OslcMediaType.APPLICATION_XML);
+        await TestResourceShapeAsync(OslcMediaType.APPLICATION_XML);
     }
 
     [TestMethod]
