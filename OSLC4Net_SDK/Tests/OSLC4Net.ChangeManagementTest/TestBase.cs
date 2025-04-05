@@ -505,10 +505,9 @@ public abstract class TestBase
 
         var updatedChangeRequest = await oslcRestClient.GetOslcResourceAsync<ChangeRequest>();
 
-        VerifyChangeRequestAsync(mediaType,
+        await VerifyChangeRequestAsync(mediaType,
                             updatedChangeRequest,
-                            true);
-
+                            true).ConfigureAwait(false);
         Assert.AreEqual(changeRequest.GetAbout(), updatedChangeRequest.GetAbout());
         Assert.AreEqual(true, updatedChangeRequest.IsApproved());
         Assert.AreEqual(closeDate.ToShortDateString() + " - " + closeDate.ToShortTimeString(),
