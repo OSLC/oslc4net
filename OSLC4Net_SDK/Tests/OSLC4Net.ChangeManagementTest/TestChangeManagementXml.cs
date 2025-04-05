@@ -53,7 +53,7 @@ public class TestChangeManagementXml : TestBase
             }
             else
             {
-                // TODO: log warning
+                 TestContext.WriteLine("Warning: Cannot delete change request as CREATED_CHANGE_REQUEST_URI is null");
             }
         }
     }

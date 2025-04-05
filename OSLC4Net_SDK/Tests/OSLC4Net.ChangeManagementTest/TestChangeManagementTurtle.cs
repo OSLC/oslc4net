@@ -31,8 +31,6 @@ public class TestChangeManagementTurtle : TestBase
     public static async Task ClassSetupAsync(TestContext ctx)
     {
         _distributedApplication = await SetupAspireAsync().ConfigureAwait(false);
-
-        Thread.Sleep(30000); // Wait for the server to start
     }
 
     [ClassCleanup]
@@ -73,7 +71,7 @@ public class TestChangeManagementTurtle : TestBase
             }
             else
             {
-                // TODO: log warning
+                TestContext.WriteLine("Warning: Cannot delete change request as CREATED_CHANGE_REQUEST_URI is null");
             }
         }
     }

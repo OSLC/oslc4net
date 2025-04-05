@@ -70,7 +70,39 @@ public abstract class TestBase
         var cmEndpoint = refimplCM.GetEndpoint("http");
 
         _serviceProviderCatalogURI = cmEndpoint.Url + "/services/catalog/singleton";
-
+        
+        // Poll for server availability
+        using var httpClient = new HttpClient();
+        httpClient.Timeout = TimeSpan.FromSeconds(1);
+        var maxRetries = 60;
+        var retryDelay = TimeSpan.FromSeconds(1);
+        var serverUrl = new Uri(_serviceProviderCatalogURI);
+        
+        for (int i = 0; i < maxRetries; i++)
+        {
+            try
+            {
+                var response = await httpClient.GetAsync(serverUrl).ConfigureAwait(false);
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    // Server is ready
+                    break;
+                }
+            }
+            catch
+            {
+                // Server not ready yet
+            }
+            
+            if (i < maxRetries - 1)
+            {
+                await Task.Delay(retryDelay).ConfigureAwait(false);
+            }
+            else
+            {
+                throw new TimeoutException($"Server at {serverUrl} did not start within {maxRetries * retryDelay.TotalSeconds} seconds");
+            }
+        }
 
         return app;
     }
