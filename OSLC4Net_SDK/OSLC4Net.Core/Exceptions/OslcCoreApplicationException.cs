@@ -16,7 +16,7 @@
 namespace OSLC4Net.Core.Exceptions;
 
 /// <summary>
-/// OSLC4Net Core exception
+///     OSLC4Net Core exception
 /// </summary>
 public class OslcCoreApplicationException : Exception
 {

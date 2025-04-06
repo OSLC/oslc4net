@@ -21,15 +21,14 @@ namespace OSLC4Net.Client.Oslc.Resources;
 
 public static class RmUtil
 {
-    public static ResourceShape LookupRequirementsInstanceShapes(string serviceProviderUrl,
+    public static async Task<ResourceShape> LookupRequirementsInstanceShapesAsync(string serviceProviderUrl,
         string oslcDomain, string oslcResourceType, OslcClient client, string requiredInstanceShape)
     {
-        var response = client.GetResource(serviceProviderUrl, OSLCConstants.CT_RDF);
-        var formatters = client.GetFormatters();
-        var serviceProvider = response.Content.ReadAsAsync<ServiceProvider>(formatters).Result;
+        var response = await client.GetResourceAsync<ServiceProvider>(serviceProviderUrl).ConfigureAwait(false);
+        //var formatters = client.GetFormatters();
+        var serviceProvider = response.Resources.SingleOrDefault();
 
         if (serviceProvider != null)
-        {
             foreach (var service in serviceProvider.GetServices())
             {
                 var domain = service.GetDomain();
@@ -37,38 +36,26 @@ public static class RmUtil
                 {
                     var creationFactories = service.GetCreationFactories();
                     if (creationFactories != null && creationFactories.Length > 0)
-                    {
                         foreach (var creationFactory in creationFactories)
-                        {
-                            foreach (var resourceType in creationFactory.GetResourceTypes())
+                        foreach (var resourceType in creationFactory.GetResourceTypes())
+                            if (resourceType.ToString() != null &&
+                                resourceType.ToString().Equals(oslcResourceType))
                             {
-                                if (resourceType.ToString() != null &&
-                                    resourceType.ToString().Equals(oslcResourceType))
-                                {
-                                    var instanceShapes = creationFactory.GetResourceShapes();
-                                    if (instanceShapes != null)
+                                var instanceShapes = creationFactory.GetResourceShapes();
+                                if (instanceShapes != null)
+                                    foreach (var typeURI in instanceShapes)
                                     {
-                                        foreach (var typeURI in instanceShapes)
-                                        {
-                                            response = client.GetResource(typeURI.ToString(),
-                                                OSLCConstants.CT_RDF);
-                                            var resourceShape = response.Content
-                                                .ReadAsAsync<ResourceShape>(formatters).Result;
-                                            var typeTitle = resourceShape.GetTitle();
-                                            if ((typeTitle != null) && (string.Compare(typeTitle,
-                                                    requiredInstanceShape, true) == 0))
-                                            {
-                                                return resourceShape;
-                                            }
-                                        }
+                                        var typeResponse = await client.GetResourceAsync<ResourceShape>(typeURI)
+                                            .ConfigureAwait(false);
+                                        var resourceShape = typeResponse.Resources.SingleOrDefault();
+                                        var typeTitle = resourceShape.GetTitle();
+                                        if (typeTitle != null && string.Compare(typeTitle,
+                                                requiredInstanceShape, true) == 0)
+                                            return resourceShape;
                                     }
-                                }
                             }
-                        }
-                    }
                 }
             }
-        }
 
         throw new ResourceNotFoundException(serviceProviderUrl, "InstanceShapes");
     }

@@ -25,6 +25,7 @@ namespace OSLC4Net.Client;
 /// <summary>
 /// A class providing client utilities to query/get, create, update and delete OSLC resources
 /// </summary>
+[Obsolete("Use OslcClient instead.")]
 public sealed class OslcRestClient
 {
     /// <summary>
@@ -204,7 +205,7 @@ public sealed class OslcRestClient
         {
             HttpStatusCode.OK => await response.Content.ReadAsAsync<T>(_formatters),
             HttpStatusCode.NoContent or HttpStatusCode.NotFound or HttpStatusCode.Gone => null,
-            _ => throw new HttpRequestException(response.ReasonPhrase),
+            _ => throw new HttpRequestException(response.ReasonPhrase)
         };
     }
 

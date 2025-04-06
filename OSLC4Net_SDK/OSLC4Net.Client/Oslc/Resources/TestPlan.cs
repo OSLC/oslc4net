@@ -22,7 +22,8 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// http://open-services.net/bin/view/Main/QmSpecificationV2#Resource_TestPlan
 /// </summary>
-[OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] { QmConstants.TYPE_TEST_PLAN })]
+[OslcResourceShape(title = "Quality Management Resource Shape",
+    describes = new string[] { QmConstants.TYPE_TEST_PLAN })]
 [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
 public class TestPlan : QmResource
 {
@@ -37,7 +38,6 @@ public class TestPlan : QmResource
 
     public TestPlan() : base()
     {
-
     }
 
     protected override Uri GetRdfType()
@@ -95,7 +95,8 @@ public class TestPlan : QmResource
         return creators.ToArray();
     }
 
-    [OslcDescription("Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
+    [OslcDescription(
+        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
     [OslcTitle("Description")]
     [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
@@ -115,7 +116,8 @@ public class TestPlan : QmResource
         return relatedChangeRequests.ToArray();
     }
 
-    [OslcDescription("Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
+    [OslcDescription(
+        "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
     [OslcName("subject")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "subject")]
     [OslcReadOnly(false)]
@@ -151,20 +153,14 @@ public class TestPlan : QmResource
     {
         this.contributors.Clear();
 
-        if (contributors != null)
-        {
-            this.contributors.AddAll(contributors);
-        }
+        if (contributors != null) this.contributors.AddAll(contributors);
     }
 
     public void SetCreators(Uri[] creators)
     {
         this.creators.Clear();
 
-        if (creators != null)
-        {
-            this.creators.AddAll(creators);
-        }
+        if (creators != null) this.creators.AddAll(creators);
     }
 
     public void SetDescription(string description)
@@ -176,30 +172,21 @@ public class TestPlan : QmResource
     {
         this.relatedChangeRequests.Clear();
 
-        if (relatedChangeRequests != null)
-        {
-            this.relatedChangeRequests.AddAll(relatedChangeRequests);
-        }
+        if (relatedChangeRequests != null) this.relatedChangeRequests.AddAll(relatedChangeRequests);
     }
 
     public void SetSubjects(string[] subjects)
     {
         this.subjects.Clear();
 
-        if (subjects != null)
-        {
-            this.subjects.AddAll(subjects);
-        }
+        if (subjects != null) this.subjects.AddAll(subjects);
     }
 
     public void SetUsesTestCases(Link[] usesTestCases)
     {
         this.usesTestCases.Clear();
 
-        if (usesTestCases != null)
-        {
-            this.usesTestCases.AddAll(usesTestCases);
-        }
+        if (usesTestCases != null) this.usesTestCases.AddAll(usesTestCases);
     }
 
     public void SetValidatesRequirementCollections(Link[] validatesRequirementCollections)
@@ -207,8 +194,6 @@ public class TestPlan : QmResource
         this.validatesRequirementCollections.Clear();
 
         if (validatesRequirementCollections != null)
-        {
             this.validatesRequirementCollections.AddAll(validatesRequirementCollections);
-        }
     }
 }

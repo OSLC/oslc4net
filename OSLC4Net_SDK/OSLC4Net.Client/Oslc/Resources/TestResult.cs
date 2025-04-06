@@ -21,7 +21,8 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// http://open-services.net/bin/view/Main/QmSpecificationV2#Resource_TestResult
 /// </summary>
-[OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] { QmConstants.TYPE_TEST_RESULT })]
+[OslcResourceShape(title = "Quality Management Resource Shape",
+    describes = new string[] { QmConstants.TYPE_TEST_RESULT })]
 [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
 public class TestResult : QmResource
 {
@@ -113,10 +114,7 @@ public class TestResult : QmResource
     {
         this.affectedByChangeRequests.Clear();
 
-        if (affectedByChangeRequests != null)
-        {
-            this.affectedByChangeRequests.AddAll(affectedByChangeRequests);
-        }
+        if (affectedByChangeRequests != null) this.affectedByChangeRequests.AddAll(affectedByChangeRequests);
     }
 
     public void SetReportsOnTestPlan(Link reportsOnTestPlan)

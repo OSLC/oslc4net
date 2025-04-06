@@ -23,7 +23,8 @@ namespace OSLC4Net.Client.Oslc.Resources;
 ///     OSLC shape for <c>oslc_rm:RequirementCollection</c>
 /// </summary>
 [OslcNamespace(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE)]
-[OslcResourceShape(title = "Requirement Collection Resource Shape", describes = new string[] { RmConstants.TYPE_REQUIREMENT_COLLECTION })]
+[OslcResourceShape(title = "Requirement Collection Resource Shape",
+    describes = new string[] { RmConstants.TYPE_REQUIREMENT_COLLECTION })]
 public class RequirementCollection : RequirementBase
 {
     // The only extra field is uses
@@ -36,7 +37,6 @@ public class RequirementCollection : RequirementBase
 
     public RequirementCollection(Uri about) : base(about)
     {
-
         AddRdfType(new Uri(RmConstants.TYPE_REQUIREMENT_COLLECTION));
     }
 

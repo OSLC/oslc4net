@@ -14,9 +14,7 @@
  *******************************************************************************/
 
 using System.Resources;
-
 using log4net;
-
 using OSLC4Net.Client.Properties;
 
 namespace OSLC4Net.Client.Exceptions;
@@ -37,7 +35,6 @@ public static class MessageExtractor
     /// <returns></returns>
     public static string GetMessage(string key, object[] args)
     {
-
         try
         {
             var message = rm.GetString(key);

@@ -22,7 +22,8 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// http://open-services.net/wiki/automation/OSLC-Automation-Specification-Version-2.0/#Resource_ParameterInstance
 /// </summary>
-[OslcResourceShape(title = "Parameter Instance Resource Shape", describes = new string[] { AutomationConstants.TYPE_PARAMETER_INSTANCE })]
+[OslcResourceShape(title = "Parameter Instance Resource Shape",
+    describes = new string[] { AutomationConstants.TYPE_PARAMETER_INSTANCE })]
 [OslcNamespace(AutomationConstants.AUTOMATION_NAMESPACE)]
 public class ParameterInstance : AbstractResource
 {
@@ -54,7 +55,8 @@ public class ParameterInstance : AbstractResource
         this.rdfTypes.Add(rdfType);
     }
 
-    [OslcDescription("Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
+    [OslcDescription(
+        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
     [OslcTitle("Description")]
     [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
@@ -132,10 +134,7 @@ public class ParameterInstance : AbstractResource
     {
         this.rdfTypes.Clear();
 
-        if (rdfTypes != null)
-        {
-            this.rdfTypes.AddAll(rdfTypes);
-        }
+        if (rdfTypes != null) this.rdfTypes.AddAll(rdfTypes);
     }
 
     public void SetServiceProvider(Uri serviceProvider)

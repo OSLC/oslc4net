@@ -16,14 +16,15 @@
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// This class represents and abstract OSLC resource.  It is normally the parent class for concrete OSLC resource types.
-/// See the ChangeMangement.cs objec in the ChangeManagementCommon project
+///     This class represents and abstract OSLC resource.  It is normally the parent class for concrete
+///     OSLC resource types.
+///     See the ChangeMangement.cs objec in the ChangeManagementCommon project
 /// </summary>
 public abstract class AbstractResource : IExtendedResource
 {
     private Uri about;
-    private ICollection<Uri> types = (ICollection<Uri>)new List<Uri>();
     private IDictionary<QName, object> extendedProperties = new Dictionary<QName, object>();
+    private ICollection<Uri> types = new List<Uri>();
 
     protected AbstractResource(Uri about)
     {
@@ -35,7 +36,7 @@ public abstract class AbstractResource : IExtendedResource
     }
 
     /// <summary>
-    /// Get the subject URI
+    ///     Get the subject URI
     /// </summary>
     /// <returns></returns>
     public Uri GetAbout()
@@ -44,7 +45,7 @@ public abstract class AbstractResource : IExtendedResource
     }
 
     /// <summary>
-    /// Set the subject URI
+    ///     Set the subject URI
     /// </summary>
     /// <param name="about"></param>
     public void SetAbout(Uri about)
@@ -55,11 +56,11 @@ public abstract class AbstractResource : IExtendedResource
     /// <param name="properties"></param>
     public void SetExtendedProperties(IDictionary<QName, object> properties)
     {
-        this.extendedProperties = properties;
+        extendedProperties = properties;
     }
 
     /// <summary>
-    /// Get all extended properties
+    ///     Get all extended properties
     /// </summary>
     /// <returns></returns>
     public IDictionary<QName, object> GetExtendedProperties()
@@ -68,7 +69,7 @@ public abstract class AbstractResource : IExtendedResource
     }
 
     /// <summary>
-    /// Get the RDF types
+    ///     Get the RDF types
     /// </summary>
     /// <returns></returns>
     public ICollection<Uri> GetTypes()
@@ -77,7 +78,7 @@ public abstract class AbstractResource : IExtendedResource
     }
 
     /// <summary>
-    /// Set the RDF types
+    ///     Set the RDF types
     /// </summary>
     /// <param name="types"></param>
     public void SetTypes(ICollection<Uri> types)
@@ -86,11 +87,11 @@ public abstract class AbstractResource : IExtendedResource
     }
 
     /// <summary>
-    /// Add an additional RDF type
+    ///     Add an additional RDF type
     /// </summary>
     /// <param name="type"></param>
     public void AddType(Uri type)
     {
-        this.types.Add(type);
+        types.Add(type);
     }
 }

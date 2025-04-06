@@ -17,16 +17,16 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-/// OSLC Name attribute
+///     OSLC Name attribute
 /// </summary>
-[System.AttributeUsage(System.AttributeTargets.Method |
-                       System.AttributeTargets.Class |
-                       System.AttributeTargets.Interface)
+[AttributeUsage(AttributeTargets.Method |
+                AttributeTargets.Class |
+                AttributeTargets.Interface)
 ]
 public class OslcName : System.Attribute
 {
     /**
-     *  Name of the element.
+     * Name of the element.
      */
     public readonly string value;
 

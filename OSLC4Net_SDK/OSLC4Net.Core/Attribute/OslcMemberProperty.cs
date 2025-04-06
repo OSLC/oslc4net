@@ -17,9 +17,9 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-/// OSLC Members attribute
+///     OSLC Members attribute
 /// </summary>
-[System.AttributeUsage(System.AttributeTargets.Method)
+[AttributeUsage(AttributeTargets.Method)
 ]
 public class OslcMemberProperty : System.Attribute
 {

@@ -22,15 +22,15 @@ namespace OSLC4Net.ChangeManagementTest;
 [TestClass]
 public class TestChangeManagementTurtle : TestBase
 {
+    private static DistributedApplication? _distributedApplication;
+
     // protected new readonly ISet<MediaTypeFormatter> FORMATTERS = OslcRestClient.DEFAULT_FORMATTERS;
     public TestContext? TestContext { set; get; }
-
-    static DistributedApplication? _distributedApplication;
 
     [ClassInitialize]
     public static async Task ClassSetupAsync(TestContext ctx)
     {
-        _distributedApplication = await SetupAspireAsync().ConfigureAwait(false);
+        _distributedApplication ??= await SetupAspireAsync().ConfigureAwait(false);
     }
 
     [ClassCleanup]
@@ -59,19 +59,21 @@ public class TestChangeManagementTurtle : TestBase
     [TestCleanup]
     public async Task TestTeardown()
     {
-        if ((TestContext!.TestName == "TestResourceShape") || (TestContext!.TestName == "TestDelete"))
+        if (TestContext!.TestName == "TestResourceShape" ||
+            TestContext!.TestName == "TestDelete")
         {
             // they remove the resource at the end
         }
         else
         {
-            if (CREATED_CHANGE_REQUEST_URI is not null)
+            if (ChangeRequestUri is not null)
             {
-                DeleteChangeRequest(OslcMediaType.TEXT_TURTLE);
+                DeleteChangeRequestAsync(OslcMediaType.TEXT_TURTLE);
             }
             else
             {
-                TestContext.WriteLine("Warning: Cannot delete change request as CREATED_CHANGE_REQUEST_URI is null");
+                TestContext.WriteLine(
+                    "Warning: Cannot delete change request as CREATED_CHANGE_REQUEST_URI is null");
             }
         }
     }
@@ -83,7 +85,7 @@ public class TestChangeManagementTurtle : TestBase
     }
 
     /// <summary>
-    /// Ordering of test methods shall not be relied upon for execution order
+    ///     Ordering of test methods shall not be relied upon for execution order
     /// </summary>
     [TestMethod]
     public async Task TestAcceptance()
@@ -91,12 +93,10 @@ public class TestChangeManagementTurtle : TestBase
         const string mediaType = OslcMediaType.TEXT_TURTLE;
         await TestResourceShapeAsync(mediaType);
         await TestCreateAsync(mediaType);
-        await Task.WhenAll(new[] {
-            TestRetrieveAsync(mediaType),
-            TestRetrievesAsync(mediaType),
-            TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
-                mediaType)
-        });
+        await Task.WhenAll(TestRetrieveAsync(mediaType), TestRetrievesAsync(mediaType),
+            TestCompactAsync(
+                OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
+                mediaType));
         await TestUpdateAsync(mediaType);
         await TestDeleteAsync(mediaType);
     }

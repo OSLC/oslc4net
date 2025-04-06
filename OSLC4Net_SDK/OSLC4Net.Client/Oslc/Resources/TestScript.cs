@@ -21,7 +21,8 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// http://open-services.net/bin/view/Main/QmSpecificationV2#Resource_TestScript
 /// </summary>
-[OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] { QmConstants.TYPE_TEST_SCRIPT })]
+[OslcResourceShape(title = "Quality Management Resource Shape",
+    describes = new string[] { QmConstants.TYPE_TEST_SCRIPT })]
 [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
 public class TestScript : QmResource
 {
@@ -82,7 +83,8 @@ public class TestScript : QmResource
         return creators.ToArray();
     }
 
-    [OslcDescription("Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
+    [OslcDescription(
+        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
     [OslcTitle("Description")]
     [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
@@ -125,20 +127,14 @@ public class TestScript : QmResource
     {
         this.contributors.Clear();
 
-        if (contributors != null)
-        {
-            this.contributors.AddAll(contributors);
-        }
+        if (contributors != null) this.contributors.AddAll(contributors);
     }
 
     public void setCreators(Uri[] creators)
     {
         this.creators.Clear();
 
-        if (creators != null)
-        {
-            this.creators.AddAll(creators);
-        }
+        if (creators != null) this.creators.AddAll(creators);
     }
 
     public void setDescription(string description)
@@ -155,19 +151,13 @@ public class TestScript : QmResource
     {
         this.relatedChangeRequests.Clear();
 
-        if (relatedChangeRequests != null)
-        {
-            this.relatedChangeRequests.AddAll(relatedChangeRequests);
-        }
+        if (relatedChangeRequests != null) this.relatedChangeRequests.AddAll(relatedChangeRequests);
     }
 
     public void setValidatesRequirements(Link[] validatesRequirements)
     {
         this.validatesRequirements.Clear();
 
-        if (validatesRequirements != null)
-        {
-            this.validatesRequirements.AddAll(validatesRequirements);
-        }
+        if (validatesRequirements != null) this.validatesRequirements.AddAll(validatesRequirements);
     }
 }

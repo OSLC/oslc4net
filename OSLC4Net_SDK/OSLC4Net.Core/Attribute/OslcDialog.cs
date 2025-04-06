@@ -17,26 +17,16 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-/// OSLC Dialog attribute
+///     OSLC Dialog attribute
 /// </summary>
-[System.AttributeUsage(System.AttributeTargets.Method)
+[AttributeUsage(AttributeTargets.Method)
 ]
 public class OslcDialog : System.Attribute
 {
     /**
-     * Title string that could be used for display
+     * Values MUST be expressed in relative length units.  Em and ex units are interpreted relative to the default system font (at 100% size).
      */
-    public string title;
-
-    /**
-     * Very short label for use in menu items
-     */
-    public string label = "";
-
-    /**
-     * The URI of the dialog
-     */
-    public string uri;
+    public string hintHeight = "";
 
     /**
      * Values MUST be expressed in relative length units.  Em and ex units are interpreted relative to the default system font (at 100% size).
@@ -44,9 +34,9 @@ public class OslcDialog : System.Attribute
     public string hintWidth = "";
 
     /**
-     * Values MUST be expressed in relative length units.  Em and ex units are interpreted relative to the default system font (at 100% size).
+     * Very short label for use in menu items
      */
-    public string hintHeight = "";
+    public string label = "";
 
     /**
      * Resource types
@@ -54,8 +44,17 @@ public class OslcDialog : System.Attribute
     public string[] resourceTypes = { };
 
     /**
+     * Title string that could be used for display
+     */
+    public string title;
+
+    /**
+     * The URI of the dialog
+     */
+    public string uri;
+
+    /**
      * Usages
      */
     public string[] usages = { };
-
 }

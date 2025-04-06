@@ -13,32 +13,27 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
+using OSLC4Net.Core.Model;
+
 namespace OSLC4Net.Core.Exceptions;
 
 /// <summary>
-///     Exception thrown when a required OSLC attribute definition is missing.
+///     OSLC4Net Core exception
 /// </summary>
-public class OslcCoreMissingNamespacePrefixException : OslcCoreApplicationException
+public class OslcCoreRequestException : Exception
 {
-    private static readonly string MESSAGE_KEY = "MissingNamespacePrefixException";
-
-    private readonly string prefix;
-
-    /// <summary>
-    /// </summary>
-    /// <param name="prefix"></param>
-    /// <param name="annotationType"></param>
-    public OslcCoreMissingNamespacePrefixException(string prefix) :
-        base(MESSAGE_KEY, new object[] { prefix })
+    public OslcCoreRequestException(int statusCode, HttpResponseMessage? responseMessage,
+        IResource? requestResource = null, Error? errorResource = null) : base(responseMessage
+        ?.ReasonPhrase)
     {
-        this.prefix = prefix;
+        ResponseMessage = responseMessage;
+        StatusCode = statusCode;
+        ErrorResource = errorResource;
+        RequestResource = requestResource;
     }
 
-    /// <summary>
-    /// </summary>
-    /// <returns></returns>
-    public string GetPrefix()
-    {
-        return prefix;
-    }
+    public int StatusCode { get; set; }
+    public HttpResponseMessage? ResponseMessage { get; set; }
+    public IResource? RequestResource { get; private set; }
+    public Error? ErrorResource { get; private set; }
 }

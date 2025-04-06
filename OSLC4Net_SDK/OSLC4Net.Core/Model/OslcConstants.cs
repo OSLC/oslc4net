@@ -16,7 +16,7 @@
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// General purpose OSLC constants
+///     General purpose OSLC constants
 /// </summary>
 public static class OslcConstants
 {
@@ -53,7 +53,9 @@ public static class OslcConstants
     public const string TYPE_RESPONSE_INFO = OSLC_CORE_NAMESPACE + "ResponseInfo";
     public const string TYPE_SERVICE = OSLC_CORE_NAMESPACE + "Service";
     public const string TYPE_SERVICE_PROVIDER = OSLC_CORE_NAMESPACE + "ServiceProvider";
-    public const string TYPE_SERVICE_PROVIDER_CATALOG = OSLC_CORE_NAMESPACE + "ServiceProviderCatalog";
+
+    public const string TYPE_SERVICE_PROVIDER_CATALOG =
+        OSLC_CORE_NAMESPACE + "ServiceProviderCatalog";
 
     public const string PATH_RESOURCE_SHAPES = "resourceShapes";
 
