@@ -124,7 +124,7 @@ jobs:
           matrix.os != 'windows-latest'
       - name: Test (without Refimpl CM tests)
         run: dotnet test --no-build --verbosity normal  --filter TestCategory!=RunningOslcServerRequired --collect:"XPlat Code Coverage"
-       if: |
+        if: |
           matrix.os == 'windows-latest'
       # - name: Set version suffix
       #   id: version
