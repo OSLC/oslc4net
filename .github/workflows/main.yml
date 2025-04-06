@@ -118,9 +118,14 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --no-restore
-      - name: Test
-        # run: dotnet test --no-build --verbosity normal  --filter TestCategory!=RunningOslcServerRequired --collect:"XPlat Code Coverage"
+      - name: Test (with Refimpl CM tests)
         run: dotnet test --no-build --verbosity normal  --collect:"XPlat Code Coverage"
+        if: |
+          matrix.os != 'windows-latest'
+      - name: Test (without Refimpl CM tests)
+        run: dotnet test --no-build --verbosity normal  --filter TestCategory!=RunningOslcServerRequired --collect:"XPlat Code Coverage"
+       if: |
+          matrix.os == 'windows-latest'
       # - name: Set version suffix
       #   id: version
       #   run: echo "::set-output name=suffix::$(date +'-ts.%y%m%d%H%M')"
