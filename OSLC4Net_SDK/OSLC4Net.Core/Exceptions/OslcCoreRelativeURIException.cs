@@ -16,10 +16,16 @@
 namespace OSLC4Net.Core.Exceptions;
 
 /// <summary>
-/// Exception thrown when relative URIs are encountered in an RDF model
+///     Exception thrown when relative URIs are encountered in an RDF model
 /// </summary>
 public class OslcCoreRelativeURIException : OslcCoreApplicationException
 {
+    private static readonly string MESSAGE_KEY = "RelativeURIException";
+
+    private readonly string methodName;
+    private readonly Uri relativeURI;
+    private readonly Type resourceType;
+
     public OslcCoreRelativeURIException(Type resourceType, string methodName, Uri relativeURI) :
         base(MESSAGE_KEY, new object[] { resourceType.Name, methodName, relativeURI.ToString() })
     {
@@ -27,10 +33,4 @@ public class OslcCoreRelativeURIException : OslcCoreApplicationException
         this.relativeURI = relativeURI;
         this.resourceType = resourceType;
     }
-
-    private static readonly string MESSAGE_KEY = "RelativeURIException";
-
-    private readonly string methodName;
-    private readonly Uri relativeURI;
-    private readonly Type resourceType;
 }

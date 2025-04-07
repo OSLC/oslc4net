@@ -22,7 +22,8 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// http://open-services.net/wiki/automation/OSLC-Automation-Specification-Version-2.0/#Resource_AutomationRequest
 /// </summary>
-[OslcResourceShape(title = "Automation Request Resource Shape", describes = new string[] { AutomationConstants.TYPE_AUTOMATION_REQUEST })]
+[OslcResourceShape(title = "Automation Request Resource Shape",
+    describes = new string[] { AutomationConstants.TYPE_AUTOMATION_REQUEST })]
 [OslcNamespace(AutomationConstants.AUTOMATION_NAMESPACE)]
 public class AutomationRequest : AbstractResource
 {
@@ -31,7 +32,9 @@ public class AutomationRequest : AbstractResource
     private readonly ISet<Uri> rdfTypes = new HashSet<Uri>(); // XXX - TreeSet<> in Java
     private readonly ISet<string> subjects = new HashSet<string>(); // XXX - TreeSet<> in Java
     private readonly ISet<Uri> states = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<ParameterInstance> inputParameters = new HashSet<ParameterInstance>(); // XXX - TreeSet<> in Java
+
+    private readonly ISet<ParameterInstance>
+        inputParameters = new HashSet<ParameterInstance>(); // XXX - TreeSet<> in Java
 
     private DateTime? created;
     private string description;
@@ -117,7 +120,8 @@ public class AutomationRequest : AbstractResource
         return creators.ToArray();
     }
 
-    [OslcDescription("Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
+    [OslcDescription(
+        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
     [OslcTitle("Description")]
     [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
@@ -126,7 +130,8 @@ public class AutomationRequest : AbstractResource
         return description;
     }
 
-    [OslcDescription("A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
+    [OslcDescription(
+        "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
     [OslcReadOnly]
@@ -171,18 +176,21 @@ public class AutomationRequest : AbstractResource
         return serviceProvider;
     }
 
-    [OslcDescription("Used to indicate the desired state of the Automation Request based on values defined by the service provider.")]
+    [OslcDescription(
+        "Used to indicate the desired state of the Automation Request based on values defined by the service provider.")]
     [OslcPropertyDefinition(AutomationConstants.AUTOMATION_NAMESPACE + "desiredState")]
     [OslcName("desiredState")]
     [OslcOccurs(Occurs.ZeroOrOne)]
     [OslcTitle("Desired State")]
-    [OslcAllowedValue(new string[] {
+    [OslcAllowedValue(new string[]
+    {
         AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_NEW,
-            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_IN_PROGRESS,
-            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_QUEUED,
-            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELING,
-            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELED,
-            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_COMPLETE})]
+        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_IN_PROGRESS,
+        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_QUEUED,
+        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELING,
+        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELED,
+        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_COMPLETE
+    })]
     public Uri GetDesiredState()
     {
         return desiredState;
@@ -198,7 +206,8 @@ public class AutomationRequest : AbstractResource
         return executesAutomationPlan;
     }
 
-    [OslcDescription("Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
+    [OslcDescription(
+        "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
     [OslcName("subject")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "subject")]
     [OslcReadOnly(false)]
@@ -208,7 +217,8 @@ public class AutomationRequest : AbstractResource
         return subjects.ToArray();
     }
 
-    [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
+    [OslcDescription(
+        "Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
     [OslcTitle("Title")]
@@ -218,19 +228,22 @@ public class AutomationRequest : AbstractResource
         return title;
     }
 
-    [OslcDescription("Used to indicate the state of the automation request based on values defined by the service provider.")]
+    [OslcDescription(
+        "Used to indicate the state of the automation request based on values defined by the service provider.")]
     [OslcOccurs(Occurs.OneOrMany)]
     [OslcReadOnly(true)]
     [OslcName("state")]
     [OslcPropertyDefinition(AutomationConstants.AUTOMATION_NAMESPACE + "state")]
     [OslcTitle("States")]
-    [OslcAllowedValue(new string[] {
+    [OslcAllowedValue(new string[]
+    {
         AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_NEW,
-            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_IN_PROGRESS,
-            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_QUEUED,
-            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELING,
-            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELED,
-            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_COMPLETE})]
+        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_IN_PROGRESS,
+        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_QUEUED,
+        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELING,
+        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELED,
+        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_COMPLETE
+    })]
     public Uri[] GetStates()
     {
         return states.ToArray();
@@ -251,10 +264,7 @@ public class AutomationRequest : AbstractResource
     {
         this.contributors.Clear();
 
-        if (contributors != null)
-        {
-            this.contributors.AddAll(contributors);
-        }
+        if (contributors != null) this.contributors.AddAll(contributors);
     }
 
     public void SetCreated(DateTime? created)
@@ -266,10 +276,7 @@ public class AutomationRequest : AbstractResource
     {
         this.creators.Clear();
 
-        if (creators != null)
-        {
-            this.creators.AddAll(creators);
-        }
+        if (creators != null) this.creators.AddAll(creators);
     }
 
     public void SetDescription(string description)
@@ -296,10 +303,7 @@ public class AutomationRequest : AbstractResource
     {
         this.rdfTypes.Clear();
 
-        if (rdfTypes != null)
-        {
-            this.rdfTypes.AddAll(rdfTypes);
-        }
+        if (rdfTypes != null) this.rdfTypes.AddAll(rdfTypes);
     }
 
     public void SetServiceProvider(Uri serviceProvider)
@@ -321,10 +325,7 @@ public class AutomationRequest : AbstractResource
     {
         this.subjects.Clear();
 
-        if (subjects != null)
-        {
-            this.subjects.AddAll(subjects);
-        }
+        if (subjects != null) this.subjects.AddAll(subjects);
     }
 
     public void SetTitle(string title)
@@ -336,19 +337,13 @@ public class AutomationRequest : AbstractResource
     {
         this.states.Clear();
 
-        if (states != null)
-        {
-            this.states.AddAll(states);
-        }
+        if (states != null) this.states.AddAll(states);
     }
 
     public void SetInputParameters(ParameterInstance[] parameters)
     {
         this.inputParameters.Clear();
 
-        if (parameters != null)
-        {
-            this.inputParameters.AddAll(parameters);
-        }
+        if (parameters != null) this.inputParameters.AddAll(parameters);
     }
 }

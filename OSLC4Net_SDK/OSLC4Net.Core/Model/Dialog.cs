@@ -18,10 +18,11 @@ using OSLC4Net.Core.Attribute;
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// OSLC Dialog resource
+///     OSLC Dialog resource
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Dialog Resource Shape", describes = new string[] { OslcConstants.TYPE_DIALOG })]
+[OslcResourceShape(title = "OSLC Dialog Resource Shape",
+    describes = new[] { OslcConstants.TYPE_DIALOG })]
 public class Dialog : AbstractResource
 {
     private readonly SortedSet<Uri> resourceTypes = new SortedUriSet();
@@ -33,7 +34,7 @@ public class Dialog : AbstractResource
     private string label;
     private string title;
 
-    public Dialog() : base()
+    public Dialog()
     {
     }
 
@@ -45,12 +46,12 @@ public class Dialog : AbstractResource
 
     public void AddResourceType(Uri resourceType)
     {
-        this.resourceTypes.Add(resourceType);
+        resourceTypes.Add(resourceType);
     }
 
     public void AddUsage(Uri usage)
     {
-        this.usages.Add(usage);
+        usages.Add(usage);
     }
 
     [OslcDescription("The Uri of the dialog")]
@@ -63,7 +64,8 @@ public class Dialog : AbstractResource
         return dialog;
     }
 
-    [OslcDescription("Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1) Em and ex units are interpreted relative to the default system font (at 100% size)")]
+    [OslcDescription(
+        "Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1) Em and ex units are interpreted relative to the default system font (at 100% size)")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintHeight")]
     [OslcReadOnly]
     [OslcTitle("Hint Height")]
@@ -72,7 +74,8 @@ public class Dialog : AbstractResource
         return hintHeight;
     }
 
-    [OslcDescription("Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1) Em and ex units are interpreted relative to the default system font (at 100% size)")]
+    [OslcDescription(
+        "Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1) Em and ex units are interpreted relative to the default system font (at 100% size)")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintWidth")]
     [OslcReadOnly]
     [OslcTitle("Hint Width")]
@@ -90,7 +93,8 @@ public class Dialog : AbstractResource
         return label;
     }
 
-    [OslcDescription("The expected resource type Uri for the resources that will be returned when using this dialog. These would be the Uris found in the result resource's rdf:type property")]
+    [OslcDescription(
+        "The expected resource type Uri for the resources that will be returned when using this dialog. These would be the Uris found in the result resource's rdf:type property")]
     [OslcName("resourceType")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "resourceType")]
     [OslcReadOnly]
@@ -111,7 +115,8 @@ public class Dialog : AbstractResource
         return title;
     }
 
-    [OslcDescription("An identifier Uri for the domain specified usage of this dialog. If a service provides multiple selection or creation dialogs, it may designate the primary or default one that should be used with a property value of http://open-services/ns/core#default")]
+    [OslcDescription(
+        "An identifier Uri for the domain specified usage of this dialog. If a service provides multiple selection or creation dialogs, it may designate the primary or default one that should be used with a property value of http://open-services/ns/core#default")]
     [OslcName("usage")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "usage")]
     [OslcReadOnly]

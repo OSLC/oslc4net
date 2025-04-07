@@ -22,7 +22,8 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// http://open-services.net/wiki/architecture-management/OSLC-Architecture-Management-Specification-Version-2.0/
 /// </summary>
-[OslcResourceShape(title = "Architecture Management LinkType Resource Shape", describes = new string[] { ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE })]
+[OslcResourceShape(title = "Architecture Management LinkType Resource Shape",
+    describes = new string[] { ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE })]
 [OslcNamespace(ArchitectureConstants.ARCHITECTURE_NAMESPACE)]
 public class ArchitectureLinkType : AbstractResource
 {
@@ -40,7 +41,6 @@ public class ArchitectureLinkType : AbstractResource
 
     public ArchitectureLinkType() : base()
     {
-
         rdfTypes.Add(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE));
     }
 
@@ -116,7 +116,8 @@ public class ArchitectureLinkType : AbstractResource
         return comment;
     }
 
-    [OslcDescription("A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
+    [OslcDescription(
+        "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
     [OslcReadOnly]
@@ -166,10 +167,7 @@ public class ArchitectureLinkType : AbstractResource
     {
         this.contributors.Clear();
 
-        if (contributors != null)
-        {
-            this.contributors.AddAll(contributors);
-        }
+        if (contributors != null) this.contributors.AddAll(contributors);
     }
 
     public void SetCreated(DateTime? created)
@@ -181,10 +179,7 @@ public class ArchitectureLinkType : AbstractResource
     {
         this.creators.Clear();
 
-        if (creators != null)
-        {
-            this.creators.AddAll(creators);
-        }
+        if (creators != null) this.creators.AddAll(creators);
     }
 
     public void SetLabel(string label)
@@ -216,10 +211,7 @@ public class ArchitectureLinkType : AbstractResource
     {
         this.rdfTypes.Clear();
 
-        if (rdfTypes != null)
-        {
-            this.rdfTypes.AddAll(rdfTypes);
-        }
+        if (rdfTypes != null) this.rdfTypes.AddAll(rdfTypes);
     }
 
     public void SetServiceProvider(Uri serviceProvider)

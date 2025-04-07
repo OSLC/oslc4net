@@ -16,28 +16,31 @@
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// OSLC Occurs attribute
+///     OSLC Occurs attribute
 /// </summary>
 /// <remarks>see http://open-services.net/bin/view/Main/OslcCoreSpecification#OSLC_Defined_Resources</remarks>
 public enum Occurs
 {
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Exactly-one")]
     ExactlyOne,
+
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Zero-or-one")]
     ZeroOrOne,
+
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Zero-or-many")]
     ZeroOrMany,
+
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "One-or-many")]
     OneOrMany,
-    [URI("")]
-    Unknown
+    [URI("")] Unknown
 }
 
 public static class OccursExtension
 {
     public static string ToString(Occurs occurs)
     {
-        var attributes = (URI[])occurs.GetType().GetField(occurs.ToString()).GetCustomAttributes(typeof(URI), false);
+        var attributes = (URI[])occurs.GetType().GetField(occurs.ToString())
+            .GetCustomAttributes(typeof(URI), false);
 
         return attributes.Length > 0 ? attributes[0].uri : string.Empty;
     }

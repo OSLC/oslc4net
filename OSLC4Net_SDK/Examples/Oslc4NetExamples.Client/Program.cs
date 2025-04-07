@@ -30,9 +30,9 @@ using (var scope = host.Services.CreateScope())
     var resourceUri =
         $"{jazzCmBase}/resource/itemName/com.ibm.team.workitem.WorkItem/{workItemId}";
     OslcResponse<ChangeRequest> response = await oslcClient.GetResourceAsync<ChangeRequest>(resourceUri);
-    if (response.Resource is not null)
+    if (response.Resources?.SingleOrDefault() is not null)
     {
-        var changeRequestResource = response.Resource;
+        var changeRequestResource = response.Resources.Single();
         logger.LogInformation(
             "{shortTitle} {title}", changeRequestResource.GetShortTitle(),
             changeRequestResource.GetTitle());

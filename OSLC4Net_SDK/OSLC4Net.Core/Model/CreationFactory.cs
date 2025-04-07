@@ -19,11 +19,11 @@ using OSLC4Net.Core.Attribute;
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// OSLC Resource Shape resource
+///     OSLC Resource Shape resource
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
 [OslcResourceShape(title = "OSLC Creation Factory Resource Shape",
-    describes = new string[] { OslcConstants.TYPE_CREATION_FACTORY })]
+    describes = new[] { OslcConstants.TYPE_CREATION_FACTORY })]
 public class CreationFactory : AbstractResource
 {
     private readonly SortedSet<Uri> resourceShapes = new SortedUriSet();
@@ -34,7 +34,7 @@ public class CreationFactory : AbstractResource
     private string label;
     private string title;
 
-    public CreationFactory() : base()
+    public CreationFactory()
     {
     }
 
@@ -46,17 +46,17 @@ public class CreationFactory : AbstractResource
 
     public void AddResourceShape(Uri resourceShape)
     {
-        this.resourceShapes.Add(resourceShape);
+        resourceShapes.Add(resourceShape);
     }
 
     public void AddResourceType(Uri resourceType)
     {
-        this.resourceTypes.Add(resourceType);
+        resourceTypes.Add(resourceType);
     }
 
     public void AddUsage(Uri usage)
     {
-        this.usages.Add(usage);
+        usages.Add(usage);
     }
 
     [OslcDescription("To create a new resource via the factory, post it to this Uri")]

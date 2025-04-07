@@ -97,7 +97,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Diagnostics" />
-    <PackageReference Include="log4net" />
+    <PackageReference Include="CommunityToolkit.Diagnostics"/>
+    <PackageReference Include="log4net"/>
   </ItemGroup>
 </Project>

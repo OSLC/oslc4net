@@ -20,7 +20,6 @@ namespace OSLC4Net.Core.Model;
 public static class InheritedMethodAttributeHelper
 {
     /// <summary>
-    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="method"></param>

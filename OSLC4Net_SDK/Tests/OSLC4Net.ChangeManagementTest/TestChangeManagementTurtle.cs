@@ -13,6 +13,7 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
+using Aspire.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OSLC4Net.Core.Model;
 
@@ -21,8 +22,25 @@ namespace OSLC4Net.ChangeManagementTest;
 [TestClass]
 public class TestChangeManagementTurtle : TestBase
 {
+    private static DistributedApplication? _distributedApplication;
+
     // protected new readonly ISet<MediaTypeFormatter> FORMATTERS = OslcRestClient.DEFAULT_FORMATTERS;
     public TestContext? TestContext { set; get; }
+
+    [ClassInitialize]
+    public static async Task ClassSetupAsync(TestContext ctx)
+    {
+        _distributedApplication ??= await SetupAspireAsync().ConfigureAwait(false);
+    }
+
+    [ClassCleanup]
+    public static async Task ClassCleanupAsync()
+    {
+        if (_distributedApplication is not null)
+        {
+            await _distributedApplication.DisposeAsync().ConfigureAwait(false);
+        }
+    }
 
     [TestInitialize]
     public async Task TestSetup()
@@ -33,22 +51,30 @@ public class TestChangeManagementTurtle : TestBase
             case "TestCreate":
                 break;
             default:
-                await MakeChangeRequestAsync(OslcMediaType.TEXT_TURTLE);
+                await MakeChangeRequestAsync(OslcMediaType.TEXT_TURTLE).ConfigureAwait(false);
                 break;
         }
     }
 
     [TestCleanup]
-    public void TestTeardown()
+    public async Task TestTeardown()
     {
-        switch (TestContext!.TestName)
+        if (TestContext!.TestName == "TestResourceShape" ||
+            TestContext!.TestName == "TestDelete")
         {
-            case "TestResourceShape":
-            case "TestDelete":
-                break;
-            default:
-                DeleteChangeRequest(OslcMediaType.TEXT_TURTLE);
-                break;
+            // they remove the resource at the end
+        }
+        else
+        {
+            if (ChangeRequestUri is not null)
+            {
+                DeleteChangeRequestAsync(OslcMediaType.TEXT_TURTLE);
+            }
+            else
+            {
+                TestContext.WriteLine(
+                    "Warning: Cannot delete change request as CREATED_CHANGE_REQUEST_URI is null");
+            }
         }
     }
 
@@ -59,7 +85,7 @@ public class TestChangeManagementTurtle : TestBase
     }
 
     /// <summary>
-    /// Ordering of test methods shall not be relied upon for execution order
+    ///     Ordering of test methods shall not be relied upon for execution order
     /// </summary>
     [TestMethod]
     public async Task TestAcceptance()
@@ -67,12 +93,10 @@ public class TestChangeManagementTurtle : TestBase
         const string mediaType = OslcMediaType.TEXT_TURTLE;
         await TestResourceShapeAsync(mediaType);
         await TestCreateAsync(mediaType);
-        await Task.WhenAll(new[] {
-            TestRetrieveAsync(mediaType),
-            TestRetrievesAsync(mediaType),
-            TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
-                mediaType)
-        });
+        await Task.WhenAll(TestRetrieveAsync(mediaType), TestRetrievesAsync(mediaType),
+            TestCompactAsync(
+                OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
+                mediaType));
         await TestUpdateAsync(mediaType);
         await TestDeleteAsync(mediaType);
     }

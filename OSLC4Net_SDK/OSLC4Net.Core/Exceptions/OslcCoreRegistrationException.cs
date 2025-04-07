@@ -18,36 +18,41 @@ using OSLC4Net.Core.Model;
 namespace OSLC4Net.Core.Exceptions;
 
 /// <summary>
-/// Exception thrown for a service provider registration failure
+///     Exception thrown for a service provider registration failure
 /// </summary>
-public class OslcCoreRegistrationException : OslcCoreApplicationException
+public class OslcCoreRegistrationException : OslcCoreRequestException
 {
-    public OslcCoreRegistrationException(ServiceProvider serviceProvider, int statusCode, string responseMessage) :
-        base(MESSAGE_KEY, new object[] { serviceProvider.GetTitle(), statusCode, responseMessage })
+    private static readonly string MESSAGE_KEY = "RegistrationException";
+
+    private readonly string responseMessage;
+    private readonly ServiceProvider serviceProvider;
+    private readonly int statusCode;
+
+    public OslcCoreRegistrationException(ServiceProvider serviceProvider, int statusCode,
+        string responseMessage) :
+        base(statusCode, null, serviceProvider)
+    //base(MESSAGE_KEY, new object[] { serviceProvider.GetTitle(), statusCode, responseMessage })
     {
         this.responseMessage = responseMessage;
         this.serviceProvider = serviceProvider;
         this.statusCode = statusCode;
     }
 
+    [Obsolete]
     public string getResponseMessage()
     {
         return responseMessage;
     }
 
+    [Obsolete]
     public ServiceProvider getServiceProvider()
     {
         return serviceProvider;
     }
 
+    [Obsolete]
     public int getStatusCode()
     {
         return statusCode;
     }
-
-    private static readonly string MESSAGE_KEY = "RegistrationException";
-
-    private readonly string responseMessage;
-    private readonly ServiceProvider serviceProvider;
-    private readonly int statusCode;
 }

@@ -16,11 +16,14 @@ This release does not contain security updates.
 
 ### Added
 
-This release does not contain new features.
+- ⚡️ CI integration tests against OSLC RefImpl based on NET Aspire
 
 ### Changed
 
 - dotNetRDF dependency was updated to v3.3.1
+- ❗️ `OslcClient` was updated to consistently support async operations
+- ❗️ `OslcResponse` was updated to expose potentially multiple resources, expose the `Graph` and, in case of error, the `oslc:Error` resource.
+- Follow redirects on more responses statuses (was: 301, became: 301, 302, 307, 308, and in case of GET requests, 303 too)
 
 ### Deprecated
 
@@ -28,7 +31,8 @@ This release does not introduce deprecations.
 
 ### Removed
 
-This release does not remove any features.
+- ❗️ Multiple non-async methods in `OslcClient`
+- ❗️ A property exposing `OslcRestClient` in `ServiceProviderRegistryClient`
 
 ### Fixed
 

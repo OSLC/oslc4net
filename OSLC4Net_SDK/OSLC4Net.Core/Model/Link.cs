@@ -18,7 +18,7 @@ using OSLC4Net.Core.Attribute;
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// An OSLC link - inculdes a Uri and a label.
+///     An OSLC link - inculdes a Uri and a label.
 /// </summary>
 public class Link : AbstractReifiedResource<Uri>
 {
@@ -40,7 +40,7 @@ public class Link : AbstractReifiedResource<Uri>
     }
 
     /// <summary>
-    /// Gets the link label.
+    ///     Gets the link label.
     /// </summary>
     /// <returns></returns>
     [OslcName("title")]
@@ -51,7 +51,7 @@ public class Link : AbstractReifiedResource<Uri>
     }
 
     /// <summary>
-    /// Sets the link label.
+    ///     Sets the link label.
     /// </summary>
     /// <param name="label"></param>
     public void SetLabel(string label)

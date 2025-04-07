@@ -15,7 +15,7 @@
 
 namespace OSLC4Net.Core.Model;
 
-class SortedUriSet : SortedSet<Uri>
+internal class SortedUriSet : SortedSet<Uri>
 {
     public SortedUriSet() : base(new SortByAbsoluteUri())
     {
@@ -25,7 +25,7 @@ class SortedUriSet : SortedSet<Uri>
     {
         public int Compare(Uri x, Uri y)
         {
-            return x.AbsoluteUri.ToString().CompareTo(y.AbsoluteUri.ToString());
+            return x.AbsoluteUri.CompareTo(y.AbsoluteUri);
         }
     }
 }

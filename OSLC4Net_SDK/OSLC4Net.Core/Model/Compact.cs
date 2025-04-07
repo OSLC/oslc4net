@@ -18,10 +18,11 @@ using OSLC4Net.Core.Attribute;
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// OSLC Compact resource representation
+///     OSLC Compact resource representation
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Compact Resource Shape", describes = new string[] { OslcConstants.TYPE_COMPACT })]
+[OslcResourceShape(title = "OSLC Compact Resource Shape",
+    describes = new[] { OslcConstants.TYPE_COMPACT })]
 public class Compact : AbstractResource
 {
     private Uri icon;
@@ -30,11 +31,8 @@ public class Compact : AbstractResource
     private Preview smallPreview;
     private string title;
 
-    public Compact() : base()
-    {
-    }
-
-    [OslcDescription("Uri of an image which may be used in the display of a link to the resource. The image SHOULD be 16x16 pixels in size.")]
+    [OslcDescription(
+        "Uri of an image which may be used in the display of a link to the resource. The image SHOULD be 16x16 pixels in size.")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "icon")]
     [OslcReadOnly]
     [OslcTitle("Icon")]
@@ -43,7 +41,8 @@ public class Compact : AbstractResource
         return icon;
     }
 
-    [OslcDescription("Uri and sizing properties for an HTML document to be used for a large preview.")]
+    [OslcDescription(
+        "Uri and sizing properties for an HTML document to be used for a large preview.")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "largePreview")]
     [OslcRange(OslcConstants.TYPE_PREVIEW)]
     [OslcReadOnly]
@@ -56,7 +55,8 @@ public class Compact : AbstractResource
         return largePreview;
     }
 
-    [OslcDescription("Abbreviated title which may be used in the display of a link to the resource.")]
+    [OslcDescription(
+        "Abbreviated title which may be used in the display of a link to the resource.")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "shortTitle")]
     [OslcReadOnly]
     [OslcTitle("Short Title")]
@@ -65,7 +65,8 @@ public class Compact : AbstractResource
         return shortTitle;
     }
 
-    [OslcDescription("Uri and sizing properties for an HTML document to be used for a small preview.")]
+    [OslcDescription(
+        "Uri and sizing properties for an HTML document to be used for a small preview.")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "smallPreview")]
     [OslcRange(OslcConstants.TYPE_PREVIEW)]
     [OslcReadOnly]

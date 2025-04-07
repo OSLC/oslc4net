@@ -18,7 +18,6 @@ namespace OSLC4Net.Core.Model;
 public static class InheritedGenericInterfacesHelper
 {
     /// <summary>
-    ///
     /// </summary>
     /// <param name="genericType"></param>
     /// <param name="typeToTest"></param>

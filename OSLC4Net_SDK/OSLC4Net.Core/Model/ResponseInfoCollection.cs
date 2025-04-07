@@ -17,47 +17,48 @@
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// An OSLC ResponseInfo resource containg an IEnumerable collection of member resources
+///     An OSLC ResponseInfo resource containg an IEnumerable collection of member resources
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public class ResponseInfoCollection<T> : ResponseInfo<ICollection<T>>
 {
-    /**
-     * Collection of resources
-     */
-    public ICollection<T> Collection() { return Resource; }
-
     /// <summary>
-    ///
     /// </summary>
     /// <param name="collection"></param>
     /// <param name="properties"></param>
     /// <param name="totalCount"></param>
     /// <param name="nextPage"></param>
     public
-    ResponseInfoCollection(
-        ICollection<T> collection,
-        IDictionary<string, object> properties,
-        int totalCount,
-        string nextPage
-    ) : base(collection, properties, totalCount, nextPage)
+        ResponseInfoCollection(
+            ICollection<T> collection,
+            IDictionary<string, object> properties,
+            int totalCount,
+            string nextPage
+        ) : base(collection, properties, totalCount, nextPage)
     {
     }
 
     /// <summary>
-    ///
     /// </summary>
     /// <param name="collection"></param>
     /// <param name="properties"></param>
     /// <param name="totalCount"></param>
     /// <param name="nextPage"></param>
     public
-    ResponseInfoCollection(
-        ICollection<T> collection,
-        IDictionary<string, object> properties,
-        int totalCount,
-        Uri nextPage
-    ) : base(collection, properties, totalCount, nextPage)
+        ResponseInfoCollection(
+            ICollection<T> collection,
+            IDictionary<string, object> properties,
+            int totalCount,
+            Uri nextPage
+        ) : base(collection, properties, totalCount, nextPage)
     {
+    }
+
+    /**
+     * Collection of resources
+     */
+    public ICollection<T> Collection()
+    {
+        return Resource;
     }
 }

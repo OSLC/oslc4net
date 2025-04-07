@@ -16,11 +16,16 @@
 namespace OSLC4Net.Core;
 
 /// <summary>
-/// Constants specific to OSLC4Net
+///     Constants specific to OSLC4Net
 /// </summary>
-/// <seealso cref="Oslc4Net.Core.OslcConstants"/>
+/// <seealso cref="Oslc4Net.Core.OslcConstants" />
 public static class OSLC4NetConstants
 {
+    /// <summary>
+    ///     Needed because MediaTypeFormatter does not expose request URI
+    /// </summary>
+    public const string INNER_URI_HEADER = "$X-OSLC4Net-GraphUriBase";
+
     public static readonly IDictionary<string, object> OSLC4NET_PROPERTY_SINGLETON =
         new Dictionary<string, object>(0);
 }

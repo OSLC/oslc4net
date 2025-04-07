@@ -17,9 +17,9 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-/// OSLC PropertyDefinition attribute
+///     OSLC PropertyDefinition attribute
 /// </summary>
-[System.AttributeUsage(System.AttributeTargets.Method)
+[AttributeUsage(AttributeTargets.Method)
 ]
 public class OslcPropertyDefinition : System.Attribute
 {

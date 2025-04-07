@@ -86,7 +86,9 @@ public static class OSLCConstants
     public const string TOTAL_COUNT_PROP = OSLC_V2 + "totalCount";
     public const string RESOURCE_TYPE_PROP = OSLC_V2 + "resourceType";
     public const string RESOURCE_SHAPE_PROP = OSLC_V2 + "resourceShape";
+
     public const string DESCRIPTION_PROP = OSLC_V2 + "Description";
+
     // OSLC CM 2.0
     public const string CM_CHANGE_REQUEST_TYPE = OSLC_CM_V2 + "ChangeRequest";
     public const string CM_CLOSE_DATE_PROP = OSLC_CM_V2 + "closeDate";

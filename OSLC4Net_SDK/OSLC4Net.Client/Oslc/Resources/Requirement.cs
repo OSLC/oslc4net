@@ -85,7 +85,6 @@ public abstract class RequirementBase : AbstractResource
 
     protected RequirementBase(Uri about) : base(about)
     {
-
     }
 
 
@@ -179,7 +178,8 @@ public abstract class RequirementBase : AbstractResource
         RdfTypes.Add(rdfType);
     }
 
-    [OslcDescription("Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
+    [OslcDescription(
+        "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
     [OslcName("subject")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "subject")]
     [OslcReadOnly(false)]
@@ -372,7 +372,8 @@ public abstract class RequirementBase : AbstractResource
         return _creators.ToArray();
     }
 
-    [OslcDescription("Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
+    [OslcDescription(
+        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
     [OslcTitle("Description")]
     [OslcValueType(ValueType.XMLLiteral)]
@@ -381,7 +382,8 @@ public abstract class RequirementBase : AbstractResource
         return _description;
     }
 
-    [OslcDescription("A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
+    [OslcDescription(
+        "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
     [OslcReadOnly]
@@ -427,7 +429,8 @@ public abstract class RequirementBase : AbstractResource
         return _serviceProvider;
     }
 
-    [OslcDescription("Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users.")]
+    [OslcDescription(
+        "Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users.")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "shortTitle")]
     [OslcTitle("Short Title")]
     [OslcValueType(ValueType.XMLLiteral)]
@@ -436,7 +439,8 @@ public abstract class RequirementBase : AbstractResource
         return _shortTitle;
     }
 
-    [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
+    [OslcDescription(
+        "Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
     [OslcTitle("Title")]
@@ -450,150 +454,105 @@ public abstract class RequirementBase : AbstractResource
     {
         _constrains.Clear();
 
-        if (constrains != null)
-        {
-            _constrains.AddAll(constrains);
-        }
+        if (constrains != null) _constrains.AddAll(constrains);
     }
 
     public void SetConstrainedBy(Link[] constrainedBy)
     {
         _constrainedBy.Clear();
 
-        if (constrainedBy != null)
-        {
-            _constrainedBy.AddAll(constrainedBy);
-        }
+        if (constrainedBy != null) _constrainedBy.AddAll(constrainedBy);
     }
 
     public void SetDecomposes(Link[] decomposes)
     {
         _decomposes.Clear();
 
-        if (decomposes != null)
-        {
-            _decomposes.AddAll(decomposes);
-        }
+        if (decomposes != null) _decomposes.AddAll(decomposes);
     }
 
     public void SetDecomposedBy(Link[] decomposedBy)
     {
         _decomposedBy.Clear();
 
-        if (decomposedBy != null)
-        {
-            _decomposedBy.AddAll(decomposedBy);
-        }
+        if (decomposedBy != null) _decomposedBy.AddAll(decomposedBy);
     }
 
     public void SetSatisfies(Link[] satisfies)
     {
         _satisfies.Clear();
 
-        if (satisfies != null)
-        {
-            _satisfies.AddAll(satisfies);
-        }
+        if (satisfies != null) _satisfies.AddAll(satisfies);
     }
 
     public void SetSatisfiedBy(Link[] satisfiedBy)
     {
         _satisfiedBy.Clear();
 
-        if (satisfiedBy != null)
-        {
-            _satisfiedBy.AddAll(satisfiedBy);
-        }
+        if (satisfiedBy != null) _satisfiedBy.AddAll(satisfiedBy);
     }
 
     public void SetValidatedBy(Link[] validatedBy)
     {
         _validatedBy.Clear();
 
-        if (validatedBy != null)
-        {
-            _validatedBy.AddAll(validatedBy);
-        }
+        if (validatedBy != null) _validatedBy.AddAll(validatedBy);
     }
 
     public void SetTrackedBy(Link[] trackedBy)
     {
         _trackedBy.Clear();
 
-        if (trackedBy != null)
-        {
-            _trackedBy.AddAll(trackedBy);
-        }
+        if (trackedBy != null) _trackedBy.AddAll(trackedBy);
     }
 
     public void SetAffectedBy(Link[] affectedBy)
     {
         _affectedBy.Clear();
 
-        if (affectedBy != null)
-        {
-            _affectedBy.AddAll(affectedBy);
-        }
+        if (affectedBy != null) _affectedBy.AddAll(affectedBy);
     }
 
     public void SetImplementedBy(Link[] implementedBy)
     {
         _implementedBy.Clear();
 
-        if (implementedBy != null)
-        {
-            _implementedBy.AddAll(implementedBy);
-        }
+        if (implementedBy != null) _implementedBy.AddAll(implementedBy);
     }
 
     public void SetElaboratedBy(Link[] elaboratedBy)
     {
         _elaboratedBy.Clear();
 
-        if (elaboratedBy != null)
-        {
-            _elaboratedBy.AddAll(elaboratedBy);
-        }
+        if (elaboratedBy != null) _elaboratedBy.AddAll(elaboratedBy);
     }
 
     public void SetElaborates(Link[] elaborates)
     {
         _elaborates.Clear();
 
-        if (elaborates != null)
-        {
-            _elaborates.AddAll(elaborates);
-        }
+        if (elaborates != null) _elaborates.AddAll(elaborates);
     }
 
     public void SetSpecifiedBy(Link[] specifiedBy)
     {
         _specifiedBy.Clear();
 
-        if (specifiedBy != null)
-        {
-            _specifiedBy.AddAll(specifiedBy);
-        }
+        if (specifiedBy != null) _specifiedBy.AddAll(specifiedBy);
     }
 
     public void SetSpecifies(Link[] specifies)
     {
         _specifies.Clear();
 
-        if (specifies != null)
-        {
-            _specifies.AddAll(specifies);
-        }
+        if (specifies != null) _specifies.AddAll(specifies);
     }
 
     public void SetContributors(Uri[] contributors)
     {
         _contributors.Clear();
 
-        if (contributors != null)
-        {
-            _contributors.AddAll(contributors);
-        }
+        if (contributors != null) _contributors.AddAll(contributors);
     }
 
     public void SetCreated(DateTime? created)
@@ -605,10 +564,7 @@ public abstract class RequirementBase : AbstractResource
     {
         _creators.Clear();
 
-        if (creators != null)
-        {
-            _creators.AddAll(creators);
-        }
+        if (creators != null) _creators.AddAll(creators);
     }
 
     public void SetDescription(string? description)
@@ -635,10 +591,7 @@ public abstract class RequirementBase : AbstractResource
     {
         RdfTypes.Clear();
 
-        if (rdfTypes != null)
-        {
-            RdfTypes.AddAll(rdfTypes);
-        }
+        if (rdfTypes != null) RdfTypes.AddAll(rdfTypes);
     }
 
     public void SetServiceProvider(Uri? serviceProvider)
@@ -660,9 +613,6 @@ public abstract class RequirementBase : AbstractResource
     {
         _subjects.Clear();
 
-        if (subjects != null)
-        {
-            _subjects.AddAll(subjects);
-        }
+        if (subjects != null) _subjects.AddAll(subjects);
     }
 }

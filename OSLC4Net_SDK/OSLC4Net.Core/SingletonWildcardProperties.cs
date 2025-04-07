@@ -17,9 +17,9 @@
 namespace OSLC4Net.Core;
 
 /// <summary>
-/// Marker interface applied to {@link Map}(String, Object> to
-/// indicate that when selecting properties for output all immediate,
-/// properties of the resource should be output
+///     Marker interface applied to {@link Map}(String, Object> to
+///     indicate that when selecting properties for output all immediate,
+///     properties of the resource should be output
 /// </summary>
 public interface SingletonWildcardProperties
 {

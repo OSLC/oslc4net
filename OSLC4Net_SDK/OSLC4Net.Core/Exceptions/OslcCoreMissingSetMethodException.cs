@@ -18,17 +18,22 @@ using System.Reflection;
 namespace OSLC4Net.Core.Exceptions;
 
 /// <summary>
-/// Exception thrown for beans without required setters
+///     Exception thrown for beans without required setters
 /// </summary>
 public class OslcCoreMissingSetMethodException : OslcCoreApplicationException
 {
+    private static readonly string MESSAGE_KEY = "MissingSetMethodException";
+    private readonly MethodInfo getMethod;
+
+    private readonly Type resourceType;
+
     /// <summary>
-    ///
     /// </summary>
     /// <param name="resourceType"></param>
     /// <param name="getMethod"></param>
     /// <param name="exception"></param>
-    public OslcCoreMissingSetMethodException(Type resourceType, MethodInfo getMethod, Exception exception) :
+    public OslcCoreMissingSetMethodException(Type resourceType, MethodInfo getMethod,
+        Exception exception) :
         base(MESSAGE_KEY, new object[] { resourceType.Name, getMethod.Name, exception })
     {
         this.getMethod = getMethod;
@@ -36,7 +41,6 @@ public class OslcCoreMissingSetMethodException : OslcCoreApplicationException
     }
 
     /// <summary>
-    ///
     /// </summary>
     /// <param name="resourceType"></param>
     /// <param name="getMethod"></param>
@@ -46,9 +50,4 @@ public class OslcCoreMissingSetMethodException : OslcCoreApplicationException
         this.getMethod = getMethod;
         this.resourceType = resourceType;
     }
-
-    private static readonly string MESSAGE_KEY = "MissingSetMethodException";
-
-    private readonly Type resourceType;
-    private readonly MethodInfo getMethod;
 }

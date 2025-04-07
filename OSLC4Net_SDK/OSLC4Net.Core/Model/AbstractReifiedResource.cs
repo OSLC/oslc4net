@@ -16,7 +16,7 @@
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// An OSLC reified resource
+///     An OSLC reified resource
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public abstract class AbstractReifiedResource<T> : IReifiedResource<T>
@@ -33,7 +33,6 @@ public abstract class AbstractReifiedResource<T> : IReifiedResource<T>
     }
 
     /// <summary>
-    ///
     /// </summary>
     /// <returns></returns>
     public T GetValue()
@@ -42,7 +41,6 @@ public abstract class AbstractReifiedResource<T> : IReifiedResource<T>
     }
 
     /// <summary>
-    ///
     /// </summary>
     /// <param name="value"></param>
     public void SetValue(T value)

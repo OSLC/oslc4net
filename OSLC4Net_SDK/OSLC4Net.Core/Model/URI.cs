@@ -16,14 +16,14 @@
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// A wrapper for a URI
+///     A wrapper for a URI
 /// </summary>
-[System.AttributeUsage(System.AttributeTargets.Field)
+[AttributeUsage(AttributeTargets.Field)
 ]
 public class URI : System.Attribute
 {
     /**
-     *  URI of element; used in enumerations
+     * URI of element; used in enumerations
      */
     public readonly string uri;
 

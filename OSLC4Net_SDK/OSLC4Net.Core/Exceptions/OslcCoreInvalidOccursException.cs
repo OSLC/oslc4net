@@ -14,7 +14,6 @@
  *******************************************************************************/
 
 using System.Reflection;
-
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
 
@@ -22,14 +21,24 @@ namespace OSLC4Net.Core.Exceptions;
 
 public class OslcCoreInvalidOccursException : OslcCoreApplicationException
 {
+    private static readonly string MESSAGE_KEY = "InvalidOccursException";
+
+    private readonly MethodInfo method;
+    private readonly OslcOccurs oslcOccurs;
+    private readonly Type resourceType;
+
     /// <summary>
-    ///
     /// </summary>
     /// <param name="resourceType"></param>
     /// <param name="method"></param>
     /// <param name="oslcOccurs"></param>
-    public OslcCoreInvalidOccursException(Type resourceType, MethodInfo method, OslcOccurs oslcOccurs) :
-        base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name, OccursExtension.ToString(oslcOccurs.value) })
+    public OslcCoreInvalidOccursException(Type resourceType, MethodInfo method,
+        OslcOccurs oslcOccurs) :
+        base(MESSAGE_KEY,
+            new object[]
+            {
+                resourceType.Name, method.Name, OccursExtension.ToString(oslcOccurs.value)
+            })
     {
         this.method = method;
         this.oslcOccurs = oslcOccurs;
@@ -50,10 +59,4 @@ public class OslcCoreInvalidOccursException : OslcCoreApplicationException
     {
         return resourceType;
     }
-
-    private static readonly string MESSAGE_KEY = "InvalidOccursException";
-
-    private readonly MethodInfo method;
-    private readonly OslcOccurs oslcOccurs;
-    private readonly Type resourceType;
 }

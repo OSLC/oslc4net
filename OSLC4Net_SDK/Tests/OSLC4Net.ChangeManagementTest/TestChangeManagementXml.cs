@@ -13,8 +13,8 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
+using Aspire.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.ChangeManagementTest;
@@ -22,7 +22,24 @@ namespace OSLC4Net.ChangeManagementTest;
 [TestClass]
 public class TestChangeManagementXml : TestBase
 {
+    private static DistributedApplication? _distributedApplication;
     public TestContext TestContext { set; get; }
+
+    [ClassInitialize]
+    public static async Task ClassSetupAsync(TestContext ctx)
+    {
+        _distributedApplication ??= await SetupAspireAsync().ConfigureAwait(false);
+    }
+
+    [ClassCleanup]
+    public static async Task ClassCleanupAsync()
+    {
+        if (_distributedApplication is not null)
+        {
+            await _distributedApplication.DisposeAsync().ConfigureAwait(false);
+        }
+    }
+
 
     [TestInitialize]
     public void TestSetup()
@@ -41,57 +58,88 @@ public class TestChangeManagementXml : TestBase
     [TestCleanup]
     public void TestTeardown()
     {
-        switch (TestContext.TestName)
+        if (TestContext!.TestName == "TestResourceShape" ||
+            TestContext!.TestName == "TestDelete")
         {
-            case "TestResourceShape":
-            case "TestDelete":
-                break;
-            default:
-                DeleteChangeRequest(OslcMediaType.APPLICATION_XML);
-                break;
+            // they remove the resource at the end
+        }
+        else
+        {
+            if (ChangeRequestUri is not null)
+            {
+                DeleteChangeRequestAsync(OslcMediaType.APPLICATION_XML);
+            }
+            else
+            {
+                TestContext.WriteLine(
+                    "Warning: Cannot delete change request as CREATED_CHANGE_REQUEST_URI is null");
+            }
         }
     }
 
-    [TestMethod]
-    public void TestResourceShape()
-    {
-        TestResourceShapeAsync(OslcMediaType.APPLICATION_XML);
-    }
+    //[TestMethod]
+    //public async Task TestResourceShape()
+    //{
+    //    await TestResourceShapeAsync(OslcMediaType.APPLICATION_XML);
+    //}
+
+    //[TestMethod]
+    //public void TestCreate()
+    //{
+    //    TestCreateAsync(OslcMediaType.APPLICATION_XML);
+    //}
+
+    //[TestMethod]
+    //public void TestRetrieve()
+    //{
+    //    TestRetrieveAsync(OslcMediaType.APPLICATION_XML);
+    //}
+
+    //[TestMethod]
+    //public void TestRetrieves()
+    //{
+    //    TestRetrievesAsync(OslcMediaType.APPLICATION_XML);
+    //}
+
+    //[TestMethod]
+    //public void TestCompact()
+    //{
+    //    TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
+    //                OslcMediaType.APPLICATION_XML);
+    //}
+
+    //[TestMethod]
+    //public void TestUpdate()
+    //{
+    //    TestUpdateAsync(OslcMediaType.APPLICATION_XML);
+    //}
+
+    //[TestMethod]
+    //public void TestDelete()
+    //{
+    //    TestDeleteAsync(OslcMediaType.APPLICATION_XML);
+    //}
 
     [TestMethod]
-    public void TestCreate()
+    public async Task TestResourceShape()
     {
-        TestCreateAsync(OslcMediaType.APPLICATION_XML);
+        await TestResourceShapeAsync(OslcMediaType.APPLICATION_XML).ConfigureAwait(false);
     }
 
+    /// <summary>
+    ///     Ordering of test methods shall not be relied upon for execution order
+    /// </summary>
     [TestMethod]
-    public void TestRetrieve()
+    public async Task TestAcceptance()
     {
-        TestRetrieveAsync(OslcMediaType.APPLICATION_XML);
-    }
-
-    [TestMethod]
-    public void TestRetrieves()
-    {
-        TestRetrievesAsync(OslcMediaType.APPLICATION_XML);
-    }
-
-    [TestMethod]
-    public void TestCompact()
-    {
-        TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
-                    OslcMediaType.APPLICATION_XML);
-    }
-
-    [TestMethod]
-    public void TestUpdate()
-    {
-        TestUpdateAsync(OslcMediaType.APPLICATION_XML);
-    }
-
-    [TestMethod]
-    public void TestDelete()
-    {
-        TestDeleteAsync(OslcMediaType.APPLICATION_XML);
+        const string mediaType = OslcMediaType.APPLICATION_XML;
+        await TestResourceShapeAsync(mediaType).ConfigureAwait(false);
+        await TestCreateAsync(mediaType).ConfigureAwait(false);
+        await Task.WhenAll(TestRetrieveAsync(mediaType), TestRetrievesAsync(mediaType),
+            TestCompactAsync(
+                OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
+                mediaType)).ConfigureAwait(false);
+        await TestUpdateAsync(mediaType).ConfigureAwait(false);
+        await TestDeleteAsync(mediaType).ConfigureAwait(false);
     }
 }

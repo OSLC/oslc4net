@@ -18,20 +18,17 @@ using OSLC4Net.Core.Attribute;
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// OSLC Preview attribute
+///     OSLC Preview attribute
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Preview Resource Shape", describes = new string[] { OslcConstants.TYPE_PREVIEW })]
+[OslcResourceShape(title = "OSLC Preview Resource Shape",
+    describes = new[] { OslcConstants.TYPE_PREVIEW })]
 public class Preview : AbstractResource
 {
     private Uri document;
     private string hintHeight;
     private string hintWidth;
     private string initialHeight;
-
-    public Preview() : base()
-    {
-    }
 
     [OslcDescription("The Uri of an HTML document to be used for the preview")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "document")]
@@ -42,7 +39,8 @@ public class Preview : AbstractResource
         return document;
     }
 
-    [OslcDescription("Recommended height of the preview. Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1). Em and ex units are interpreted relative to the default system font (at 100% size).")]
+    [OslcDescription(
+        "Recommended height of the preview. Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1). Em and ex units are interpreted relative to the default system font (at 100% size).")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintHeight")]
     [OslcReadOnly]
     [OslcTitle("Hint Height")]
@@ -51,7 +49,8 @@ public class Preview : AbstractResource
         return hintHeight;
     }
 
-    [OslcDescription("Recommended width of the preview. Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1). Em and ex units are interpreted relative to the default system font (at 100% size).")]
+    [OslcDescription(
+        "Recommended width of the preview. Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1). Em and ex units are interpreted relative to the default system font (at 100% size).")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintWidth")]
     [OslcReadOnly]
     [OslcTitle("Hint Width")]
@@ -60,7 +59,8 @@ public class Preview : AbstractResource
         return hintWidth;
     }
 
-    [OslcDescription("Recommended initial height of the preview. The presence of this property indicates that the preview supports dynamically computing its size. Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1). Em and ex units are interpreted relative to the default system font (at 100% size).")]
+    [OslcDescription(
+        "Recommended initial height of the preview. The presence of this property indicates that the preview supports dynamically computing its size. Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1). Em and ex units are interpreted relative to the default system font (at 100% size).")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "initialHeight")]
     [OslcReadOnly]
     [OslcTitle("Initial Height")]

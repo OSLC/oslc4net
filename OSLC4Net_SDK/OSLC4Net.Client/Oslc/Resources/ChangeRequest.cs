@@ -19,7 +19,8 @@ using OSLC4Net.Core.Model;
 namespace OSLC4Net.Client.Oslc.Resources;
 
 [OslcNamespace(CmConstants.CHANGE_MANAGEMENT_NAMESPACE)]
-[OslcResourceShape(title = "Change Request Resource Shape", describes = new string[] { CmConstants.TYPE_CHANGE_REQUEST })]
+[OslcResourceShape(title = "Change Request Resource Shape",
+    describes = new string[] { CmConstants.TYPE_CHANGE_REQUEST })]
 public class ChangeRequest : AbstractResource
 {
     private readonly ISet<Link> affectedByDefects = new HashSet<Link>();
@@ -32,7 +33,10 @@ public class ChangeRequest : AbstractResource
     private readonly ISet<string> dctermsTypes = new HashSet<string>(); // XXX - TreeSet<> in Java
     private readonly ISet<Link> implementsRequirements = new HashSet<Link>();
     private readonly ISet<Link> relatedChangeRequests = new HashSet<Link>();
-    private readonly ISet<Link> relatedResources = new HashSet<Link>(); // TODO - Extension to point to any other OSLC resource(s).
+
+    private readonly ISet<Link>
+        relatedResources = new HashSet<Link>(); // TODO - Extension to point to any other OSLC resource(s).
+
     private readonly ISet<Link> relatedTestCases = new HashSet<Link>();
     private readonly ISet<Link> relatedTestExecutionRecords = new HashSet<Link>();
     private readonly ISet<Link> relatedTestPlans = new HashSet<Link>();
@@ -274,7 +278,8 @@ public class ChangeRequest : AbstractResource
         return dctermsTypes.ToArray();
     }
 
-    [OslcDescription("Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
+    [OslcDescription(
+        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
     [OslcTitle("Description")]
     [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
@@ -292,7 +297,8 @@ public class ChangeRequest : AbstractResource
         return discussedBy;
     }
 
-    [OslcDescription("A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
+    [OslcDescription(
+        "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
     [OslcReadOnly]
@@ -413,7 +419,8 @@ public class ChangeRequest : AbstractResource
         return serviceProvider;
     }
 
-    [OslcDescription("Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users.")]
+    [OslcDescription(
+        "Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users.")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "shortTitle")]
     [OslcTitle("Short Title")]
     [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
@@ -422,7 +429,8 @@ public class ChangeRequest : AbstractResource
         return shortTitle;
     }
 
-    [OslcDescription("Used to indicate the status of the change request based on values defined by the service provider. Most often a read-only property. Some possible values may include: 'Submitted', 'Done', 'InProgress', etc.")]
+    [OslcDescription(
+        "Used to indicate the status of the change request based on values defined by the service provider. Most often a read-only property. Some possible values may include: 'Submitted', 'Done', 'InProgress', etc.")]
     [OslcPropertyDefinition(CmConstants.CHANGE_MANAGEMENT_NAMESPACE + "status")]
     [OslcTitle("Status")]
     public string GetStatus()
@@ -430,7 +438,8 @@ public class ChangeRequest : AbstractResource
         return status;
     }
 
-    [OslcDescription("Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
+    [OslcDescription(
+        "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
     [OslcName("subject")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "subject")]
     [OslcReadOnly(false)]
@@ -451,7 +460,8 @@ public class ChangeRequest : AbstractResource
         return testedByTestCases.ToArray();
     }
 
-    [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
+    [OslcDescription(
+        "Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
     [OslcTitle("Title")]
@@ -492,7 +502,8 @@ public class ChangeRequest : AbstractResource
         return approved;
     }
 
-    [OslcDescription("Whether or not the Change Request is completely done, no further fixes or fix verification is needed.")]
+    [OslcDescription(
+        "Whether or not the Change Request is completely done, no further fixes or fix verification is needed.")]
     [OslcPropertyDefinition(CmConstants.CHANGE_MANAGEMENT_NAMESPACE + "closed")]
     [OslcReadOnly]
     [OslcTitle("Closed")]
@@ -510,7 +521,8 @@ public class ChangeRequest : AbstractResource
         return isFixedValue;
     }
 
-    [OslcDescription("Whether or not the Change Request in a state indicating that active work is occurring. If oslc_cm:inprogress is true, then oslc_cm:fixed and oslc_cm:closed must also be false.")]
+    [OslcDescription(
+        "Whether or not the Change Request in a state indicating that active work is occurring. If oslc_cm:inprogress is true, then oslc_cm:fixed and oslc_cm:closed must also be false.")]
     [OslcName("inprogress")]
     [OslcPropertyDefinition(CmConstants.CHANGE_MANAGEMENT_NAMESPACE + "inprogress")]
     [OslcReadOnly]
@@ -542,40 +554,28 @@ public class ChangeRequest : AbstractResource
     {
         this.affectedByDefects.Clear();
 
-        if (affectedByDefects != null)
-        {
-            this.affectedByDefects.AddAll(affectedByDefects);
-        }
+        if (affectedByDefects != null) this.affectedByDefects.AddAll(affectedByDefects);
     }
 
     public void SetAffectsPlanItems(Link[] affectsPlanItems)
     {
         this.affectsPlanItems.Clear();
 
-        if (affectsPlanItems != null)
-        {
-            this.affectsPlanItems.AddAll(affectsPlanItems);
-        }
+        if (affectsPlanItems != null) this.affectsPlanItems.AddAll(affectsPlanItems);
     }
 
     public void SetAffectsRequirements(Link[] affectsRequirements)
     {
         this.affectsRequirements.Clear();
 
-        if (affectsRequirements != null)
-        {
-            this.affectsRequirements.AddAll(affectsRequirements);
-        }
+        if (affectsRequirements != null) this.affectsRequirements.AddAll(affectsRequirements);
     }
 
     public void SetAffectsTestResults(Link[] affectsTestResults)
     {
         this.affectsTestResults.Clear();
 
-        if (affectsTestResults != null)
-        {
-            this.affectsTestResults.AddAll(affectsTestResults);
-        }
+        if (affectsTestResults != null) this.affectsTestResults.AddAll(affectsTestResults);
     }
 
     public void SetApproved(bool approved)
@@ -587,10 +587,7 @@ public class ChangeRequest : AbstractResource
     {
         this.blocksTestExecutionRecords.Clear();
 
-        if (blocksTestExecutionRecords != null)
-        {
-            this.blocksTestExecutionRecords.AddAll(blocksTestExecutionRecords);
-        }
+        if (blocksTestExecutionRecords != null) this.blocksTestExecutionRecords.AddAll(blocksTestExecutionRecords);
     }
 
     public void SetClosed(bool closed)
@@ -607,10 +604,7 @@ public class ChangeRequest : AbstractResource
     {
         this.contributors.Clear();
 
-        if (contributors != null)
-        {
-            this.contributors.AddAll(contributors);
-        }
+        if (contributors != null) this.contributors.AddAll(contributors);
     }
 
     public void SetCreated(DateTime? created)
@@ -622,20 +616,14 @@ public class ChangeRequest : AbstractResource
     {
         this.creators.Clear();
 
-        if (creators != null)
-        {
-            this.creators.AddAll(creators);
-        }
+        if (creators != null) this.creators.AddAll(creators);
     }
 
     public void SetDctermsTypes(string[] dctermsTypes)
     {
         this.dctermsTypes.Clear();
 
-        if (dctermsTypes != null)
-        {
-            this.dctermsTypes.AddAll(dctermsTypes);
-        }
+        if (dctermsTypes != null) this.dctermsTypes.AddAll(dctermsTypes);
     }
 
     public void SetDescription(string description)
@@ -662,10 +650,7 @@ public class ChangeRequest : AbstractResource
     {
         this.implementsRequirements.Clear();
 
-        if (implementsRequirements != null)
-        {
-            this.implementsRequirements.AddAll(implementsRequirements);
-        }
+        if (implementsRequirements != null) this.implementsRequirements.AddAll(implementsRequirements);
     }
 
     public void SetInProgress(bool inProgress)
@@ -687,70 +672,49 @@ public class ChangeRequest : AbstractResource
     {
         this.rdfTypes.Clear();
 
-        if (rdfTypes != null)
-        {
-            this.rdfTypes.AddAll(rdfTypes);
-        }
+        if (rdfTypes != null) this.rdfTypes.AddAll(rdfTypes);
     }
 
     public void SetRelatedChangeRequests(Link[] relatedChangeRequests)
     {
         this.relatedChangeRequests.Clear();
 
-        if (relatedChangeRequests != null)
-        {
-            this.relatedChangeRequests.AddAll(relatedChangeRequests);
-        }
+        if (relatedChangeRequests != null) this.relatedChangeRequests.AddAll(relatedChangeRequests);
     }
 
     public void SetRelatedResources(Link[] relatedResources)
     {
         this.relatedResources.Clear();
 
-        if (relatedResources != null)
-        {
-            this.relatedResources.AddAll(relatedResources);
-        }
+        if (relatedResources != null) this.relatedResources.AddAll(relatedResources);
     }
 
     public void SetRelatedTestCases(Link[] relatedTestCases)
     {
         this.relatedTestCases.Clear();
 
-        if (relatedTestCases != null)
-        {
-            this.relatedTestCases.AddAll(relatedTestCases);
-        }
+        if (relatedTestCases != null) this.relatedTestCases.AddAll(relatedTestCases);
     }
 
     public void SetRelatedTestExecutionRecords(Link[] relatedTestExecutionRecords)
     {
         this.relatedTestExecutionRecords.Clear();
 
-        if (relatedTestExecutionRecords != null)
-        {
-            this.relatedTestExecutionRecords.AddAll(relatedTestExecutionRecords);
-        }
+        if (relatedTestExecutionRecords != null) this.relatedTestExecutionRecords.AddAll(relatedTestExecutionRecords);
     }
 
     public void SetRelatedTestPlans(Link[] relatedTestPlans)
     {
         this.relatedTestPlans.Clear();
 
-        if (relatedTestPlans != null)
-        {
-            this.relatedTestPlans.AddAll(relatedTestPlans);
-        }
+        if (relatedTestPlans != null) this.relatedTestPlans.AddAll(relatedTestPlans);
     }
 
     public void SetRelatedTestScripts(Link[] relatedTestScripts)
     {
         this.relatedTestScripts.Clear();
 
-        if (relatedTestScripts != null)
-        {
-            this.relatedTestScripts.AddAll(relatedTestScripts);
-        }
+        if (relatedTestScripts != null) this.relatedTestScripts.AddAll(relatedTestScripts);
     }
 
     public void SetReviewed(bool reviewed)
@@ -777,20 +741,14 @@ public class ChangeRequest : AbstractResource
     {
         this.subjects.Clear();
 
-        if (subjects != null)
-        {
-            this.subjects.AddAll(subjects);
-        }
+        if (subjects != null) this.subjects.AddAll(subjects);
     }
 
     public void SetTestedByTestCases(Link[] testedByTestCases)
     {
         this.testedByTestCases.Clear();
 
-        if (testedByTestCases != null)
-        {
-            this.testedByTestCases.AddAll(testedByTestCases);
-        }
+        if (testedByTestCases != null) this.testedByTestCases.AddAll(testedByTestCases);
     }
 
     public void SetTitle(string title)
@@ -802,20 +760,14 @@ public class ChangeRequest : AbstractResource
     {
         this.tracksChangeSets.Clear();
 
-        if (tracksChangeSets != null)
-        {
-            this.tracksChangeSets.AddAll(tracksChangeSets);
-        }
+        if (tracksChangeSets != null) this.tracksChangeSets.AddAll(tracksChangeSets);
     }
 
     public void SetTracksRequirements(Link[] tracksRequirements)
     {
         this.tracksRequirements.Clear();
 
-        if (tracksRequirements != null)
-        {
-            this.tracksRequirements.AddAll(tracksRequirements);
-        }
+        if (tracksRequirements != null) this.tracksRequirements.AddAll(tracksRequirements);
     }
 
     public void SetVerified(bool verified)

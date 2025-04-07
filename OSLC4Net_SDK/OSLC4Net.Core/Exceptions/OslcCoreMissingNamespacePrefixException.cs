@@ -16,12 +16,15 @@
 namespace OSLC4Net.Core.Exceptions;
 
 /// <summary>
-/// Exception thrown when a required OSLC attribute definition is missing.
+///     Exception thrown when a required OSLC attribute definition is missing.
 /// </summary>
 public class OslcCoreMissingNamespacePrefixException : OslcCoreApplicationException
 {
+    private static readonly string MESSAGE_KEY = "MissingNamespacePrefixException";
+
+    private readonly string prefix;
+
     /// <summary>
-    ///
     /// </summary>
     /// <param name="prefix"></param>
     /// <param name="annotationType"></param>
@@ -32,15 +35,10 @@ public class OslcCoreMissingNamespacePrefixException : OslcCoreApplicationExcept
     }
 
     /// <summary>
-    ///
     /// </summary>
     /// <returns></returns>
     public string GetPrefix()
     {
         return prefix;
     }
-
-    private static readonly string MESSAGE_KEY = "MissingNamespacePrefixException";
-
-    private readonly string prefix;
 }

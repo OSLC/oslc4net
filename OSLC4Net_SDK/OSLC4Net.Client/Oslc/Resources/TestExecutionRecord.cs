@@ -22,7 +22,8 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// http://open-services.net/bin/view/Main/QmSpecificationV2#Resource_TestExecutionRecord
 /// </summary>
-[OslcResourceShape(title = "Quality Management Resource Shape", describes = new string[] { QmConstants.TYPE_TEST_EXECUTION_RECORD })]
+[OslcResourceShape(title = "Quality Management Resource Shape",
+    describes = new string[] { QmConstants.TYPE_TEST_EXECUTION_RECORD })]
 [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
 public class TestExecutionRecord : QmResource
 {
@@ -140,40 +141,28 @@ public class TestExecutionRecord : QmResource
     {
         this.blockedByChangeRequests.Clear();
 
-        if (blockedByChangeRequests != null)
-        {
-            this.blockedByChangeRequests.AddAll(blockedByChangeRequests);
-        }
+        if (blockedByChangeRequests != null) this.blockedByChangeRequests.AddAll(blockedByChangeRequests);
     }
 
     public void SetContributors(Uri[] contributors)
     {
         this.contributors.Clear();
 
-        if (contributors != null)
-        {
-            this.contributors.AddAll(contributors);
-        }
+        if (contributors != null) this.contributors.AddAll(contributors);
     }
 
     public void SetCreators(Uri[] creators)
     {
         this.creators.Clear();
 
-        if (creators != null)
-        {
-            this.creators.AddAll(creators);
-        }
+        if (creators != null) this.creators.AddAll(creators);
     }
 
     public void SetRelatedChangeRequests(Link[] relatedChangeRequests)
     {
         this.relatedChangeRequests.Clear();
 
-        if (relatedChangeRequests != null)
-        {
-            this.relatedChangeRequests.AddAll(relatedChangeRequests);
-        }
+        if (relatedChangeRequests != null) this.relatedChangeRequests.AddAll(relatedChangeRequests);
     }
 
     public void SetReportsOnTestPlan(Link reportsOnTestPlan)

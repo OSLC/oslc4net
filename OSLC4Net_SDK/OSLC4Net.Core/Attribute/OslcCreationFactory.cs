@@ -17,17 +17,12 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-/// OSLC CreationFactory attribute
+///     OSLC CreationFactory attribute
 /// </summary>
-[System.AttributeUsage(System.AttributeTargets.Method)
+[AttributeUsage(AttributeTargets.Method)
 ]
 public class OslcCreationFactory : System.Attribute
 {
-    /**
-     * Title string that could be used for display
-     */
-    public string title;
-
     /**
      * Very short label for use in menu items
      */
@@ -44,8 +39,12 @@ public class OslcCreationFactory : System.Attribute
     public string[] resourceTypes = { };
 
     /**
+     * Title string that could be used for display
+     */
+    public string title;
+
+    /**
      * Usages
      */
     public string[] usages = { };
-
 }

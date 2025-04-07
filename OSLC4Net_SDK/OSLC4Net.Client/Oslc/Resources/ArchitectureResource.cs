@@ -22,7 +22,8 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// http://open-services.net/wiki/architecture-management/OSLC-Architecture-Management-Specification-Version-2.0/
 /// </summary>
-[OslcResourceShape(title = "Architecture Management Resource Resource Shape", describes = new string[] { ArchitectureConstants.TYPE_ARCHITECTURE_RESOURCE })]
+[OslcResourceShape(title = "Architecture Management Resource Resource Shape",
+    describes = new string[] { ArchitectureConstants.TYPE_ARCHITECTURE_RESOURCE })]
 [OslcNamespace(ArchitectureConstants.ARCHITECTURE_NAMESPACE)]
 public class ArchitectureResource : AbstractResource
 {
@@ -104,7 +105,8 @@ public class ArchitectureResource : AbstractResource
         return creators.ToArray();
     }
 
-    [OslcDescription("Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
+    [OslcDescription(
+        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
     [OslcTitle("Description")]
     [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
@@ -113,7 +115,8 @@ public class ArchitectureResource : AbstractResource
         return description;
     }
 
-    [OslcDescription("A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
+    [OslcDescription(
+        "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
     [OslcReadOnly]
@@ -159,7 +162,8 @@ public class ArchitectureResource : AbstractResource
         return dctermsTypes.ToArray();
     }
 
-    [OslcDescription("The resource Uri a client can perform a Get on to obtain the original non-OSLC AM formatted resource that was used to create this resource. ")]
+    [OslcDescription(
+        "The resource Uri a client can perform a Get on to obtain the original non-OSLC AM formatted resource that was used to create this resource. ")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "source")]
     [OslcTitle("Source")]
     public Uri GetSource()
@@ -176,7 +180,8 @@ public class ArchitectureResource : AbstractResource
         return serviceProvider;
     }
 
-    [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
+    [OslcDescription(
+        "Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
     [OslcTitle("Title")]
@@ -190,10 +195,7 @@ public class ArchitectureResource : AbstractResource
     {
         this.contributors.Clear();
 
-        if (contributors != null)
-        {
-            this.contributors.AddAll(contributors);
-        }
+        if (contributors != null) this.contributors.AddAll(contributors);
     }
 
     public void SetCreated(DateTime? created)
@@ -205,10 +207,7 @@ public class ArchitectureResource : AbstractResource
     {
         this.creators.Clear();
 
-        if (creators != null)
-        {
-            this.creators.AddAll(creators);
-        }
+        if (creators != null) this.creators.AddAll(creators);
     }
 
     public void SetDescription(string description)
@@ -235,20 +234,14 @@ public class ArchitectureResource : AbstractResource
     {
         this.rdfTypes.Clear();
 
-        if (rdfTypes != null)
-        {
-            this.rdfTypes.AddAll(rdfTypes);
-        }
+        if (rdfTypes != null) this.rdfTypes.AddAll(rdfTypes);
     }
 
     public void SetDctermsTypes(string[] dctermsTypes)
     {
         this.dctermsTypes.Clear();
 
-        if (dctermsTypes != null)
-        {
-            this.dctermsTypes.AddAll(dctermsTypes);
-        }
+        if (dctermsTypes != null) this.dctermsTypes.AddAll(dctermsTypes);
     }
 
     public void SetSource(Uri source)

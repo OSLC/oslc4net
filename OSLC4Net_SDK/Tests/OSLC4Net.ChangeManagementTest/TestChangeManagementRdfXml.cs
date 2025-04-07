@@ -13,16 +13,32 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
+using Aspire.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.ChangeManagementTest;
 
-// [TestClass]
+[TestClass]
 public class TestChangeManagementRdfXml : TestBase
 {
+    private static DistributedApplication? _distributedApplication;
     public TestContext? TestContext { set; get; }
+
+    [ClassInitialize]
+    public static async Task ClassSetupAsync(TestContext ctx)
+    {
+        _distributedApplication ??= await SetupAspireAsync().ConfigureAwait(false);
+    }
+
+    [ClassCleanup]
+    public static async Task ClassCleanupAsync()
+    {
+        if (_distributedApplication is not null)
+        {
+            await _distributedApplication.DisposeAsync().ConfigureAwait(false);
+        }
+    }
 
     [TestInitialize]
     public void TestSetup()
@@ -33,7 +49,7 @@ public class TestChangeManagementRdfXml : TestBase
             case "TestCreate":
                 break;
             default:
-                MakeChangeRequestAsync(OslcMediaType.APPLICATION_RDF_XML);
+                MakeChangeRequestAsync(OslcMediaType.APPLICATION_RDF_XML).ConfigureAwait(false);
                 break;
         }
     }
@@ -47,7 +63,7 @@ public class TestChangeManagementRdfXml : TestBase
             case "TestDelete":
                 break;
             default:
-                DeleteChangeRequest(OslcMediaType.APPLICATION_RDF_XML);
+                DeleteChangeRequestAsync(OslcMediaType.APPLICATION_RDF_XML).ConfigureAwait(false);
                 break;
         }
     }
@@ -56,15 +72,13 @@ public class TestChangeManagementRdfXml : TestBase
     public async Task TestRdfXml()
     {
         const string mediaType = OslcMediaType.APPLICATION_RDF_XML;
-        await TestResourceShapeAsync(mediaType);
-        await TestCreateAsync(mediaType);
-        await Task.WhenAll(new[] {
-            TestRetrieveAsync(mediaType),
-            TestRetrievesAsync(mediaType),
-            TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
-                        mediaType)
-        });
-        await TestUpdateAsync(mediaType);
-        await TestDeleteAsync(mediaType);
+        await TestResourceShapeAsync(mediaType).ConfigureAwait(false);
+        await TestCreateAsync(mediaType).ConfigureAwait(false);
+        await Task.WhenAll(TestRetrieveAsync(mediaType), TestRetrievesAsync(mediaType),
+            TestCompactAsync(
+                OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
+                mediaType)).ConfigureAwait(false);
+        await TestUpdateAsync(mediaType).ConfigureAwait(false);
+        await TestDeleteAsync(mediaType).ConfigureAwait(false);
     }
 }

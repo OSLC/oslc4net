@@ -17,11 +17,46 @@
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// An OSLC ResponseInfo resource containg a single member resource
+///     An OSLC ResponseInfo resource containg a single member resource
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public abstract class ResponseInfo<T> : FilteredResource<T>
 {
+    /// <summary>
+    /// </summary>
+    /// <param name="resource"></param>
+    /// <param name="properties"></param>
+    /// <param name="totalCount"></param>
+    /// <param name="nextPage"></param>
+    public
+        ResponseInfo(
+            T resource,
+            IDictionary<string, object> properties,
+            int totalCount,
+            string nextPage
+        ) : base(resource, properties)
+    {
+        TotalCount = totalCount;
+        NextPage = nextPage;
+    }
+
+    /// <summary>
+    /// </summary>
+    /// <param name="resource"></param>
+    /// <param name="properties"></param>
+    /// <param name="totalCount"></param>
+    /// <param name="nextPage"></param>
+    public
+        ResponseInfo(
+            T resource,
+            IDictionary<string, object> properties,
+            int totalCount,
+            Uri nextPage
+        ) : this(resource, properties, totalCount,
+        nextPage?.ToString())
+    {
+    }
+
     /**
      * Total count of resource
      */
@@ -31,41 +66,4 @@ public abstract class ResponseInfo<T> : FilteredResource<T>
      * Next page in paged output
      */
     public string NextPage { get; private set; }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="resource"></param>
-    /// <param name="properties"></param>
-    /// <param name="totalCount"></param>
-    /// <param name="nextPage"></param>
-    public
-    ResponseInfo(
-        T resource,
-        IDictionary<string, object> properties,
-        int totalCount,
-        string nextPage
-    ) : base(resource, properties)
-    {
-        this.TotalCount = totalCount;
-        this.NextPage = nextPage;
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="resource"></param>
-    /// <param name="properties"></param>
-    /// <param name="totalCount"></param>
-    /// <param name="nextPage"></param>
-    public
-    ResponseInfo(
-        T resource,
-        IDictionary<string, object> properties,
-        int totalCount,
-        Uri nextPage
-    ) : this(resource, properties, totalCount,
-             nextPage?.ToString())
-    {
-    }
 }

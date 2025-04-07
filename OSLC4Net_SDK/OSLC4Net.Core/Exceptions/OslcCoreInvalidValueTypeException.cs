@@ -15,19 +15,27 @@
 
 using System.Reflection;
 using OSLC4Net.Core.Model;
+using ValueType = OSLC4Net.Core.Model.ValueType;
 
 namespace OSLC4Net.Core.Exceptions;
 
 public class OslcCoreInvalidValueTypeException : OslcCoreApplicationException
 {
+    private static readonly string MESSAGE_KEY = "InvalidValueTypeException";
+
+    private readonly MethodInfo method;
+    private readonly Type resourceType;
+    private readonly ValueType valueType;
+
     /// <summary>
-    ///
     /// </summary>
     /// <param name="resourceType"></param>
     /// <param name="method"></param>
     /// <param name="valueType"></param>
-    public OslcCoreInvalidValueTypeException(Type resourceType, MethodInfo method, Model.ValueType valueType) :
-        base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name, ValueTypeExtension.ToString(valueType) })
+    public OslcCoreInvalidValueTypeException(Type resourceType, MethodInfo method,
+        ValueType valueType) :
+        base(MESSAGE_KEY,
+            new object[] { resourceType.Name, method.Name, ValueTypeExtension.ToString(valueType) })
     {
         this.method = method;
         this.valueType = valueType;
@@ -39,7 +47,7 @@ public class OslcCoreInvalidValueTypeException : OslcCoreApplicationException
         return method;
     }
 
-    public Model.ValueType GetValueType()
+    public ValueType GetValueType()
     {
         return valueType;
     }
@@ -48,10 +56,4 @@ public class OslcCoreInvalidValueTypeException : OslcCoreApplicationException
     {
         return resourceType;
     }
-
-    private static readonly string MESSAGE_KEY = "InvalidValueTypeException";
-
-    private readonly MethodInfo method;
-    private readonly Type resourceType;
-    private readonly Model.ValueType valueType;
 }

@@ -18,17 +18,23 @@ using System.Reflection;
 namespace OSLC4Net.Core.Exceptions;
 
 /// <summary>
-/// Exception thrown for an invalid property type
+///     Exception thrown for an invalid property type
 /// </summary>
 public class OslcCoreInvalidPropertyTypeException : OslcCoreApplicationException
 {
+    private static readonly string MESSAGE_KEY = "InvalidPropertyTypeException";
+
+    private readonly MethodInfo method;
+    private readonly Type resourceType;
+    private readonly Type returnType;
+
     /// <summary>
-    ///
     /// </summary>
     /// <param name="resourceType"></param>
     /// <param name="method"></param>
     /// <param name="returnType"></param>
-    public OslcCoreInvalidPropertyTypeException(Type resourceType, MethodInfo method, Type returnType) :
+    public OslcCoreInvalidPropertyTypeException(Type resourceType, MethodInfo method,
+        Type returnType) :
         base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name, returnType.Name })
     {
         this.method = method;
@@ -45,10 +51,4 @@ public class OslcCoreInvalidPropertyTypeException : OslcCoreApplicationException
     {
         return resourceType;
     }
-
-    private static readonly string MESSAGE_KEY = "InvalidPropertyTypeException";
-
-    private readonly MethodInfo method;
-    private readonly Type resourceType;
-    private readonly Type returnType;
 }

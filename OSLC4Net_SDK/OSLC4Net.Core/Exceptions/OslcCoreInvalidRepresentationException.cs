@@ -20,14 +20,24 @@ namespace OSLC4Net.Core.Exceptions;
 
 public class OslcCoreInvalidRepresentationException : OslcCoreApplicationException
 {
+    private static readonly string MESSAGE_KEY = "InvalidRepresentationException";
+
+    private readonly MethodInfo method;
+    private readonly Representation representation;
+    private readonly Type resourceType;
+
     /// <summary>
-    ///
     /// </summary>
     /// <param name="resourceType"></param>
     /// <param name="method"></param>
     /// <param name="representation"></param>
-    public OslcCoreInvalidRepresentationException(Type resourceType, MethodInfo method, Representation representation) :
-        base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name, RepresentationExtension.ToString(representation) })
+    public OslcCoreInvalidRepresentationException(Type resourceType, MethodInfo method,
+        Representation representation) :
+        base(MESSAGE_KEY,
+            new object[]
+            {
+                resourceType.Name, method.Name, RepresentationExtension.ToString(representation)
+            })
     {
         this.method = method;
         this.representation = representation;
@@ -48,10 +58,4 @@ public class OslcCoreInvalidRepresentationException : OslcCoreApplicationExcepti
     {
         return resourceType;
     }
-
-    private static readonly string MESSAGE_KEY = "InvalidRepresentationException";
-
-    private readonly MethodInfo method;
-    private readonly Representation representation;
-    private readonly Type resourceType;
 }
