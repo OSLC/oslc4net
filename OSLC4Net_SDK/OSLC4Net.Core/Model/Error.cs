@@ -58,4 +58,22 @@ public class Error
     {
         this.statusCode = statusCode;
     }
+
+    public string Message
+    {
+        get => GetMessage();
+        set => SetMessage(value);
+    }
+
+    public string StatusCode
+    {
+        get => GetStatusCode();
+        set => SetStatusCode(value);
+    }
+
+    public ExtendedError ExtendedError
+    {
+        get => GetExtendedError();
+        set => SetExtendedError(value);
+    }
 }

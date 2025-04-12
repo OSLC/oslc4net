@@ -14,31 +14,30 @@
  *******************************************************************************/
 
 using System.Net;
-using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Net.Security;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Threading.Tasks;
-using AngleSharp.Dom;
-using AngleSharp.Io;
 using log4net;
 using OSLC4Net.Client.Exceptions;
 using OSLC4Net.Core;
 using OSLC4Net.Core.DotNetRdfProvider;
+using OSLC4Net.Core.Exceptions;
 using OSLC4Net.Core.Model;
 using VDS.RDF;
-using VDS.RDF.Parsing;
 
 namespace OSLC4Net.Client.Oslc;
 
 /// <summary>
 /// An OSLC Client.
 /// </summary>
-public class OslcClient
+public class OslcClient : IDisposable
 {
+    // As of 2020, FF allows 20, Blink - 19, Safari - 16.
+    private const int MAX_REDIRECTS = 20;
+
     private static readonly ILog log =
         LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -245,6 +244,7 @@ public class OslcClient
         _client.DefaultRequestHeaders.Add(OSLCConstants.OSLC_CORE_VERSION, "2.0");
         HttpResponseMessage response;
         bool redirect;
+        byte redirectCount = 0;
         do
         {
             response = await _client.GetAsync(url);
@@ -255,6 +255,15 @@ public class OslcClient
                 url = response.Headers.Location.AbsoluteUri;
                 response.ConsumeContent();
                 redirect = true;
+                if (++redirectCount > MAX_REDIRECTS)
+                {
+                    // max redirects reached
+                    throw new OslcCoreRequestException(-1, response, null,
+                        new Error
+                        {
+                            Message = $"Maximum redirects reached (allowed: {MAX_REDIRECTS})."
+                        });
+                }
             }
             else
             {
@@ -774,6 +783,11 @@ public class OslcClient
                response.StatusCode == HttpStatusCode.Found
                || response.StatusCode == HttpStatusCode.RedirectKeepVerb
                || response.StatusCode == HttpStatusCode.PermanentRedirect;
+    }
+
+    public void Dispose()
+    {
+        _client.Dispose();
     }
 }
 
