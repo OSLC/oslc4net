@@ -82,7 +82,7 @@ public abstract class TestBase
         //    clientBuilder.AddStandardResilienceHandler();
         //});
 
-        // To output logs to the xUnit.net ITestOutputHelper, 
+        // To output logs to the xUnit.net ITestOutputHelper,
         // consider adding a package from https://www.nuget.org/packages?q=xunit+logging
 
         await using var app = await builder.BuildAsync().ConfigureAwait(false);
@@ -103,7 +103,7 @@ public abstract class TestBase
     {
         var httpClient = new HttpClient();
         httpClient.Timeout = TimeSpan.FromSeconds(TIMEOUT_HEALTHCHECK);
-        var maxRetries = 60;
+        var maxRetries = 180;
         var retryDelay = TimeSpan.FromSeconds(DELAY_HEALTHCHECK);
         var serverUrl = new Uri(_serviceProviderCatalogURI);
 

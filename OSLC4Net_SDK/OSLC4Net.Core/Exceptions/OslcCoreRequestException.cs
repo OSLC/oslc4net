@@ -32,8 +32,8 @@ public class OslcCoreRequestException : Exception
         RequestResource = requestResource;
     }
 
-    public int StatusCode { get; set; }
-    public HttpResponseMessage? ResponseMessage { get; set; }
-    public IResource? RequestResource { get; private set; }
-    public Error? ErrorResource { get; private set; }
+    public int StatusCode { get; }
+    public HttpResponseMessage? ResponseMessage { get; }
+    public IResource? RequestResource { get; }
+    public Error? ErrorResource { get; }
 }
