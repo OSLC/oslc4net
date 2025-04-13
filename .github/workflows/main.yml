@@ -87,9 +87,9 @@ jobs:
       - name: Target ${{ matrix.version.target }} only
         shell: pwsh
         run: |
-          (Get-Content Tests/OSLC4Net.ChangeManagementTest/OSLC4Net.ChangeManagementTest.csproj) |
+          (Get-Content Tests/OSLC4Net.Test.RefImpl/OSLC4Net.Test.RefImpl.csproj) |
             ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
-            Set-Content Tests/OSLC4Net.ChangeManagementTest/OSLC4Net.ChangeManagementTest.csproj
+            Set-Content Tests/OSLC4Net.Test.RefImpl/OSLC4Net.Test.RefImpl.csproj
           (Get-Content Tests/OSLC4Net.Client.Tests/OSLC4Net.Client.Tests.csproj) |
             ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
             Set-Content Tests/OSLC4Net.Client.Tests/OSLC4Net.Client.Tests.csproj
