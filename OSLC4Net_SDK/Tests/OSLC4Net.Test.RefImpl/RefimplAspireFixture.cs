@@ -44,10 +44,10 @@ public class RefimplAspireFixture : IAsyncLifetime
             .WithEndpoint(8801, 8080, isExternal: true, isProxied: false,
                 scheme: "http", name: "http");
 
-        var refimplRM = builder
-            .AddDockerfile("refimpl-rm", "../../../../refimpl/src/", "server-rm/Dockerfile")
-            .WithEndpoint(8800, 8080, isExternal: true, isProxied: false,
-                scheme: "http", name: "http");
+        // var refimplRM = builder
+        //     .AddDockerfile("refimpl-rm", "../../../../refimpl/src/", "server-rm/Dockerfile")
+        //     .WithEndpoint(8800, 8080, isExternal: true, isProxied: false,
+        //         scheme: "http", name: "http");
 
 
         //builder.Services.ConfigureHttpClientDefaults(clientBuilder =>
@@ -64,9 +64,9 @@ public class RefimplAspireFixture : IAsyncLifetime
 
         ServiceProviderCatalogUriCM =
             refimplCM.GetEndpoint("http").Url + "/services/catalog/singleton";
-        ServiceProviderCatalogUriRM =
-            refimplRM.GetEndpoint("http").Url + "/services/catalog/singleton";
-        // ServiceProviderCatalogUriRM = "http://localhost:8800/services/catalog/singleton";
+        // ServiceProviderCatalogUriRM =
+        //     refimplRM.GetEndpoint("http").Url + "/services/catalog/singleton";
+        ServiceProviderCatalogUriRM = "http://localhost:8800/services/catalog/singleton";
 
         // Poll for server availability
         await AwaitRefimplStartupAsync().ConfigureAwait(true);

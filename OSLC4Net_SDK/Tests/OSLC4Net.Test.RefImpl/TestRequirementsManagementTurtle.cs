@@ -20,6 +20,8 @@ using Constants = OSLC4Net.ChangeManagement.Constants;
 
 namespace OSLC4Net.ChangeManagementTest;
 
+using DCTerms = OslcConstants.Domains.DCTerms.Q;
+
 [Trait("TestCategory", "RunningOslcServerRequired")]
 public class TestRequirementsManagementTurtle : TestBase
 {
@@ -38,6 +40,7 @@ public class TestRequirementsManagementTurtle : TestBase
     public async Task TestCreateRequirement()
     {
         Requirement resource = new() { Identifier = "REQ-001", Title = "Test requirement" };
+        resource.ExtendedProperties[DCTerms.Description] = "A sample description";
 
         var creation = await GetCreationAsync(MediaType, Constants.TYPE_REQUIREMENT)
             .ConfigureAwait(true);
@@ -49,5 +52,8 @@ public class TestRequirementsManagementTurtle : TestBase
 
         Assert.NotNull(createdResource);
         Assert.Equal(resource.Title, createdResource?.Title);
+        Assert.Equal(resource.Identifier, createdResource?.Identifier);
+        Assert.Equal(resource.ExtendedProperties[DCTerms.Description],
+            createdResource?.ExtendedProperties[DCTerms.Description]);
     }
 }

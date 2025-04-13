@@ -13,20 +13,14 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
+using OSLC4Net.Core.Model;
+
 namespace OSLC4Net.Domains.RequirementsManagement;
 
 public static class Constants
 {
     public static class Domains
     {
-        public static class FOAF
-        {
-            public const string NS = "http://xmlns.com/foaf/0.1/";
-            public const string Prefix = "foaf";
-
-            public const string Person = NS + "Person";
-        }
-
         /// <summary>
         ///     OSLC Requirements Management specific constants
         /// </summary>
@@ -36,6 +30,50 @@ public static class Constants
             public const string Prefix = "oslc_rm";
 
             public const string Requirement = NS + "Requirement";
+
+            public static QName QNameFor(string localResource)
+            {
+                return new QName(NS, localResource, Prefix);
+            }
+
+            public static class P
+            {
+                public const string AffectedBy = NS + "affectedBy";
+                public const string ConstrainedBy = NS + "constrainedBy";
+                public const string Constrains = NS + "constrains";
+                public const string DecomposedBy = NS + "decomposedBy";
+                public const string Decomposes = NS + "decomposes";
+                public const string ElaboratedBy = NS + "elaboratedBy";
+                public const string Elaborates = NS + "elaborates";
+                public const string ImplementedBy = NS + "implementedBy";
+                public const string SatisfiedBy = NS + "satisfiedBy";
+                public const string Satisfies = NS + "satisfies";
+                public const string SpecifiedBy = NS + "specifiedBy";
+                public const string Specifies = NS + "specifies";
+                public const string TrackedBy = NS + "trackedBy";
+                public const string Uses = NS + "uses";
+                public const string ValidatedBy = NS + "validatedBy";
+            }
+
+
+            public static class Q
+            {
+                public static QName AffectedBy => QNameFor("affectedBy");
+                public static QName ConstrainedBy => QNameFor("constrainedBy");
+                public static QName Constrains => QNameFor("constrains");
+                public static QName DecomposedBy => QNameFor("decomposedBy");
+                public static QName Decomposes => QNameFor("decomposes");
+                public static QName ElaboratedBy => QNameFor("elaboratedBy");
+                public static QName Elaborates => QNameFor("elaborates");
+                public static QName ImplementedBy => QNameFor("implementedBy");
+                public static QName SatisfiedBy => QNameFor("satisfiedBy");
+                public static QName Satisfies => QNameFor("satisfies");
+                public static QName SpecifiedBy => QNameFor("specifiedBy");
+                public static QName Specifies => QNameFor("specifies");
+                public static QName TrackedBy => QNameFor("trackedBy");
+                public static QName Uses => QNameFor("uses");
+                public static QName ValidatedBy => QNameFor("validatedBy");
+            }
         }
     }
 }

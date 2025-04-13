@@ -24,17 +24,17 @@ public class OslcCoreMisusedOccursException : OslcCoreApplicationException
 {
     private const string MessageKey = "MisusedOccursException";
 
-    public MemberInfo Method { get; }
-    private Type ResourceType { get; }
-
     /// <summary>
     /// </summary>
     /// <param name="resourceType"></param>
-    /// <param name="method"></param>
-    public OslcCoreMisusedOccursException(Type resourceType, MemberInfo method) :
-        base(MessageKey, [resourceType.Name, method.Name])
+    /// <param name="member"></param>
+    public OslcCoreMisusedOccursException(Type resourceType, MemberInfo member) :
+        base(MessageKey, [resourceType.Name, member.Name])
     {
-        Method = method;
+        Member = member;
         ResourceType = resourceType;
     }
+
+    public MemberInfo Member { get; }
+    private Type ResourceType { get; }
 }

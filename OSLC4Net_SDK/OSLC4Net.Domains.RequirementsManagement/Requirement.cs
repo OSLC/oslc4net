@@ -13,7 +13,8 @@ public record Requirement : IExtendedResource
 
     public readonly List<Uri> Types = new();
 
-    public Dictionary<QName, object> ExtendedProperties { get; set; } = new();
+    public IDictionary<QName, object> ExtendedProperties { get; private set; } =
+        new Dictionary<QName, object>();
 
     [OslcDescription(
         "Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
@@ -62,8 +63,8 @@ public record Requirement : IExtendedResource
 
     public void SetExtendedProperties(IDictionary<QName, object> properties)
     {
-        ExtendedProperties.Clear();
-        ExtendedProperties.AddAll(properties);
+        // must be implemented this way due to how DotNetRdfHelper works - do not Clear+AddRange
+        ExtendedProperties = properties;
     }
 
     public IDictionary<QName, object> GetExtendedProperties()

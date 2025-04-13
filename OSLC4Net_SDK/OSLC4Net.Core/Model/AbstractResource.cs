@@ -22,18 +22,19 @@ namespace OSLC4Net.Core.Model;
 /// </summary>
 public abstract class AbstractResource : IExtendedResource
 {
-    private Uri about;
     private IDictionary<QName, object> extendedProperties = new Dictionary<QName, object>();
     private ICollection<Uri> types = new List<Uri>();
 
     protected AbstractResource(Uri about)
     {
-        this.about = about;
+        About = about;
     }
 
     protected AbstractResource()
     {
     }
+
+    public Uri About { get; set; }
 
     /// <summary>
     ///     Get the subject URI
@@ -41,7 +42,7 @@ public abstract class AbstractResource : IExtendedResource
     /// <returns></returns>
     public Uri GetAbout()
     {
-        return about;
+        return About;
     }
 
     /// <summary>
@@ -50,7 +51,7 @@ public abstract class AbstractResource : IExtendedResource
     /// <param name="about"></param>
     public void SetAbout(Uri about)
     {
-        this.about = about;
+        About = about;
     }
 
     /// <param name="properties"></param>

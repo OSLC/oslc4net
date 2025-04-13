@@ -359,9 +359,9 @@ public static class DotNetRdfHelper
 
         IExtendedResource? extendedResource;
         IDictionary<QName, object>? extendedProperties;
-        if (bean is IExtendedResource)
+        if (bean is IExtendedResource extendedResourcePoco)
         {
-            extendedResource = (IExtendedResource)bean;
+            extendedResource = extendedResourcePoco;
             // TODO: check that all .Add() calls are replaced with []=
             extendedProperties = new Dictionary<QName, object>();
             extendedResource.SetExtendedProperties(extendedProperties);
