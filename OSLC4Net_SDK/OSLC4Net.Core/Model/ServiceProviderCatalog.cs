@@ -18,10 +18,11 @@ using OSLC4Net.Core.Attribute;
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// OSLC Service Provider Catalog resource
+///     OSLC Service Provider Catalog resource
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Service Provider Catalog Resource Shape", describes = new string[] { OslcConstants.TYPE_SERVICE_PROVIDER_CATALOG })]
+[OslcResourceShape(title = "OSLC Service Provider Catalog Resource Shape",
+    describes = new[] { OslcConstants.TYPE_SERVICE_PROVIDER_CATALOG })]
 public class ServiceProviderCatalog : AbstractResource
 {
     private readonly SortedSet<Uri> domains = new SortedUriSet();
@@ -33,13 +34,9 @@ public class ServiceProviderCatalog : AbstractResource
     private Publisher publisher;
     private string title;
 
-    public ServiceProviderCatalog() : base()
-    {
-    }
-
     public void AddDomain(Uri domain)
     {
-        this.domains.Add(domain);
+        domains.Add(domain);
     }
 
     public void AddDomains(ICollection<Uri> domains)
@@ -52,7 +49,7 @@ public class ServiceProviderCatalog : AbstractResource
 
     public void AddServiceProvider(ServiceProvider serviceProvider)
     {
-        this.serviceProviders.Add(serviceProvider);
+        serviceProviders.Add(serviceProvider);
     }
 
     [OslcDescription("Description of the service provider catalog")]
@@ -65,7 +62,8 @@ public class ServiceProviderCatalog : AbstractResource
         return description;
     }
 
-    [OslcDescription("URIs of the OSLC domain specifications that may be implemented by referenced services")]
+    [OslcDescription(
+        "URIs of the OSLC domain specifications that may be implemented by referenced services")]
     [OslcName("domain")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "domain")]
     [OslcReadOnly]
@@ -75,13 +73,15 @@ public class ServiceProviderCatalog : AbstractResource
         return domains.ToArray();
     }
 
-    [OslcDescription("Defines the three OAuth URIs required for a client to act as an OAuth consumer")]
+    [OslcDescription(
+        "Defines the three OAuth URIs required for a client to act as an OAuth consumer")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "oauthConfiguration")]
     [OslcRange(OslcConstants.TYPE_O_AUTH_CONFIGURATION)]
     [OslcReadOnly]
     [OslcRepresentation(Representation.Inline)]
     [OslcTitle("OAuth URIs")]
-    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_OAUTH_CONFIGURATION)]
+    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" +
+                    OslcConstants.PATH_OAUTH_CONFIGURATION)]
     [OslcValueType(ValueType.LocalResource)]
     public OAuthConfiguration GetOauthConfiguration()
     {
@@ -107,7 +107,8 @@ public class ServiceProviderCatalog : AbstractResource
     [OslcRange(OslcConstants.TYPE_SERVICE_PROVIDER_CATALOG)]
     [OslcReadOnly]
     [OslcTitle("Additional Service Provider Catalogs")]
-    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_SERVICE_PROVIDER_CATALOG)]
+    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" +
+                    OslcConstants.PATH_SERVICE_PROVIDER_CATALOG)]
     public Uri[] GetReferencedServiceProviderCatalogs()
     {
         return referencedServiceProviderCatalogs.ToArray();

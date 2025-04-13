@@ -5,8 +5,7 @@
 
   <PropertyGroup>
     <Version Condition="'$(RELEASE_VERSION)' != ''">$(RELEASE_VERSION)</Version>
-    <VersionPrefix Condition="'$(RELEASE_VERSION)' == ''">999.9.9</VersionPrefix>
-    <VersionSuffix Condition="'$(RELEASE_VERSION)' == ''">ts.$([System.DateTime]::UtcNow.ToString(`yyyyMMddHHmm`))</VersionSuffix>
+    <VersionPrefix Condition="'$(RELEASE_VERSION)' == ''">99.99.99.9999</VersionPrefix>
     <PackageLicenseExpression>EPL-1.0</PackageLicenseExpression>
     <Authors>Andrii Berezovskyi and OSLC4Net contributors</Authors>
     <Copyright>© Andrii Berezovskyi and OSLC4Net contributors 2023; © IBM 2012</Copyright>
@@ -35,6 +34,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
     <!-- fail on any NuGet vulnerability audit findings -->
-    <WarningsAsErrors>NU1900;NU1901;NU1902;NU1903;NU1904</WarningsAsErrors>
+    <NugetWarnings>NU1900;NU1901;NU1902;NU1903;NU1904</NugetWarnings>
+    <NullabilityWarnings>CS8600;CS8602;CS8603</NullabilityWarnings>
+    <WarningsAsErrors>$(NugetWarnings);$(NullabilityWarnings)</WarningsAsErrors>
   </PropertyGroup>
 </Project>

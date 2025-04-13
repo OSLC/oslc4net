@@ -19,9 +19,9 @@ using OSLC4Net.Core.Model;
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-/// OSLC Representation attribute
+///     OSLC Representation attribute
 /// </summary>
-[System.AttributeUsage(System.AttributeTargets.Method)
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)
 ]
 public class OslcRepresentation : System.Attribute
 {

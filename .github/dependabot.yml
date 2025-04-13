@@ -8,6 +8,17 @@ updates:
     open-pull-requests-limit: 99
     schedule:
       interval: "daily"
+    groups:
+      test-deps:
+        patterns:
+          - "xunit*"
+          - "MSTest.*"
+          - "Microsoft.NET.Test.*"
+      # often get updates in lockstep with dotnet
+      test-ms-essential:
+        patterns:
+          - "Microsoft.Extensions.*"
+          - "System.Configuration.*"
   - package-ecosystem: "github-actions" # See documentation for possible values
     directory: "/" # Location of package manifests
     open-pull-requests-limit: 99

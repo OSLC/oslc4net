@@ -18,10 +18,11 @@ using OSLC4Net.Core.Attribute;
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// OSLC QueryCapability resource
+///     OSLC QueryCapability resource
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Query Capability Resource Shape", describes = new string[] { OslcConstants.TYPE_QUERY_CAPABILITY })]
+[OslcResourceShape(title = "OSLC Query Capability Resource Shape",
+    describes = new[] { OslcConstants.TYPE_QUERY_CAPABILITY })]
 public class QueryCapability : AbstractResource
 {
     private readonly SortedSet<Uri> resourceTypes = new SortedUriSet();
@@ -33,14 +34,12 @@ public class QueryCapability : AbstractResource
     private string title;
 
     /// <summary>
-    ///
     /// </summary>
-    public QueryCapability() : base()
+    public QueryCapability()
     {
     }
 
     /// <summary>
-    ///
     /// </summary>
     /// <param name="title"></param>
     /// <param name="queryBase"></param>
@@ -52,12 +51,12 @@ public class QueryCapability : AbstractResource
 
     public void AddResourceType(Uri resourceType)
     {
-        this.resourceTypes.Add(resourceType);
+        resourceTypes.Add(resourceType);
     }
 
     public void AddUsage(Uri usage)
     {
-        this.usages.Add(usage);
+        usages.Add(usage);
     }
 
     [OslcDescription("Very short label for use in menu items")]
@@ -69,7 +68,8 @@ public class QueryCapability : AbstractResource
         return label;
     }
 
-    [OslcDescription("The base Uri to use for queries. Queries are invoked via HTTP GET on a query Uri formed by appending a key=value pair to the base Uri, as described in Query Capabilities section")]
+    [OslcDescription(
+        "The base Uri to use for queries. Queries are invoked via HTTP GET on a query Uri formed by appending a key=value pair to the base Uri, as described in Query Capabilities section")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "queryBase")]
     [OslcReadOnly]
@@ -79,7 +79,8 @@ public class QueryCapability : AbstractResource
         return queryBase;
     }
 
-    [OslcDescription("The Query Capability SHOULD provide a Resource Shape that describes the query base Uri")]
+    [OslcDescription(
+        "The Query Capability SHOULD provide a Resource Shape that describes the query base Uri")]
     [OslcName("resourceShape")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "resourceShape")]
     [OslcRange(OslcConstants.TYPE_RESOURCE_SHAPE)]
@@ -91,7 +92,8 @@ public class QueryCapability : AbstractResource
         return resourceShape;
     }
 
-    [OslcDescription("The expected resource type Uri that will be returned with this query capability. These would be the URIs found in the result resource's rdf:type property")]
+    [OslcDescription(
+        "The expected resource type Uri that will be returned with this query capability. These would be the URIs found in the result resource's rdf:type property")]
     [OslcName("resourceType")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "resourceType")]
     [OslcReadOnly]
@@ -112,7 +114,8 @@ public class QueryCapability : AbstractResource
         return title;
     }
 
-    [OslcDescription("An identifier Uri for the domain specified usage of this query capability. If a service provides multiple query capabilities, it may designate the primary or default one that should be used with a property value of http://open-services/ns/core#default")]
+    [OslcDescription(
+        "An identifier Uri for the domain specified usage of this query capability. If a service provides multiple query capabilities, it may designate the primary or default one that should be used with a property value of http://open-services/ns/core#default")]
     [OslcName("usage")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "usage")]
     [OslcReadOnly]

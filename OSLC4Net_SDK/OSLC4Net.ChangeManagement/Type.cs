@@ -23,13 +23,15 @@ public enum Type
     Task,
     [Description("Story")]
     Story,
+
+    // REVISIT: remove underscore in the next major version (@berezovskyi 2025-02)
     [Description("Bug Report")]
     Bug_Report,
     [Description("Feature Request")]
     Feature_Request
 }
 
-class TypeExtension
+public static class TypeExtension
 {
     public static string ToString(Type type)
     {
@@ -50,21 +52,17 @@ class TypeExtension
             }
         }
 
-        throw new ArgumentException();
+        throw new ArgumentOutOfRangeException(nameof(value), value,
+            "The string must correspond to one of the Type enum values");
     }
 }
 
-[System.AttributeUsage(System.AttributeTargets.Field)
+[AttributeUsage(AttributeTargets.Field)
 ]
-class Description : System.Attribute
+internal class Description(string value) : Attribute
 {
     /**
      *  Description of element; used in enumerations
      */
-    public readonly string value;
-
-    public Description(string value)
-    {
-        this.value = value;
-    }
+    public readonly string value = value;
 }

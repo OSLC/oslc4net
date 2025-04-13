@@ -14,15 +14,13 @@
  *******************************************************************************/
 
 using System.Resources;
-
 using log4net;
-
 using OSLC4Net.Core.Properties;
 
 namespace OSLC4Net.Core.Exceptions;
 
 /// <summary>
-/// Utility methods for retrieving messages
+///     Utility methods for retrieving messages
 /// </summary>
 public static class MessageExtractor
 {
@@ -30,14 +28,12 @@ public static class MessageExtractor
     private static readonly ILog logger = LogManager.GetLogger(typeof(MessageExtractor));
 
     /// <summary>
-    ///
     /// </summary>
     /// <param name="key"></param>
     /// <param name="args"></param>
     /// <returns></returns>
-    public static string GetMessage(string key, object[] args)
+    public static string GetMessage(string key, object?[] args)
     {
-
         try
         {
             var message = rm.GetString(key);

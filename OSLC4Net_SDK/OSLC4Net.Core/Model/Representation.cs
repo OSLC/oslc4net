@@ -16,24 +16,29 @@
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// OSLC Representation attribute
+///     OSLC Representation attribute
 /// </summary>
 /// <remarks>see http://open-services.net/bin/view/Main/OslcCoreSpecification#OSLC_Defined_Resources</remarks>
 public enum Representation
 {
+    [URI("")] Unknown,
+
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Reference")]
     Reference,
+
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Inline")]
     Inline,
-    [URI("")]
-    Unknown
+
+    [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Either")]
+    Either
 }
 
 public static class RepresentationExtension
 {
     public static string ToString(Representation representation)
     {
-        var attributes = (URI[])representation.GetType().GetField(representation.ToString()).GetCustomAttributes(typeof(URI), false);
+        var attributes = (URI[])representation.GetType().GetField(representation.ToString())
+            .GetCustomAttributes(typeof(URI), false);
 
         return attributes.Length > 0 ? attributes[0].uri : string.Empty;
     }

@@ -3,16 +3,13 @@ using OSLC4Net.Core.Attribute;
 namespace OSLC4Net.Core.Model;
 
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Error Resource Shape", describes = new string[] { OslcConstants.TYPE_ERROR })]
-class Error
+[OslcResourceShape(title = "OSLC Error Resource Shape",
+    describes = new[] { OslcConstants.TYPE_ERROR })]
+public class Error
 {
     private ExtendedError extendedError;
     private string message;
     private string statusCode;
-
-    public Error() : base()
-    {
-    }
 
     [OslcDescription("Extended error information.")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "extendedError")]
@@ -60,5 +57,23 @@ class Error
     public void SetStatusCode(string statusCode)
     {
         this.statusCode = statusCode;
+    }
+
+    public string Message
+    {
+        get => GetMessage();
+        set => SetMessage(value);
+    }
+
+    public string StatusCode
+    {
+        get => GetStatusCode();
+        set => SetStatusCode(value);
+    }
+
+    public ExtendedError ExtendedError
+    {
+        get => GetExtendedError();
+        set => SetExtendedError(value);
     }
 }

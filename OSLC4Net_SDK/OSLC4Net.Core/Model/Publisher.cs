@@ -18,10 +18,11 @@ using OSLC4Net.Core.Attribute;
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// OSLC Publisher resource
+///     OSLC Publisher resource
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Publisher Resource Shape", describes = new string[] { OslcConstants.TYPE_PUBLISHER })]
+[OslcResourceShape(title = "OSLC Publisher Resource Shape",
+    describes = new[] { OslcConstants.TYPE_PUBLISHER })]
 public class Publisher : AbstractResource
 {
     private Uri icon;
@@ -29,7 +30,7 @@ public class Publisher : AbstractResource
     private string label;
     private string title;
 
-    public Publisher() : base()
+    public Publisher()
     {
     }
 
@@ -39,7 +40,8 @@ public class Publisher : AbstractResource
         this.identifier = identifier;
     }
 
-    [OslcDescription("URL to an icon file that represents the provider. This icon should be a favicon format and 16x16 pixels in size")]
+    [OslcDescription(
+        "URL to an icon file that represents the provider. This icon should be a favicon format and 16x16 pixels in size")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "icon")]
     [OslcReadOnly]
     [OslcTitle("Icon")]

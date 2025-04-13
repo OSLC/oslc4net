@@ -16,11 +16,16 @@
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// Interface to represent an OSLC resource.
+///     Interface to represent an OSLC resource.
 /// </summary>
 public interface IResource
 {
+    Uri About { get; }
+
+    [Obsolete]
     Uri GetAbout();
+
+    [Obsolete]
     void SetAbout(Uri about);
 }
 

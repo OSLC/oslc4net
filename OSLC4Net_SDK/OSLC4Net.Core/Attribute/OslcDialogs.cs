@@ -17,18 +17,18 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-/// OSLC Dialogs attribute
+///     OSLC Dialogs attribute
 /// </summary>
-[System.AttributeUsage(System.AttributeTargets.Method)
+[AttributeUsage(AttributeTargets.Method)
 ]
 public class OslcDialogs : System.Attribute
 {
-    public readonly OslcDialog[] value;
+    public readonly OslcDialog[]? Value;
 
     public OslcDialogs(params OslcDialog[] value)
     {
-        this.value = new OslcDialog[value.Length];
+        Value = new OslcDialog[value.Length];
 
-        value.CopyTo(this.value, 0);
+        value.CopyTo(Value, 0);
     }
 }

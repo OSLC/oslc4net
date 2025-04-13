@@ -17,10 +17,10 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-/// OSLC MaxSize attribute
+///     OSLC MaxSize attribute
 /// </summary>
 /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-[System.AttributeUsage(System.AttributeTargets.Method)
+[AttributeUsage(AttributeTargets.Method)
 ]
 public class OslcMaxSize : System.Attribute
 {

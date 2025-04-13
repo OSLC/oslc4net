@@ -13,12 +13,15 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
+using System.Collections;
 using System.Reflection;
 
 namespace OSLC4Net.Core.Model;
 
 public class EnumerableWrapper : IEnumerable<object>
 {
+    private readonly object opaqueObj;
+
     public EnumerableWrapper(object opaqueObj)
     {
         this.opaqueObj = opaqueObj;
@@ -28,18 +31,26 @@ public class EnumerableWrapper : IEnumerable<object>
     {
         var method = opaqueObj.GetType().GetMethod("GetEnumerator", Type.EmptyTypes);
 
-        method = method.MakeGenericMethod();
+        if (method.IsGenericMethod)
+        {
+            method = method.MakeGenericMethod();
+        }
 
         return new EnumeratorWrapper(method.Invoke(opaqueObj, null));
     }
 
-    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+    IEnumerator IEnumerable.GetEnumerator()
     {
         return GetEnumerator();
     }
 
     private class EnumeratorWrapper : IEnumerator<object>
     {
+        private readonly PropertyInfo currentInfo;
+        private readonly MethodInfo moveNext;
+
+        private readonly object opaqueEnumerator;
+
         public EnumeratorWrapper(object opaqueEnumerator)
         {
             this.opaqueEnumerator = opaqueEnumerator;
@@ -47,17 +58,12 @@ public class EnumerableWrapper : IEnumerable<object>
             moveNext = opaqueEnumerator.GetType().GetMethod("MoveNext", Type.EmptyTypes);
         }
 
-        public object Current
-        {
-            get
-            {
-                return currentInfo.GetValue(opaqueEnumerator, null);
-            }
-        }
+        public object Current => currentInfo.GetValue(opaqueEnumerator, null);
 
         public void Dispose()
         {
-            opaqueEnumerator.GetType().GetMethod("Dispose", Type.EmptyTypes).Invoke(opaqueEnumerator, Type.EmptyTypes);
+            opaqueEnumerator.GetType().GetMethod("Dispose", Type.EmptyTypes)
+                .Invoke(opaqueEnumerator, Type.EmptyTypes);
         }
 
         public bool MoveNext()
@@ -67,13 +73,8 @@ public class EnumerableWrapper : IEnumerable<object>
 
         public void Reset()
         {
-            opaqueEnumerator.GetType().GetMethod("Reset", Type.EmptyTypes).Invoke(opaqueEnumerator, Type.EmptyTypes);
+            opaqueEnumerator.GetType().GetMethod("Reset", Type.EmptyTypes)
+                .Invoke(opaqueEnumerator, Type.EmptyTypes);
         }
-
-        private readonly object opaqueEnumerator;
-        private readonly PropertyInfo currentInfo;
-        private readonly MethodInfo moveNext;
     }
-
-    private readonly object opaqueObj;
 }

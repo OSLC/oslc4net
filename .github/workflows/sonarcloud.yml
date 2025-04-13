@@ -17,10 +17,10 @@ jobs:
   build:
     name: Build and analyze
     runs-on: windows-latest
-    if: ${{ !contains(github.event.pull_request.labels.*.name, 'ci:nolint') && !contains(github.event.pull_request.labels.*.name, 'dependencies') && !github.event.pull_request.head.repo.fork }}
+    if: ${{ !contains(github.event.pull_request.labels.*.name, 'ci:nolint') && !contains(github.event.pull_request.labels.*.name, 'dependencies') }}
     steps:
       - name: Set up JDK 17
-        uses: actions/setup-java@7a6d8a8234af8eb26422e24e3006232cccaa061b # v4.6.0
+        uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
         with:
           java-version: 17
           distribution: 'zulu' # Alternative distribution options are available.
@@ -29,14 +29,14 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
           persist-credentials: false
       - name: Cache SonarCloud packages
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
         with:
           path: ~\sonar\cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache SonarCloud scanner
         id: cache-sonar-scanner
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
         with:
           path: .\.sonar\scanner
           key: ${{ runner.os }}-sonar-scanner

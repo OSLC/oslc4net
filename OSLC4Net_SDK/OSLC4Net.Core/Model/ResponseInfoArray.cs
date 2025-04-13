@@ -17,47 +17,48 @@
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// An OSLC ResponseInfo resource containing an array of member resources
+///     An OSLC ResponseInfo resource containing an array of member resources
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public class ResponseInfoArray<T> : ResponseInfo<T[]>
 {
-    /**
-     * Array of resources
-     */
-    public T[] Array() { return Resource; }
-
     /// <summary>
-    ///
     /// </summary>
     /// <param name="array"></param>
     /// <param name="properties"></param>
     /// <param name="totalCount"></param>
     /// <param name="nextPage"></param>
     public
-    ResponseInfoArray(
-        T[] array,
-        IDictionary<string, object> properties,
-        int totalCount,
-        string nextPage
-    ) : base(array, properties, totalCount, nextPage)
+        ResponseInfoArray(
+            T[] array,
+            IDictionary<string, object> properties,
+            int totalCount,
+            string nextPage
+        ) : base(array, properties, totalCount, nextPage)
     {
     }
 
     /// <summary>
-    ///
     /// </summary>
     /// <param name="array"></param>
     /// <param name="properties"></param>
     /// <param name="totalCount"></param>
     /// <param name="nextPage"></param>
     public
-    ResponseInfoArray(
-        T[] array,
-        IDictionary<string, object> properties,
-        int totalCount,
-        Uri nextPage
-    ) : base(array, properties, totalCount, nextPage)
+        ResponseInfoArray(
+            T[] array,
+            IDictionary<string, object> properties,
+            int totalCount,
+            Uri nextPage
+        ) : base(array, properties, totalCount, nextPage)
     {
+    }
+
+    /**
+     * Array of resources
+     */
+    public T[] Array()
+    {
+        return Resource;
     }
 }

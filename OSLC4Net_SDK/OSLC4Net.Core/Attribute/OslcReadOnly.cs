@@ -17,10 +17,10 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-/// OSLC ReadOnly attribute
+///     OSLC ReadOnly attribute
 /// </summary>
 /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-[System.AttributeUsage(System.AttributeTargets.Method)
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)
 ]
 public class OslcReadOnly : System.Attribute
 {
@@ -31,7 +31,7 @@ public class OslcReadOnly : System.Attribute
 
     public OslcReadOnly()
     {
-        this.value = true;
+        value = true;
     }
 
     public OslcReadOnly(bool value)

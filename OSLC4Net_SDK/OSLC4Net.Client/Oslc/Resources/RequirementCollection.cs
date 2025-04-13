@@ -13,17 +13,23 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
+using CommunityToolkit.Diagnostics;
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client.Oslc.Resources;
 
+/// <summary>
+///     OSLC shape for <c>oslc_rm:RequirementCollection</c>
+/// </summary>
 [OslcNamespace(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE)]
-[OslcResourceShape(title = "Requirement Collection Resource Shape", describes = new string[] { RmConstants.TYPE_REQUIREMENT_COLLECTION })]
-public class RequirementCollection : Requirement
+[OslcResourceShape(title = "Requirement Collection Resource Shape",
+    describes = new string[] { RmConstants.TYPE_REQUIREMENT_COLLECTION })]
+[Obsolete("See OSLC4Net.Domains.RequirementsManagement")]
+public class RequirementCollection : RequirementBase
 {
     // The only extra field is uses
-    private readonly ISet<Uri> uses = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Uri> _uses = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
     public RequirementCollection() : base()
     {
@@ -32,13 +38,12 @@ public class RequirementCollection : Requirement
 
     public RequirementCollection(Uri about) : base(about)
     {
-
         AddRdfType(new Uri(RmConstants.TYPE_REQUIREMENT_COLLECTION));
     }
 
     public void AddUses(Uri uses)
     {
-        this.uses.Add(uses);
+        _uses.Add(uses);
     }
 
     [OslcDescription("A collection uses a resource - the resource is in the requirement collection.")]
@@ -48,16 +53,13 @@ public class RequirementCollection : Requirement
     [OslcTitle("Uses")]
     public Uri[] GetUses()
     {
-        return uses.ToArray();
+        return _uses.ToArray();
     }
 
     public void SetUses(Uri[] uses)
     {
-        this.uses.Clear();
-
-        if (uses != null)
-        {
-            this.uses.AddAll(uses);
-        }
+        Guard.IsNotNull(uses);
+        _uses.Clear();
+        _uses.AddAll(uses);
     }
 }

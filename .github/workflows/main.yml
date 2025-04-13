@@ -44,33 +44,41 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, windows-latest]
+        os: [ubuntu-24.04, ubuntu-24.04-arm, windows-latest]
         version:
           [
             # { setup: "6.x", target: "net6.0" },
             { setup: "8.x", target: "net8.0" },
             { setup: "9.x", target: "net9.0" },
+            { setup: "10.x", target: "net10.0" },
           ]
     runs-on: ${{ matrix.os }}
     defaults:
       run:
-        working-directory: OSLC4Net_SDK/
+        working-directory: main/OSLC4Net_SDK/
     env:
       NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
       # TAG_VALUE: ${{ github.ref_name || inputs.version }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+        uses: step-security/harden-runner@c6295a65d1254861815972266d5933fd6e532bdf # v2.11.1
         with:
           egress-policy: audit
-
       - name: Checkout Code
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           show-progress: false
           persist-credentials: false
+          path: main
+      - name: Checkout Code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          show-progress: false
+          persist-credentials: false
+          repository: oslc-op/refimpl
+          path: refimpl
       - name: Setup .NET
-        uses: actions/setup-dotnet@87b7050bc53ea08284295505d98d2aa94301e852 # v4.2.0
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
         with:
           dotnet-version: ${{ matrix.version.setup }}
           source-url: https://nuget.pkg.github.com/oslc/index.json
@@ -79,9 +87,9 @@ jobs:
       - name: Target ${{ matrix.version.target }} only
         shell: pwsh
         run: |
-          (Get-Content Tests/OSLC4Net.ChangeManagementTest/OSLC4Net.ChangeManagementTest.csproj) |
+          (Get-Content Tests/OSLC4Net.Test.RefImpl/OSLC4Net.Test.RefImpl.csproj) |
             ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
-            Set-Content Tests/OSLC4Net.ChangeManagementTest/OSLC4Net.ChangeManagementTest.csproj
+            Set-Content Tests/OSLC4Net.Test.RefImpl/OSLC4Net.Test.RefImpl.csproj
           (Get-Content Tests/OSLC4Net.Client.Tests/OSLC4Net.Client.Tests.csproj) |
             ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
             Set-Content Tests/OSLC4Net.Client.Tests/OSLC4Net.Client.Tests.csproj
@@ -94,9 +102,12 @@ jobs:
           (Get-Content Tests/OSLC4Net.Core.QueryTests/OSLC4Net.Core.QueryTests.csproj) |
             ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
             Set-Content Tests/OSLC4Net.Core.QueryTests/OSLC4Net.Core.QueryTests.csproj
+          (Get-Content Tests/OSLC4Net.Test.AspireHost/OSLC4Net.Test.AspireHost.csproj) |
+            ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
+            Set-Content Tests/OSLC4Net.Test.AspireHost/OSLC4Net.Test.AspireHost.csproj
       - name: Cache NuGet
         # id: cache-nuget
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
         # env:
         #   cache-name: cache-node-modules
         with:
@@ -107,13 +118,19 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --no-restore
-      - name: Test
+      - name: Test (with Refimpl CM tests)
+        run: dotnet test --no-build --verbosity normal  --collect:"XPlat Code Coverage"
+        if: |
+          matrix.os != 'windows-latest'
+      - name: Test (without Refimpl CM tests)
         run: dotnet test --no-build --verbosity normal  --filter TestCategory!=RunningOslcServerRequired --collect:"XPlat Code Coverage"
+        if: |
+          matrix.os == 'windows-latest'
       # - name: Set version suffix
       #   id: version
       #   run: echo "::set-output name=suffix::$(date +'-ts.%y%m%d%H%M')"
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@1e68e06f1dbfde0e4cefc87efeba9e4643565303 # v5.1.2
+        uses: codecov/codecov-action@0565863a31f2c772f9f0395002a31e3f06189574 # v5.4.0
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       - name: Pack NuGet packages (snapshot)
@@ -140,7 +157,7 @@ jobs:
           success()
           && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
           && ( github.event_name == 'release' || inputs.release )
-      - uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: nuget
           # if-no-files-found: error

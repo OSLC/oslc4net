@@ -14,9 +14,8 @@
  *******************************************************************************/
 
 
-using log4net;
-
 using System.Net.NetworkInformation;
+using log4net;
 
 namespace OSLC4Net.Client;
 
@@ -27,7 +26,8 @@ public static class ServiceProviderRegistryURIs
 {
     private static readonly ILog LOGGER = LogManager.GetLogger(typeof(ServiceProviderRegistryURIs));
 
-    private static readonly string SYSTEM_PROPERTY_NAME_REGISTRY_URI = typeof(ServiceProviderRegistryURIs).Assembly.FullName + ".registryuri";
+    private static readonly string SYSTEM_PROPERTY_NAME_REGISTRY_URI =
+        typeof(ServiceProviderRegistryURIs).Assembly.FullName + ".registryuri";
 
     private static readonly string SERVICE_PROVIDER_REGISTRY_URI;
 
@@ -36,7 +36,7 @@ public static class ServiceProviderRegistryURIs
         LOGGER.Debug($"Checking {SYSTEM_PROPERTY_NAME_REGISTRY_URI} env var for OSLC SPC URI");
         var registryURI = Environment.GetEnvironmentVariable(SYSTEM_PROPERTY_NAME_REGISTRY_URI);
 
-        string defaultBase = null;
+        string? defaultBase = null;
 
         if (registryURI == null)
         {
@@ -69,9 +69,9 @@ public static class ServiceProviderRegistryURIs
             // This also allows us to distinguish between array and single results within the ServiceProviderCatalogResource.
             SERVICE_PROVIDER_REGISTRY_URI = defaultBase + "OSLC4JRegistry/catalog/singleton";
 
-            LOGGER.Warn("System property '" + SYSTEM_PROPERTY_NAME_REGISTRY_URI + "' not set.  Using calculated value '" + SERVICE_PROVIDER_REGISTRY_URI + "'");
+            LOGGER.Warn("System property '" + SYSTEM_PROPERTY_NAME_REGISTRY_URI +
+                        "' not set.  Using calculated value '" + SERVICE_PROVIDER_REGISTRY_URI + "'");
         }
-
     }
 
     /// <summary>
@@ -82,5 +82,4 @@ public static class ServiceProviderRegistryURIs
     {
         return SERVICE_PROVIDER_REGISTRY_URI;
     }
-
 }

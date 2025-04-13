@@ -17,12 +17,22 @@
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// Class representing a filtered OSLC resource.  That is, a representation of resource where some of the
-/// attributes are not present (filtered using oslc.select or oslc.properties)
+///     Class representing a filtered OSLC resource.  That is, a representation of resource where some
+///     of the
+///     attributes are not present (filtered using oslc.select or oslc.properties)
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public class FilteredResource<T>
 {
+    public FilteredResource(
+        T resource,
+        IDictionary<string, object> properties
+    )
+    {
+        Resource = resource;
+        Properties = properties;
+    }
+
     /**
      * Resource.
      */
@@ -32,13 +42,4 @@ public class FilteredResource<T>
      * properties
      */
     public IDictionary<string, object> Properties { get; private set; }
-
-    public FilteredResource(
-        T resource,
-        IDictionary<string, object> properties
-    )
-    {
-        this.Resource = resource;
-        this.Properties = properties;
-    }
 }

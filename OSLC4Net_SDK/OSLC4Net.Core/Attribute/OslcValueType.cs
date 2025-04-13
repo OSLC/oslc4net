@@ -14,21 +14,23 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
+using ValueType = OSLC4Net.Core.Model.ValueType;
+
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-/// OSLC ValueType attribue
+///     OSLC ValueType attribue
 /// </summary>
-[System.AttributeUsage(System.AttributeTargets.Method)
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)
 ]
 public class OslcValueType : System.Attribute
 {
     /**
      * Value-type of the property.
      */
-    public readonly OSLC4Net.Core.Model.ValueType value;
+    public readonly ValueType value;
 
-    public OslcValueType(OSLC4Net.Core.Model.ValueType value)
+    public OslcValueType(ValueType value)
     {
         this.value = value;
     }

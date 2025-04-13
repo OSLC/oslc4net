@@ -58,7 +58,8 @@ public abstract class QmResource : AbstractResource
         return created;
     }
 
-    [OslcDescription("A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
+    [OslcDescription(
+        "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
     [OslcReadOnly]
@@ -104,7 +105,8 @@ public abstract class QmResource : AbstractResource
         return serviceProvider;
     }
 
-    [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
+    [OslcDescription(
+        "Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
     [OslcTitle("Title")]
@@ -138,10 +140,7 @@ public abstract class QmResource : AbstractResource
     {
         this.rdfTypes.Clear();
 
-        if (rdfTypes != null)
-        {
-            this.rdfTypes.AddAll(rdfTypes);
-        }
+        if (rdfTypes != null) this.rdfTypes.AddAll(rdfTypes);
     }
 
     public void SetServiceProvider(Uri serviceProvider)

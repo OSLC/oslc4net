@@ -18,10 +18,11 @@ using OSLC4Net.Core.Attribute;
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// OSLC Service attribute
+///     OSLC Service attribute
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Service Resource Shape", describes = new string[] { OslcConstants.TYPE_SERVICE })]
+[OslcResourceShape(title = "OSLC Service Resource Shape",
+    describes = new[] { OslcConstants.TYPE_SERVICE })]
 public class Service : AbstractResource
 {
     private readonly IList<Dialog> creationDialogs = new List<Dialog>();
@@ -31,7 +32,7 @@ public class Service : AbstractResource
 
     private Uri domain;
 
-    public Service() : base()
+    public Service()
     {
     }
 
@@ -42,22 +43,22 @@ public class Service : AbstractResource
 
     public void AddCreationDialog(Dialog dialog)
     {
-        this.creationDialogs.Add(dialog);
+        creationDialogs.Add(dialog);
     }
 
     public void AddCreationFactory(CreationFactory creationFactory)
     {
-        this.creationFactories.Add(creationFactory);
+        creationFactories.Add(creationFactory);
     }
 
     public void AddQueryCapability(QueryCapability queryCapability)
     {
-        this.queryCapabilities.Add(queryCapability);
+        queryCapabilities.Add(queryCapability);
     }
 
     public void AddSelectionDialog(Dialog dialog)
     {
-        this.selectionDialogs.Add(dialog);
+        selectionDialogs.Add(dialog);
     }
 
     [OslcDescription("Enables clients to create a resource via UI")]
@@ -88,7 +89,8 @@ public class Service : AbstractResource
         return creationFactories.ToArray();
     }
 
-    [OslcDescription("Namespace Uri of the OSLC domain specification that is implemented by this service")]
+    [OslcDescription(
+        "Namespace Uri of the OSLC domain specification that is implemented by this service")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "domain")]
     [OslcReadOnly]
