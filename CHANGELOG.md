@@ -17,11 +17,11 @@ This release does not contain security updates.
 
 ### Added
 
-- ⚡️ CI integration tests against OSLC RefImpl based on NET Aspire
+- ⚡️ CI integration tests against OSLC RefImpl CM/RM based on NET Aspire
 - ⚡️ Ability to define OSLC resource POCOs using C# properties instead of
   Java-style getters/setters.
-- ⚡️ Initial support for the OSLC Requirements Management domain.
-- Added full vocabulary definitions for FOAF and DC Terms
+- ⚡️ Support for the OSLC Requirements Management 2.1 domain with property-based code.
+- Added full vocabulary definitions for FOAF, DC Terms, DC Elements, LDP, PROV-O, QUDT, SKOS.
 - Redirect loop protection for `OslcClient` (max 20 redirects as in
   Firefox/Blink/WebKit)
 - Follow redirects on more responses statuses (was: 301, became: 301, 302, 307,
@@ -39,6 +39,7 @@ This release does not contain security updates.
 - Most non-async methods in client classes.
 - Further OSLC JSON deprecations. Clients should rely on RDF instead (RDF/XML,
   Turtle)
+- Old OSLC Requirements Management classes that were hand-rolled and used Java code style.
 
 ### Removed
 
