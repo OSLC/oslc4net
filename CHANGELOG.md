@@ -18,14 +18,13 @@ This release does not contain security updates.
 
 - ⚡️ CI integration tests against OSLC RefImpl based on NET Aspire
 - Redirect loop protection for `OslcClient` (max 20 redirects as in Firefox/Blink/WebKit)
+- Follow redirects on more responses statuses (was: 301, became: 301, 302, 307, 308, and in case of GET requests, 303 too)
+- ❗️ `OslcResponse` can now expose multiple response resources, the `Graph` and, in case of error, the `oslc:Error` resource.
 
 ### Changed
 
 - dotNetRDF dependency was updated to v3.3.1
 - ❗️ `OslcClient` was updated to consistently support async operations
-- ❗️ `OslcResponse` was updated to expose potentially multiple resources, expose the `Graph` and, in case of error, the `oslc:Error` resource.
-- Follow redirects on more responses statuses (was: 301, became: 301, 302, 307, 308, and in case of GET requests, 303 too)
-
 
 ### Deprecated
 
