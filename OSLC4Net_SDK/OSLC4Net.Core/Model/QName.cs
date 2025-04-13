@@ -98,7 +98,8 @@ public class QName
         if (obj is QName qNameOther)
         {
             return $"{namespaceURI}{localPart}".Equals(
-                $"{qNameOther.namespaceURI}{qNameOther.localPart}");
+                $"{qNameOther.namespaceURI}{qNameOther.localPart}",
+                StringComparison.InvariantCulture);
         }
 
         return false;
