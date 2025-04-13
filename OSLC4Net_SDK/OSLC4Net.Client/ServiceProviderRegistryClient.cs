@@ -68,12 +68,14 @@ public sealed class ServiceProviderRegistryClient
     /// <param name="mediaType"></param>
     public ServiceProviderRegistryClient(string uri,
         IEnumerable<MediaTypeFormatter> formatters,
-        string mediaType) : this(uri, formatters, mediaType, null, null)
+        string mediaType, ILoggerFactory loggerFactory) : this(uri, formatters, mediaType,
+        loggerFactory, null)
     {
     }
 
-    public ServiceProviderRegistryClient(string uri, IEnumerable<MediaTypeFormatter> formatters) :
-        this(uri, formatters, OslcMediaType.APPLICATION_RDF_XML, null, null)
+    public ServiceProviderRegistryClient(string uri, IEnumerable<MediaTypeFormatter> formatters,
+        ILoggerFactory loggerFactory) :
+        this(uri, formatters, OslcMediaType.APPLICATION_RDF_XML, loggerFactory, null)
     {
     }
 
@@ -127,8 +129,8 @@ public sealed class ServiceProviderRegistryClient
 
         if (serviceProviders != null)
         {
-            CreationFactory firstCreationFactory = null;
-            CreationFactory firstDefaultCreationFactory = null;
+            CreationFactory? firstCreationFactory = null;
+            CreationFactory? firstDefaultCreationFactory = null;
 
             for (var serviceProviderIndex = 0;
                  serviceProviderIndex < serviceProviders.Length &&
@@ -237,7 +239,7 @@ public sealed class ServiceProviderRegistryClient
     /// Otherwise null will be returned.
     /// </summary>
     /// <returns></returns>
-    public async Task<ServiceProviderCatalog> FetchServiceProviderCatalogAsync()
+    public async Task<ServiceProviderCatalog?> FetchServiceProviderCatalogAsync()
     {
         var oslcResponse = await Client.GetResourceAsync<ServiceProviderCatalog>(Endpoint).ConfigureAwait(false);
         if (oslcResponse.StatusCode == HttpStatusCode.OK)

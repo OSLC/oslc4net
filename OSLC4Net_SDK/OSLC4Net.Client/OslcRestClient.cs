@@ -192,7 +192,7 @@ public sealed class OslcRestClient
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public async Task<T> GetOslcResourceAsync<T>() where T : class, IResource
+    public async Task<T?> GetOslcResourceAsync<T>() where T : class, IResource
     {
         // _client.DefaultRequestHeaders.Clear();
         // _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(_mediaType, 1.0));
@@ -214,7 +214,7 @@ public sealed class OslcRestClient
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public async Task<ICollection<T>> GetOslcResourcesAsync<T>()
+    public async Task<ICollection<T>?> GetOslcResourcesAsync<T>()
     {
         // _client.DefaultRequestHeaders.Clear();
         // _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(_mediaType));
@@ -243,7 +243,7 @@ public sealed class OslcRestClient
     /// <typeparam name="T"></typeparam>
     /// <param name="oslcResource"></param>
     /// <returns></returns>
-    public async Task<T> AddOslcResourceAsync<T>(T oslcResource) where T : class, IResource
+    public async Task<T?> AddOslcResourceAsync<T>(T oslcResource) where T : class, IResource
     {
         // FIXME: stop clearing
         // _client.DefaultRequestHeaders.Clear();

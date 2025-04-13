@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <WarningsAsErrors>$(NugetWarnings)</WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\OSLC4Net.Core.JsonProvider\OSLC4Net.Core.JsonProvider.csproj" />

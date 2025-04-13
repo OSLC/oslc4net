@@ -5,10 +5,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
     <IsAspireHost>true</IsAspireHost>
-    <UserSecretsId>b0f717da-8861-4578-831f-67d4cf543b6b</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

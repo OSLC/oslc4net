@@ -327,14 +327,14 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
                 _graph = graph;
             }
 
-            object IEnumerator.Current => Current;
+            object IEnumerator.Current => Current!;
 
             public T Current
             {
                 get
                 {
-                    var member = _triples.Current;
-
+                    var member = _triples.Current ??
+                                 throw new ArgumentNullException(nameof(_triples.Current));
                     return (T)DotNetRdfHelper.FromDotNetRdfNode((IUriNode)member.Object, _graph,
                         typeof(T));
                 }

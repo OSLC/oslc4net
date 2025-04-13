@@ -14,8 +14,8 @@
  *******************************************************************************/
 
 
-using log4net;
 using System.Net.NetworkInformation;
+using log4net;
 
 namespace OSLC4Net.Client;
 
@@ -36,7 +36,7 @@ public static class ServiceProviderRegistryURIs
         LOGGER.Debug($"Checking {SYSTEM_PROPERTY_NAME_REGISTRY_URI} env var for OSLC SPC URI");
         var registryURI = Environment.GetEnvironmentVariable(SYSTEM_PROPERTY_NAME_REGISTRY_URI);
 
-        string defaultBase = null;
+        string? defaultBase = null;
 
         if (registryURI == null)
         {

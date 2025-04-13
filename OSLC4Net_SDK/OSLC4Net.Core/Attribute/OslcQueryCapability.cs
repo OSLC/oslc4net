@@ -22,30 +22,30 @@ namespace OSLC4Net.Core.Attribute;
 /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
 [AttributeUsage(AttributeTargets.Method)
 ]
-public class OslcQueryCapability : System.Attribute
+public class OslcQueryCapability(string? title) : System.Attribute
 {
     /**
      * Very short label for use in menu items
      */
-    public string label = "";
+    public readonly string Label = "";
 
     /**
  * Resource shapes
  */
-    public string resourceShape = "";
+    public readonly string ResourceShape = "";
 
     /**
      * Resource types
      */
-    public string[] resourceTypes = { };
+    public readonly string[] ResourceTypes = { };
 
     /**
      * Title string that could be used for display
      */
-    public string title;
+    public readonly string? Title = title;
 
     /**
      * Usages
      */
-    public string[] usages = { };
+    public readonly string[] Usages = { };
 }

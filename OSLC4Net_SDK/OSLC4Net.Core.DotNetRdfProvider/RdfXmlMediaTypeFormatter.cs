@@ -21,8 +21,6 @@ using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
 using VDS.RDF;
 using VDS.RDF.Parsing;
-using VDS.RDF.Parsing.Handlers;
-using VDS.RDF.Query.Algebra;
 using VDS.RDF.Writing;
 
 namespace OSLC4Net.Core.DotNetRdfProvider;
@@ -275,7 +273,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     /// <returns></returns>
     public override bool CanReadType(Type type)
     {
-        if (type == typeof(VDS.RDF.Graph) || type == typeof(BaseGraph) || type == typeof(IGraph))
+        if (type == typeof(Graph) || type == typeof(BaseGraph) || type == typeof(IGraph))
         {
             return true;
         }
@@ -346,7 +344,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             }
 
 
-            IGraph? graph = new VDS.RDF.Graph();
+            IGraph? graph = new Graph();
             // REVISIT: we need a more robust way to obtain request URI
             content.Headers.TryGetValues(OSLC4NetConstants.INNER_URI_HEADER, out var shuttleRequestUri);
             graph.BaseUri = shuttleRequestUri?.SingleOrDefault()?.ToSafeUri() ?? httpRequest?.RequestUri;
@@ -378,7 +376,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                 rdfParser.Load(graph, streamReader);
 
                 // REVISIT: better handling of assignable types (@berezovskyi 2025-04)
-                if (type == typeof(VDS.RDF.Graph) || type == typeof(BaseGraph) || type == typeof(IGraph))
+                if (type == typeof(Graph) || type == typeof(BaseGraph) || type == typeof(IGraph))
                 {
                     return graph;
                 }
@@ -430,7 +428,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         return type.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0;
     }
 
-    private Type GetMemberType(Type type)
+    private Type? GetMemberType(Type type)
     {
         if (type.IsArray)
         {

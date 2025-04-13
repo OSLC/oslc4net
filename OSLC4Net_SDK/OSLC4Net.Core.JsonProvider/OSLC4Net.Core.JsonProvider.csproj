@@ -3,6 +3,7 @@
     <AssemblyName>OSLC4Net.Core.JsonProvider</AssemblyName>
     <RootNamespace>OSLC4Net.Core.JsonProvider</RootNamespace>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <WarningsAsErrors>$(NugetWarnings)</WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <None Include="app.config" />

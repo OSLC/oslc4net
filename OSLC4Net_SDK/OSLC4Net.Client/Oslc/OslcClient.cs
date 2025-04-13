@@ -617,7 +617,7 @@ public class OslcClient : IDisposable
     /// <returns></returns>
     public async Task<string> LookupServiceProviderUrl(string catalogUrl, string serviceProviderTitle)
     {
-        string retval = null;
+        string? retval = null;
         var response = await GetResourceAsync<ServiceProviderCatalog>(catalogUrl).ConfigureAwait(false);
 
         if (response.StatusCode != HttpStatusCode.OK)
@@ -713,15 +713,15 @@ public class OslcClient : IDisposable
     public async Task<string> LookupCreationFactoryAsync(string serviceProviderUrl, string oslcDomain,
         string oslcResourceType)
     {
-        CreationFactory defaultCreationFactory = null;
-        CreationFactory firstCreationFactory = null;
+        CreationFactory? defaultCreationFactory = null;
+        CreationFactory? firstCreationFactory = null;
 
         var response = await GetResourceAsync<ServiceProvider>(serviceProviderUrl).ConfigureAwait(false);
 
         if (response.StatusCode != HttpStatusCode.OK)
             throw new ResourceNotFoundException(serviceProviderUrl, "CreationFactory");
 
-        var serviceProvider = response.Resources.SingleOrDefault();
+        var serviceProvider = response.Resources?.SingleOrDefault();
 
         if (serviceProvider != null)
             foreach (var service in serviceProvider.GetServices())

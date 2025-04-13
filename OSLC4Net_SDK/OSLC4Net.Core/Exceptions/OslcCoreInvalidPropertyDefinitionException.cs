@@ -31,10 +31,10 @@ public class OslcCoreInvalidPropertyDefinitionException : OslcCoreApplicationExc
     /// <param name="resourceType"></param>
     /// <param name="method"></param>
     /// <param name="oslcPropertyDefinition"></param>
-    public OslcCoreInvalidPropertyDefinitionException(Type resourceType, MethodInfo method,
+    public OslcCoreInvalidPropertyDefinitionException(Type resourceType, MethodInfo? method,
         OslcPropertyDefinition oslcPropertyDefinition) :
         base(MESSAGE_KEY,
-            new object[] { resourceType.Name, method.Name, oslcPropertyDefinition.value })
+            new object?[] { resourceType.Name, method?.Name, oslcPropertyDefinition.value })
     {
         this.method = method;
         this.oslcPropertyDefinition = oslcPropertyDefinition;

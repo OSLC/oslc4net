@@ -39,7 +39,7 @@ public sealed class Property : AbstractResource, IComparable<Property>
     private Occurs occurs;
     private Uri propertyDefinition;
     private bool readOnly;
-    private Representation representation;
+    private Representation? representation;
     private string title;
     private Uri valueShape;
     private ValueType valueType;
@@ -148,7 +148,7 @@ public sealed class Property : AbstractResource, IComparable<Property>
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "occurs")]
     [OslcReadOnly]
     [OslcTitle("Occurs")]
-    public Uri GetOccurs()
+    public Uri? GetOccurs()
     {
         if (occurs != Occurs.Unknown)
         {
@@ -194,22 +194,22 @@ public sealed class Property : AbstractResource, IComparable<Property>
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "representation")]
     [OslcReadOnly]
     [OslcTitle("Representation")]
-    public Uri GetRepresentation()
+    public Uri? GetRepresentation()
     {
-        if (representation != null)
+        if (representation == null)
         {
-            try
-            {
-                return new Uri(RepresentationExtension.ToString(representation));
-            }
-            catch (UriFormatException exception)
-            {
-                // This should never happen since we control the possible values of the Representation enum.
-                throw new SystemException(exception.Message, exception);
-            }
+            return null;
         }
 
-        return null;
+        try
+        {
+            return new Uri(RepresentationExtension.ToString(representation.Value));
+        }
+        catch (UriFormatException exception)
+        {
+            // This should never happen since we control the possible values of the Representation enum.
+            throw new SystemException(exception.Message, exception);
+        }
     }
 
     [OslcDescription(
@@ -250,7 +250,7 @@ public sealed class Property : AbstractResource, IComparable<Property>
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "valueType")]
     [OslcReadOnly]
     [OslcTitle("Value Type")]
-    public Uri GetValueType()
+    public Uri? GetValueType()
     {
         if (valueType != ValueType.Unknown)
         {

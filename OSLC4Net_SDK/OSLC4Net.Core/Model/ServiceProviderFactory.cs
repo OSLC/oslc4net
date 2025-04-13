@@ -103,14 +103,14 @@ public class ServiceProviderFactory
             if (method.Name.StartsWith("Get"))
             {
                 var queryCapabilityAttribute =
-                    (OslcQueryCapability[])method.GetCustomAttributes(typeof(OslcQueryCapability),
-                        false);
-                string[] resourceShapes = null;
-                if (queryCapabilityAttribute != null && queryCapabilityAttribute.Length > 0)
+                    method.GetCustomAttributes(typeof(OslcQueryCapability),
+                        false) as OslcQueryCapability[];
+                string[]? resourceShapes = null;
+                if (queryCapabilityAttribute?.Length > 0)
                 {
                     service.AddQueryCapability(CreateQueryCapability(baseURI, method,
                         pathParameterValues));
-                    var resourceShape = queryCapabilityAttribute[0].resourceShape;
+                    var resourceShape = queryCapabilityAttribute[0].ResourceShape;
                     if (resourceShape != null && resourceShape.Length > 0)
                     {
                         resourceShapes = new[] { resourceShape };
@@ -121,10 +121,10 @@ public class ServiceProviderFactory
                     (OslcDialogs[])method.GetCustomAttributes(typeof(OslcDialogs), false);
                 if (dialogsAttribute != null && dialogsAttribute.Length > 0)
                 {
-                    var dialogs = dialogsAttribute[0].value;
-                    foreach (var dialog in dialogs)
+                    var dialogs = dialogsAttribute[0].Value;
+                    if (dialogs != null)
                     {
-                        if (dialog != null)
+                        foreach (var dialog in dialogs)
                         {
                             service.AddSelectionDialog(CreateSelectionDialog(baseURI, method,
                                 dialog, resourceShapes, pathParameterValues));
@@ -134,8 +134,8 @@ public class ServiceProviderFactory
                 else
                 {
                     var dialogAttribute =
-                        (OslcDialog[])method.GetCustomAttributes(typeof(OslcDialog), false);
-                    if (dialogAttribute != null && dialogAttribute.Length > 0)
+                        method.GetCustomAttributes(typeof(OslcDialog), false) as OslcDialog[];
+                    if (dialogAttribute is { Length: > 0 })
                     {
                         service.AddSelectionDialog(CreateSelectionDialog(baseURI, method,
                             dialogAttribute[0], resourceShapes, pathParameterValues));
@@ -147,10 +147,10 @@ public class ServiceProviderFactory
                 if (method.Name.StartsWith("Post"))
                 {
                     var creationFactoryAttribute =
-                        (OslcCreationFactory[])method.GetCustomAttributes(
-                            typeof(OslcCreationFactory), false);
-                    string[] resourceShapes = null;
-                    if (creationFactoryAttribute != null && creationFactoryAttribute.Length > 0)
+                        method.GetCustomAttributes(
+                            typeof(OslcCreationFactory), false) as OslcCreationFactory[];
+                    string[]? resourceShapes = null;
+                    if (creationFactoryAttribute is { Length: > 0 })
                     {
                         service.AddCreationFactory(CreateCreationFactory(baseURI, method,
                             pathParameterValues));
@@ -158,13 +158,13 @@ public class ServiceProviderFactory
                     }
 
                     var dialogsAttribute =
-                        (OslcDialogs[])method.GetCustomAttributes(typeof(OslcDialogs), false);
-                    if (dialogsAttribute != null && dialogsAttribute.Length > 0)
+                        method.GetCustomAttributes(typeof(OslcDialogs), false) as OslcDialogs[];
+                    if (dialogsAttribute is { Length: > 0 })
                     {
-                        var dialogs = dialogsAttribute[0].value;
-                        foreach (var dialog in dialogs)
+                        var dialogs = dialogsAttribute[0].Value;
+                        if (dialogs != null)
                         {
-                            if (dialog != null)
+                            foreach (var dialog in dialogs)
                             {
                                 service.AddCreationDialog(CreateCreationDialog(baseURI, method,
                                     dialog, resourceShapes, pathParameterValues));
@@ -243,11 +243,11 @@ public class ServiceProviderFactory
         var queryCapabilityAttribute =
             (OslcQueryCapability[])method.GetCustomAttributes(typeof(OslcQueryCapability), false);
 
-        var title = queryCapabilityAttribute[0].title;
-        var label = queryCapabilityAttribute[0].label;
-        var resourceShape = queryCapabilityAttribute[0].resourceShape;
-        var resourceTypes = queryCapabilityAttribute[0].resourceTypes;
-        var usages = queryCapabilityAttribute[0].usages;
+        var title = queryCapabilityAttribute[0].Title;
+        var label = queryCapabilityAttribute[0].Label;
+        var resourceShape = queryCapabilityAttribute[0].ResourceShape;
+        var resourceTypes = queryCapabilityAttribute[0].ResourceTypes;
+        var usages = queryCapabilityAttribute[0].Usages;
 
         var typeName = method.DeclaringType.Name;
         //controller names must end with Controller

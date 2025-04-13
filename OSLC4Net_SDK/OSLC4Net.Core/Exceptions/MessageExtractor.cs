@@ -32,7 +32,7 @@ public static class MessageExtractor
     /// <param name="key"></param>
     /// <param name="args"></param>
     /// <returns></returns>
-    public static string GetMessage(string key, object[] args)
+    public static string GetMessage(string key, object?[] args)
     {
         try
         {
