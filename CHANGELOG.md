@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking changes; 👉 important notes.
 
 
-## [0.5.0] - 2024-11-15
+## [0.5.0] - 2025-04-13
 
 ### Security
 
