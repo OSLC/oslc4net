@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking changes; 👉 important notes.
 
 
-## [UNRELEASED] - YYYY-MM-DD
+## [0.5.0] - 2024-11-15
 
 ### Security
 
@@ -17,6 +17,7 @@ This release does not contain security updates.
 ### Added
 
 - ⚡️ CI integration tests against OSLC RefImpl based on NET Aspire
+- Redirect loop protection for `OslcClient` (max 20 redirects as in Firefox/Blink/WebKit)
 
 ### Changed
 
@@ -25,9 +26,11 @@ This release does not contain security updates.
 - ❗️ `OslcResponse` was updated to expose potentially multiple resources, expose the `Graph` and, in case of error, the `oslc:Error` resource.
 - Follow redirects on more responses statuses (was: 301, became: 301, 302, 307, 308, and in case of GET requests, 303 too)
 
+
 ### Deprecated
 
-This release does not introduce deprecations.
+- Most non-async methods in client classes.
+- Further OSLC JSON deprecations. Clients should rely on RDF instead (RDF/XML, Turtle)
 
 ### Removed
 
@@ -36,7 +39,7 @@ This release does not introduce deprecations.
 
 ### Fixed
 
-This release does not contain bug fixes.
+- Minor bug fixes to pass acceptance tests against OSLC RefImpl Change Management server.
 
 
 ## [0.4.6] - 2024-11-15
