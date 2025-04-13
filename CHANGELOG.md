@@ -277,7 +277,8 @@ This release does not remove any features.
 This release does not contain bug fixes.
 
 
-[UNRELEASED]: https://github.com/OSLC/oslc4net/compare/v0.4.6...HEAD
+[UNRELEASED]: https://github.com/OSLC/oslc4net/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/OSLC/oslc4net/releases/tag/v0.5.0
 [0.4.6]: https://github.com/OSLC/oslc4net/releases/tag/v0.4.6
 [0.4.5]: https://github.com/OSLC/oslc4net/releases/tag/v0.4.5
 [0.4.4]: https://github.com/OSLC/oslc4net/releases/tag/v0.4.4
