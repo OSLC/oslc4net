@@ -1,8 +1,14 @@
+#!/usr/bin/env -S uv run --script
+
+# /// script
+# dependencies = ["rdflib==7.*"]
+# ///
+
 import rdflib
 import argparse  # Import the argparse library
 import sys       # To exit gracefully on error
 from rdflib import Graph, URIRef, Namespace
-from rdflib.namespace import RDF, OWL, RDFS
+from rdflib.namespace import RDF, OWL
 import re
 
 def to_pascal_case(input_str: str) -> str:
