@@ -39,7 +39,7 @@ Create a new console application targeting .NET 6+, add a NuGet dependency to
 `OSLC4Net.Client` and add the following code:
 
 ```csharp
-var oslcClient = OslcClient.ForBasicAuth(username, password);
+var oslcClient = OslcClient.ForBasicAuth(username, password, loggerFactory.CreateLogger<OslcClient>());
 
 var resourceUri =
     "https://jazz.net/sandbox01-ccm/resource/itemName/com.ibm.team.workitem.WorkItem/1300";
@@ -56,7 +56,6 @@ else
     logger.LogError("Something went wrong: {} {}", (response.StatusCode as int?) ?? -1,
         response.ResponseMessage?.ReasonPhrase);
 }
-
 ```
 
 Replace `resourceUri` with a valid OSLC resource URI. This should give you a
