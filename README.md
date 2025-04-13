@@ -35,7 +35,7 @@ Make sure to install .NET 8 SDK for development. Libraries target NETStandard
 
 ### A simple OSLC Client
 
-Create a new console application targeting .NET 6+, add a NuGet dependency to
+Create a new console application targeting .NET 8+, add a NuGet dependency to
 `OSLC4Net.Client` and add the following code:
 
 ```csharp
