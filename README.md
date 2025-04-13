@@ -53,7 +53,8 @@ if (response.Resources?.SingleOrDefault() is not null)
 }
 else
 {
-    logger.LogError("Something went wrong: {} {}", (response.StatusCode as int?) ?? -1,
+    var responseStatusCode = response.StatusCode is null ? -1 : (int)response.StatusCode;
+    logger.LogError("Something went wrong: {} {}", responseStatusCode,
         response.ResponseMessage?.ReasonPhrase);
 }
 ```
