@@ -15,14 +15,13 @@
 
 using System.Numerics;
 using System.Reflection;
-
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Exceptions;
 
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// Factory for creating ResourceShape resources
+///     Factory for creating ResourceShape resources
 /// </summary>
 public sealed class ResourceShapeFactory
 {
@@ -33,7 +32,8 @@ public sealed class ResourceShapeFactory
     private static readonly int METHOD_NAME_START_GET_LENGTH = METHOD_NAME_START_GET.Length;
     private static readonly int METHOD_NAME_START_IS_LENGTH = METHOD_NAME_START_IS.Length;
 
-    private static readonly IDictionary<Type, ValueType> TYPE_TO_VALUE_TYPE = new Dictionary<Type, ValueType>();
+    private static readonly IDictionary<Type, ValueType> TYPE_TO_VALUE_TYPE =
+        new Dictionary<Type, ValueType>();
 
     static ResourceShapeFactory()
     {
@@ -55,12 +55,12 @@ public sealed class ResourceShapeFactory
         TYPE_TO_VALUE_TYPE[typeof(Uri)] = ValueType.Resource;
     }
 
-    private ResourceShapeFactory() : base()
+    private ResourceShapeFactory()
     {
     }
 
     /// <summary>
-    /// Create an OSLC ResourceShape resource
+    ///     Create an OSLC ResourceShape resource
     /// </summary>
     /// <param name="baseURI"></param>
     /// <param name="resourceShapesPath"></param>
@@ -68,23 +68,25 @@ public sealed class ResourceShapeFactory
     /// <param name="resourceType"></param>
     /// <returns></returns>
     public static ResourceShape CreateResourceShape(string baseURI,
-                                                    string resourceShapesPath,
-                                                    string resourceShapePath,
-                                                    Type resourceType)
+        string resourceShapesPath,
+        string resourceShapePath,
+        Type resourceType)
     {
         var verifiedTypes = new HashSet<Type>();
         verifiedTypes.Add(resourceType);
 
-        return CreateResourceShape(baseURI, resourceShapesPath, resourceShapePath, resourceType, verifiedTypes);
+        return CreateResourceShape(baseURI, resourceShapesPath, resourceShapePath, resourceType,
+            verifiedTypes);
     }
 
     private static ResourceShape CreateResourceShape(string baseURI,
-                                                     string resourceShapesPath,
-                                                     string resourceShapePath,
-                                                     Type resourceType,
-                                                     ISet<Type> verifiedTypes)
+        string resourceShapesPath,
+        string resourceShapePath,
+        Type resourceType,
+        ISet<Type> verifiedTypes)
     {
-        var resourceShapeAttribute = (OslcResourceShape[])resourceType.GetCustomAttributes(typeof(OslcResourceShape), false);
+        var resourceShapeAttribute =
+            (OslcResourceShape[])resourceType.GetCustomAttributes(typeof(OslcResourceShape), false);
         if (resourceShapeAttribute == null || resourceShapeAttribute.Length == 0)
         {
             throw new OslcCoreMissingAttributeException(resourceType, typeof(OslcResourceShape));
@@ -94,7 +96,7 @@ public sealed class ResourceShapeFactory
         var resourceShape = new ResourceShape(about);
 
         var title = resourceShapeAttribute[0].title;
-        if ((title != null) && (title.Length > 0))
+        if (title != null && title.Length > 0)
         {
             resourceShape.SetTitle(title);
         }
@@ -112,21 +114,26 @@ public sealed class ResourceShapeFactory
             {
                 var methodName = method.Name;
                 var methodNameLength = methodName.Length;
-                if (((methodName.StartsWith(METHOD_NAME_START_GET)) && (methodNameLength > METHOD_NAME_START_GET_LENGTH)) ||
-                    ((methodName.StartsWith(METHOD_NAME_START_IS)) && (methodNameLength > METHOD_NAME_START_IS_LENGTH)))
+                if ((methodName.StartsWith(METHOD_NAME_START_GET) &&
+                     methodNameLength > METHOD_NAME_START_GET_LENGTH) ||
+                    (methodName.StartsWith(METHOD_NAME_START_IS) &&
+                     methodNameLength > METHOD_NAME_START_IS_LENGTH))
                 {
-                    var propertyDefinitionAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcPropertyDefinition>(method);
+                    var propertyDefinitionAttribute =
+                        InheritedMethodAttributeHelper.GetAttribute<OslcPropertyDefinition>(method);
                     if (propertyDefinitionAttribute != null)
                     {
                         var propertyDefinition = propertyDefinitionAttribute.value;
                         if (propertyDefinitions.Contains(propertyDefinition))
                         {
-                            throw new OslcCoreDuplicatePropertyDefinitionException(resourceType, propertyDefinitionAttribute);
+                            throw new OslcCoreDuplicatePropertyDefinitionException(resourceType,
+                                propertyDefinitionAttribute);
                         }
 
                         propertyDefinitions.Add(propertyDefinition);
 
-                        var property = CreateProperty(baseURI, resourceType, method, propertyDefinitionAttribute, verifiedTypes);
+                        var property = CreateProperty(baseURI, resourceType, method,
+                            propertyDefinitionAttribute, verifiedTypes);
                         resourceShape.AddProperty(property);
 
                         ValidateSetMethodExists(resourceType, method);
@@ -138,7 +145,8 @@ public sealed class ResourceShapeFactory
         return resourceShape;
     }
 
-    private static Property CreateProperty(string baseURI, Type resourceType, MethodInfo method, OslcPropertyDefinition propertyDefinitionAttribute, ISet<Type> verifiedTypes)
+    private static Property CreateProperty(string baseURI, Type resourceType, MethodInfo method,
+        OslcPropertyDefinition propertyDefinitionAttribute, ISet<Type> verifiedTypes)
     {
         string name;
         var nameAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcName>(method);
@@ -155,7 +163,8 @@ public sealed class ResourceShapeFactory
 
         if (!propertyDefinition.EndsWith(name))
         {
-            throw new OslcCoreInvalidPropertyDefinitionException(resourceType, method, propertyDefinitionAttribute);
+            throw new OslcCoreInvalidPropertyDefinitionException(resourceType, method,
+                propertyDefinitionAttribute);
         }
 
         var returnType = method.ReturnType;
@@ -174,7 +183,8 @@ public sealed class ResourceShapeFactory
         var componentType = GetComponentType(resourceType, method, returnType);
 
         // Reified resources are a special case.
-        if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IReifiedResource<>), componentType))
+        if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IReifiedResource<>),
+                componentType))
         {
             var genericType = typeof(IReifiedResource<object>).GetGenericTypeDefinition();
 
@@ -211,7 +221,8 @@ public sealed class ResourceShapeFactory
             property.SetTitle(titleAttribute.value);
         }
 
-        var descriptionAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcDescription>(method);
+        var descriptionAttribute =
+            InheritedMethodAttributeHelper.GetAttribute<OslcDescription>(method);
         if (descriptionAttribute != null)
         {
             property.SetDescription(descriptionAttribute.value);
@@ -226,11 +237,13 @@ public sealed class ResourceShapeFactory
             }
         }
 
-        var representationAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcRepresentation>(method);
+        var representationAttribute =
+            InheritedMethodAttributeHelper.GetAttribute<OslcRepresentation>(method);
         if (representationAttribute != null)
         {
             var representation = representationAttribute.value;
-            ValidateUserSpecifiedRepresentation(resourceType, method, representation, componentType);
+            ValidateUserSpecifiedRepresentation(resourceType, method, representation,
+                componentType);
             property.SetRepresentation(new Uri(RepresentationExtension.ToString(representation)));
         }
         else
@@ -238,11 +251,13 @@ public sealed class ResourceShapeFactory
             var defaultRepresentation = GetDefaultRepresentation(componentType);
             if (defaultRepresentation != Representation.Unknown)
             {
-                property.SetRepresentation(new Uri(RepresentationExtension.ToString(defaultRepresentation)));
+                property.SetRepresentation(
+                    new Uri(RepresentationExtension.ToString(defaultRepresentation)));
             }
         }
 
-        var allowedValueAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcAllowedValue>(method);
+        var allowedValueAttribute =
+            InheritedMethodAttributeHelper.GetAttribute<OslcAllowedValue>(method);
         if (allowedValueAttribute != null)
         {
             foreach (var allowedValue in allowedValueAttribute.value)
@@ -251,13 +266,15 @@ public sealed class ResourceShapeFactory
             }
         }
 
-        var allowedValuesAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcAllowedValues>(method);
+        var allowedValuesAttribute =
+            InheritedMethodAttributeHelper.GetAttribute<OslcAllowedValues>(method);
         if (allowedValuesAttribute != null)
         {
             property.SetAllowedValuesRef(new Uri(allowedValuesAttribute.value));
         }
 
-        var defaultValueAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcDefaultValue>(method);
+        var defaultValueAttribute =
+            InheritedMethodAttributeHelper.GetAttribute<OslcDefaultValue>(method);
         if (defaultValueAttribute != null)
         {
             property.SetDefaultValue(defaultValueAttribute.value);
@@ -269,7 +286,8 @@ public sealed class ResourceShapeFactory
             property.SetHidden(hiddenAttribute.value);
         }
 
-        var memberPropertyAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcMemberProperty>(method);
+        var memberPropertyAttribute =
+            InheritedMethodAttributeHelper.GetAttribute<OslcMemberProperty>(method);
         if (memberPropertyAttribute != null)
         {
             property.SetMemberProperty(memberPropertyAttribute.value);
@@ -287,7 +305,8 @@ public sealed class ResourceShapeFactory
             property.SetMaxSize(maxSizeAttribute.value);
         }
 
-        var valueShapeAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcValueShape>(method);
+        var valueShapeAttribute =
+            InheritedMethodAttributeHelper.GetAttribute<OslcValueShape>(method);
         if (valueShapeAttribute != null)
         {
             property.SetValueShape(new Uri(baseURI + "/" + valueShapeAttribute.value));
@@ -299,7 +318,8 @@ public sealed class ResourceShapeFactory
             if (verifiedTypes.Add(componentType))
             {
                 // Validate nested resource ignoring return value, but throwing any exceptions
-                CreateResourceShape(baseURI, OslcConstants.PATH_RESOURCE_SHAPES, "unused", componentType, verifiedTypes);
+                CreateResourceShape(baseURI, OslcConstants.PATH_RESOURCE_SHAPES, "unused",
+                    componentType, verifiedTypes);
             }
         }
 
@@ -309,7 +329,9 @@ public sealed class ResourceShapeFactory
     private static string GetDefaultPropertyName(MethodInfo method)
     {
         var methodName = method.Name;
-        var startingIndex = methodName.StartsWith(METHOD_NAME_START_GET) ? METHOD_NAME_START_GET_LENGTH : METHOD_NAME_START_IS_LENGTH;
+        var startingIndex = methodName.StartsWith(METHOD_NAME_START_GET)
+            ? METHOD_NAME_START_GET_LENGTH
+            : METHOD_NAME_START_IS_LENGTH;
 
         // We want the name to start with a lower-case letter
         var lowercasedFirstCharacter = methodName.Substring(startingIndex, 1).ToLower();
@@ -321,13 +343,15 @@ public sealed class ResourceShapeFactory
         return lowercasedFirstCharacter + methodName.Substring(startingIndex + 1);
     }
 
-    private static ValueType GetDefaultValueType(Type resourceType, MethodInfo method, Type componentType)
+    private static ValueType GetDefaultValueType(Type resourceType, MethodInfo method,
+        Type componentType)
     {
         var valueType = TYPE_TO_VALUE_TYPE[componentType];
         if (valueType == ValueType.Unknown)
         {
             throw new OslcCoreInvalidPropertyTypeException(resourceType, method, componentType);
         }
+
         return valueType;
     }
 
@@ -337,16 +361,19 @@ public sealed class ResourceShapeFactory
         {
             return Representation.Reference;
         }
+
         return Representation.Unknown;
     }
 
     private static Occurs GetDefaultOccurs(Type type)
     {
-        if ((type.IsArray) ||
-            (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(ICollection<>), type)))
+        if (type.IsArray ||
+            InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(ICollection<>),
+                type))
         {
             return Occurs.ZeroOrMany;
         }
+
         return Occurs.ZeroOrOne;
     }
 
@@ -356,19 +383,20 @@ public sealed class ResourceShapeFactory
         {
             return type.GetElementType();
         }
-        else if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(ICollection<>), type))
+
+        if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(ICollection<>),
+                type))
         {
             var actualTypeArguments = type.GetGenericArguments();
             if (actualTypeArguments.Length == 1)
             {
                 return actualTypeArguments[0];
             }
+
             throw new OslcCoreInvalidPropertyTypeException(resourceType, method, type);
         }
-        else
-        {
-            return type;
-        }
+
+        return type;
     }
 
     private static void ValidateSetMethodExists(Type resourceType, MethodInfo getMethod)
@@ -378,44 +406,49 @@ public sealed class ResourceShapeFactory
         string setMethodName;
         if (getMethodName.StartsWith(METHOD_NAME_START_GET))
         {
-            setMethodName = METHOD_NAME_START_SET + getMethodName.Substring(METHOD_NAME_START_GET_LENGTH);
+            setMethodName = METHOD_NAME_START_SET +
+                            getMethodName.Substring(METHOD_NAME_START_GET_LENGTH);
         }
         else
         {
-            setMethodName = METHOD_NAME_START_SET + getMethodName.Substring(METHOD_NAME_START_IS_LENGTH);
+            setMethodName = METHOD_NAME_START_SET +
+                            getMethodName.Substring(METHOD_NAME_START_IS_LENGTH);
         }
 
-        if (resourceType.GetMethod(setMethodName, new Type[] { getMethod.ReturnType }) == null)
+        if (resourceType.GetMethod(setMethodName, new[] { getMethod.ReturnType }) == null)
         {
             throw new OslcCoreMissingSetMethodException(resourceType, getMethod);
         }
     }
 
-    private static void ValidateUserSpecifiedOccurs(Type resourceType, MethodInfo method, OslcOccurs occursAttribute)
+    private static void ValidateUserSpecifiedOccurs(Type resourceType, MethodInfo method,
+        OslcOccurs occursAttribute)
     {
         var returnType = method.ReturnType;
         var occurs = occursAttribute.value;
 
-        if ((returnType.IsArray) ||
-            (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(ICollection<>), returnType)))
+        if (returnType.IsArray ||
+            InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(ICollection<>),
+                returnType))
         {
-            if ((!Occurs.ZeroOrMany.Equals(occurs)) &&
-                (!Occurs.OneOrMany.Equals(occurs)))
+            if (!Occurs.ZeroOrMany.Equals(occurs) &&
+                !Occurs.OneOrMany.Equals(occurs))
             {
                 throw new OslcCoreInvalidOccursException(resourceType, method, occursAttribute);
             }
         }
         else
         {
-            if ((!Occurs.ZeroOrOne.Equals(occurs)) &&
-                (!Occurs.ExactlyOne.Equals(occurs)))
+            if (!Occurs.ZeroOrOne.Equals(occurs) &&
+                !Occurs.ExactlyOne.Equals(occurs))
             {
                 throw new OslcCoreInvalidOccursException(resourceType, method, occursAttribute);
             }
         }
     }
 
-    private static void ValidateUserSpecifiedValueType(Type resourceType, MethodInfo method, ValueType userSpecifiedValueType, Type componentType)
+    private static void ValidateUserSpecifiedValueType(Type resourceType, MethodInfo method,
+        ValueType userSpecifiedValueType, Type componentType)
     {
         var calculatedValueType = TYPE_TO_VALUE_TYPE[componentType];
 
@@ -426,22 +459,22 @@ public sealed class ResourceShapeFactory
         // user-specified value type is xml literal and calculated value type is string
         // or
         // user-specified value type is decimal and calculated value type is numeric
-        if ((userSpecifiedValueType.Equals(calculatedValueType))
+        if (userSpecifiedValueType.Equals(calculatedValueType)
             ||
-            (ValueType.LocalResource.Equals(userSpecifiedValueType))
+            ValueType.LocalResource.Equals(userSpecifiedValueType)
             ||
-            ((ValueType.XMLLiteral.Equals(userSpecifiedValueType))
+            (ValueType.XMLLiteral.Equals(userSpecifiedValueType)
              &&
-             (ValueType.String.Equals(calculatedValueType))
+             ValueType.String.Equals(calculatedValueType)
             )
             ||
-            ((ValueType.Decimal.Equals(userSpecifiedValueType))
+            (ValueType.Decimal.Equals(userSpecifiedValueType)
              &&
-             ((ValueType.Double.Equals(calculatedValueType))
+             (ValueType.Double.Equals(calculatedValueType)
               ||
-              (ValueType.Float.Equals(calculatedValueType))
+              ValueType.Float.Equals(calculatedValueType)
               ||
-              (ValueType.Integer.Equals(calculatedValueType))
+              ValueType.Integer.Equals(calculatedValueType)
              )
             )
            )
@@ -453,23 +486,25 @@ public sealed class ResourceShapeFactory
         throw new OslcCoreInvalidValueTypeException(resourceType, method, userSpecifiedValueType);
     }
 
-    private static void ValidateUserSpecifiedRepresentation(Type resourceType, MethodInfo method, Representation userSpecifiedRepresentation, Type componentType)
+    private static void ValidateUserSpecifiedRepresentation(Type resourceType, MethodInfo method,
+        Representation userSpecifiedRepresentation, Type componentType)
     {
         // If user-specified representation is reference and component is not Uri
         // or
         // user-specified representation is inline and component is a standard class
-        if (((Representation.Reference.Equals(userSpecifiedRepresentation))
+        if ((Representation.Reference.Equals(userSpecifiedRepresentation)
              &&
-             (!typeof(Uri).Equals(componentType))
+             !typeof(Uri).Equals(componentType)
             )
             ||
-            ((Representation.Inline.Equals(userSpecifiedRepresentation))
+            (Representation.Inline.Equals(userSpecifiedRepresentation)
              &&
-             (TYPE_TO_VALUE_TYPE.ContainsKey(componentType))
+             TYPE_TO_VALUE_TYPE.ContainsKey(componentType)
             )
            )
         {
-            throw new OslcCoreInvalidRepresentationException(resourceType, method, userSpecifiedRepresentation);
+            throw new OslcCoreInvalidRepresentationException(resourceType, method,
+                userSpecifiedRepresentation);
         }
     }
 }

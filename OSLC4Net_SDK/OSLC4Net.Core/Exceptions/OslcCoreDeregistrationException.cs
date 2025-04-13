@@ -17,14 +17,21 @@ namespace OSLC4Net.Core.Exceptions;
 
 public class OslcCoreDeregistrationException : OslcCoreApplicationException
 {
+    private static readonly string MESSAGE_KEY = "DeregistrationException";
+
+    private readonly string responseMessage;
+    private readonly Uri serviceProviderURI;
+    private readonly int statusCode;
+
     /// <summary>
-    ///
     /// </summary>
     /// <param name="serviceProviderURI"></param>
     /// <param name="statusCode"></param>
     /// <param name="responseMessage"></param>
-    public OslcCoreDeregistrationException(Uri serviceProviderURI, int statusCode, string responseMessage) :
-        base(MESSAGE_KEY, new object[] { serviceProviderURI.ToString(), statusCode, responseMessage })
+    public OslcCoreDeregistrationException(Uri serviceProviderURI, int statusCode,
+        string responseMessage) :
+        base(MESSAGE_KEY,
+            new object[] { serviceProviderURI.ToString(), statusCode, responseMessage })
     {
         this.responseMessage = responseMessage;
         this.serviceProviderURI = serviceProviderURI;
@@ -45,10 +52,4 @@ public class OslcCoreDeregistrationException : OslcCoreApplicationException
     {
         return statusCode;
     }
-
-    private static readonly string MESSAGE_KEY = "DeregistrationException";
-
-    private readonly string responseMessage;
-    private readonly Uri serviceProviderURI;
-    private readonly int statusCode;
 }

@@ -17,7 +17,6 @@ using System.Json;
 using System.Net;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
-
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
 
@@ -28,6 +27,7 @@ namespace OSLC4Net.Core.JsonProvider;
 ///     - read RDF/XML from an input stream and create .NET objects.
 ///     - write .NET objects to an output stream as RDF/XML
 /// </summary>
+[Obsolete]
 public class OslcJsonMediaTypeFormatter : MediaTypeFormatter
 {
 

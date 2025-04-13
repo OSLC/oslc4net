@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking changes; 👉 important notes.
 
 
-## [UNRELEASED] - YYYY-MM-DD
+## [0.5.0] - 2024-11-15
 
 ### Security
 
@@ -16,23 +16,29 @@ This release does not contain security updates.
 
 ### Added
 
-This release does not contain new features.
+- ⚡️ CI integration tests against OSLC RefImpl based on NET Aspire
+- Redirect loop protection for `OslcClient` (max 20 redirects as in Firefox/Blink/WebKit)
+- Follow redirects on more responses statuses (was: 301, became: 301, 302, 307, 308, and in case of GET requests, 303 too)
+- ❗️ `OslcResponse` can now expose multiple response resources, the `Graph` and, in case of error, the `oslc:Error` resource.
 
 ### Changed
 
 - dotNetRDF dependency was updated to v3.3.1
+- ❗️ `OslcClient` was updated to consistently support async operations
 
 ### Deprecated
 
-This release does not introduce deprecations.
+- Most non-async methods in client classes.
+- Further OSLC JSON deprecations. Clients should rely on RDF instead (RDF/XML, Turtle)
 
 ### Removed
 
-This release does not remove any features.
+- ❗️ Multiple non-async methods in `OslcClient`
+- ❗️ A property exposing `OslcRestClient` in `ServiceProviderRegistryClient`
 
 ### Fixed
 
-This release does not contain bug fixes.
+- Minor bug fixes to pass acceptance tests against OSLC RefImpl Change Management server.
 
 
 ## [0.4.6] - 2024-11-15
@@ -271,7 +277,8 @@ This release does not remove any features.
 This release does not contain bug fixes.
 
 
-[UNRELEASED]: https://github.com/OSLC/oslc4net/compare/v0.4.6...HEAD
+[UNRELEASED]: https://github.com/OSLC/oslc4net/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/OSLC/oslc4net/releases/tag/v0.5.0
 [0.4.6]: https://github.com/OSLC/oslc4net/releases/tag/v0.4.6
 [0.4.5]: https://github.com/OSLC/oslc4net/releases/tag/v0.4.5
 [0.4.4]: https://github.com/OSLC/oslc4net/releases/tag/v0.4.4

@@ -16,8 +16,8 @@
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// Represents a resource of any (unknown) type, usually the object of a
-/// statement in anIExtendedResource.
+///     Represents a resource of any (unknown) type, usually the object of a
+///     statement in anIExtendedResource.
 /// </summary>
 public class AnyResource : AbstractResource
 {
@@ -25,7 +25,7 @@ public class AnyResource : AbstractResource
     {
     }
 
-    public AnyResource() : base()
+    public AnyResource()
     {
     }
 }

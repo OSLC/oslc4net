@@ -33,8 +33,10 @@ namespace OSLC4Net.Client.Oslc.Resources;
 public class OslcQueryResult : IEnumerator<OslcQueryResult>
 {
     private static readonly Uri _rdfsMemberUri = new("http://www.w3.org/2000/01/rdf-schema#member");
+
     private static readonly Uri _responsePredicateUri = new(OslcConstants.OSLC_CORE_NAMESPACE +
-                                                     "ResponseInfo");
+                                                            "ResponseInfo");
+
     private static readonly Uri _totalCountPredicateUri = new Uri("http://open-services.net/ns/core#totalCount");
 
     private readonly int _pageNumber;
@@ -69,7 +71,8 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     private OslcQueryResult(OslcQueryResult prev)
     {
         _query = new OslcQuery(prev);
-        _response = _query.GetResponse();
+        // FIXME: we should split the data from logic - ctor should not be making calls; one of the methods should return a record with the data.
+        _response = _query.GetResponseRawAsync().Result;
 
         _pageNumber = prev._pageNumber + 1;
     }
@@ -95,10 +98,7 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     {
         get
         {
-            if (!MoveNext())
-            {
-                throw new InvalidOperationException();
-            }
+            if (!MoveNext()) throw new InvalidOperationException();
 
             return new OslcQueryResult(this);
         }
@@ -139,10 +139,7 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     [MethodImpl(MethodImplOptions.Synchronized)]
     private void InitializeRdf()
     {
-        if (_rdfInitialized)
-        {
-            return;
-        }
+        if (_rdfInitialized) return;
 
         _rdfInitialized = true;
         _rdfGraph = new Graph();
@@ -218,10 +215,7 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
         Debug.Assert(_rdfGraph != null);
 
 
-        if (_nextPageChecked)
-        {
-            return _nextPageUrl;
-        }
+        if (_nextPageChecked) return _nextPageUrl;
 
         _nextPageChecked = true;
         var predicate =
@@ -229,9 +223,7 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
         var triples = _rdfGraph.GetTriplesWithSubjectPredicate(_infoResource, predicate);
         var triplesEnumerated = triples.ToList();
         if (triplesEnumerated.Count == 1 && triplesEnumerated.First().Object is IUriNode)
-        {
             _nextPageUrl = (triplesEnumerated.First().Object as IUriNode)?.Uri.OriginalString;
-        }
 
         return _nextPageUrl;
     }
@@ -276,14 +268,9 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
         {
             if (!triple.Predicate.Equals(
                     _rdfGraph.GetUriNode(_rdfsMemberUri)))
-            {
                 continue;
-            }
 
-            if (triple.Object is IUriNode uriNode)
-            {
-                membersUrls.Add(uriNode.Uri.ToString());
-            }
+            if (triple.Object is IUriNode uriNode) membersUrls.Add(uriNode.Uri.ToString());
             // REVISIT: log or throw
         }
 
@@ -340,14 +327,14 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
                 _graph = graph;
             }
 
-            object IEnumerator.Current => Current;
+            object IEnumerator.Current => Current!;
 
             public T Current
             {
                 get
                 {
-                    var member = _triples.Current;
-
+                    var member = _triples.Current ??
+                                 throw new ArgumentNullException(nameof(_triples.Current));
                     return (T)DotNetRdfHelper.FromDotNetRdfNode((IUriNode)member.Object, _graph,
                         typeof(T));
                 }

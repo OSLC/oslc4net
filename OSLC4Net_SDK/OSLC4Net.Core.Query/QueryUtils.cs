@@ -232,14 +232,12 @@ public class QueryUtils
 
         foreach (var property in children)
         {
-
-            PName pname = null;
-            string propertyName = null;
+            string? propertyName = null;
 
             if (!property.IsWildcard)
             {
-                pname = property.Identifier;
-                propertyName = pname.ns + pname.local;
+                var pName = property.Identifier;
+                propertyName = pName.ns + pName.local;
             }
 
             switch (property.Type)

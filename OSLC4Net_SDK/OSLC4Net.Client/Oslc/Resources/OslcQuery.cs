@@ -135,30 +135,15 @@ public class OslcQuery
 
     private void ApplyOslcQueryParams()
     {
-        if (where != null && where.Length != 0)
-        {
-            QueryParam("oslc.where", where);
-        }
+        if (where != null && where.Length != 0) QueryParam("oslc.where", where);
 
-        if (select != null && select.Length != 0)
-        {
-            QueryParam("oslc.select", select);
-        }
+        if (select != null && select.Length != 0) QueryParam("oslc.select", select);
 
-        if (orderBy != null && orderBy.Length != 0)
-        {
-            QueryParam("oslc.orderBy", orderBy);
-        }
+        if (orderBy != null && orderBy.Length != 0) QueryParam("oslc.orderBy", orderBy);
 
-        if (searchTerms != null && searchTerms.Length != 0)
-        {
-            QueryParam("oslc.searchTerms", searchTerms);
-        }
+        if (searchTerms != null && searchTerms.Length != 0) QueryParam("oslc.searchTerms", searchTerms);
 
-        if (prefix != null && prefix.Length != 0)
-        {
-            QueryParam("oslc.prefix", prefix);
-        }
+        if (prefix != null && prefix.Length != 0) QueryParam("oslc.prefix", prefix);
     }
 
     /**
@@ -187,14 +172,14 @@ public class OslcQuery
         return queryUrl ??= uriBuilder.ToString();
     }
 
-    public OslcQueryResult Submit()
+    public async Task<OslcQueryResult> Submit()
     {
-        return new OslcQueryResult(this, GetResponse());
+        return new OslcQueryResult(this, await GetResponseRawAsync().ConfigureAwait(false));
     }
 
-    internal HttpResponseMessage GetResponse()
+    internal Task<HttpResponseMessage> GetResponseRawAsync()
     {
-        return oslcClient.GetResource(GetQueryUrl(), OSLCConstants.CT_RDF);
+        return oslcClient.GetResourceRawAsync(QueryUri.ToString(), OSLCConstants.CT_RDF);
     }
 
     private void QueryParam(string name, string value)
@@ -202,12 +187,8 @@ public class OslcQuery
         var content = name + '=' + value;
 
         if (uriBuilder.Query != null && uriBuilder.Query.Length > 1)
-        {
             uriBuilder.Query = uriBuilder.Query.Substring(1) + '&' + content;
-        }
         else
-        {
             uriBuilder.Query = content;
-        }
     }
 }

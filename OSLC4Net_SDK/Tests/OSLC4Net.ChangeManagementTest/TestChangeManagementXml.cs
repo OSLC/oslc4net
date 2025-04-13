@@ -13,85 +13,37 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using OSLC4Net.Core.Model;
+using Xunit;
 
 namespace OSLC4Net.ChangeManagementTest;
 
-[TestClass]
+[Trait("TestCategory", "RunningOslcServerRequired")]
 public class TestChangeManagementXml : TestBase
 {
-    public TestContext TestContext { set; get; }
+    private readonly RefimplAspireFixture _fixture;
 
-    [TestInitialize]
-    public void TestSetup()
+    public TestChangeManagementXml(RefimplAspireFixture fixture, ITestOutputHelper output) :
+        base(output)
     {
-        switch (TestContext.TestName)
-        {
-            case "TestResourceShape":
-            case "TestCreate":
-                break;
-            default:
-                MakeChangeRequestAsync(OslcMediaType.APPLICATION_XML);
-                break;
-        }
+        _fixture = fixture;
+        ServiceProviderCatalogUri = _fixture.ServiceProviderCatalogURI;
     }
 
-    [TestCleanup]
-    public void TestTeardown()
+    /// <summary>
+    ///     Ordering of test methods shall not be relied upon for execution order
+    /// </summary>
+    [Fact]
+    public async Task TestAcceptance()
     {
-        switch (TestContext.TestName)
-        {
-            case "TestResourceShape":
-            case "TestDelete":
-                break;
-            default:
-                DeleteChangeRequest(OslcMediaType.APPLICATION_XML);
-                break;
-        }
-    }
-
-    [TestMethod]
-    public void TestResourceShape()
-    {
-        TestResourceShapeAsync(OslcMediaType.APPLICATION_XML);
-    }
-
-    [TestMethod]
-    public void TestCreate()
-    {
-        TestCreateAsync(OslcMediaType.APPLICATION_XML);
-    }
-
-    [TestMethod]
-    public void TestRetrieve()
-    {
-        TestRetrieveAsync(OslcMediaType.APPLICATION_XML);
-    }
-
-    [TestMethod]
-    public void TestRetrieves()
-    {
-        TestRetrievesAsync(OslcMediaType.APPLICATION_XML);
-    }
-
-    [TestMethod]
-    public void TestCompact()
-    {
-        TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
-                    OslcMediaType.APPLICATION_XML);
-    }
-
-    [TestMethod]
-    public void TestUpdate()
-    {
-        TestUpdateAsync(OslcMediaType.APPLICATION_XML);
-    }
-
-    [TestMethod]
-    public void TestDelete()
-    {
-        TestDeleteAsync(OslcMediaType.APPLICATION_XML);
+        const string mediaType = OslcMediaType.APPLICATION_XML;
+        await TestResourceShapeAsync(mediaType).ConfigureAwait(true);
+        await TestCreateAsync(mediaType).ConfigureAwait(true);
+        await Task.WhenAll(TestRetrieveAsync(mediaType), TestRetrievesAsync(mediaType),
+            TestCompactAsync(
+                OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
+                mediaType)).ConfigureAwait(true);
+        await TestUpdateAsync(mediaType).ConfigureAwait(true);
+        await TestDeleteAsync(mediaType).ConfigureAwait(true);
     }
 }

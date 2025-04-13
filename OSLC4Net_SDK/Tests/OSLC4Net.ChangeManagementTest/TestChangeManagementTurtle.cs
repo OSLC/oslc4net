@@ -13,66 +13,37 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OSLC4Net.Core.Model;
+using Xunit;
 
 namespace OSLC4Net.ChangeManagementTest;
 
-[TestClass]
+[Trait("TestCategory", "RunningOslcServerRequired")]
 public class TestChangeManagementTurtle : TestBase
 {
-    // protected new readonly ISet<MediaTypeFormatter> FORMATTERS = OslcRestClient.DEFAULT_FORMATTERS;
-    public TestContext? TestContext { set; get; }
+    private readonly RefimplAspireFixture _fixture;
 
-    [TestInitialize]
-    public async Task TestSetup()
+    public TestChangeManagementTurtle(RefimplAspireFixture fixture, ITestOutputHelper output) :
+        base(output)
     {
-        switch (TestContext!.TestName)
-        {
-            case "TestResourceShape":
-            case "TestCreate":
-                break;
-            default:
-                await MakeChangeRequestAsync(OslcMediaType.TEXT_TURTLE);
-                break;
-        }
+        _fixture = fixture;
+        ServiceProviderCatalogUri = _fixture.ServiceProviderCatalogURI;
     }
 
-    [TestCleanup]
-    public void TestTeardown()
-    {
-        switch (TestContext!.TestName)
-        {
-            case "TestResourceShape":
-            case "TestDelete":
-                break;
-            default:
-                DeleteChangeRequest(OslcMediaType.TEXT_TURTLE);
-                break;
-        }
-    }
-
-    [TestMethod]
-    public async Task TestResourceShape()
-    {
-        await TestResourceShapeAsync(OslcMediaType.TEXT_TURTLE);
-    }
 
     /// <summary>
-    /// Ordering of test methods shall not be relied upon for execution order
+    ///     Ordering of test methods shall not be relied upon for execution order
     /// </summary>
-    [TestMethod]
+    [Fact]
     public async Task TestAcceptance()
     {
         const string mediaType = OslcMediaType.TEXT_TURTLE;
         await TestResourceShapeAsync(mediaType);
         await TestCreateAsync(mediaType);
-        await Task.WhenAll(new[] {
-            TestRetrieveAsync(mediaType),
-            TestRetrievesAsync(mediaType),
-            TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
-                mediaType)
-        });
+        await Task.WhenAll(TestRetrieveAsync(mediaType), TestRetrievesAsync(mediaType),
+            TestCompactAsync(
+                OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
+                mediaType));
         await TestUpdateAsync(mediaType);
         await TestDeleteAsync(mediaType);
     }

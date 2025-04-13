@@ -19,7 +19,7 @@ using OSLC4Net.Core.Attribute;
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// OSLC ServiceProvider resource
+///     OSLC ServiceProvider resource
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
 [OslcResourceShape(title = "OSLC Service Provider Resource Shape", describes =
@@ -37,16 +37,12 @@ public class ServiceProvider : AbstractResource
     private string _identifier; // TODO - ServiceProvider.identifier nice to have, but not required.
     private OAuthConfiguration _oauthConfiguration;
     private Publisher _publisher;
-    private string _title;
-
-    public ServiceProvider() : base()
-    {
-    }
+    private string? _title;
 
     public void AddService(Service service)
     {
         Guard.IsNotNull(service, nameof(service));
-        this._services.Add(service);
+        _services.Add(service);
     }
 
     [OslcDescription("The date and time that this resource was created")]
@@ -68,7 +64,8 @@ public class ServiceProvider : AbstractResource
         return _description;
     }
 
-    [OslcDescription("URLs that may be used to retrieve web pages to determine additional details about the service provider")]
+    [OslcDescription(
+        "URLs that may be used to retrieve web pages to determine additional details about the service provider")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "details")]
     [OslcReadOnly]
     [OslcTitle("Details")]
@@ -86,27 +83,31 @@ public class ServiceProvider : AbstractResource
         return _identifier;
     }
 
-    [OslcDescription("Defines the three OAuth URIs required for a client to act as an OAuth consumer")]
+    [OslcDescription(
+        "Defines the three OAuth URIs required for a client to act as an OAuth consumer")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "oauthConfiguration")]
     [OslcRange(OslcConstants.TYPE_O_AUTH_CONFIGURATION)]
     [OslcReadOnly]
     [OslcRepresentation(Representation.Inline)]
     [OslcTitle("OAuth Configuration")]
-    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_OAUTH_CONFIGURATION)]
+    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" +
+                    OslcConstants.PATH_OAUTH_CONFIGURATION)]
     [OslcValueType(ValueType.LocalResource)]
     public OAuthConfiguration GetOauthConfiguration()
     {
         return _oauthConfiguration;
     }
 
-    [OslcDescription("Defines namespace prefixes for use in JSON representations and in forming OSLC Query Syntax strings")]
+    [OslcDescription(
+        "Defines namespace prefixes for use in JSON representations and in forming OSLC Query Syntax strings")]
     [OslcName("prefixDefinition")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "prefixDefinition")]
     [OslcRange(OslcConstants.TYPE_PREFIX_DEFINITION)]
     [OslcReadOnly]
     [OslcRepresentation(Representation.Inline)]
     [OslcTitle("Prefix Definitions")]
-    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_PREFIX_DEFINITION)]
+    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" +
+                    OslcConstants.PATH_PREFIX_DEFINITION)]
     [OslcValueType(ValueType.LocalResource)]
     public PrefixDefinition[] GetPrefixDefinitions()
     {
@@ -146,71 +147,71 @@ public class ServiceProvider : AbstractResource
     [OslcReadOnly]
     [OslcTitle("Title")]
     [OslcValueType(ValueType.XMLLiteral)]
-    public string GetTitle()
+    public string? GetTitle()
     {
         return _title;
     }
 
     public void SetCreated(DateTime? created)
     {
-        this._created = created;
+        _created = created;
     }
 
     public void SetDescription(string description)
     {
-        this._description = description;
+        _description = description;
     }
 
     public void SetDetails(Uri[] details)
     {
-        this._details.Clear();
+        _details.Clear();
         if (details != null)
         {
-            this._details.AddAll(details);
+            _details.AddAll(details);
         }
     }
 
     public void SetIdentifier(string identifier)
     {
-        this._identifier = identifier;
+        _identifier = identifier;
     }
 
     public void SetOauthConfiguration(OAuthConfiguration oauthConfiguration)
     {
-        this._oauthConfiguration = oauthConfiguration;
+        _oauthConfiguration = oauthConfiguration;
     }
 
     public void SetPrefixDefinitions(PrefixDefinition[] prefixDefinitions)
     {
-        this._prefixDefinitions.Clear();
+        _prefixDefinitions.Clear();
         if (prefixDefinitions != null)
         {
-            this._prefixDefinitions.AddAll(prefixDefinitions);
+            _prefixDefinitions.AddAll(prefixDefinitions);
         }
     }
 
     public void SetPublisher(Publisher publisher)
     {
-        this._publisher = publisher;
+        _publisher = publisher;
     }
 
     public void SetServices(Service[]? services)
     {
-        this._services.Clear();
+        _services.Clear();
         if (services != null)
         {
-            this._services.AddAll(services);
+            _services.AddAll(services);
         }
     }
 
     public void SetServices(IEnumerable<Service> services)
     {
-        this._services.Clear();
-        this._services.AddAll(services);
+        _services.Clear();
+        _services.AddAll(services);
     }
 
     public void SetTitle(string title)
     {
-        this._title = title;
+        _title = title;
     }
 }

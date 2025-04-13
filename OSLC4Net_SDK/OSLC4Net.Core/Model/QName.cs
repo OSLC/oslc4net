@@ -16,12 +16,17 @@
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
-/// Class representing namespace-qualified names
+///     Class representing namespace-qualified names
 /// </summary>
 public class QName
 {
+    private readonly string localPart;
+
+    private readonly string namespaceURI;
+    private readonly string prefix;
+
     /// <summary>
-    /// Constructor with local part only
+    ///     Constructor with local part only
     /// </summary>
     /// <param name="localPart"></param>
     public QName(string localPart)
@@ -30,7 +35,7 @@ public class QName
     }
 
     /// <summary>
-    /// Constructior with namespace and local part
+    ///     Constructior with namespace and local part
     /// </summary>
     /// <param name="namespaceURI"></param>
     /// <param name="localPart"></param>
@@ -42,7 +47,7 @@ public class QName
     }
 
     /// <summary>
-    /// Constructor with namespace, local part and prefix/alias
+    ///     Constructor with namespace, local part and prefix/alias
     /// </summary>
     /// <param name="namespaceURI"></param>
     /// <param name="localPart"></param>
@@ -96,15 +101,11 @@ public class QName
         }
 
         return namespaceURI.Equals(((QName)obj).namespaceURI) &&
-            localPart.Equals(((QName)obj).localPart);
+               localPart.Equals(((QName)obj).localPart);
     }
 
     public override int GetHashCode()
     {
         return namespaceURI.GetHashCode() * 31 + localPart.GetHashCode();
     }
-
-    private readonly string namespaceURI;
-    private readonly string localPart;
-    private readonly string prefix;
 }

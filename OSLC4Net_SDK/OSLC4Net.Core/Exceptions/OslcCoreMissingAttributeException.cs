@@ -16,12 +16,16 @@
 namespace OSLC4Net.Core.Exceptions;
 
 /// <summary>
-/// Exception thrown when a required OSLC attribute definition is missing.
+///     Exception thrown when a required OSLC attribute definition is missing.
 /// </summary>
 public class OslcCoreMissingAttributeException : OslcCoreApplicationException
 {
+    private static readonly string MESSAGE_KEY = "MissingAnnotationException";
+
+    private readonly Type annotationType;
+    private readonly Type resourceType;
+
     /// <summary>
-    ///
     /// </summary>
     /// <param name="resourceType"></param>
     /// <param name="annotationType"></param>
@@ -33,7 +37,6 @@ public class OslcCoreMissingAttributeException : OslcCoreApplicationException
     }
 
     /// <summary>
-    ///
     /// </summary>
     /// <returns></returns>
     public Type GetAnnotationType()
@@ -42,16 +45,10 @@ public class OslcCoreMissingAttributeException : OslcCoreApplicationException
     }
 
     /// <summary>
-    ///
     /// </summary>
     /// <returns></returns>
     public Type GetResourceType()
     {
         return resourceType;
     }
-
-    private static readonly string MESSAGE_KEY = "MissingAnnotationException";
-
-    private readonly Type annotationType;
-    private readonly Type resourceType;
 }

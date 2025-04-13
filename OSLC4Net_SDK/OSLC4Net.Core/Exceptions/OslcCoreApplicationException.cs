@@ -16,11 +16,11 @@
 namespace OSLC4Net.Core.Exceptions;
 
 /// <summary>
-/// OSLC4Net Core exception
+///     OSLC4Net Core exception
 /// </summary>
 public class OslcCoreApplicationException : Exception
 {
-    public OslcCoreApplicationException(string messageKey, object[] args) :
+    public OslcCoreApplicationException(string messageKey, object?[] args) :
         base(MessageExtractor.GetMessage(messageKey, args))
     {
     }

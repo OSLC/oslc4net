@@ -16,6 +16,7 @@
 using System.Net;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Text;
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
 using VDS.RDF;
@@ -31,6 +32,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider;
 /// </summary>
 public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 {
+    const int STREAM_BUFFER_SIZE = 8192;
     private HttpRequestMessage httpRequest;
 
     /// <summary>
@@ -141,7 +143,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     /// <param name="content"></param>
     /// <param name="transportContext"></param>
     /// <returns></returns>
-    public override Task WriteToStreamAsync(
+    public override async Task WriteToStreamAsync(
         Type type,
         object value,
         Stream writeStream,
@@ -149,116 +151,119 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         TransportContext transportContext
     )
     {
-        return Task.Factory.StartNew(() =>
+
+        if (Graph == null || Graph.IsEmpty || RebuildGraph)
         {
-            if (Graph == null || Graph.IsEmpty || RebuildGraph)
+            if (ImplementsGenericType(typeof(FilteredResource<>), type))
             {
-                if (ImplementsGenericType(typeof(FilteredResource<>), type))
+                var resourceProp = value.GetType().GetProperty("Resource");
+                var actualTypeArguments =
+                    GetChildClassParameterArguments(typeof(FilteredResource<>), type);
+                var objects = resourceProp.GetValue(value, null);
+                var propertiesProp = value.GetType().GetProperty("Properties");
+
+                if (!ImplementsICollection(actualTypeArguments[0]))
                 {
-                    var resourceProp = value.GetType().GetProperty("Resource");
-                    var actualTypeArguments =
-                        GetChildClassParameterArguments(typeof(FilteredResource<>), type);
-                    var objects = resourceProp.GetValue(value, null);
-                    var propertiesProp = value.GetType().GetProperty("Properties");
+                    objects = new EnumerableWrapper(objects);
+                }
 
-                    if (!ImplementsICollection(actualTypeArguments[0]))
+                if (ImplementsGenericType(typeof(ResponseInfo<>), type))
+                {
+                    //Subject URI for the collection is the query capability
+                    // FIXME: should this be set by the app based on service provider info
+                    var portNum = httpRequest.RequestUri.Port;
+                    string portString;
+                    if (portNum == 80 || portNum == 443)
                     {
-                        objects = new EnumerableWrapper(objects);
-                    }
-
-                    if (ImplementsGenericType(typeof(ResponseInfo<>), type))
-                    {
-                        //Subject URI for the collection is the query capability
-                        // FIXME: should this be set by the app based on service provider info
-                        var portNum = httpRequest.RequestUri.Port;
-                        string portString = null;
-                        if (portNum == 80 || portNum == 443)
-                        {
-                            portString = "";
-                        }
-                        else
-                        {
-                            portString = ":" + portNum;
-                        }
-
-                        var descriptionAbout = httpRequest.RequestUri.Scheme + "://" +
-                                               httpRequest.RequestUri.Host +
-                                               portString +
-                                               httpRequest.RequestUri.LocalPath;
-
-                        //Subject URI for the responseInfo is the full request URI
-                        var responseInfoAbout = httpRequest.RequestUri.ToString();
-
-                        var totalCountProp = value.GetType().GetProperty("TotalCount");
-                        var nextPageProp = value.GetType().GetProperty("NextPage");
-
-                        Graph = DotNetRdfHelper.CreateDotNetRdfGraph(descriptionAbout,
-                            responseInfoAbout,
-                            (string)nextPageProp.GetValue(value, null),
-                            (int)totalCountProp.GetValue(value, null),
-                            objects as IEnumerable<object>,
-                            (IDictionary<string, object>)propertiesProp.GetValue(value, null));
+                        portString = string.Empty;
                     }
                     else
                     {
-                        Graph = DotNetRdfHelper.CreateDotNetRdfGraph(null, null, null, null,
-                            objects as IEnumerable<object>,
-                            (IDictionary<string, object>)propertiesProp.GetValue(value, null));
+                        portString = $":{portNum}";
                     }
-                }
-                else if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(
-                             typeof(IEnumerable<>), value.GetType()))
-                {
-                    Graph = DotNetRdfHelper.CreateDotNetRdfGraph(value as IEnumerable<object>);
-                }
-                else if (type.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
-                {
-                    Graph = DotNetRdfHelper.CreateDotNetRdfGraph(new[] { value });
+
+                    var descriptionAbout = httpRequest.RequestUri.Scheme + "://" +
+                                           httpRequest.RequestUri.Host +
+                                           portString +
+                                           httpRequest.RequestUri.LocalPath;
+
+                    //Subject URI for the responseInfo is the full request URI
+                    var responseInfoAbout = httpRequest.RequestUri.ToString();
+
+                    var totalCountProp = value.GetType().GetProperty("TotalCount");
+                    var nextPageProp = value.GetType().GetProperty("NextPage");
+
+                    Graph = DotNetRdfHelper.CreateDotNetRdfGraph(descriptionAbout,
+                        responseInfoAbout,
+                        (string)nextPageProp.GetValue(value, null),
+                        (int)totalCountProp.GetValue(value, null),
+                        objects as IEnumerable<object>,
+                        (IDictionary<string, object>)propertiesProp.GetValue(value, null));
                 }
                 else
                 {
-                    Graph = DotNetRdfHelper.CreateDotNetRdfGraph(new EnumerableWrapper(value));
+                    Graph = DotNetRdfHelper.CreateDotNetRdfGraph(null, null, null, null,
+                        objects as IEnumerable<object>,
+                        (IDictionary<string, object>)propertiesProp.GetValue(value, null));
                 }
             }
-
-            IRdfWriter rdfWriter;
-
-            if (content == null || content.Headers == null ||
-                content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_RDF_XML))
+            else if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(
+                         typeof(IEnumerable<>), value.GetType()))
             {
-                var rdfXmlWriter = new RdfXmlWriter
-                {
-                    UseDtd = false, PrettyPrintMode = false, CompressionLevel = 20
-                };
-                //turtlelWriter.UseTypedNodes = false;
-
-                rdfWriter = rdfXmlWriter;
+                Graph = DotNetRdfHelper.CreateDotNetRdfGraph(value as IEnumerable<object>);
             }
-            else if (content.Headers.ContentType.MediaType.Equals(OslcMediaType.TEXT_TURTLE))
+            else if (type.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
             {
-                var turtlelWriter = new CompressingTurtleWriter(TurtleSyntax.W3C)
-                {
-                    PrettyPrintMode = false
-                };
-
-                rdfWriter = turtlelWriter;
+                Graph = DotNetRdfHelper.CreateDotNetRdfGraph(new[] { value });
             }
             else
             {
-                //For now, use the dotNetRDF RdfXmlWriter for application/xml
-                //OslcXmlWriter oslcXmlWriter = new OslcXmlWriter();
-                var oslcXmlWriter = new RdfXmlWriter
-                {
-                    UseDtd = false, PrettyPrintMode = false, CompressionLevel = 20
-                };
-
-                rdfWriter = oslcXmlWriter;
+                Graph = DotNetRdfHelper.CreateDotNetRdfGraph(new EnumerableWrapper(value));
             }
+        }
 
-            StreamWriter streamWriter = new NonClosingStreamWriter(writeStream);
+        IRdfWriter rdfWriter;
 
-            rdfWriter.Save(Graph, streamWriter);
-        });
+        if (content == null || content.Headers == null ||
+            content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_RDF_XML))
+        {
+            var rdfXmlWriter = new RdfXmlWriter
+            {
+                UseDtd = false,
+                PrettyPrintMode = false,
+                CompressionLevel = 20
+            };
+            //turtlelWriter.UseTypedNodes = false;
+
+            rdfWriter = rdfXmlWriter;
+        }
+        else if (content.Headers.ContentType.MediaType.Equals(OslcMediaType.TEXT_TURTLE))
+        {
+            var turtlelWriter = new CompressingTurtleWriter(TurtleSyntax.W3C)
+            {
+                PrettyPrintMode = false
+            };
+
+            rdfWriter = turtlelWriter;
+        }
+        else
+        {
+            //For now, use the dotNetRDF RdfXmlWriter for application/xml
+            //OslcXmlWriter oslcXmlWriter = new OslcXmlWriter();
+            var oslcXmlWriter = new RdfXmlWriter
+            {
+                UseDtd = false,
+                PrettyPrintMode = false,
+                CompressionLevel = 20
+            };
+
+            rdfWriter = oslcXmlWriter;
+        }
+
+        StreamWriter streamWriter = new NonClosingStreamWriter(writeStream);
+
+        rdfWriter.Save(Graph, streamWriter);
+
     }
 
     /// <summary>
@@ -268,6 +273,11 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     /// <returns></returns>
     public override bool CanReadType(Type type)
     {
+        if (type == typeof(Graph) || type == typeof(BaseGraph) || type == typeof(IGraph))
+        {
+            return true;
+        }
+
         if (IsSingleton(type))
         {
             return true;
@@ -291,14 +301,14 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     /// <param name="content"></param>
     /// <param name="formatterLogger"></param>
     /// <returns></returns>
-    public override Task<object> ReadFromStreamAsync(
+    public override async Task<object?> ReadFromStreamAsync(
         Type type,
         Stream readStream,
         HttpContent content,
         IFormatterLogger formatterLogger
     )
     {
-        var tcs = new TaskCompletionSource<object>();
+        //var tcs = new TaskCompletionSource<object>();
 
         if (content == null || content.Headers == null || content.Headers.ContentLength == 0)
         {
@@ -333,17 +343,43 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                     content.Headers.ContentType);
             }
 
+
             IGraph? graph = new Graph();
-            var streamReader = new StreamReader(readStream);
+            // REVISIT: we need a more robust way to obtain request URI
+            content.Headers.TryGetValues(OSLC4NetConstants.INNER_URI_HEADER, out var shuttleRequestUri);
+            graph.BaseUri = shuttleRequestUri?.SingleOrDefault()?.ToSafeUri() ?? httpRequest?.RequestUri;
+            var encodingHeader = content.Headers.ContentEncoding.SingleOrDefault();
+            var streamEncoding = Encoding.UTF8;
+            if (encodingHeader is not null)
+            {
+                try
+                {
+                    streamEncoding = Encoding.GetEncoding(encodingHeader);
+                }
+                catch
+                {
+                    streamEncoding = Encoding.UTF8;
+                }
+            }
+            // do not close the stream after reading
+            var streamReader = new StreamReader(readStream, streamEncoding, false, STREAM_BUFFER_SIZE, true);
 
             using (streamReader)
             {
-                // var rdfString = streamReader.ReadToEnd();
-                // Debug.Write(rdfString);
-                // readStream.Position = 0; // reset stream
-                // streamReader.DiscardBufferedData();
+                #if DEBUG
+                var rdfString = streamReader.ReadToEnd();
+                //Debug.Write(rdfString);
+                readStream.Position = 0; // reset stream
+                //streamReader.DiscardBufferedData();
+                #endif
 
                 rdfParser.Load(graph, streamReader);
+
+                // REVISIT: better handling of assignable types (@berezovskyi 2025-04)
+                if (type == typeof(Graph) || type == typeof(BaseGraph) || type == typeof(IGraph))
+                {
+                    return graph;
+                }
 
                 var isSingleton = IsSingleton(type);
                 var output =
@@ -355,18 +391,18 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                     var haveOne =
                         (int)output.GetType().GetProperty("Count").GetValue(output, null) > 0;
 
-                    tcs.SetResult(haveOne
+                    return haveOne
                         ? output.GetType().GetProperty("Item").GetValue(output, new object[] { 0 })
-                        : null);
+                        : null;
                 }
                 else if (type.IsArray)
                 {
-                    tcs.SetResult(output.GetType().GetMethod("ToArray", Type.EmptyTypes)
-                        .Invoke(output, null));
+                    return output.GetType().GetMethod("ToArray", Type.EmptyTypes)
+                        .Invoke(output, null);
                 }
                 else
                 {
-                    tcs.SetResult(output);
+                    return output;
                 }
             }
         }
@@ -379,10 +415,12 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 
             formatterLogger.LogError(string.Empty, e.Message);
 
-            tcs.SetResult(GetDefaultValueForType(type));
+            return GetDefaultValueForType(type);
         }
-
-        return tcs.Task;
+        finally
+        {
+            readStream.Seek(0, SeekOrigin.Begin);
+        }
     }
 
     private bool IsSingleton(Type type)
@@ -390,7 +428,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         return type.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0;
     }
 
-    private Type GetMemberType(Type type)
+    private Type? GetMemberType(Type type)
     {
         if (type.IsArray)
         {

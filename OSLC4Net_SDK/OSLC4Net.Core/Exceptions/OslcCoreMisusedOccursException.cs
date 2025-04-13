@@ -18,13 +18,16 @@ using System.Reflection;
 namespace OSLC4Net.Core.Exceptions;
 
 /// <summary>
-/// Exception thrown for an incorrect use of the OSLC Occurs attribute
+///     Exception thrown for an incorrect use of the OSLC Occurs attribute
 /// </summary>
 public class OslcCoreMisusedOccursException : OslcCoreApplicationException
 {
+    private static readonly string MESSAGE_KEY = "MisusedOccursException";
+
+    private readonly MethodInfo method;
+    private readonly Type resourceType;
 
     /// <summary>
-    ///
     /// </summary>
     /// <param name="resourceType"></param>
     /// <param name="method"></param>
@@ -44,9 +47,4 @@ public class OslcCoreMisusedOccursException : OslcCoreApplicationException
     {
         return resourceType;
     }
-
-    private static readonly string MESSAGE_KEY = "MisusedOccursException";
-
-    private readonly MethodInfo method;
-    private readonly Type resourceType;
 }

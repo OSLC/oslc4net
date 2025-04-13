@@ -22,7 +22,8 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// http://open-services.net/wiki/automation/OSLC-Automation-Specification-Version-2.0/#Resource_AutomationPlan
 /// </summary>
-[OslcResourceShape(title = "Automation Plan Resource Shape", describes = new string[] { AutomationConstants.TYPE_AUTOMATION_PLAN })]
+[OslcResourceShape(title = "Automation Plan Resource Shape",
+    describes = new string[] { AutomationConstants.TYPE_AUTOMATION_PLAN })]
 [OslcNamespace(AutomationConstants.AUTOMATION_NAMESPACE)]
 public class AutomationPlan : AbstractResource
 {
@@ -109,7 +110,8 @@ public class AutomationPlan : AbstractResource
         return creators.ToArray();
     }
 
-    [OslcDescription("Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
+    [OslcDescription(
+        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
     [OslcTitle("Description")]
     [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
@@ -118,7 +120,8 @@ public class AutomationPlan : AbstractResource
         return description;
     }
 
-    [OslcDescription("A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
+    [OslcDescription(
+        "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
     [OslcReadOnly]
@@ -164,7 +167,8 @@ public class AutomationPlan : AbstractResource
         return serviceProvider;
     }
 
-    [OslcDescription("Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
+    [OslcDescription(
+        "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
     [OslcName("subject")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "subject")]
     [OslcReadOnly(false)]
@@ -174,7 +178,8 @@ public class AutomationPlan : AbstractResource
         return subjects.ToArray();
     }
 
-    [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
+    [OslcDescription(
+        "Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
     [OslcTitle("Title")]
@@ -198,10 +203,7 @@ public class AutomationPlan : AbstractResource
     {
         this.contributors.Clear();
 
-        if (contributors != null)
-        {
-            this.contributors.AddAll(contributors);
-        }
+        if (contributors != null) this.contributors.AddAll(contributors);
     }
 
     public void SetCreated(DateTime? created)
@@ -213,10 +215,7 @@ public class AutomationPlan : AbstractResource
     {
         this.creators.Clear();
 
-        if (creators != null)
-        {
-            this.creators.AddAll(creators);
-        }
+        if (creators != null) this.creators.AddAll(creators);
     }
 
     public void SetDescription(string description)
@@ -243,10 +242,7 @@ public class AutomationPlan : AbstractResource
     {
         this.rdfTypes.Clear();
 
-        if (rdfTypes != null)
-        {
-            this.rdfTypes.AddAll(rdfTypes);
-        }
+        if (rdfTypes != null) this.rdfTypes.AddAll(rdfTypes);
     }
 
     public void SetServiceProvider(Uri serviceProvider)
@@ -258,10 +254,7 @@ public class AutomationPlan : AbstractResource
     {
         this.subjects.Clear();
 
-        if (subjects != null)
-        {
-            this.subjects.AddAll(subjects);
-        }
+        if (subjects != null) this.subjects.AddAll(subjects);
     }
 
     public void SetTitle(string title)
@@ -273,9 +266,6 @@ public class AutomationPlan : AbstractResource
     {
         this.parameterDefinitions.Clear();
 
-        if (parameterDefinitions != null)
-        {
-            this.parameterDefinitions.AddAll(parameterDefinitions);
-        }
+        if (parameterDefinitions != null) this.parameterDefinitions.AddAll(parameterDefinitions);
     }
 }

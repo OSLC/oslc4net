@@ -25,6 +25,7 @@ namespace OSLC4Net.Client;
 /// <summary>
 /// A class providing client utilities to query/get, create, update and delete OSLC resources
 /// </summary>
+[Obsolete("Use OslcClient instead.")]
 public sealed class OslcRestClient
 {
     /// <summary>
@@ -191,7 +192,7 @@ public sealed class OslcRestClient
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public async Task<T> GetOslcResourceAsync<T>() where T : class, IResource
+    public async Task<T?> GetOslcResourceAsync<T>() where T : class, IResource
     {
         // _client.DefaultRequestHeaders.Clear();
         // _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(_mediaType, 1.0));
@@ -204,7 +205,7 @@ public sealed class OslcRestClient
         {
             HttpStatusCode.OK => await response.Content.ReadAsAsync<T>(_formatters),
             HttpStatusCode.NoContent or HttpStatusCode.NotFound or HttpStatusCode.Gone => null,
-            _ => throw new HttpRequestException(response.ReasonPhrase),
+            _ => throw new HttpRequestException(response.ReasonPhrase)
         };
     }
 
@@ -213,7 +214,7 @@ public sealed class OslcRestClient
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public async Task<ICollection<T>> GetOslcResourcesAsync<T>()
+    public async Task<ICollection<T>?> GetOslcResourcesAsync<T>()
     {
         // _client.DefaultRequestHeaders.Clear();
         // _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(_mediaType));
@@ -242,7 +243,7 @@ public sealed class OslcRestClient
     /// <typeparam name="T"></typeparam>
     /// <param name="oslcResource"></param>
     /// <returns></returns>
-    public async Task<T> AddOslcResourceAsync<T>(T oslcResource) where T : class, IResource
+    public async Task<T?> AddOslcResourceAsync<T>(T oslcResource) where T : class, IResource
     {
         // FIXME: stop clearing
         // _client.DefaultRequestHeaders.Clear();

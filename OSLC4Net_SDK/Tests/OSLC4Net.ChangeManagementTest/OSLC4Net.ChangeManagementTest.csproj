@@ -4,24 +4,29 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\OSLC4Net.Core\OSLC4Net.Core.csproj" />
-    <ProjectReference Include="..\..\OSLC4Net.Core.JsonProvider\OSLC4Net.Core.JsonProvider.csproj" />
-    <ProjectReference Include="..\..\OSLC4Net.Core.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj" />
-    <ProjectReference Include="..\..\OSLC4Net.ChangeManagement\OSLC4Net.ChangeManagementCommon.csproj" />
-    <ProjectReference Include="..\..\OSLC4Net.Client\OSLC4Net.Client.csproj" />
+    <ProjectReference Include="..\..\OSLC4Net.Core\OSLC4Net.Core.csproj"/>
+    <ProjectReference Include="..\..\OSLC4Net.Core.JsonProvider\OSLC4Net.Core.JsonProvider.csproj"/>
+    <ProjectReference Include="..\..\OSLC4Net.Core.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj"/>
+    <ProjectReference Include="..\..\OSLC4Net.ChangeManagement\OSLC4Net.ChangeManagementCommon.csproj"/>
+    <ProjectReference Include="..\..\OSLC4Net.Client\OSLC4Net.Client.csproj"/>
+    <ProjectReference Include="..\OSLC4Net.Test.AspireHost\OSLC4Net.Test.AspireHost.csproj"/>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Diagnostics" />
+    <PackageReference Include="CommunityToolkit.Diagnostics"/>
     <PackageReference Include="coverlet.collector">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Aspire.Hosting.Testing"/>
+    <PackageReference Include="Meziantou.Extensions.Logging.Xunit.v3"/>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json"/>
-    <PackageReference Include="log4net"/>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client"/>
     <PackageReference Include="Microsoft.NET.Test.Sdk"/>
-    <PackageReference Include="MSTest.TestFramework"/>
-    <PackageReference Include="MSTest.TestAdapter"/>
+    <PackageReference Include="xunit.runner.visualstudio">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="xunit.v3"/>
   </ItemGroup>
 
   <ItemGroup>

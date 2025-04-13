@@ -16,38 +16,107 @@
 
 using System.Net;
 using System.Net.Http.Formatting;
+using Meziantou.Extensions.Logging.Xunit.v3;
 using Microsoft.Extensions.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using OSLC4Net.ChangeManagement;
 using OSLC4Net.Client;
+using OSLC4Net.Client.Oslc;
+using OSLC4Net.Core.Exceptions;
 using OSLC4Net.Core.Model;
+using Xunit;
+using Xunit.Sdk;
+using Type = OSLC4Net.ChangeManagement.Type;
 
 namespace OSLC4Net.ChangeManagementTest;
 
-[TestClass]
-[TestCategory("RunningOslcServerRequired")]
 public abstract class TestBase
 {
-    protected virtual IEnumerable<MediaTypeFormatter> Formatters { get; } = OslcRestClient.DEFAULT_FORMATTERS;
-    protected Uri? CREATED_CHANGE_REQUEST_URI;
-    protected readonly IConfigurationRoot _config;
-    protected readonly string _serviceProviderCatalogURI;
+    private OslcClient? _testClient;
 
-    protected TestBase()
+    protected string ServiceProviderCatalogUri;
+    protected readonly IConfigurationRoot Config;
+    protected IHost AppHost { get; set; }
+    protected ILoggerFactory LoggerFactory { get; set; }
+
+    protected TestBase(ITestOutputHelper testOutputHelper)
     {
-        _config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.Development.json")
-                 //  .AddEnvironmentVariables()
-                 .Build();
-        _serviceProviderCatalogURI = _config["serviceProviderCatalog:uri"]!;
+        Config = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.Development.json")
+            //  .AddEnvironmentVariables()
+            .Build();
+        if (Config["serviceProviderCatalog:auth:type"] is not null
+            && Config["serviceProviderCatalog:auth:type"]!.Equals("basic",
+                StringComparison.InvariantCultureIgnoreCase))
+        {
+            Username = Config["serviceProviderCatalog:auth:user"];
+            Password = Config["serviceProviderCatalog:auth:password"];
+        }
+
+        AppHost = Host.CreateDefaultBuilder()
+            .ConfigureLogging(
+                builder =>
+                {
+                    builder.Services.AddSingleton<ILoggerProvider>(
+                        new XUnitLoggerProvider(testOutputHelper, false));
+                }).Build();
+        LoggerFactory = AppHost.Services.GetRequiredService<ILoggerFactory>();
+    }
+
+
+
+    protected virtual IEnumerable<MediaTypeFormatter> Formatters { get; } =
+        OslcRestClient.DEFAULT_FORMATTERS;
+
+    protected Uri? ChangeRequestUri { get; set; }
+    public string? Username { get; set; }
+    public string? Password { get; set; }
+    public OslcClient TestClient => _testClient ??= GetTestClient();
+
+    private ServiceProviderRegistryClient GetTestSPCClient()
+    {
+        ServiceProviderRegistryClient registryClient;
+
+        if (Password is not null && Username is not null)
+        {
+            registryClient =
+                ServiceProviderRegistryClient.WithBasicAuth(ServiceProviderCatalogUri, Username,
+                    Password, LoggerFactory);
+        }
+        else
+        {
+            registryClient =
+                new ServiceProviderRegistryClient(ServiceProviderCatalogUri, LoggerFactory);
+        }
+
+        return registryClient;
+    }
+
+    private OslcClient GetTestClient()
+    {
+        OslcClient client;
+
+        if (Password is not null && Username is not null)
+        {
+            client = OslcClient.ForBasicAuth(Username, Password,
+                LoggerFactory.CreateLogger<OslcClient>());
+        }
+        else
+        {
+            client = new OslcClient(LoggerFactory.CreateLogger<OslcClient>());
+        }
+
+        return client;
     }
 
     protected async Task<string> GetCreationAsync(string mediaType,
-                                      string type)
+        string type)
     {
-        var registryClient = new ServiceProviderRegistryClient(_serviceProviderCatalogURI);
-        var serviceProviders = await registryClient.GetServiceProvidersAsync();
+        var registryClient = GetTestSPCClient();
+        var serviceProviders =
+            await registryClient.GetServiceProvidersAsync().ConfigureAwait(true);
 
         foreach (var serviceProvider in serviceProviders)
         {
@@ -72,14 +141,15 @@ public abstract class TestBase
             }
         }
 
-        throw new AssertFailedException("Unable to retrieve creation for type '" + type + "'");
+        throw FailException.ForFailure("Unable to retrieve creation for type '" + type + "'");
     }
 
     protected async Task<string> GetQueryBaseAsync(string mediaType,
-                                       string type)
+        string type)
     {
-        var registryClient = new ServiceProviderRegistryClient(_serviceProviderCatalogURI, Formatters, mediaType);
-        var serviceProviders = await registryClient.GetServiceProvidersAsync();
+        var registryClient = GetTestSPCClient();
+        var serviceProviders =
+            await registryClient.GetServiceProvidersAsync().ConfigureAwait(true);
 
         foreach (var serviceProvider in serviceProviders)
         {
@@ -107,15 +177,15 @@ public abstract class TestBase
             }
         }
 
-        throw new AssertFailedException("Unable to retrieve queryBase for type '" + type + "'");
+        throw FailException.ForFailure("Unable to retrieve queryBase for type '" + type + "'");
     }
 
     protected async Task<ResourceShape> GetResourceShapeAsync(string mediaType,
-                                                  string type)
+        string type)
     {
-        var registryClient = new ServiceProviderRegistryClient(_serviceProviderCatalogURI,
-                    Formatters, mediaType);
-        var serviceProviders = await registryClient.GetServiceProvidersAsync();
+        var registryClient = GetTestSPCClient();
+        var serviceProviders =
+            await registryClient.GetServiceProvidersAsync().ConfigureAwait(true);
 
         foreach (var serviceProvider in serviceProviders)
         {
@@ -135,9 +205,10 @@ public abstract class TestBase
                                 var resourceShape = queryCapability.GetResourceShape();
                                 if (resourceShape != null)
                                 {
-                                    OslcRestClient oslcRestClient = new(
-                                        Formatters, resourceShape, mediaType);
-                                    return await oslcRestClient.GetOslcResourceAsync<ResourceShape>();
+                                    var response = await TestClient
+                                        .GetResourceAsync<ResourceShape>(resourceShape)
+                                        .ConfigureAwait(true);
+                                    return response.Resources!.Single();
                                 }
                             }
                         }
@@ -146,14 +217,15 @@ public abstract class TestBase
             }
         }
 
-        throw new AssertFailedException("Unable to retrieve resource shape for type '" + type + "'");
+        throw FailException.ForFailure("Unable to retrieve resource shape for type '" + type +
+                                       "'");
     }
 
-    protected async void VerifyChangeRequest(string mediaType,
-                                            ChangeRequest changeRequest,
-                                            bool recurse)
+    protected async Task VerifyChangeRequestAsync(string mediaType,
+        ChangeRequest? changeRequest,
+        bool recurse)
     {
-        Assert.IsNotNull(changeRequest);
+        Assert.NotNull(changeRequest);
 
         var aboutURI = changeRequest.GetAbout();
         var createdDate = changeRequest.GetCreated();
@@ -162,84 +234,83 @@ public abstract class TestBase
         Uri[] rdfTypesURIs = changeRequest.GetRdfTypes();
         var serviceProviderURI = changeRequest.GetServiceProvider();
 
-        Assert.IsNotNull(aboutURI);
-        Assert.IsNotNull(createdDate);
-        Assert.IsNotNull(identifierString);
+        Assert.NotNull(aboutURI);
+        Assert.NotNull(createdDate);
+        Assert.NotNull(identifierString);
         // TODO: check the spec and refimpl if shall be set
-        // Assert.IsNotNull(modifiedDate);
-        Assert.IsNotNull(rdfTypesURIs);
+        // Assert.NotNull(modifiedDate);
+        Assert.NotNull(rdfTypesURIs);
         // TODO: check the spec and refimpl if shall be set
-        // Assert.IsNotNull(serviceProviderURI);
-        // Assert.IsTrue(modifiedDate.Equals(createdDate) || modifiedDate > createdDate);
+        // Assert.NotNull(serviceProviderURI);
+        // Assert.True(modifiedDate.Equals(createdDate) || modifiedDate > createdDate);
 
         // FIXME: says who?
-        // Assert.IsTrue(aboutURI.ToString().EndsWith(identifierString));
+        // Assert.True(aboutURI.ToString().EndsWith(identifierString));
 
-        Assert.IsTrue(rdfTypesURIs.Contains(new Uri(Constants.TYPE_CHANGE_REQUEST)));
+        Assert.Contains(new Uri(Constants.TYPE_CHANGE_REQUEST), rdfTypesURIs);
 
         if (recurse)
         {
-            OslcRestClient aboutOSLCRestClient = new(Formatters,
-                                                    aboutURI,
-                                                    mediaType);
+            var aboutResponse = await TestClient
+                .GetResourceAsync<ChangeRequest>(aboutURI.ToString(), mediaType)
+                .ConfigureAwait(true);
 
-            VerifyChangeRequest(mediaType,
-                                await aboutOSLCRestClient.GetOslcResourceAsync<ChangeRequest>(),
-                                recurse: false);
+            await VerifyChangeRequestAsync(mediaType,
+                aboutResponse.Resources!.Single(),
+                false).ConfigureAwait(true);
             if (serviceProviderURI != null)
             {
-                OslcRestClient serviceProviderOSLCRestClient = new(Formatters,
-                                                                serviceProviderURI,
-                                                                mediaType);
+                var serviceProviderResponse = await TestClient
+                    .GetResourceAsync<ChangeRequest>(serviceProviderURI.ToString(), mediaType)
+                    .ConfigureAwait(true);
+                var serviceProvider = serviceProviderResponse.Resources?.SingleOrDefault();
 
-                var serviceProvider = await serviceProviderOSLCRestClient.GetOslcResourceAsync<ServiceProvider>();
-
-                Assert.IsNotNull(serviceProvider);
+                Assert.NotNull(serviceProvider);
             }
         }
     }
 
-    protected async void VerifyCompact(string mediaType,
-                                      Compact compact)
+    protected async Task VerifyCompact(string mediaType,
+        Compact? compact)
     {
-        Assert.IsNotNull(compact);
+        Assert.NotNull(compact);
 
         var aboutURI = compact.GetAbout();
         _ = compact.GetShortTitle();
         var titleString = compact.GetTitle();
 
-        Assert.IsNotNull(aboutURI);
+        Assert.NotNull(aboutURI);
         // TODO: check OSLC Core and print warning otherwise
-        // Assert.IsNotNull(shortTitleString);
-        Assert.IsNotNull(titleString);
+        // Assert.NotNull(shortTitleString);
+        Assert.NotNull(titleString);
 
-        OslcRestClient aboutOSLCRestClient = new(Formatters,
-                                                aboutURI,
-                                                mediaType);
+        var aboutResponse = await TestClient
+            .GetResourceAsync<ChangeRequest>(aboutURI.ToString(), mediaType).ConfigureAwait(true);
 
-        VerifyChangeRequest(mediaType,
-                            await aboutOSLCRestClient.GetOslcResourceAsync<ChangeRequest>(),
-                            false);
+
+        await VerifyChangeRequestAsync(mediaType,
+            aboutResponse.Resources?.SingleOrDefault(),
+            false).ConfigureAwait(true);
     }
 
     protected void VerifyResourceShape(ResourceShape resourceShape,
-                                            string type)
+        string type)
     {
-        Assert.IsNotNull(resourceShape);
+        Assert.NotNull(resourceShape);
 
         Uri[] describes = resourceShape.GetDescribes();
-        Assert.IsNotNull(describes);
-        Assert.IsTrue(describes.Length > 0);
+        Assert.NotNull(describes);
+        Assert.True(describes.Length > 0);
 
         if (type != null)
         {
-            Assert.IsTrue(describes.Contains(new Uri(type)));
+            Assert.True(describes.Contains(new Uri(type)));
         }
 
-        Property[] properties = resourceShape.GetProperties();
+        var properties = resourceShape.GetProperties();
 
-        Assert.IsNotNull(properties);
-        Assert.IsTrue(properties.Length > 0);
+        Assert.NotNull(properties);
+        Assert.True(properties.Length > 0);
 
         foreach (var property in properties)
         {
@@ -247,96 +318,106 @@ public abstract class TestBase
             var propertyDefinition = property.GetPropertyDefinition();
 
             // not mandatory according OSLC CM 3.0
-            // Assert.IsNotNull(property.GetDescription());
-            Assert.IsNotNull(name);
-            Assert.IsNotNull(property.GetOccurs());
-            Assert.IsNotNull(propertyDefinition);
-            Assert.IsNotNull(property.GetTitle());
-            Assert.IsNotNull(property.GetValueType());
+            // Assert.NotNull(property.GetDescription());
+            Assert.NotNull(name);
+            Assert.NotNull(property.GetOccurs());
+            Assert.NotNull(propertyDefinition);
+            Assert.NotNull(property.GetTitle());
+            Assert.NotNull(property.GetValueType());
 
-            Assert.IsTrue(propertyDefinition.ToString().EndsWith(name),
-                          $"propertyDefinition [{propertyDefinition}], name [{name}]");
+            Assert.True(propertyDefinition.ToString().EndsWith(name),
+                $"propertyDefinition [{propertyDefinition}], name [{name}]");
         }
     }
 
     protected async Task TestResourceShapeAsync(string mediaType)
     {
         var resourceShape = await GetResourceShapeAsync(mediaType,
-                                                       Constants.TYPE_CHANGE_REQUEST);
+            Constants.TYPE_CHANGE_REQUEST).ConfigureAwait(true);
 
         VerifyResourceShape(resourceShape,
-                            Constants.TYPE_CHANGE_REQUEST);
+            Constants.TYPE_CHANGE_REQUEST);
     }
 
     protected async Task TestCompactAsync(string compactMediaType,
-                               string normalMediaType)
+        string normalMediaType)
     {
-        Assert.IsNotNull(CREATED_CHANGE_REQUEST_URI);
+        Assert.NotNull(ChangeRequestUri);
 
-        OslcRestClient oslcRestClient = new(Formatters,
-                                            CREATED_CHANGE_REQUEST_URI,
-                                            compactMediaType);
+        //OslcRestClient oslcRestClient = new(Formatters,
+        //                                    CREATED_CHANGE_REQUEST_URI,
+        //compactMediaType);
 
-        var compact = await oslcRestClient.GetOslcResourceAsync<Compact>();
+        var compactResponse = await TestClient
+            .GetResourceAsync<Compact>(ChangeRequestUri.ToString(), compactMediaType)
+            .ConfigureAwait(true);
 
-        VerifyCompact(normalMediaType,
-                      compact);
+        var compact = compactResponse.Resources?.SingleOrDefault();
+
+        await VerifyCompact(normalMediaType,
+            compact).ConfigureAwait(true);
     }
 
     protected async Task<ChangeRequest> MakeChangeRequestAsync(string mediaType)
     {
-        CREATED_CHANGE_REQUEST_URI = null;
+        //ChangeRequestUri = null;
 
         ChangeRequest changeRequest = new();
 
         changeRequest.AddContributor(new Uri("http://myserver/mycmapp/users/bob"));
         changeRequest.AddCreator(new Uri("http://myserver/mycmapp/users/bob"));
-        changeRequest.AddDctermsType(ChangeManagement.Type.Defect.ToString());
-        changeRequest.SetDescription("Invalid installation instructions indicating invalid patches to be applied.");
+        changeRequest.AddDctermsType(Type.Defect.ToString());
+        changeRequest.SetDescription(
+            "Invalid installation instructions indicating invalid patches to be applied.");
         changeRequest.SetDiscussedBy(new Uri("http://example.com/bugs/2314/discussion"));
         changeRequest.SetInstanceShape(new Uri("http://example.com/shapes/defect"));
-        changeRequest.AddRelatedChangeRequest(new Link(new Uri("http://myserver/mycmapp/bugs/1235"), "Bug 1235"));
+        changeRequest.AddRelatedChangeRequest(new Link(new Uri("http://myserver/mycmapp/bugs/1235"),
+            "Bug 1235"));
         changeRequest.SetSeverity(Severity.Major.ToString());
         changeRequest.SetShortTitle("Bug 2314");
         changeRequest.SetStatus("InProgress");
         changeRequest.AddSubject("doc");
         changeRequest.AddSubject("install");
         changeRequest.SetTitle("Invalid installation instructions");
-        changeRequest.AddTracksRequirement(new Link(new Uri("http://myserver/reqtool/req/34ef31af")));
-        changeRequest.AddTracksRequirement(new Link(new Uri("http://remoteserver/reqrepo/project1/req456"), "Requirement 456"));
+        changeRequest.AddTracksRequirement(
+            new Link(new Uri("http://myserver/reqtool/req/34ef31af")));
+        changeRequest.AddTracksRequirement(
+            new Link(new Uri("http://remoteserver/reqrepo/project1/req456"), "Requirement 456"));
 
-        var creation = await GetCreationAsync(mediaType, Constants.TYPE_CHANGE_REQUEST);
+        var creation = await GetCreationAsync(mediaType, Constants.TYPE_CHANGE_REQUEST)
+            .ConfigureAwait(true);
 
-        OslcRestClient oslcRestClient = new(Formatters,
-                                            creation,
-                                            mediaType);
+        //OslcRestClient oslcRestClient = new(Formatters,
+        //                                    creation,
+        //                                    mediaType);
+        var client = GetTestClient();
+        var addedChangeRequestResponse = await TestClient
+            .CreateResourceAsync(creation, changeRequest, mediaType)
+            .ConfigureAwait(true);
+        var createdResource = addedChangeRequestResponse.Resources?.SingleOrDefault();
+        ChangeRequestUri = createdResource?.GetAbout();
 
-        var addedChangeRequest = await oslcRestClient.AddOslcResourceAsync(changeRequest);
-
-        CREATED_CHANGE_REQUEST_URI = addedChangeRequest.GetAbout();
-
-        return addedChangeRequest;
+        return createdResource ?? throw new OslcCoreRequestException(
+            (int)addedChangeRequestResponse.StatusCode, addedChangeRequestResponse.ResponseMessage);
     }
 
     protected async Task TestCreateAsync(string mediaType)
     {
         // Assert.IsNull(CREATED_CHANGE_REQUEST_URI);
 
-        var addedChangeRequest = await MakeChangeRequestAsync(mediaType);
+        var addedChangeRequest = await MakeChangeRequestAsync(mediaType).ConfigureAwait(true);
 
-        VerifyChangeRequest(mediaType,
-                            addedChangeRequest,
-                            true);
+        await VerifyChangeRequestAsync(mediaType,
+            addedChangeRequest,
+            true).ConfigureAwait(true);
     }
 
-    protected HttpResponseMessage? DeleteChangeRequest(string mediaType)
+    protected async Task<HttpResponseMessage?> DeleteChangeRequestAsync(string mediaType)
     {
+        ArgumentNullException.ThrowIfNull(ChangeRequestUri);
         try
         {
-            OslcRestClient oslcRestClient = new(Formatters,
-                                                CREATED_CHANGE_REQUEST_URI,
-                                                mediaType);
-            return oslcRestClient.RemoveOslcResourceReturnClientResponse();
+            return await TestClient.DeleteResourceAsync(ChangeRequestUri).ConfigureAwait(true);
         }
         catch (Exception)
         {
@@ -344,111 +425,123 @@ public abstract class TestBase
         }
         finally
         {
-            CREATED_CHANGE_REQUEST_URI = null;
+            ChangeRequestUri = null;
         }
     }
 
     protected async Task TestDeleteAsync(string mediaType)
     {
-        Assert.IsNotNull(CREATED_CHANGE_REQUEST_URI);
-        var oslcRestClient = new OslcRestClient(Formatters,
-                                            CREATED_CHANGE_REQUEST_URI,
-                                            mediaType);
+        Assert.NotNull(ChangeRequestUri);
+        var resourceToBeDeleted = ChangeRequestUri;
+        //var oslcRestClient = new OslcRestClient(Formatters,
+        //                                    CREATED_CHANGE_REQUEST_URI,
+        //                                    mediaType);
 
-        var clientResponse = DeleteChangeRequest(mediaType);
+        var clientResponse = await DeleteChangeRequestAsync(mediaType).ConfigureAwait(true);
 
-        Assert.IsNotNull(clientResponse);
+        Assert.NotNull(clientResponse);
         // OSLC 3.0 allows 200 OK or 204 No Content
         // TODO: confirm an exact CC
-        CollectionAssert.Contains(new[] { HttpStatusCode.NoContent, HttpStatusCode.OK },
-            clientResponse?.StatusCode);
+        HashSet<HttpStatusCode?> allowedStatuses = [HttpStatusCode.NoContent, HttpStatusCode.OK];
+        Assert.Contains(clientResponse?.StatusCode, allowedStatuses);
         // Assert.Equals(HttpStatusCode.NoContent, clientResponse?.StatusCode);
 
-        Assert.IsNull(await oslcRestClient.GetOslcResourceAsync<ChangeRequest>());
+        var response = await TestClient
+            .GetResourceAsync<ChangeRequest>(resourceToBeDeleted.ToString(), mediaType)
+            .ConfigureAwait(true);
+
+        Assert.True(response.StatusCode == HttpStatusCode.NotFound ||
+                    response.StatusCode == HttpStatusCode.Gone);
+        Assert.Null(response.Resources?.FirstOrDefault());
     }
 
     protected async Task TestRetrieveAsync(string mediaType)
     {
-        Assert.IsNotNull(CREATED_CHANGE_REQUEST_URI);
+        Assert.NotNull(ChangeRequestUri);
 
-        OslcRestClient oslcRestClient = new(Formatters,
-                                            CREATED_CHANGE_REQUEST_URI,
-                                            mediaType);
+        var response = await TestClient
+            .GetResourceAsync<ChangeRequest>(ChangeRequestUri.ToString(), mediaType)
+            .ConfigureAwait(true);
 
-        var changeRequest = await oslcRestClient.GetOslcResourceAsync<ChangeRequest>();
-
-        VerifyChangeRequest(mediaType,
-                            changeRequest,
-                            recurse: true);
+        await VerifyChangeRequestAsync(mediaType,
+            response.Resources?.SingleOrDefault(),
+            true).ConfigureAwait(true);
     }
 
     protected async Task TestRetrievesAsync(string mediaType)
     {
-        Assert.IsNotNull(CREATED_CHANGE_REQUEST_URI);
+        Assert.NotNull(ChangeRequestUri);
 
-        var queryBase = await GetQueryBaseAsync(mediaType, Constants.TYPE_CHANGE_REQUEST);
+        var queryBase = await GetQueryBaseAsync(mediaType, Constants.TYPE_CHANGE_REQUEST)
+            .ConfigureAwait(true);
 
-        Assert.IsNotNull(queryBase);
+        Assert.NotNull(queryBase);
 
-        var client = new OslcRestClient(Formatters, queryBase, mediaType);
+        var response = await TestClient
+            .GetResourceAsync<ChangeRequest>(queryBase, mediaType).ConfigureAwait(true);
 
-        ICollection<ChangeRequest> changeRequests = await client.GetOslcResourcesAsync<ChangeRequest>();
-
-        Assert.IsNotNull(changeRequests);
-        Assert.IsTrue(changeRequests.Count > 0);
+        Assert.NotNull(response.Resources?.FirstOrDefault());
+        Assert.True(response.Resources.Count > 0);
 
         var found = false;
 
         // FIXME add paging
-        foreach (var changeRequest in changeRequests)
+        foreach (var changeRequest in response.Resources)
         {
-            VerifyChangeRequest(mediaType, changeRequest, recurse: true);
+            await VerifyChangeRequestAsync(mediaType, changeRequest, true)
+                .ConfigureAwait(true);
 
-            if (CREATED_CHANGE_REQUEST_URI.Equals(changeRequest.GetAbout()))
+            if (ChangeRequestUri.Equals(changeRequest.GetAbout()))
             {
                 found = true;
             }
         }
 
-        Assert.IsTrue(found);
+        Assert.True(found);
     }
 
     protected async Task TestUpdateAsync(string mediaType)
     {
-        Assert.IsNotNull(CREATED_CHANGE_REQUEST_URI);
+        Assert.NotNull(ChangeRequestUri);
 
-        OslcRestClient oslcRestClient = new(Formatters,
-                                            CREATED_CHANGE_REQUEST_URI,
-                                            mediaType);
+        var response = await TestClient
+            .GetResourceAsync<ChangeRequest>(ChangeRequestUri.ToString(), mediaType)
+            .ConfigureAwait(true);
 
-        var changeRequest = await oslcRestClient.GetOslcResourceAsync<ChangeRequest>();
+        var changeRequest = response.Resources?.SingleOrDefault();
+        await VerifyChangeRequestAsync(mediaType, changeRequest, true)
+            .ConfigureAwait(true);
 
-        VerifyChangeRequest(mediaType, changeRequest, recurse: true);
-
-        Assert.IsNull(changeRequest.IsApproved());
-        Assert.IsNull(changeRequest.GetCloseDate());
+        Assert.Null(changeRequest!.IsApproved());
+        Assert.Null(changeRequest!.GetCloseDate());
 
         var closeDate = DateTime.Now;
 
         changeRequest.SetApproved(true);
         changeRequest.SetCloseDate(closeDate);
 
-        var clientResponse = oslcRestClient.UpdateOslcResourceReturnClientResponse(changeRequest);
+        var clientResponse = await TestClient
+            .UpdateResourceRawAsync(ChangeRequestUri, changeRequest, mediaType)
+            .ConfigureAwait(true);
 
-        Assert.IsNotNull(clientResponse);
-        Assert.AreEqual(HttpStatusCode.OK, clientResponse.StatusCode);
+        Assert.NotNull(clientResponse);
+        Assert.Equal(HttpStatusCode.OK, clientResponse.StatusCode);
 
-        var updatedChangeRequest = await oslcRestClient.GetOslcResourceAsync<ChangeRequest>();
+        var updatedResponse = await TestClient
+            .GetResourceAsync<ChangeRequest>(ChangeRequestUri.ToString(), mediaType)
+            .ConfigureAwait(true);
 
-        VerifyChangeRequest(mediaType,
-                            updatedChangeRequest,
-                            true);
+        var updatedChangeRequest = updatedResponse.Resources!.Single();
 
-        Assert.AreEqual(changeRequest.GetAbout(), updatedChangeRequest.GetAbout());
-        Assert.AreEqual(true, updatedChangeRequest.IsApproved());
-        Assert.AreEqual(closeDate.ToShortDateString() + " - " + closeDate.ToShortTimeString(),
-                        updatedChangeRequest.GetCloseDate()?.ToShortDateString() + " - " + updatedChangeRequest.GetCloseDate()?.ToShortTimeString());
-        Assert.IsFalse(changeRequest.GetModified().Equals(updatedChangeRequest.GetModified()));
-        Assert.IsTrue(updatedChangeRequest.GetModified() > updatedChangeRequest.GetCreated());
+        await VerifyChangeRequestAsync(mediaType,
+            updatedChangeRequest,
+            true).ConfigureAwait(true);
+        Assert.Equal(changeRequest.GetAbout(), updatedChangeRequest.GetAbout());
+        Assert.Equal(true, updatedChangeRequest.IsApproved());
+        Assert.Equal(closeDate.ToShortDateString() + " - " + closeDate.ToShortTimeString(),
+            updatedChangeRequest.GetCloseDate()?.ToShortDateString() + " - " +
+            updatedChangeRequest.GetCloseDate()?.ToShortTimeString());
+        Assert.False(changeRequest.GetModified().Equals(updatedChangeRequest.GetModified()));
+        Assert.True(updatedChangeRequest.GetModified() > updatedChangeRequest.GetCreated());
     }
 }
