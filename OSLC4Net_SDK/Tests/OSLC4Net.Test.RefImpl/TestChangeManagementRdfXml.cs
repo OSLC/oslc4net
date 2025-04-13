@@ -27,7 +27,7 @@ public class TestChangeManagementRdfXml : TestBase
         base(output)
     {
         _fixture = fixture;
-        ServiceProviderCatalogUri = _fixture.ServiceProviderCatalogURI;
+        ServiceProviderCatalogUri = _fixture.ServiceProviderCatalogUriCM;
     }
 
     [Fact]

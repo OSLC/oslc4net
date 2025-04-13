@@ -22,20 +22,20 @@ public class OslcCoreInvalidPropertyDefinitionException : OslcCoreApplicationExc
 {
     private static readonly string MESSAGE_KEY = "InvalidPropertyDefinitionException";
 
-    private readonly MethodInfo? method;
+    private readonly MemberInfo? member;
     private readonly OslcPropertyDefinition oslcPropertyDefinition;
     private readonly Type resourceType;
 
     /// <summary>
     /// </summary>
     /// <param name="resourceType"></param>
-    /// <param name="method"></param>
+    /// <param name="member"></param>
     /// <param name="oslcPropertyDefinition"></param>
-    public OslcCoreInvalidPropertyDefinitionException(Type resourceType, MethodInfo? method,
+    public OslcCoreInvalidPropertyDefinitionException(Type resourceType, MemberInfo? member,
         OslcPropertyDefinition oslcPropertyDefinition) :
-        base(MESSAGE_KEY, [resourceType.Name, method?.Name, oslcPropertyDefinition.value])
+        base(MESSAGE_KEY, [resourceType.Name, member?.Name, oslcPropertyDefinition.value])
     {
-        this.method = method;
+        this.member = member;
         this.oslcPropertyDefinition = oslcPropertyDefinition;
         this.resourceType = resourceType;
     }

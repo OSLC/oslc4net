@@ -19,16 +19,17 @@ using Xunit;
 namespace OSLC4Net.ChangeManagementTest;
 
 [Trait("TestCategory", "RunningOslcServerRequired")]
-public class TestChangeManagementXml : TestBase
+public class TestChangeManagementTurtle : TestBase
 {
     private readonly RefimplAspireFixture _fixture;
 
-    public TestChangeManagementXml(RefimplAspireFixture fixture, ITestOutputHelper output) :
+    public TestChangeManagementTurtle(RefimplAspireFixture fixture, ITestOutputHelper output) :
         base(output)
     {
         _fixture = fixture;
-        ServiceProviderCatalogUri = _fixture.ServiceProviderCatalogURI;
+        ServiceProviderCatalogUri = _fixture.ServiceProviderCatalogUriCM;
     }
+
 
     /// <summary>
     ///     Ordering of test methods shall not be relied upon for execution order
@@ -36,14 +37,14 @@ public class TestChangeManagementXml : TestBase
     [Fact]
     public async Task TestAcceptance()
     {
-        const string mediaType = OslcMediaType.APPLICATION_XML;
-        await TestResourceShapeAsync(mediaType).ConfigureAwait(true);
-        await TestCreateAsync(mediaType).ConfigureAwait(true);
+        const string mediaType = OslcMediaType.TEXT_TURTLE;
+        await TestResourceShapeAsync(mediaType);
+        await TestCreateAsync(mediaType);
         await Task.WhenAll(TestRetrieveAsync(mediaType), TestRetrievesAsync(mediaType),
             TestCompactAsync(
                 OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
-                mediaType)).ConfigureAwait(true);
-        await TestUpdateAsync(mediaType).ConfigureAwait(true);
-        await TestDeleteAsync(mediaType).ConfigureAwait(true);
+                mediaType));
+        await TestUpdateAsync(mediaType);
+        await TestDeleteAsync(mediaType);
     }
 }

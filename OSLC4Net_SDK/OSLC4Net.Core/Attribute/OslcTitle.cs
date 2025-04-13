@@ -20,7 +20,7 @@ namespace OSLC4Net.Core.Attribute;
 ///     OSLC Title attribute
 /// </summary>
 /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-[AttributeUsage(AttributeTargets.Method)
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)
 ]
 public class OslcTitle : System.Attribute
 {

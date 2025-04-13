@@ -40,9 +40,15 @@ public class RefimplAspireFixture : IAsyncLifetime
             .CreateAsync<OSLC4Net_Test_AspireHost>().ConfigureAwait(true);
 
         var refimplCM = builder
-            .AddDockerfile("refimpl-rm", "../../../../refimpl/src/", "server-cm/Dockerfile")
+            .AddDockerfile("refimpl-cm", "../../../../refimpl/src/", "server-cm/Dockerfile")
             .WithEndpoint(8801, 8080, isExternal: true, isProxied: false,
                 scheme: "http", name: "http");
+
+        var refimplRM = builder
+            .AddDockerfile("refimpl-rm", "../../../../refimpl/src/", "server-rm/Dockerfile")
+            .WithEndpoint(8800, 8080, isExternal: true, isProxied: false,
+                scheme: "http", name: "http");
+
 
         //builder.Services.ConfigureHttpClientDefaults(clientBuilder =>
         //{
@@ -56,9 +62,11 @@ public class RefimplAspireFixture : IAsyncLifetime
 
         await app.StartAsync().ConfigureAwait(true);
 
-        var cmEndpoint = refimplCM.GetEndpoint("http");
-
-        ServiceProviderCatalogURI = cmEndpoint.Url + "/services/catalog/singleton";
+        ServiceProviderCatalogUriCM =
+            refimplCM.GetEndpoint("http").Url + "/services/catalog/singleton";
+        ServiceProviderCatalogUriRM =
+            refimplRM.GetEndpoint("http").Url + "/services/catalog/singleton";
+        // ServiceProviderCatalogUriRM = "http://localhost:8800/services/catalog/singleton";
 
         // Poll for server availability
         await AwaitRefimplStartupAsync().ConfigureAwait(true);
@@ -66,7 +74,9 @@ public class RefimplAspireFixture : IAsyncLifetime
         return app;
     }
 
-    public string ServiceProviderCatalogURI { get; set; }
+    public string ServiceProviderCatalogUriRM { get; set; }
+
+    public string ServiceProviderCatalogUriCM { get; set; }
 
     private async Task AwaitRefimplStartupAsync()
     {
@@ -74,14 +84,17 @@ public class RefimplAspireFixture : IAsyncLifetime
         httpClient.Timeout = TimeSpan.FromSeconds(TimeoutHealthcheck);
         var maxRetries = 180;
         var retryDelay = TimeSpan.FromSeconds(DelayHealthcheck);
-        var serverUrl = new Uri(ServiceProviderCatalogURI);
+        var serverUrlCm = new Uri(ServiceProviderCatalogUriCM);
+        var serverUrlRm = new Uri(ServiceProviderCatalogUriRM);
 
         for (var i = 0; i < maxRetries; i++)
         {
             try
             {
-                var response = await httpClient.GetAsync(serverUrl).ConfigureAwait(true);
-                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                var response = await httpClient.GetAsync(serverUrlCm).ConfigureAwait(true);
+                var responseRm = await httpClient.GetAsync(serverUrlRm).ConfigureAwait(true);
+                if (response.StatusCode == HttpStatusCode.Unauthorized &&
+                    responseRm.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     // Server is ready
                     break;
@@ -99,7 +112,7 @@ public class RefimplAspireFixture : IAsyncLifetime
             else
             {
                 throw new TimeoutException(
-                    $"Server at {serverUrl} did not start within {maxRetries * retryDelay.TotalSeconds} seconds");
+                    $"Server at {serverUrlCm} or {serverUrlRm} did not start within {maxRetries * retryDelay.TotalSeconds} seconds");
             }
         }
     }

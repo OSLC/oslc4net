@@ -28,7 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.JsonProvider"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5BCA08EA-BC25-4F9F-A825-8054E842619A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.ChangeManagementTest", "Tests\OSLC4Net.ChangeManagementTest\OSLC4Net.ChangeManagementTest.csproj", "{533433C7-2431-4937-B861-0286CAD60BCF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Test.RefImpl", "Tests\OSLC4Net.Test.RefImpl\OSLC4Net.Test.RefImpl.csproj", "{533433C7-2431-4937-B861-0286CAD60BCF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Client.Tests", "Tests\OSLC4Net.Client.Tests\OSLC4Net.Client.Tests.csproj", "{0081D7DE-F525-4AF0-8F6B-8E4D4BD7F2B9}"
 EndProject
@@ -39,6 +39,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Core.DotNetRdfProviderTests", "Tests\OSLC4Net.Core.DotNetRdfProviderTests\OSLC4Net.Core.DotNetRdfProviderTests.csproj", "{7EF256A2-DC83-4AF0-A608-C3CDC783D063}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Test.AspireHost", "Tests\OSLC4Net.Test.AspireHost\OSLC4Net.Test.AspireHost.csproj", "{54E6E221-F805-4AB7-A3F4-596AD85A9F1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLC4Net.Domains.RequirementsManagement", "OSLC4Net.Domains.RequirementsManagement\OSLC4Net.Domains.RequirementsManagement.csproj", "{9F9D0423-6720-45B4-BF58-3D26C8EFB0F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -198,6 +200,18 @@ Global
 		{54E6E221-F805-4AB7-A3F4-596AD85A9F1E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{54E6E221-F805-4AB7-A3F4-596AD85A9F1E}.Release|x86.ActiveCfg = Release|Any CPU
 		{54E6E221-F805-4AB7-A3F4-596AD85A9F1E}.Release|x86.Build.0 = Release|Any CPU
+		{9F9D0423-6720-45B4-BF58-3D26C8EFB0F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F9D0423-6720-45B4-BF58-3D26C8EFB0F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F9D0423-6720-45B4-BF58-3D26C8EFB0F6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9F9D0423-6720-45B4-BF58-3D26C8EFB0F6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9F9D0423-6720-45B4-BF58-3D26C8EFB0F6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9F9D0423-6720-45B4-BF58-3D26C8EFB0F6}.Debug|x86.Build.0 = Debug|Any CPU
+		{9F9D0423-6720-45B4-BF58-3D26C8EFB0F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F9D0423-6720-45B4-BF58-3D26C8EFB0F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F9D0423-6720-45B4-BF58-3D26C8EFB0F6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9F9D0423-6720-45B4-BF58-3D26C8EFB0F6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9F9D0423-6720-45B4-BF58-3D26C8EFB0F6}.Release|x86.ActiveCfg = Release|Any CPU
+		{9F9D0423-6720-45B4-BF58-3D26C8EFB0F6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

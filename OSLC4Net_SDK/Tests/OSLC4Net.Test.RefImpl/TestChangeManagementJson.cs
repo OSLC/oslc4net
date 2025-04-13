@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 IBM Corporation.
+ * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,30 +19,29 @@ using Xunit;
 namespace OSLC4Net.ChangeManagementTest;
 
 [Trait("TestCategory", "RunningOslcServerRequired")]
-public class TestChangeManagementTurtle : TestBase
+public class TestChangeManagementJson : TestBase
 {
     private readonly RefimplAspireFixture _fixture;
 
-    public TestChangeManagementTurtle(RefimplAspireFixture fixture, ITestOutputHelper output) :
+    public TestChangeManagementJson(RefimplAspireFixture fixture, ITestOutputHelper output) :
         base(output)
     {
         _fixture = fixture;
-        ServiceProviderCatalogUri = _fixture.ServiceProviderCatalogURI;
+        ServiceProviderCatalogUri = _fixture.ServiceProviderCatalogUriCM;
     }
-
 
     /// <summary>
     ///     Ordering of test methods shall not be relied upon for execution order
     /// </summary>
-    [Fact]
+    [Fact(Skip = "OSLC RefImpl was configured without legacy OSLC JSON support")]
     public async Task TestAcceptance()
     {
-        const string mediaType = OslcMediaType.TEXT_TURTLE;
+        const string mediaType = OslcMediaType.APPLICATION_JSON;
         await TestResourceShapeAsync(mediaType);
         await TestCreateAsync(mediaType);
         await Task.WhenAll(TestRetrieveAsync(mediaType), TestRetrievesAsync(mediaType),
             TestCompactAsync(
-                OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
+                OslcMediaType.APPLICATION_X_OSLC_COMPACT_JSON,
                 mediaType));
         await TestUpdateAsync(mediaType);
         await TestDeleteAsync(mediaType);
