@@ -95,13 +95,13 @@ public class QName
 
     public override bool Equals(object obj)
     {
-        if (!(obj is QName))
+        if (obj is QName qNameOther)
         {
-            return false;
+            return $"{namespaceURI}{localPart}".Equals(
+                $"{qNameOther.namespaceURI}{qNameOther.localPart}");
         }
 
-        return namespaceURI.Equals(((QName)obj).namespaceURI) &&
-               localPart.Equals(((QName)obj).localPart);
+        return false;
     }
 
     public override int GetHashCode()
