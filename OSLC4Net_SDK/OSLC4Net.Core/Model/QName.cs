@@ -95,6 +95,11 @@ public class QName
 
     public override bool Equals(object obj)
     {
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
+
         if (obj is QName qNameOther)
         {
             return $"{namespaceURI}{localPart}".Equals(
