@@ -24,7 +24,7 @@ This release does not contain security updates.
 ### Changed
 
 - dotNetRDF dependency was updated to v3.3.1
-- ❗️ `OslcClient` was updated to consistently support async operations
+- ❗️ `OslcClient` was updated to support async operations consistently
 
 ### Deprecated
 
