@@ -5,15 +5,15 @@ using ValueType = OSLC4Net.Core.Model.ValueType;
 namespace OSLC4Net.Domains.RequirementsManagement;
 
 [OslcNamespace(Constants.Domains.RM.NS)]
-[OslcResourceShape(title = "Requirement Resource Shape",
-    describes = [Constants.Domains.RM.Requirement])]
-public record Requirement : AbstractResourceRecord
+[OslcResourceShape(title = "Requirement Collection resource shape",
+    describes = [Constants.Domains.RM.RequirementCollection])]
+public record RequirementCollection : AbstractResourceRecord
 {
-    public Requirement(Uri about) : base(about)
+    public RequirementCollection(Uri about) : base(about)
     {
     }
 
-    public Requirement()
+    public RequirementCollection()
     {
     }
 
@@ -158,7 +158,20 @@ public record Requirement : AbstractResourceRecord
 
 
     [OslcDescription(
-        "The subject is elaborated by the object. For example, a user requirement is elaborated by use case.")] // Escape quotes in description
+        "A collection uses a resource - the resource is in the requirement collection.")] // Escape quotes in description
+    [OslcOccurs(Occurs.ZeroOrMany)]
+    [OslcPropertyDefinition("http://open-services.net/ns/rm#uses")]
+    [OslcName("uses")]
+
+    // Range specified: http://open-services.net/ns/core#AnyResource - Consider adding OslcRange attribute if needed
+    [OslcRepresentation(Representation.Reference)]
+    [OslcReadOnly(false)] // Assuming read_only property exists
+    [OslcTitle("uses")] // Use prop name as fallback title
+    public HashSet<Uri> Uses { get; set; }
+
+
+    [OslcDescription(
+        "The subject is elaborated by the object. For example, a collection of user requirements elaborates a business need, or a model elaborates a collection of system requirements.")] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#elaboratedBy")]
     [OslcName("elaboratedBy")]
@@ -183,7 +196,7 @@ public record Requirement : AbstractResourceRecord
 
 
     [OslcDescription(
-        "The subject is specified by the object. For example, a requirement is elaborated by a model element.")] // Escape quotes in description
+        "The subject is specified by the object. For example, a model element might make a requirement collection more precise.")] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#specifiedBy")]
     [OslcName("specifiedBy")]
@@ -221,7 +234,7 @@ public record Requirement : AbstractResourceRecord
 
 
     [OslcDescription(
-        "Resource, such as a change request, which tracks this requirement.")] // Escape quotes in description
+        "Resource, such as a change request, which manages this requirement collection.")] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#trackedBy")]
     [OslcName("trackedBy")]
@@ -234,7 +247,7 @@ public record Requirement : AbstractResourceRecord
 
 
     [OslcDescription(
-        "Resource, such as a change request, which implements this requirement.")] // Escape quotes in description
+        "Resource, such as a change request, which implements this requirement collection.")] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#implementedBy")]
     [OslcName("implementedBy")]
@@ -247,7 +260,7 @@ public record Requirement : AbstractResourceRecord
 
 
     [OslcDescription(
-        "Resource, such as a test case, which validates this requirement.")] // Escape quotes in description
+        "Resource, such as a test plan, which validates this requirement collection.")] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#validatedBy")]
     [OslcName("validatedBy")]
@@ -260,7 +273,7 @@ public record Requirement : AbstractResourceRecord
 
 
     [OslcDescription(
-        "The subject is satisfied by the object. For example, a user requirement is satisfied by a system requirement.")] // Escape quotes in description
+        "The subject is satisfied by the object. For example, a collection of user requirements is satisfied by a requirement collection of system requirements.")] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#satisfiedBy")]
     [OslcName("satisfiedBy")]
@@ -285,7 +298,7 @@ public record Requirement : AbstractResourceRecord
 
 
     [OslcDescription(
-        "The subject is decomposed by the object. For example, a system requirement is decomposed into a collection of system requirements.")] // Escape quotes in description
+        "The subject is decomposed by the object. For example, a collection of business requirements is decomposed by a collection of user requirements.")] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#decomposedBy")]
     [OslcName("decomposedBy")]
@@ -310,7 +323,7 @@ public record Requirement : AbstractResourceRecord
 
 
     [OslcDescription(
-        "The subject is constrained by the object. For example, a functional requirement is constrained by a safety requirement.")] // Escape quotes in description
+        "The subject is constrained by the object. For example, a requirement collection is constrained by a requirement collection.")] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#constrainedBy")]
     [OslcName("constrainedBy")]

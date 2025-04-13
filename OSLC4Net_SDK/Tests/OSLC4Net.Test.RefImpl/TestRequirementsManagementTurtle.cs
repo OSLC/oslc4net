@@ -20,6 +20,8 @@ using Constants = OSLC4Net.ChangeManagement.Constants;
 
 namespace OSLC4Net.ChangeManagementTest;
 
+using DC = OslcConstants.Domains.DCElements.Q;
+using PROV = OslcConstants.Domains.PROV.Q;
 using DCTerms = OslcConstants.Domains.DCTerms.Q;
 
 [Trait("TestCategory", "RunningOslcServerRequired")]
@@ -39,8 +41,21 @@ public class TestRequirementsManagementTurtle : TestBase
     [Fact]
     public async Task TestCreateRequirement()
     {
-        Requirement resource = new() { Identifier = "REQ-001", Title = "Test requirement" };
-        resource.ExtendedProperties[DCTerms.Description] = "A sample description";
+        Requirement resource = new()
+        {
+            Identifier = "REQ-001",
+            Title = "Test requirement",
+            Constrains =
+                [new Uri("http://example.com/REQ-002"), new Uri("http://example.com/REQ-003")],
+            Creator = [new Uri("https://github.com/berezovskyi")],
+            ExtendedProperties =
+            {
+                [DCTerms.Description] = "A sample description",
+                [PROV.AtLocation] =
+                    new Uri("http://dbpedia.org/resource/Stockholm"),
+                [DC.Language] = "en-GB"
+            }
+        };
 
         var creation = await GetCreationAsync(MediaType, Constants.TYPE_REQUIREMENT)
             .ConfigureAwait(true);
@@ -54,6 +69,11 @@ public class TestRequirementsManagementTurtle : TestBase
         Assert.Equal(resource.Title, createdResource?.Title);
         Assert.Equal(resource.Identifier, createdResource?.Identifier);
         Assert.Equal(resource.ExtendedProperties[DCTerms.Description],
-            createdResource?.ExtendedProperties[DCTerms.Description]);
+            createdResource?.Description);
+        Assert.Equal(resource.ExtendedProperties[PROV.AtLocation],
+            createdResource?.ExtendedProperties[PROV.AtLocation]);
+        Assert.Equal(resource.ExtendedProperties[DC.Language],
+            createdResource?.ExtendedProperties[DC.Language]);
+        Assert.Equal(2, createdResource?.Constrains.Count);
     }
 }

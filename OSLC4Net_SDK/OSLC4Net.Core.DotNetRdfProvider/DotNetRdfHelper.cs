@@ -401,7 +401,7 @@ public static class DotNetRdfHelper
                     else
                     {
                         var predicateUri = predicate.Uri.ToString();
-                        string prefix;
+                        string? prefix = null;
                         string localPart;
                         string ns;
                         string qname;
@@ -421,7 +421,13 @@ public static class DotNetRdfHelper
 
                             localPart = predicateUri.Substring(idx + 1);
                             ns = predicateUri.Substring(0, idx + 1);
-                            prefix = graph.NamespaceMap.GetPrefix(new Uri(ns));
+                            try
+                            {
+                                prefix = graph.NamespaceMap.GetPrefix(new Uri(ns));
+                            }
+                            catch
+                            {
+                            }
                             if (prefix == null)
                             {
                                 prefix = GeneratePrefix(graph, ns);
@@ -961,7 +967,7 @@ public static class DotNetRdfHelper
         {
             candidatePrefix = GENERATED_PREFIX_START + i;
             ++i;
-        } while (map.GetNamespaceUri(candidatePrefix) == null);
+        } while (map.HasNamespace(candidatePrefix) == true);
 
         map.AddNamespace(candidatePrefix, new Uri(ns));
         return candidatePrefix;

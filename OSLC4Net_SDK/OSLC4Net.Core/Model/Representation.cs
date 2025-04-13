@@ -21,12 +21,16 @@ namespace OSLC4Net.Core.Model;
 /// <remarks>see http://open-services.net/bin/view/Main/OslcCoreSpecification#OSLC_Defined_Resources</remarks>
 public enum Representation
 {
+    [URI("")] Unknown,
+
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Reference")]
     Reference,
 
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Inline")]
     Inline,
-    [URI("")] Unknown
+
+    [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Either")]
+    Either
 }
 
 public static class RepresentationExtension

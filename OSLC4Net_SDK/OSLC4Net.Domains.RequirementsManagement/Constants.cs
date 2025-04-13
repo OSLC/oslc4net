@@ -30,6 +30,7 @@ public static class Constants
             public const string Prefix = "oslc_rm";
 
             public const string Requirement = NS + "Requirement";
+            public const string RequirementCollection = NS + "RequirementCollection";
 
             public static QName QNameFor(string localResource)
             {

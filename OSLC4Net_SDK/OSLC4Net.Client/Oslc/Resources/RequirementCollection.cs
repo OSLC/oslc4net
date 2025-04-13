@@ -25,6 +25,7 @@ namespace OSLC4Net.Client.Oslc.Resources;
 [OslcNamespace(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE)]
 [OslcResourceShape(title = "Requirement Collection Resource Shape",
     describes = new string[] { RmConstants.TYPE_REQUIREMENT_COLLECTION })]
+[Obsolete("See OSLC4Net.Domains.RequirementsManagement")]
 public class RequirementCollection : RequirementBase
 {
     // The only extra field is uses

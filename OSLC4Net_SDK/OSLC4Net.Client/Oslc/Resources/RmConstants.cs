@@ -17,6 +17,7 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client.Oslc.Resources;
 
+[Obsolete("See OSLC4Net.Domains.RequirementsManagement")]
 public static class RmConstants
 {
     public const string REQUIREMENTS_MANAGEMENT_DOMAIN = "http://open-services.net/ns/rm#";
@@ -38,11 +39,11 @@ public static class RmConstants
     public const string JAZZ_RM_NAV_NAMESPACE = "http://jazz.net/ns/rm/navigation#";
     public const string JAZZ_RM_ACCESS_NAMESPACE = "http://jazz.net/ns/acp#";
 
-    public static readonly QName PROPERTY_PRIMARY_TEXT = new QName(RmConstants.JAZZ_RM_NAMESPACE, "primaryText");
-    public static readonly QName PROPERTY_PARENT_FOLDER = new QName(RmConstants.JAZZ_RM_NAV_NAMESPACE, "parent");
+    public static readonly QName PROPERTY_PRIMARY_TEXT = new QName(JAZZ_RM_NAMESPACE, "primaryText");
+    public static readonly QName PROPERTY_PARENT_FOLDER = new QName(JAZZ_RM_NAV_NAMESPACE, "parent");
 
     public static readonly QName PROPERTY_ACCESS_CONTROL =
-        new QName(RmConstants.JAZZ_RM_ACCESS_NAMESPACE, "accessControl");
+        new QName(JAZZ_RM_ACCESS_NAMESPACE, "accessControl");
 
     public const string NAMESPACE_URI_XHTML = "http://www.w3.org/1999/xhtml"; //$NON-NLS-1$
 }
