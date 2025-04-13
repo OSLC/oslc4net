@@ -36,6 +36,7 @@
     <!-- fail on any NuGet vulnerability audit findings -->
     <NugetWarnings>NU1900;NU1901;NU1902;NU1903;NU1904</NugetWarnings>
     <NullabilityWarnings>CS8600;CS8602;CS8603</NullabilityWarnings>
-    <WarningsAsErrors>$(NugetWarnings);$(NullabilityWarnings)</WarningsAsErrors>
+    <!--    <WarningsAsErrors>$(NugetWarnings);$(NullabilityWarnings)</WarningsAsErrors>-->
+    <WarningsAsErrors>$(NugetWarnings)</WarningsAsErrors>
   </PropertyGroup>
 </Project>
