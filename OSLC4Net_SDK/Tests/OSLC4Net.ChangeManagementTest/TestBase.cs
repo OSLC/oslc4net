@@ -34,25 +34,25 @@ namespace OSLC4Net.ChangeManagementTest;
 
 public abstract class TestBase
 {
-    private OslcClient _testClient;
+    private OslcClient? _testClient;
 
-    protected static string _serviceProviderCatalogURI;
-    protected readonly IConfigurationRoot _config;
+    protected string ServiceProviderCatalogUri;
+    protected readonly IConfigurationRoot Config;
     protected IHost AppHost { get; set; }
     protected ILoggerFactory LoggerFactory { get; set; }
 
     protected TestBase(ITestOutputHelper testOutputHelper)
     {
-        _config = new ConfigurationBuilder()
+        Config = new ConfigurationBuilder()
             .AddJsonFile("appsettings.Development.json")
             //  .AddEnvironmentVariables()
             .Build();
-        if (_config["serviceProviderCatalog:auth:type"] is not null
-            && _config["serviceProviderCatalog:auth:type"]!.Equals("basic",
+        if (Config["serviceProviderCatalog:auth:type"] is not null
+            && Config["serviceProviderCatalog:auth:type"]!.Equals("basic",
                 StringComparison.InvariantCultureIgnoreCase))
         {
-            Username = _config["serviceProviderCatalog:auth:user"];
-            Password = _config["serviceProviderCatalog:auth:password"];
+            Username = Config["serviceProviderCatalog:auth:user"];
+            Password = Config["serviceProviderCatalog:auth:password"];
         }
 
         AppHost = Host.CreateDefaultBuilder()
@@ -82,13 +82,13 @@ public abstract class TestBase
         if (Password is not null && Username is not null)
         {
             registryClient =
-                ServiceProviderRegistryClient.WithBasicAuth(_serviceProviderCatalogURI, Username,
+                ServiceProviderRegistryClient.WithBasicAuth(ServiceProviderCatalogUri, Username,
                     Password, LoggerFactory);
         }
         else
         {
             registryClient =
-                new ServiceProviderRegistryClient(_serviceProviderCatalogURI, LoggerFactory);
+                new ServiceProviderRegistryClient(ServiceProviderCatalogUri, LoggerFactory);
         }
 
         return registryClient;

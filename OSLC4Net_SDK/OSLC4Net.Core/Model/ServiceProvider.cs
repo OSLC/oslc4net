@@ -37,7 +37,7 @@ public class ServiceProvider : AbstractResource
     private string _identifier; // TODO - ServiceProvider.identifier nice to have, but not required.
     private OAuthConfiguration _oauthConfiguration;
     private Publisher _publisher;
-    private string _title;
+    private string? _title;
 
     public void AddService(Service service)
     {
@@ -147,7 +147,7 @@ public class ServiceProvider : AbstractResource
     [OslcReadOnly]
     [OslcTitle("Title")]
     [OslcValueType(ValueType.XMLLiteral)]
-    public string GetTitle()
+    public string? GetTitle()
     {
         return _title;
     }

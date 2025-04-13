@@ -208,7 +208,14 @@ public sealed class ServiceProviderRegistryClient
                         (int)statusCode,
                         clientResponse.ResponseMessage?.ReasonPhrase);
 
-                return clientResponse.ResponseMessage!.Headers.Location;
+                if (clientResponse.ResponseMessage?.Headers.Location == null)
+                {
+                    throw new OslcCoreRegistrationException(serviceProviderToRegister,
+                        (int)statusCode,
+                        "Missing Location header in response");
+                }
+
+                return clientResponse.ResponseMessage.Headers.Location;
             }
         }
 

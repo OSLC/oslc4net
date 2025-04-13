@@ -295,6 +295,7 @@ public class OslcClient : IDisposable
     /// </summary>
     /// <param name="url"></param>
     /// <returns></returns>
+    [Obsolete]
     public HttpResponseMessage DeleteResource(string url)
     {
         _client.DefaultRequestHeaders.Accept.Clear();
@@ -543,7 +544,6 @@ public class OslcClient : IDisposable
 
             content.Headers.ContentType = mediaTypeValue;
 
-            // FIXME: await (@berezovskyi 2024-10)
             response = _client.PutAsync(url, content).Result;
 
             if (ShallFollowRedirect(response))
@@ -570,6 +570,7 @@ public class OslcClient : IDisposable
     /// <param name="acceptType"></param>
     /// <param name="ifMatch"></param>
     /// <returns></returns>
+    [Obsolete]
     public HttpResponseMessage UpdateResource(string url, object artifact, string mediaType,
         string acceptType, string ifMatch)
     {
@@ -591,7 +592,6 @@ public class OslcClient : IDisposable
 
             content.Headers.ContentType = mediaTypeValue;
 
-            // FIXME: await (@berezovskyi 2024-10)
             response = _client.PutAsync(url, content).Result;
 
             if (ShallFollowRedirect(response))
@@ -623,12 +623,13 @@ public class OslcClient : IDisposable
         if (response.StatusCode != HttpStatusCode.OK)
             throw new ResourceNotFoundException(catalogUrl, serviceProviderTitle);
 
-        var catalog = response.Resources.SingleOrDefault();
+        var catalog = response.Resources?.SingleOrDefault();
 
         if (catalog != null)
             foreach (var sp in catalog.GetServiceProviders())
                 if (sp.GetTitle() != null &&
-                    string.Compare(sp.GetTitle(), serviceProviderTitle, true) == 0)
+                    string.Compare(sp.GetTitle(), serviceProviderTitle,
+                        StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     retval = sp.GetAbout().ToString();
                     break;

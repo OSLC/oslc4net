@@ -22,7 +22,7 @@ public class OslcCoreInvalidPropertyDefinitionException : OslcCoreApplicationExc
 {
     private static readonly string MESSAGE_KEY = "InvalidPropertyDefinitionException";
 
-    private readonly MethodInfo method;
+    private readonly MethodInfo? method;
     private readonly OslcPropertyDefinition oslcPropertyDefinition;
     private readonly Type resourceType;
 
@@ -33,8 +33,7 @@ public class OslcCoreInvalidPropertyDefinitionException : OslcCoreApplicationExc
     /// <param name="oslcPropertyDefinition"></param>
     public OslcCoreInvalidPropertyDefinitionException(Type resourceType, MethodInfo? method,
         OslcPropertyDefinition oslcPropertyDefinition) :
-        base(MESSAGE_KEY,
-            new object?[] { resourceType.Name, method?.Name, oslcPropertyDefinition.value })
+        base(MESSAGE_KEY, [resourceType.Name, method?.Name, oslcPropertyDefinition.value])
     {
         this.method = method;
         this.oslcPropertyDefinition = oslcPropertyDefinition;

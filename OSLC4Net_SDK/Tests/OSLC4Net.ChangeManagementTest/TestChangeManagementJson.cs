@@ -18,6 +18,7 @@ using Xunit;
 
 namespace OSLC4Net.ChangeManagementTest;
 
+[Trait("TestCategory", "RunningOslcServerRequired")]
 public class TestChangeManagementJson : TestBase
 {
     private readonly RefimplAspireFixture _fixture;
@@ -26,7 +27,7 @@ public class TestChangeManagementJson : TestBase
         base(output)
     {
         _fixture = fixture;
-        _serviceProviderCatalogURI = _fixture.ServiceProviderCatalogURI;
+        ServiceProviderCatalogUri = _fixture.ServiceProviderCatalogURI;
     }
 
     /// <summary>
