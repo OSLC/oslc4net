@@ -22,18 +22,19 @@ namespace OSLC4Net.Core.Model;
 /// </summary>
 public abstract class AbstractResource : IExtendedResource
 {
-    private Uri about;
     private IDictionary<QName, object> extendedProperties = new Dictionary<QName, object>();
     private ICollection<Uri> types = new List<Uri>();
 
     protected AbstractResource(Uri about)
     {
-        this.about = about;
+        About = about;
     }
 
     protected AbstractResource()
     {
     }
+
+    public Uri About { get; set; }
 
     /// <summary>
     ///     Get the subject URI
@@ -41,7 +42,7 @@ public abstract class AbstractResource : IExtendedResource
     /// <returns></returns>
     public Uri GetAbout()
     {
-        return about;
+        return About;
     }
 
     /// <summary>
@@ -50,7 +51,7 @@ public abstract class AbstractResource : IExtendedResource
     /// <param name="about"></param>
     public void SetAbout(Uri about)
     {
-        this.about = about;
+        About = about;
     }
 
     /// <param name="properties"></param>
@@ -93,5 +94,67 @@ public abstract class AbstractResource : IExtendedResource
     public void AddType(Uri type)
     {
         types.Add(type);
+    }
+}
+
+public abstract record AbstractResourceRecord : IExtendedResource
+{
+    public Uri About { get; set; }
+
+    public List<Uri> Types { get; private set; } = new();
+
+    public IDictionary<QName, object> ExtendedProperties { get; private set; } =
+        new Dictionary<QName, object>();
+
+    protected AbstractResourceRecord(Uri about)
+    {
+        About = about;
+    }
+
+    protected AbstractResourceRecord()
+    {
+    }
+
+    /// <inheritdoc cref="IResource.GetAbout" />
+    public Uri GetAbout()
+    {
+        return About;
+    }
+
+    /// <inheritdoc cref="IResource.SetAbout" />
+    public void SetAbout(Uri about)
+    {
+        About = about;
+    }
+
+    /// <inheritdoc cref="IExtendedResource.GetTypes" />
+    public ICollection<Uri> GetTypes()
+    {
+        return Types;
+    }
+
+    /// <inheritdoc cref="IExtendedResource.SetTypes" />
+    public void SetTypes(ICollection<Uri> types)
+    {
+        Types = new List<Uri>(types);
+    }
+
+    /// <inheritdoc cref="IExtendedResource.AddType" />
+    public void AddType(Uri type)
+    {
+        Types.Add(type);
+    }
+
+    /// <inheritdoc cref="IExtendedResource.SetExtendedProperties" />
+    public void SetExtendedProperties(IDictionary<QName, object> properties)
+    {
+        // must be implemented this way due to how DotNetRdfHelper works - do not Clear+AddRange
+        ExtendedProperties = properties;
+    }
+
+    /// <inheritdoc cref="IExtendedResource.GetExtendedProperties" />
+    public IDictionary<QName, object> GetExtendedProperties()
+    {
+        return ExtendedProperties;
     }
 }

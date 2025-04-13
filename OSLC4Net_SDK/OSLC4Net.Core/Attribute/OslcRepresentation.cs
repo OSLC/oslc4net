@@ -21,7 +21,7 @@ namespace OSLC4Net.Core.Attribute;
 /// <summary>
 ///     OSLC Representation attribute
 /// </summary>
-[AttributeUsage(AttributeTargets.Method)
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)
 ]
 public class OslcRepresentation : System.Attribute
 {

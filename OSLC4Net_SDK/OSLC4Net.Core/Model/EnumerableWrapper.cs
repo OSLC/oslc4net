@@ -31,7 +31,10 @@ public class EnumerableWrapper : IEnumerable<object>
     {
         var method = opaqueObj.GetType().GetMethod("GetEnumerator", Type.EmptyTypes);
 
-        method = method.MakeGenericMethod();
+        if (method.IsGenericMethod)
+        {
+            method = method.MakeGenericMethod();
+        }
 
         return new EnumeratorWrapper(method.Invoke(opaqueObj, null));
     }

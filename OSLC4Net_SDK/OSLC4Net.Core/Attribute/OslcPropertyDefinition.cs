@@ -19,7 +19,7 @@ namespace OSLC4Net.Core.Attribute;
 /// <summary>
 ///     OSLC PropertyDefinition attribute
 /// </summary>
-[AttributeUsage(AttributeTargets.Method)
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)
 ]
 public class OslcPropertyDefinition : System.Attribute
 {

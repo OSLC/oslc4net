@@ -24,7 +24,7 @@ public static class InheritedMethodAttributeHelper
     /// <typeparam name="T"></typeparam>
     /// <param name="method"></param>
     /// <returns></returns>
-    public static T? GetAttribute<T>(MethodInfo method) where T : System.Attribute
+    public static T? GetAttribute<T>(MemberInfo method) where T : System.Attribute
     {
         var attributes = (T[])method.GetCustomAttributes(typeof(T), true);
 

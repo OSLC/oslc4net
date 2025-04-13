@@ -21,7 +21,7 @@ namespace OSLC4Net.Core.Attribute;
 /// <summary>
 ///     OSLC ValueType attribue
 /// </summary>
-[AttributeUsage(AttributeTargets.Method)
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)
 ]
 public class OslcValueType : System.Attribute
 {

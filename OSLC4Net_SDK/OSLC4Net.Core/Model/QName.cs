@@ -95,13 +95,19 @@ public class QName
 
     public override bool Equals(object obj)
     {
-        if (!(obj is QName))
+        if (ReferenceEquals(this, obj))
         {
-            return false;
+            return true;
         }
 
-        return namespaceURI.Equals(((QName)obj).namespaceURI) &&
-               localPart.Equals(((QName)obj).localPart);
+        if (obj is QName qNameOther)
+        {
+            return $"{namespaceURI}{localPart}".Equals(
+                $"{qNameOther.namespaceURI}{qNameOther.localPart}",
+                StringComparison.InvariantCulture);
+        }
+
+        return false;
     }
 
     public override int GetHashCode()

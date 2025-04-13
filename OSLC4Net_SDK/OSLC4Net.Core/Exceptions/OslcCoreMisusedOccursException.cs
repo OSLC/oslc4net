@@ -22,29 +22,19 @@ namespace OSLC4Net.Core.Exceptions;
 /// </summary>
 public class OslcCoreMisusedOccursException : OslcCoreApplicationException
 {
-    private static readonly string MESSAGE_KEY = "MisusedOccursException";
-
-    private readonly MethodInfo method;
-    private readonly Type resourceType;
+    private const string MessageKey = "MisusedOccursException";
 
     /// <summary>
     /// </summary>
     /// <param name="resourceType"></param>
-    /// <param name="method"></param>
-    public OslcCoreMisusedOccursException(Type resourceType, MethodInfo method) :
-        base(MESSAGE_KEY, new object[] { resourceType.Name, method.Name })
+    /// <param name="member"></param>
+    public OslcCoreMisusedOccursException(Type resourceType, MemberInfo member) :
+        base(MessageKey, [resourceType.Name, member.Name])
     {
-        this.method = method;
-        this.resourceType = resourceType;
+        Member = member;
+        ResourceType = resourceType;
     }
 
-    public MethodInfo GetMethod()
-    {
-        return method;
-    }
-
-    public Type GetResourceType()
-    {
-        return resourceType;
-    }
+    public MemberInfo Member { get; }
+    private Type ResourceType { get; }
 }

@@ -18,11 +18,11 @@ namespace OSLC4Net.Core.Model;
 /// <summary>
 ///     General purpose OSLC constants
 /// </summary>
-public static class OslcConstants
+public static partial class OslcConstants
 {
     public const string OSLC_CORE_DOMAIN = "http://open-services.net/ns/core#";
 
-    public const string DCTERMS_NAMESPACE = "http://purl.org/dc/terms/";
+    [Obsolete("Use ")] public const string DCTERMS_NAMESPACE = "http://purl.org/dc/terms/";
     public const string OSLC_CORE_NAMESPACE = "http://open-services.net/ns/core#";
     public const string OSLC_DATA_NAMESPACE = "http://open-services.net/ns/servicemanagement/1.0/";
     public const string RDF_NAMESPACE = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
@@ -75,4 +75,6 @@ public static class OslcConstants
     public const string PATH_SERVICE = "service";
     public const string PATH_SERVICE_PROVIDER = "serviceProvider";
     public const string PATH_SERVICE_PROVIDER_CATALOG = "serviceProviderCatalog";
+
+    public static partial class Domains;
 }

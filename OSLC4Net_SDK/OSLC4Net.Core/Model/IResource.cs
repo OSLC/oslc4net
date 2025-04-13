@@ -20,7 +20,12 @@ namespace OSLC4Net.Core.Model;
 /// </summary>
 public interface IResource
 {
+    Uri About { get; }
+
+    [Obsolete]
     Uri GetAbout();
+
+    [Obsolete]
     void SetAbout(Uri about);
 }
 

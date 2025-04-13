@@ -94,7 +94,7 @@ public abstract class TestBase
         return registryClient;
     }
 
-    private OslcClient GetTestClient()
+    protected OslcClient GetTestClient()
     {
         OslcClient client;
 
@@ -123,18 +123,15 @@ public abstract class TestBase
             var services = serviceProvider.GetServices();
             foreach (var service in services)
             {
-                if (Constants.CHANGE_MANAGEMENT_DOMAIN.Equals(service.GetDomain().ToString()))
+                var creationFactories = service.GetCreationFactories();
+                foreach (var creationFactory in creationFactories)
                 {
-                    var creationFactories = service.GetCreationFactories();
-                    foreach (var creationFactory in creationFactories)
+                    Uri[] resourceTypes = creationFactory.GetResourceTypes();
+                    foreach (var resourceType in resourceTypes)
                     {
-                        Uri[] resourceTypes = creationFactory.GetResourceTypes();
-                        foreach (var resourceType in resourceTypes)
+                        if (resourceType.ToString().Equals(type))
                         {
-                            if (resourceType.ToString().Equals(type))
-                            {
-                                return creationFactory.GetCreation().ToString();
-                            }
+                            return creationFactory.GetCreation().ToString();
                         }
                     }
                 }

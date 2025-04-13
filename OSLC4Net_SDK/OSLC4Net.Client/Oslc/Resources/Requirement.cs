@@ -24,6 +24,7 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// </summary>
 [OslcNamespace(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE)]
 [OslcResourceShape(title = "Requirement Resource Shape", describes = new string[] { RmConstants.TYPE_REQUIREMENT })]
+[Obsolete("See OSLC4Net.Domains.RequirementsManagement")]
 public class Requirement : RequirementBase
 {
     public Requirement()
@@ -37,6 +38,7 @@ public class Requirement : RequirementBase
     }
 }
 
+[Obsolete("See OSLC4Net.Domains.RequirementsManagement")]
 public abstract class RequirementBase : AbstractResource
 {
     private string? _title;
