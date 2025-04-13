@@ -21,6 +21,7 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using log4net;
+using Microsoft.Extensions.Logging;
 using OSLC4Net.Client.Exceptions;
 using OSLC4Net.Core;
 using OSLC4Net.Core.DotNetRdfProvider;
@@ -35,6 +36,8 @@ namespace OSLC4Net.Client.Oslc;
 /// </summary>
 public class OslcClient : IDisposable
 {
+    private readonly ILogger<OslcClient> _logger;
+
     // As of 2020, FF allows 20, Blink - 19, Safari - 16.
     private const int MAX_REDIRECTS = 20;
 
@@ -50,7 +53,7 @@ public class OslcClient : IDisposable
     /// <summary>
     /// Initialize a new OslcClient.
     /// </summary>
-    public OslcClient() : this(false)
+    public OslcClient(ILogger<OslcClient> logger) : this(false, logger)
     {
     }
 
@@ -61,7 +64,8 @@ public class OslcClient : IDisposable
     /// (null will not replace the default validation callback)</param>
     [Obsolete]
     public OslcClient(Func<HttpRequestMessage, X509Certificate2, X509Chain,
-        SslPolicyErrors, bool> certCallback) : this(certCallback, null)
+        SslPolicyErrors, bool> certCallback, ILogger<OslcClient> logger) : this(certCallback, null,
+        logger)
     {
     }
 
@@ -73,12 +77,15 @@ public class OslcClient : IDisposable
     /// <param name="userHttpMessageHandler">optionally use OAuth</param>
     [Obsolete]
     protected OslcClient(Func<HttpRequestMessage, X509Certificate2, X509Chain,
-        SslPolicyErrors, bool> certCallback, HttpMessageHandler userHttpMessageHandler)
+            SslPolicyErrors, bool> certCallback, HttpMessageHandler userHttpMessageHandler,
+        ILogger<OslcClient> logger)
     {
+        _logger = logger;
         this._formatters = new HashSet<MediaTypeFormatter>();
 
         // REVISIT: RDF/XML + Turtle support only for now (@berezovskyi 2024-10)
         _formatters.Add(new RdfXmlMediaTypeFormatter());
+        _formatters.Add(new JsonMediaTypeFormatter());
 
         var handler = userHttpMessageHandler;
         handler ??= new HttpClientHandler { AllowAutoRedirect = false };
@@ -101,12 +108,14 @@ public class OslcClient : IDisposable
         _client = HttpClientFactory.Create(handler);
     }
 
-    private OslcClient(HttpClientHandler customHandler) : this(null, customHandler)
+    private OslcClient(HttpClientHandler customHandler, ILogger<OslcClient> logger) : this(null,
+        customHandler, logger)
     {
     }
 
-    private OslcClient(bool allowInvalidTlsCerts)
+    private OslcClient(bool allowInvalidTlsCerts, ILogger<OslcClient> logger)
     {
+        _logger = logger;
         var handler = new HttpClientHandler
         {
             AllowAutoRedirect = false,
@@ -125,9 +134,10 @@ public class OslcClient : IDisposable
     }
 
     public static OslcClient ForBasicAuth(string username, string password,
+        ILogger<OslcClient> logger,
         HttpClientHandler handler = null)
     {
-        var oslcClient = new OslcClient(handler);
+        var oslcClient = new OslcClient(handler, logger);
         var client = oslcClient.GetHttpClient();
         var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}"));
         client.DefaultRequestHeaders.Authorization =
@@ -144,7 +154,7 @@ public class OslcClient : IDisposable
     /// in .NET 5+ if really needed)</param>
     /// <returns></returns>
     public static HttpClientHandler CreateSSLHandler(Func<HttpRequestMessage, X509Certificate2,
-        X509Chain, SslPolicyErrors, bool> certCallback = null)
+        X509Chain, SslPolicyErrors, bool>? certCallback = null)
     {
         var handler = new HttpClientHandler();
 
@@ -245,14 +255,17 @@ public class OslcClient : IDisposable
         HttpResponseMessage response;
         bool redirect;
         byte redirectCount = 0;
+        var requestUrl = url;
         do
         {
-            response = await _client.GetAsync(url);
+            response = await _client.GetAsync(requestUrl);
 
             if (response.StatusCode == HttpStatusCode.MovedPermanently ||
                 response.StatusCode == HttpStatusCode.Moved)
             {
-                url = response.Headers.Location.AbsoluteUri;
+                _logger.LogTrace("Encountered redirect {code}: {from} -> {to}", response.StatusCode,
+                    requestUrl, response.Headers.Location.AbsoluteUri);
+                requestUrl = response.Headers.Location.AbsoluteUri;
                 response.ConsumeContent();
                 redirect = true;
                 if (++redirectCount > MAX_REDIRECTS)
@@ -267,6 +280,9 @@ public class OslcClient : IDisposable
             }
             else
             {
+                _logger.LogTrace("Encountered reponse {code}: {url} (for {origUrl})",
+                    response.StatusCode,
+                    requestUrl, url);
                 redirect = false;
             }
         } while (redirect);

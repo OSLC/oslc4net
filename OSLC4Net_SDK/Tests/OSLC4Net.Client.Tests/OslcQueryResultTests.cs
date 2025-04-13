@@ -12,18 +12,34 @@
  *******************************************************************************/
 
 using System.Net;
+using Meziantou.Extensions.Logging.Xunit.v3;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Xunit;
-using Xunit.Abstractions;
+
+[assembly: CaptureConsole]
+[assembly: CaptureTrace]
 
 namespace OSLC4Net.Client.Oslc.Resources;
 
 public class OslcQueryResultTests
 {
     private readonly ITestOutputHelper _testOutputHelper;
+    private IHost AppHost { get; }
+    private ILoggerFactory LoggerFactory { get; }
 
     public OslcQueryResultTests(ITestOutputHelper testOutputHelper)
     {
         _testOutputHelper = testOutputHelper;
+        AppHost = Host.CreateDefaultBuilder()
+            .ConfigureLogging(
+                builder =>
+                {
+                    builder.Services.AddSingleton<ILoggerProvider>(
+                        new XUnitLoggerProvider(testOutputHelper, false));
+                }).Build();
+        LoggerFactory = AppHost.Services.GetRequiredService<ILoggerFactory>();
     }
 
     [Fact]
@@ -59,10 +75,10 @@ public class OslcQueryResultTests
         Assert.Equal(20, oslcQueryResult.GetMembersUrls().Length);
     }
 
-    private static async Task<OslcQueryResult> GetMockOslcQueryResultMulti()
+    private async Task<OslcQueryResult> GetMockOslcQueryResultMulti()
     {
         var responseText = await File.ReadAllTextAsync("data/multiResponseQuery.rdf");
-        var testQuery = new OslcQuery(new OslcClient(),
+        var testQuery = new OslcQuery(new OslcClient(LoggerFactory.CreateLogger<OslcClient>()),
             "https://nordic.clm.ibmcloud.com/ccm/oslc/contexts/_2nC4UBNvEeutmoeSPr3-Ag/workitems");
         var httpResponseMessage = new HttpResponseMessage
         {

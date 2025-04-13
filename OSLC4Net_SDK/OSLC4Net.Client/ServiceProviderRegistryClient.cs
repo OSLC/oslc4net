@@ -14,11 +14,12 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
+using System.Net;
+using System.Net.Http.Formatting;
+using Microsoft.Extensions.Logging;
 using OSLC4Net.Client.Oslc;
 using OSLC4Net.Core.Exceptions;
 using OSLC4Net.Core.Model;
-using System.Net;
-using System.Net.Http.Formatting;
 
 namespace OSLC4Net.Client;
 
@@ -30,6 +31,7 @@ namespace OSLC4Net.Client;
 /// </summary>
 public sealed class ServiceProviderRegistryClient
 {
+    private readonly ILogger<ServiceProviderRegistryClient> _logger;
     public OslcClient Client { get; private set; }
     private string Endpoint { get; set; }
 
@@ -44,15 +46,17 @@ public sealed class ServiceProviderRegistryClient
     public ServiceProviderRegistryClient(string uri,
         IEnumerable<MediaTypeFormatter> formatters,
         string mediaType,
+        ILoggerFactory loggerFactory,
         string? username = null,
         string? password = null)
     {
-        //_client = new OslcRestClient(formatters, uri, mediaType);
         Endpoint = uri;
+        _logger = loggerFactory.CreateLogger<ServiceProviderRegistryClient>();
         if (username != null && password != null)
-            Client = OslcClient.ForBasicAuth(username, password);
+            Client = OslcClient.ForBasicAuth(username, password,
+                loggerFactory.CreateLogger<OslcClient>());
         else
-            Client = new OslcClient();
+            Client = new OslcClient(loggerFactory.CreateLogger<OslcClient>());
     }
 
 
@@ -73,16 +77,18 @@ public sealed class ServiceProviderRegistryClient
     {
     }
 
-    public ServiceProviderRegistryClient(string uri) :
+    public ServiceProviderRegistryClient(string uri, ILoggerFactory loggerFactory) :
         // TODO: build an Accept string from the formatter list on the fly
-        this(uri, OslcRestClient.DEFAULT_FORMATTERS, OslcMediaType.APPLICATION_RDF_XML, null, null)
+        this(uri, OslcRestClient.DEFAULT_FORMATTERS, OslcMediaType.APPLICATION_RDF_XML,
+            loggerFactory, null)
     {
     }
 
-    public static ServiceProviderRegistryClient WithBasicAuth(string uri, string username, string password)
+    public static ServiceProviderRegistryClient WithBasicAuth(string uri, string username,
+        string password, ILoggerFactory loggerFactory)
     {
         return new ServiceProviderRegistryClient(uri, OslcRestClient.DEFAULT_FORMATTERS,
-            OslcMediaType.APPLICATION_RDF_XML, username, password);
+            OslcMediaType.APPLICATION_RDF_XML, loggerFactory, username, password);
     }
 
     /// <summary>

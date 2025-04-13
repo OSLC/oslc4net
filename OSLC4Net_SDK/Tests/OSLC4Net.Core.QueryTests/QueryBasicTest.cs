@@ -14,10 +14,13 @@
  *******************************************************************************/
 
 using System.Diagnostics;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OSLC4Net.Core.Query;
 using Xunit;
+//using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParseException = OSLC4Net.Core.Query.ParseException;
+
+[assembly: CaptureConsole]
+[assembly: CaptureTrace]
 
 namespace OSLC4Net.Core.QueryTests;
 

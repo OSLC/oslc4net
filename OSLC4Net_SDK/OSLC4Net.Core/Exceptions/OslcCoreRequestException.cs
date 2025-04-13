@@ -23,8 +23,8 @@ namespace OSLC4Net.Core.Exceptions;
 public class OslcCoreRequestException : Exception
 {
     public OslcCoreRequestException(int statusCode, HttpResponseMessage? responseMessage,
-        IResource? requestResource = null, Error? errorResource = null) : base(responseMessage
-        ?.ReasonPhrase)
+        IResource? requestResource = null, Error? errorResource = null) : base($"{(int)responseMessage
+            ?.StatusCode} {responseMessage?.ReasonPhrase}")
     {
         ResponseMessage = responseMessage;
         StatusCode = statusCode;

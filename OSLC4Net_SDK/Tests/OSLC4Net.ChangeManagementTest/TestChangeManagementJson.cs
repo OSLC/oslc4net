@@ -13,116 +13,26 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System.Net.Http.Formatting;
-using Aspire.Hosting;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OSLC4Net.Core.JsonProvider;
 using OSLC4Net.Core.Model;
+using Xunit;
 
 namespace OSLC4Net.ChangeManagementTest;
 
-// FIXME: re-enable
-//[TestClass]
 public class TestChangeManagementJson : TestBase
 {
-    private static DistributedApplication? _distributedApplication;
+    private readonly RefimplAspireFixture _fixture;
 
-    protected override IEnumerable<MediaTypeFormatter> Formatters { get; } =
-        new HashSet<MediaTypeFormatter> { new OslcJsonMediaTypeFormatter() };
-
-    public TestContext? TestContext { set; get; }
-
-    [ClassInitialize]
-    public static async Task ClassSetupAsync(TestContext ctx)
+    public TestChangeManagementJson(RefimplAspireFixture fixture, ITestOutputHelper output) :
+        base(output)
     {
-        _distributedApplication ??= await SetupAspireAsync().ConfigureAwait(false);
+        _fixture = fixture;
+        _serviceProviderCatalogURI = _fixture.ServiceProviderCatalogURI;
     }
-
-    [ClassCleanup]
-    public static async Task ClassCleanupAsync()
-    {
-        if (_distributedApplication is not null)
-        {
-            await _distributedApplication.DisposeAsync().ConfigureAwait(false);
-        }
-    }
-
-
-    [TestInitialize]
-    public async Task TestSetup()
-    {
-        switch (TestContext!.TestName)
-        {
-            case "TestResourceShape":
-            case "TestCreate":
-                break;
-            default:
-                await MakeChangeRequestAsync(OslcMediaType.APPLICATION_JSON);
-                break;
-        }
-    }
-
-    [TestCleanup]
-    public void TestTeardown()
-    {
-        switch (TestContext!.TestName)
-        {
-            case "TestResourceShape":
-            case "TestDelete":
-                break;
-            default:
-                DeleteChangeRequestAsync(OslcMediaType.APPLICATION_JSON);
-                break;
-        }
-    }
-
-    //[TestMethod]
-    //public async Task TestResourceShape()
-    //{
-    //    await TestResourceShapeAsync(OslcMediaType.APPLICATION_JSON);
-    //}
-
-    //[TestMethod]
-    //public async Task TestCreate()
-    //{
-    //    await TestCreateAsync(OslcMediaType.APPLICATION_JSON);
-    //}
-
-    //[TestMethod]
-    //public async Task TestRetrieve()
-    //{
-    //    await TestRetrieveAsync(OslcMediaType.APPLICATION_JSON);
-    //}
-
-    //[TestMethod]
-    //public async Task TestRetrieves()
-    //{
-    //    await TestRetrievesAsync(OslcMediaType.APPLICATION_JSON);
-    //}
-
-    //[TestMethod]
-    //public async Task TestCompact()
-    //{
-    //    await TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
-    //                OslcMediaType.APPLICATION_JSON);
-    //}
-
-    //[TestMethod]
-    //public async Task TestUpdate()
-    //{
-    //    await TestUpdateAsync(OslcMediaType.APPLICATION_JSON);
-    //}
-
-    //[TestMethod]
-    //public async Task TestDelete()
-    //{
-    //    await TestDeleteAsync(OslcMediaType.APPLICATION_JSON);
-    //}
 
     /// <summary>
     ///     Ordering of test methods shall not be relied upon for execution order
     /// </summary>
-    [TestMethod]
+    [Fact(Skip = "OSLC RefImpl was configured without legacy OSLC JSON support")]
     public async Task TestAcceptance()
     {
         const string mediaType = OslcMediaType.APPLICATION_JSON;

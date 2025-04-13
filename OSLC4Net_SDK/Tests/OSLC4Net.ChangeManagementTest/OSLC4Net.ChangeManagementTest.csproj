@@ -18,12 +18,15 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Aspire.Hosting.Testing"/>
+    <PackageReference Include="Meziantou.Extensions.Logging.Xunit.v3"/>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json"/>
-    <PackageReference Include="log4net"/>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client"/>
     <PackageReference Include="Microsoft.NET.Test.Sdk"/>
-    <PackageReference Include="MSTest.TestFramework"/>
-    <PackageReference Include="MSTest.TestAdapter"/>
+    <PackageReference Include="xunit.runner.visualstudio">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="xunit.v3"/>
   </ItemGroup>
 
   <ItemGroup>

@@ -25,7 +25,8 @@ using (var scope = host.Services.CreateScope())
 
     string username = "%USERNAME%";
     string password = "%PASSWORD%";
-    var oslcClient = OslcClient.ForBasicAuth(username, password);
+    var oslcClient = OslcClient.ForBasicAuth(username, password,
+        services.GetRequiredService<ILogger<OslcClient>>());
 
     var resourceUri =
         $"{jazzCmBase}/resource/itemName/com.ibm.team.workitem.WorkItem/{workItemId}";

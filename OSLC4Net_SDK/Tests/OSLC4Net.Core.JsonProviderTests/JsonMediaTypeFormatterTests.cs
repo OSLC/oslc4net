@@ -23,8 +23,12 @@ using OSLC4Net.Core.JsonProvider;
 using OSLC4Net.Core.Model;
 using Xunit;
 
+[assembly: CaptureConsole]
+[assembly: CaptureTrace]
+
 namespace OSLC4Net.Core.JsonProviderTests;
 
+[Obsolete]
 public class JsonMediaTypeFormatterTests
 {
     [Fact]
@@ -77,7 +81,7 @@ public class JsonMediaTypeFormatterTests
                                                null,
                                                crListOut,
                                                null);
-        OSLC4Net.Core.JsonProvider.OslcJsonMediaTypeFormatter formatter = new(json, false);
+        OslcJsonMediaTypeFormatter formatter = new(json, false);
 
         var jsonString = SerializeCollection(formatter, crListOut, OslcMediaType.APPLICATION_JSON_TYPE);
 

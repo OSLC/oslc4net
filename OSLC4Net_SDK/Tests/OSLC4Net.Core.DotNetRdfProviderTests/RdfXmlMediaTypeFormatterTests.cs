@@ -22,6 +22,9 @@ using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
 using Xunit;
 
+[assembly: CaptureConsole]
+[assembly: CaptureTrace]
+
 namespace OSLC4Net.Core.DotNetRdfProviderTests;
 
 public class RdfXmlMediaTypeFormatterTests

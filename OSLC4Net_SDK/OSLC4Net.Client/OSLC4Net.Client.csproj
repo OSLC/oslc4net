@@ -36,5 +36,6 @@
     <PackageReference Include="dotNetRdf.Core"/>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client"/>
     <PackageReference Include="log4net"/>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"/>
   </ItemGroup>
 </Project>
