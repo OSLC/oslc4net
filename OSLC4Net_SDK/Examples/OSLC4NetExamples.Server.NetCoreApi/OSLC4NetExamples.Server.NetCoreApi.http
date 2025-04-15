@@ -1,0 +1,6 @@
+@OSLC4NetExamples.Server.NetCoreApi_HostAddress = http://localhost:5065
+
+GET {{OSLC4NetExamples.Server.NetCoreApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
