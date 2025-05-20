@@ -20,16 +20,6 @@ namespace OSLC4Net.Core.Exceptions;
 /// </summary>
 public class OslcCoreApplicationException : Exception
 {
-    public OslcCoreApplicationException(string message) :
-        base(message)
-    {
-    }
-
-    public OslcCoreApplicationException(string message, Exception innerException) :
-        base(message, innerException)
-    {
-    }
-
     public OslcCoreApplicationException(string messageKey, object?[] args) :
         base(MessageExtractor.GetMessage(messageKey, args))
     {

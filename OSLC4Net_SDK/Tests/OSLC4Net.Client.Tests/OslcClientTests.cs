@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NSubstitute;
-using NSubstitute.ExceptionExtensions; // For ThrowsAsync
+using Xunit;
+using NSubstitute; // Still needed for ILogger
+// NSubstitute.ExceptionExtensions is not explicitly needed if Assert.ThrowsAsync is used directly
 using OSLC4Net.Client.Exceptions;
 using OSLC4Net.Client.Oslc;
 using OSLC4Net.Core.Attribute;
@@ -15,20 +15,17 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-// VDS.RDF is not strictly needed here anymore as we rely on OslcClient's internal parsing.
-// We are constructing RDF strings directly.
 
 namespace OSLC4Net.Client.Tests
 {
-    [TestClass]
     public class OslcClientRdfTypeTests
     {
         private const string TestResourceBaseUri = "http://example.com/resources/";
-        private HttpMessageHandler _mockHttpMessageHandler;
-        private OslcClient _oslcClient;
-        private ILogger<OslcClient> _mockLogger;
+        private readonly FakeHttpMessageHandler _fakeHttpMessageHandler; // Changed
+        private readonly OslcClient _oslcClient;
+        private readonly ILogger<OslcClient> _mockLogger;
 
-        // --- Mock Resource Classes ---
+        // --- Mock Resource Classes (remain unchanged) ---
         [OslcName("MockResourceWithShape")]
         [OslcNamespace("http://example.com/ns#")]
         [OslcResourceShape(describes = new string[] { "http://example.com/ns#ExpectedType" })]
@@ -73,7 +70,6 @@ namespace OSLC4Net.Client.Tests
             public MockResourceWithNullDescribes(Uri about) : base(about) { }
         }
 
-        // For hierarchy tests
         [OslcName("MockBaseResource")]
         [OslcNamespace("http://example.com/ns#")]
         [OslcResourceShape(describes = new string[] { "http://example.com/ns#BaseType" })]
@@ -100,57 +96,21 @@ namespace OSLC4Net.Client.Tests
             public MockDerivedResourceNoShape(Uri about) : base(about) { }
         }
 
-
-        [TestInitialize]
-        public void Setup()
+        public OslcClientRdfTypeTests()
         {
-            _mockHttpMessageHandler = Substitute.For<HttpMessageHandler>();
             _mockLogger = Substitute.For<ILogger<OslcClient>>();
+            _fakeHttpMessageHandler = new FakeHttpMessageHandler(); // Initialize with default
             
-            var internalHttpClient = new HttpClient(_mockHttpMessageHandler);
+            var httpClientWithFakeHandler = new HttpClient(_fakeHttpMessageHandler);
             
-            _oslcClient = new OslcClient(_mockLogger);
-            // Use reflection to set the otherwise immutable _client field
-            typeof(OslcClient).GetField("_client", BindingFlags.NonPublic | BindingFlags.Instance)
-                              .SetValue(_oslcClient, internalHttpClient);
+            _oslcClient = new OslcClient(_mockLogger); 
+            
+            var clientField = typeof(OslcClient).GetField("_client", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            if (clientField == null) throw new InvalidOperationException("Could not find private field '_client' in OslcClient for test setup.");
+            clientField.SetValue(_oslcClient, httpClientWithFakeHandler);
         }
 
-        private void SetupMockHttpResponse(string requestUri, string rdfContent, HttpStatusCode statusCode = HttpStatusCode.OK, string contentType = "application/rdf+xml")
-        {
-            var response = new HttpResponseMessage(statusCode)
-            {
-                Content = new StringContent(rdfContent, Encoding.UTF8, contentType)
-            };
-
-            // NSubstitute setup for HttpMessageHandler.SendAsync (protected method)
-            // This requires NSubstitute.ProtectedExtensions if SendAsync were protected, but it's public on HttpMessageHandler.
-             _mockHttpMessageHandler
-                .GetType().GetMethod("SendAsync", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public) // Ensure we get the right one
-                .Invoke(_mockHttpMessageHandler, new object[] { Arg.Is<HttpRequestMessage>(req => req.RequestUri.ToString() == requestUri), Arg.Any<CancellationToken>() })
-                .Returns(Task.FromResult(response));
-
-            // A more common NSubstitute setup if SendAsync was directly mockable (e.g. on an interface or public virtual)
-            // _mockHttpMessageHandler.SendAsync(Arg.Is<HttpRequestMessage>(req => req.RequestUri.ToString() == requestUri), Arg.Any<CancellationToken>())
-            //    .Returns(Task.FromResult(response));
-            // For HttpMessageHandler, the above reflection or a more specific NSubstitute setup for protected members is usually needed.
-            // However, SendAsync is public. The issue might be how Arg.Is and Arg.Any are used with non-virtual methods.
-            // The simplest way that often works with NSubstitute for HttpMessageHandler:
-            typeof(HttpMessageHandler).GetMethod("SendAsync", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)
-                .Invoke(_mockHttpMessageHandler, new object[] { Arg.Is<HttpRequestMessage>(m => m.RequestUri.AbsoluteUri == requestUri), Arg.Any<CancellationToken>() })
-                .Returns(Task.FromResult(response));
-
-
-            // Fallback to a more manual setup if the above still has issues with NSubstitute specifics:
-            // We need to ensure the mock handler's SendAsync method is properly configured.
-            // NSubstitute doesn't directly mock non-virtual methods of concrete classes like HttpClientHandler.
-            // The _mockHttpMessageHandler is a substitute instance of HttpMessageHandler (abstract class).
-            // Its SendAsync method IS abstract, so NSubstitute CAN override it.
-
-             _mockHttpMessageHandler.SendAsync(
-                Arg.Is<HttpRequestMessage>(req => req.RequestUri.ToString() == requestUri),
-                Arg.Any<CancellationToken>()
-            ).Returns(Task.FromResult(response));
-        }
+        // Removed SetupMockHttpResponse helper method
 
         private string GetSingleRdf(string resourceUri, string rdfType, string title = "Test Resource")
         {
@@ -160,10 +120,13 @@ namespace OSLC4Net.Client.Tests
         private string GetSingleRdf(string resourceUri, string[] rdfTypes, string title = "Test Resource")
         {
             var typeTriples = new StringBuilder();
-            foreach (var type in rdfTypes)
+            if (rdfTypes != null)
             {
-                if(!string.IsNullOrEmpty(type))
-                    typeTriples.AppendLine($"    <rdf:type rdf:resource=\"{type}\"/>");
+                foreach (var type in rdfTypes)
+                {
+                    if(!string.IsNullOrEmpty(type))
+                        typeTriples.AppendLine($"    <rdf:type rdf:resource=\"{type}\"/>");
+                }
             }
             return $@"<rdf:RDF 
     xmlns:rdf=""http://www.w3.org/1999/02/22-rdf-syntax-ns#""
@@ -185,10 +148,13 @@ namespace OSLC4Net.Client.Tests
             foreach (var res in resources)
             {
                 var typeTriples = new StringBuilder();
-                foreach (var type in res.rdfTypes)
+                if (res.rdfTypes != null)
                 {
-                     if(!string.IsNullOrEmpty(type))
-                        typeTriples.AppendLine($"    <rdf:type rdf:resource=\"{type}\"/>");
+                    foreach (var type in res.rdfTypes)
+                    {
+                         if(!string.IsNullOrEmpty(type))
+                            typeTriples.AppendLine($"    <rdf:type rdf:resource=\"{type}\"/>");
+                    }
                 }
                 sb.AppendLine($@"  <rdf:Description rdf:about=""{res.uri}"">
 {typeTriples}
@@ -209,157 +175,233 @@ namespace OSLC4Net.Client.Tests
                 Arg.Any<Func<object, Exception, string>>());
         }
 
-        // --- Test Methods ---
-
-        [TestMethod]
+        [Fact]
         public async Task GetResourceAsync_Single_TypeMatchSuccess_ReturnsResource()
         {
             var resourceUri = TestResourceBaseUri + "res1";
             var rdfContent = GetSingleRdf(resourceUri, "http://example.com/ns#ExpectedType");
-            SetupMockHttpResponse(resourceUri, rdfContent);
+            var expectedMediaType = "application/rdf+xml";
 
-            var oslcResponse = await _oslcClient.GetResourceAsync<MockResourceWithShape>(resourceUri);
+            _fakeHttpMessageHandler.SetHandler((request, cancellationToken) =>
+            {
+                Assert.Equal(HttpMethod.Get, request.Method);
+                Assert.Equal(resourceUri, request.RequestUri.ToString());
+                var response = new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(rdfContent, Encoding.UTF8, expectedMediaType),
+                    RequestMessage = request
+                };
+                return Task.FromResult(response);
+            });
 
-            Assert.IsNotNull(oslcResponse);
-            Assert.IsTrue(oslcResponse.IsSuccess);
-            Assert.IsNotNull(oslcResponse.Resources);
-            Assert.AreEqual(1, oslcResponse.Resources.Count);
-            Assert.IsInstanceOfType(oslcResponse.Resources[0], typeof(MockResourceWithShape));
-            Assert.AreEqual(new Uri(resourceUri), oslcResponse.Resources[0].GetAbout());
+            var oslcResponse = await _oslcClient.GetResourceAsync<MockResourceWithShape>(resourceUri, expectedMediaType);
+
+            Assert.NotNull(oslcResponse);
+            Assert.True(oslcResponse.IsSuccess);
+            Assert.NotNull(oslcResponse.Resources);
+            Assert.Single(oslcResponse.Resources);
+            Assert.IsAssignableFrom<MockResourceWithShape>(oslcResponse.Resources[0]);
+            Assert.Equal(new Uri(resourceUri), oslcResponse.Resources[0].GetAbout());
         }
 
-        [TestMethod]
+        [Fact]
         public async Task GetResourceAsync_Single_TypeMismatch_ThrowsOslcRdfTypeMismatchException()
         {
             var resourceUri = TestResourceBaseUri + "resMismatch";
             var rdfContent = GetSingleRdf(resourceUri, "http://example.com/ns#UnexpectedType");
-            SetupMockHttpResponse(resourceUri, rdfContent);
+            var expectedMediaType = "application/rdf+xml";
 
-            var exception = await Assert.ThrowsExceptionAsync<OslcRdfTypeMismatchException>(() => 
-                _oslcClient.GetResourceAsync<MockResourceWithShape>(resourceUri)
+            _fakeHttpMessageHandler.SetHandler((request, cancellationToken) =>
+                Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(rdfContent, Encoding.UTF8, expectedMediaType),
+                    RequestMessage = request
+                })
             );
             
-            Assert.AreEqual(resourceUri, exception.ResourceUri);
-            Assert.IsTrue(exception.ExpectedTypes.Contains("http://example.com/ns#ExpectedType"));
-            Assert.IsTrue(exception.ActualTypes.Contains("http://example.com/ns#UnexpectedType"));
+            var exception = await Assert.ThrowsAsync<OslcRdfTypeMismatchException>(() => 
+                _oslcClient.GetResourceAsync<MockResourceWithShape>(resourceUri, expectedMediaType)
+            );
+            
+            Assert.Equal(resourceUri, exception.ResourceUri);
+            Assert.Contains("http://example.com/ns#ExpectedType", exception.ExpectedTypes);
+            Assert.Contains("http://example.com/ns#UnexpectedType", exception.ActualTypes);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task GetResourceAsync_Single_NoRdfTypeInResource_ThrowsOslcRdfTypeMismatchException()
         {
             var resourceUri = TestResourceBaseUri + "resNoType";
-            var rdfContent = GetSingleRdf(resourceUri, new string[] { null }, title: "Resource Without Type"); // Pass null or empty string for type
-            SetupMockHttpResponse(resourceUri, rdfContent);
+            var rdfContent = GetSingleRdf(resourceUri, (string[])null, title: "Resource Without Type"); // Pass null for types
+            var expectedMediaType = "application/rdf+xml";
+
+            _fakeHttpMessageHandler.SetHandler((request, cancellationToken) =>
+                Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(rdfContent, Encoding.UTF8, expectedMediaType),
+                    RequestMessage = request
+                })
+            );
              
-            var exception = await Assert.ThrowsExceptionAsync<OslcRdfTypeMismatchException>(() => 
-                _oslcClient.GetResourceAsync<MockResourceWithShape>(resourceUri)
+            var exception = await Assert.ThrowsAsync<OslcRdfTypeMismatchException>(() => 
+                _oslcClient.GetResourceAsync<MockResourceWithShape>(resourceUri, expectedMediaType)
             );
 
-            Assert.AreEqual(resourceUri, exception.ResourceUri);
-            Assert.IsTrue(exception.ExpectedTypes.Contains("http://example.com/ns#ExpectedType"));
-            Assert.IsTrue(exception.ActualTypes.ToLowerInvariant().Contains("none"));
+            Assert.Equal(resourceUri, exception.ResourceUri);
+            Assert.Contains("http://example.com/ns#ExpectedType", exception.ExpectedTypes);
+            Assert.Contains("none", exception.ActualTypes, StringComparison.OrdinalIgnoreCase);
         }
         
-        [TestMethod]
+        [Fact]
         public async Task GetResourceAsync_Single_TypeMatchSuccess_MultipleAllowedTypes_ReturnsResource()
         {
             var resourceUri = TestResourceBaseUri + "resMultiAllowed";
             var rdfContent = GetSingleRdf(resourceUri, "http://example.com/ns#Type2");
-            SetupMockHttpResponse(resourceUri, rdfContent);
+            var expectedMediaType = "application/rdf+xml";
 
-            var oslcResponse = await _oslcClient.GetResourceAsync<MockResourceWithMultipleAllowedTypes>(resourceUri);
+            _fakeHttpMessageHandler.SetHandler((request, cancellationToken) =>
+                Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(rdfContent, Encoding.UTF8, expectedMediaType),
+                    RequestMessage = request
+                })
+            );
 
-            Assert.IsNotNull(oslcResponse);
-            Assert.IsTrue(oslcResponse.IsSuccess);
-            Assert.AreEqual(1, oslcResponse.Resources.Count);
-            Assert.IsInstanceOfType(oslcResponse.Resources[0], typeof(MockResourceWithMultipleAllowedTypes));
+            var oslcResponse = await _oslcClient.GetResourceAsync<MockResourceWithMultipleAllowedTypes>(resourceUri, expectedMediaType);
+
+            Assert.NotNull(oslcResponse);
+            Assert.True(oslcResponse.IsSuccess);
+            Assert.NotNull(oslcResponse.Resources);
+            Assert.Single(oslcResponse.Resources);
+            Assert.IsAssignableFrom<MockResourceWithMultipleAllowedTypes>(oslcResponse.Resources[0]);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task GetResourceAsync_Single_TypeMatchSuccess_ResourceHasMultipleTypes_ReturnsResource()
         {
             var resourceUri = TestResourceBaseUri + "resMultiActual";
             var rdfContent = GetSingleRdf(resourceUri, new string[] { "http://example.com/ns#OtherType", "http://example.com/ns#ExpectedType" });
-            SetupMockHttpResponse(resourceUri, rdfContent);
+             var expectedMediaType = "application/rdf+xml";
 
-            var oslcResponse = await _oslcClient.GetResourceAsync<MockResourceWithShape>(resourceUri);
+            _fakeHttpMessageHandler.SetHandler((request, cancellationToken) =>
+                Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(rdfContent, Encoding.UTF8, expectedMediaType),
+                    RequestMessage = request
+                })
+            );
 
-            Assert.IsNotNull(oslcResponse);
-            Assert.IsTrue(oslcResponse.IsSuccess);
-            Assert.AreEqual(1, oslcResponse.Resources.Count);
-            Assert.IsInstanceOfType(oslcResponse.Resources[0], typeof(MockResourceWithShape));
+            var oslcResponse = await _oslcClient.GetResourceAsync<MockResourceWithShape>(resourceUri, expectedMediaType);
+
+            Assert.NotNull(oslcResponse);
+            Assert.True(oslcResponse.IsSuccess);
+            Assert.NotNull(oslcResponse.Resources);
+            Assert.Single(oslcResponse.Resources);
+            Assert.IsAssignableFrom<MockResourceWithShape>(oslcResponse.Resources[0]);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task GetResourceAsync_Single_NoOslcResourceShape_SkipsTypeCheck_ReturnsResource()
         {
             var resourceUri = TestResourceBaseUri + "resNoShape";
             var rdfContent = GetSingleRdf(resourceUri, "http://example.com/ns#AnyType");
-            SetupMockHttpResponse(resourceUri, rdfContent);
+            var expectedMediaType = "application/rdf+xml";
 
-            var oslcResponse = await _oslcClient.GetResourceAsync<MockResourceWithoutShape>(resourceUri);
+            _fakeHttpMessageHandler.SetHandler((request, cancellationToken) =>
+                Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(rdfContent, Encoding.UTF8, expectedMediaType),
+                    RequestMessage = request
+                })
+            );
 
-            Assert.IsNotNull(oslcResponse);
-            Assert.IsTrue(oslcResponse.IsSuccess);
-            Assert.AreEqual(1, oslcResponse.Resources.Count);
-            Assert.IsInstanceOfType(oslcResponse.Resources[0], typeof(MockResourceWithoutShape));
+            var oslcResponse = await _oslcClient.GetResourceAsync<MockResourceWithoutShape>(resourceUri, expectedMediaType);
+
+            Assert.NotNull(oslcResponse);
+            Assert.True(oslcResponse.IsSuccess);
+            Assert.NotNull(oslcResponse.Resources);
+            Assert.Single(oslcResponse.Resources);
+            Assert.IsAssignableFrom<MockResourceWithoutShape>(oslcResponse.Resources[0]);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task GetResourceAsync_Single_EmptyDescribesInShape_SkipsTypeCheck_ReturnsResource()
         {
             var resourceUri = TestResourceBaseUri + "resEmptyDescribes";
             var rdfContent = GetSingleRdf(resourceUri, "http://example.com/ns#AnyType");
-            SetupMockHttpResponse(resourceUri, rdfContent);
-
-            var oslcResponse = await _oslcClient.GetResourceAsync<MockResourceWithEmptyDescribes>(resourceUri);
+            var expectedMediaType = "application/rdf+xml";
             
-            Assert.IsNotNull(oslcResponse);
-            Assert.IsTrue(oslcResponse.IsSuccess);
-            Assert.AreEqual(1, oslcResponse.Resources.Count);
+            _fakeHttpMessageHandler.SetHandler((request, cancellationToken) =>
+                Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(rdfContent, Encoding.UTF8, expectedMediaType),
+                    RequestMessage = request
+                })
+            );
+            
+            var oslcResponse = await _oslcClient.GetResourceAsync<MockResourceWithEmptyDescribes>(resourceUri, expectedMediaType);
+            
+            Assert.NotNull(oslcResponse);
+            Assert.True(oslcResponse.IsSuccess);
+            Assert.NotNull(oslcResponse.Resources);
+            Assert.Single(oslcResponse.Resources);
         }
         
-        [TestMethod]
+        [Fact]
         public async Task GetResourceAsync_Single_NullDescribesInShape_SkipsTypeCheck_ReturnsResource()
         {
             var resourceUri = TestResourceBaseUri + "resNullDescribes";
             var rdfContent = GetSingleRdf(resourceUri, "http://example.com/ns#AnyType");
-            SetupMockHttpResponse(resourceUri, rdfContent);
+            var expectedMediaType = "application/rdf+xml";
 
-            var oslcResponse = await _oslcClient.GetResourceAsync<MockResourceWithNullDescribes>(resourceUri);
+            _fakeHttpMessageHandler.SetHandler((request, cancellationToken) =>
+                Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(rdfContent, Encoding.UTF8, expectedMediaType),
+                    RequestMessage = request
+                })
+            );
 
-            Assert.IsNotNull(oslcResponse);
-            Assert.IsTrue(oslcResponse.IsSuccess);
-            Assert.AreEqual(1, oslcResponse.Resources.Count);
+            var oslcResponse = await _oslcClient.GetResourceAsync<MockResourceWithNullDescribes>(resourceUri, expectedMediaType);
+
+            Assert.NotNull(oslcResponse);
+            Assert.True(oslcResponse.IsSuccess);
+            Assert.NotNull(oslcResponse.Resources);
+            Assert.Single(oslcResponse.Resources);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task GetResourceAsync_TypeMatch_InheritedShapes_ReturnsResource()
         {
             var resourceUri = TestResourceBaseUri + "resInherited";
+            var expectedMediaType = "application/rdf+xml";
+
             // Test 1: Matches DerivedType
             var rdfContent1 = GetSingleRdf(resourceUri, "http://example.com/ns#DerivedType");
-            SetupMockHttpResponse(resourceUri, rdfContent1);
-            var oslcResponse1 = await _oslcClient.GetResourceAsync<MockDerivedResourceWithOwnShape>(resourceUri);
-            Assert.IsNotNull(oslcResponse1?.Resources);
-            Assert.AreEqual(1, oslcResponse1.Resources.Count, "Should match derived type");
+            _fakeHttpMessageHandler.SetHandler((req, ct) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK) 
+                { Content = new StringContent(rdfContent1, Encoding.UTF8, expectedMediaType), RequestMessage = req }));
+            var oslcResponse1 = await _oslcClient.GetResourceAsync<MockDerivedResourceWithOwnShape>(resourceUri, expectedMediaType);
+            Assert.NotNull(oslcResponse1?.Resources);
+            Assert.Single(oslcResponse1.Resources);
 
             // Test 2: Matches BaseType
             var rdfContent2 = GetSingleRdf(resourceUri, "http://example.com/ns#BaseType");
-            SetupMockHttpResponse(resourceUri, rdfContent2); // Re-setup for next call
-            var oslcResponse2 = await _oslcClient.GetResourceAsync<MockDerivedResourceWithOwnShape>(resourceUri);
-            Assert.IsNotNull(oslcResponse2?.Resources);
-            Assert.AreEqual(1, oslcResponse2.Resources.Count, "Should match base type via hierarchy");
+            _fakeHttpMessageHandler.SetHandler((req, ct) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK) 
+                { Content = new StringContent(rdfContent2, Encoding.UTF8, expectedMediaType), RequestMessage = req }));
+            var oslcResponse2 = await _oslcClient.GetResourceAsync<MockDerivedResourceWithOwnShape>(resourceUri, expectedMediaType);
+            Assert.NotNull(oslcResponse2?.Resources);
+            Assert.Single(oslcResponse2.Resources);
             
             // Test 3: MockDerivedNoShapeResource matches BaseType
             var rdfContent3 = GetSingleRdf(resourceUri, "http://example.com/ns#BaseType");
-            SetupMockHttpResponse(resourceUri, rdfContent3);
-            var oslcResponse3 = await _oslcClient.GetResourceAsync<MockDerivedResourceNoShape>(resourceUri);
-            Assert.IsNotNull(oslcResponse3?.Resources);
-            Assert.AreEqual(1, oslcResponse3.Resources.Count, "Derived with no shape should match base type");
+            _fakeHttpMessageHandler.SetHandler((req, ct) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK) 
+                { Content = new StringContent(rdfContent3, Encoding.UTF8, expectedMediaType), RequestMessage = req }));
+            var oslcResponse3 = await _oslcClient.GetResourceAsync<MockDerivedResourceNoShape>(resourceUri, expectedMediaType);
+            Assert.NotNull(oslcResponse3?.Resources);
+            Assert.Single(oslcResponse3.Resources);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task GetResourceAsync_Collection_FiltersInvalid_ReturnsValid()
         {
             var queryUri = TestResourceBaseUri + "query";
@@ -368,19 +410,27 @@ namespace OSLC4Net.Client.Tests
                 (TestResourceBaseUri + "invalid1", new[] { "http://example.com/ns#UnexpectedType" }, "Invalid Resource 1"),
                 (TestResourceBaseUri + "valid2", new[] { "http://example.com/ns#ExpectedType" }, "Valid Resource 2")
             );
-            SetupMockHttpResponse(queryUri, rdfContent);
+            var expectedMediaType = "application/rdf+xml";
 
-            var oslcResponse = await _oslcClient.GetResourceAsync<MockResourceWithShape>(queryUri);
+            _fakeHttpMessageHandler.SetHandler((request, cancellationToken) =>
+                Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(rdfContent, Encoding.UTF8, expectedMediaType),
+                    RequestMessage = request
+                })
+            );
+            
+            var oslcResponse = await _oslcClient.GetResourceAsync<MockResourceWithShape>(queryUri, expectedMediaType);
 
-            Assert.IsNotNull(oslcResponse);
-            Assert.IsTrue(oslcResponse.IsSuccess);
-            Assert.IsNotNull(oslcResponse.Resources);
-            Assert.AreEqual(2, oslcResponse.Resources.Count);
-            Assert.IsTrue(oslcResponse.Resources.All(r => r.GetTypes().Any(t => t.ToString() == "http://example.com/ns#ExpectedType")));
-            AssertLoggedWarningContains("was discarded"); // Check if logging of discarded resource happened
+            Assert.NotNull(oslcResponse);
+            Assert.True(oslcResponse.IsSuccess);
+            Assert.NotNull(oslcResponse.Resources);
+            Assert.Equal(2, oslcResponse.Resources.Count);
+            Assert.All(oslcResponse.Resources, r => Assert.Contains("http://example.com/ns#ExpectedType", r.GetTypes().Select(t => t.ToString())));
+            AssertLoggedWarningContains("was discarded"); 
         }
 
-        [TestMethod]
+        [Fact]
         public async Task GetResourceAsync_Collection_AllInvalid_ReturnsEmptyAndLogs()
         {
             var queryUri = TestResourceBaseUri + "queryAllInvalid";
@@ -388,15 +438,22 @@ namespace OSLC4Net.Client.Tests
                 (TestResourceBaseUri + "invalid1", new[] { "http://example.com/ns#UnexpectedType1" }, "Invalid Resource 1"),
                 (TestResourceBaseUri + "invalid2", new[] { "http://example.com/ns#UnexpectedType2" }, "Invalid Resource 2")
             );
-            SetupMockHttpResponse(queryUri, rdfContent);
+            var expectedMediaType = "application/rdf+xml";
 
-            var oslcResponse = await _oslcClient.GetResourceAsync<MockResourceWithShape>(queryUri);
+            _fakeHttpMessageHandler.SetHandler((request, cancellationToken) =>
+                Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(rdfContent, Encoding.UTF8, expectedMediaType),
+                    RequestMessage = request
+                })
+            );
 
-            Assert.IsNotNull(oslcResponse);
-            Assert.IsTrue(oslcResponse.IsSuccess);
-            Assert.IsNotNull(oslcResponse.Resources);
-            Assert.AreEqual(0, oslcResponse.Resources.Count);
-            // Expect 2 warnings, one for each discarded resource
+            var oslcResponse = await _oslcClient.GetResourceAsync<MockResourceWithShape>(queryUri, expectedMediaType);
+
+            Assert.NotNull(oslcResponse);
+            Assert.True(oslcResponse.IsSuccess);
+            Assert.NotNull(oslcResponse.Resources);
+            Assert.Empty(oslcResponse.Resources);
              _mockLogger.Received(2).Log(
                 LogLevel.Warning,
                 Arg.Any<EventId>(),
@@ -405,21 +462,29 @@ namespace OSLC4Net.Client.Tests
                 Arg.Any<Func<object, Exception, string>>());
         }
         
-        [TestMethod]
+        [Fact]
         public async Task GetResourceAsync_Collection_ResourceHasNoRdfType_IsFiltered()
         {
             var queryUri = TestResourceBaseUri + "queryFilterNoType";
              var rdfContent = GetCollectionRdf(
                 (TestResourceBaseUri + "valid1", new[] { "http://example.com/ns#ExpectedType" }, "Valid Resource 1"),
-                (TestResourceBaseUri + "noType1", new string[] { null }, "Resource Without Type"), // No rdf:type
+                (TestResourceBaseUri + "noType1", (string[])null, "Resource Without Type"), // Pass null for types 
                 (TestResourceBaseUri + "valid2", new[] { "http://example.com/ns#ExpectedType" }, "Valid Resource 2")
             );
-            SetupMockHttpResponse(queryUri, rdfContent);
-
-            var oslcResponse = await _oslcClient.GetResourceAsync<MockResourceWithShape>(queryUri);
+            var expectedMediaType = "application/rdf+xml";
             
-            Assert.IsNotNull(oslcResponse?.Resources);
-            Assert.AreEqual(2, oslcResponse.Resources.Count, "Only valid resources with correct type should be returned.");
+            _fakeHttpMessageHandler.SetHandler((request, cancellationToken) =>
+                Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(rdfContent, Encoding.UTF8, expectedMediaType),
+                    RequestMessage = request
+                })
+            );
+
+            var oslcResponse = await _oslcClient.GetResourceAsync<MockResourceWithShape>(queryUri, expectedMediaType);
+            
+            Assert.NotNull(oslcResponse?.Resources);
+            Assert.Equal(2, oslcResponse.Resources.Count);
             AssertLoggedWarningContains("was discarded");
             AssertLoggedWarningContains(TestResourceBaseUri + "noType1");
         }
