@@ -24,14 +24,17 @@ using log4net;
 using Microsoft.Extensions.Logging;
 using OSLC4Net.Client.Exceptions;
 using OSLC4Net.Core;
+using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Exceptions;
 using OSLC4Net.Core.Model;
 using VDS.RDF;
-using System.Reflection; // For GetCustomAttribute and GetCustomAttributes
-using OSLC4Net.Core.Attribute; // For OslcResourceShape
-using OSLC4Net.Client.Exceptions; // For the new exception
-using System.Linq; // For Enumerable methods like OfType, Any, SelectMany, Distinct
+
+// For GetCustomAttribute and GetCustomAttributes
+// For OslcResourceShape
+// For the new exception
+
+// For Enumerable methods like OfType, Any, SelectMany, Distinct
 
 namespace OSLC4Net.Client.Oslc;
 
@@ -134,6 +137,9 @@ public class OslcClient : IDisposable
                 HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
         }
 
+        _formatters = new HashSet<MediaTypeFormatter>();
+        _formatters.Add(new RdfXmlMediaTypeFormatter());
+
         _client = new HttpClient(handler);
     }
 
@@ -220,7 +226,7 @@ public class OslcClient : IDisposable
                         ICollection<Uri> actualRdfTypes = resourceInstance.GetTypes();
                         if (!actualRdfTypes.Any()) // Resource has no rdf:type, but shapes expect specific types
                         {
-                            isMatch = false; 
+                            isMatch = false;
                         }
                         else
                         {
@@ -234,7 +240,7 @@ public class OslcClient : IDisposable
                                         if (actualRdfTypes.Any(actualType => string.Equals(actualType.ToString(), expectedType, StringComparison.OrdinalIgnoreCase)))
                                         {
                                             isMatch = true; // Match found
-                                            break; 
+                                            break;
                                         }
                                     }
                                 }
@@ -260,14 +266,14 @@ public class OslcClient : IDisposable
                     var resourceInstance = initialResources[0];
                     var actualRdfTypes = resourceInstance.GetTypes();
                     var actualTypesStr = actualRdfTypes.Any() ? string.Join(", ", actualRdfTypes.Select(uri => uri.ToString())) : "none";
-                    
+
                     List<string> expectedTypesFromAllShapes = shapesFromHierarchy
                         .Where(s => s.describes != null && s.describes.Any())
                         .SelectMany(s => s.describes)
                         .Distinct(StringComparer.OrdinalIgnoreCase)
                         .ToList();
-                    string expectedTypesOutput = expectedTypesFromAllShapes.Any() 
-                        ? string.Join(", ", expectedTypesFromAllShapes) 
+                    string expectedTypesOutput = expectedTypesFromAllShapes.Any()
+                        ? string.Join(", ", expectedTypesFromAllShapes)
                         : "specific types (based on active shapes)";
 
                     _logger.LogError($"Single resource <{resourceInstance.GetAbout()}> with rdf:type(s) [{actualTypesStr}] failed OSLC type check for target type {typeof(T).FullName}. Expected one of: [{expectedTypesOutput}]");

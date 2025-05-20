@@ -1,5 +1,4 @@
-using System;
-using OSLC4Net.Core.Exceptions; 
+using OSLC4Net.Core.Exceptions;
 
 namespace OSLC4Net.Client.Exceptions
 {
@@ -8,6 +7,7 @@ namespace OSLC4Net.Client.Exceptions
         public string ExpectedTypes { get; }
         public string ActualTypes { get; }
         public string ResourceUri { get; }
+
 
         public OslcRdfTypeMismatchException(string resourceUri, string expectedTypes, string actualTypes)
             : base($"RDF type mismatch for resource <{resourceUri}>. Expected one of: [{expectedTypes}], but found: [{actualTypes}].")
