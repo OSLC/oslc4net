@@ -91,6 +91,9 @@ public class OslcClient : IDisposable
         handler ??= new HttpClientHandler { AllowAutoRedirect = false };
         if (certCallback is not null)
         {
+            // only for development
+            // REVISIT: get rid of this once we confirm that this can be worked around for e.g. self-signed certs and Jazz/Polarion (@berezovskyi 2025-05)
+#pragma warning disable MA0039
             if (handler is HttpClientHandler httpClientHandler)
             {
                 log.Warn(
@@ -103,6 +106,7 @@ public class OslcClient : IDisposable
                     "Must be an instance of HttpClientHandler if the certCallback is provided",
                     nameof(userHttpMessageHandler));
             }
+#pragma warning enable MA0039
         }
 
         _client = HttpClientFactory.Create(handler);
@@ -129,6 +133,9 @@ public class OslcClient : IDisposable
             handler.ServerCertificateCustomValidationCallback =
                 HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
         }
+
+        _formatters = new HashSet<MediaTypeFormatter>();
+        _formatters.Add(new RdfXmlMediaTypeFormatter());
 
         _client = new HttpClient(handler);
     }
@@ -189,15 +196,18 @@ public class OslcClient : IDisposable
             await httpResponseMessage.Content.LoadIntoBufferAsync().ConfigureAwait(false);
 
             var dummy = new T[0];
-            var resources = await httpResponseMessage.Content.ReadAsAsync(dummy.GetType(), _formatters)
-                .ConfigureAwait(false) as T[];
+            var resources = await httpResponseMessage.Content
+                .ReadAsAsync(dummy.GetType(), _formatters).ConfigureAwait(false) as T[];
 
-            Stream stream = await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
-            stream.Seek(0, SeekOrigin.Begin);
-            var graph =
-                await httpResponseMessage.Content.ReadAsAsync(typeof(Graph), _formatters)
-                    .ConfigureAwait(false) as Graph;
+            var contentStream =
+                await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
+            if (contentStream.CanSeek)
+            {
+                contentStream.Seek(0, SeekOrigin.Begin);
+            }
 
+            var graph = await httpResponseMessage.Content.ReadAsAsync(typeof(Graph), _formatters)
+                .ConfigureAwait(false) as Graph;
 
             return OslcResponse<T>.WithSuccess(resources?.ToList(), graph, httpResponseMessage);
         }

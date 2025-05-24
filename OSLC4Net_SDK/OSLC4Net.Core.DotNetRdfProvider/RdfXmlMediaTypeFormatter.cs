@@ -17,10 +17,15 @@ using System.Net;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Text;
+using CommunityToolkit.Diagnostics;
+using Newtonsoft.Json;
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
 using VDS.RDF;
+using VDS.RDF.JsonLd;
+using VDS.RDF.JsonLd.Syntax;
 using VDS.RDF.Parsing;
+using VDS.RDF.Query.Inference;
 using VDS.RDF.Writing;
 
 namespace OSLC4Net.Core.DotNetRdfProvider;
@@ -131,7 +136,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             return false;
         }
 
-        return memberType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0;
+        return memberType.GetCustomAttributes(typeof(OslcResourceShape), true).Length > 0;
     }
 
     /// <summary>
@@ -222,29 +227,44 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             }
         }
 
-        IRdfWriter rdfWriter;
+        IRdfWriter? tripleWriter = null;
+        IStoreWriter? quadWriter = null;
 
         if (content == null || content.Headers == null ||
-            content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_RDF_XML))
+            content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_RDF_XML,
+                StringComparison.Ordinal))
         {
+            // REVISIT: make Turtle the default (@berezovskyi 2025-05)
             var rdfXmlWriter = new RdfXmlWriter
             {
                 UseDtd = false,
-                PrettyPrintMode = false,
+                PrettyPrintMode = true,
                 CompressionLevel = 20
             };
-            //turtlelWriter.UseTypedNodes = false;
 
-            rdfWriter = rdfXmlWriter;
+            tripleWriter = rdfXmlWriter;
         }
-        else if (content.Headers.ContentType.MediaType.Equals(OslcMediaType.TEXT_TURTLE))
+        else if (content.Headers.ContentType.MediaType.Equals(OslcMediaType.TEXT_TURTLE,
+                     StringComparison.Ordinal))
         {
             var turtlelWriter = new CompressingTurtleWriter(TurtleSyntax.W3C)
             {
-                PrettyPrintMode = false
+                PrettyPrintMode = true, CompressionLevel = 20
             };
 
-            rdfWriter = turtlelWriter;
+            tripleWriter = turtlelWriter;
+        }
+        else if (content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_JSON_LD,
+                     StringComparison.Ordinal))
+        {
+            // REVISIT: should be configurable to lower the overhead (@berezovskyi 2025-05)
+            var writer = new JsonLdWriter(new JsonLdWriterOptions
+            {
+                JsonFormatting = Formatting.Indented,
+                Ordered = true,
+                ProcessingMode = JsonLdProcessingMode.JsonLd11
+            });
+            quadWriter = writer;
         }
         else
         {
@@ -257,12 +277,22 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                 CompressionLevel = 20
             };
 
-            rdfWriter = oslcXmlWriter;
+            tripleWriter = oslcXmlWriter;
         }
 
         StreamWriter streamWriter = new NonClosingStreamWriter(writeStream);
 
-        rdfWriter.Save(Graph, streamWriter);
+        if (tripleWriter is not null)
+        {
+            tripleWriter.Save(Graph, streamWriter);
+        }
+        else if (quadWriter is not null)
+        {
+            var graphCollection = new GraphCollection();
+            graphCollection.Add(Graph, true);
+            var quadStore = new TripleStore(graphCollection);
+            quadWriter.Save(quadStore, streamWriter);
+        }
 
     }
 
@@ -290,7 +320,9 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             return false;
         }
 
-        return memberType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0;
+        var canReadType =
+            memberType.GetCustomAttributes(typeof(OslcResourceShape), true).Length > 0;
+        return canReadType;
     }
 
     /// <summary>
@@ -317,24 +349,33 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 
         try
         {
-            IRdfReader rdfParser;
+            IRdfReader? tripleReader = null;
+            IStoreReader? quadReader = null;
 
             // TODO: one class per RDF content type
             var mediaType = content.Headers.ContentType.MediaType;
             if (mediaType.Equals(OslcMediaType.APPLICATION_RDF_XML))
             {
-                rdfParser = new RdfXmlParser();
+                tripleReader = new RdfXmlParser();
             }
             else if (mediaType.Equals(OslcMediaType.TEXT_TURTLE))
             {
                 // TODO: make IRI validation configurable
-                rdfParser = new TurtleParser(TurtleSyntax.Rdf11Star, false);
+                tripleReader = new TurtleParser(TurtleSyntax.Rdf11Star, false);
             }
             else if (mediaType.Equals(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML)
                      || mediaType.Equals(OslcMediaType.APPLICATION_XML))
             {
                 //For now, use the dotNetRDF RdfXmlParser() for application/xml.  This could change
-                rdfParser = new RdfXmlParser();
+                tripleReader = new RdfXmlParser();
+            }
+            else if (mediaType.Equals(OslcMediaType.APPLICATION_JSON_LD))
+            {
+                //For now, use the dotNetRDF RdfXmlParser() for application/xml.  This could change
+                quadReader = new JsonLdParser(new JsonLdProcessorOptions
+                {
+                    ProcessingMode = JsonLdProcessingMode.JsonLd11
+                });
             }
             else
             {
@@ -344,7 +385,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             }
 
 
-            IGraph? graph = new Graph();
+            IGraph graph = new Graph();
             // REVISIT: we need a more robust way to obtain request URI
             content.Headers.TryGetValues(OSLC4NetConstants.INNER_URI_HEADER, out var shuttleRequestUri);
             graph.BaseUri = shuttleRequestUri?.SingleOrDefault()?.ToSafeUri() ?? httpRequest?.RequestUri;
@@ -373,7 +414,29 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                 //streamReader.DiscardBufferedData();
                 #endif
 
-                rdfParser.Load(graph, streamReader);
+                if (tripleReader is not null)
+                {
+                    tripleReader.Load(graph, streamReader);
+                }
+                else if (quadReader is not null)
+                {
+                    var quadStore = new TripleStore();
+                    quadReader.Load(quadStore, streamReader);
+                    // REVISIT: for now we support single graph in JSON-LD payloads (@berezovskyi 2025-05)
+                    graph = quadStore.Graphs.Single();
+                }
+                else
+                {
+                    ThrowHelper.ThrowInvalidOperationException(
+                        "Either a quad or triple reader is required.");
+                }
+
+                // REVISIT: make RDFS reasoning configurable (@berezovskyi 2025-05)
+                // TODO: make schema loads configurable (@berezovskyi 2025-05)
+                var reasoner = new StaticRdfsReasoner();
+                // reasoner.Initialise(schema);
+                reasoner.Apply(graph);
+
 
                 // REVISIT: better handling of assignable types (@berezovskyi 2025-04)
                 if (type == typeof(Graph) || type == typeof(BaseGraph) || type == typeof(IGraph))

@@ -16,6 +16,7 @@
 
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
+using ValueType = OSLC4Net.Core.Model.ValueType;
 
 namespace OSLC4Net.Client.Oslc.Resources;
 
@@ -27,7 +28,7 @@ namespace OSLC4Net.Client.Oslc.Resources;
 [OslcNamespace(AutomationConstants.AUTOMATION_NAMESPACE)]
 public class ParameterInstance : AbstractResource
 {
-    private readonly ISet<Uri> rdfTypes = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+
 
     private string name;
     private string value;
@@ -37,12 +38,12 @@ public class ParameterInstance : AbstractResource
 
     public ParameterInstance() : base()
     {
-        rdfTypes.Add(new Uri(AutomationConstants.TYPE_PARAMETER_INSTANCE));
+        AddType(new Uri(AutomationConstants.TYPE_PARAMETER_INSTANCE));
     }
 
     public ParameterInstance(Uri about) : base(about)
     {
-        rdfTypes.Add(new Uri(AutomationConstants.TYPE_PARAMETER_INSTANCE));
+        AddType(new Uri(AutomationConstants.TYPE_PARAMETER_INSTANCE));
     }
 
     protected Uri GetRdfType()
@@ -52,14 +53,14 @@ public class ParameterInstance : AbstractResource
 
     public void addRdfType(Uri rdfType)
     {
-        this.rdfTypes.Add(rdfType);
+        AddType(rdfType);
     }
 
     [OslcDescription(
         "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
     [OslcTitle("Description")]
-    [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
+    [OslcValueType(ValueType.XMLLiteral)]
     public string GetDescription()
     {
         return description;
@@ -92,13 +93,10 @@ public class ParameterInstance : AbstractResource
         return instanceShape;
     }
 
-    [OslcDescription("The resource type URIs.")]
-    [OslcName("type")]
-    [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
-    [OslcTitle("Types")]
+    [Obsolete("User GetTypes() or .Types instead")]
     public Uri[] GetRdfTypes()
     {
-        return rdfTypes.ToArray();
+        return GetTypes().ToArray();
     }
 
     [OslcDescription("The scope of a resource is a Uri for the resource's OSLC Service Provider.")]
@@ -130,11 +128,10 @@ public class ParameterInstance : AbstractResource
         this.instanceShape = instanceShape;
     }
 
+    [Obsolete("User SetTypes() or .Types instead")]
     public void SetRdfTypes(Uri[] rdfTypes)
     {
-        this.rdfTypes.Clear();
-
-        if (rdfTypes != null) this.rdfTypes.AddAll(rdfTypes);
+        SetTypes(rdfTypes);
     }
 
     public void SetServiceProvider(Uri serviceProvider)

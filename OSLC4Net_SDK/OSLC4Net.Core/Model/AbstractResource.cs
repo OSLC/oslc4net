@@ -13,6 +13,8 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
+using OSLC4Net.Core.Attribute;
+
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
@@ -73,6 +75,10 @@ public abstract class AbstractResource : IExtendedResource
     ///     Get the RDF types
     /// </summary>
     /// <returns></returns>
+    [OslcDescription("The resource type URIs.")]
+    [OslcName("type")]
+    [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
+    [OslcTitle("Types")]
     public ICollection<Uri> GetTypes()
     {
         return types;
@@ -128,6 +134,10 @@ public abstract record AbstractResourceRecord : IExtendedResource
     }
 
     /// <inheritdoc cref="IExtendedResource.GetTypes" />
+    [OslcDescription("The resource type URIs.")]
+    [OslcName("type")]
+    [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
+    [OslcTitle("Types")]
     public ICollection<Uri> GetTypes()
     {
         return Types;

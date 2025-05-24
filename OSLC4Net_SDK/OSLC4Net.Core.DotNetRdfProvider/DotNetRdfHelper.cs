@@ -268,7 +268,7 @@ public static class DotNetRdfHelper
         Type[] types = { beanType };
         var results = Activator.CreateInstance(typeof(List<>).MakeGenericType(types));
 
-        if (beanType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
+        if (beanType.GetCustomAttributes(typeof(OslcResourceShape), true).Length > 0)
         {
             var qualifiedName = TypeFactory.GetQualifiedName(beanType);
 
@@ -659,7 +659,8 @@ public static class DotNetRdfHelper
                             else
                             {
                                 nestedBean =
-                                    Activator.CreateInstance(setMethodComponentParameterType);
+                                    Activator.CreateInstance(
+                                        MapToActivatableType(setMethodComponentParameterType));
                             }
 
                             FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
@@ -804,7 +805,7 @@ public static class DotNetRdfHelper
             // Else - we are dealing with a collection or a subclass of collection
             else
             {
-                var collection = Activator.CreateInstance(parameterType);
+                var collection = Activator.CreateInstance(MapToActivatableType(parameterType));
 
                 if (values.Count > 0)
                 {
@@ -820,6 +821,7 @@ public static class DotNetRdfHelper
             }
         }
     }
+
 
     private static void SetValue(object bean, MemberInfo backingMember, object parameter)
     {
@@ -863,16 +865,41 @@ public static class DotNetRdfHelper
                 setMethodComponentParameterType.GetElementType();
         }
         else if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(
-                     typeof(ICollection<>), setMethodComponentParameterType))
+                     typeof(IEnumerable<>), setMethodComponentParameterType))
         {
-            multiple = true;
+            var genericArguments = setMethodComponentParameterType.GetGenericArguments();
 
-            setMethodComponentParameterType =
-                setMethodComponentParameterType.GetGenericArguments()[0];
+            // REVISIT: multiple args and old-school enumerables - but not e.g. String (@berezovskyi 2025-05)
+            if (genericArguments.Length == 1)
+            {
+                setMethodComponentParameterType = genericArguments[0];
+
+                multiple = true;
+            }
         }
 
         return (setMethodComponentParameterType, multiple);
     }
+
+    private static Type MapToActivatableType(Type setMethodComponentParameterType)
+    {
+        if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(
+                typeof(ISet<>), setMethodComponentParameterType))
+        {
+            return typeof(HashSet<>).MakeGenericType(setMethodComponentParameterType
+                .GetGenericArguments());
+        }
+
+        if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(
+                typeof(IEnumerable<>), setMethodComponentParameterType))
+        {
+            return typeof(List<>).MakeGenericType(setMethodComponentParameterType
+                .GetGenericArguments());
+        }
+
+        return setMethodComponentParameterType;
+    }
+
 
     private static bool IsRdfCollectionResource(IGraph graph, INode obj)
     {

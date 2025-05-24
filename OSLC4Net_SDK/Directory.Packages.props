@@ -6,6 +6,7 @@
   <PropertyGroup>
     <!-- Versions used by several individual references below -->
     <AspireVersion>9.3.0</AspireVersion>
+    <DotNetRdfVersion>3.3.2</DotNetRdfVersion>
   </PropertyGroup>
   <ItemGroup>
     <!-- For removal -->
@@ -17,11 +18,14 @@
     <PackageVersion Include="System.Net.Http" Version="4.3.4"/>
     <PackageVersion Include="System.Text.RegularExpressions" Version="4.3.1"/>
     <!-- Main deps -->
-    <PackageVersion Include="dotNetRdf.Core" Version="3.3.2"/>
+    <PackageVersion Include="dotNetRdf.Core" Version="$(DotNetRdfVersion)"/>
+    <PackageVersion Include="dotNetRdf.Inferencing" Version="$(DotNetRdfVersion)"/>
     <PackageVersion Include="Antlr3.Runtime" Version="3.5.1"/>
     <PackageVersion Include="CommunityToolkit.Diagnostics" Version="8.4.0"/>
     <!-- conneg support &c for System.Net.Http -->
     <PackageVersion Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0"/>
+    <!-- misc -->
+    <PackageVersion Include="Meziantou.Analyzer" Version="2.0.201"/>
     <!-- Test deps -->
     <PackageVersion Include="Aspire.Hosting.AppHost" Version="$(AspireVersion)"/>
     <PackageVersion Include="Aspire.Hosting.Testing" Version="$(AspireVersion)"/>
@@ -34,7 +38,7 @@
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17"/>
     <PackageVersion Include="coverlet.collector" Version="6.0.4"/>
     <!-- Examples only -->
-    <PackageVersion Include="dotNetRdf" Version="3.3.2"/>
+    <PackageVersion Include="dotNetRdf" Version="$(DotNetRdfVersion)"/>
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.4"/>
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4"/>
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.4"/>

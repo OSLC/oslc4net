@@ -9,6 +9,37 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking changes; 👉
 important notes.
 
+## [UNRELEASED] - YYYY-MM-DD
+
+### Security
+
+This release does not contain security updates.
+
+### Added
+
+- ⚡️ JSON-LD 1.1 support
+- Initial support for RDFS inference during deserialization was added.
+
+### Changed
+
+This release does not contain other significant changes.
+
+### Deprecated
+
+- 👉 `OSLC4Net.Client.Oslc.Resources.ChangeRequest.GetRdfTypes` and all similar
+  methods. Use `OSLC4Net.Core.Model.IExtendedResource.GetTypes` instead or,
+  better yet, `OSLC4Net.Core.Model.AbstractResourceRecord.Types`.
+
+### Removed
+
+- ❗️Legacy OSLC JSON support was removed to reduce maintenance overhead now that
+  the JSON-LD support is added.
+
+### Fixed
+
+- `OSLC4Net.Core.Model.IExtendedResource.GetTypes` is now annotated properly and
+  should be populated correctly on deserialization.
+
 ## [0.5.0] - 2025-04-13
 
 ### Security
