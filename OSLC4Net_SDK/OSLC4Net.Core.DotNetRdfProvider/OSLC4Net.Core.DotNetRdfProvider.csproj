@@ -13,6 +13,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Diagnostics" />
+    <PackageReference Include="dotNetRdf.Inferencing"/>
     <PackageReference Include="log4net" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" />
     <PackageReference Include="Newtonsoft.Json" />
