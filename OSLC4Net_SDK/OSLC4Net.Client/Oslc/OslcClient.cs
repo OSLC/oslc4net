@@ -24,7 +24,6 @@ using log4net;
 using Microsoft.Extensions.Logging;
 using OSLC4Net.Client.Exceptions;
 using OSLC4Net.Core;
-using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Exceptions;
 using OSLC4Net.Core.Model;
@@ -98,6 +97,9 @@ public class OslcClient : IDisposable
         handler ??= new HttpClientHandler { AllowAutoRedirect = false };
         if (certCallback is not null)
         {
+            // only for development
+            // REVISIT: get rid of this once we confirm that this can be worked around for e.g. self-signed certs and Jazz/Polarion (@berezovskyi 2025-05)
+#pragma warning disable MA0039
             if (handler is HttpClientHandler httpClientHandler)
             {
                 log.Warn(
@@ -110,6 +112,7 @@ public class OslcClient : IDisposable
                     "Must be an instance of HttpClientHandler if the certCallback is provided",
                     nameof(userHttpMessageHandler));
             }
+#pragma warning enable MA0039
         }
 
         _client = HttpClientFactory.Create(handler);
@@ -203,87 +206,6 @@ public class OslcClient : IDisposable
             var dummy = new T[0];
             T[]? initialResources = await httpResponseMessage.Content.ReadAsAsync(dummy.GetType(), _formatters).ConfigureAwait(false) as T[];
 
-            List<T> validResources = new List<T>();
-            if (initialResources != null && initialResources.Any())
-            {
-                var shapesFromHierarchy = typeof(T).GetCustomAttributes(typeof(OslcResourceShape), true)
-                                                   .OfType<OslcResourceShape>()
-                                                   .ToList();
-
-                bool typeCheckIsActive = shapesFromHierarchy.Any(s => s.describes != null && s.describes.Any());
-
-                foreach (var resourceInstance in initialResources)
-                {
-                    if (resourceInstance == null) continue;
-
-                    bool isMatch = false;
-                    if (!typeCheckIsActive)
-                    {
-                        isMatch = true; // Type check effectively skipped
-                    }
-                    else
-                    {
-                        ICollection<Uri> actualRdfTypes = resourceInstance.GetTypes();
-                        if (!actualRdfTypes.Any()) // Resource has no rdf:type, but shapes expect specific types
-                        {
-                            isMatch = false;
-                        }
-                        else
-                        {
-                            // Check against all shapes in the hierarchy
-                            foreach (var shape in shapesFromHierarchy)
-                            {
-                                if (shape.describes != null && shape.describes.Any())
-                                {
-                                    foreach (var expectedType in shape.describes)
-                                    {
-                                        if (actualRdfTypes.Any(actualType => string.Equals(actualType.ToString(), expectedType, StringComparison.OrdinalIgnoreCase)))
-                                        {
-                                            isMatch = true; // Match found
-                                            break;
-                                        }
-                                    }
-                                }
-                                if (isMatch) break; // Current resource instance matches this shape
-                            }
-                        }
-                    }
-
-                    if (isMatch)
-                    {
-                        validResources.Add(resourceInstance);
-                    }
-                    else
-                    {
-                        var actualTypesStr = string.Join(", ", resourceInstance.GetTypes().Select(uri => uri.ToString()));
-                        _logger.LogWarning($"Resource <{resourceInstance.GetAbout()}> of type(s) [{actualTypesStr}] was discarded because it does not match the expected rdf:type(s) for type {typeof(T).FullName} based on its OslcResourceShape hierarchy.");
-                    }
-                }
-
-                // After loop, check if a single fetched resource was filtered out
-                if (initialResources.Length == 1 && !validResources.Any() && typeCheckIsActive)
-                {
-                    var resourceInstance = initialResources[0];
-                    var actualRdfTypes = resourceInstance.GetTypes();
-                    var actualTypesStr = actualRdfTypes.Any() ? string.Join(", ", actualRdfTypes.Select(uri => uri.ToString())) : "none";
-
-                    List<string> expectedTypesFromAllShapes = shapesFromHierarchy
-                        .Where(s => s.describes != null && s.describes.Any())
-                        .SelectMany(s => s.describes)
-                        .Distinct(StringComparer.OrdinalIgnoreCase)
-                        .ToList();
-                    string expectedTypesOutput = expectedTypesFromAllShapes.Any()
-                        ? string.Join(", ", expectedTypesFromAllShapes)
-                        : "specific types (based on active shapes)";
-
-                    _logger.LogError($"Single resource <{resourceInstance.GetAbout()}> with rdf:type(s) [{actualTypesStr}] failed OSLC type check for target type {typeof(T).FullName}. Expected one of: [{expectedTypesOutput}]");
-                    throw new OslcRdfTypeMismatchException(resourceInstance.GetAbout().ToString(), expectedTypesOutput, actualTypesStr);
-                }
-            }
-            // If initialResources is null or empty, validResources remains empty.
-
-            // Read Full Graph for Response (from buffered content)
-            // Ensure the stream is at the beginning before reading for the graph
             var contentStreamForGraph = await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
             if (contentStreamForGraph.CanSeek)
             {
@@ -292,7 +214,8 @@ public class OslcClient : IDisposable
             Graph? graph = await httpResponseMessage.Content.ReadAsAsync(typeof(Graph), _formatters).ConfigureAwait(false) as Graph;
 
             // Return Success with Validated Resources
-            return OslcResponse<T>.WithSuccess(validResources, graph, httpResponseMessage);
+            return OslcResponse<T>.WithSuccess(initialResources?.ToList(), graph,
+                httpResponseMessage);
         }
         else
         {
