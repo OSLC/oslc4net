@@ -46,7 +46,6 @@ public class ChangeRequest : AbstractResource
     private readonly ISet<Link> testedByTestCases = new HashSet<Link>();
     private readonly ISet<Link> tracksChangeSets = new HashSet<Link>();
     private readonly ISet<Link> tracksRequirements = new HashSet<Link>();
-    private readonly ISet<Uri> rdfTypes = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
     private bool approved;
     private bool closed;
@@ -68,12 +67,12 @@ public class ChangeRequest : AbstractResource
 
     public ChangeRequest() : base()
     {
-        rdfTypes.Add(new Uri(CmConstants.TYPE_CHANGE_REQUEST));
+        AddType(new Uri(CmConstants.TYPE_CHANGE_REQUEST));
     }
 
     public ChangeRequest(Uri about) : base(about)
     {
-        rdfTypes.Add(new Uri(CmConstants.TYPE_CHANGE_REQUEST));
+        AddType(new Uri(CmConstants.TYPE_CHANGE_REQUEST));
     }
 
     public void AddAffectedByDefect(Link affectedByDefect)
@@ -121,9 +120,10 @@ public class ChangeRequest : AbstractResource
         this.implementsRequirements.Add(implementsRequirement);
     }
 
+    [Obsolete]
     public void AddRdfType(Uri rdfType)
     {
-        this.rdfTypes.Add(rdfType);
+        AddType(rdfType);
     }
 
     public void AddRelatedChangeRequest(Link relatedChangeRequest)

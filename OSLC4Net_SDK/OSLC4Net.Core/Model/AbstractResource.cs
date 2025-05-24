@@ -138,19 +138,19 @@ public abstract record AbstractResourceRecord : IExtendedResource
     [OslcName("type")]
     [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
     [OslcTitle("Types")]
-    public virtual ICollection<Uri> GetTypes()
+    public ICollection<Uri> GetTypes()
     {
         return Types;
     }
 
     /// <inheritdoc cref="IExtendedResource.SetTypes" />
-    public virtual void SetTypes(ICollection<Uri> types)
+    public void SetTypes(ICollection<Uri> types)
     {
         Types = new List<Uri>(types);
     }
 
     /// <inheritdoc cref="IExtendedResource.AddType" />
-    public virtual void AddType(Uri type)
+    public void AddType(Uri type)
     {
         Types.Add(type);
     }
