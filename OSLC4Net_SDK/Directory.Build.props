@@ -32,10 +32,22 @@
     <LangVersion>12</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+
+    <!-- not needed for NET5+ but needed for netstandard -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+
     <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
     <!-- fail on any NuGet vulnerability audit findings -->
     <NugetWarnings>NU1900;NU1901;NU1902;NU1903;NU1904</NugetWarnings>
     <NullabilityWarnings>CS8600;CS8602;CS8603</NullabilityWarnings>
     <WarningsAsErrors>$(NugetWarnings);$(NullabilityWarnings)</WarningsAsErrors>
+    <!-- Suppress localization warnings for this SDK project -->
+    <NoWarn>$(NoWarn);CA1303</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Meziantou.Analyzer"/>
+  </ItemGroup>
+
 </Project>
