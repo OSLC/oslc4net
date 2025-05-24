@@ -169,6 +169,36 @@ public class RdfXmlMediaTypeFormatterTests
         Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
     }
 
+    [Fact]
+    public async Task TestJsonLdSerializationAsync()
+    {
+        var changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeReuest"));
+
+        changeRequest1.SetFixed(true);
+        changeRequest1.AddAffectedByDefect(new Link(new Uri("http://com/somewhere/changeRequest2"),
+            "Test of links"));
+
+        var formatter = new RdfXmlMediaTypeFormatter();
+
+        var jsonLd =
+            await SerializeAsync(formatter, changeRequest1, OslcMediaType.APPLICATION_JSON_LD_TYPE);
+
+        Debug.WriteLine(jsonLd);
+
+        var changeRequest2 =
+            await DeserializeAsync<ChangeRequest>(formatter, jsonLd,
+                OslcMediaType.APPLICATION_JSON_LD_TYPE);
+
+        Assert.NotNull(changeRequest2);
+        Assert.Equal(changeRequest1.GetAbout(), changeRequest2.GetAbout());
+        Assert.Equal(changeRequest1.IsFixed(), changeRequest2.IsFixed());
+        Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetValue(),
+            changeRequest2.GetAffectedByDefects()[0].GetValue());
+        Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetLabel(),
+            changeRequest2.GetAffectedByDefects()[0].GetLabel());
+    }
+
+
     private static async Task<string> SerializeAsync<T>(MediaTypeFormatter formatter, T value,
         MediaTypeHeaderValue mediaType)
     {

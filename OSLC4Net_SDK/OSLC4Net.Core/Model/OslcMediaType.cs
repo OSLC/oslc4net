@@ -23,33 +23,22 @@ namespace OSLC4Net.Core.Model;
 /// <seealso cref="System.Net.Http.Headers.MediaTypeHeaderValue" />
 public class OslcMediaType
 {
-    public const string APPLICATION = "application";
-    public const string TEXT = "text";
+    public const string APPLICATION_RDF_XML = "application/rdf+xml";
+    public const string APPLICATION_JSON_LD = "application/ld+json";
+    public const string TEXT_TURTLE = "text/turtle";
 
-    public const string RDF_XML = "rdf+xml";
-    public const string APPLICATION_RDF_XML = APPLICATION + "/" + RDF_XML;
 
-    public const string APPLICATION_JSON = APPLICATION + "/" + "json";
-
-    public const string APPLICATION_XML = APPLICATION + "/" + "xml";
-
-    public const string TEXT_XML = TEXT + "/" + "xml";
-
-    public const string TURTLE = "turtle";
-    public const string TEXT_TURTLE = TEXT + "/" + TURTLE;
 
     public const string X_OSLC_COMPACT_XML = "x-oslc-compact+xml";
-    public const string APPLICATION_X_OSLC_COMPACT_XML = APPLICATION + "/" + X_OSLC_COMPACT_XML;
+    public const string APPLICATION_X_OSLC_COMPACT_XML = $"application/{X_OSLC_COMPACT_XML}";
 
     public const string
         X_OSLC_COMPACT_JSON =
             "x-oslc-compact+json"; // TODO - Compact media type never defined in the OSLC spec for JSON
 
-    public const string APPLICATION_X_OSLC_COMPACT_JSON = APPLICATION + "/" + X_OSLC_COMPACT_JSON;
+    public const string APPLICATION_X_OSLC_COMPACT_JSON = "application" + "/" + X_OSLC_COMPACT_JSON;
     public static readonly MediaTypeHeaderValue APPLICATION_RDF_XML_TYPE = new(APPLICATION_RDF_XML);
-    public static readonly MediaTypeHeaderValue APPLICATION_JSON_TYPE = new(APPLICATION_JSON);
-    public static readonly MediaTypeHeaderValue APPLICATION_XML_TYPE = new(APPLICATION_XML);
-    public static readonly MediaTypeHeaderValue TEXT_XML_TYPE = new(TEXT_XML);
+    public static readonly MediaTypeHeaderValue APPLICATION_JSON_LD_TYPE = new(APPLICATION_JSON_LD);
     public static readonly MediaTypeHeaderValue TEXT_TURTLE_TYPE = new(TEXT_TURTLE);
 
     public static readonly MediaTypeHeaderValue APPLICATION_X_OSLC_COMPACT_XML_TYPE =
@@ -57,4 +46,19 @@ public class OslcMediaType
 
     public static readonly MediaTypeHeaderValue APPLICATION_X_OSLC_COMPACT_JSON_TYPE =
         new(APPLICATION_X_OSLC_COMPACT_JSON);
+
+    [Obsolete] public const string APPLICATION_JSON = "application/json";
+
+    [Obsolete] public const string APPLICATION_XML = "application/xml";
+
+    [Obsolete] public const string TEXT_XML = "text/xml";
+
+    [Obsolete]
+    public static readonly MediaTypeHeaderValue APPLICATION_JSON_TYPE = new(APPLICATION_JSON);
+
+    [Obsolete]
+    public static readonly MediaTypeHeaderValue APPLICATION_XML_TYPE = new(APPLICATION_XML);
+
+    [Obsolete] public static readonly MediaTypeHeaderValue TEXT_XML_TYPE = new(TEXT_XML);
+
 }
