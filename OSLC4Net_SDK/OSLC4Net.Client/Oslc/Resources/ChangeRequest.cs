@@ -15,6 +15,7 @@
 
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
+using ValueType = OSLC4Net.Core.Model.ValueType;
 
 namespace OSLC4Net.Client.Oslc.Resources;
 
@@ -282,7 +283,7 @@ public class ChangeRequest : AbstractResource
         "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
     [OslcTitle("Description")]
-    [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
+    [OslcValueType(ValueType.XMLLiteral)]
     public string GetDescription()
     {
         return description;
@@ -337,13 +338,10 @@ public class ChangeRequest : AbstractResource
         return modified;
     }
 
-    [OslcDescription("The resource type URIs.")]
-    [OslcName("type")]
-    [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
-    [OslcTitle("Types")]
+    [Obsolete]
     public Uri[] GetRdfTypes()
     {
-        return rdfTypes.ToArray();
+        return GetTypes().ToArray();
     }
 
     [OslcDescription("This relationship is loosely coupled and has no specific meaning.")]
@@ -423,7 +421,7 @@ public class ChangeRequest : AbstractResource
         "Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users.")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "shortTitle")]
     [OslcTitle("Short Title")]
-    [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
+    [OslcValueType(ValueType.XMLLiteral)]
     public string GetShortTitle()
     {
         return shortTitle;
@@ -465,7 +463,7 @@ public class ChangeRequest : AbstractResource
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
     [OslcTitle("Title")]
-    [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
+    [OslcValueType(ValueType.XMLLiteral)]
     public string GetTitle()
     {
         return title;
@@ -668,11 +666,11 @@ public class ChangeRequest : AbstractResource
         this.modified = modified;
     }
 
+
+    [Obsolete]
     public void SetRdfTypes(Uri[] rdfTypes)
     {
-        this.rdfTypes.Clear();
-
-        if (rdfTypes != null) this.rdfTypes.AddAll(rdfTypes);
+        SetTypes(rdfTypes);
     }
 
     public void SetRelatedChangeRequests(Link[] relatedChangeRequests)

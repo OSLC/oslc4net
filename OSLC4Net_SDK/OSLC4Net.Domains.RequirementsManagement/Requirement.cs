@@ -17,16 +17,15 @@ public record Requirement : AbstractResourceRecord
     {
     }
 
-
-    [OslcDescription("The resource type URIs.")] // Escape quotes in description
-    [OslcOccurs(Occurs.ZeroOrMany)]
-    [OslcPropertyDefinition("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")]
-    [OslcName("type")]
-    [OslcRepresentation(Representation.Reference)]
-    [OslcReadOnly(false)] // Assuming read_only property exists
-    [OslcTitle("type")] // Use prop name as fallback title
-    public HashSet<Uri> Type { get; set; }
-
+    //
+    // [OslcDescription("The resource type URIs.")] // Escape quotes in description
+    // [OslcOccurs(Occurs.ZeroOrMany)]
+    // [OslcPropertyDefinition("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")]
+    // [OslcName("type")]
+    // [OslcRepresentation(Representation.Reference)]
+    // [OslcReadOnly(false)] // Assuming read_only property exists
+    // [OslcTitle("type")] // Use prop name as fallback title
+    [Obsolete] public HashSet<Uri> Type => new(Types);
 
     [OslcDescription(
         "An identifier for a resource. This identifier may be unique with a scope that is defined by the RM provider. Assigned by the service provider when a resource is created. Not intended for end-user display.")] // Escape quotes in description
