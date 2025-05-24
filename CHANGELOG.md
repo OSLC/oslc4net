@@ -19,6 +19,8 @@ This release does not contain security updates.
 
 - ⚡️ JSON-LD 1.1 support
 - Initial support for RDFS inference during deserialization was added.
+- Docs are now published to https://oslc4net.github.io/
+
 
 ### Changed
 
