@@ -338,7 +338,7 @@ public class ChangeRequest : AbstractResource
         return modified;
     }
 
-    [Obsolete]
+    [Obsolete("User GetTypes() or .Types instead")]
     public Uri[] GetRdfTypes()
     {
         return GetTypes().ToArray();
@@ -667,7 +667,7 @@ public class ChangeRequest : AbstractResource
     }
 
 
-    [Obsolete]
+    [Obsolete("User SetTypes() or .Types instead")]
     public void SetRdfTypes(Uri[] rdfTypes)
     {
         SetTypes(rdfTypes);

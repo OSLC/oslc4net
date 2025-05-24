@@ -16,6 +16,7 @@
 
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
+using ValueType = OSLC4Net.Core.Model.ValueType;
 
 namespace OSLC4Net.Client.Oslc.Resources;
 
@@ -29,7 +30,7 @@ public class AutomationResult : AbstractResource
 {
     private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
     private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri> rdfTypes = new HashSet<Uri>(); // XXX - TreeSet<> in Java
+
     private readonly ISet<string> subjects = new HashSet<string>(); // XXX - TreeSet<> in Java
     private readonly ISet<Uri> states = new HashSet<Uri>(); // XXX - TreeSet<> in Java
     private readonly ISet<Uri> verdicts = new HashSet<Uri>(); // XXX - TreeSet<> in Java
@@ -53,12 +54,12 @@ public class AutomationResult : AbstractResource
 
     public AutomationResult() : base()
     {
-        rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_RESULT));
+        AddType(new Uri(AutomationConstants.TYPE_AUTOMATION_RESULT));
     }
 
     public AutomationResult(Uri about) : base(about)
     {
-        rdfTypes.Add(new Uri(AutomationConstants.TYPE_AUTOMATION_RESULT));
+        AddType(new Uri(AutomationConstants.TYPE_AUTOMATION_RESULT));
     }
 
     protected Uri GetRdfType()
@@ -78,7 +79,7 @@ public class AutomationResult : AbstractResource
 
     public void AddRdfType(Uri rdfType)
     {
-        this.rdfTypes.Add(rdfType);
+        AddType(rdfType);
     }
 
     public void AddSubject(string subject)
@@ -169,13 +170,10 @@ public class AutomationResult : AbstractResource
         return modified;
     }
 
-    [OslcDescription("The resource type URIs.")]
-    [OslcName("type")]
-    [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
-    [OslcTitle("Types")]
+    [Obsolete("User GetTypes() or .Types instead")]
     public Uri[] GetRdfTypes()
     {
-        return rdfTypes.ToArray();
+        return GetTypes().ToArray();
     }
 
     [OslcDescription("The scope of a resource is a Uri for the resource's OSLC Service Provider.")]
@@ -203,7 +201,7 @@ public class AutomationResult : AbstractResource
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
     [OslcTitle("Title")]
-    [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
+    [OslcValueType(ValueType.XMLLiteral)]
     public string GetTitle()
     {
         return title;
@@ -356,11 +354,10 @@ public class AutomationResult : AbstractResource
         this.modified = modified;
     }
 
-    public void setRdfTypes(Uri[] rdfTypes)
+    [Obsolete("User SetTypes() or .Types instead")]
+    public void SetRdfTypes(Uri[] rdfTypes)
     {
-        this.rdfTypes.Clear();
-
-        if (rdfTypes != null) this.rdfTypes.AddAll(rdfTypes);
+        SetTypes(rdfTypes);
     }
 
     public void setServiceProvider(Uri serviceProvider)

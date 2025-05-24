@@ -29,12 +29,12 @@ public class Requirement : RequirementBase
 {
     public Requirement()
     {
-        RdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
+        AddType(new Uri(RmConstants.TYPE_REQUIREMENT));
     }
 
     public Requirement(Uri about) : base(about)
     {
-        RdfTypes.Add(new Uri(RmConstants.TYPE_REQUIREMENT));
+        AddType(new Uri(RmConstants.TYPE_REQUIREMENT));
     }
 }
 
@@ -177,7 +177,7 @@ public abstract class RequirementBase : AbstractResource
 
     public void AddRdfType(Uri rdfType)
     {
-        RdfTypes.Add(rdfType);
+        AddType(rdfType);
     }
 
     [OslcDescription(
@@ -413,13 +413,10 @@ public abstract class RequirementBase : AbstractResource
         return _modified;
     }
 
-    [OslcDescription("The resource type URIs.")]
-    [OslcName("type")]
-    [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
-    [OslcTitle("Types")]
+    [Obsolete("User GetTypes() or .Types instead")]
     public Uri[] GetRdfTypes()
     {
-        return RdfTypes.ToArray();
+        return GetTypes().ToArray();
     }
 
     [OslcDescription("The scope of a resource is a Uri for the resource's OSLC Service Provider.")]
@@ -589,11 +586,10 @@ public abstract class RequirementBase : AbstractResource
         _modified = modified;
     }
 
+    [Obsolete("User SetTypes() or .Types instead")]
     public void SetRdfTypes(Uri[] rdfTypes)
     {
-        RdfTypes.Clear();
-
-        if (rdfTypes != null) RdfTypes.AddAll(rdfTypes);
+        SetTypes(rdfTypes);
     }
 
     public void SetServiceProvider(Uri? serviceProvider)

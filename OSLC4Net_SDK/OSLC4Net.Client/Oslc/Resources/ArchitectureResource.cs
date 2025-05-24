@@ -16,6 +16,7 @@
 
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
+using ValueType = OSLC4Net.Core.Model.ValueType;
 
 namespace OSLC4Net.Client.Oslc.Resources;
 
@@ -30,7 +31,6 @@ public class ArchitectureResource : AbstractResource
     private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeISet<> in Java
     private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeISet<> in Java
     private readonly ISet<string> dctermsTypes = new HashSet<string>(); // XXX - TreeISet<> in
-    private readonly ISet<Uri> rdfTypes = new HashSet<Uri>(); // XXX - TreeISet<> in Java
 
     private DateTime? created;
     private string description;
@@ -43,12 +43,12 @@ public class ArchitectureResource : AbstractResource
 
     public ArchitectureResource() : base()
     {
-        rdfTypes.Add(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_RESOURCE));
+        AddType(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_RESOURCE));
     }
 
     public ArchitectureResource(Uri about) : base(about)
     {
-        rdfTypes.Add(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_RESOURCE));
+        AddType(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_RESOURCE));
     }
 
     protected Uri GetRdfType()
@@ -68,7 +68,7 @@ public class ArchitectureResource : AbstractResource
 
     public void AddRdfType(Uri rdfType)
     {
-        this.rdfTypes.Add(rdfType);
+        AddType(rdfType);
     }
 
     public void addDctermsType(string dctermsType)
@@ -109,7 +109,7 @@ public class ArchitectureResource : AbstractResource
         "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
     [OslcTitle("Description")]
-    [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
+    [OslcValueType(ValueType.XMLLiteral)]
     public string GetDescription()
     {
         return description;
@@ -144,13 +144,10 @@ public class ArchitectureResource : AbstractResource
         return modified;
     }
 
-    [OslcDescription("The resource type Uris.")]
-    [OslcName("type")]
-    [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
-    [OslcTitle("Types")]
+    [Obsolete("User GetTypes() or .Types instead")]
     public Uri[] GetRdfTypes()
     {
-        return rdfTypes.ToArray();
+        return GetTypes().ToArray();
     }
 
     [OslcDescription("A short string representation for the type, example 'Defect'.")]
@@ -185,7 +182,7 @@ public class ArchitectureResource : AbstractResource
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
     [OslcTitle("Title")]
-    [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
+    [OslcValueType(ValueType.XMLLiteral)]
     public string GetTitle()
     {
         return title;
@@ -230,11 +227,10 @@ public class ArchitectureResource : AbstractResource
         this.modified = modified;
     }
 
+    [Obsolete("User SetTypes() or .Types instead")]
     public void SetRdfTypes(Uri[] rdfTypes)
     {
-        this.rdfTypes.Clear();
-
-        if (rdfTypes != null) this.rdfTypes.AddAll(rdfTypes);
+        SetTypes(rdfTypes);
     }
 
     public void SetDctermsTypes(string[] dctermsTypes)

@@ -29,7 +29,6 @@ public class ArchitectureLinkType : AbstractResource
 {
     private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
     private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<Uri> rdfTypes = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
     private DateTime? created;
     private string comment;
@@ -41,12 +40,12 @@ public class ArchitectureLinkType : AbstractResource
 
     public ArchitectureLinkType() : base()
     {
-        rdfTypes.Add(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE));
+        AddType(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE));
     }
 
     public ArchitectureLinkType(Uri about) : base(about)
     {
-        rdfTypes.Add(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE));
+        AddType(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE));
     }
 
     protected Uri GetRdfType()
@@ -66,7 +65,7 @@ public class ArchitectureLinkType : AbstractResource
 
     public void AddRdfType(Uri rdfType)
     {
-        this.rdfTypes.Add(rdfType);
+        AddType(rdfType);
     }
 
     [OslcDescription("The person(s) who are responsible for the work needed to complete the automation plan.")]
@@ -145,13 +144,10 @@ public class ArchitectureLinkType : AbstractResource
         return modified;
     }
 
-    [OslcDescription("The resource type URIs.")]
-    [OslcName("type")]
-    [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
-    [OslcTitle("Types")]
+    [Obsolete("User GetTypes() or .Types instead")]
     public Uri[] GetRdfTypes()
     {
-        return rdfTypes.ToArray();
+        return GetTypes().ToArray();
     }
 
     [OslcDescription("The scope of a resource is a Uri for the resource's OSLC Service Provider.")]
@@ -207,11 +203,10 @@ public class ArchitectureLinkType : AbstractResource
         this.modified = modified;
     }
 
+    [Obsolete("User SetTypes() or .Types instead")]
     public void SetRdfTypes(Uri[] rdfTypes)
     {
-        this.rdfTypes.Clear();
-
-        if (rdfTypes != null) this.rdfTypes.AddAll(rdfTypes);
+        SetTypes(rdfTypes);
     }
 
     public void SetServiceProvider(Uri serviceProvider)
