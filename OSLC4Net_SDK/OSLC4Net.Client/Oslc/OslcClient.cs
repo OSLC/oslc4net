@@ -29,12 +29,6 @@ using OSLC4Net.Core.Exceptions;
 using OSLC4Net.Core.Model;
 using VDS.RDF;
 
-// For GetCustomAttribute and GetCustomAttributes
-// For OslcResourceShape
-// For the new exception
-
-// For Enumerable methods like OfType, Any, SelectMany, Distinct
-
 namespace OSLC4Net.Client.Oslc;
 
 /// <summary>
@@ -199,23 +193,23 @@ public class OslcClient : IDisposable
         if (httpResponseMessage.IsSuccessStatusCode && httpResponseMessage.Content is not null)
         {
             httpResponseMessage.Content.Headers.Add(OSLC4NetConstants.INNER_URI_HEADER, resourceUri);
-            // Buffer content at the beginning
             await httpResponseMessage.Content.LoadIntoBufferAsync().ConfigureAwait(false);
 
-            // Deserialize Initial Resources
             var dummy = new T[0];
-            T[]? initialResources = await httpResponseMessage.Content.ReadAsAsync(dummy.GetType(), _formatters).ConfigureAwait(false) as T[];
+            var resources = await httpResponseMessage.Content
+                .ReadAsAsync(dummy.GetType(), _formatters).ConfigureAwait(false) as T[];
 
-            var contentStreamForGraph = await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
-            if (contentStreamForGraph.CanSeek)
+            var contentStream =
+                await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
+            if (contentStream.CanSeek)
             {
-                 contentStreamForGraph.Seek(0, SeekOrigin.Begin);
+                contentStream.Seek(0, SeekOrigin.Begin);
             }
-            Graph? graph = await httpResponseMessage.Content.ReadAsAsync(typeof(Graph), _formatters).ConfigureAwait(false) as Graph;
 
-            // Return Success with Validated Resources
-            return OslcResponse<T>.WithSuccess(initialResources?.ToList(), graph,
-                httpResponseMessage);
+            var graph = await httpResponseMessage.Content.ReadAsAsync(typeof(Graph), _formatters)
+                .ConfigureAwait(false) as Graph;
+
+            return OslcResponse<T>.WithSuccess(resources?.ToList(), graph, httpResponseMessage);
         }
         else
         {
