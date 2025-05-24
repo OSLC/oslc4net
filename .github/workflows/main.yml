@@ -94,9 +94,6 @@ jobs:
           (Get-Content Tests/OSLC4Net.Client.Tests/OSLC4Net.Client.Tests.csproj) |
             ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
             Set-Content Tests/OSLC4Net.Client.Tests/OSLC4Net.Client.Tests.csproj
-          (Get-Content Tests/OSLC4Net.Core.JsonProviderTests/OSLC4Net.Core.JsonProviderTests.csproj) |
-            ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
-            Set-Content Tests/OSLC4Net.Core.JsonProviderTests/OSLC4Net.Core.JsonProviderTests.csproj
           (Get-Content Tests/OSLC4Net.Core.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj) |
             ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
             Set-Content Tests/OSLC4Net.Core.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj
