@@ -33,11 +33,10 @@ public sealed class OslcRestClient
     /// </summary>
     public const int DEFAULT_READ_TIMEOUT = 60000;
 
-    public static readonly IEnumerable<MediaTypeFormatter> DEFAULT_FORMATTERS =
-        new HashSet<MediaTypeFormatter>(new[] { new RdfXmlMediaTypeFormatter() });
+    public IReadOnlyCollection<MediaTypeFormatter> Formatters { get; }
 
-    private readonly IEnumerable<MediaTypeFormatter> _formatters;
     private readonly string _uri;
+    private readonly DotNetRdfHelper _rdfHelper;
     private readonly HttpClient _client;
     private readonly string _mediaType;
     private readonly int _readTimeout;
@@ -55,7 +54,7 @@ public sealed class OslcRestClient
         string mediaType,
         int readTimeout)
     {
-        _formatters = formatters;
+        Formatters = formatters.ToList();
         _uri = uri;
         _mediaType = mediaType;
         _readTimeout = readTimeout;
@@ -63,6 +62,29 @@ public sealed class OslcRestClient
         _client = new HttpClient
         {
             Timeout = new TimeSpan(TimeSpan.TicksPerMillisecond * readTimeout)
+        };
+        _client.DefaultRequestHeaders.Accept.Add(
+            new MediaTypeWithQualityHeaderValue(_mediaType, 1.0));
+        _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*", 0.9));
+    }
+
+    public OslcRestClient(
+        string uri,
+        DotNetRdfHelper rdfHelper,
+        string? mediaType = null,
+        int? readTimeout = null)
+    {
+        _uri = uri;
+        _rdfHelper = rdfHelper;
+        _mediaType = mediaType;
+        _readTimeout = readTimeout ?? DEFAULT_READ_TIMEOUT;
+        Formatters =
+            new HashSet<MediaTypeFormatter>(new[] { new RdfXmlMediaTypeFormatter(_rdfHelper) })
+            ;
+
+        _client = new HttpClient
+        {
+            Timeout = new TimeSpan(TimeSpan.TicksPerMillisecond * _readTimeout)
         };
         _client.DefaultRequestHeaders.Accept.Add(
             new MediaTypeWithQualityHeaderValue(_mediaType, 1.0));
@@ -158,15 +180,6 @@ public sealed class OslcRestClient
     {
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <returns></returns>
-    public IEnumerable<MediaTypeFormatter> GetFormatters()
-    {
-        return _formatters;
-    }
-
     public string GetMediaType()
     {
         return _mediaType;
@@ -198,12 +211,13 @@ public sealed class OslcRestClient
         // _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(_mediaType, 1.0));
         // _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*", 0.9));
 
-        var response = await _client.GetAsync(_uri);
+        var response = await _client.GetAsync(_uri).ConfigureAwait(false);
         var statusCode = response.StatusCode;
 
         return statusCode switch
         {
-            HttpStatusCode.OK => await response.Content.ReadAsAsync<T>(_formatters),
+            HttpStatusCode.OK => await response.Content.ReadAsAsync<T>(Formatters)
+                .ConfigureAwait(false),
             HttpStatusCode.NoContent or HttpStatusCode.NotFound or HttpStatusCode.Gone => null,
             _ => throw new HttpRequestException(response.ReasonPhrase)
         };
@@ -219,7 +233,7 @@ public sealed class OslcRestClient
         // _client.DefaultRequestHeaders.Clear();
         // _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(_mediaType));
 
-        var response = await _client.GetAsync(_uri);
+        var response = await _client.GetAsync(_uri).ConfigureAwait(false);
         var statusCode = response.StatusCode;
 
         switch (statusCode)
@@ -227,7 +241,8 @@ public sealed class OslcRestClient
             case HttpStatusCode.OK:
                 // TODO: check if we can get rid of this Java-looking code
                 var dummy = new T[0];
-                return await response.Content.ReadAsAsync(dummy.GetType(), _formatters) as T[];
+                return await response.Content.ReadAsAsync(dummy.GetType(), Formatters)
+                    .ConfigureAwait(false) as T[];
             case HttpStatusCode.NoContent:
             // case HttpStatusCode.NotFound:
             case HttpStatusCode.Gone:
@@ -255,7 +270,7 @@ public sealed class OslcRestClient
 
         var mediaTypeValue = new MediaTypeHeaderValue(_mediaType);
         var formatter =
-            new MediaTypeFormatterCollection(_formatters).FindWriter(oslcResource.GetType(),
+            new MediaTypeFormatterCollection(Formatters).FindWriter(oslcResource.GetType(),
                 mediaTypeValue);
         var content = new ObjectContent<T>(oslcResource, formatter);
 
@@ -266,15 +281,15 @@ public sealed class OslcRestClient
 
         if (status == HttpStatusCode.OK)
         {
-            return await creation.Content.ReadAsAsync<T>(_formatters);
+            return await creation.Content.ReadAsAsync<T>(Formatters).ConfigureAwait(false);
         }
         else if (status == HttpStatusCode.Created)
         {
             // FIXME: stop allocating a new client for every request
             var followUpClient =
-                new OslcRestClient(_formatters, creation.Headers.Location, _mediaType);
+                new OslcRestClient(Formatters, creation.Headers.Location, _mediaType);
 
-            return await followUpClient.GetOslcResourceAsync<T>();
+            return await followUpClient.GetOslcResourceAsync<T>().ConfigureAwait(false);
         }
 
         throw new HttpRequestException(creation.ReasonPhrase);
@@ -293,7 +308,7 @@ public sealed class OslcRestClient
 
         var mediaTypeValue = new MediaTypeHeaderValue(_mediaType);
         var formatter =
-            new MediaTypeFormatterCollection(_formatters).FindWriter(oslcResource.GetType(),
+            new MediaTypeFormatterCollection(Formatters).FindWriter(oslcResource.GetType(),
                 mediaTypeValue);
         var content = new ObjectContent(oslcResource.GetType(), oslcResource, formatter);
 
@@ -324,7 +339,7 @@ public sealed class OslcRestClient
         // _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
 
         var formatter =
-            new MediaTypeFormatterCollection(_formatters).FindWriter(oslcResource.GetType(),
+            new MediaTypeFormatterCollection(Formatters).FindWriter(oslcResource.GetType(),
                 new MediaTypeHeaderValue(_mediaType));
         var content = new ObjectContent(oslcResource.GetType(), oslcResource, formatter);
 

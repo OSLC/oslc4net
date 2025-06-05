@@ -66,9 +66,7 @@ public abstract class TestBase
     }
 
 
-
-    protected virtual IEnumerable<MediaTypeFormatter> Formatters { get; } =
-        OslcRestClient.DEFAULT_FORMATTERS;
+    protected virtual IEnumerable<MediaTypeFormatter> Formatters => TestClient.GetFormatters();
 
     protected Uri? ChangeRequestUri { get; set; }
     public string? Username { get; set; }

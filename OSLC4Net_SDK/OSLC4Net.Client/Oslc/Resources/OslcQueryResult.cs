@@ -58,17 +58,20 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     private IUriNode? _resultsMemberContainer;
 
     private long? _totalCount;
+    private readonly DotNetRdfHelper _rdfHelper;
 
 
-    public OslcQueryResult(OslcQuery query, HttpResponseMessage response)
+    public OslcQueryResult(OslcQuery query, HttpResponseMessage response,
+        DotNetRdfHelper? rdfHelper = null)
     {
         _query = query;
         _response = response;
+        _rdfHelper = rdfHelper ?? Activator.CreateInstance<DotNetRdfHelper>();
 
         _pageNumber = 1;
     }
 
-    private OslcQueryResult(OslcQueryResult prev)
+    private OslcQueryResult(OslcQueryResult prev, DotNetRdfHelper rdfHelper)
     {
         _query = new OslcQuery(prev);
         // FIXME: we should split the data from logic - ctor should not be making calls; one of the methods should return a record with the data.
@@ -100,7 +103,7 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
         {
             if (!MoveNext()) throw new InvalidOperationException();
 
-            return new OslcQueryResult(this);
+            return new OslcQueryResult(this, _rdfHelper);
         }
     }
 
@@ -287,7 +290,7 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
         Debug.Assert(_rdfGraph != null);
 
         var triples = _rdfGraph!.GetTriplesWithSubject(_resultsMemberContainer);
-        IEnumerable<T> result = new TripleEnumerableWrapper<T>(triples, _rdfGraph);
+        IEnumerable<T> result = new TripleEnumerableWrapper<T>(triples, _rdfGraph, _rdfHelper);
 
         return result;
     }
@@ -295,13 +298,16 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     private class TripleEnumerableWrapper<T> : IEnumerable<T>
     {
         private readonly IGraph? _graph;
+        private readonly DotNetRdfHelper _dotNetRdfHelper;
 
         private readonly IEnumerable<Triple> _triples;
 
-        public TripleEnumerableWrapper(IEnumerable<Triple> triples, IGraph? graph)
+        public TripleEnumerableWrapper(IEnumerable<Triple> triples, IGraph? graph,
+            DotNetRdfHelper dotNetRdfHelper)
         {
             _triples = triples;
             _graph = graph;
+            _dotNetRdfHelper = dotNetRdfHelper;
         }
 
         IEnumerator
@@ -312,7 +318,7 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
 
         public IEnumerator<T> GetEnumerator()
         {
-            return new TripleEnumeratorWrapper(_triples.GetEnumerator(), _graph);
+            return new TripleEnumeratorWrapper(_triples.GetEnumerator(), _graph, _dotNetRdfHelper);
         }
 
         private class TripleEnumeratorWrapper : IEnumerator<T>
@@ -320,11 +326,14 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
             private readonly IGraph? _graph;
 
             private readonly IEnumerator<Triple> _triples;
+            private readonly DotNetRdfHelper _dotNetRdfHelper;
 
-            public TripleEnumeratorWrapper(IEnumerator<Triple> triples, IGraph? graph)
+            public TripleEnumeratorWrapper(IEnumerator<Triple> triples, IGraph? graph,
+                DotNetRdfHelper dotNetRdfHelper)
             {
                 _triples = triples;
                 _graph = graph;
+                _dotNetRdfHelper = dotNetRdfHelper;
             }
 
             object IEnumerator.Current => Current!;
@@ -335,7 +344,7 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
                 {
                     var member = _triples.Current ??
                                  throw new ArgumentNullException(nameof(_triples.Current));
-                    return (T)DotNetRdfHelper.FromDotNetRdfNode((IUriNode)member.Object, _graph,
+                    return (T)_dotNetRdfHelper.FromDotNetRdfNode((IUriNode)member.Object, _graph,
                         typeof(T));
                 }
             }

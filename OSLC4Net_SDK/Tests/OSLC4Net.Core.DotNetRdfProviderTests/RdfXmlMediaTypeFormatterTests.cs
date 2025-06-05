@@ -78,7 +78,7 @@ public class RdfXmlMediaTypeFormatterTests
                                                                crListOut,
                                                                null);
         // TODO: fix overload confusion with one arg
-        var formatter = new RdfXmlMediaTypeFormatter(rdfGraph, true);
+        var formatter = new RdfXmlMediaTypeFormatter(rdfGraph, null);
 
         var rdfXml =
             await SerializeCollectionAsync(formatter, crListOut,

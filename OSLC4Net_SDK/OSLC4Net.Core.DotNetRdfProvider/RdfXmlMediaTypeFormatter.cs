@@ -39,13 +39,15 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 {
     const int STREAM_BUFFER_SIZE = 8192;
     private HttpRequestMessage httpRequest;
+    private readonly DotNetRdfHelper _rdfHelper;
 
     /// <summary>
     ///     Defauld RdfXml formatter
     /// </summary>
     /// <param name="graph"></param>
-    public RdfXmlMediaTypeFormatter(bool rebuildgraph = true)
+    public RdfXmlMediaTypeFormatter(DotNetRdfHelper? rdfHelper = null, bool rebuildgraph = true)
     {
+        _rdfHelper = rdfHelper ?? Activator.CreateInstance<DotNetRdfHelper>();
         RebuildGraph = rebuildgraph;
 
         SupportedMediaTypes.Add(OslcMediaType.APPLICATION_RDF_XML_TYPE);
@@ -61,8 +63,9 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     /// <param name="graph"></param>
     public RdfXmlMediaTypeFormatter(
         IGraph graph,
+        DotNetRdfHelper? rdfHelper,
         bool rebuildgraph = true
-    ) : this(rebuildgraph)
+    ) : this(rdfHelper, rebuildgraph)
     {
         Graph = graph;
     }
@@ -446,7 +449,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 
                 var isSingleton = IsSingleton(type);
                 var output =
-                    DotNetRdfHelper.FromDotNetRdfGraph(graph,
+                    _rdfHelper.FromDotNetRdfGraph(graph,
                         isSingleton ? type : GetMemberType(type));
 
                 if (isSingleton)
