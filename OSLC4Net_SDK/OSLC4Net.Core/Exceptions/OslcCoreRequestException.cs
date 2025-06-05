@@ -22,13 +22,17 @@ namespace OSLC4Net.Core.Exceptions;
 /// </summary>
 // TODO: accept HttpResponseMessage in a static ctor but do not retain it (@berezovskyi 2025-06)
 public class OslcCoreRequestException(
-    int statusCode,
-    HttpResponseMessage? responseMessage,
+    HttpStatusCode? statusCode,
+    string responseMessage,
     IResource? requestResource = null,
     Error? errorResource = null)
-    : Exception($"HTTP {ToErrorCode(responseMessage
-        ?.StatusCode, statusCode)} {responseMessage?.ReasonPhrase}")
+    : Exception($"HTTP {ToErrorCode(statusCode, -1)} {responseMessage}")
 {
+    public HttpStatusCode? StatusCode { get; } = statusCode;
+    public string ResponseMessage { get; } = responseMessage;
+    public IResource? RequestResource { get; } = requestResource;
+    public Error? ErrorResource { get; } = errorResource;
+
     private static string ToErrorCode(HttpStatusCode? status, int code)
     {
         return status switch
@@ -38,8 +42,4 @@ public class OslcCoreRequestException(
         };
     }
 
-    public int StatusCode { get; } = statusCode;
-    public HttpResponseMessage? ResponseMessage { get; } = responseMessage;
-    public IResource? RequestResource { get; } = requestResource;
-    public Error? ErrorResource { get; } = errorResource;
 }

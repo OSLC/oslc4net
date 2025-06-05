@@ -11,6 +11,7 @@
  * http://www.eclipse.org/org/documents/edl-v10.php.
  *******************************************************************************/
 
+using System.Net;
 using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Core.Exceptions;
@@ -20,10 +21,9 @@ namespace OSLC4Net.Core.Exceptions;
 /// </summary>
 public class OslcCoreRegistrationException(
     ServiceProvider serviceProvider,
-    int statusCode,
+    HttpStatusCode? statusCode,
     string responseMessage) : OslcCoreRequestException(
-    statusCode, null, serviceProvider)
+    statusCode, responseMessage, serviceProvider)
 {
     public ServiceProvider ServiceProvider { get; } = serviceProvider;
-    public new string ResponseMessage { get; } = responseMessage;
 }

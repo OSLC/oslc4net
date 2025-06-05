@@ -281,7 +281,8 @@ public class OslcClient : IDisposable
                 if (++redirectCount > MAX_REDIRECTS)
                 {
                     // max redirects reached
-                    throw new OslcCoreRequestException(-1, response, null,
+                    throw new OslcCoreRequestException(HttpStatusCode.LoopDetected,
+                        response.ReasonPhrase, null,
                         new Error
                         {
                             Message = $"Maximum redirects reached (allowed: {MAX_REDIRECTS})."
