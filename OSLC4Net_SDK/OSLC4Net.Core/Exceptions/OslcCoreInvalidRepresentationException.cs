@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
+ * Copyright (c) 2025 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,9 +9,6 @@
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
- *
- * Contributors:
- *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
 using System.Reflection;
@@ -18,44 +16,13 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Core.Exceptions;
 
-public class OslcCoreInvalidRepresentationException : OslcCoreApplicationException
+public class OslcCoreInvalidRepresentationException(
+    Type resourceType,
+    MethodInfo method,
+    Representation representation) : OslcCoreApplicationException(
+    $"OSLC1006: Invalid representation {RepresentationExtension.ToString(representation)} defined for method {method.Name} of class {resourceType.Name}")
 {
-    private static readonly string MESSAGE_KEY = "InvalidRepresentationException";
-
-    private readonly MethodInfo method;
-    private readonly Representation representation;
-    private readonly Type resourceType;
-
-    /// <summary>
-    /// </summary>
-    /// <param name="resourceType"></param>
-    /// <param name="method"></param>
-    /// <param name="representation"></param>
-    public OslcCoreInvalidRepresentationException(Type resourceType, MethodInfo method,
-        Representation representation) :
-        base(MESSAGE_KEY,
-            new object[]
-            {
-                resourceType.Name, method.Name, RepresentationExtension.ToString(representation)
-            })
-    {
-        this.method = method;
-        this.representation = representation;
-        this.resourceType = resourceType;
-    }
-
-    public MethodInfo GetMethod()
-    {
-        return method;
-    }
-
-    public Representation GetRepresentation()
-    {
-        return representation;
-    }
-
-    public Type GetResourceType()
-    {
-        return resourceType;
-    }
+    public Type ResourceType { get; } = resourceType;
+    public MethodInfo Method { get; } = method;
+    public Representation Representation { get; } = representation;
 }

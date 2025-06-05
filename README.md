@@ -83,3 +83,8 @@ Server parts of the SDK have not yet been migrated from .NET Framework to .NET
 ## OSLC4Net License
 
 OSLC4Net is licensed under the [Eclipse Public License 1.0](LICENSE)
+
+## Credits
+
+- Steve Pitschke (IBM) did the majority of the initial implementation in
+  2012-2013.

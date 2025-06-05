@@ -24,7 +24,15 @@ This release does not contain security updates.
 
 ### Changed
 
-This release does not contain other significant changes.
+- Major changes to exceptions from Core and Client packages.
+    - Getters were replaced with read-only properties
+    - I18n resource strings were removed along with the corresponding
+      constructors.
+    - Error codes `OSLC001..OSLC014` from Core were renamed to
+      `OSLC1001..OSLC1014`, while
+      codes `OSLCC001..OSLCC004` from Client were renamed into
+      `OSLC2001..OSLC2014`. All OSLC4Net error codes now have 4 digits for
+      consistency.
 
 ### Deprecated
 
@@ -36,6 +44,8 @@ This release does not contain other significant changes.
 
 - ❗️Legacy OSLC JSON support was removed to reduce maintenance overhead now that
   the JSON-LD support is added.
+- I18n resource strings were removed along with the corresponding
+  constructors on exceptions. Also, `MessageExtractor` helpers were removed.
 
 ### Fixed
 
