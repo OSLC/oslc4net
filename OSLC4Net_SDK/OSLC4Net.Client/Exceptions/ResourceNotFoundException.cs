@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
+ * Copyright (c) 2025 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,37 +9,17 @@
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
- *
- * Contributors:
- *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
 namespace OSLC4Net.Client.Exceptions;
 
 /// <summary>
-/// Exceptions indicating a Jazz authentication or credentials problem
+/// Exception thrown when a requested resource could not be found.
 /// </summary>
-public class ResourceNotFoundException : OslcClientApplicationException
+public class ResourceNotFoundException(string resource, string value)
+    : OslcClientApplicationException($"OSLC2004: The requested resource could not be found. Resource: {resource} Value: {value}.")
 {
-    private const string MESSAGE_KEY = "ResourceNotFoundException";
+    public string Resource { get; } = resource;
 
-    private readonly string resource;
-    private readonly string value;
-
-    public ResourceNotFoundException(string resource, string value) :
-        base(MESSAGE_KEY, new object[] { resource, value })
-    {
-        this.resource = resource;
-        this.value = value;
-    }
-
-    public string GetResource()
-    {
-        return resource;
-    }
-
-    public string GetValue()
-    {
-        return value;
-    }
+    public string Value { get; } = value;
 }

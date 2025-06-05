@@ -395,7 +395,8 @@ public abstract class TestBase
         ChangeRequestUri = createdResource?.GetAbout();
 
         return createdResource ?? throw new OslcCoreRequestException(
-            (int)addedChangeRequestResponse.StatusCode, addedChangeRequestResponse.ResponseMessage);
+            addedChangeRequestResponse.StatusCode,
+            addedChangeRequestResponse.ResponseMessage?.ReasonPhrase);
     }
 
     protected async Task TestCreateAsync(string mediaType)

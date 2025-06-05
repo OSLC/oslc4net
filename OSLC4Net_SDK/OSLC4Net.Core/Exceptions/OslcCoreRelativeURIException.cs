@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
+ * Copyright (c) 2025 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,9 +9,6 @@
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
- *
- * Contributors:
- *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
 namespace OSLC4Net.Core.Exceptions;
@@ -18,19 +16,13 @@ namespace OSLC4Net.Core.Exceptions;
 /// <summary>
 ///     Exception thrown when relative URIs are encountered in an RDF model
 /// </summary>
-public class OslcCoreRelativeURIException : OslcCoreApplicationException
+public class OslcCoreRelativeURIException(
+    Type resourceType,
+    string methodName,
+    Uri relativeURI) : OslcCoreApplicationException(
+    $"OSLC1014: Relative URI value {relativeURI} for method {methodName} of class {resourceType.Name}")
 {
-    private static readonly string MESSAGE_KEY = "RelativeURIException";
-
-    private readonly string methodName;
-    private readonly Uri relativeURI;
-    private readonly Type resourceType;
-
-    public OslcCoreRelativeURIException(Type resourceType, string methodName, Uri relativeURI) :
-        base(MESSAGE_KEY, new object[] { resourceType.Name, methodName, relativeURI.ToString() })
-    {
-        this.methodName = methodName;
-        this.relativeURI = relativeURI;
-        this.resourceType = resourceType;
-    }
+    public Type ResourceType { get; } = resourceType;
+    public string MethodName { get; } = methodName;
+    public Uri RelativeURI { get; } = relativeURI;
 }

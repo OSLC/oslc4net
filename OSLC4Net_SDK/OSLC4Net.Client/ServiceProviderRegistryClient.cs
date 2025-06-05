@@ -123,7 +123,7 @@ public sealed class ServiceProviderRegistryClient
                 serviceProviders = new ServiceProvider[] { serviceProvider };
             else
                 throw new OslcCoreRegistrationException(serviceProviderToRegister,
-                    (int)HttpStatusCode.NotFound,
+                    HttpStatusCode.NotFound,
                     "ServiceProviderCatalog");
         }
 
@@ -205,13 +205,13 @@ public sealed class ServiceProviderRegistryClient
 
                 if (statusCode != HttpStatusCode.Created)
                     throw new OslcCoreRegistrationException(serviceProviderToRegister,
-                        (int)statusCode,
+                        statusCode,
                         clientResponse.ResponseMessage?.ReasonPhrase);
 
                 if (clientResponse.ResponseMessage?.Headers.Location == null)
                 {
                     throw new OslcCoreRegistrationException(serviceProviderToRegister,
-                        (int)statusCode,
+                        statusCode,
                         "Missing Location header in response");
                 }
 
@@ -220,7 +220,7 @@ public sealed class ServiceProviderRegistryClient
         }
 
         throw new OslcCoreRegistrationException(serviceProviderToRegister,
-            (int)HttpStatusCode.NotFound,
+            HttpStatusCode.NotFound,
             "CreationFactory");
     }
 
@@ -250,12 +250,14 @@ public sealed class ServiceProviderRegistryClient
     {
         var oslcResponse = await Client.GetResourceAsync<ServiceProviderCatalog>(Endpoint).ConfigureAwait(false);
         if (oslcResponse.StatusCode == HttpStatusCode.OK)
+        {
             return oslcResponse.Resources!.Single();
-        else
-            throw new OslcCoreRequestException((int)oslcResponse.StatusCode,
-                oslcResponse.ResponseMessage,
-                null,
-                oslcResponse.ErrorResource);
+        }
+
+        throw new OslcCoreRequestException(oslcResponse.StatusCode,
+            oslcResponse.ResponseMessage?.ReasonPhrase ?? "N/A",
+            null,
+            oslcResponse.ErrorResource);
     }
 
     /// <summary>
@@ -268,12 +270,14 @@ public sealed class ServiceProviderRegistryClient
     {
         var oslcResponse = await Client.GetResourceAsync<ServiceProvider>(Endpoint).ConfigureAwait(false);
         if (oslcResponse.StatusCode == HttpStatusCode.OK)
+        {
             return oslcResponse.Resources!.Single();
-        else
-            throw new OslcCoreRequestException((int)oslcResponse.StatusCode,
-                oslcResponse.ResponseMessage,
-                null,
-                oslcResponse.ErrorResource);
+        }
+
+        throw new OslcCoreRequestException(oslcResponse.StatusCode,
+            oslcResponse.ResponseMessage?.ReasonPhrase ?? "N/A",
+            null,
+            oslcResponse.ErrorResource);
     }
 
     /// <summary>
