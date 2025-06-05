@@ -33,6 +33,7 @@ This release does not contain security updates.
       codes `OSLCC001..OSLCC004` from Client were renamed into
       `OSLC2001..OSLC2014`. All OSLC4Net error codes now have 4 digits for
       consistency.
+- DotNetRdfHelper is no longer static
 
 ### Deprecated
 
@@ -46,6 +47,10 @@ This release does not contain security updates.
   the JSON-LD support is added.
 - I18n resource strings were removed along with the corresponding
   constructors on exceptions. Also, `MessageExtractor` helpers were removed.
+- log4net dependency - all logging is now done via standard `ILogger`
+  abstraction.
+- ServiceProviderRegistryURIs - oslc4net will no longer try to guess/compute the
+  SP catalog URI.
 
 ### Fixed
 

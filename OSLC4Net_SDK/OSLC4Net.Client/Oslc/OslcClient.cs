@@ -17,10 +17,8 @@ using System.Net;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Net.Security;
-using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using log4net;
 using Microsoft.Extensions.Logging;
 using OSLC4Net.Client.Exceptions;
 using OSLC4Net.Core;
@@ -40,9 +38,6 @@ public class OslcClient : IDisposable
 
     // As of 2020, FF allows 20, Blink - 19, Safari - 16.
     private const int MAX_REDIRECTS = 20;
-
-    private static readonly ILog log =
-        LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
     protected readonly ISet<MediaTypeFormatter> _formatters;
     protected readonly HttpClient _client;
@@ -85,7 +80,6 @@ public class OslcClient : IDisposable
 
         // REVISIT: RDF/XML + Turtle support only for now (@berezovskyi 2024-10)
         _formatters.Add(new RdfXmlMediaTypeFormatter());
-        _formatters.Add(new JsonMediaTypeFormatter());
 
         var handler = userHttpMessageHandler;
         handler ??= new HttpClientHandler { AllowAutoRedirect = false };
@@ -96,7 +90,7 @@ public class OslcClient : IDisposable
 #pragma warning disable MA0039
             if (handler is HttpClientHandler httpClientHandler)
             {
-                log.Warn(
+                _logger.LogWarning(
                     "TLS certificate validation may be compromised! DO NOT USE IN PRODUCTION");
                 httpClientHandler.ServerCertificateCustomValidationCallback = certCallback;
             }
@@ -128,7 +122,7 @@ public class OslcClient : IDisposable
         };
         if (allowInvalidTlsCerts)
         {
-            log.Warn(
+            _logger.LogWarning(
                 "TLS certificate validation is compromised! DO NOT USE IN PRODUCTION");
             handler.ServerCertificateCustomValidationCallback =
                 HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
@@ -150,28 +144,6 @@ public class OslcClient : IDisposable
         client.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Basic", credentials);
         return oslcClient;
-    }
-
-    [Obsolete("Not for public use; just provide the callback if necessary")]
-    /// <summary>
-    /// Create an SSL Web Request Handler
-    /// </summary>
-    /// <param name="certCallback">optionally control SSL certificate management
-    /// (use HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-    /// in .NET 5+ if really needed)</param>
-    /// <returns></returns>
-    public static HttpClientHandler CreateSSLHandler(Func<HttpRequestMessage, X509Certificate2,
-        X509Chain, SslPolicyErrors, bool>? certCallback = null)
-    {
-        var handler = new HttpClientHandler();
-
-        if (certCallback != null)
-        {
-            log.Warn("TLS certificate validation may be compromised! DO NOT USE IN PRODUCTION");
-            handler.ServerCertificateCustomValidationCallback = certCallback;
-        }
-
-        return handler;
     }
 
     /// <summary>
