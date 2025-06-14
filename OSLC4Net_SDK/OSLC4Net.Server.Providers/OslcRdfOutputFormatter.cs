@@ -40,19 +40,26 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
         var type = context.ObjectType;
         var value = context.Object;
         var httpRequest = httpContext.Request;
-
         IGraph graph;
-        if (ImplementsGenericType(typeof(FilteredResource<>), type))
+        if (type != null && ImplementsGenericType(typeof(FilteredResource<>), type))
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(context),
+                    "Value cannot be null for FilteredResource");
+            }
+
             var resourceProp = value.GetType().GetProperty("Resource");
             var actualTypeArguments =
                 GetChildClassParameterArguments(typeof(FilteredResource<>), type);
-            var objects = resourceProp.GetValue(value, null);
+            var objects = resourceProp?.GetValue(value, null);
             var propertiesProp = value.GetType().GetProperty("Properties");
-
             if (!ImplementsICollection(actualTypeArguments[0]))
             {
-                objects = new EnumerableWrapper(objects);
+                if (objects != null)
+                {
+                    objects = new EnumerableWrapper(objects);
+                }
             }
 
             if (ImplementsGenericType(typeof(ResponseInfo<>), type))
@@ -60,7 +67,7 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
                 //Subject URI for the collection is the query capability
                 // FIXME: should this be set by the app based on service provider info
                 var portNum = httpContext.Request.Host.Port;
-                string portString = null;
+                string? portString;
                 if (portNum == 80 || portNum == 443)
                 {
                     portString = "";
@@ -77,36 +84,51 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
 
                 //Subject URI for the responseInfo is the full request URI
                 var responseInfoAbout = httpRequest.GetEncodedUrl();
-
                 var totalCountProp = value.GetType().GetProperty("TotalCount");
                 var nextPageProp = value.GetType().GetProperty("NextPage");
 
+                var nextPageValue = nextPageProp?.GetValue(value, null) as string ?? string.Empty;
+                var totalCountValue = totalCountProp?.GetValue(value, null);
+                var totalCount = totalCountValue as int? ?? 0;
+                var propertiesValue =
+                    propertiesProp?.GetValue(value, null) as IDictionary<string, object>;
+
                 graph = DotNetRdfHelper.CreateDotNetRdfGraph(descriptionAbout,
                     responseInfoAbout,
-                    (string)nextPageProp.GetValue(value, null),
-                    (int)totalCountProp.GetValue(value, null),
-                    objects as IEnumerable<object>,
-                    (IDictionary<string, object>)propertiesProp.GetValue(value, null));
+                    nextPageValue,
+                    totalCount,
+                    objects as IEnumerable<object> ?? Enumerable.Empty<object>(),
+                    propertiesValue ?? new Dictionary<string, object>(StringComparer.Ordinal));
             }
             else
             {
-                graph = DotNetRdfHelper.CreateDotNetRdfGraph(null, null, null, null,
-                    objects as IEnumerable<object>,
-                    (IDictionary<string, object>)propertiesProp.GetValue(value, null));
+                var propertiesValue =
+                    propertiesProp?.GetValue(value, null) as IDictionary<string, object>;
+
+                graph = DotNetRdfHelper.CreateDotNetRdfGraph(string.Empty, string.Empty,
+                    string.Empty, null,
+                    objects as IEnumerable<object> ?? Enumerable.Empty<object>(),
+                    propertiesValue ?? new Dictionary<string, object>(StringComparer.Ordinal));
             }
         }
-        else if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(
+        else if (value != null && InheritedGenericInterfacesHelper.ImplementsGenericInterface(
                      typeof(IEnumerable<>), value.GetType()))
         {
-            graph = DotNetRdfHelper.CreateDotNetRdfGraph(value as IEnumerable<object>);
+            graph = DotNetRdfHelper.CreateDotNetRdfGraph(value as IEnumerable<object> ??
+                                                         Enumerable.Empty<object>());
         }
-        else if (type.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
+        else if (type != null &&
+                 type.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
         {
-            graph = DotNetRdfHelper.CreateDotNetRdfGraph(new[] { value });
+            graph = DotNetRdfHelper.CreateDotNetRdfGraph(value != null
+                ? new[] { value }
+                : Enumerable.Empty<object>());
         }
         else
         {
-            graph = DotNetRdfHelper.CreateDotNetRdfGraph(new EnumerableWrapper(value));
+            graph = DotNetRdfHelper.CreateDotNetRdfGraph(value != null
+                ? new EnumerableWrapper(value)
+                : Enumerable.Empty<object>());
         }
 
         // TODO: set the default
@@ -115,7 +137,6 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
 
         //await httpContext.Response.WriteAsync(buffer.ToString(), selectedEncoding);
     }
-
 
 
     private async Task SerializeGraph(StringSegment contentType, IGraph graph,
