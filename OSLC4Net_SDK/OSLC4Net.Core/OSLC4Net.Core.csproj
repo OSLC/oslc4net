@@ -82,22 +82,9 @@
     <Compile Update="Attribute\OslcValueType.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Diagnostics"/>
-    <PackageReference Include="log4net"/>
   </ItemGroup>
 </Project>

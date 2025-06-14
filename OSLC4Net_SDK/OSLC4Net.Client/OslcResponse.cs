@@ -16,6 +16,8 @@ public sealed class OslcResponse<T> where T : IResource
     // REVISIT: we should build in the flexibility to detect 200 OK HTML reponses as actually 401s etc (@berezovskyi 2024-10)
     public HttpStatusCode? StatusCode { get; private set; }
 
+    public bool IsSuccess => ResponseMessage?.IsSuccessStatusCode ?? false;
+
     public static OslcResponse<T> WithSuccess(List<T>? resources, Graph? g,
         HttpResponseMessage? responseMessage = null)
     {

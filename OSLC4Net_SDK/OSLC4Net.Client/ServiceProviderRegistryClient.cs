@@ -44,7 +44,7 @@ public sealed class ServiceProviderRegistryClient
     /// <param name="username">Basic auth username</param>
     /// <param name="password">Basic auth password</param>
     public ServiceProviderRegistryClient(string uri,
-        IEnumerable<MediaTypeFormatter> formatters,
+        IEnumerable<MediaTypeFormatter>? formatters,
         string mediaType,
         ILoggerFactory loggerFactory,
         string? username = null,
@@ -67,29 +67,23 @@ public sealed class ServiceProviderRegistryClient
     /// <param name="formatters"></param>
     /// <param name="mediaType"></param>
     public ServiceProviderRegistryClient(string uri,
-        IEnumerable<MediaTypeFormatter> formatters,
+        IEnumerable<MediaTypeFormatter>? formatters,
         string mediaType, ILoggerFactory loggerFactory) : this(uri, formatters, mediaType,
         loggerFactory, null)
     {
     }
 
-    public ServiceProviderRegistryClient(string uri, IEnumerable<MediaTypeFormatter> formatters,
-        ILoggerFactory loggerFactory) :
+    public ServiceProviderRegistryClient(string uri,
+        ILoggerFactory loggerFactory, IEnumerable<MediaTypeFormatter>? formatters = null) :
         this(uri, formatters, OslcMediaType.APPLICATION_RDF_XML, loggerFactory, null)
     {
     }
 
-    public ServiceProviderRegistryClient(string uri, ILoggerFactory loggerFactory) :
-        // TODO: build an Accept string from the formatter list on the fly
-        this(uri, OslcRestClient.DEFAULT_FORMATTERS, OslcMediaType.APPLICATION_RDF_XML,
-            loggerFactory, null)
-    {
-    }
 
     public static ServiceProviderRegistryClient WithBasicAuth(string uri, string username,
         string password, ILoggerFactory loggerFactory)
     {
-        return new ServiceProviderRegistryClient(uri, OslcRestClient.DEFAULT_FORMATTERS,
+        return new ServiceProviderRegistryClient(uri, null,
             OslcMediaType.APPLICATION_RDF_XML, loggerFactory, username, password);
     }
 
@@ -123,7 +117,7 @@ public sealed class ServiceProviderRegistryClient
                 serviceProviders = new ServiceProvider[] { serviceProvider };
             else
                 throw new OslcCoreRegistrationException(serviceProviderToRegister,
-                    (int)HttpStatusCode.NotFound,
+                    HttpStatusCode.NotFound,
                     "ServiceProviderCatalog");
         }
 
@@ -205,13 +199,13 @@ public sealed class ServiceProviderRegistryClient
 
                 if (statusCode != HttpStatusCode.Created)
                     throw new OslcCoreRegistrationException(serviceProviderToRegister,
-                        (int)statusCode,
+                        statusCode,
                         clientResponse.ResponseMessage?.ReasonPhrase);
 
                 if (clientResponse.ResponseMessage?.Headers.Location == null)
                 {
                     throw new OslcCoreRegistrationException(serviceProviderToRegister,
-                        (int)statusCode,
+                        statusCode,
                         "Missing Location header in response");
                 }
 
@@ -220,7 +214,7 @@ public sealed class ServiceProviderRegistryClient
         }
 
         throw new OslcCoreRegistrationException(serviceProviderToRegister,
-            (int)HttpStatusCode.NotFound,
+            HttpStatusCode.NotFound,
             "CreationFactory");
     }
 
@@ -250,12 +244,14 @@ public sealed class ServiceProviderRegistryClient
     {
         var oslcResponse = await Client.GetResourceAsync<ServiceProviderCatalog>(Endpoint).ConfigureAwait(false);
         if (oslcResponse.StatusCode == HttpStatusCode.OK)
+        {
             return oslcResponse.Resources!.Single();
-        else
-            throw new OslcCoreRequestException((int)oslcResponse.StatusCode,
-                oslcResponse.ResponseMessage,
-                null,
-                oslcResponse.ErrorResource);
+        }
+
+        throw new OslcCoreRequestException(oslcResponse.StatusCode,
+            oslcResponse.ResponseMessage?.ReasonPhrase ?? "N/A",
+            null,
+            oslcResponse.ErrorResource);
     }
 
     /// <summary>
@@ -268,12 +264,14 @@ public sealed class ServiceProviderRegistryClient
     {
         var oslcResponse = await Client.GetResourceAsync<ServiceProvider>(Endpoint).ConfigureAwait(false);
         if (oslcResponse.StatusCode == HttpStatusCode.OK)
+        {
             return oslcResponse.Resources!.Single();
-        else
-            throw new OslcCoreRequestException((int)oslcResponse.StatusCode,
-                oslcResponse.ResponseMessage,
-                null,
-                oslcResponse.ErrorResource);
+        }
+
+        throw new OslcCoreRequestException(oslcResponse.StatusCode,
+            oslcResponse.ResponseMessage?.ReasonPhrase ?? "N/A",
+            null,
+            oslcResponse.ErrorResource);
     }
 
     /// <summary>

@@ -9,6 +9,54 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking changes; 👉
 important notes.
 
+## [UNRELEASED] - YYYY-MM-DD
+
+### Security
+
+This release does not contain security updates.
+
+### Added
+
+- ⚡️ JSON-LD 1.1 support
+- Initial support for RDFS inference during deserialization was added.
+- Docs are now published to https://oslc4net.github.io/
+
+
+### Changed
+
+- Major changes to exceptions from Core and Client packages.
+    - Getters were replaced with read-only properties
+    - I18n resource strings were removed along with the corresponding
+      constructors.
+    - Error codes `OSLC001..OSLC014` from Core were renamed to
+      `OSLC1001..OSLC1014`, while
+      codes `OSLCC001..OSLCC004` from Client were renamed into
+      `OSLC2001..OSLC2014`. All OSLC4Net error codes now have 4 digits for
+      consistency.
+- DotNetRdfHelper is no longer static
+
+### Deprecated
+
+- 👉 `OSLC4Net.Client.Oslc.Resources.ChangeRequest.GetRdfTypes` and all similar
+  methods. Use `OSLC4Net.Core.Model.IExtendedResource.GetTypes` instead or,
+  better yet, `OSLC4Net.Core.Model.AbstractResourceRecord.Types`.
+
+### Removed
+
+- ❗️Legacy OSLC JSON support was removed to reduce maintenance overhead now that
+  the JSON-LD support is added.
+- I18n resource strings were removed along with the corresponding
+  constructors on exceptions. Also, `MessageExtractor` helpers were removed.
+- log4net dependency - all logging is now done via standard `ILogger`
+  abstraction.
+- ServiceProviderRegistryURIs - oslc4net will no longer try to guess/compute the
+  SP catalog URI.
+
+### Fixed
+
+- `OSLC4Net.Core.Model.IExtendedResource.GetTypes` is now annotated properly and
+  should be populated correctly on deserialization.
+
 ## [0.5.0] - 2025-04-13
 
 ### Security

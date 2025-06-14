@@ -66,9 +66,7 @@ public abstract class TestBase
     }
 
 
-
-    protected virtual IEnumerable<MediaTypeFormatter> Formatters { get; } =
-        OslcRestClient.DEFAULT_FORMATTERS;
+    protected virtual IEnumerable<MediaTypeFormatter> Formatters => TestClient.GetFormatters();
 
     protected Uri? ChangeRequestUri { get; set; }
     public string? Username { get; set; }
@@ -395,7 +393,8 @@ public abstract class TestBase
         ChangeRequestUri = createdResource?.GetAbout();
 
         return createdResource ?? throw new OslcCoreRequestException(
-            (int)addedChangeRequestResponse.StatusCode, addedChangeRequestResponse.ResponseMessage);
+            addedChangeRequestResponse.StatusCode,
+            addedChangeRequestResponse.ResponseMessage?.ReasonPhrase);
     }
 
     protected async Task TestCreateAsync(string mediaType)

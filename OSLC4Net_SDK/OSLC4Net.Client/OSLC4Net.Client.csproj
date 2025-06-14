@@ -14,19 +14,6 @@
     <None Include="../../README.md" Pack="true" PackagePath=""/>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\OSLC4Net.Core.Query\OSLC4Net.Core.Query.csproj"/>
     <ProjectReference Include="..\OSLC4Net.Core\OSLC4Net.Core.csproj"/>
     <ProjectReference Include="..\OSLC4Net.Core.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj"/>
@@ -35,7 +22,6 @@
     <PackageReference Include="CommunityToolkit.Diagnostics"/>
     <PackageReference Include="dotNetRdf.Core"/>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client"/>
-    <PackageReference Include="log4net"/>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"/>
   </ItemGroup>
 </Project>

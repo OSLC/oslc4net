@@ -13,6 +13,8 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
+using OSLC4Net.Core.DotNetRdfProvider;
+
 namespace OSLC4Net.Client.Oslc.Resources;
 
 /// <summary>
@@ -21,6 +23,7 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// </summary>
 public class OslcQuery
 {
+    private readonly DotNetRdfHelper _rdfHelper;
     private readonly string capabilityUrl;
     private readonly string orderBy;
     private readonly OslcClient oslcClient;
@@ -42,9 +45,11 @@ public class OslcQuery
     /// </summary>
     /// <param name="oslcClient">the authenticated OSLC client</param>
     /// <param name="capabilityUrl">the URL that is the base </param>
-    public OslcQuery(OslcClient oslcClient, string capabilityUrl) :
+    public OslcQuery(OslcClient oslcClient, string capabilityUrl,
+        DotNetRdfHelper? rdfHelper = null) :
         this(oslcClient, capabilityUrl, 0)
     {
+        _rdfHelper = rdfHelper ?? Activator.CreateInstance<DotNetRdfHelper>();
     }
 
     /// <summary>
@@ -174,7 +179,8 @@ public class OslcQuery
 
     public async Task<OslcQueryResult> Submit()
     {
-        return new OslcQueryResult(this, await GetResponseRawAsync().ConfigureAwait(false));
+        return new OslcQueryResult(this, await GetResponseRawAsync().ConfigureAwait(false),
+            _rdfHelper);
     }
 
     internal Task<HttpResponseMessage> GetResponseRawAsync()

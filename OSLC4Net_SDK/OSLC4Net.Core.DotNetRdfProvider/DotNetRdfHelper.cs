@@ -20,7 +20,8 @@ using System.Numerics;
 using System.Reflection;
 using System.Xml.Linq;
 using CommunityToolkit.Diagnostics;
-using log4net;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Exceptions;
 using OSLC4Net.Core.Model;
@@ -34,8 +35,14 @@ namespace OSLC4Net.Core.DotNetRdfProvider;
 /// <summary>
 ///     A class to assist with serialization and de-serialization of RDF/XML from/to .NET objects
 /// </summary>
-public static class DotNetRdfHelper
+public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 {
+    public DotNetRdfHelper() : this(NullLoggerFactory.Instance.CreateLogger<DotNetRdfHelper>())
+    {
+    }
+
+    private readonly ILogger<DotNetRdfHelper> _logger =
+        logger;
     private const string PROPERTY_TOTAL_COUNT = "totalCount";
     private const string PROPERTY_NEXT_PAGE = "nextPage";
 
@@ -55,8 +62,6 @@ public static class DotNetRdfHelper
 
     private static readonly int METHOD_NAME_START_GET_LENGTH = METHOD_NAME_START_GET.Length;
     private static readonly int METHOD_NAME_START_IS_LENGTH = METHOD_NAME_START_IS.Length;
-
-    private static readonly ILog logger = LogManager.GetLogger(typeof(DotNetRdfHelper));
 
     /// <summary>
     ///     Create an RDF graph from a collection of .NET objects
@@ -235,7 +240,7 @@ public static class DotNetRdfHelper
     /// <param name="resource"></param>
     /// <param name="beanType"></param>
     /// <returns></returns>
-    public static object FromDotNetRdfNode(IUriNode resource,
+    public object FromDotNetRdfNode(IUriNode resource,
         IGraph? graph,
         Type beanType)
     {
@@ -262,13 +267,13 @@ public static class DotNetRdfHelper
     /// <param name="graph"></param>
     /// <param name="beanType"></param>
     /// <returns></returns>
-    public static object FromDotNetRdfGraph(IGraph graph,
+    public object FromDotNetRdfGraph(IGraph graph,
         Type beanType)
     {
         Type[] types = { beanType };
         var results = Activator.CreateInstance(typeof(List<>).MakeGenericType(types));
 
-        if (beanType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
+        if (beanType.GetCustomAttributes(typeof(OslcResourceShape), true).Length > 0)
         {
             var qualifiedName = TypeFactory.GetQualifiedName(beanType);
 
@@ -307,7 +312,7 @@ public static class DotNetRdfHelper
         return results;
     }
 
-    private static void FromDotNetRdfNode(
+    private void FromDotNetRdfNode(
         IDictionary<Type, IDictionary<string, MemberInfo>> typePropertyDefinitionsToSetMethods,
         Type beanType,
         object bean,
@@ -393,10 +398,10 @@ public static class DotNetRdfHelper
                 {
                     if (extendedProperties == null)
                     {
-                        logger.Warn("Set method not found for object type:  " +
-                                    beanType.Name +
-                                    ", uri:  " +
-                                    uri);
+                        _logger.LogWarning("Set method not found for object type:  " +
+                                           beanType.Name +
+                                           ", uri:  " +
+                                           uri);
                     }
                     else
                     {
@@ -659,7 +664,8 @@ public static class DotNetRdfHelper
                             else
                             {
                                 nestedBean =
-                                    Activator.CreateInstance(setMethodComponentParameterType);
+                                    Activator.CreateInstance(
+                                        MapToActivatableType(setMethodComponentParameterType));
                             }
 
                             FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
@@ -804,7 +810,7 @@ public static class DotNetRdfHelper
             // Else - we are dealing with a collection or a subclass of collection
             else
             {
-                var collection = Activator.CreateInstance(parameterType);
+                var collection = Activator.CreateInstance(MapToActivatableType(parameterType));
 
                 if (values.Count > 0)
                 {
@@ -820,6 +826,7 @@ public static class DotNetRdfHelper
             }
         }
     }
+
 
     private static void SetValue(object bean, MemberInfo backingMember, object parameter)
     {
@@ -863,16 +870,41 @@ public static class DotNetRdfHelper
                 setMethodComponentParameterType.GetElementType();
         }
         else if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(
-                     typeof(ICollection<>), setMethodComponentParameterType))
+                     typeof(IEnumerable<>), setMethodComponentParameterType))
         {
-            multiple = true;
+            var genericArguments = setMethodComponentParameterType.GetGenericArguments();
 
-            setMethodComponentParameterType =
-                setMethodComponentParameterType.GetGenericArguments()[0];
+            // REVISIT: multiple args and old-school enumerables - but not e.g. String (@berezovskyi 2025-05)
+            if (genericArguments.Length == 1)
+            {
+                setMethodComponentParameterType = genericArguments[0];
+
+                multiple = true;
+            }
         }
 
         return (setMethodComponentParameterType, multiple);
     }
+
+    private static Type MapToActivatableType(Type setMethodComponentParameterType)
+    {
+        if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(
+                typeof(ISet<>), setMethodComponentParameterType))
+        {
+            return typeof(HashSet<>).MakeGenericType(setMethodComponentParameterType
+                .GetGenericArguments());
+        }
+
+        if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(
+                typeof(IEnumerable<>), setMethodComponentParameterType))
+        {
+            return typeof(List<>).MakeGenericType(setMethodComponentParameterType
+                .GetGenericArguments());
+        }
+
+        return setMethodComponentParameterType;
+    }
+
 
     private static bool IsRdfCollectionResource(IGraph graph, INode obj)
     {
@@ -973,7 +1005,7 @@ public static class DotNetRdfHelper
         return candidatePrefix;
     }
 
-    private static object HandleExtendedPropertyValue(Type beanType,
+    private object HandleExtendedPropertyValue(Type beanType,
         INode obj,
         IGraph graph,
         IDictionary<string, object> visitedResources)

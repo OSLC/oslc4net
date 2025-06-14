@@ -17,10 +17,8 @@ using System.Net;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Net.Security;
-using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using log4net;
 using Microsoft.Extensions.Logging;
 using OSLC4Net.Client.Exceptions;
 using OSLC4Net.Core;
@@ -40,9 +38,6 @@ public class OslcClient : IDisposable
 
     // As of 2020, FF allows 20, Blink - 19, Safari - 16.
     private const int MAX_REDIRECTS = 20;
-
-    private static readonly ILog log =
-        LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
     protected readonly ISet<MediaTypeFormatter> _formatters;
     protected readonly HttpClient _client;
@@ -85,15 +80,17 @@ public class OslcClient : IDisposable
 
         // REVISIT: RDF/XML + Turtle support only for now (@berezovskyi 2024-10)
         _formatters.Add(new RdfXmlMediaTypeFormatter());
-        _formatters.Add(new JsonMediaTypeFormatter());
 
         var handler = userHttpMessageHandler;
         handler ??= new HttpClientHandler { AllowAutoRedirect = false };
         if (certCallback is not null)
         {
+            // only for development
+            // REVISIT: get rid of this once we confirm that this can be worked around for e.g. self-signed certs and Jazz/Polarion (@berezovskyi 2025-05)
+#pragma warning disable MA0039
             if (handler is HttpClientHandler httpClientHandler)
             {
-                log.Warn(
+                _logger.LogWarning(
                     "TLS certificate validation may be compromised! DO NOT USE IN PRODUCTION");
                 httpClientHandler.ServerCertificateCustomValidationCallback = certCallback;
             }
@@ -103,6 +100,7 @@ public class OslcClient : IDisposable
                     "Must be an instance of HttpClientHandler if the certCallback is provided",
                     nameof(userHttpMessageHandler));
             }
+#pragma warning enable MA0039
         }
 
         _client = HttpClientFactory.Create(handler);
@@ -124,11 +122,14 @@ public class OslcClient : IDisposable
         };
         if (allowInvalidTlsCerts)
         {
-            log.Warn(
+            _logger.LogWarning(
                 "TLS certificate validation is compromised! DO NOT USE IN PRODUCTION");
             handler.ServerCertificateCustomValidationCallback =
                 HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
         }
+
+        _formatters = new HashSet<MediaTypeFormatter>();
+        _formatters.Add(new RdfXmlMediaTypeFormatter());
 
         _client = new HttpClient(handler);
     }
@@ -143,28 +144,6 @@ public class OslcClient : IDisposable
         client.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Basic", credentials);
         return oslcClient;
-    }
-
-    [Obsolete("Not for public use; just provide the callback if necessary")]
-    /// <summary>
-    /// Create an SSL Web Request Handler
-    /// </summary>
-    /// <param name="certCallback">optionally control SSL certificate management
-    /// (use HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-    /// in .NET 5+ if really needed)</param>
-    /// <returns></returns>
-    public static HttpClientHandler CreateSSLHandler(Func<HttpRequestMessage, X509Certificate2,
-        X509Chain, SslPolicyErrors, bool>? certCallback = null)
-    {
-        var handler = new HttpClientHandler();
-
-        if (certCallback != null)
-        {
-            log.Warn("TLS certificate validation may be compromised! DO NOT USE IN PRODUCTION");
-            handler.ServerCertificateCustomValidationCallback = certCallback;
-        }
-
-        return handler;
     }
 
     /// <summary>
@@ -189,15 +168,18 @@ public class OslcClient : IDisposable
             await httpResponseMessage.Content.LoadIntoBufferAsync().ConfigureAwait(false);
 
             var dummy = new T[0];
-            var resources = await httpResponseMessage.Content.ReadAsAsync(dummy.GetType(), _formatters)
-                .ConfigureAwait(false) as T[];
+            var resources = await httpResponseMessage.Content
+                .ReadAsAsync(dummy.GetType(), _formatters).ConfigureAwait(false) as T[];
 
-            Stream stream = await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
-            stream.Seek(0, SeekOrigin.Begin);
-            var graph =
-                await httpResponseMessage.Content.ReadAsAsync(typeof(Graph), _formatters)
-                    .ConfigureAwait(false) as Graph;
+            var contentStream =
+                await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
+            if (contentStream.CanSeek)
+            {
+                contentStream.Seek(0, SeekOrigin.Begin);
+            }
 
+            var graph = await httpResponseMessage.Content.ReadAsAsync(typeof(Graph), _formatters)
+                .ConfigureAwait(false) as Graph;
 
             return OslcResponse<T>.WithSuccess(resources?.ToList(), graph, httpResponseMessage);
         }
@@ -271,7 +253,8 @@ public class OslcClient : IDisposable
                 if (++redirectCount > MAX_REDIRECTS)
                 {
                     // max redirects reached
-                    throw new OslcCoreRequestException(-1, response, null,
+                    throw new OslcCoreRequestException(HttpStatusCode.LoopDetected,
+                        response.ReasonPhrase, null,
                         new Error
                         {
                             Message = $"Maximum redirects reached (allowed: {MAX_REDIRECTS})."

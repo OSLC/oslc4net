@@ -13,8 +13,6 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using log4net;
-
 namespace OSLC4Net.Client.Oslc.Resources;
 
 /// <summary>
@@ -27,8 +25,6 @@ public class OslcQueryParameters
     private string? _searchTerms;
     private string? _orderBy;
     private string? _prefix;
-
-    private static readonly ILog _logger = LogManager.GetLogger(typeof(OslcQuery));
 
     public OslcQueryParameters()
     {

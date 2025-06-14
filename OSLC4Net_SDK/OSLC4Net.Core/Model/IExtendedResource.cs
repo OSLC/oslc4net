@@ -13,6 +13,8 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
+using OSLC4Net.Core.Attribute;
+
 namespace OSLC4Net.Core.Model;
 
 /// <summary>
@@ -36,6 +38,10 @@ public interface IExtendedResource : IResource
     ///     OslcResourceShape#describes() annotation
     /// </summary>
     /// <returns></returns>
+    [OslcDescription("The resource type URIs.")]
+    [OslcName("type")]
+    [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
+    [OslcTitle("Types")]
     ICollection<Uri> GetTypes();
 
     /// <summary>
