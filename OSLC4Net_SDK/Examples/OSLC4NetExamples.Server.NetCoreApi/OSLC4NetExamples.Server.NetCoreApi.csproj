@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\OSLC4Net.Server.Providers\OSLC4Net.Server.Providers.csproj" />
+    <ProjectReference Include="..\..\OSLC4Net.ChangeManagement\OSLC4Net.ChangeManagementCommon.csproj" />
   </ItemGroup>
 
 </Project>
