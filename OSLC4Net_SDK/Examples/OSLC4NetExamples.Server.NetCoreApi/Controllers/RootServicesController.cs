@@ -36,7 +36,7 @@ public class RootServicesController(ILogger<RootServicesController> logger) : Co
             };            // Serialize to XML with proper formatting
             var xmlContent = rootServices.ToXml();
 
-            logger.LogDebug("Generated root services XML for base URL: {BaseUrl}", baseUrl);
+            logger.LogDebug("Generated root services XML for base URL: {BaseUrl}", baseUrl.Replace("\n", "\\n", StringComparison.Ordinal));
 
             return Content(xmlContent, "application/rdf+xml", Encoding.UTF8);
         }
