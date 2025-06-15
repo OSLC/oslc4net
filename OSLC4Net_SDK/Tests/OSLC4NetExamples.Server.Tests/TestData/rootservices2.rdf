@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:Description 
+    xmlns:oslc_cm="http://open-services.net/xmlns/cm/1.0/"
+    xmlns:oslc_am="http://open-services.net/ns/am#"
+    xmlns:oslc_rm="http://open-services.net/xmlns/rm/1.0/"
+    xmlns:dc="http://purl.org/dc/terms/"
+    xmlns:jfs="http://jazz.net/xmlns/prod/jazz/jfs/1.0/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    rdf:about="https://server-am.sandbox.lynxwork.com/services/rootservices">
+    <dc:title>Root Services</dc:title>
+    <oslc_am:amServiceProviders rdf:resource="https://server-am.sandbox.lynxwork.com/services/catalog/singleton" />
+    <oslc_rm:rmServiceProviders rdf:resource="https://server-am.sandbox.lynxwork.com/services/catalog/singleton" />
+    <oslc_cm:cmServiceProviders rdf:resource="https://server-am.sandbox.lynxwork.com/services/catalog/singleton" />
+    <jfs:oauthRealmName>AM</jfs:oauthRealmName>
+    <jfs:oauthDomain>https://server-am.sandbox.lynxwork.com/</jfs:oauthDomain>
+    <jfs:oauthRequestConsumerKeyUrl rdf:resource="https://server-am.sandbox.lynxwork.com/services/oauth/requestKey"/>
+    <jfs:oauthApprovalModuleUrl rdf:resource="https://server-am.sandbox.lynxwork.com/services/oauth/approveKey"/>
+    <jfs:oauthRequestTokenUrl rdf:resource="https://server-am.sandbox.lynxwork.com/services/oauth/requestToken"/>
+    <jfs:oauthUserAuthorizationUrl rdf:resource="https://server-am.sandbox.lynxwork.com/services/oauth/authorize"/>
+    <jfs:oauthAccessTokenUrl rdf:resource="https://server-am.sandbox.lynxwork.com/services/oauth/accessToken"/>
+    </rdf:Description>
