@@ -27,4 +27,4 @@ First off, thank you for considering contributing to OSLC4Net! It's people like 
 - TODO: Add any specific coding conventions here.
 
 ## Code of Conduct
-This project and everyone participating in it is governed by the [OSLC4Net Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [project maintainers](mailto:oslc-steering-committee@oasis-open.org).
+This project and everyone participating in it is governed by the [.NET Foundation Code of Conduct](https://dotnetfoundation.org/about/policies/code-of-conduct). By participating, you are expected to uphold this code.
