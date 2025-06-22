@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <WarningsAsErrors>$(NugetWarnings)</WarningsAsErrors>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit.runner.visualstudio">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="FluentAssertions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Examples\OSLC4NetExamples.Server.NetCoreApi\OSLC4NetExamples.Server.NetCoreApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="TestData\rootservices.rdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\rootservices2.rdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

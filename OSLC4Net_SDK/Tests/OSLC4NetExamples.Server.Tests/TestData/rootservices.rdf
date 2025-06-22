@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:Description 
+    xmlns:oslc_cm="http://open-services.net/xmlns/cm/1.0/"
+    xmlns:oslc_am="http://open-services.net/ns/am#"
+    xmlns:oslc_rm="http://open-services.net/xmlns/rm/1.0/"
+    xmlns:dc="http://purl.org/dc/terms/"
+    xmlns:jfs="http://jazz.net/xmlns/prod/jazz/jfs/1.0/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    rdf:about="http://localhost:8800/services/rootservices">
+    <dc:title>Root Services</dc:title>
+    <oslc_am:amServiceProviders rdf:resource="http://localhost:8800/services/catalog/singleton" />
+    <oslc_rm:rmServiceProviders rdf:resource="http://localhost:8800/services/catalog/singleton" />
+    <oslc_cm:cmServiceProviders rdf:resource="http://localhost:8800/services/catalog/singleton" />
+    <jfs:oauthRealmName>RM</jfs:oauthRealmName>
+    <jfs:oauthDomain>http://localhost:8800/</jfs:oauthDomain>
+    <jfs:oauthRequestConsumerKeyUrl rdf:resource="http://localhost:8800/services/oauth/requestKey"/>
+    <jfs:oauthApprovalModuleUrl rdf:resource="http://localhost:8800/services/oauth/approveKey"/>
+    <jfs:oauthRequestTokenUrl rdf:resource="http://localhost:8800/services/oauth/requestToken"/>
+    <jfs:oauthUserAuthorizationUrl rdf:resource="http://localhost:8800/services/oauth/authorize"/>
+    <jfs:oauthAccessTokenUrl rdf:resource="http://localhost:8800/services/oauth/accessToken"/>
+    </rdf:Description>
