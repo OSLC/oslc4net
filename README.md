@@ -80,6 +80,10 @@ Server parts of the SDK have not yet been migrated from .NET Framework to .NET
 * See the [Eclipse Lyo](http://eclipse.org/lyo) site for information on OSLC
   SDKs and samples for other technologies.
 
+## Contributing
+
+We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) file for details on how to contribute.
+
 ## OSLC4Net License
 
 OSLC4Net is licensed under the [Eclipse Public License 1.0](LICENSE)
