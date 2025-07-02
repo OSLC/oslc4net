@@ -7,10 +7,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
+using Newtonsoft.Json;
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
 using VDS.RDF;
+using VDS.RDF.JsonLd.Syntax;
 using VDS.RDF.Parsing;
 using VDS.RDF.Writing;
 using static OSLC4Net.Core.DotNetRdfProvider.RdfXmlMediaTypeFormatter;
@@ -21,11 +23,13 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
 {
     public OslcRdfOutputFormatter()
     {
-        SupportedMediaTypes.Add(OslcMediaType.TEXT_TURTLE_TYPE.AsMsNetType());
-        SupportedMediaTypes.Add(OslcMediaType.APPLICATION_RDF_XML_TYPE.AsMsNetType());
+        SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(OslcMediaType.APPLICATION_RDF_XML));
+        SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(OslcMediaType.TEXT_TURTLE));
+        SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(OslcMediaType.APPLICATION_JSON_LD));
+        SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(OslcMediaType.APPLICATION_NTRIPLES));
 
         SupportedEncodings.Add(Encoding.UTF8);
-        SupportedEncodings.Add(Encoding.Unicode);
+        // SupportedEncodings.Add(Encoding.Unicode);
     }
 
     public override async Task WriteResponseBodyAsync(OutputFormatterWriteContext context,
@@ -34,18 +38,46 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
         var httpContext = context.HttpContext;
         var serviceProvider = httpContext.RequestServices;
 
-        var logger = serviceProvider.GetRequiredService<ILogger<OslcRdfOutputFormatter>>();
-        var buffer = new StringBuilder();
+        // var logger = serviceProvider.GetRequiredService<ILogger<OslcRdfOutputFormatter>>();
 
         var type = context.ObjectType;
         var value = context.Object;
         var httpRequest = httpContext.Request;
+        var graph = ConvertOslcObjectsToGraph(type, value, httpContext, httpRequest);
+
+        var contentType = context.ContentType.ToString();
+        var requestedMediaType = new MediaType(contentType);
+        var requestedType = $"{requestedMediaType.Type}/{requestedMediaType.SubType}";
+
+        var ctx = new SerializationContext
+        {
+            Format = requestedType switch
+            {
+                OslcMediaType.APPLICATION_RDF_XML => RdfFormat.RdfXml,
+                OslcMediaType.TEXT_TURTLE => RdfFormat.Turtle,
+                OslcMediaType.APPLICATION_NTRIPLES => RdfFormat.NTriples,
+                OslcMediaType.APPLICATION_JSON_LD => RdfFormat.JsonLd,
+                _ => throw new ArgumentOutOfRangeException(nameof(requestedType),
+                    "Unknown RDF format"),
+            },
+            Graph = graph,
+            // TODO: make configurable
+            PrettyPrint = true,
+        };
+
+        await SerializeToRdfAsync(ctx, httpContext.Response).ConfigureAwait(false);
+    }
+
+    private static IGraph ConvertOslcObjectsToGraph(Type? type, object? value,
+        HttpContext httpContext,
+        HttpRequest httpRequest)
+    {
         IGraph graph;
         if (type != null && ImplementsGenericType(typeof(FilteredResource<>), type))
         {
             if (value == null)
             {
-                throw new ArgumentNullException(nameof(context),
+                throw new ArgumentNullException(nameof(value),
                     "Value cannot be null for FilteredResource");
             }
 
@@ -131,69 +163,86 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
                 : Enumerable.Empty<object>());
         }
 
-        // TODO: set the default
-        var contentType = context.ContentType;
-        await SerializeGraph(contentType, graph, httpContext.Response);
-
-        //await httpContext.Response.WriteAsync(buffer.ToString(), selectedEncoding);
+        return graph;
     }
 
-
-    private async Task SerializeGraph(StringSegment contentType, IGraph graph,
+    private static async Task SerializeToRdfAsync(SerializationContext ctx,
         HttpResponse httpContextResponse)
     {
-        IRdfWriter rdfWriter;
-
-        var requestedMediaType = new MediaType(contentType);
-
-        var requestedType = $"{requestedMediaType.Type}/{requestedMediaType.SubType}";
-
-        if (requestedType.Equals(OslcMediaType.APPLICATION_RDF_XML))
+        // TODO: deal with namespaces
+        var responseStreamWriter = new HttpResponseStreamWriter(
+            httpContextResponse.BodyWriter.AsStream(),
+            Encoding.UTF8);
+        if (ctx.Format is RdfFormat.Turtle or RdfFormat.NTriples or RdfFormat.RdfXml)
         {
-            var rdfXmlWriter = new RdfXmlWriter
-            {
-                UseDtd = false, PrettyPrintMode = false, CompressionLevel = 20
-            };
-            //turtlelWriter.UseTypedNodes = false;
-
-            rdfWriter = rdfXmlWriter;
+            await SerializeTriplesAsync(ctx, responseStreamWriter).ConfigureAwait(false);
         }
-        else if (requestedType.Equals(OslcMediaType.TEXT_TURTLE))
+        else if (ctx.Format is RdfFormat.JsonLd)
         {
-            var turtleWriter = new CompressingTurtleWriter(TurtleSyntax.W3C)
-            {
-                PrettyPrintMode = true,
-                CompressionLevel = WriterCompressionLevel.Minimal,
-                HighSpeedModePermitted = true
-            };
-
-            rdfWriter = turtleWriter;
+            await SerializeQuadsAsync(ctx, responseStreamWriter).ConfigureAwait(false);
         }
-        else
-        {
-            //For now, use the dotNetRDF RdfXmlWriter for application/xml
-            //OslcXmlWriter oslcXmlWriter = new OslcXmlWriter();
-            var oslcXmlWriter = new RdfXmlWriter
-            {
-                UseDtd = false, PrettyPrintMode = false, CompressionLevel = 20
-            };
-
-            rdfWriter = oslcXmlWriter;
-        }
-
-        await using var writer =
-            new HttpResponseStreamWriter(httpContextResponse.BodyWriter.AsStream(),
-                Encoding.UTF8);
-        rdfWriter.Save(graph, writer);
     }
-}
 
-public static class RdfOutputFormatterExtensions
-{
-    // REVISIT: can we drop one of the two?
-    public static MediaTypeHeaderValue AsMsNetType(
-        this System.Net.Http.Headers.MediaTypeHeaderValue oslcMediaType)
+
+    private static async Task SerializeTriplesAsync(SerializationContext ctx,
+        HttpResponseStreamWriter textWriter)
     {
-        return MediaTypeHeaderValue.Parse(oslcMediaType.MediaType);
+        IRdfWriter triplesWriter = ctx.Format switch
+        {
+            RdfFormat.RdfXml => new RdfXmlWriter
+            {
+                UseDtd = false,
+                PrettyPrintMode = ctx.PrettyPrint,
+                CompressionLevel = ctx.PrettyPrint
+                    ? WriterCompressionLevel.High
+                    : WriterCompressionLevel.Minimal
+            },
+            RdfFormat.Turtle => new CompressingTurtleWriter(TurtleSyntax.W3C)
+            {
+                PrettyPrintMode = ctx.PrettyPrint,
+                CompressionLevel =
+                    ctx.PrettyPrint
+                        ? WriterCompressionLevel.High
+                        : WriterCompressionLevel.Minimal,
+                HighSpeedModePermitted = !ctx.PrettyPrint,
+            },
+            RdfFormat.NTriples => new NTriplesWriter(NTriplesSyntax.Rdf11)
+            {
+                SortTriples = ctx.PrettyPrint,
+            },
+            RdfFormat.JsonLd => throw new NotSupportedException(
+                "This method supports only triple-based formats, use quad-based method"),
+            _ => throw new ArgumentOutOfRangeException(nameof(ctx), "Unknown RDF format"),
+        };
+
+        await using (textWriter.ConfigureAwait(false))
+        {
+            triplesWriter.Save(ctx.Graph, textWriter);
+        }
+    }
+
+    private static async Task SerializeQuadsAsync(SerializationContext ctx, HttpResponseStreamWriter textWriter)
+    {
+        IStoreWriter quadsWriter = ctx.Format switch
+        {
+            RdfFormat.JsonLd => new JsonLdWriter(new JsonLdWriterOptions
+            {
+                JsonFormatting = Formatting.Indented,
+                Ordered = true,
+                ProcessingMode = JsonLdProcessingMode.JsonLd11,
+            }),
+            RdfFormat.NTriples or RdfFormat.RdfXml or RdfFormat.Turtle => throw
+                new NotSupportedException(
+                    "This method supports only quad-based formats, use triple-based method"),
+            _ => throw new ArgumentOutOfRangeException(nameof(ctx), "Unknown RDF format"),
+        };
+
+        await using (textWriter.ConfigureAwait(false))
+        {
+            var graphCollection = new GraphCollection();
+            graphCollection.Add(ctx.Graph, true);
+            var quadStore = new TripleStore(graphCollection);
+            quadsWriter.Save(quadStore, textWriter);
+        }
     }
 }
