@@ -127,7 +127,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             actualType = type;
         }
 
-        if (IsSingleton(actualType))
+        if (IsOslcSingleton(actualType))
         {
             return true;
         }
@@ -311,7 +311,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             return true;
         }
 
-        if (IsSingleton(type))
+        if (IsOslcSingleton(type))
         {
             return true;
         }
@@ -447,7 +447,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                     return graph;
                 }
 
-                var isSingleton = IsSingleton(type);
+                var isSingleton = IsOslcSingleton(type);
                 var output =
                     _rdfHelper.FromDotNetRdfGraph(graph,
                         isSingleton ? type : GetMemberType(type));
@@ -489,7 +489,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         }
     }
 
-    private bool IsSingleton(Type type)
+    private bool IsOslcSingleton(Type type)
     {
         return type.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0;
     }
