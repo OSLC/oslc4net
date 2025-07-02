@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using OSLC4Net.Core.Model;
+using ServiceProvider = OSLC4Net.Core.Model.ServiceProvider;
 
 namespace OSLC4NetExamples.Server.NetCoreApi.Controllers;
 
@@ -8,17 +10,26 @@ namespace OSLC4NetExamples.Server.NetCoreApi.Controllers;
 /// </summary>
 /// <param name="logger"></param>
 [ApiController]
-[Route("/services/catalog")]
+[Route("/oslc/catalog")]
+[Produces(OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.TEXT_TURTLE, OslcMediaType.APPLICATION_JSON_LD, OslcMediaType.APPLICATION_NTRIPLES)]
+[Consumes(OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.TEXT_TURTLE, OslcMediaType.APPLICATION_JSON_LD, OslcMediaType.APPLICATION_NTRIPLES)]
 public class CatalogController(ILogger<CatalogController> logger) : ControllerBase
 {
     [HttpGet]
-    public OSLC4Net.Core.Model.ServiceProviderCatalog Get()
+    public ServiceProviderCatalog Get()
     {
-        // TODO: inject a provider catalog service
-        var catalog = new OSLC4Net.Core.Model.ServiceProviderCatalog();
+        var catalog = new ServiceProviderCatalog();
         var sp = new OSLC4Net.Core.Model.ServiceProvider();
         sp.SetAbout(new Uri(Request.GetEncodedUrl()));
         sp.SetDescription("test me");
+        catalog.AddServiceProvider(sp);
+        return catalog;
+    }
+
+    [HttpPut]
+    public ServiceProviderCatalog Put(ServiceProvider sp)
+    {
+        var catalog = new ServiceProviderCatalog();
         catalog.AddServiceProvider(sp);
         return catalog;
     }

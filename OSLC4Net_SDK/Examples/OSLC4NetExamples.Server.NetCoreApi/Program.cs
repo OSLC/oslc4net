@@ -12,6 +12,12 @@ builder.Services.AddControllers(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.WebHost.UseKestrel();
+builder.WebHost.ConfigureKestrel(options =>
+{
+    // due to DotNetRdf not supporting async parsing
+    options.AllowSynchronousIO = true;
+});
 
 var app = builder.Build();
 

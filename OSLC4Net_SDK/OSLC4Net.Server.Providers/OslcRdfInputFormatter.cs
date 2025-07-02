@@ -61,13 +61,13 @@ public class OslcRdfInputFormatter : TextInputFormatter
         IGraph graph;
         if (format == RdfFormat.JsonLd)
         {
-            graph = await DeserializeRdfQuadsAsync(reader, format, context.ModelType, baseUri)
+            graph = await DeserializeRdfQuadsAsync(reader, format, baseUri)
                 .ConfigureAwait(false);
         }
         else
         {
             graph =
-                await DeserializeRdfTriplesAsync(reader, format, context.ModelType, baseUri)
+                await DeserializeRdfTriplesAsync(reader, format, baseUri)
                     .ConfigureAwait(false);
         }
 
@@ -109,8 +109,7 @@ public class OslcRdfInputFormatter : TextInputFormatter
     }
 
     private async Task<IGraph> DeserializeRdfTriplesAsync(StreamReader streamReader,
-        RdfFormat format,
-        Type contextModelType, Uri baseUri)
+        RdfFormat format, Uri baseUri)
     {
         IRdfReader? tripleReader = format switch
         {
@@ -140,8 +139,7 @@ public class OslcRdfInputFormatter : TextInputFormatter
     }
 
     private async Task<IGraph> DeserializeRdfQuadsAsync(StreamReader streamReader,
-        RdfFormat format,
-        Type type, Uri baseUri)
+        RdfFormat format, Uri baseUri)
     {
         IStoreReader? quadReader = format switch
         {
