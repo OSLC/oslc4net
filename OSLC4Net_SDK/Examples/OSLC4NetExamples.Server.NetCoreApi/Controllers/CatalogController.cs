@@ -19,9 +19,9 @@ public class CatalogController(ILogger<CatalogController> logger) : ControllerBa
     public ServiceProviderCatalog Get()
     {
         var catalog = new ServiceProviderCatalog();
-        var sp = new OSLC4Net.Core.Model.ServiceProvider();
+        var sp = new ServiceProvider();
         sp.SetAbout(new Uri(Request.GetEncodedUrl()));
-        sp.SetDescription("test me");
+        sp.SetDescription("Dummy Service Provider");
         catalog.AddServiceProvider(sp);
         return catalog;
     }

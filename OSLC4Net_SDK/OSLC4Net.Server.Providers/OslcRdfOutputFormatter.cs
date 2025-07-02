@@ -33,7 +33,6 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
         Encoding selectedEncoding)
     {
         var httpContext = context.HttpContext;
-        _ = httpContext.RequestServices;
 
         // var logger = serviceProvider.GetRequiredService<ILogger<OslcRdfOutputFormatter>>();
 

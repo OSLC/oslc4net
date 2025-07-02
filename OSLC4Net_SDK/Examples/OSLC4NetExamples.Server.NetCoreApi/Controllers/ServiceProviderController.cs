@@ -16,7 +16,7 @@ public class ServiceProviderController(ILogger<ServiceProviderController> logger
     {
         var sp = new ServiceProvider();
         sp.SetAbout(new Uri(Request.GetEncodedUrl()));
-        sp.SetDescription("test me");
+        sp.SetDescription($"Service Provider for {id}");
         return sp;
     }
 }
