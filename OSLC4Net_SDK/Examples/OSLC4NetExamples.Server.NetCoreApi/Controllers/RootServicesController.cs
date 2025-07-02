@@ -1,6 +1,6 @@
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using OSLC4NetExamples.Server.NetCoreApi.Models;
-using System.Text;
 
 namespace OSLC4NetExamples.Server.NetCoreApi.Controllers;
 
@@ -18,7 +18,7 @@ public class RootServicesController(ILogger<RootServicesController> logger) : Co
             var baseUrl = $"{Request.Scheme}://{Request.Host}";
             var rootServicesUrl = $"{baseUrl}/services/rootservices";
             var catalogUrl = $"{baseUrl}/services/catalog/singleton";
-            
+
             // Create the DTO with dynamic URLs based on the request
             var rootServices = new RootServicesDto
             {

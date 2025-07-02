@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using OSLC4Net.ChangeManagement;
 
@@ -6,7 +5,7 @@ namespace OSLC4NetExamples.Server.NetCoreApi.Controllers;
 
 [ApiController]
 [Route("resources/[controller]")]
-public abstract class ChangeRequestController(ILogger<ChangeRequestController> logger) 
+public abstract class ChangeRequestController(ILogger<ChangeRequestController> logger)
     : ResourceController<ChangeRequest>(logger)
 {
     [HttpGet]

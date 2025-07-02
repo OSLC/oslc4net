@@ -1,6 +1,6 @@
-using System.Xml.Serialization;
-using System.Xml;
 using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace OSLC4NetExamples.Server.NetCoreApi.Models;
 
@@ -64,7 +64,7 @@ public record RootServicesDto
             // Create an XmlDocument to parse the RDF
             var doc = new XmlDocument();
             doc.LoadXml(xml);
-            
+
             // Set up namespace manager
             var nsManager = new XmlNamespaceManager(doc.NameTable);
             nsManager.AddNamespace("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
@@ -72,8 +72,8 @@ public record RootServicesDto
             nsManager.AddNamespace("oslc_am", "http://open-services.net/ns/am#");
             nsManager.AddNamespace("oslc_rm", "http://open-services.net/xmlns/rm/1.0/");
             nsManager.AddNamespace("oslc_cm", "http://open-services.net/xmlns/cm/1.0/");
-            nsManager.AddNamespace("jfs", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/");            var root = doc.DocumentElement;
-            if (root == null) 
+            nsManager.AddNamespace("jfs", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/"); var root = doc.DocumentElement;
+            if (root == null)
             {
                 return new RootServicesDto();
             }
@@ -84,41 +84,42 @@ public record RootServicesDto
                 Title = root.SelectSingleNode("dc:title", nsManager)?.InnerText ?? "Root Services",
                 OAuthRealmName = root.SelectSingleNode("jfs:oauthRealmName", nsManager)?.InnerText ?? "",
                 OAuthDomain = root.SelectSingleNode("jfs:oauthDomain", nsManager)?.InnerText ?? "",
-                AmServiceProviders = new ResourceReference 
-                { 
+                AmServiceProviders = new ResourceReference
+                {
                     Resource = (root.SelectSingleNode("oslc_am:amServiceProviders", nsManager) as XmlElement)?.GetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#") ?? ""
                 },
-                RmServiceProviders = new ResourceReference 
-                { 
+                RmServiceProviders = new ResourceReference
+                {
                     Resource = (root.SelectSingleNode("oslc_rm:rmServiceProviders", nsManager) as XmlElement)?.GetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#") ?? ""
                 },
-                CmServiceProviders = new ResourceReference 
-                { 
+                CmServiceProviders = new ResourceReference
+                {
                     Resource = (root.SelectSingleNode("oslc_cm:cmServiceProviders", nsManager) as XmlElement)?.GetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#") ?? ""
                 },
-                OAuthRequestConsumerKeyUrl = new ResourceReference 
-                { 
+                OAuthRequestConsumerKeyUrl = new ResourceReference
+                {
                     Resource = (root.SelectSingleNode("jfs:oauthRequestConsumerKeyUrl", nsManager) as XmlElement)?.GetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#") ?? ""
                 },
-                OAuthApprovalModuleUrl = new ResourceReference 
-                { 
+                OAuthApprovalModuleUrl = new ResourceReference
+                {
                     Resource = (root.SelectSingleNode("jfs:oauthApprovalModuleUrl", nsManager) as XmlElement)?.GetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#") ?? ""
                 },
-                OAuthRequestTokenUrl = new ResourceReference 
-                { 
+                OAuthRequestTokenUrl = new ResourceReference
+                {
                     Resource = (root.SelectSingleNode("jfs:oauthRequestTokenUrl", nsManager) as XmlElement)?.GetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#") ?? ""
                 },
-                OAuthUserAuthorizationUrl = new ResourceReference 
-                { 
+                OAuthUserAuthorizationUrl = new ResourceReference
+                {
                     Resource = (root.SelectSingleNode("jfs:oauthUserAuthorizationUrl", nsManager) as XmlElement)?.GetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#") ?? ""
                 },
-                OAuthAccessTokenUrl = new ResourceReference 
-                { 
+                OAuthAccessTokenUrl = new ResourceReference
+                {
                     Resource = (root.SelectSingleNode("jfs:oauthAccessTokenUrl", nsManager) as XmlElement)?.GetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#") ?? ""
                 }
             };
 
-            return dto;        }
+            return dto;
+        }
         catch
         {
             return new RootServicesDto();
@@ -131,10 +132,10 @@ public record RootServicesDto
         try
         {
             var doc = new XmlDocument();
-            
+
             // Create the root element with proper namespace
             var root = doc.CreateElement("rdf", "Description", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-            
+
             // Add namespace declarations
             root.SetAttribute("xmlns:oslc_cm", "http://open-services.net/xmlns/cm/1.0/");
             root.SetAttribute("xmlns:oslc_am", "http://open-services.net/ns/am#");
@@ -142,10 +143,10 @@ public record RootServicesDto
             root.SetAttribute("xmlns:dc", "http://purl.org/dc/terms/");
             root.SetAttribute("xmlns:jfs", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/");
             root.SetAttribute("xmlns:rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-            
+
             // Add the rdf:about attribute
             root.SetAttribute("about", "http://www.w3.org/1999/02/22-rdf-syntax-ns#", About);
-            
+
             doc.AppendChild(root);
 
             // Add child elements
@@ -204,10 +205,10 @@ public record RootServicesDto
                 OmitXmlDeclaration = false,
                 Encoding = Encoding.UTF8
             });
-            
+
             doc.WriteContentTo(xmlWriter);
             xmlWriter.Flush();
-            
+
             return stringWriter.ToString();
         }
         catch
