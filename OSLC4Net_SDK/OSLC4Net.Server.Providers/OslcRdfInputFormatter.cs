@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Text;
 using CommunityToolkit.Diagnostics;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -90,12 +91,11 @@ public class OslcRdfInputFormatter : TextInputFormatter
 
         if (isSingleton)
         {
-            var haveOne =
-                (int)output.GetType().GetProperty("Count")?.GetValue(output, null) > 0;
-
-            return haveOne
-                ? output.GetType().GetProperty("Item")?.GetValue(output, new object[] { 0 })
-                : null;
+            if (output is IList { Count: > 0 } list)
+            {
+                return list[0];
+            }
+            return null;
         }
         else if (type.IsArray)
         {
