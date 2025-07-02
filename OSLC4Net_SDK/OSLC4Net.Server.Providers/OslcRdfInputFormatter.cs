@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using CommunityToolkit.Diagnostics;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -108,7 +108,7 @@ public class OslcRdfInputFormatter : TextInputFormatter
         }
     }
 
-    private async Task<IGraph> DeserializeRdfTriplesAsync(StreamReader streamReader,
+    private static async Task<IGraph> DeserializeRdfTriplesAsync(StreamReader streamReader,
         RdfFormat format, Uri baseUri)
     {
         IRdfReader? tripleReader = format switch
@@ -138,7 +138,7 @@ public class OslcRdfInputFormatter : TextInputFormatter
         }
     }
 
-    private async Task<IGraph> DeserializeRdfQuadsAsync(StreamReader streamReader,
+    private static async Task<IGraph> DeserializeRdfQuadsAsync(StreamReader streamReader,
         RdfFormat format, Uri baseUri)
     {
         IStoreReader? quadReader = format switch

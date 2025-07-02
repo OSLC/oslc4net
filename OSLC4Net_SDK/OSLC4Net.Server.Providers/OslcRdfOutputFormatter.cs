@@ -3,9 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using OSLC4Net.Core.Attribute;
@@ -36,7 +33,7 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
         Encoding selectedEncoding)
     {
         var httpContext = context.HttpContext;
-        var serviceProvider = httpContext.RequestServices;
+        _ = httpContext.RequestServices;
 
         // var logger = serviceProvider.GetRequiredService<ILogger<OslcRdfOutputFormatter>>();
 
@@ -182,7 +179,6 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
             await SerializeQuadsAsync(ctx, responseStreamWriter).ConfigureAwait(false);
         }
     }
-
 
     private static async Task SerializeTriplesAsync(SerializationContext ctx,
         HttpResponseStreamWriter textWriter)

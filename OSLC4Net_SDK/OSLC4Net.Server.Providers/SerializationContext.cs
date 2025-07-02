@@ -1,4 +1,4 @@
-﻿using VDS.RDF;
+using VDS.RDF;
 
 namespace OSLC4Net.Server.Providers;
 

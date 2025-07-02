@@ -1,4 +1,4 @@
-﻿namespace OSLC4Net.Server.Providers;
+namespace OSLC4Net.Server.Providers;
 
 public enum RdfFormat
 {
