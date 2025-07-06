@@ -9,7 +9,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking changes; 👉
 important notes.
 
-## [UNRELEASED] - YYYY-MM-DD
+## [0.6.0] - 2025-07-06
 
 ### Security
 
@@ -17,14 +17,15 @@ This release does not contain security updates.
 
 ### Added
 
+- ⚡️ `TextOutputFormatter`/`TextInputFormatter` implementations for OSLC RDF, enabling the use of OSLC4Net in ASP.NET Core API servers
+  - 👉 see sample server under `OSLC4Net_SDK/Examples/OSLC4NetExamples.Server.NetCoreApi`
 - ⚡️ JSON-LD 1.1 support
 - Initial support for RDFS inference during deserialization was added.
-- Docs are now published to https://oslc4net.github.io/
-
+- 👉 Docs are now published to https://oslc4net.github.io/
 
 ### Changed
 
-- Major changes to exceptions from Core and Client packages.
+- ❗️ Major changes to exceptions from Core and Client packages.
     - Getters were replaced with read-only properties
     - I18n resource strings were removed along with the corresponding
       constructors.
@@ -33,7 +34,7 @@ This release does not contain security updates.
       codes `OSLCC001..OSLCC004` from Client were renamed into
       `OSLC2001..OSLC2014`. All OSLC4Net error codes now have 4 digits for
       consistency.
-- DotNetRdfHelper is no longer static
+- ❗️ DotNetRdfHelper is no longer static
 
 ### Deprecated
 
@@ -43,7 +44,7 @@ This release does not contain security updates.
 
 ### Removed
 
-- ❗️Legacy OSLC JSON support was removed to reduce maintenance overhead now that
+- ❗️ Legacy OSLC JSON support was removed to reduce maintenance overhead now that
   the JSON-LD support is added.
 - I18n resource strings were removed along with the corresponding
   constructors on exceptions. Also, `MessageExtractor` helpers were removed.
@@ -384,7 +385,9 @@ This release does not remove any features.
 This release does not contain bug fixes.
 
 
-[UNRELEASED]: https://github.com/OSLC/oslc4net/compare/v0.5.0...HEAD
+[UNRELEASED]: https://github.com/OSLC/oslc4net/compare/v0.6.0...HEAD
+
+[0.6.0]: https://github.com/OSLC/oslc4net/releases/tag/v0.6.0
 
 [0.5.0]: https://github.com/OSLC/oslc4net/releases/tag/v0.5.0
 

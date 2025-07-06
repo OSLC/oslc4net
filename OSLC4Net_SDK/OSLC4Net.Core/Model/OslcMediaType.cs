@@ -26,8 +26,7 @@ public class OslcMediaType
     public const string APPLICATION_RDF_XML = "application/rdf+xml";
     public const string APPLICATION_JSON_LD = "application/ld+json";
     public const string TEXT_TURTLE = "text/turtle";
-
-
+    public const string APPLICATION_NTRIPLES = "application/n-triples";
 
     public const string X_OSLC_COMPACT_XML = "x-oslc-compact+xml";
     public const string APPLICATION_X_OSLC_COMPACT_XML = $"application/{X_OSLC_COMPACT_XML}";
