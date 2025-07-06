@@ -9,6 +9,33 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking changes; 👉
 important notes.
 
+
+## [UNRELEASED] - YYYY-MM-DD
+
+### Security
+
+This release does not contain security updates.
+
+### Added
+
+This release does not contain new features.
+
+### Changed
+
+This release does not contain other significant changes.
+
+### Deprecated
+
+This release does not introduce deprecations.
+
+### Removed
+
+This release does not remove any features.
+
+### Fixed
+
+This release does not contain bug fixes.
+
 ## [0.6.0] - 2025-07-06
 
 ### Security
