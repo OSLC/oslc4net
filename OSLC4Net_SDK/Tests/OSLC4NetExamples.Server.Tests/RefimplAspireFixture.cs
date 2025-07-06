@@ -9,7 +9,7 @@ using Projects;
 [assembly: CaptureConsole]
 [assembly: CaptureTrace]
 
-namespace OSLC4Net.ChangeManagementTest;
+namespace OSLC4NetExamples.Server.Tests;
 
 public class RefimplAspireFixture : IAsyncLifetime
 {
@@ -41,7 +41,7 @@ public class RefimplAspireFixture : IAsyncLifetime
         // Wait a bit for the application to fully start
         await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(true);
 
-        NetCoreApiBaseUri = 
+        NetCoreApiBaseUri =
             app.GetEndpoint("oslc-netcore-api", "api-https").AbsoluteUri;
 
         return app;

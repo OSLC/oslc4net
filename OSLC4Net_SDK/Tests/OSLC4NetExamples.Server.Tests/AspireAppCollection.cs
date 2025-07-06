@@ -15,7 +15,7 @@
 
 using Xunit;
 
-namespace OSLC4Net.ChangeManagementTest;
+namespace OSLC4NetExamples.Server.Tests;
 
 [CollectionDefinition("AspireApp")]
 public class AspireAppCollection : ICollectionFixture<RefimplAspireFixture>
