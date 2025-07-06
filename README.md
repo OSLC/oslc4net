@@ -33,6 +33,15 @@ Kit](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit
 Make sure to install .NET 8 SDK for development. Libraries target NETStandard
 2.0/2.1 and should run on .NET 6+.
 
+### A simple OSLC Server
+
+See under [OSLC4Net_SDK/Examples/OSLC4NetExamples.Server.NetCoreApi](https://github.com/OSLC/oslc4net/tree/main/OSLC4Net_SDK/Examples/OSLC4NetExamples.Server.NetCoreApi)
+for an example of a ASP.NET Core 8+ API that showcases support for
+
+- OSLC Root Services document under `/.well-known` path
+- OSLC Service Provider Catalog
+- OSLC Service Provider
+
 ### A simple OSLC Client
 
 Create a new console application targeting .NET 8+, add a NuGet dependency to
