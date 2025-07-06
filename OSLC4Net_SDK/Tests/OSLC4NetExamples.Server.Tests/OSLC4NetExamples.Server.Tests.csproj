@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <WarningsAsErrors>$(NugetWarnings)</WarningsAsErrors>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit.runner.visualstudio">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="CommunityToolkit.Diagnostics"/>
+    <PackageReference Include="Aspire.Hosting.Testing"/>
+    <PackageReference Include="Meziantou.Extensions.Logging.Xunit.v3"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json"/>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client"/>
+  </ItemGroup>
+
+  <ItemGroup>
+      <ProjectReference Include="..\..\OSLC4Net.Core\OSLC4Net.Core.csproj"/>
+    <ProjectReference Include="..\..\OSLC4Net.Core.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj"/>
+    <ProjectReference Include="..\..\OSLC4Net.ChangeManagement\OSLC4Net.ChangeManagementCommon.csproj"/>
+    <ProjectReference Include="..\..\OSLC4Net.Client\OSLC4Net.Client.csproj"/>
+    <ProjectReference Include="..\..\OSLC4Net.Domains.RequirementsManagement\OSLC4Net.Domains.RequirementsManagement.csproj"/>
+    <ProjectReference Include="..\OSLC4NetExamples.Server.Tests.AspireHost\OSLC4NetExamples.Server.Tests.AspireHost.csproj"/>
+    <ProjectReference Include="..\..\Examples\OSLC4NetExamples.Server.NetCoreApi\OSLC4NetExamples.Server.NetCoreApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="TestData\rootservices.rdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\rootservices2.rdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

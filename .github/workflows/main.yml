@@ -61,7 +61,7 @@ jobs:
       # TAG_VALUE: ${{ github.ref_name || inputs.version }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@002fdce3c6a235733a90a27c80493a3241e56863 # v2.12.1
+        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49 # v2.12.2
         with:
           disable-sudo: true
           egress-policy: audit
@@ -103,6 +103,9 @@ jobs:
           (Get-Content Tests/OSLC4Net.Test.AspireHost/OSLC4Net.Test.AspireHost.csproj) |
             ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
             Set-Content Tests/OSLC4Net.Test.AspireHost/OSLC4Net.Test.AspireHost.csproj
+          (Get-Content Tests/OSLC4NetExamples.Server.Tests/OSLC4NetExamples.Server.Tests.csproj) |
+            ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
+            Set-Content Tests/OSLC4NetExamples.Server.Tests/OSLC4NetExamples.Server.Tests.csproj
       - name: Cache NuGet
         # id: cache-nuget
         uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
