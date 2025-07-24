@@ -24,8 +24,8 @@
 
 
   <ItemGroup>
-    <SourceRoot Include="$(MSBuildThisFileDirectory)/"/>
-    <None Include="$(SolutionDir)\..\README.md" Pack="true" PackagePath="README.md"/>
+    <SourceRoot Include="$(MSBuildThisFileDirectory)/" />
+    <None Include="$(SolutionDir)\..\README.md" Pack="true" PackagePath="README.md" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -47,7 +47,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Meziantou.Analyzer"/>
+    <PackageReference Include="Meziantou.Analyzer" />
   </ItemGroup>
 
 </Project>
