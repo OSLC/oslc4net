@@ -15,10 +15,19 @@ public class RefimplAspireFixture : IAsyncLifetime
 {
     public async ValueTask DisposeAsync()
     {
-        if (DistributedApplication is not null)
+        if (DistributedApplication is null)
+        {
+            return;
+        }
+
+        try
         {
             await DistributedApplication.StopAsync().ConfigureAwait(false);
+        }
+        finally
+        {
             await DistributedApplication.DisposeAsync().ConfigureAwait(false);
+            DistributedApplication = null;
         }
     }
 

@@ -18,7 +18,8 @@ This release does not contain security updates.
 
 ### Added
 
-This release does not contain new features.
+- The `QName` class now has properties `NamespaceUri`, `LocalPart`, and
+  `Prefix`.
 
 ### Changed
 
@@ -26,7 +27,9 @@ This release does not contain other significant changes.
 
 ### Deprecated
 
-This release does not introduce deprecations.
+- `QName` getters `GetNamespaceURI`, `GetLocalPart`, and `GetPrefix` are
+  deprecated in favor of C# properties and are scheduled for removal in the
+  next release.
 
 ### Removed
 
