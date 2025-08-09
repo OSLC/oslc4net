@@ -58,7 +58,6 @@ public class OslcQueryResultTests
         Assert.Equal(20, oslcQueryResult.Current?.GetMembersUrls().Length);
     }
 
-
     [Fact]
     public async Task OslcQueryMultiResponseIterTest()
     {
@@ -77,12 +76,13 @@ public class OslcQueryResultTests
 
     private async Task<OslcQueryResult> GetMockOslcQueryResultMulti()
     {
-        var responseText = await File.ReadAllTextAsync("data/multiResponseQuery.rdf");
+        var responseText = await File.ReadAllTextAsync("data/multiResponseQuery.rdf").ConfigureAwait(false);
         var testQuery = new OslcQuery(new OslcClient(LoggerFactory.CreateLogger<OslcClient>()),
             "https://nordic.clm.ibmcloud.com/ccm/oslc/contexts/_2nC4UBNvEeutmoeSPr3-Ag/workitems");
         var httpResponseMessage = new HttpResponseMessage
         {
-            StatusCode = HttpStatusCode.OK, Content = new StringContent(responseText)
+            StatusCode = HttpStatusCode.OK,
+            Content = new StringContent(responseText)
         };
         var oslcQueryResult = new OslcQueryResult(testQuery, httpResponseMessage);
         return oslcQueryResult;

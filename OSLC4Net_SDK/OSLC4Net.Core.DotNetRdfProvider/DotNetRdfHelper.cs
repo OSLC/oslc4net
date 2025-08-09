@@ -187,9 +187,9 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             objType);
 
         Uri? aboutURI = null;
-        if (obj is IResource)
+        if (obj is IResource resource)
         {
-            aboutURI = ((IResource)obj).GetAbout();
+            aboutURI = resource.About;
         }
 
         INode mainResource;
@@ -249,7 +249,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             new Dictionary<Type, IDictionary<string, MemberInfo>>();
         // TODO: check that all .Add() calls were converted into [k] = v
         //IDictionary<string, object> visitedResources = new DictionaryWithReplacement<string, object>();
-        var visitedResources = new Dictionary<string, object>();
+        var visitedResources = new Dictionary<string, object>(StringComparer.Ordinal);
 
         FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
             beanType,
@@ -281,7 +281,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                 graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType)),
                 graph.CreateUriNode(new Uri(qualifiedName)));
 
-            if (triples.Count() > 0)
+            if (triples.Any())
             {
                 triples = new List<Triple>(triples);
 
@@ -295,7 +295,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                     var resource = triple.Subject;
                     var newInstance = Activator.CreateInstance(beanType);
                     //IDictionary<string, object> visitedResources = new DictionaryWithReplacement<string, object>();
-                    IDictionary<string, object> visitedResources = new Dictionary<string, object>();
+                    IDictionary<string, object> visitedResources = new Dictionary<string, object>(StringComparer.Ordinal);
 
                     FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
                         beanType,
@@ -322,9 +322,9 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
     {
         IDictionary<string, MemberInfo> setMethodMap;
 
-        if (typePropertyDefinitionsToSetMethods.ContainsKey(beanType))
+        if (typePropertyDefinitionsToSetMethods.TryGetValue(beanType, out var beanTypeValue))
         {
-            setMethodMap = typePropertyDefinitionsToSetMethods[beanType];
+            setMethodMap = beanTypeValue;
         }
         else
         {
@@ -336,26 +336,26 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 
         visitedResources[GetVisitedResourceName(resource)] = bean;
 
-        if (bean is IResource)
+        if (bean is IResource iResource)
         {
-            var aboutURI = resource is IUriNode ? ((IUriNode)resource).Uri : null;
-            if (aboutURI != null)
+            var aboutUri = resource is IUriNode node ? node.Uri : null;
+            if (aboutUri != null)
             {
-                if (!aboutURI.IsAbsoluteUri)
+                if (!aboutUri.IsAbsoluteUri)
                 {
                     throw new OslcCoreRelativeURIException(beanType,
                         "setAbout",
-                        aboutURI);
+                        aboutUri);
                 }
 
-                ((IResource)bean).SetAbout(aboutURI);
+                iResource.About = aboutUri;
             }
         }
 
         // Collect values for array properties. We do this since values for
         // arrays are not required to be contiguous.
         IDictionary<string, List<object>> propertyDefinitionsToArrayValues =
-            new Dictionary<string, List<object>>();
+            new Dictionary<string, List<object>>(StringComparer.Ordinal);
 
         // Ensure a single-value property is not set more than once
         HashSet<MemberInfo> singleValueMethodsUsed = [];
@@ -442,13 +442,12 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                         var key = new QName(ns, localPart, prefix);
                         var value =
                             HandleExtendedPropertyValue(beanType, obj, graph, visitedResources);
-                        if (!extendedProperties.ContainsKey(key))
+                        if (!extendedProperties.TryGetValue(key, out var previous))
                         {
                             extendedProperties[key] = value;
                         }
                         else
                         {
-                            var previous = extendedProperties[key];
                             // TODO: untangle this mess (Andrew 2023-09)
                             // I think the idea was to store the property object directly if the property has
                             // a cardinality of 1, when a new object is added, the backing object shall switch to
@@ -478,16 +477,16 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                 var nil = new Uri(OslcConstants.RDF_NAMESPACE + RDF_NIL);
                 IList<INode> objects;
 
-                if (multiple && obj is IUriNode && (
-                        (graph.GetTriplesWithSubjectPredicate(obj,
+                if (multiple && obj is IUriNode node && (
+                        (graph.GetTriplesWithSubjectPredicate(node,
                              graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListFirst))).Any()
-                         && graph.GetTriplesWithSubjectPredicate(obj,
+                         && graph.GetTriplesWithSubjectPredicate(node,
                              graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListRest))).Any())
-                        || nil.Equals((obj as IUriNode)?.Uri)
-                        || ((IUriNode)obj).IsListRoot(graph)))
+                        || nil.Equals(node?.Uri)
+                        || node.IsListRoot(graph)))
                 {
                     objects = new List<INode>();
-                    var listNode = obj as IUriNode;
+                    var listNode = node;
 
                     while (listNode != null && !nil.Equals(listNode.Uri))
                     {
@@ -503,7 +502,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                             .Object;
                     }
 
-                    visitedResources[GetVisitedResourceName(obj as IUriNode)] = objects;
+                    visitedResources[GetVisitedResourceName(node)] = objects;
                 }
                 else if (multiple && IsRdfCollectionResource(graph, obj))
                 {
@@ -750,9 +749,9 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                         if (multiple)
                         {
                             List<object> values;
-                            if (propertyDefinitionsToArrayValues.ContainsKey(uri))
+                            if (propertyDefinitionsToArrayValues.TryGetValue(uri, out var value))
                             {
-                                values = propertyDefinitionsToArrayValues[uri];
+                                values = value;
                             }
                             else
                             {
@@ -826,7 +825,6 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             }
         }
     }
-
 
     private static void SetValue(object bean, MemberInfo backingMember, object parameter)
     {
@@ -905,7 +903,6 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         return setMethodComponentParameterType;
     }
 
-
     private static bool IsRdfCollectionResource(IGraph graph, INode obj)
     {
         if (obj is IUriNode resource)
@@ -931,9 +928,9 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         IEnumerable<Triple> reifiedSubjects =
             graph.GetTriplesWithPredicateObject(rdfSubject, source.Subject);
 
-        if (reifiedSubjects.Count() == 0)
+        if (!reifiedSubjects.Any())
         {
-            return new Triple[0];
+            return Array.Empty<Triple>();
         }
 
         var rdfPredicate = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfPredicate));
@@ -977,7 +974,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             result[0] = null;
         }
 
-        return new Triple[0];
+        return Array.Empty<Triple>();
     }
 
     /**
@@ -1109,7 +1106,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
     private static IDictionary<string, MemberInfo> CreatePropertyDefinitionToSetMethods(
         Type beanType)
     {
-        var result = new Dictionary<string, MemberInfo>();
+        var result = new Dictionary<string, MemberInfo>(StringComparer.Ordinal);
 
         var methods = beanType.GetMethods();
 
@@ -1122,9 +1119,9 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 
             var getMethodName = method.Name;
 
-            if ((!getMethodName.StartsWith(METHOD_NAME_START_GET) ||
+            if ((!getMethodName.StartsWith(METHOD_NAME_START_GET, StringComparison.Ordinal) ||
                  getMethodName.Length <= METHOD_NAME_START_GET_LENGTH) &&
-                (!getMethodName.StartsWith(METHOD_NAME_START_IS) ||
+                (!getMethodName.StartsWith(METHOD_NAME_START_IS, StringComparison.Ordinal) ||
                  getMethodName.Length <= METHOD_NAME_START_IS_LENGTH))
             {
                 continue;
@@ -1140,7 +1137,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 
             // We need to find the set companion setMethod
             string setMethodName;
-            if (getMethodName.StartsWith(METHOD_NAME_START_GET))
+            if (getMethodName.StartsWith(METHOD_NAME_START_GET, StringComparison.Ordinal))
             {
                 setMethodName = METHOD_NAME_START_SET +
                                 getMethodName.Substring(METHOD_NAME_START_GET_LENGTH);
@@ -1204,9 +1201,9 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 
             var methodName = method.Name;
 
-            if ((!methodName.StartsWith(METHOD_NAME_START_GET) ||
+            if ((!methodName.StartsWith(METHOD_NAME_START_GET, StringComparison.Ordinal) ||
                  methodName.Length <= METHOD_NAME_START_GET_LENGTH) &&
-                (!methodName.StartsWith(METHOD_NAME_START_IS) ||
+                (!methodName.StartsWith(METHOD_NAME_START_IS, StringComparison.Ordinal) ||
                  methodName.Length <= METHOD_NAME_START_IS_LENGTH))
             {
                 continue;
@@ -1245,11 +1242,11 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                     nestedProperties =
                         OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON;
                 }
-                else if (oslcProperties is NestedWildcardProperties)
+                else if (oslcProperties is NestedWildcardProperties properties)
                 {
-                    nestedProperties = ((NestedWildcardProperties)oslcProperties)
+                    nestedProperties = properties
                         .CommonNestedProperties();
-                    onlyNested = !(oslcProperties is SingletonWildcardProperties);
+                    onlyNested = properties is not SingletonWildcardProperties;
                 }
                 else
                 {
@@ -1302,11 +1299,11 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                     nestedProperties =
                         OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON;
                 }
-                else if (oslcProperties is NestedWildcardProperties)
+                else if (oslcProperties is NestedWildcardProperties properties)
                 {
-                    nestedProperties = ((NestedWildcardProperties)oslcProperties)
+                    nestedProperties = properties
                         .CommonNestedProperties();
-                    onlyNested = !(oslcProperties is SingletonWildcardProperties);
+                    onlyNested = properties is not SingletonWildcardProperties;
                 }
                 else
                 {
@@ -1355,7 +1352,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 
             var typeResource = graph.CreateUriNode(new Uri(propertyName));
             var rdfType = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
-            if (graph.GetTriplesWithPredicateObject(rdfType, typeResource).Count() == 0)
+            if (!graph.GetTriplesWithPredicateObject(rdfType, typeResource).Any())
             {
                 graph.Assert(new Triple(mainResource, rdfType, typeResource));
             }
@@ -1382,11 +1379,11 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                 {
                     nestedProperties = OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON;
                 }
-                else if (properties is NestedWildcardProperties)
+                else if (properties is NestedWildcardProperties wildcardProperties)
                 {
                     nestedProperties =
-                        ((NestedWildcardProperties)properties).CommonNestedProperties();
-                    onlyNested = !(properties is SingletonWildcardProperties);
+                        wildcardProperties.CommonNestedProperties();
+                    onlyNested = wildcardProperties is not SingletonWildcardProperties;
                 }
                 else
                 {
@@ -1580,7 +1577,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             name = GetDefaultPropertyName(method);
         }
 
-        if (!propertyDefinition.EndsWith(name))
+        if (!propertyDefinition.EndsWith(name, StringComparison.Ordinal))
         {
             throw new OslcCoreInvalidPropertyDefinitionException(resourceType,
                 method,
@@ -1709,7 +1706,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             INode root = graph.CreateBlankNode();
             var current = root;
 
-            for (var i = 0; i < rdfNodeContainer.Count() - 1; i++)
+            for (var i = 0; i < rdfNodeContainer.Count - 1; i++)
             {
                 var node = rdfNodeContainer[i];
 
@@ -1724,11 +1721,11 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                 current = next;
             }
 
-            if (rdfNodeContainer.Count() > 0)
+            if (rdfNodeContainer.Count > 0)
             {
                 graph.Assert(new Triple(current,
                     graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListFirst)),
-                    rdfNodeContainer[rdfNodeContainer.Count() - 1]));
+                    rdfNodeContainer[rdfNodeContainer.Count - 1]));
             }
 
             graph.Assert(new Triple(current,
@@ -1821,51 +1818,49 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 
             _ = value.GetType();
 
-            if (value is bool)
+            if (value is bool b)
             {
-                nestedNode = ((bool)value).ToLiteral(graph);
+                nestedNode = b.ToLiteral(graph);
             }
-            else if (value is byte)
+            else if (value is byte b1)
             {
-                nestedNode = ((byte)value).ToLiteral(graph);
+                nestedNode = b1.ToLiteral(graph);
             }
-            else if (value is short)
+            else if (value is short s)
             {
-                nestedNode = ((short)value).ToLiteral(graph);
+                nestedNode = s.ToLiteral(graph);
             }
-            else if (value is int)
+            else if (value is int i)
             {
-                nestedNode = ((int)value).ToLiteral(graph);
+                nestedNode = i.ToLiteral(graph);
             }
-            else if (value is long)
+            else if (value is long l)
             {
-                nestedNode = ((long)value).ToLiteral(graph);
+                nestedNode = l.ToLiteral(graph);
             }
-            else if (value is BigInteger)
+            else if (value is BigInteger bigint)
             {
-                nestedNode = ((long)(BigInteger)value).ToLiteral(graph);
+                nestedNode = ((long)bigint).ToLiteral(graph);
             }
-            else if (value is float)
+            else if (value is float f)
             {
-                nestedNode = ((float)value).ToLiteral(graph);
+                nestedNode = f.ToLiteral(graph);
             }
-            else if (value is decimal)
+            else if (value is decimal value1)
             {
-                nestedNode = ((decimal)value).ToLiteral(graph);
+                nestedNode = value1.ToLiteral(graph);
             }
-            else if (value is double)
+            else if (value is double d)
             {
-                nestedNode = ((double)value).ToLiteral(graph);
+                nestedNode = d.ToLiteral(graph);
             }
         }
-        else if (value is Uri)
+        else if (value is Uri uri)
         {
             if (onlyNested)
             {
                 return;
             }
-
-            var uri = (Uri)value;
 
             if (!uri.IsAbsoluteUri)
             {
@@ -1877,14 +1872,14 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             // URIs represent references to other resources identified by their IDs, so they need to be managed as such
             nestedNode = graph.CreateUriNode(uri);
         }
-        else if (value is DateTime)
+        else if (value is DateTime time)
         {
             if (onlyNested)
             {
                 return;
             }
 
-            nestedNode = ((DateTime)value).ToUniversalTime().ToLiteral(graph);
+            nestedNode = time.ToUniversalTime().ToLiteral(graph);
         }
         else if (objType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
         {
@@ -1985,7 +1980,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
     private static string GetDefaultPropertyName(MemberInfo method)
     {
         var methodName = method.Name;
-        var startingIndex = methodName.StartsWith(METHOD_NAME_START_GET)
+        var startingIndex = methodName.StartsWith(METHOD_NAME_START_GET, StringComparison.Ordinal)
             ? METHOD_NAME_START_GET_LENGTH
             : METHOD_NAME_START_IS_LENGTH;
         var endingIndex = startingIndex + 1;

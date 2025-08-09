@@ -20,80 +20,90 @@ namespace OSLC4Net.Core.Model;
 /// </summary>
 public class QName
 {
-    private readonly string localPart;
-
-    private readonly string namespaceURI;
-    private readonly string prefix;
-
     /// <summary>
     ///     Constructor with local part only
     /// </summary>
     /// <param name="localPart"></param>
     public QName(string localPart)
     {
-        this.localPart = localPart;
+        LocalPart = localPart ?? throw new ArgumentNullException(nameof(localPart));
     }
 
     /// <summary>
     ///     Constructior with namespace and local part
     /// </summary>
-    /// <param name="namespaceURI"></param>
+    /// <param name="namespaceUri"></param>
     /// <param name="localPart"></param>
     public QName(
-        string namespaceURI,
+        string namespaceUri,
         string localPart
-    ) : this(namespaceURI, localPart, null)
+    ) : this(namespaceUri, localPart, null)
     {
     }
 
     /// <summary>
     ///     Constructor with namespace, local part and prefix/alias
     /// </summary>
-    /// <param name="namespaceURI"></param>
+    /// <param name="namespaceUri"></param>
     /// <param name="localPart"></param>
     /// <param name="prefix"></param>
     public QName(
-        string namespaceURI,
+        string namespaceUri,
         string localPart,
-        string prefix
+        string? prefix
     )
     {
-        if (namespaceURI == null || localPart == null)
-        {
-            throw new ArgumentException();
-        }
-
-        this.namespaceURI = namespaceURI;
-        this.localPart = localPart;
-        this.prefix = prefix;
+        NamespaceUri = namespaceUri ?? throw new ArgumentNullException(nameof(namespaceUri));
+        LocalPart = localPart ?? throw new ArgumentNullException(nameof(localPart));
+        Prefix = prefix;
     }
 
-    public string GetNamespaceURI()
+    /// <summary>
+    ///     URI of the namespace, e.g. <c>http://open-services.net/ns/rm#</c>
+    /// </summary>
+    public string? NamespaceUri { get; }
+
+    /// <summary>
+    ///     URI part the comes after the namespace e.g. <c>Requirement</c> for URI
+    ///     <c>http://open-services.net/ns/rm#Requirement</c>
+    /// </summary>
+    public string LocalPart { get; }
+
+    /// <summary>
+    ///     Prefix for the namespace e.g. <c>oslc_rm</c> for namespace
+    ///     <c>http://open-services.net/ns/rm#</c>
+    /// </summary>
+    public string? Prefix { get; }
+
+    [Obsolete("Use .NamespaceUri instead. This method will be removed in a future release.")]
+    public string? GetNamespaceURI()
     {
-        return namespaceURI;
+        return NamespaceUri;
     }
 
+    [Obsolete("Use .LocalPart instead. This method will be removed in a future release.")]
     public string GetLocalPart()
     {
-        return localPart;
+        return LocalPart;
     }
 
-    public string GetPrefix()
+    [Obsolete("Use .Prefix instead. This method will be removed in a future release.")]
+    public string? GetPrefix()
     {
-        return prefix;
+        return Prefix;
     }
 
     public override string ToString()
     {
-        if (namespaceURI == null)
+        if (NamespaceUri == null)
         {
-            return localPart;
+            return LocalPart;
         }
 
-        return '{' + namespaceURI + '}' + localPart;
+        return '{' + NamespaceUri + '}' + LocalPart;
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (ReferenceEquals(this, obj))
         {
@@ -102,8 +112,8 @@ public class QName
 
         if (obj is QName qNameOther)
         {
-            return $"{namespaceURI}{localPart}".Equals(
-                $"{qNameOther.namespaceURI}{qNameOther.localPart}",
+            return $"{NamespaceUri}{LocalPart}".Equals(
+                $"{qNameOther.NamespaceUri}{qNameOther.LocalPart}",
                 StringComparison.InvariantCulture);
         }
 
@@ -112,6 +122,7 @@ public class QName
 
     public override int GetHashCode()
     {
-        return namespaceURI.GetHashCode() * 31 + localPart.GetHashCode();
+        return (NamespaceUri is null ? 0 : StringComparer.Ordinal.GetHashCode(NamespaceUri)) * 31
+               + StringComparer.Ordinal.GetHashCode(LocalPart);
     }
 }

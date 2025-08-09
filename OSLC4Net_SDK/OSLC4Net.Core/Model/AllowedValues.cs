@@ -5,7 +5,7 @@ namespace OSLC4Net.Core.Model;
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
 [OslcResourceShape(title = "OSLC Allowed Values Resource Shape",
     describes = new[] { OslcConstants.TYPE_ALLOWED_VALUES })]
-internal class AllowedValues
+internal sealed class AllowedValues
 {
     private readonly List<string> allowedValues = new();
 

@@ -150,5 +150,5 @@ internal class PropertiesImpl : Properties
 
     private readonly CommonTree tree;
     protected readonly IDictionary<string, string> prefixMap;
-    private IList<Property> children = null;
+    private IList<Property> children;
 }

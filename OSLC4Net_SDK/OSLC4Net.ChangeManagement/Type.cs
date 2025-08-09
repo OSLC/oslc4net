@@ -59,7 +59,7 @@ public static class TypeExtension
 
 [AttributeUsage(AttributeTargets.Field)
 ]
-internal class Description(string value) : Attribute
+internal sealed class Description(string value) : Attribute
 {
     /**
      *  Description of element; used in enumerations

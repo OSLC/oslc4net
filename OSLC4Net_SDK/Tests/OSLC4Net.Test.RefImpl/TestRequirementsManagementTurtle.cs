@@ -21,8 +21,8 @@ using Constants = OSLC4Net.ChangeManagement.Constants;
 namespace OSLC4Net.ChangeManagementTest;
 
 using DC = OslcConstants.Domains.DCElements.Q;
-using PROV = OslcConstants.Domains.PROV.Q;
 using DCTerms = OslcConstants.Domains.DCTerms.Q;
+using PROV = OslcConstants.Domains.PROV.Q;
 
 [Trait("TestCategory", "RunningOslcServerRequired")]
 public class TestRequirementsManagementTurtle : TestBase

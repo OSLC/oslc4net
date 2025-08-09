@@ -15,10 +15,19 @@ public class RefimplAspireFixture : IAsyncLifetime
 {
     public async ValueTask DisposeAsync()
     {
-        if (DistributedApplication is not null)
+        if (DistributedApplication is null)
         {
-            await DistributedApplication.StopAsync();
-            await DistributedApplication.DisposeAsync();
+            return;
+        }
+
+        try
+        {
+            await DistributedApplication.StopAsync().ConfigureAwait(false);
+        }
+        finally
+        {
+            await DistributedApplication.DisposeAsync().ConfigureAwait(false);
+            DistributedApplication = null;
         }
     }
 
@@ -43,7 +52,7 @@ public class RefimplAspireFixture : IAsyncLifetime
         // consider adding a package from https://www.nuget.org/packages?q=xunit+logging
 
         // builder.
-        var app = await builder.BuildAsync();
+        var app = await builder.BuildAsync().ConfigureAwait(false);
 
         await app.StartAsync().WaitAsync(TimeSpan.FromSeconds(300)).ConfigureAwait(true);
 

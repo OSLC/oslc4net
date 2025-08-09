@@ -26,7 +26,7 @@ public class OslcResourceShape : System.Attribute
     /**
      * Type or types of resource described by this shape.
      */
-    public string[] describes = { };
+    public string[] describes = Array.Empty<string>();
 
     /**
      * Title string that could be used for display

@@ -168,7 +168,6 @@ public static partial class OslcConstants
                 public const string Type = NS + "type";
             }
 
-
             public static class Q
             {
                 public static QName Contributor => QNameFor("contributor");

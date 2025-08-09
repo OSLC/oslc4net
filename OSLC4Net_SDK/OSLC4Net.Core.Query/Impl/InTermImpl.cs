@@ -21,7 +21,7 @@ namespace OSLC4Net.Core.Query.Impl;
 /// <summary>
 /// Implementation of InTerm interface
 /// </summary>
-internal class InTermImpl : SimpleTermImpl, InTerm
+internal sealed class InTermImpl : SimpleTermImpl, InTerm
 {
     public
     InTermImpl(
@@ -86,5 +86,5 @@ internal class InTermImpl : SimpleTermImpl, InTerm
         return buffer.ToString();
     }
 
-    private List<Value> values = null;
+    private List<Value> values;
 }

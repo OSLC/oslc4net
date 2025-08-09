@@ -30,7 +30,7 @@ public class ArchitectureResource : AbstractResource
 {
     private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeISet<> in Java
     private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeISet<> in Java
-    private readonly ISet<string> dctermsTypes = new HashSet<string>(); // XXX - TreeISet<> in
+    private readonly ISet<string> dctermsTypes = new HashSet<string>(StringComparer.Ordinal); // XXX - TreeISet<> in
 
     private DateTime? created;
     private string description;
@@ -192,7 +192,10 @@ public class ArchitectureResource : AbstractResource
     {
         this.contributors.Clear();
 
-        if (contributors != null) this.contributors.AddAll(contributors);
+        if (contributors != null)
+        {
+            this.contributors.AddAll(contributors);
+        }
     }
 
     public void SetCreated(DateTime? created)
@@ -204,7 +207,10 @@ public class ArchitectureResource : AbstractResource
     {
         this.creators.Clear();
 
-        if (creators != null) this.creators.AddAll(creators);
+        if (creators != null)
+        {
+            this.creators.AddAll(creators);
+        }
     }
 
     public void SetDescription(string description)
@@ -237,7 +243,10 @@ public class ArchitectureResource : AbstractResource
     {
         this.dctermsTypes.Clear();
 
-        if (dctermsTypes != null) this.dctermsTypes.AddAll(dctermsTypes);
+        if (dctermsTypes != null)
+        {
+            this.dctermsTypes.AddAll(dctermsTypes);
+        }
     }
 
     public void SetSource(Uri source)

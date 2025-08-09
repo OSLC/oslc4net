@@ -13,7 +13,6 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-
 namespace OSLC4Net.Client;
 
 /// <summary>

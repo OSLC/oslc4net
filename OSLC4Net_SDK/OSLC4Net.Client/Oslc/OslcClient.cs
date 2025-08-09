@@ -167,7 +167,7 @@ public class OslcClient : IDisposable
             httpResponseMessage.Content.Headers.Add(OSLC4NetConstants.INNER_URI_HEADER, resourceUri);
             await httpResponseMessage.Content.LoadIntoBufferAsync().ConfigureAwait(false);
 
-            var dummy = new T[0];
+            var dummy = Array.Empty<T>();
             var resources = await httpResponseMessage.Content
                 .ReadAsAsync(dummy.GetType(), _formatters).ConfigureAwait(false) as T[];
 
@@ -185,13 +185,12 @@ public class OslcClient : IDisposable
         }
         else
         {
-            Graph? g = null;
             Error? resource = null;
             if (httpResponseMessage.Content is not null)
             {
                 try
                 {
-                    g = await httpResponseMessage.Content.ReadAsAsync(typeof(Graph)).ConfigureAwait(false) as Graph;
+                    var g = await httpResponseMessage.Content.ReadAsAsync(typeof(Graph)).ConfigureAwait(false) as Graph;
                 }
                 catch
                 {
@@ -240,7 +239,7 @@ public class OslcClient : IDisposable
         var requestUrl = url;
         do
         {
-            response = await _client.GetAsync(requestUrl);
+            response = await _client.GetAsync(requestUrl).ConfigureAwait(false);
 
             if (response.StatusCode == HttpStatusCode.MovedPermanently ||
                 response.StatusCode == HttpStatusCode.Moved)
@@ -412,7 +411,9 @@ public class OslcClient : IDisposable
     {
         _client.DefaultRequestHeaders.Accept.Clear();
         foreach (var acceptSingle in acceptType.Split(','))
+        {
             _client.DefaultRequestHeaders.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(acceptSingle));
+        }
         //_client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptType));
         _client.DefaultRequestHeaders.Remove(OSLCConstants.OSLC_CORE_VERSION);
         _client.DefaultRequestHeaders.Add(OSLCConstants.OSLC_CORE_VERSION, "2.0");
@@ -451,7 +452,10 @@ public class OslcClient : IDisposable
     {
         _client.DefaultRequestHeaders.Accept.Clear();
         foreach (var acceptSingle in (acceptType ?? AcceptHeader).Split(','))
+        {
             _client.DefaultRequestHeaders.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(acceptSingle));
+        }
+
         _client.DefaultRequestHeaders.Remove(OSLCConstants.OSLC_CORE_VERSION);
         _client.DefaultRequestHeaders.Add(OSLCConstants.OSLC_CORE_VERSION, "2.0");
 
@@ -604,12 +608,16 @@ public class OslcClient : IDisposable
         var response = await GetResourceAsync<ServiceProviderCatalog>(catalogUrl).ConfigureAwait(false);
 
         if (response.StatusCode != HttpStatusCode.OK)
+        {
             throw new ResourceNotFoundException(catalogUrl, serviceProviderTitle);
+        }
 
         var catalog = response.Resources?.SingleOrDefault();
 
         if (catalog != null)
+        {
             foreach (var sp in catalog.GetServiceProviders())
+            {
                 if (sp.GetTitle() != null &&
                     string.Compare(sp.GetTitle(), serviceProviderTitle,
                         StringComparison.OrdinalIgnoreCase) == 0)
@@ -617,8 +625,13 @@ public class OslcClient : IDisposable
                     retval = sp.GetAbout().ToString();
                     break;
                 }
+            }
+        }
 
-        if (retval == null) throw new ResourceNotFoundException(catalogUrl, serviceProviderTitle);
+        if (retval == null)
+        {
+            throw new ResourceNotFoundException(catalogUrl, serviceProviderTitle);
+        }
 
         return retval;
     }
@@ -641,11 +654,14 @@ public class OslcClient : IDisposable
 
 
         if (response.StatusCode != HttpStatusCode.OK)
+        {
             throw new ResourceNotFoundException(serviceProviderUrl, "QueryCapability");
+        }
 
         var serviceProvider = response.Resources.SingleOrDefault();
 
         if (serviceProvider != null)
+        {
             foreach (var service in serviceProvider.GetServices())
             {
                 var domain = service.GetDomain();
@@ -658,30 +674,43 @@ public class OslcClient : IDisposable
                         foreach (var queryCapability in service.GetQueryCapabilities())
                         {
                             foreach (var resourceType in queryCapability.GetResourceTypes())
+                            {
                                 //return as soon as domain + resource type are matched
                                 if (resourceType.ToString() != null &&
                                     resourceType.ToString().Equals(oslcResourceType))
+                                {
                                     return queryCapability.GetQueryBase().OriginalString;
+                                }
+                            }
 
                             //Check if this is the default capability
                             foreach (var usage in queryCapability.GetUsages())
+                            {
                                 if (usage.ToString() != null && usage.ToString()
                                         .Equals(OSLCConstants.USAGE_DEFAULT_URI))
+                                {
                                     defaultQueryCapability = queryCapability;
+                                }
+                            }
                         }
                     }
                 }
             }
+        }
 
         //If we reached this point, there was no resource type match
         if (defaultQueryCapability != null)
+        {
             //return default, if present
             return defaultQueryCapability.GetQueryBase().ToString();
+        }
 
         if (firstQueryCapability != null &&
             firstQueryCapability.GetResourceTypes().Length == 0)
+        {
             //return the first for the domain, if present
             return firstQueryCapability.GetQueryBase().ToString();
+        }
 
         throw new ResourceNotFoundException(serviceProviderUrl, "QueryCapability");
     }
@@ -703,11 +732,14 @@ public class OslcClient : IDisposable
         var response = await GetResourceAsync<ServiceProvider>(serviceProviderUrl).ConfigureAwait(false);
 
         if (response.StatusCode != HttpStatusCode.OK)
+        {
             throw new ResourceNotFoundException(serviceProviderUrl, "CreationFactory");
+        }
 
         var serviceProvider = response.Resources?.SingleOrDefault();
 
         if (serviceProvider != null)
+        {
             foreach (var service in serviceProvider.GetServices())
             {
                 var domain = service.GetDomain();
@@ -720,30 +752,43 @@ public class OslcClient : IDisposable
                         foreach (var creationFactory in creationFactories)
                         {
                             foreach (var resourceType in creationFactory.GetResourceTypes())
+                            {
                                 //return as soon as domain + resource type are matched
                                 if (resourceType.ToString() != null &&
                                     resourceType.ToString().Equals(oslcResourceType))
+                                {
                                     return creationFactory.GetCreation().ToString();
+                                }
+                            }
 
                             //Check if this is the default factory
                             foreach (var usage in creationFactory.GetUsages())
+                            {
                                 if (usage.ToString() != null && usage.ToString()
                                         .Equals(OSLCConstants.USAGE_DEFAULT_URI))
+                                {
                                     defaultCreationFactory = creationFactory;
+                                }
+                            }
                         }
                     }
                 }
             }
+        }
 
         //If we reached this point, there was no resource type match
         if (defaultCreationFactory != null)
+        {
             //return default, if present
             return defaultCreationFactory.GetCreation().ToString();
+        }
 
         if (firstCreationFactory != null &&
             firstCreationFactory.GetResourceTypes().Length == 0)
+        {
             //return the first for the domain, if present
             return firstCreationFactory.GetCreation().ToString();
+        }
 
         throw new ResourceNotFoundException(serviceProviderUrl, "CreationFactory");
     }

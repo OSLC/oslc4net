@@ -7,9 +7,9 @@ namespace OSLC4Net.Client;
 public sealed class OslcResponse<T> where T : IResource
 {
     // TODO: make init (@berezovskyi 2024-10)
-    public Graph? Graph { get; private set; } = default;
-    public List<T>? Resources { get; private set; } = default;
-    public Error? ErrorResource { get; private set; } = null;
+    public Graph? Graph { get; private set; }
+    public List<T>? Resources { get; private set; }
+    public Error? ErrorResource { get; private set; }
 
     public HttpResponseMessage? ResponseMessage { get; private set; }
 

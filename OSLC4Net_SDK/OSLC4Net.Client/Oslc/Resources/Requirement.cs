@@ -45,7 +45,7 @@ public abstract class RequirementBase : AbstractResource
     private string? _description;
     private string? _identifier;
     private string? _shortTitle;
-    private readonly ISet<string> _subjects = new HashSet<string>(); // XXX - TreeSet<> in Java
+    private readonly ISet<string> _subjects = new HashSet<string>(StringComparer.Ordinal); // XXX - TreeSet<> in Java
     private readonly ISet<Uri> _creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
     private readonly ISet<Uri> _contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
     private DateTime? _created;
@@ -84,11 +84,9 @@ public abstract class RequirementBase : AbstractResource
     {
     }
 
-
     protected RequirementBase(Uri about) : base(about)
     {
     }
-
 
     public void AddSubject(string subject)
     {
@@ -453,105 +451,150 @@ public abstract class RequirementBase : AbstractResource
     {
         _constrains.Clear();
 
-        if (constrains != null) _constrains.AddAll(constrains);
+        if (constrains != null)
+        {
+            _constrains.AddAll(constrains);
+        }
     }
 
     public void SetConstrainedBy(Link[] constrainedBy)
     {
         _constrainedBy.Clear();
 
-        if (constrainedBy != null) _constrainedBy.AddAll(constrainedBy);
+        if (constrainedBy != null)
+        {
+            _constrainedBy.AddAll(constrainedBy);
+        }
     }
 
     public void SetDecomposes(Link[] decomposes)
     {
         _decomposes.Clear();
 
-        if (decomposes != null) _decomposes.AddAll(decomposes);
+        if (decomposes != null)
+        {
+            _decomposes.AddAll(decomposes);
+        }
     }
 
     public void SetDecomposedBy(Link[] decomposedBy)
     {
         _decomposedBy.Clear();
 
-        if (decomposedBy != null) _decomposedBy.AddAll(decomposedBy);
+        if (decomposedBy != null)
+        {
+            _decomposedBy.AddAll(decomposedBy);
+        }
     }
 
     public void SetSatisfies(Link[] satisfies)
     {
         _satisfies.Clear();
 
-        if (satisfies != null) _satisfies.AddAll(satisfies);
+        if (satisfies != null)
+        {
+            _satisfies.AddAll(satisfies);
+        }
     }
 
     public void SetSatisfiedBy(Link[] satisfiedBy)
     {
         _satisfiedBy.Clear();
 
-        if (satisfiedBy != null) _satisfiedBy.AddAll(satisfiedBy);
+        if (satisfiedBy != null)
+        {
+            _satisfiedBy.AddAll(satisfiedBy);
+        }
     }
 
     public void SetValidatedBy(Link[] validatedBy)
     {
         _validatedBy.Clear();
 
-        if (validatedBy != null) _validatedBy.AddAll(validatedBy);
+        if (validatedBy != null)
+        {
+            _validatedBy.AddAll(validatedBy);
+        }
     }
 
     public void SetTrackedBy(Link[] trackedBy)
     {
         _trackedBy.Clear();
 
-        if (trackedBy != null) _trackedBy.AddAll(trackedBy);
+        if (trackedBy != null)
+        {
+            _trackedBy.AddAll(trackedBy);
+        }
     }
 
     public void SetAffectedBy(Link[] affectedBy)
     {
         _affectedBy.Clear();
 
-        if (affectedBy != null) _affectedBy.AddAll(affectedBy);
+        if (affectedBy != null)
+        {
+            _affectedBy.AddAll(affectedBy);
+        }
     }
 
     public void SetImplementedBy(Link[] implementedBy)
     {
         _implementedBy.Clear();
 
-        if (implementedBy != null) _implementedBy.AddAll(implementedBy);
+        if (implementedBy != null)
+        {
+            _implementedBy.AddAll(implementedBy);
+        }
     }
 
     public void SetElaboratedBy(Link[] elaboratedBy)
     {
         _elaboratedBy.Clear();
 
-        if (elaboratedBy != null) _elaboratedBy.AddAll(elaboratedBy);
+        if (elaboratedBy != null)
+        {
+            _elaboratedBy.AddAll(elaboratedBy);
+        }
     }
 
     public void SetElaborates(Link[] elaborates)
     {
         _elaborates.Clear();
 
-        if (elaborates != null) _elaborates.AddAll(elaborates);
+        if (elaborates != null)
+        {
+            _elaborates.AddAll(elaborates);
+        }
     }
 
     public void SetSpecifiedBy(Link[] specifiedBy)
     {
         _specifiedBy.Clear();
 
-        if (specifiedBy != null) _specifiedBy.AddAll(specifiedBy);
+        if (specifiedBy != null)
+        {
+            _specifiedBy.AddAll(specifiedBy);
+        }
     }
 
     public void SetSpecifies(Link[] specifies)
     {
         _specifies.Clear();
 
-        if (specifies != null) _specifies.AddAll(specifies);
+        if (specifies != null)
+        {
+            _specifies.AddAll(specifies);
+        }
     }
 
     public void SetContributors(Uri[] contributors)
     {
         _contributors.Clear();
 
-        if (contributors != null) _contributors.AddAll(contributors);
+        if (contributors != null)
+        {
+            _contributors.AddAll(contributors);
+        }
     }
 
     public void SetCreated(DateTime? created)
@@ -563,7 +606,10 @@ public abstract class RequirementBase : AbstractResource
     {
         _creators.Clear();
 
-        if (creators != null) _creators.AddAll(creators);
+        if (creators != null)
+        {
+            _creators.AddAll(creators);
+        }
     }
 
     public void SetDescription(string? description)
@@ -611,6 +657,9 @@ public abstract class RequirementBase : AbstractResource
     {
         _subjects.Clear();
 
-        if (subjects != null) _subjects.AddAll(subjects);
+        if (subjects != null)
+        {
+            _subjects.AddAll(subjects);
+        }
     }
 }

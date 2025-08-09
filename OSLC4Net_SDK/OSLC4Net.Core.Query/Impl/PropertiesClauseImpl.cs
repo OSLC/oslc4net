@@ -20,7 +20,7 @@ namespace OSLC4Net.Core.Query.Impl;
 /// <summary>
 /// Implementation of PropertiesClause interface
 /// </summary>
-internal class PropertiesClauseImpl : PropertiesImpl, PropertiesClause
+internal sealed class PropertiesClauseImpl : PropertiesImpl, PropertiesClause
 {
     public
     PropertiesClauseImpl(

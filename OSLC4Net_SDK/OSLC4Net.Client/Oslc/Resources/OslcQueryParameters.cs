@@ -106,7 +106,7 @@ public class OslcQueryParameters
             return encodedQueryParms.Replace("#", "%23").Replace("/", "%2F").Replace(":", "%3A")
                 .Replace("=", "%3D");
         }
-        catch (UriFormatException e)
+        catch (UriFormatException)
         {
             //Should not occur
             throw new ArgumentOutOfRangeException(nameof(oslcQueryParam), oslcQueryParam,

@@ -86,7 +86,6 @@ public static partial class OslcConstants
                 public const string WasStartedBy = NS + "wasStartedBy";
             }
 
-
             public static class Q
             {
                 public static QName ActedOnBehalfOf => QNameFor("actedOnBehalfOf");

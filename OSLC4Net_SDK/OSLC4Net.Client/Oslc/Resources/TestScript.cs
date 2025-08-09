@@ -127,14 +127,20 @@ public class TestScript : QmResource
     {
         this.contributors.Clear();
 
-        if (contributors != null) this.contributors.AddAll(contributors);
+        if (contributors != null)
+        {
+            this.contributors.AddAll(contributors);
+        }
     }
 
     public void setCreators(Uri[] creators)
     {
         this.creators.Clear();
 
-        if (creators != null) this.creators.AddAll(creators);
+        if (creators != null)
+        {
+            this.creators.AddAll(creators);
+        }
     }
 
     public void setDescription(string description)
@@ -151,13 +157,19 @@ public class TestScript : QmResource
     {
         this.relatedChangeRequests.Clear();
 
-        if (relatedChangeRequests != null) this.relatedChangeRequests.AddAll(relatedChangeRequests);
+        if (relatedChangeRequests != null)
+        {
+            this.relatedChangeRequests.AddAll(relatedChangeRequests);
+        }
     }
 
     public void setValidatesRequirements(Link[] validatesRequirements)
     {
         this.validatesRequirements.Clear();
 
-        if (validatesRequirements != null) this.validatesRequirements.AddAll(validatesRequirements);
+        if (validatesRequirements != null)
+        {
+            this.validatesRequirements.AddAll(validatesRequirements);
+        }
     }
 }

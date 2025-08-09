@@ -17,7 +17,7 @@ using Antlr.Runtime.Tree;
 
 namespace OSLC4Net.Core.Query.Impl;
 
-class WhereClauseImpl : CompoundTermImpl, WhereClause
+sealed class WhereClauseImpl : CompoundTermImpl, WhereClause
 {
     public
     WhereClauseImpl(

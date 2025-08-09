@@ -21,7 +21,7 @@ namespace OSLC4Net.Core.Query.Impl;
 /// <summary>
 /// Implementation of NestedProperty interface
 /// </summary>
-internal class NestedPropertyImpl : PropertyImpl, NestedProperty
+internal sealed class NestedPropertyImpl : PropertyImpl, NestedProperty
 {
     public
     NestedPropertyImpl(
@@ -64,5 +64,5 @@ internal class NestedPropertyImpl : PropertyImpl, NestedProperty
     }
 
     private readonly CommonTree tree;
-    private IList<Property> children = null;
+    private IList<Property> children;
 }

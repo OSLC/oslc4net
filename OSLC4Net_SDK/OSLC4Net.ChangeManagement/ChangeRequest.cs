@@ -44,7 +44,7 @@ public class ChangeRequest : AbstractResource
     private readonly HashSet<Link> _relatedTestExecutionRecords = new();
     private readonly HashSet<Link> _relatedTestPlans = new();
     private readonly HashSet<Link> _relatedTestScripts = new();
-    private readonly HashSet<string> _subjects = new(); // XXX - TreeSet<> in Java
+    private readonly HashSet<string> _subjects = new(StringComparer.Ordinal); // XXX - TreeSet<> in Java
     private readonly HashSet<Link> _testedByTestCases = new();
     private readonly HashSet<Link> _tracksChangeSets = new();
     private readonly HashSet<Link> _tracksRequirements = new();

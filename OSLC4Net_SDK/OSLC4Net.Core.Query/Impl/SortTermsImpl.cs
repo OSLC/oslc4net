@@ -17,7 +17,7 @@ using Antlr.Runtime.Tree;
 
 namespace OSLC4Net.Core.Query.Impl;
 
-class SortTermsImpl : OrderByClause
+sealed class SortTermsImpl : OrderByClause
 {
     public SortTermsImpl(
         CommonTree tree,
@@ -37,7 +37,7 @@ class SortTermsImpl : OrderByClause
 
                 var rawChildren = (IList<CommonTree>)tree.Children;
 
-                children = new List<SortTerm>(rawChildren.Count());
+                children = new List<SortTerm>(rawChildren.Count);
 
                 foreach (var child in rawChildren)
                 {
@@ -63,5 +63,5 @@ class SortTermsImpl : OrderByClause
 
     private readonly CommonTree tree;
     private readonly IDictionary<string, string> prefixMap;
-    private IList<SortTerm> children = null;
+    private IList<SortTerm> children;
 }
