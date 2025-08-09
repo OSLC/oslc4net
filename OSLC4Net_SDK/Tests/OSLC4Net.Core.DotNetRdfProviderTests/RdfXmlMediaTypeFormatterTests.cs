@@ -206,12 +206,12 @@ public class RdfXmlMediaTypeFormatterTests
         {
             using HttpContent content = new StreamContent(stream);
 
-        content.Headers.ContentType = mediaType;
+            content.Headers.ContentType = mediaType;
 
-        await formatter.WriteToStreamAsync(typeof(T), value, stream, content, null);
-        stream.Position = 0;
+            await formatter.WriteToStreamAsync(typeof(T), value, stream, content, null);
+            stream.Position = 0;
 
-        return await content.ReadAsStringAsync();
+            return await content.ReadAsStringAsync();
         }
     }
 
@@ -223,12 +223,12 @@ public class RdfXmlMediaTypeFormatterTests
         {
             using HttpContent content = new StreamContent(stream);
 
-        content.Headers.ContentType = mediaType;
+            content.Headers.ContentType = mediaType;
 
-        await formatter.WriteToStreamAsync(typeof(T), value, stream, content, null);
-        stream.Position = 0;
+            await formatter.WriteToStreamAsync(typeof(T), value, stream, content, null);
+            stream.Position = 0;
 
-        return await content.ReadAsStringAsync();
+            return await content.ReadAsStringAsync();
         }
     }
 
@@ -239,16 +239,16 @@ public class RdfXmlMediaTypeFormatterTests
         await using (stream.ConfigureAwait(false))
         {
             await using var writer = new StreamWriter(stream);
-        using HttpContent content = new StreamContent(stream);
+            using HttpContent content = new StreamContent(stream);
 
-        content.Headers.ContentType = mediaType;
+            content.Headers.ContentType = mediaType;
 
-        await writer.WriteAsync(str);
-        await writer.FlushAsync();
+            await writer.WriteAsync(str);
+            await writer.FlushAsync();
 
-        stream.Position = 0;
+            stream.Position = 0;
 
-        return await formatter.ReadFromStreamAsync(typeof(T), stream, content, null) as T;
+            return await formatter.ReadFromStreamAsync(typeof(T), stream, content, null) as T;
         }
     }
 
@@ -260,17 +260,17 @@ public class RdfXmlMediaTypeFormatterTests
         await using (stream.ConfigureAwait(false))
         {
             await using var writer = new StreamWriter(stream);
-        using HttpContent content = new StreamContent(stream);
+            using HttpContent content = new StreamContent(stream);
 
-        content.Headers.ContentType = mediaType;
+            content.Headers.ContentType = mediaType;
 
-        await writer.WriteAsync(str);
-        await writer.FlushAsync();
+            await writer.WriteAsync(str);
+            await writer.FlushAsync();
 
-        stream.Position = 0;
+            stream.Position = 0;
 
-        return await formatter.ReadFromStreamAsync(typeof(List<T>), stream, content, null) as
-            IEnumerable<T>;
+            return await formatter.ReadFromStreamAsync(typeof(List<T>), stream, content, null) as
+                IEnumerable<T>;
         }
     }
 }

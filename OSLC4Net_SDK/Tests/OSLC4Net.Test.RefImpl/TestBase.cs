@@ -383,7 +383,7 @@ public abstract class TestBase
         //OslcRestClient oslcRestClient = new(Formatters,
         //                                    creation,
         //                                    mediaType);
-        var client = GetTestClient();
+        _ = GetTestClient();
         var addedChangeRequestResponse = await TestClient
             .CreateResourceAsync(creation, changeRequest, mediaType)
             .ConfigureAwait(true);
