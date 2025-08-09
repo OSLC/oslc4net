@@ -29,7 +29,6 @@ namespace OSLC4Net.Client.Oslc.Resources;
 public class ParameterInstance : AbstractResource
 {
 
-
     private string name;
     private string value;
     private string description;

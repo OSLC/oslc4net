@@ -20,7 +20,7 @@ namespace OSLC4Net.Core.Query.Impl;
 /// <summary>
 /// Implementation of UriRefValue interface
 /// </summary>
-internal class UriRefValueImpl : ValueImpl, UriRefValue
+internal sealed class UriRefValueImpl : ValueImpl, UriRefValue
 {
     public
     UriRefValueImpl(CommonTree tree) : base(tree, ValueType.URI_REF)
@@ -46,5 +46,5 @@ internal class UriRefValueImpl : ValueImpl, UriRefValue
         return '<' + Value.ToString() + '>';
     }
 
-    private string value = null;
+    private string value;
 }

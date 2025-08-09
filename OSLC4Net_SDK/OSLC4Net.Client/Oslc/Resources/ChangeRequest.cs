@@ -31,7 +31,7 @@ public class ChangeRequest : AbstractResource
     private readonly ISet<Link> blocksTestExecutionRecords = new HashSet<Link>();
     private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
     private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
-    private readonly ISet<string> dctermsTypes = new HashSet<string>(); // XXX - TreeSet<> in Java
+    private readonly ISet<string> dctermsTypes = new HashSet<string>(StringComparer.Ordinal); // XXX - TreeSet<> in Java
     private readonly ISet<Link> implementsRequirements = new HashSet<Link>();
     private readonly ISet<Link> relatedChangeRequests = new HashSet<Link>();
 
@@ -42,7 +42,7 @@ public class ChangeRequest : AbstractResource
     private readonly ISet<Link> relatedTestExecutionRecords = new HashSet<Link>();
     private readonly ISet<Link> relatedTestPlans = new HashSet<Link>();
     private readonly ISet<Link> relatedTestScripts = new HashSet<Link>();
-    private readonly ISet<string> subjects = new HashSet<string>(); // XXX - TreeSet<> in Java
+    private readonly ISet<string> subjects = new HashSet<string>(StringComparer.Ordinal); // XXX - TreeSet<> in Java
     private readonly ISet<Link> testedByTestCases = new HashSet<Link>();
     private readonly ISet<Link> tracksChangeSets = new HashSet<Link>();
     private readonly ISet<Link> tracksRequirements = new HashSet<Link>();
@@ -552,28 +552,40 @@ public class ChangeRequest : AbstractResource
     {
         this.affectedByDefects.Clear();
 
-        if (affectedByDefects != null) this.affectedByDefects.AddAll(affectedByDefects);
+        if (affectedByDefects != null)
+        {
+            this.affectedByDefects.AddAll(affectedByDefects);
+        }
     }
 
     public void SetAffectsPlanItems(Link[] affectsPlanItems)
     {
         this.affectsPlanItems.Clear();
 
-        if (affectsPlanItems != null) this.affectsPlanItems.AddAll(affectsPlanItems);
+        if (affectsPlanItems != null)
+        {
+            this.affectsPlanItems.AddAll(affectsPlanItems);
+        }
     }
 
     public void SetAffectsRequirements(Link[] affectsRequirements)
     {
         this.affectsRequirements.Clear();
 
-        if (affectsRequirements != null) this.affectsRequirements.AddAll(affectsRequirements);
+        if (affectsRequirements != null)
+        {
+            this.affectsRequirements.AddAll(affectsRequirements);
+        }
     }
 
     public void SetAffectsTestResults(Link[] affectsTestResults)
     {
         this.affectsTestResults.Clear();
 
-        if (affectsTestResults != null) this.affectsTestResults.AddAll(affectsTestResults);
+        if (affectsTestResults != null)
+        {
+            this.affectsTestResults.AddAll(affectsTestResults);
+        }
     }
 
     public void SetApproved(bool approved)
@@ -585,7 +597,10 @@ public class ChangeRequest : AbstractResource
     {
         this.blocksTestExecutionRecords.Clear();
 
-        if (blocksTestExecutionRecords != null) this.blocksTestExecutionRecords.AddAll(blocksTestExecutionRecords);
+        if (blocksTestExecutionRecords != null)
+        {
+            this.blocksTestExecutionRecords.AddAll(blocksTestExecutionRecords);
+        }
     }
 
     public void SetClosed(bool closed)
@@ -602,7 +617,10 @@ public class ChangeRequest : AbstractResource
     {
         this.contributors.Clear();
 
-        if (contributors != null) this.contributors.AddAll(contributors);
+        if (contributors != null)
+        {
+            this.contributors.AddAll(contributors);
+        }
     }
 
     public void SetCreated(DateTime? created)
@@ -614,14 +632,20 @@ public class ChangeRequest : AbstractResource
     {
         this.creators.Clear();
 
-        if (creators != null) this.creators.AddAll(creators);
+        if (creators != null)
+        {
+            this.creators.AddAll(creators);
+        }
     }
 
     public void SetDctermsTypes(string[] dctermsTypes)
     {
         this.dctermsTypes.Clear();
 
-        if (dctermsTypes != null) this.dctermsTypes.AddAll(dctermsTypes);
+        if (dctermsTypes != null)
+        {
+            this.dctermsTypes.AddAll(dctermsTypes);
+        }
     }
 
     public void SetDescription(string description)
@@ -648,7 +672,10 @@ public class ChangeRequest : AbstractResource
     {
         this.implementsRequirements.Clear();
 
-        if (implementsRequirements != null) this.implementsRequirements.AddAll(implementsRequirements);
+        if (implementsRequirements != null)
+        {
+            this.implementsRequirements.AddAll(implementsRequirements);
+        }
     }
 
     public void SetInProgress(bool inProgress)
@@ -666,7 +693,6 @@ public class ChangeRequest : AbstractResource
         this.modified = modified;
     }
 
-
     [Obsolete("User SetTypes() or .Types instead")]
     public void SetRdfTypes(Uri[] rdfTypes)
     {
@@ -677,42 +703,60 @@ public class ChangeRequest : AbstractResource
     {
         this.relatedChangeRequests.Clear();
 
-        if (relatedChangeRequests != null) this.relatedChangeRequests.AddAll(relatedChangeRequests);
+        if (relatedChangeRequests != null)
+        {
+            this.relatedChangeRequests.AddAll(relatedChangeRequests);
+        }
     }
 
     public void SetRelatedResources(Link[] relatedResources)
     {
         this.relatedResources.Clear();
 
-        if (relatedResources != null) this.relatedResources.AddAll(relatedResources);
+        if (relatedResources != null)
+        {
+            this.relatedResources.AddAll(relatedResources);
+        }
     }
 
     public void SetRelatedTestCases(Link[] relatedTestCases)
     {
         this.relatedTestCases.Clear();
 
-        if (relatedTestCases != null) this.relatedTestCases.AddAll(relatedTestCases);
+        if (relatedTestCases != null)
+        {
+            this.relatedTestCases.AddAll(relatedTestCases);
+        }
     }
 
     public void SetRelatedTestExecutionRecords(Link[] relatedTestExecutionRecords)
     {
         this.relatedTestExecutionRecords.Clear();
 
-        if (relatedTestExecutionRecords != null) this.relatedTestExecutionRecords.AddAll(relatedTestExecutionRecords);
+        if (relatedTestExecutionRecords != null)
+        {
+            this.relatedTestExecutionRecords.AddAll(relatedTestExecutionRecords);
+        }
     }
 
     public void SetRelatedTestPlans(Link[] relatedTestPlans)
     {
         this.relatedTestPlans.Clear();
 
-        if (relatedTestPlans != null) this.relatedTestPlans.AddAll(relatedTestPlans);
+        if (relatedTestPlans != null)
+        {
+            this.relatedTestPlans.AddAll(relatedTestPlans);
+        }
     }
 
     public void SetRelatedTestScripts(Link[] relatedTestScripts)
     {
         this.relatedTestScripts.Clear();
 
-        if (relatedTestScripts != null) this.relatedTestScripts.AddAll(relatedTestScripts);
+        if (relatedTestScripts != null)
+        {
+            this.relatedTestScripts.AddAll(relatedTestScripts);
+        }
     }
 
     public void SetReviewed(bool reviewed)
@@ -739,14 +783,20 @@ public class ChangeRequest : AbstractResource
     {
         this.subjects.Clear();
 
-        if (subjects != null) this.subjects.AddAll(subjects);
+        if (subjects != null)
+        {
+            this.subjects.AddAll(subjects);
+        }
     }
 
     public void SetTestedByTestCases(Link[] testedByTestCases)
     {
         this.testedByTestCases.Clear();
 
-        if (testedByTestCases != null) this.testedByTestCases.AddAll(testedByTestCases);
+        if (testedByTestCases != null)
+        {
+            this.testedByTestCases.AddAll(testedByTestCases);
+        }
     }
 
     public void SetTitle(string title)
@@ -758,14 +808,20 @@ public class ChangeRequest : AbstractResource
     {
         this.tracksChangeSets.Clear();
 
-        if (tracksChangeSets != null) this.tracksChangeSets.AddAll(tracksChangeSets);
+        if (tracksChangeSets != null)
+        {
+            this.tracksChangeSets.AddAll(tracksChangeSets);
+        }
     }
 
     public void SetTracksRequirements(Link[] tracksRequirements)
     {
         this.tracksRequirements.Clear();
 
-        if (tracksRequirements != null) this.tracksRequirements.AddAll(tracksRequirements);
+        if (tracksRequirements != null)
+        {
+            this.tracksRequirements.AddAll(tracksRequirements);
+        }
     }
 
     public void SetVerified(bool verified)

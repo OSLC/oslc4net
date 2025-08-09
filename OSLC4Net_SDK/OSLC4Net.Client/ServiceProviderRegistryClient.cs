@@ -53,12 +53,15 @@ public sealed class ServiceProviderRegistryClient
         Endpoint = uri;
         _logger = loggerFactory.CreateLogger<ServiceProviderRegistryClient>();
         if (username != null && password != null)
+        {
             Client = OslcClient.ForBasicAuth(username, password,
                 loggerFactory.CreateLogger<OslcClient>());
+        }
         else
+        {
             Client = new OslcClient(loggerFactory.CreateLogger<OslcClient>());
+        }
     }
-
 
     /// <summary>
     ///
@@ -78,7 +81,6 @@ public sealed class ServiceProviderRegistryClient
         this(uri, formatters, OslcMediaType.APPLICATION_RDF_XML, loggerFactory, null)
     {
     }
-
 
     public static ServiceProviderRegistryClient WithBasicAuth(string uri, string username,
         string password, ILoggerFactory loggerFactory)
@@ -102,7 +104,7 @@ public sealed class ServiceProviderRegistryClient
         // We have to first get the ServiceProvider for ServiceProviders and then find the CreationFactory for a ServiceProvider
 
         // We first try for a ServiceProviderCatalog
-        var serviceProviderCatalog = await FetchServiceProviderCatalogAsync();
+        var serviceProviderCatalog = await FetchServiceProviderCatalogAsync().ConfigureAwait(false);
 
         if (serviceProviderCatalog != null)
         {
@@ -111,14 +113,18 @@ public sealed class ServiceProviderRegistryClient
         else
         {
             // Secondly we try for a ServiceProvider which is acting as a ServiceProvider registry
-            var serviceProvider = await GetServiceProviderAsync();
+            var serviceProvider = await GetServiceProviderAsync().ConfigureAwait(false);
 
             if (serviceProvider != null)
+            {
                 serviceProviders = new ServiceProvider[] { serviceProvider };
+            }
             else
+            {
                 throw new OslcCoreRegistrationException(serviceProviderToRegister,
                     HttpStatusCode.NotFound,
                     "ServiceProviderCatalog");
+            }
         }
 
         if (serviceProviders != null)
@@ -136,6 +142,7 @@ public sealed class ServiceProviderRegistryClient
                 var services = serviceProvider.GetServices();
 
                 if (services != null)
+                {
                     for (var serviceIndex = 0;
                          serviceIndex < services.Length &&
                          firstDefaultCreationFactory == null;
@@ -146,6 +153,7 @@ public sealed class ServiceProviderRegistryClient
                         var creationFactories = service.GetCreationFactories();
 
                         if (creationFactories != null)
+                        {
                             for (var creationFactoryIndex = 0;
                                  creationFactoryIndex < creationFactories.Length &&
                                  firstDefaultCreationFactory == null;
@@ -156,6 +164,7 @@ public sealed class ServiceProviderRegistryClient
                                 var resourceTypes = creationFactory.GetResourceTypes();
 
                                 if (resourceTypes != null)
+                                {
                                     for (var resourceTypeIndex = 0;
                                          resourceTypeIndex < resourceTypes.Length &&
                                          firstDefaultCreationFactory == null;
@@ -177,12 +186,17 @@ public sealed class ServiceProviderRegistryClient
                                                 var usage = usages[usageIndex];
 
                                                 if (oslcUsageDefault.Equals(usage))
+                                                {
                                                     firstDefaultCreationFactory = creationFactory;
+                                                }
                                             }
                                         }
                                     }
+                                }
                             }
+                        }
                     }
+                }
             }
 
             if (firstCreationFactory != null)
@@ -198,9 +212,11 @@ public sealed class ServiceProviderRegistryClient
                 var statusCode = clientResponse.StatusCode;
 
                 if (statusCode != HttpStatusCode.Created)
+                {
                     throw new OslcCoreRegistrationException(serviceProviderToRegister,
                         statusCode,
                         clientResponse.ResponseMessage?.ReasonPhrase);
+                }
 
                 if (clientResponse.ResponseMessage?.Headers.Location == null)
                 {
@@ -230,9 +246,11 @@ public sealed class ServiceProviderRegistryClient
 
         var statusCode = clientResponse.StatusCode;
         if (statusCode != HttpStatusCode.OK)
+        {
             throw new OslcCoreDeregistrationException(serviceProviderURI,
                 (int)statusCode,
                 clientResponse.ReasonPhrase);
+        }
     }
 
     /// <summary>
@@ -283,7 +301,10 @@ public sealed class ServiceProviderRegistryClient
         // We first try for a ServiceProviderCatalog
         var serviceProviderCatalog = await FetchServiceProviderCatalogAsync().ConfigureAwait(false);
 
-        if (serviceProviderCatalog != null) return serviceProviderCatalog.GetServiceProviders();
+        if (serviceProviderCatalog != null)
+        {
+            return serviceProviderCatalog.GetServiceProviders();
+        }
 
         // Secondly we try for a ServiceProvider which is acting as a ServiceProvider registry
         var serviceProvider = await GetServiceProviderAsync().ConfigureAwait(false);
@@ -307,6 +328,7 @@ public sealed class ServiceProviderRegistryClient
                     var queryCapabilities = service.GetQueryCapabilities();
 
                     if (queryCapabilities != null)
+                    {
                         for (var queryCapabilityIndex = 0;
                              queryCapabilityIndex < queryCapabilities.Length &&
                              firstDefaultQueryCapability == null;
@@ -317,6 +339,7 @@ public sealed class ServiceProviderRegistryClient
                             var resourceTypes = queryCapability.GetResourceTypes();
 
                             if (resourceTypes != null)
+                            {
                                 for (var resourceTypeIndex = 0;
                                      resourceTypeIndex < resourceTypes.Length &&
                                      firstDefaultQueryCapability == null;
@@ -338,11 +361,15 @@ public sealed class ServiceProviderRegistryClient
                                             var usage = usages[usageIndex];
 
                                             if (OslcConstants.OSLC_USAGE_DEFAULT.Equals(usage.ToString()))
+                                            {
                                                 firstDefaultQueryCapability = queryCapability;
+                                            }
                                         }
                                     }
                                 }
+                            }
                         }
+                    }
                 }
 
                 if (firstQueryCapability != null)

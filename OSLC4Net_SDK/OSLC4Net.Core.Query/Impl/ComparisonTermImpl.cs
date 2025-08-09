@@ -20,7 +20,7 @@ namespace OSLC4Net.Core.Query.Impl;
 /// <summary>
 /// implmentation of ComparisonTerm interface
 /// </summary>
-internal class ComparisonTermImpl : SimpleTermImpl, ComparisonTerm
+internal sealed class ComparisonTermImpl : SimpleTermImpl, ComparisonTerm
 {
     public
     ComparisonTermImpl(
@@ -110,7 +110,7 @@ internal class ComparisonTermImpl : SimpleTermImpl, ComparisonTerm
     }
 
     private readonly Operator op;
-    private Value operand = null;
+    private Value operand;
 }
 
 internal static class OperatorExtension

@@ -19,12 +19,6 @@ library based on the [dotNetRDF](https://dotnetrdf.org/) package, which assists
 with representing these resources as RDF and helps parse Turle, RDF/XML, and
 JSON-LD documents into OSLC .NET objects.
 
-The [OSLC4Net.Client package](https://www.nuget.org/packages/OSLC4Net.Client/)
-can be used to help create consumer REST requests. On the server side, the
-project offers an RDF-specific `MediaTypeFormatter` that can help process OSLC
-REST requests within an ASP.NET MVC 5 API (ASP.NET Core 8+ migration is
-[ongoing](https://github.com/OSLC/oslc4net/issues/218)).
-
 ## Getting started
 
 If you do not have a .NET development environment, start by downloading VS Code
@@ -32,6 +26,15 @@ If you do not have a .NET development environment, start by downloading VS Code
 Kit](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit).
 Make sure to install .NET 8 SDK for development. Libraries target NETStandard
 2.0/2.1 and should run on .NET 6+.
+
+### A simple OSLC Server
+
+See under [OSLC4Net_SDK/Examples/OSLC4NetExamples.Server.NetCoreApi](https://github.com/OSLC/oslc4net/tree/main/OSLC4Net_SDK/Examples/OSLC4NetExamples.Server.NetCoreApi)
+for an example of a ASP.NET Core 8+ API that showcases support for
+
+- OSLC Root Services document under `/.well-known` path
+- OSLC Service Provider Catalog
+- OSLC Service Provider
 
 ### A simple OSLC Client
 

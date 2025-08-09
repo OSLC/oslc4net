@@ -44,9 +44,8 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
 
     private readonly HttpResponseMessage _response;
 
-
     private IUriNode? _infoResource;
-    private bool _nextPageChecked = false;
+    private bool _nextPageChecked;
 
     private string? _nextPageUrl = "";
 
@@ -60,7 +59,6 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     private long? _totalCount;
     private readonly DotNetRdfHelper _rdfHelper;
 
-
     public OslcQueryResult(OslcQuery query, HttpResponseMessage response,
         DotNetRdfHelper? rdfHelper = null)
     {
@@ -73,6 +71,7 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
 
     private OslcQueryResult(OslcQueryResult prev, DotNetRdfHelper rdfHelper)
     {
+        _rdfHelper = rdfHelper;
         _query = new OslcQuery(prev);
         // FIXME: we should split the data from logic - ctor should not be making calls; one of the methods should return a record with the data.
         _response = _query.GetResponseRawAsync().Result;
@@ -101,7 +100,10 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     {
         get
         {
-            if (!MoveNext()) throw new InvalidOperationException();
+            if (!MoveNext())
+            {
+                throw new InvalidOperationException();
+            }
 
             return new OslcQueryResult(this, _rdfHelper);
         }
@@ -142,7 +144,10 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     [MethodImpl(MethodImplOptions.Synchronized)]
     private void InitializeRdf()
     {
-        if (_rdfInitialized) return;
+        if (_rdfInitialized)
+        {
+            return;
+        }
 
         _rdfInitialized = true;
         _rdfGraph = new Graph();
@@ -171,7 +176,7 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
         }
     }
 
-    private IUriNode? GetSingleInfoResource(Triple[]? triples)
+    private static IUriNode? GetSingleInfoResource(Triple[]? triples)
     {
         return triples?.Length == 1 ? triples.First().Subject as IUriNode : null;
     }
@@ -200,14 +205,14 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     {
         return triples?.SingleOrDefault(spo =>
             spo.Subject is IUriNode node &&
-            node.Uri.ToString().StartsWith(_query.QueryUri.ToString()))?.Subject as IUriNode;
+            node.Uri.ToString().StartsWith(_query.QueryUri.ToString(), StringComparison.Ordinal))?.Subject as IUriNode;
     }
 
     private IUriNode? GetInfoResourceSubjectStartsWithCapabilityUri(Triple[]? triples)
     {
         return triples?.SingleOrDefault(spo =>
             spo.Subject is IUriNode node &&
-            node.Uri.ToString().StartsWith(_query.CapabilityUrl))?.Subject as IUriNode;
+            node.Uri.ToString().StartsWith(_query.CapabilityUrl, StringComparison.Ordinal))?.Subject as IUriNode;
     }
 
     internal string? GetNextPageUrl()
@@ -217,8 +222,10 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
         Debug.Assert(_infoResource != null);
         Debug.Assert(_rdfGraph != null);
 
-
-        if (_nextPageChecked) return _nextPageUrl;
+        if (_nextPageChecked)
+        {
+            return _nextPageUrl;
+        }
 
         _nextPageChecked = true;
         var predicate =
@@ -226,7 +233,9 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
         var triples = _rdfGraph.GetTriplesWithSubjectPredicate(_infoResource, predicate);
         var triplesEnumerated = triples.ToList();
         if (triplesEnumerated.Count == 1 && triplesEnumerated.First().Object is IUriNode)
+        {
             _nextPageUrl = (triplesEnumerated.First().Object as IUriNode)?.Uri.OriginalString;
+        }
 
         return _nextPageUrl;
     }
@@ -271,9 +280,14 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
         {
             if (!triple.Predicate.Equals(
                     _rdfGraph.GetUriNode(_rdfsMemberUri)))
+            {
                 continue;
+            }
 
-            if (triple.Object is IUriNode uriNode) membersUrls.Add(uriNode.Uri.ToString());
+            if (triple.Object is IUriNode uriNode)
+            {
+                membersUrls.Add(uriNode.Uri.ToString());
+            }
             // REVISIT: log or throw
         }
 
@@ -295,7 +309,7 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
         return result;
     }
 
-    private class TripleEnumerableWrapper<T> : IEnumerable<T>
+    private sealed class TripleEnumerableWrapper<T> : IEnumerable<T>
     {
         private readonly IGraph? _graph;
         private readonly DotNetRdfHelper _dotNetRdfHelper;
@@ -321,7 +335,7 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
             return new TripleEnumeratorWrapper(_triples.GetEnumerator(), _graph, _dotNetRdfHelper);
         }
 
-        private class TripleEnumeratorWrapper : IEnumerator<T>
+        private sealed class TripleEnumeratorWrapper : IEnumerator<T>
         {
             private readonly IGraph? _graph;
 

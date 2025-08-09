@@ -1,4 +1,3 @@
-using System.Reflection;
 using System.Runtime.InteropServices;
 using OSLC4Net.ChangeManagement;
 using OSLC4Net.Core.Attribute;

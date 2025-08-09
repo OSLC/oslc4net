@@ -114,7 +114,10 @@ public class TestResult : QmResource
     {
         this.affectedByChangeRequests.Clear();
 
-        if (affectedByChangeRequests != null) this.affectedByChangeRequests.AddAll(affectedByChangeRequests);
+        if (affectedByChangeRequests != null)
+        {
+            this.affectedByChangeRequests.AddAll(affectedByChangeRequests);
+        }
     }
 
     public void SetReportsOnTestPlan(Link reportsOnTestPlan)

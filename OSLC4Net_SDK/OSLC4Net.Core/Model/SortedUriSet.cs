@@ -15,13 +15,13 @@
 
 namespace OSLC4Net.Core.Model;
 
-internal class SortedUriSet : SortedSet<Uri>
+internal sealed class SortedUriSet : SortedSet<Uri>
 {
     public SortedUriSet() : base(new SortByAbsoluteUri())
     {
     }
 
-    protected class SortByAbsoluteUri : IComparer<Uri>
+    protected sealed class SortByAbsoluteUri : IComparer<Uri>
     {
         public int Compare(Uri x, Uri y)
         {

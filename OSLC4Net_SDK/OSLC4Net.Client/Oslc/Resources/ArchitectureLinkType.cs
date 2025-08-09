@@ -163,7 +163,10 @@ public class ArchitectureLinkType : AbstractResource
     {
         this.contributors.Clear();
 
-        if (contributors != null) this.contributors.AddAll(contributors);
+        if (contributors != null)
+        {
+            this.contributors.AddAll(contributors);
+        }
     }
 
     public void SetCreated(DateTime? created)
@@ -175,7 +178,10 @@ public class ArchitectureLinkType : AbstractResource
     {
         this.creators.Clear();
 
-        if (creators != null) this.creators.AddAll(creators);
+        if (creators != null)
+        {
+            this.creators.AddAll(creators);
+        }
     }
 
     public void SetLabel(string label)

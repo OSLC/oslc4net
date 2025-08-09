@@ -80,7 +80,6 @@ public static partial class OslcConstants
                 public const string YahooChatId = NS + "yahooChatID";
             }
 
-
             public static class Q
             {
                 public static QName Account => QNameFor("account");

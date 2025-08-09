@@ -37,7 +37,7 @@ public class QueryUtils
     {
         if (prefixExpression == null)
         {
-            return new Dictionary<string, string>();
+            return new Dictionary<string, string>(StringComparer.Ordinal);
         }
 
         var parser = new OslcPrefixParser(prefixExpression);
@@ -228,7 +228,7 @@ public class QueryUtils
     InvertSelectedProperties(Properties properties)
     {
         var children = properties.Children;
-        IDictionary<string, object> result = new Dictionary<string, object>(children.Count);
+        IDictionary<string, object> result = new Dictionary<string, object>(children.Count, StringComparer.Ordinal);
 
         foreach (var property in children)
         {
@@ -281,8 +281,7 @@ public class QueryUtils
                 case PropertyType.NESTED_PROPERTY:
                     if (property.IsWildcard)
                     {
-
-                        if (!(result is NestedWildcardProperties))
+                        if (result is not NestedWildcardProperties wildcardProperties)
                         {
                             if (result is SingletonWildcardProperties)
                             {
@@ -300,7 +299,7 @@ public class QueryUtils
                         else
                         {
                             MergePropertyMaps(
-                                ((NestedWildcardProperties)result).CommonNestedProperties(),
+                                wildcardProperties.CommonNestedProperties(),
                                 InvertSelectedProperties((NestedProperty)property));
                         }
 
@@ -363,16 +362,17 @@ public class QueryUtils
             var rawTree = (CommonTree)parser.Result;
             var child = (CommonTree)rawTree.GetChild(0);
 
-            if (child is CommonErrorNode)
+            if (child is CommonErrorNode node)
             {
-                throw ((CommonErrorNode)child).trappedException;
+                throw node.trappedException;
             }
 
             var rawList = rawTree.Children;
             var stringList = new StringList(rawList.Count);
 
-            foreach (CommonTree str in rawList)
+            foreach (var iTree in rawList)
             {
+                var str = (CommonTree)iTree;
 
                 var rawString = str.Text;
 
@@ -391,7 +391,7 @@ public class QueryUtils
     /// <summary>
     /// Implementation of a IDictionary<String, String> prefixMap
     /// </summary>
-    private class PrefixMap : Dictionary<string, string>
+    private sealed class PrefixMap : Dictionary<string, string>
     {
         public
         PrefixMap(int size)
@@ -431,7 +431,7 @@ public class QueryUtils
     /// <summary>
     /// Implementation of a SearchTermsClause interface
     /// </summary>
-    private class StringList : List<string>, SearchTermsClause
+    private sealed class StringList : List<string>, SearchTermsClause
     {
         public
         StringList(int size) : base(size)
@@ -468,7 +468,7 @@ public class QueryUtils
     /// <summary>
     /// Implementation of SingletonWildcardProperties
     /// </summary>
-    private class SingletonWildcardPropertiesImpl :
+    private sealed class SingletonWildcardPropertiesImpl :
         Dictionary<string, object>,
         SingletonWildcardProperties
     {
@@ -502,14 +502,14 @@ public class QueryUtils
         }
 
         internal IDictionary<string, object> commonNestedProperties =
-            new Dictionary<string, object>();
+            new Dictionary<string, object>(StringComparer.Ordinal);
     }
 
     /// <summary>
     /// Implementation of both SingletonWildcardProperties and
     /// NestedWildcardProperties
     /// </summary>
-    private class BothWildcardPropertiesImpl :
+    private sealed class BothWildcardPropertiesImpl :
         NestedWildcardPropertiesImpl,
         SingletonWildcardProperties
     {

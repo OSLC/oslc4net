@@ -31,7 +31,7 @@ public class AutomationPlan : AbstractResource
     private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
     private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
-    private readonly ISet<string> subjects = new HashSet<string>(); // XXX - TreeSet<> in Java
+    private readonly ISet<string> subjects = new HashSet<string>(StringComparer.Ordinal); // XXX - TreeSet<> in Java
     private readonly ISet<Property> parameterDefinitions = new HashSet<Property>(); // XXX - TreeSet<> in Java
 
     private DateTime? created;
@@ -201,7 +201,10 @@ public class AutomationPlan : AbstractResource
     {
         this.contributors.Clear();
 
-        if (contributors != null) this.contributors.AddAll(contributors);
+        if (contributors != null)
+        {
+            this.contributors.AddAll(contributors);
+        }
     }
 
     public void SetCreated(DateTime? created)
@@ -213,7 +216,10 @@ public class AutomationPlan : AbstractResource
     {
         this.creators.Clear();
 
-        if (creators != null) this.creators.AddAll(creators);
+        if (creators != null)
+        {
+            this.creators.AddAll(creators);
+        }
     }
 
     public void SetDescription(string description)
@@ -251,7 +257,10 @@ public class AutomationPlan : AbstractResource
     {
         this.subjects.Clear();
 
-        if (subjects != null) this.subjects.AddAll(subjects);
+        if (subjects != null)
+        {
+            this.subjects.AddAll(subjects);
+        }
     }
 
     public void SetTitle(string title)
@@ -263,6 +272,9 @@ public class AutomationPlan : AbstractResource
     {
         this.parameterDefinitions.Clear();
 
-        if (parameterDefinitions != null) this.parameterDefinitions.AddAll(parameterDefinitions);
+        if (parameterDefinitions != null)
+        {
+            this.parameterDefinitions.AddAll(parameterDefinitions);
+        }
     }
 }

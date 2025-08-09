@@ -31,7 +31,7 @@ public class AutomationRequest : AbstractResource
     private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
     private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
-    private readonly ISet<string> subjects = new HashSet<string>(); // XXX - TreeSet<> in Java
+    private readonly ISet<string> subjects = new HashSet<string>(StringComparer.Ordinal); // XXX - TreeSet<> in Java
     private readonly ISet<Uri> states = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
     private readonly ISet<ParameterInstance>
@@ -262,7 +262,10 @@ public class AutomationRequest : AbstractResource
     {
         this.contributors.Clear();
 
-        if (contributors != null) this.contributors.AddAll(contributors);
+        if (contributors != null)
+        {
+            this.contributors.AddAll(contributors);
+        }
     }
 
     public void SetCreated(DateTime? created)
@@ -274,7 +277,10 @@ public class AutomationRequest : AbstractResource
     {
         this.creators.Clear();
 
-        if (creators != null) this.creators.AddAll(creators);
+        if (creators != null)
+        {
+            this.creators.AddAll(creators);
+        }
     }
 
     public void SetDescription(string description)
@@ -322,7 +328,10 @@ public class AutomationRequest : AbstractResource
     {
         this.subjects.Clear();
 
-        if (subjects != null) this.subjects.AddAll(subjects);
+        if (subjects != null)
+        {
+            this.subjects.AddAll(subjects);
+        }
     }
 
     public void SetTitle(string title)
@@ -334,13 +343,19 @@ public class AutomationRequest : AbstractResource
     {
         this.states.Clear();
 
-        if (states != null) this.states.AddAll(states);
+        if (states != null)
+        {
+            this.states.AddAll(states);
+        }
     }
 
     public void SetInputParameters(ParameterInstance[] parameters)
     {
         this.inputParameters.Clear();
 
-        if (parameters != null) this.inputParameters.AddAll(parameters);
+        if (parameters != null)
+        {
+            this.inputParameters.AddAll(parameters);
+        }
     }
 }

@@ -198,68 +198,79 @@ public class RdfXmlMediaTypeFormatterTests
             changeRequest2.GetAffectedByDefects()[0].GetLabel());
     }
 
-
     private static async Task<string> SerializeAsync<T>(MediaTypeFormatter formatter, T value,
         MediaTypeHeaderValue mediaType)
     {
-        await using Stream stream = new MemoryStream();
-        using HttpContent content = new StreamContent(stream);
+        Stream stream = new MemoryStream();
+        await using (stream.ConfigureAwait(false))
+        {
+            using HttpContent content = new StreamContent(stream);
 
-        content.Headers.ContentType = mediaType;
+            content.Headers.ContentType = mediaType;
 
-        await formatter.WriteToStreamAsync(typeof(T), value, stream, content, null);
-        stream.Position = 0;
+            await formatter.WriteToStreamAsync(typeof(T), value, stream, content, null);
+            stream.Position = 0;
 
-        return await content.ReadAsStringAsync();
+            return await content.ReadAsStringAsync();
+        }
     }
 
     private static async Task<string> SerializeCollectionAsync<T>(MediaTypeFormatter formatter,
         IEnumerable<T> value, MediaTypeHeaderValue mediaType)
     {
-        await using Stream stream = new MemoryStream();
-        using HttpContent content = new StreamContent(stream);
+        Stream stream = new MemoryStream();
+        await using (stream.ConfigureAwait(false))
+        {
+            using HttpContent content = new StreamContent(stream);
 
-        content.Headers.ContentType = mediaType;
+            content.Headers.ContentType = mediaType;
 
-        await formatter.WriteToStreamAsync(typeof(T), value, stream, content, null);
-        stream.Position = 0;
+            await formatter.WriteToStreamAsync(typeof(T), value, stream, content, null);
+            stream.Position = 0;
 
-        return await content.ReadAsStringAsync();
+            return await content.ReadAsStringAsync();
+        }
     }
 
     private static async Task<T?> DeserializeAsync<T>(MediaTypeFormatter formatter, string str,
         MediaTypeHeaderValue mediaType) where T : class
     {
-        await using Stream stream = new MemoryStream();
-        await using var writer = new StreamWriter(stream);
-        using HttpContent content = new StreamContent(stream);
+        Stream stream = new MemoryStream();
+        await using (stream.ConfigureAwait(false))
+        {
+            await using var writer = new StreamWriter(stream);
+            using HttpContent content = new StreamContent(stream);
 
-        content.Headers.ContentType = mediaType;
+            content.Headers.ContentType = mediaType;
 
-        await writer.WriteAsync(str);
-        await writer.FlushAsync();
+            await writer.WriteAsync(str);
+            await writer.FlushAsync();
 
-        stream.Position = 0;
+            stream.Position = 0;
 
-        return await formatter.ReadFromStreamAsync(typeof(T), stream, content, null) as T;
+            return await formatter.ReadFromStreamAsync(typeof(T), stream, content, null) as T;
+        }
     }
 
     private static async Task<IEnumerable<T>?> DeserializeCollectionAsync<T>(
         MediaTypeFormatter formatter,
         string str, MediaTypeHeaderValue mediaType) where T : class
     {
-        await using Stream stream = new MemoryStream();
-        await using var writer = new StreamWriter(stream);
-        using HttpContent content = new StreamContent(stream);
+        Stream stream = new MemoryStream();
+        await using (stream.ConfigureAwait(false))
+        {
+            await using var writer = new StreamWriter(stream);
+            using HttpContent content = new StreamContent(stream);
 
-        content.Headers.ContentType = mediaType;
+            content.Headers.ContentType = mediaType;
 
-        await writer.WriteAsync(str);
-        await writer.FlushAsync();
+            await writer.WriteAsync(str);
+            await writer.FlushAsync();
 
-        stream.Position = 0;
+            stream.Position = 0;
 
-        return await formatter.ReadFromStreamAsync(typeof(List<T>), stream, content, null) as
-            IEnumerable<T>;
+            return await formatter.ReadFromStreamAsync(typeof(List<T>), stream, content, null) as
+                IEnumerable<T>;
+        }
     }
 }

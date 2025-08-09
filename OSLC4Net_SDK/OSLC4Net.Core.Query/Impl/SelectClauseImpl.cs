@@ -20,7 +20,7 @@ namespace OSLC4Net.Core.Query.Impl;
 /// <summary>
 /// Implementation of SelectClause interface
 /// </summary>
-internal class SelectClauseImpl : PropertiesImpl, SelectClause
+internal sealed class SelectClauseImpl : PropertiesImpl, SelectClause
 {
     public
     SelectClauseImpl(

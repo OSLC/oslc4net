@@ -20,7 +20,7 @@ namespace OSLC4Net.Core.Query.Impl;
 /// <summary>
 /// Implementation of TypedValue interface
 /// </summary>
-internal class TypedValueImpl : ValueImpl, TypedValue
+internal sealed class TypedValueImpl : ValueImpl, TypedValue
 {
     public
     TypedValueImpl(
@@ -82,6 +82,6 @@ internal class TypedValueImpl : ValueImpl, TypedValue
     }
 
     private readonly IDictionary<string, string> prefixMap;
-    private string value = null;
-    private PName prefixedName = null;
+    private string value;
+    private PName prefixedName;
 }

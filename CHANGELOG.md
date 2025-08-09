@@ -9,6 +9,36 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking changes; 👉
 important notes.
 
+
+## [UNRELEASED] - YYYY-MM-DD
+
+### Security
+
+This release does not contain security updates.
+
+### Added
+
+- The `QName` class now has properties `NamespaceUri`, `LocalPart`, and
+  `Prefix`.
+
+### Changed
+
+This release does not contain other significant changes.
+
+### Deprecated
+
+- `QName` getters `GetNamespaceURI`, `GetLocalPart`, and `GetPrefix` are
+  deprecated in favor of C# properties and are scheduled for removal in the
+  next release.
+
+### Removed
+
+This release does not remove any features.
+
+### Fixed
+
+This release does not contain bug fixes.
+
 ## [0.6.0] - 2025-07-06
 
 ### Security

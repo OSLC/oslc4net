@@ -30,7 +30,6 @@ public class TestChangeManagementTurtle : TestBase
         ServiceProviderCatalogUri = _fixture.ServiceProviderCatalogUriCM;
     }
 
-
     /// <summary>
     ///     Ordering of test methods shall not be relied upon for execution order
     /// </summary>

@@ -56,7 +56,6 @@ public static class Constants
                 public const string ValidatedBy = NS + "validatedBy";
             }
 
-
             public static class Q
             {
                 public static QName AffectedBy => QNameFor("affectedBy");

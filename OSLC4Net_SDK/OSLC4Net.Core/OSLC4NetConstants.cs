@@ -27,5 +27,5 @@ public static class OSLC4NetConstants
     public const string INNER_URI_HEADER = "$X-OSLC4Net-GraphUriBase";
 
     public static readonly IDictionary<string, object> OSLC4NET_PROPERTY_SINGLETON =
-        new Dictionary<string, object>(0);
+        new Dictionary<string, object>(0, StringComparer.Ordinal);
 }

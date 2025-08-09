@@ -72,5 +72,5 @@ class SortTermImpl : SortTerm
     private readonly SortTermType type;
     protected readonly CommonTree tree;
     protected readonly IDictionary<string, string> prefixMap;
-    private PName identifier = null;
+    private PName identifier;
 }
