@@ -31,12 +31,12 @@ public class OslcCreationFactory : System.Attribute
     /**
      * Resource shapes
      */
-    public string[] resourceShapes = { };
+    public string[] resourceShapes = Array.Empty<string>();
 
     /**
      * Resource types
      */
-    public string[] resourceTypes = { };
+    public string[] resourceTypes = Array.Empty<string>();
 
     /**
      * Title string that could be used for display
@@ -46,5 +46,5 @@ public class OslcCreationFactory : System.Attribute
     /**
      * Usages
      */
-    public string[] usages = { };
+    public string[] usages = Array.Empty<string>();
 }

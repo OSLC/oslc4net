@@ -65,7 +65,6 @@ public abstract class TestBase
         LoggerFactory = AppHost.Services.GetRequiredService<ILoggerFactory>();
     }
 
-
     protected virtual IEnumerable<MediaTypeFormatter> Formatters => TestClient.GetFormatters();
 
     protected Uri? ChangeRequestUri { get; set; }
@@ -282,7 +281,6 @@ public abstract class TestBase
         var aboutResponse = await TestClient
             .GetResourceAsync<ChangeRequest>(aboutURI.ToString(), mediaType).ConfigureAwait(true);
 
-
         await VerifyChangeRequestAsync(mediaType,
             aboutResponse.Resources?.SingleOrDefault(),
             false).ConfigureAwait(true);
@@ -299,7 +297,7 @@ public abstract class TestBase
 
         if (type != null)
         {
-            Assert.True(describes.Contains(new Uri(type)));
+            Assert.Contains(new Uri(type), describes);
         }
 
         var properties = resourceShape.GetProperties();
@@ -320,7 +318,7 @@ public abstract class TestBase
             Assert.NotNull(property.GetTitle());
             Assert.NotNull(property.GetValueType());
 
-            Assert.True(propertyDefinition.ToString().EndsWith(name),
+            Assert.True(propertyDefinition.ToString().EndsWith(name, StringComparison.Ordinal),
                 $"propertyDefinition [{propertyDefinition}], name [{name}]");
         }
     }

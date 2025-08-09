@@ -27,7 +27,6 @@ public static partial class OslcConstants
                 public const string Value = NS + "value";
             }
 
-
             public static class Q
             {
                 public static QName Direction => QNameFor("direction");
@@ -52,7 +51,6 @@ public static partial class OslcConstants
                 return new QName(NS, localResource, Prefix);
             }
 
-
             public static class P
             {
                 public const string Comment = NS + "comment";
@@ -65,7 +63,6 @@ public static partial class OslcConstants
                 public const string SubClassOf = NS + "subClassOf";
                 public const string SubPropertyOf = NS + "subPropertyOf";
             }
-
 
             public static class Q
             {

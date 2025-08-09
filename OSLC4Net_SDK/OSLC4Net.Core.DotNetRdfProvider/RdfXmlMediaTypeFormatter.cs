@@ -101,7 +101,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             var actualTypeArguments =
                 GetChildClassParameterArguments(typeof(FilteredResource<>), type);
 
-            if (actualTypeArguments.Count() != 1)
+            if (actualTypeArguments.Length != 1)
             {
                 return false;
             }
@@ -110,7 +110,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             {
                 actualTypeArguments = actualTypeArguments[0].GetGenericArguments();
 
-                if (actualTypeArguments.Count() != 1)
+                if (actualTypeArguments.Length != 1)
                 {
                     return false;
                 }
@@ -252,7 +252,8 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         {
             var turtlelWriter = new CompressingTurtleWriter(TurtleSyntax.W3C)
             {
-                PrettyPrintMode = true, CompressionLevel = 20
+                PrettyPrintMode = true,
+                CompressionLevel = 20
             };
 
             tripleWriter = turtlelWriter;
@@ -387,7 +388,6 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                     content.Headers.ContentType);
             }
 
-
             IGraph graph = new Graph();
             // REVISIT: we need a more robust way to obtain request URI
             content.Headers.TryGetValues(OSLC4NetConstants.INNER_URI_HEADER, out var shuttleRequestUri);
@@ -410,12 +410,12 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 
             using (streamReader)
             {
-                #if DEBUG
+#if DEBUG
                 var rdfString = streamReader.ReadToEnd();
                 //Debug.Write(rdfString);
                 readStream.Position = 0; // reset stream
-                //streamReader.DiscardBufferedData();
-                #endif
+                                         //streamReader.DiscardBufferedData();
+#endif
 
                 if (tripleReader is not null)
                 {
@@ -439,7 +439,6 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                 var reasoner = new StaticRdfsReasoner();
                 // reasoner.Initialise(schema);
                 reasoner.Apply(graph);
-
 
                 // REVISIT: better handling of assignable types (@berezovskyi 2025-04)
                 if (type == typeof(Graph) || type == typeof(BaseGraph) || type == typeof(IGraph))
@@ -489,12 +488,12 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         }
     }
 
-    private bool IsOslcSingleton(Type type)
+    private static bool IsOslcSingleton(Type type)
     {
         return type.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0;
     }
 
-    private Type? GetMemberType(Type type)
+    private static Type? GetMemberType(Type type)
     {
         if (type.IsArray)
         {

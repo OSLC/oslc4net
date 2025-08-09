@@ -22,14 +22,7 @@ namespace OSLC4Net.Core.Model;
 /// <typeparam name="T"></typeparam>
 public abstract class ResponseInfo<T> : FilteredResource<T>
 {
-    /// <summary>
-    /// </summary>
-    /// <param name="resource"></param>
-    /// <param name="properties"></param>
-    /// <param name="totalCount"></param>
-    /// <param name="nextPage"></param>
-    public
-        ResponseInfo(
+    protected ResponseInfo(
             T resource,
             IDictionary<string, object> properties,
             int totalCount,
@@ -40,14 +33,7 @@ public abstract class ResponseInfo<T> : FilteredResource<T>
         NextPage = nextPage;
     }
 
-    /// <summary>
-    /// </summary>
-    /// <param name="resource"></param>
-    /// <param name="properties"></param>
-    /// <param name="totalCount"></param>
-    /// <param name="nextPage"></param>
-    public
-        ResponseInfo(
+    protected ResponseInfo(
             T resource,
             IDictionary<string, object> properties,
             int totalCount,

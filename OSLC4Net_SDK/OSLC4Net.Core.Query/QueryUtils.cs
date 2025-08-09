@@ -37,7 +37,7 @@ public class QueryUtils
     {
         if (prefixExpression == null)
         {
-            return new Dictionary<string, string>();
+            return new Dictionary<string, string>(StringComparer.Ordinal);
         }
 
         var parser = new OslcPrefixParser(prefixExpression);
@@ -228,7 +228,7 @@ public class QueryUtils
     InvertSelectedProperties(Properties properties)
     {
         var children = properties.Children;
-        IDictionary<string, object> result = new Dictionary<string, object>(children.Count);
+        IDictionary<string, object> result = new Dictionary<string, object>(children.Count, StringComparer.Ordinal);
 
         foreach (var property in children)
         {
@@ -391,7 +391,7 @@ public class QueryUtils
     /// <summary>
     /// Implementation of a IDictionary<String, String> prefixMap
     /// </summary>
-    private class PrefixMap : Dictionary<string, string>
+    private sealed class PrefixMap : Dictionary<string, string>
     {
         public
         PrefixMap(int size)
@@ -431,7 +431,7 @@ public class QueryUtils
     /// <summary>
     /// Implementation of a SearchTermsClause interface
     /// </summary>
-    private class StringList : List<string>, SearchTermsClause
+    private sealed class StringList : List<string>, SearchTermsClause
     {
         public
         StringList(int size) : base(size)
@@ -468,7 +468,7 @@ public class QueryUtils
     /// <summary>
     /// Implementation of SingletonWildcardProperties
     /// </summary>
-    private class SingletonWildcardPropertiesImpl :
+    private sealed class SingletonWildcardPropertiesImpl :
         Dictionary<string, object>,
         SingletonWildcardProperties
     {
@@ -502,14 +502,14 @@ public class QueryUtils
         }
 
         internal IDictionary<string, object> commonNestedProperties =
-            new Dictionary<string, object>();
+            new Dictionary<string, object>(StringComparer.Ordinal);
     }
 
     /// <summary>
     /// Implementation of both SingletonWildcardProperties and
     /// NestedWildcardProperties
     /// </summary>
-    private class BothWildcardPropertiesImpl :
+    private sealed class BothWildcardPropertiesImpl :
         NestedWildcardPropertiesImpl,
         SingletonWildcardProperties
     {

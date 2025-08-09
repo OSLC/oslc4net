@@ -44,7 +44,7 @@ public class EnumerableWrapper : IEnumerable<object>
         return GetEnumerator();
     }
 
-    private class EnumeratorWrapper : IEnumerator<object>
+    private sealed class EnumeratorWrapper : IEnumerator<object>
     {
         private readonly PropertyInfo currentInfo;
         private readonly MethodInfo moveNext;

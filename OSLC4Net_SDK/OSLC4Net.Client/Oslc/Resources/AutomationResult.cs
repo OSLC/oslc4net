@@ -31,7 +31,7 @@ public class AutomationResult : AbstractResource
     private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
     private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
-    private readonly ISet<string> subjects = new HashSet<string>(); // XXX - TreeSet<> in Java
+    private readonly ISet<string> subjects = new HashSet<string>(StringComparer.Ordinal); // XXX - TreeSet<> in Java
     private readonly ISet<Uri> states = new HashSet<Uri>(); // XXX - TreeSet<> in Java
     private readonly ISet<Uri> verdicts = new HashSet<Uri>(); // XXX - TreeSet<> in Java
     private readonly ISet<Uri> contributions = new HashSet<Uri>(); // XXX - TreeSet<> in Java
@@ -324,7 +324,10 @@ public class AutomationResult : AbstractResource
     {
         this.contributors.Clear();
 
-        if (contributors != null) this.contributors.AddAll(contributors);
+        if (contributors != null)
+        {
+            this.contributors.AddAll(contributors);
+        }
     }
 
     public void setCreated(DateTime? created)
@@ -336,7 +339,10 @@ public class AutomationResult : AbstractResource
     {
         this.creators.Clear();
 
-        if (creators != null) this.creators.AddAll(creators);
+        if (creators != null)
+        {
+            this.creators.AddAll(creators);
+        }
     }
 
     public void setIdentifier(string identifier)
@@ -369,7 +375,10 @@ public class AutomationResult : AbstractResource
     {
         this.subjects.Clear();
 
-        if (subjects != null) this.subjects.AddAll(subjects);
+        if (subjects != null)
+        {
+            this.subjects.AddAll(subjects);
+        }
     }
 
     public void setTitle(string title)
@@ -381,21 +390,30 @@ public class AutomationResult : AbstractResource
     {
         this.states.Clear();
 
-        if (states != null) this.states.AddAll(states);
+        if (states != null)
+        {
+            this.states.AddAll(states);
+        }
     }
 
     public void setVerdicts(Uri[] verdicts)
     {
         this.verdicts.Clear();
 
-        if (verdicts != null) this.verdicts.AddAll(verdicts);
+        if (verdicts != null)
+        {
+            this.verdicts.AddAll(verdicts);
+        }
     }
 
     public void setContributions(Uri[] contributions)
     {
         this.contributions.Clear();
 
-        if (contributions != null) this.contributions.AddAll(contributions);
+        if (contributions != null)
+        {
+            this.contributions.AddAll(contributions);
+        }
     }
 
     public void setDesiredState(Uri desiredState)
@@ -417,13 +435,19 @@ public class AutomationResult : AbstractResource
     {
         this.inputParameters.Clear();
 
-        if (parameters != null) this.inputParameters.AddAll(parameters);
+        if (parameters != null)
+        {
+            this.inputParameters.AddAll(parameters);
+        }
     }
 
     public void setOutputParameters(ParameterInstance[] parameters)
     {
         this.outputParameters.Clear();
 
-        if (parameters != null) this.outputParameters.AddAll(parameters);
+        if (parameters != null)
+        {
+            this.outputParameters.AddAll(parameters);
+        }
     }
 }

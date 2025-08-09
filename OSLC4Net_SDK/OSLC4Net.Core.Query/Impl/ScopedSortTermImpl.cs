@@ -17,7 +17,7 @@ using Antlr.Runtime.Tree;
 
 namespace OSLC4Net.Core.Query.Impl;
 
-class ScopedSortTermImpl : SortTermImpl, ScopedSortTerm
+sealed class ScopedSortTermImpl : SortTermImpl, ScopedSortTerm
 {
     public ScopedSortTermImpl(
         CommonTree tree,
@@ -40,5 +40,5 @@ class ScopedSortTermImpl : SortTermImpl, ScopedSortTerm
         }
     }
 
-    private SortTerms sortTerms = null;
+    private SortTerms sortTerms;
 }

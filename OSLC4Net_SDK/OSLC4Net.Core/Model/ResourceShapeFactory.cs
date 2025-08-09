@@ -25,9 +25,9 @@ namespace OSLC4Net.Core.Model;
 /// </summary>
 public sealed class ResourceShapeFactory
 {
-    private static readonly string METHOD_NAME_START_GET = "Get";
-    private static readonly string METHOD_NAME_START_IS = "Is";
-    private static readonly string METHOD_NAME_START_SET = "Set";
+    private const string METHOD_NAME_START_GET = "Get";
+    private const string METHOD_NAME_START_IS = "Is";
+    private const string METHOD_NAME_START_SET = "Set";
 
     private static readonly int METHOD_NAME_START_GET_LENGTH = METHOD_NAME_START_GET.Length;
     private static readonly int METHOD_NAME_START_IS_LENGTH = METHOD_NAME_START_IS.Length;
@@ -106,7 +106,7 @@ public sealed class ResourceShapeFactory
             resourceShape.AddDescribeItem(new Uri(describesItem));
         }
 
-        ISet<string> propertyDefinitions = new HashSet<string>();
+        ISet<string> propertyDefinitions = new HashSet<string>(StringComparer.Ordinal);
 
         foreach (var method in resourceType.GetMethods())
         {
@@ -114,9 +114,9 @@ public sealed class ResourceShapeFactory
             {
                 var methodName = method.Name;
                 var methodNameLength = methodName.Length;
-                if ((methodName.StartsWith(METHOD_NAME_START_GET) &&
+                if ((methodName.StartsWith(METHOD_NAME_START_GET, StringComparison.Ordinal) &&
                      methodNameLength > METHOD_NAME_START_GET_LENGTH) ||
-                    (methodName.StartsWith(METHOD_NAME_START_IS) &&
+                    (methodName.StartsWith(METHOD_NAME_START_IS, StringComparison.Ordinal) &&
                      methodNameLength > METHOD_NAME_START_IS_LENGTH))
                 {
                     var propertyDefinitionAttribute =
@@ -161,7 +161,7 @@ public sealed class ResourceShapeFactory
 
         var propertyDefinition = propertyDefinitionAttribute.value;
 
-        if (!propertyDefinition.EndsWith(name))
+        if (!propertyDefinition.EndsWith(name, StringComparison.Ordinal))
         {
             throw new OslcCoreInvalidPropertyDefinitionException(resourceType, method,
                 propertyDefinitionAttribute);
@@ -329,7 +329,7 @@ public sealed class ResourceShapeFactory
     private static string GetDefaultPropertyName(MethodInfo method)
     {
         var methodName = method.Name;
-        var startingIndex = methodName.StartsWith(METHOD_NAME_START_GET)
+        var startingIndex = methodName.StartsWith(METHOD_NAME_START_GET, StringComparison.Ordinal)
             ? METHOD_NAME_START_GET_LENGTH
             : METHOD_NAME_START_IS_LENGTH;
 
@@ -404,7 +404,7 @@ public sealed class ResourceShapeFactory
         var getMethodName = getMethod.Name;
 
         string setMethodName;
-        if (getMethodName.StartsWith(METHOD_NAME_START_GET))
+        if (getMethodName.StartsWith(METHOD_NAME_START_GET, StringComparison.Ordinal))
         {
             setMethodName = METHOD_NAME_START_SET +
                             getMethodName.Substring(METHOD_NAME_START_GET_LENGTH);

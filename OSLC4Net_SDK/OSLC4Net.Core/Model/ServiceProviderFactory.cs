@@ -48,7 +48,7 @@ public class ServiceProviderFactory
         serviceProvider.SetDescription(description);
         serviceProvider.SetPublisher(publisher);
 
-        var serviceMap = new Dictionary<string, Service>();
+        var serviceMap = new Dictionary<string, Service>(StringComparer.Ordinal);
 
         foreach (var resourceType in resourceTypes)
         {
@@ -100,7 +100,7 @@ public class ServiceProviderFactory
     {
         foreach (var method in resourceType.GetMethods())
         {
-            if (method.Name.StartsWith("Get"))
+            if (method.Name.StartsWith("Get", StringComparison.Ordinal))
             {
                 var queryCapabilityAttribute =
                     method.GetCustomAttributes(typeof(OslcQueryCapability),
@@ -144,7 +144,7 @@ public class ServiceProviderFactory
             }
             else
             {
-                if (method.Name.StartsWith("Post"))
+                if (method.Name.StartsWith("Post", StringComparison.Ordinal))
                 {
                     var creationFactoryAttribute =
                         method.GetCustomAttributes(
@@ -200,7 +200,7 @@ public class ServiceProviderFactory
 
         var typeName = method.DeclaringType.Name;
         //controller names must end with Controller
-        var pos = typeName.IndexOf("Controller");
+        var pos = typeName.IndexOf("Controller", StringComparison.Ordinal);
         var controllerName = typeName.Substring(0, pos);
 
         var creation =
@@ -251,7 +251,7 @@ public class ServiceProviderFactory
 
         var typeName = method.DeclaringType.Name;
         //controller names must end with Controller
-        var pos = typeName.IndexOf("Controller");
+        var pos = typeName.IndexOf("Controller", StringComparison.Ordinal);
         var controllerName = typeName.Substring(0, pos);
 
         var query = ResolvePathParameters(baseURI, controllerName.ToLower(), pathParameterValues);
@@ -315,7 +315,7 @@ public class ServiceProviderFactory
         var usages = dialogAttribute.usages;
         var typeName = method.DeclaringType.Name;
         //controller names must end with Controller
-        var pos = typeName.IndexOf("Controller");
+        var pos = typeName.IndexOf("Controller", StringComparison.Ordinal);
         _ = typeName.Substring(0, pos);
 
         string uri;

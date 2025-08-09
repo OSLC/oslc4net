@@ -25,7 +25,6 @@ namespace OSLC4Net.Client.Oslc.Resources;
 public abstract class QmResource : AbstractResource
 {
 
-
     private DateTime? created;
     private string identifier;
     private Uri instanceShape;
@@ -33,12 +32,12 @@ public abstract class QmResource : AbstractResource
     private Uri serviceProvider;
     private string title;
 
-    public QmResource() : base()
+    protected QmResource() : base()
     {
         AddType(GetRdfType());
     }
 
-    public QmResource(Uri about) : base(about)
+    protected QmResource(Uri about) : base(about)
     {
         AddType(GetRdfType());
     }

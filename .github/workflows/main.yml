@@ -37,7 +37,37 @@ permissions:
   contents: read
 
 jobs:
+  format:
+    name: Format (dotnet format)
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: main/OSLC4Net_SDK/
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
+        with:
+          disable-sudo: true
+          egress-policy: audit
+      - name: Checkout Code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          show-progress: false
+          persist-credentials: false
+          path: main
+      - name: Setup .NET (8.x)
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        with:
+          dotnet-version: 8.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Verify formatting
+        run: dotnet format OSLC4Net.Core.sln --verify-no-changes
+
   test:
+    needs: [format]
     permissions:
       contents: read  # for actions/checkout to fetch code
       packages: write  # for setup-dotnet to create package

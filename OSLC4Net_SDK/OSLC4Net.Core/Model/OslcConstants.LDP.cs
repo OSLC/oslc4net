@@ -31,7 +31,6 @@ public static partial class OslcConstants
                 public const string PageSortPredicate = NS + "pageSortPredicate";
             }
 
-
             public static class Q
             {
                 public static QName ConstrainedBy => QNameFor("constrainedBy");

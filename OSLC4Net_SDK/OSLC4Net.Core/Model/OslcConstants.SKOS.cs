@@ -46,7 +46,6 @@ public static partial class OslcConstants
                 public const string TopConceptOf = NS + "topConceptOf";
             }
 
-
             public static class Q
             {
                 public static QName AltLabel => QNameFor("altLabel");

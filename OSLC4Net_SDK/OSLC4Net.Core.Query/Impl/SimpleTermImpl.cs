@@ -76,5 +76,5 @@ internal abstract class SimpleTermImpl : SimpleTerm
     protected readonly CommonTree tree;
     protected readonly IDictionary<string, string> prefixMap;
     private readonly TermType type;
-    private PName property = null;
+    private PName property;
 }

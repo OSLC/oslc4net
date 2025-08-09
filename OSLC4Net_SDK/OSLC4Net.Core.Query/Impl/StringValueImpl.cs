@@ -20,7 +20,7 @@ namespace OSLC4Net.Core.Query.Impl;
 /// <summary>
 /// Implementation of StringValue interface
 /// </summary>
-internal class StringValueImpl : ValueImpl, StringValue
+internal sealed class StringValueImpl : ValueImpl, StringValue
 {
     public
     StringValueImpl(CommonTree tree) : base(tree, ValueType.STRING)
@@ -46,5 +46,5 @@ internal class StringValueImpl : ValueImpl, StringValue
         return '"' + Value.ToString() + '"';
     }
 
-    private string value = null;
+    private string value;
 }

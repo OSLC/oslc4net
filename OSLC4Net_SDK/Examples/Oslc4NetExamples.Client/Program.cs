@@ -1,4 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
+// See https://aka.ms/new-console-template for more information
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,7 +30,7 @@ using (var scope = host.Services.CreateScope())
 
     var resourceUri =
         $"{jazzCmBase}/resource/itemName/com.ibm.team.workitem.WorkItem/{workItemId}";
-    OslcResponse<ChangeRequest> response = await oslcClient.GetResourceAsync<ChangeRequest>(resourceUri);
+    OslcResponse<ChangeRequest> response = await oslcClient.GetResourceAsync<ChangeRequest>(resourceUri).ConfigureAwait(false);
     if (response.Resources?.SingleOrDefault() is not null)
     {
         var changeRequestResource = response.Resources.Single();

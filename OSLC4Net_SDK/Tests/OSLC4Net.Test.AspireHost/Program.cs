@@ -14,5 +14,4 @@ var refimplRM = builder
         scheme: "http", name: "http")
     .WithHttpHealthCheck("/services/catalog/singleton", (int)HttpStatusCode.Unauthorized);
 
-
-await builder.Build().RunAsync();
+await builder.Build().RunAsync().ConfigureAwait(false);

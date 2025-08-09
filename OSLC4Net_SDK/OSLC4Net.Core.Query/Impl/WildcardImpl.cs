@@ -18,7 +18,7 @@ namespace OSLC4Net.Core.Query.Impl;
 /// <summary>
 /// Implementation of Wildcard interface
 /// </summary>
-internal class WildcardImpl : PropertyImpl, Wildcard
+internal sealed class WildcardImpl : PropertyImpl, Wildcard
 {
     public
     WildcardImpl() : base(null, PropertyType.IDENTIFIER, null, true)

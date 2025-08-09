@@ -116,5 +116,5 @@ internal class CompoundTermImpl : SimpleTermImpl, CompoundTerm
 
     private readonly CommonTree tree;
     private readonly bool isTopLevel;
-    private IList<SimpleTerm> children = null;
+    private IList<SimpleTerm> children;
 }

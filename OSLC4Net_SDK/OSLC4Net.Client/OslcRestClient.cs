@@ -240,7 +240,7 @@ public sealed class OslcRestClient
         {
             case HttpStatusCode.OK:
                 // TODO: check if we can get rid of this Java-looking code
-                var dummy = new T[0];
+                var dummy = Array.Empty<T>();
                 return await response.Content.ReadAsAsync(dummy.GetType(), Formatters)
                     .ConfigureAwait(false) as T[];
             case HttpStatusCode.NoContent:
@@ -276,7 +276,7 @@ public sealed class OslcRestClient
 
         content.Headers.ContentType = mediaTypeValue;
 
-        var creation = await _client.PostAsync(_uri, content);
+        var creation = await _client.PostAsync(_uri, content).ConfigureAwait(false);
         var status = creation.StatusCode;
 
         if (status == HttpStatusCode.OK)

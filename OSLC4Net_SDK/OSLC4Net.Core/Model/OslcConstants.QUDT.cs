@@ -214,7 +214,6 @@ public static partial class OslcConstants
                 public const string Width = NS + "width";
             }
 
-
             public static class Q
             {
                 public static QName Abbreviation => QNameFor("abbreviation");

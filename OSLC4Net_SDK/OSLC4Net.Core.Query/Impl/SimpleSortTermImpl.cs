@@ -17,7 +17,7 @@ using Antlr.Runtime.Tree;
 
 namespace OSLC4Net.Core.Query.Impl;
 
-class SimpleSortTermImpl : SortTermImpl, SimpleSortTerm
+sealed class SimpleSortTermImpl : SortTermImpl, SimpleSortTerm
 {
     public SimpleSortTermImpl(
         CommonTree tree,
@@ -46,5 +46,5 @@ class SimpleSortTermImpl : SortTermImpl, SimpleSortTerm
         return Ascending + Identifier.ToString();
     }
 
-    private bool? ascending = null;
+    private bool? ascending;
 }

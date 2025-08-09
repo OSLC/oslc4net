@@ -30,7 +30,7 @@ public class TestCase : QmResource
     private readonly ISet<Uri> contributors = new HashSet<Uri>(); // XXX - TreeSet<> in Java
     private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
     private readonly ISet<Link> relatedChangeRequests = new HashSet<Link>();
-    private readonly ISet<string> subjects = new HashSet<string>(); // XXX - TreeSet<> in Java
+    private readonly ISet<string> subjects = new HashSet<string>(StringComparer.Ordinal); // XXX - TreeSet<> in Java
     private readonly ISet<Link> testsChangeRequests = new HashSet<Link>();
     private readonly ISet<Link> usesTestScripts = new HashSet<Link>();
     private readonly ISet<Link> validatesRequirements = new HashSet<Link>();
@@ -170,14 +170,20 @@ public class TestCase : QmResource
     {
         this.contributors.Clear();
 
-        if (contributors != null) this.contributors.AddAll(contributors);
+        if (contributors != null)
+        {
+            this.contributors.AddAll(contributors);
+        }
     }
 
     public void SetCreators(Uri[] creators)
     {
         this.creators.Clear();
 
-        if (creators != null) this.creators.AddAll(creators);
+        if (creators != null)
+        {
+            this.creators.AddAll(creators);
+        }
     }
 
     public void SetDescription(string description)
@@ -189,34 +195,49 @@ public class TestCase : QmResource
     {
         this.relatedChangeRequests.Clear();
 
-        if (relatedChangeRequests != null) this.relatedChangeRequests.AddAll(relatedChangeRequests);
+        if (relatedChangeRequests != null)
+        {
+            this.relatedChangeRequests.AddAll(relatedChangeRequests);
+        }
     }
 
     public void SetSubjects(string[] subjects)
     {
         this.subjects.Clear();
 
-        if (subjects != null) this.subjects.AddAll(subjects);
+        if (subjects != null)
+        {
+            this.subjects.AddAll(subjects);
+        }
     }
 
     public void SetTestsChangeRequests(Link[] testsChangeRequests)
     {
         this.testsChangeRequests.Clear();
 
-        if (testsChangeRequests != null) this.testsChangeRequests.AddAll(testsChangeRequests);
+        if (testsChangeRequests != null)
+        {
+            this.testsChangeRequests.AddAll(testsChangeRequests);
+        }
     }
 
     public void SetUsesTestScripts(Link[] usesTestScripts)
     {
         this.usesTestScripts.Clear();
 
-        if (usesTestScripts != null) this.usesTestScripts.AddAll(usesTestScripts);
+        if (usesTestScripts != null)
+        {
+            this.usesTestScripts.AddAll(usesTestScripts);
+        }
     }
 
     public void SetValidatesRequirements(Link[] validatesRequirements)
     {
         this.validatesRequirements.Clear();
 
-        if (validatesRequirements != null) this.validatesRequirements.AddAll(validatesRequirements);
+        if (validatesRequirements != null)
+        {
+            this.validatesRequirements.AddAll(validatesRequirements);
+        }
     }
 }

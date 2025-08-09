@@ -41,7 +41,7 @@ public class OslcDialog : System.Attribute
     /**
      * Resource types
      */
-    public string[] resourceTypes = { };
+    public string[] resourceTypes = Array.Empty<string>();
 
     /**
      * Title string that could be used for display
@@ -56,5 +56,5 @@ public class OslcDialog : System.Attribute
     /**
      * Usages
      */
-    public string[] usages = { };
+    public string[] usages = Array.Empty<string>();
 }

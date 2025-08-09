@@ -37,7 +37,7 @@ public class OslcQueryCapability(string? title) : System.Attribute
     /**
      * Resource types
      */
-    public readonly string[] ResourceTypes = { };
+    public readonly string[] ResourceTypes = Array.Empty<string>();
 
     /**
      * Title string that could be used for display
@@ -47,5 +47,5 @@ public class OslcQueryCapability(string? title) : System.Attribute
     /**
      * Usages
      */
-    public readonly string[] Usages = { };
+    public readonly string[] Usages = Array.Empty<string>();
 }

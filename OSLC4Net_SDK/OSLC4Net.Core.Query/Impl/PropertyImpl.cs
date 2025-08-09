@@ -94,5 +94,5 @@ internal class PropertyImpl : Property
     private readonly PropertyType type;
     protected readonly IDictionary<string, string> prefixMap;
     private readonly bool isWildcard;
-    private PName identifier = null;
+    private PName identifier;
 }

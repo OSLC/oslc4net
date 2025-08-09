@@ -112,6 +112,6 @@ public class QName
 
     public override int GetHashCode()
     {
-        return namespaceURI.GetHashCode() * 31 + localPart.GetHashCode();
+        return StringComparer.Ordinal.GetHashCode(namespaceURI) * 31 + StringComparer.Ordinal.GetHashCode(localPart);
     }
 }
