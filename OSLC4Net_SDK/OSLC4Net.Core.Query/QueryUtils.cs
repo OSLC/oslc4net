@@ -281,8 +281,7 @@ public class QueryUtils
                 case PropertyType.NESTED_PROPERTY:
                     if (property.IsWildcard)
                     {
-
-                        if (!(result is NestedWildcardProperties))
+                        if (result is not NestedWildcardProperties wildcardProperties)
                         {
                             if (result is SingletonWildcardProperties)
                             {
@@ -300,7 +299,7 @@ public class QueryUtils
                         else
                         {
                             MergePropertyMaps(
-                                ((NestedWildcardProperties)result).CommonNestedProperties(),
+                                wildcardProperties.CommonNestedProperties(),
                                 InvertSelectedProperties((NestedProperty)property));
                         }
 
@@ -363,16 +362,17 @@ public class QueryUtils
             var rawTree = (CommonTree)parser.Result;
             var child = (CommonTree)rawTree.GetChild(0);
 
-            if (child is CommonErrorNode)
+            if (child is CommonErrorNode node)
             {
-                throw ((CommonErrorNode)child).trappedException;
+                throw node.trappedException;
             }
 
             var rawList = rawTree.Children;
             var stringList = new StringList(rawList.Count);
 
-            foreach (CommonTree str in rawList)
+            foreach (var iTree in rawList)
             {
+                var str = (CommonTree)iTree;
 
                 var rawString = str.Text;
 

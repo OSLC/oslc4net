@@ -71,6 +71,7 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
 
     private OslcQueryResult(OslcQueryResult prev, DotNetRdfHelper rdfHelper)
     {
+        _rdfHelper = rdfHelper;
         _query = new OslcQuery(prev);
         // FIXME: we should split the data from logic - ctor should not be making calls; one of the methods should return a record with the data.
         _response = _query.GetResponseRawAsync().Result;

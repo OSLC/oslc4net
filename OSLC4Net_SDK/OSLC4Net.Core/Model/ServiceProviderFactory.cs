@@ -127,7 +127,7 @@ public class ServiceProviderFactory
                         foreach (var dialog in dialogs)
                         {
                             service.AddSelectionDialog(CreateSelectionDialog(baseURI, method,
-                                dialog, resourceShapes, pathParameterValues));
+                                dialog, pathParameterValues));
                         }
                     }
                 }
@@ -138,7 +138,7 @@ public class ServiceProviderFactory
                     if (dialogAttribute is { Length: > 0 })
                     {
                         service.AddSelectionDialog(CreateSelectionDialog(baseURI, method,
-                            dialogAttribute[0], resourceShapes, pathParameterValues));
+                            dialogAttribute[0], pathParameterValues));
                     }
                 }
             }
@@ -167,7 +167,7 @@ public class ServiceProviderFactory
                             foreach (var dialog in dialogs)
                             {
                                 service.AddCreationDialog(CreateCreationDialog(baseURI, method,
-                                    dialog, resourceShapes, pathParameterValues));
+                                    dialog, pathParameterValues));
                             }
                         }
                     }
@@ -178,7 +178,7 @@ public class ServiceProviderFactory
                         if (dialogAttribute != null && dialogAttribute.Length > 0)
                         {
                             service.AddCreationDialog(CreateCreationDialog(baseURI, method,
-                                dialogAttribute[0], resourceShapes, pathParameterValues));
+                                dialogAttribute[0], pathParameterValues));
                         }
                     }
                 }
@@ -287,23 +287,21 @@ public class ServiceProviderFactory
     }
 
     private static Dialog CreateCreationDialog(string baseURI, MethodInfo method,
-        OslcDialog dialogAttribute, string[] resourceShapes,
+        OslcDialog dialogAttribute,
         Dictionary<string, object> pathParameterValues)
     {
-        return CreateDialog(baseURI, "Creation", "creation", method, dialogAttribute,
-            resourceShapes, pathParameterValues);
+        return CreateDialog(baseURI, method, dialogAttribute, pathParameterValues);
     }
 
     private static Dialog CreateSelectionDialog(string baseURI, MethodInfo method,
-        OslcDialog dialogAttribute, string[] resourceShapes,
+        OslcDialog dialogAttribute,
         Dictionary<string, object> pathParameterValues)
     {
-        return CreateDialog(baseURI, "Selection", "queryBase", method, dialogAttribute,
-            resourceShapes, pathParameterValues);
+        return CreateDialog(baseURI, method, dialogAttribute, pathParameterValues);
     }
 
-    private static Dialog CreateDialog(string baseURI, string dialogType, string parameterName,
-        MethodInfo method, OslcDialog dialogAttribute, string[] resourceShapes,
+    private static Dialog CreateDialog(string baseURI,
+        MethodInfo method, OslcDialog dialogAttribute,
         Dictionary<string, object> pathParameterValues)
     {
         var title = dialogAttribute.title;

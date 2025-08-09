@@ -187,9 +187,9 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             objType);
 
         Uri? aboutURI = null;
-        if (obj is IResource)
+        if (obj is IResource resource)
         {
-            aboutURI = ((IResource)obj).GetAbout();
+            aboutURI = resource.About;
         }
 
         INode mainResource;
@@ -336,19 +336,19 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 
         visitedResources[GetVisitedResourceName(resource)] = bean;
 
-        if (bean is IResource)
+        if (bean is IResource iResource)
         {
-            var aboutURI = resource is IUriNode ? ((IUriNode)resource).Uri : null;
-            if (aboutURI != null)
+            var aboutUri = resource is IUriNode node ? node.Uri : null;
+            if (aboutUri != null)
             {
-                if (!aboutURI.IsAbsoluteUri)
+                if (!aboutUri.IsAbsoluteUri)
                 {
                     throw new OslcCoreRelativeURIException(beanType,
                         "setAbout",
-                        aboutURI);
+                        aboutUri);
                 }
 
-                ((IResource)bean).SetAbout(aboutURI);
+                iResource.About = aboutUri;
             }
         }
 
@@ -477,16 +477,16 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                 var nil = new Uri(OslcConstants.RDF_NAMESPACE + RDF_NIL);
                 IList<INode> objects;
 
-                if (multiple && obj is IUriNode && (
-                        (graph.GetTriplesWithSubjectPredicate(obj,
+                if (multiple && obj is IUriNode node && (
+                        (graph.GetTriplesWithSubjectPredicate(node,
                              graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListFirst))).Any()
-                         && graph.GetTriplesWithSubjectPredicate(obj,
+                         && graph.GetTriplesWithSubjectPredicate(node,
                              graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListRest))).Any())
-                        || nil.Equals((obj as IUriNode)?.Uri)
-                        || ((IUriNode)obj).IsListRoot(graph)))
+                        || nil.Equals(node?.Uri)
+                        || node.IsListRoot(graph)))
                 {
                     objects = new List<INode>();
-                    var listNode = obj as IUriNode;
+                    var listNode = node;
 
                     while (listNode != null && !nil.Equals(listNode.Uri))
                     {
@@ -502,7 +502,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                             .Object;
                     }
 
-                    visitedResources[GetVisitedResourceName(obj as IUriNode)] = objects;
+                    visitedResources[GetVisitedResourceName(node)] = objects;
                 }
                 else if (multiple && IsRdfCollectionResource(graph, obj))
                 {
@@ -1242,11 +1242,11 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                     nestedProperties =
                         OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON;
                 }
-                else if (oslcProperties is NestedWildcardProperties)
+                else if (oslcProperties is NestedWildcardProperties properties)
                 {
-                    nestedProperties = ((NestedWildcardProperties)oslcProperties)
+                    nestedProperties = properties
                         .CommonNestedProperties();
-                    onlyNested = !(oslcProperties is SingletonWildcardProperties);
+                    onlyNested = properties is not SingletonWildcardProperties;
                 }
                 else
                 {
@@ -1299,11 +1299,11 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                     nestedProperties =
                         OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON;
                 }
-                else if (oslcProperties is NestedWildcardProperties)
+                else if (oslcProperties is NestedWildcardProperties properties)
                 {
-                    nestedProperties = ((NestedWildcardProperties)oslcProperties)
+                    nestedProperties = properties
                         .CommonNestedProperties();
-                    onlyNested = !(oslcProperties is SingletonWildcardProperties);
+                    onlyNested = properties is not SingletonWildcardProperties;
                 }
                 else
                 {
@@ -1379,11 +1379,11 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                 {
                     nestedProperties = OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON;
                 }
-                else if (properties is NestedWildcardProperties)
+                else if (properties is NestedWildcardProperties wildcardProperties)
                 {
                     nestedProperties =
-                        ((NestedWildcardProperties)properties).CommonNestedProperties();
-                    onlyNested = !(properties is SingletonWildcardProperties);
+                        wildcardProperties.CommonNestedProperties();
+                    onlyNested = wildcardProperties is not SingletonWildcardProperties;
                 }
                 else
                 {
@@ -1818,51 +1818,49 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 
             _ = value.GetType();
 
-            if (value is bool)
+            if (value is bool b)
             {
-                nestedNode = ((bool)value).ToLiteral(graph);
+                nestedNode = b.ToLiteral(graph);
             }
-            else if (value is byte)
+            else if (value is byte b1)
             {
-                nestedNode = ((byte)value).ToLiteral(graph);
+                nestedNode = b1.ToLiteral(graph);
             }
-            else if (value is short)
+            else if (value is short s)
             {
-                nestedNode = ((short)value).ToLiteral(graph);
+                nestedNode = s.ToLiteral(graph);
             }
-            else if (value is int)
+            else if (value is int i)
             {
-                nestedNode = ((int)value).ToLiteral(graph);
+                nestedNode = i.ToLiteral(graph);
             }
-            else if (value is long)
+            else if (value is long l)
             {
-                nestedNode = ((long)value).ToLiteral(graph);
+                nestedNode = l.ToLiteral(graph);
             }
-            else if (value is BigInteger)
+            else if (value is BigInteger bigint)
             {
-                nestedNode = ((long)(BigInteger)value).ToLiteral(graph);
+                nestedNode = ((long)bigint).ToLiteral(graph);
             }
-            else if (value is float)
+            else if (value is float f)
             {
-                nestedNode = ((float)value).ToLiteral(graph);
+                nestedNode = f.ToLiteral(graph);
             }
-            else if (value is decimal)
+            else if (value is decimal value1)
             {
-                nestedNode = ((decimal)value).ToLiteral(graph);
+                nestedNode = value1.ToLiteral(graph);
             }
-            else if (value is double)
+            else if (value is double d)
             {
-                nestedNode = ((double)value).ToLiteral(graph);
+                nestedNode = d.ToLiteral(graph);
             }
         }
-        else if (value is Uri)
+        else if (value is Uri uri)
         {
             if (onlyNested)
             {
                 return;
             }
-
-            var uri = (Uri)value;
 
             if (!uri.IsAbsoluteUri)
             {
@@ -1874,14 +1872,14 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             // URIs represent references to other resources identified by their IDs, so they need to be managed as such
             nestedNode = graph.CreateUriNode(uri);
         }
-        else if (value is DateTime)
+        else if (value is DateTime time)
         {
             if (onlyNested)
             {
                 return;
             }
 
-            nestedNode = ((DateTime)value).ToUniversalTime().ToLiteral(graph);
+            nestedNode = time.ToUniversalTime().ToLiteral(graph);
         }
         else if (objType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
         {
