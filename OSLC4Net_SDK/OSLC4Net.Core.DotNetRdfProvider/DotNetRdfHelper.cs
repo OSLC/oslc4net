@@ -322,9 +322,9 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
     {
         IDictionary<string, MemberInfo> setMethodMap;
 
-        if (typePropertyDefinitionsToSetMethods.TryGetValue(beanType, out var value))
+        if (typePropertyDefinitionsToSetMethods.TryGetValue(beanType, out var beanTypeValue))
         {
-            setMethodMap = value;
+            setMethodMap = beanTypeValue;
         }
         else
         {
