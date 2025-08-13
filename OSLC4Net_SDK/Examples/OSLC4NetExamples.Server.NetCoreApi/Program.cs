@@ -14,7 +14,9 @@ builder.Services.AddControllers(options =>
             {
                 // CompressionLevel = WriterCompressionLevel.Minimal,
                 // PrettyPrint = false,
-                CompressionLevel = WriterCompressionLevel.High, PrettyPrint = true, UseDtd = true
+                CompressionLevel = WriterCompressionLevel.High,
+                PrettyPrint = true,
+                UseDtd = true
             }));
 
 });

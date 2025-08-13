@@ -20,6 +20,11 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
 {
     private readonly OslcOutputFormatConfig _config;
 
+    // From https://learn.microsoft.com/en-us/aspnet/core/web-api/advanced/custom-formatters?view=aspnetcore-9.0#specify-supported-media-types-and-encodings
+    // A formatter class can not use constructor injection for its dependencies. For example,
+    // ILogger<VcardOutputFormatter> can't be added as a parameter to the constructor. To access
+    // services, use the context object that gets passed in to the methods. A code example in this
+    // article and the sample show how to do this.
     public OslcRdfOutputFormatter(OslcOutputFormatConfig? config = null)
     {
         _config = new OslcOutputFormatConfig
