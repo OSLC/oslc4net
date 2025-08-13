@@ -17,6 +17,7 @@ jobs:
   build:
     name: Build and analyze
     runs-on: windows-latest
+    timeout-minutes: 25
     if: ${{ !contains(github.event.pull_request.labels.*.name, 'ci:nolint') && !contains(github.event.pull_request.labels.*.name, 'dependencies') }}
     steps:
       - name: Set up JDK 17

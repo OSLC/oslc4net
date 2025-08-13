@@ -8,6 +8,7 @@ on:
     branches: ["main", "master"]
   pull_request:
     branches: ["main", "master"]
+  merge_group:
   release:
     types:
       - published # Run the workflow when a new GitHub release is published
@@ -42,6 +43,7 @@ jobs:
     permissions:
       contents: read
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     defaults:
       run:
         working-directory: main/OSLC4Net_SDK/
@@ -85,6 +87,7 @@ jobs:
             { setup: "10.x", target: "net10.0" },
           ]
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
     defaults:
       run:
         working-directory: main/OSLC4Net_SDK/

@@ -7,7 +7,9 @@
 #
 # Source repository: https://github.com/actions/dependency-review-action
 name: 'Dependency Review'
-on: [pull_request]
+on:
+  pull_request:
+  # merge_group:
 
 permissions:
   contents: read
@@ -19,6 +21,7 @@ concurrency:
 jobs:
   dependency-review:
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
