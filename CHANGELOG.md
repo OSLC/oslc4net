@@ -10,6 +10,33 @@ Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking c
 important notes.
 
 
+## [UNRELEASED] - YYYY-MM-DD
+
+### Security
+
+This release does not contain security updates.
+
+### Added
+
+This release does not contain new features.
+
+### Changed
+
+This release does not contain other significant changes.
+
+### Deprecated
+
+This release does not introduce deprecations.
+
+### Removed
+
+This release does not remove any features.
+
+### Fixed
+
+This release does not contain bug fixes.
+
+
 ## [0.6.1] - 2025-08-13
 
 ### Security
