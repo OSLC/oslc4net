@@ -19,8 +19,8 @@ public class CatalogController(ILogger<CatalogController> logger) : ControllerBa
     public ServiceProviderCatalog Get()
     {
         var catalog = new ServiceProviderCatalog();
+        catalog.SetAbout(new Uri(Request.GetEncodedUrl()));
         var sp = new ServiceProvider();
-        sp.SetAbout(new Uri(Request.GetEncodedUrl()));
         sp.SetDescription("Dummy Service Provider");
         catalog.AddServiceProvider(sp);
         return catalog;

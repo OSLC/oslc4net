@@ -16,7 +16,7 @@ builder.Services.AddControllers(options =>
                 // PrettyPrint = false,
                 CompressionLevel = WriterCompressionLevel.High,
                 PrettyPrint = true,
-                UseDtd = true
+                // UseDtd = true
             }));
 
 });

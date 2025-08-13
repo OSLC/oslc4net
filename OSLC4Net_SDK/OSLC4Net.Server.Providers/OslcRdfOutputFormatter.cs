@@ -190,7 +190,7 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
     {
         IRdfWriter triplesWriter = ctx.Format switch
         {
-            RdfFormat.RdfXml => new RdfXmlWriter
+            RdfFormat.RdfXml => new PrettyRdfXmlWriter
             {
                 UseDtd = _config.UseDtd,
                 PrettyPrintMode = _config.PrettyPrint,

@@ -22,7 +22,9 @@ This release does not contain new features.
 
 ### Changed
 
-This release does not contain other significant changes.
+- RDF/XML output is now produced using `PrettyRdfXmlWriter` instead of
+  `RdfXmlWriter`. Pretty-printing is still configurable with
+  `OslcOutputFormatConfig`.
 
 ### Deprecated
 
