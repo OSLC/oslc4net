@@ -10,7 +10,7 @@ Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking c
 important notes.
 
 
-## [UNRELEASED] - YYYY-MM-DD
+## [0.6.2] - 2025-08-13
 
 ### Security
 
@@ -445,7 +445,9 @@ This release does not remove any features.
 This release does not contain bug fixes.
 
 
-[UNRELEASED]: https://github.com/OSLC/oslc4net/compare/v0.6.1...HEAD
+[UNRELEASED]: https://github.com/OSLC/oslc4net/compare/v0.6.2...HEAD
+
+[0.6.2]: https://github.com/OSLC/oslc4net/releases/tag/v0.6.2
 
 [0.6.1]: https://github.com/OSLC/oslc4net/releases/tag/v0.6.1
 
