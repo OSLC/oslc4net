@@ -16,8 +16,8 @@ public class RootServicesController(ILogger<RootServicesController> logger) : Co
         {
             // Get the base URL from the current request
             var baseUrl = $"{Request.Scheme}://{Request.Host}";
-            var rootServicesUrl = $"{baseUrl}/services/rootservices";
-            var catalogUrl = $"{baseUrl}/services/catalog/singleton";
+            var rootServicesUrl = $"{baseUrl}/.well-known/oslc/rootservices.xml";
+            var catalogUrl = $"{baseUrl}/oslc/catalog";
 
             // Create the DTO with dynamic URLs based on the request
             var rootServices = new RootServicesDto
