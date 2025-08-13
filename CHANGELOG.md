@@ -20,6 +20,7 @@ This release does not contain security updates.
 
 - The `QName` class now has properties `NamespaceUri`, `LocalPart`, and
   `Prefix`.
+- ⚡️ `OslcOutputFormatConfig` configure RDF output formatting (pretty-printing, DTD, JSON-LD mode)
 
 ### Changed
 
@@ -27,7 +28,7 @@ This release does not contain other significant changes.
 
 ### Deprecated
 
-- `QName` getters `GetNamespaceURI`, `GetLocalPart`, and `GetPrefix` are
+- 👉 `QName` getters `GetNamespaceURI`, `GetLocalPart`, and `GetPrefix` are
   deprecated in favor of C# properties and are scheduled for removal in the
   next release.
 
