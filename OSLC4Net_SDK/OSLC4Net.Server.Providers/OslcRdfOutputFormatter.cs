@@ -9,7 +9,6 @@ using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
 using VDS.RDF;
-using VDS.RDF.JsonLd.Syntax;
 using VDS.RDF.Parsing;
 using VDS.RDF.Writing;
 using static OSLC4Net.Core.DotNetRdfProvider.RdfXmlMediaTypeFormatter;
@@ -27,13 +26,7 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
     // article and the sample show how to do this.
     public OslcRdfOutputFormatter(OslcOutputFormatConfig? config = null)
     {
-        _config = new OslcOutputFormatConfig
-        {
-            CompressionLevel = config?.CompressionLevel ?? WriterCompressionLevel.More,
-            PrettyPrint = config?.PrettyPrint ?? true,
-            UseDtd = config?.UseDtd ?? false,
-            JsonLdMode = config?.JsonLdMode ?? JsonLdProcessingMode.JsonLd11
-        };
+        _config = config ?? new OslcOutputFormatConfig();
 
         SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(OslcMediaType.APPLICATION_RDF_XML));
         SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(OslcMediaType.TEXT_TURTLE));
@@ -71,9 +64,7 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
                 _ => throw new ArgumentOutOfRangeException(nameof(requestedType),
                     "Unknown RDF format"),
             },
-            Graph = graph,
-            // TODO: make configurable
-            PrettyPrint = _config.PrettyPrint!.Value
+            Graph = graph
         };
 
         await SerializeToRdfAsync(ctx, httpContext.Response).ConfigureAwait(false);
@@ -201,19 +192,19 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
         {
             RdfFormat.RdfXml => new RdfXmlWriter
             {
-                UseDtd = _config.UseDtd!.Value,
-                PrettyPrintMode = _config.PrettyPrint!.Value,
-                CompressionLevel = _config.CompressionLevel!.Value
+                UseDtd = _config.UseDtd,
+                PrettyPrintMode = _config.PrettyPrint,
+                CompressionLevel = _config.CompressionLevel
             },
             RdfFormat.Turtle => new CompressingTurtleWriter(TurtleSyntax.W3C)
             {
-                PrettyPrintMode = _config.PrettyPrint!.Value,
-                CompressionLevel = _config.CompressionLevel!.Value,
-                HighSpeedModePermitted = !ctx.PrettyPrint,
+                PrettyPrintMode = _config.PrettyPrint,
+                CompressionLevel = _config.CompressionLevel,
+                HighSpeedModePermitted = !_config.PrettyPrint
             },
             RdfFormat.NTriples => new NTriplesWriter(NTriplesSyntax.Rdf11)
             {
-                SortTriples = _config.PrettyPrint!.Value
+                SortTriples = _config.PrettyPrint
             },
             RdfFormat.JsonLd => throw new NotSupportedException(
                 "This method supports only triple-based formats, use quad-based method"),
@@ -233,9 +224,9 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
         {
             RdfFormat.JsonLd => new JsonLdWriter(new JsonLdWriterOptions
             {
-                JsonFormatting = _config.PrettyPrint!.Value ? Formatting.Indented : Formatting.None,
-                Ordered = _config.PrettyPrint!.Value,
-                ProcessingMode = _config.JsonLdMode!.Value
+                JsonFormatting = _config.PrettyPrint ? Formatting.Indented : Formatting.None,
+                Ordered = _config.PrettyPrint,
+                ProcessingMode = _config.JsonLdMode
             }),
             RdfFormat.NTriples or RdfFormat.RdfXml or RdfFormat.Turtle => throw
                 new NotSupportedException(
