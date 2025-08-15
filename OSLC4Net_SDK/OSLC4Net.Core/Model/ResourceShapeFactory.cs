@@ -53,6 +53,7 @@ public sealed class ResourceShapeFactory
         TYPE_TO_VALUE_TYPE[typeof(BigInteger)] = ValueType.Integer;
         TYPE_TO_VALUE_TYPE[typeof(DateTime)] = ValueType.DateTime;
         TYPE_TO_VALUE_TYPE[typeof(Uri)] = ValueType.Resource;
+        TYPE_TO_VALUE_TYPE[typeof(ICollection<Uri>)] = ValueType.Resource;
     }
 
     private ResourceShapeFactory()
