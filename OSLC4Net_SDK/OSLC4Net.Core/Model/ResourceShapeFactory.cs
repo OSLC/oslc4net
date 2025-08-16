@@ -54,6 +54,8 @@ public sealed class ResourceShapeFactory
         TYPE_TO_VALUE_TYPE[typeof(DateTime)] = ValueType.DateTime;
         TYPE_TO_VALUE_TYPE[typeof(Uri)] = ValueType.Resource;
         TYPE_TO_VALUE_TYPE[typeof(ICollection<Uri>)] = ValueType.Resource;
+        TYPE_TO_VALUE_TYPE[typeof(IEnumerable<Uri>)] = ValueType.Resource;
+        TYPE_TO_VALUE_TYPE[typeof(ISet<Uri>)] = ValueType.Resource;
     }
 
     private ResourceShapeFactory()
