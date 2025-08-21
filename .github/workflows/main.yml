@@ -71,7 +71,7 @@ jobs:
           dotnet format OSLC4Net.Core.sln whitespace --verify-no-changes
 
   test:
-    needs: [format]
+    #needs: [format]
     permissions:
       contents: read  # for actions/checkout to fetch code
       packages: write  # for setup-dotnet to create package
@@ -79,9 +79,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-24.04, ubuntu-24.04-arm, windows-latest]
-        version:
-          [
-            # { setup: "6.x", target: "net6.0" },
+        version: 
+          [ 
             { setup: "8.x", target: "net8.0" },
             { setup: "9.x", target: "net9.0" },
             { setup: "10.x", target: "net10.0" },
