@@ -16,7 +16,7 @@
 namespace OSLC4Net.Core.Query;
 
 /// <summary>
-/// Boolean literal operand from olsc.where clause
+/// Boolean literal operand from oslc.where clause
 /// </summary>
 public interface BooleanValue : Value
 {

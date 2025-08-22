@@ -16,7 +16,7 @@
 namespace OSLC4Net.Core.Query;
 
 /// <summary>
-/// <i>in</i> operator simple term from olsc.where clause
+/// <i>in</i> operator simple term from oslc.where clause
 /// </summary>
 public interface InTerm : SimpleTerm
 {
