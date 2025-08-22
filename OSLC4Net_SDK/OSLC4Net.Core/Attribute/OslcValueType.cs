@@ -19,15 +19,14 @@ using ValueType = OSLC4Net.Core.Model.ValueType;
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC ValueType attribue
+/// OSLC ValueType attribue
 /// </summary>
-[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcValueType : System.Attribute
 {
-    /**
-     * Value-type of the property.
-     */
+    /// <summary>
+    /// Value-type of the property.
+    /// </summary>
     public readonly ValueType value;
 
     public OslcValueType(ValueType value)

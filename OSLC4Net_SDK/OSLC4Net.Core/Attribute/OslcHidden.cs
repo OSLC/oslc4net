@@ -17,16 +17,15 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC Hidden attribute
+/// OSLC Hidden attribute
 /// </summary>
 /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-[AttributeUsage(AttributeTargets.Method)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcHidden : System.Attribute
 {
-    /**
-     * A hint that indicates that property MAY be hidden when presented in a user interface.
-     */
+    /// <summary>
+    /// A hint that indicates that property MAY be hidden when presented in a user interface.
+    /// </summary>
     public readonly bool value;
 
     public OslcHidden(bool value)

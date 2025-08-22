@@ -17,34 +17,33 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC CreationFactory attribute
+/// OSLC CreationFactory attribute
 /// </summary>
-[AttributeUsage(AttributeTargets.Method)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcCreationFactory : System.Attribute
 {
-    /**
-     * Very short label for use in menu items
-     */
+    /// <summary>
+    /// Very short label for use in menu items
+    /// </summary>
     public string label = "";
 
-    /**
-     * Resource shapes
-     */
+    /// <summary>
+    /// Resource shapes
+    /// </summary>
     public string[] resourceShapes = Array.Empty<string>();
 
-    /**
-     * Resource types
-     */
+    /// <summary>
+    /// Resource types
+    /// </summary>
     public string[] resourceTypes = Array.Empty<string>();
 
-    /**
-     * Title string that could be used for display
-     */
+    /// <summary>
+    /// Title string that could be used for display
+    /// </summary>
     public string title;
 
-    /**
-     * Usages
-     */
+    /// <summary>
+    /// Usages
+    /// </summary>
     public string[] usages = Array.Empty<string>();
 }

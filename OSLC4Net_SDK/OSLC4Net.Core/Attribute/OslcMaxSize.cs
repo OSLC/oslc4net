@@ -17,17 +17,16 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC MaxSize attribute
+/// OSLC MaxSize attribute
 /// </summary>
 /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-[AttributeUsage(AttributeTargets.Method)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcMaxSize : System.Attribute
 {
-    /**
-     * For String properties only, specifies maximum characters allowed.
-     * If not set, then there is no maximum or maximum is specified elsewhere.
-     */
+    /// <summary>
+    /// For String properties only, specifies maximum characters allowed.
+    /// If not set, then there is no maximum or maximum is specified elsewhere.
+    /// </summary>
     public readonly int value;
 
     public OslcMaxSize(int value)

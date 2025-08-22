@@ -17,10 +17,9 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     Describe the assembley schema
+/// Describe the assembley schema
 /// </summary>
-[AttributeUsage(AttributeTargets.Assembly)
-]
+[AttributeUsage(AttributeTargets.Assembly)]
 public class OslcSchema : System.Attribute
 {
     public Type namespaceType;

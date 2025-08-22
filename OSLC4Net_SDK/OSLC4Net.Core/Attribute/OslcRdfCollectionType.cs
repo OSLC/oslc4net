@@ -18,18 +18,17 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Core.Attribute;
 
-[AttributeUsage(AttributeTargets.Method)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcRdfCollectionType : System.Attribute
 {
-    /**
-     * Prefix for the namespace.
-     */
+    /// <summary>
+    /// Prefix for the namespace.
+    /// </summary>
     public readonly string collectionType = "List";
 
-    /**
-     * Namespace URI.
-     */
+    /// <summary>
+    /// Namespace URI.
+    /// </summary>
     public readonly string namespaceURI = OslcConstants.RDF_NAMESPACE;
 
     public OslcRdfCollectionType(string namespaceURI, string collectionType)

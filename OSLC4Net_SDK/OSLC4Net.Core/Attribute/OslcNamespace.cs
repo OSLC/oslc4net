@@ -16,14 +16,12 @@
 
 namespace OSLC4Net.Core.Attribute;
 
-[AttributeUsage(AttributeTargets.Class |
-                AttributeTargets.Interface)
-]
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
 public class OslcNamespace : System.Attribute
 {
-    /**
-     * Namespace URI of the element.
-     */
+    /// <summary>
+    /// Namespace URI of the element.
+    /// </summary>
     public readonly string value;
 
     public OslcNamespace(string value)

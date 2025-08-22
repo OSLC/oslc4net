@@ -17,16 +17,15 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC Title attribute
+/// OSLC Title attribute
 /// </summary>
 /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcTitle : System.Attribute
 {
-    /**
-     * Title of the element.
-     */
+    /// <summary>
+    /// Title of the element.
+    /// </summary>
     public readonly string value;
 
     public OslcTitle(string value)

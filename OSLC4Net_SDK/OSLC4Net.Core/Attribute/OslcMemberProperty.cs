@@ -17,15 +17,14 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC Members attribute
+/// OSLC Members attribute
 /// </summary>
-[AttributeUsage(AttributeTargets.Method)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcMemberProperty : System.Attribute
 {
-    /**
-     * If set to true, this indicates that the property is a membership property.
-     */
+    /// <summary>
+    /// If set to true, this indicates that the property is a membership property.
+    /// </summary>
     public readonly bool value;
 
     public OslcMemberProperty(bool value)

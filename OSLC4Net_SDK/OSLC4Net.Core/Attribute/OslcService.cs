@@ -17,15 +17,14 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC Service attribute
+/// OSLC Service attribute
 /// </summary>
-[AttributeUsage(AttributeTargets.Class)
-]
+[AttributeUsage(AttributeTargets.Class)]
 public class OslcService : System.Attribute
 {
-    /**
-     * Domain of the service.
-     */
+    /// <summary>
+    /// Domain of the service.
+    /// </summary>
     public readonly string value;
 
     public OslcService(string value)

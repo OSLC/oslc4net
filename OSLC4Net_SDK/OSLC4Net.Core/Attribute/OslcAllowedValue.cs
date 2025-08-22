@@ -17,16 +17,15 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC AllowedValue attribute
+/// OSLC AllowedValue attribute
 /// </summary>
 /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-[AttributeUsage(AttributeTargets.Method)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcAllowedValue : System.Attribute
 {
-    /**
-     * A value allowed for property, inlined into property definition.
-     */
+    /// <summary>
+    /// A value allowed for property, inlined into property definition.
+    /// </summary>
     public readonly string[] value;
 
     public OslcAllowedValue(params string[] value)

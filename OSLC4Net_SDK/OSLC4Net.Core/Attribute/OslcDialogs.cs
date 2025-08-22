@@ -17,10 +17,9 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC Dialogs attribute
+/// OSLC Dialogs attribute
 /// </summary>
-[AttributeUsage(AttributeTargets.Method)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcDialogs : System.Attribute
 {
     public readonly OslcDialog[]? Value;

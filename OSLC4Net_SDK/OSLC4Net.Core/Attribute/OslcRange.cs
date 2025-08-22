@@ -17,16 +17,15 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC Range attribute
+/// OSLC Range attribute
 /// </summary>
 /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-[AttributeUsage(AttributeTargets.Method)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcRange : System.Attribute
 {
-    /**
-     * Specify the range of possible resource types allowed (for properties with a resource value-type).
-     */
+    /// <summary>
+    /// Specify the range of possible resource types allowed (for properties with a resource value-type).
+    /// </summary>
     public readonly string[] value;
 
     public OslcRange(params string[] value)

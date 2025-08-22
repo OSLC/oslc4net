@@ -17,15 +17,14 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC DefaultValue attribute
+/// OSLC DefaultValue attribute
 /// </summary>
-[AttributeUsage(AttributeTargets.Method)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcDefaultValue : System.Attribute
 {
-    /**
-     * Description of the element.
-     */
+    /// <summary>
+    /// Description of the element.
+    /// </summary>
     public readonly string value;
 
     public OslcDefaultValue(string value)
