@@ -30,9 +30,8 @@ public interface SimpleTerm
 {
     TermType Type { get; }
 
-    /**
-     * @return type of simple term.  When {@link CompoundTerm}
-     * return <code>null</code>.
-     */
+    /// <summary>
+    /// Gets the property name. Returns null for CompoundTerm.
+    /// </summary>
     PName Property { get; }
 }

@@ -19,15 +19,14 @@ using OSLC4Net.Core.Model;
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC Representation attribute
+/// OSLC Representation attribute
 /// </summary>
-[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcRepresentation : System.Attribute
 {
-    /**
-     * Specify how the resource will be represented (for properties with a resource value-type).
-     */
+    /// <summary>
+    /// Specify how the resource will be represented (for properties with a resource value-type).
+    /// </summary>
     public readonly Representation value;
 
     public OslcRepresentation(Representation value)

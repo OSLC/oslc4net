@@ -17,15 +17,14 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC PropertyDefinition attribute
+/// OSLC PropertyDefinition attribute
 /// </summary>
-[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcPropertyDefinition : System.Attribute
 {
-    /**
-     * URI of the property whose usage is being described.
-     */
+    /// <summary>
+    /// URI of the property whose usage is being described.
+    /// </summary>
     public readonly string value;
 
     public OslcPropertyDefinition(string value)

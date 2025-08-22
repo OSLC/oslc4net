@@ -16,8 +16,7 @@
 namespace OSLC4Net.Core.Query;
 
 /// <summary>
-/// Decimal literal operand from olsc.where clause.<p>
-///
+/// Decimal literal operand from oslc.where clause.
 /// Not converted to any .NET native class as only clients of this
 /// interface can convert to native DB field values without losing
 /// precision.

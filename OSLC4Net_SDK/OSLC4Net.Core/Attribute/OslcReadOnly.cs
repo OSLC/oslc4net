@@ -17,16 +17,15 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC ReadOnly attribute
+/// OSLC ReadOnly attribute
 /// </summary>
 /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcReadOnly : System.Attribute
 {
-    /**
-     * True if the property is read-only. If not set, or set to false, then the property is writable.
-     */
+    /// <summary>
+    /// True if the property is read-only. If not set, or set to false, then the property is writable.
+    /// </summary>
     public readonly bool value;
 
     public OslcReadOnly()

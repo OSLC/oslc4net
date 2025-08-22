@@ -22,7 +22,7 @@ public enum PropertyType
 }
 
 /// <summary>
-/// Property list element from olsc.select of oslc.properties clause
+/// Property list element from oslc.select of oslc.properties clause
 /// </summary>
 public interface Property
 {

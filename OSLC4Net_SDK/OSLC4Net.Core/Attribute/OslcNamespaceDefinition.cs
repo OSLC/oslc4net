@@ -17,19 +17,20 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     The definition of an OSLC namespace attribute
+/// The definition of an OSLC namespace attribute
+/// Only used within OslcSchema
 /// </summary>
 [Serializable]
-public class OslcNamespaceDefinition
+public class OslcNamespaceDefinition : System.Attribute
 {
-    /**
-     * Namespace URI.
-     */
+    /// <summary>
+    /// Namespace URI.
+    /// </summary>
     public readonly string namespaceURI;
 
-    /**
-     * Prefix for the namespace.
-     */
+    /// <summary>
+    /// Prefix for the namespace.
+    /// </summary>
     public readonly string prefix;
 
     public OslcNamespaceDefinition(

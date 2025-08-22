@@ -17,44 +17,43 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC Dialog attribute
+/// OSLC Dialog attribute
 /// </summary>
-[AttributeUsage(AttributeTargets.Method)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcDialog : System.Attribute
 {
-    /**
-     * Values MUST be expressed in relative length units.  Em and ex units are interpreted relative to the default system font (at 100% size).
-     */
+    /// <summary>
+    /// Values MUST be expressed in relative length units.  Em and ex units are interpreted relative to the default system font (at 100% size).
+    /// </summary>
     public string hintHeight = "";
 
-    /**
-     * Values MUST be expressed in relative length units.  Em and ex units are interpreted relative to the default system font (at 100% size).
-     */
+    /// <summary>
+    /// Values MUST be expressed in relative length units.  Em and ex units are interpreted relative to the default system font (at 100% size).
+    /// </summary>
     public string hintWidth = "";
 
-    /**
-     * Very short label for use in menu items
-     */
+    /// <summary>
+    /// Very short label for use in menu items
+    /// </summary>
     public string label = "";
 
-    /**
-     * Resource types
-     */
+    /// <summary>
+    /// Resource types
+    /// </summary>
     public string[] resourceTypes = Array.Empty<string>();
 
-    /**
-     * Title string that could be used for display
-     */
+    /// <summary>
+    /// Title string that could be used for display
+    /// </summary>
     public string title;
 
-    /**
-     * The URI of the dialog
-     */
+    /// <summary>
+    /// The URI of the dialog
+    /// </summary>
     public string uri;
 
-    /**
-     * Usages
-     */
+    /// <summary>
+    /// Usages
+    /// </summary>
     public string[] usages = Array.Empty<string>();
 }

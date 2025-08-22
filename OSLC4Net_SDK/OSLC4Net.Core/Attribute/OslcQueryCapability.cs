@@ -17,35 +17,34 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC QueryCapability attribute
+/// OSLC QueryCapability attribute
 /// </summary>
 /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-[AttributeUsage(AttributeTargets.Method)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcQueryCapability(string? title) : System.Attribute
 {
-    /**
-     * Very short label for use in menu items
-     */
+    /// <summary>
+    /// Very short label for use in menu items
+    /// </summary>
     public readonly string Label = "";
 
-    /**
- * Resource shapes
- */
+    /// <summary>
+    /// Resource shapes
+    /// </summary>
     public readonly string ResourceShape = "";
 
-    /**
-     * Resource types
-     */
+    /// <summary>
+    /// Resource types
+    /// </summary>
     public readonly string[] ResourceTypes = Array.Empty<string>();
 
-    /**
-     * Title string that could be used for display
-     */
+    /// <summary>
+    /// Title string that could be used for display
+    /// </summary>
     public readonly string? Title = title;
 
-    /**
-     * Usages
-     */
+    /// <summary>
+    /// Usages
+    /// </summary>
     public readonly string[] Usages = Array.Empty<string>();
 }

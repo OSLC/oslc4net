@@ -17,17 +17,16 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC ValueShape attribute
+/// OSLC ValueShape attribute
 /// </summary>
 /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-[AttributeUsage(AttributeTargets.Method)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcValueShape : System.Attribute
 {
-    /**
-     * If the value-type is a resource type, then Property MAY provide a shape value
-     * to indicate the Resource Shape that applies to the resource.
-     */
+    /// <summary>
+    /// If the value-type is a resource type, then Property MAY provide a shape value
+    /// to indicate the Resource Shape that applies to the resource.
+    /// </summary>
     public readonly string value;
 
     public OslcValueShape(string value)

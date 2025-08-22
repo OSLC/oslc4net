@@ -17,16 +17,16 @@
 namespace OSLC4Net.Core;
 
 /// <summary>
-///     Marker interface applied to a Map(String, Object> to
-///     indicate that when selecting properties for output all immediate,
-///     resource properties of the resource should be output with entries
-///     in the {@link NestedWildcardProperties#commonNestedProperties()
+/// Marker interface applied to a Map&lt;String, Object&gt; to
+/// indicate that when selecting properties for output all immediate
+/// resource properties of the resource should be output with entries
+/// in the CommonNestedProperties
 /// </summary>
 public interface NestedWildcardProperties
 {
-    /**
-     * @return map of all member properties of nested resources to be
-     * output
-     */
+    /// <summary>
+    /// Gets the map of all member properties of nested resources to be output
+    /// </summary>
+    /// <returns>Map of all member properties of nested resources to be output</returns>
     IDictionary<string, object> CommonNestedProperties();
 }

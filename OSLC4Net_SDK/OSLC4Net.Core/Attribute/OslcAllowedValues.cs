@@ -17,16 +17,15 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC AllowedValues (enumeration) attribute
+/// OSLC AllowedValues (enumeration) attribute
 /// </summary>
 /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-[AttributeUsage(AttributeTargets.Method)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcAllowedValues : System.Attribute
 {
-    /**
-     * Specify how the resource will be represented (for properties with a resource value-type).
-     */
+    /// <summary>
+    /// Specify how the resource will be represented (for properties with a resource value-type).
+    /// </summary>
     public readonly string value;
 
     public OslcAllowedValues(string value)

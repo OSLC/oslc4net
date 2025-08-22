@@ -17,19 +17,18 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC Resource Shape attribute
+/// OSLC Resource Shape attribute
 /// </summary>
-[AttributeUsage(AttributeTargets.Class)
-]
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
 public class OslcResourceShape : System.Attribute
 {
-    /**
-     * Type or types of resource described by this shape.
-     */
+    /// <summary>
+    /// Type or types of resource described by this shape.
+    /// </summary>
     public string[] describes = Array.Empty<string>();
 
-    /**
-     * Title string that could be used for display
-     */
+    /// <summary>
+    /// Title string that could be used for display
+    /// </summary>
     public string title;
 }

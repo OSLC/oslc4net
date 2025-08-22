@@ -27,7 +27,7 @@ public enum ValueType
 
 /// <summary>
 /// Operand from ComparisonTerm or InTerm
-/// impleTerm from olsc.where clause
+/// from oslc.where clause
 /// </summary>
 public interface Value
 {

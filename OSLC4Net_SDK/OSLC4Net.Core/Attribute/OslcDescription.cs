@@ -17,16 +17,15 @@
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC Description attribute
+/// OSLC Description attribute
 /// </summary>
 /// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
-[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcDescription : System.Attribute
 {
-    /**
-     * A default value for property, inlined into property definition.
-     */
+    /// <summary>
+    /// A default value for property, inlined into property definition.
+    /// </summary>
     public readonly string value;
 
     public OslcDescription(string value)

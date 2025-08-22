@@ -19,15 +19,14 @@ using OSLC4Net.Core.Model;
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-///     OSLC Occurs attribute
+/// OSLC Occurs attribute
 /// </summary>
-[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcOccurs : System.Attribute
 {
-    /**
-     * Occurs of property.
-     */
+    /// <summary>
+    /// Occurs of property.
+    /// </summary>
     public readonly Occurs value;
 
     public OslcOccurs(Occurs value)

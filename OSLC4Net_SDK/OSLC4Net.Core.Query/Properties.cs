@@ -16,7 +16,7 @@
 namespace OSLC4Net.Core.Query;
 
 /// <summary>
-/// Properties from olsc.select of oslc.properties clause
+/// Properties from oslc.select of oslc.properties clause
 /// </summary>
 public interface Properties
 {

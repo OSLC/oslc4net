@@ -16,7 +16,7 @@
 namespace OSLC4Net.Core.Query;
 
 /// <summary>
-/// yped value operand from oslc.where clause
+/// Typed value operand from oslc.where clause
 /// </summary>
 public interface TypedValue : Value
 {
