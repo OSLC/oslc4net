@@ -60,7 +60,7 @@ jobs:
           persist-credentials: false
           path: main
       - name: Setup .NET (8.x)
-        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        uses: actions/setup-dotnet@d4c94342e560b34958eacfc5d055d21461ed1c5d # v5.0.0
         with:
           dotnet-version: 8.x
       - name: Restore dependencies
@@ -113,7 +113,7 @@ jobs:
           repository: oslc-op/refimpl
           path: refimpl
       - name: Setup .NET
-        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        uses: actions/setup-dotnet@d4c94342e560b34958eacfc5d055d21461ed1c5d # v5.0.0
         with:
           dotnet-version: ${{ matrix.version.setup }}
           source-url: https://nuget.pkg.github.com/oslc/index.json
