@@ -5,7 +5,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <!-- Versions used by several individual references below -->
-    <AspireVersion>9.3.1</AspireVersion>
+    <AspireVersion>9.5.0</AspireVersion>
     <DotNetRdfVersion>3.3.2</DotNetRdfVersion>
   </PropertyGroup>
   <ItemGroup>
@@ -28,7 +28,7 @@
     <!-- Test deps -->
     <PackageVersion Include="Aspire.Hosting.AppHost" Version="$(AspireVersion)" />
     <PackageVersion Include="Aspire.Hosting.Testing" Version="$(AspireVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.8" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.9" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageVersion Include="xunit.v3" Version="3.0.1" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.4" />
@@ -39,12 +39,12 @@
     <PackageVersion Include="FluentAssertions" Version="8.3.0" />
     <!-- Examples only -->
     <PackageVersion Include="dotNetRdf" Version="$(DotNetRdfVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.8" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.8" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.8" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.8" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.8" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.9" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" PrivateAssets="all" ExcludeAssets="runtime" />
 
