@@ -9,7 +9,6 @@ using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
 using VDS.RDF;
-using VDS.RDF.JsonLd.Syntax;
 using VDS.RDF.Parsing;
 using VDS.RDF.Writing;
 using static OSLC4Net.Core.DotNetRdfProvider.RdfXmlMediaTypeFormatter;
@@ -18,8 +17,17 @@ namespace OSLC4Net.Server.Providers;
 
 public class OslcRdfOutputFormatter : TextOutputFormatter
 {
-    public OslcRdfOutputFormatter()
+    private readonly OslcOutputFormatConfig _config;
+
+    // From https://learn.microsoft.com/en-us/aspnet/core/web-api/advanced/custom-formatters?view=aspnetcore-9.0#specify-supported-media-types-and-encodings
+    // A formatter class can not use constructor injection for its dependencies. For example,
+    // ILogger<VcardOutputFormatter> can't be added as a parameter to the constructor. To access
+    // services, use the context object that gets passed in to the methods. A code example in this
+    // article and the sample show how to do this.
+    public OslcRdfOutputFormatter(OslcOutputFormatConfig? config = null)
     {
+        _config = config ?? new OslcOutputFormatConfig();
+
         SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(OslcMediaType.APPLICATION_RDF_XML));
         SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(OslcMediaType.TEXT_TURTLE));
         SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(OslcMediaType.APPLICATION_JSON_LD));
@@ -34,7 +42,7 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
     {
         var httpContext = context.HttpContext;
 
-        // var logger = serviceProvider.GetRequiredService<ILogger<OslcRdfOutputFormatter>>();
+        // var logger = httpContext.RequestServices.GetRequiredService<ILogger<OslcRdfOutputFormatter>>();
 
         var type = context.ObjectType;
         var value = context.Object;
@@ -56,9 +64,7 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
                 _ => throw new ArgumentOutOfRangeException(nameof(requestedType),
                     "Unknown RDF format"),
             },
-            Graph = graph,
-            // TODO: make configurable
-            PrettyPrint = true,
+            Graph = graph
         };
 
         await SerializeToRdfAsync(ctx, httpContext.Response).ConfigureAwait(false);
@@ -162,7 +168,7 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
         return graph;
     }
 
-    private static async Task SerializeToRdfAsync(SerializationContext ctx,
+    private async Task SerializeToRdfAsync(SerializationContext ctx,
         HttpResponse httpContextResponse)
     {
         // TODO: deal with namespaces
@@ -179,31 +185,26 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
         }
     }
 
-    private static async Task SerializeTriplesAsync(SerializationContext ctx,
+    private async Task SerializeTriplesAsync(SerializationContext ctx,
         HttpResponseStreamWriter textWriter)
     {
         IRdfWriter triplesWriter = ctx.Format switch
         {
-            RdfFormat.RdfXml => new RdfXmlWriter
+            RdfFormat.RdfXml => new PrettyRdfXmlWriter
             {
-                UseDtd = false,
-                PrettyPrintMode = ctx.PrettyPrint,
-                CompressionLevel = ctx.PrettyPrint
-                    ? WriterCompressionLevel.High
-                    : WriterCompressionLevel.Minimal
+                UseDtd = _config.UseDtd,
+                PrettyPrintMode = _config.PrettyPrint,
+                CompressionLevel = _config.CompressionLevel
             },
             RdfFormat.Turtle => new CompressingTurtleWriter(TurtleSyntax.W3C)
             {
-                PrettyPrintMode = ctx.PrettyPrint,
-                CompressionLevel =
-                    ctx.PrettyPrint
-                        ? WriterCompressionLevel.High
-                        : WriterCompressionLevel.Minimal,
-                HighSpeedModePermitted = !ctx.PrettyPrint,
+                PrettyPrintMode = _config.PrettyPrint,
+                CompressionLevel = _config.CompressionLevel,
+                HighSpeedModePermitted = !_config.PrettyPrint
             },
             RdfFormat.NTriples => new NTriplesWriter(NTriplesSyntax.Rdf11)
             {
-                SortTriples = ctx.PrettyPrint,
+                SortTriples = _config.PrettyPrint
             },
             RdfFormat.JsonLd => throw new NotSupportedException(
                 "This method supports only triple-based formats, use quad-based method"),
@@ -216,15 +217,16 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
         }
     }
 
-    private static async Task SerializeQuadsAsync(SerializationContext ctx, HttpResponseStreamWriter textWriter)
+    private async Task SerializeQuadsAsync(SerializationContext ctx,
+        HttpResponseStreamWriter textWriter)
     {
         IStoreWriter quadsWriter = ctx.Format switch
         {
             RdfFormat.JsonLd => new JsonLdWriter(new JsonLdWriterOptions
             {
-                JsonFormatting = Formatting.Indented,
-                Ordered = true,
-                ProcessingMode = JsonLdProcessingMode.JsonLd11,
+                JsonFormatting = _config.PrettyPrint ? Formatting.Indented : Formatting.None,
+                Ordered = _config.PrettyPrint,
+                ProcessingMode = _config.JsonLdMode
             }),
             RdfFormat.NTriples or RdfFormat.RdfXml or RdfFormat.Turtle => throw
                 new NotSupportedException(

@@ -1,4 +1,5 @@
 using OSLC4Net.Server.Providers;
+using VDS.RDF.Writing;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +8,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers(options =>
 {
     options.InputFormatters.Insert(0, new OslcRdfInputFormatter());
-    options.OutputFormatters.Insert(0, new OslcRdfOutputFormatter());
+    options.OutputFormatters.Insert(0,
+        new OslcRdfOutputFormatter(
+            new OslcOutputFormatConfig
+            {
+                // CompressionLevel = WriterCompressionLevel.Minimal,
+                // PrettyPrint = false,
+                CompressionLevel = WriterCompressionLevel.High,
+                PrettyPrint = true,
+                // UseDtd = true
+            }));
+
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
