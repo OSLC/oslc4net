@@ -19,7 +19,7 @@ using ValueType = OSLC4Net.Core.Model.ValueType;
 namespace OSLC4Net.Core.Attribute;
 
 /// <summary>
-/// OSLC ValueType attribue
+/// OSLC ValueType attribute
 /// </summary>
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcValueType : System.Attribute
