@@ -5,7 +5,11 @@
   </PropertyGroup>
   <PropertyGroup>
     <!-- Versions used by several individual references below -->
-    <AspireVersion>9.5.0</AspireVersion>
+
+    <!-- Make sure to update OSLC4Net_SDK/Tests/OSLC4Net.Test.AspireHost/OSLC4Net.Test.AspireHost.csproj -->
+    <!-- Make sure to update OSLC4Net_SDK/Tests/OSLC4NetExamples.Server.Tests.AspireHost/OSLC4NetExamples.Server.Tests.AspireHost.csproj -->
+    <AspireVersion>9.5.1</AspireVersion>
+
     <DotNetRdfVersion>3.3.2</DotNetRdfVersion>
   </PropertyGroup>
   <ItemGroup>
