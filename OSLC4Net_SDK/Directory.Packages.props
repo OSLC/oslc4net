@@ -6,12 +6,12 @@
   <PropertyGroup>
     <!-- Versions used by several individual references below -->
     <AspireVersion>9.5.0</AspireVersion>
-    <DotNetRdfVersion>3.3.2</DotNetRdfVersion>
+    <DotNetRdfVersion>3.4.1</DotNetRdfVersion>
   </PropertyGroup>
   <ItemGroup>
     <!-- For removal -->
     <PackageVersion Include="NuGet.Build.Tasks.Pack" Version="6.12.1" />
-    <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageVersion Include="System.Json" Version="4.8.0" />
     <!-- depedencyManagement / convergence -->
     <PackageVersion Include="System.Net.Http" Version="4.3.4" />
