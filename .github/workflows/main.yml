@@ -192,7 +192,7 @@ jobs:
           success()
           && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
           && ( github.event_name == 'release' || inputs.release )
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: nuget
           # if-no-files-found: error
