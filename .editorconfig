@@ -463,7 +463,7 @@ dotnet_diagnostic.IDE0161.severity = silent
 dotnet_diagnostic.IDE0005.severity = silent
 
 # Verify settings
-[*.{received,verified}.{json,txt,xml}]
+[*.{received,verified}.{json,txt,xml,ttl,nq}]
 charset = utf-8-bom
 end_of_line = lf
 indent_size = unset
