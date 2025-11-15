@@ -1,4 +1,6 @@
 *.verified.txt text eol=lf working-tree-encoding=UTF-8
 *.verified.xml text eol=lf working-tree-encoding=UTF-8
 *.verified.json text eol=lf working-tree-encoding=UTF-8
+*.verified.ttl text eol=lf working-tree-encoding=UTF-8
+*.verified.nq text eol=lf working-tree-encoding=UTF-8
 *.verified.bin binary
