@@ -5,7 +5,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <!-- Versions used by several individual references below -->
-    <AspireVersion>9.5.2</AspireVersion>
+    <AspireVersion>13.0.0</AspireVersion>
     <DotNetRdfVersion>3.4.1</DotNetRdfVersion>
   </PropertyGroup>
   <ItemGroup>
