@@ -24,7 +24,7 @@
     <!-- conneg support &c for System.Net.Http -->
     <PackageVersion Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
     <!-- misc -->
-    <PackageVersion Include="Meziantou.Analyzer" Version="2.0.239" />
+    <PackageVersion Include="Meziantou.Analyzer" Version="2.0.253" />
     <!-- Test deps -->
     <PackageVersion Include="Aspire.Hosting.AppHost" Version="$(AspireVersion)" />
     <PackageVersion Include="Aspire.Hosting.Testing" Version="$(AspireVersion)" />
