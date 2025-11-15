@@ -20,16 +20,15 @@ using System.Net.Http.Headers;
 using OSLC4Net.ChangeManagement;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
-using Xunit;
-
-[assembly: CaptureConsole]
-[assembly: CaptureTrace]
+using TUnit.Assertions;
+using TUnit.Core;
 
 namespace OSLC4Net.Core.DotNetRdfProviderTests;
 
+[TestFixture]
 public class RdfXmlMediaTypeFormatterTests
 {
-    [Fact]
+    [Test]
     public async Task TestRdfXmlSerializationAsync()
     {
         var changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeReuest"));
@@ -42,20 +41,20 @@ public class RdfXmlMediaTypeFormatterTests
         var rdfXml = await SerializeAsync(formatter, changeRequest1,
             OslcMediaType.APPLICATION_RDF_XML_TYPE);
 
-        Debug.WriteLine(rdfXml);
+        TestContext.WriteLine(rdfXml);
 
         var changeRequest2 =
             await DeserializeAsync<ChangeRequest>(formatter, rdfXml,
                 OslcMediaType.APPLICATION_RDF_XML_TYPE);
 
-        Assert.NotNull(changeRequest2);
-        Assert.Equal(changeRequest1.GetAbout(), changeRequest2.GetAbout());
-        Assert.Equal(changeRequest1.IsFixed(), changeRequest2.IsFixed());
-        Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
-        Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
+        await Assert.That(changeRequest2).Is.Not.Null();
+        await Assert.That(changeRequest2.GetAbout()).Is.EqualTo(changeRequest1.GetAbout());
+        await Assert.That(changeRequest2.IsFixed()).Is.EqualTo(changeRequest1.IsFixed());
+        await Assert.That(changeRequest2.GetAffectedByDefects()[0].GetValue()).Is.EqualTo(changeRequest1.GetAffectedByDefects()[0].GetValue());
+        await Assert.That(changeRequest2.GetAffectedByDefects()[0].GetLabel()).Is.EqualTo(changeRequest1.GetAffectedByDefects()[0].GetLabel());
     }
 
-    [Fact]
+    [Test]
     public async Task TestRdfXmlCollectionSerializationAsync()
     {
         var crListOut = new List<ChangeRequest>();
@@ -84,13 +83,13 @@ public class RdfXmlMediaTypeFormatterTests
             await SerializeCollectionAsync(formatter, crListOut,
                 OslcMediaType.APPLICATION_RDF_XML_TYPE);
 
-        Debug.WriteLine(rdfXml);
+        TestContext.WriteLine(rdfXml);
 
         var crListIn =
             (await DeserializeCollectionAsync<ChangeRequest>(formatter, rdfXml,
                 OslcMediaType.APPLICATION_RDF_XML_TYPE) ?? throw new InvalidOperationException())
             .ToList();
-        Assert.Equal(crListOut.Count, crListIn.Count);
+        await Assert.That(crListIn.Count).Is.EqualTo(crListOut.Count);
 
         //No guarantees of order in a collection, use the "about" attribute to identify individual ChangeRequests
         foreach (var cr in crListIn)
@@ -99,25 +98,25 @@ public class RdfXmlMediaTypeFormatterTests
 
             if (crAboutUri.Equals("http://com/somewhere/changeRequest1"))
             {
-                Assert.Equal(cr.IsFixed(), changeRequest1.IsFixed());
-                Assert.Equal(cr.GetAffectedByDefects()[0].GetValue(), changeRequest1.GetAffectedByDefects()[0].GetValue());
-                Assert.Equal(cr.GetAffectedByDefects()[0].GetLabel(), changeRequest1.GetAffectedByDefects()[0].GetLabel());
+                await Assert.That(cr.IsFixed()).Is.EqualTo(changeRequest1.IsFixed());
+                await Assert.That(cr.GetAffectedByDefects()[0].GetValue()).Is.EqualTo(changeRequest1.GetAffectedByDefects()[0].GetValue());
+                await Assert.That(cr.GetAffectedByDefects()[0].GetLabel()).Is.EqualTo(changeRequest1.GetAffectedByDefects()[0].GetLabel());
             }
             else if (crAboutUri.Equals("http://com/somewhere/changeRequest2"))
             {
-                Assert.Equal(cr.IsFixed(), changeRequest2.IsFixed());
-                Assert.Equal(cr.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
-                Assert.Equal(cr.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
+                await Assert.That(cr.IsFixed()).Is.EqualTo(changeRequest2.IsFixed());
+                await Assert.That(cr.GetAffectedByDefects()[0].GetValue()).Is.EqualTo(changeRequest2.GetAffectedByDefects()[0].GetValue());
+                await Assert.That(cr.GetAffectedByDefects()[0].GetLabel()).Is.EqualTo(changeRequest2.GetAffectedByDefects()[0].GetLabel());
             }
             else
             {
-                Assert.Fail("Deserialized ChangeRequest about attribute not recognized: " + crAboutUri);
+                await Assert.That(false).Is.True($"Deserialized ChangeRequest about attribute not recognized: {crAboutUri}");
             }
         }
 
     }
 
-    [Fact]
+    [Test]
     public async Task TestXmlSerializationAsync()
     {
         var changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeReuest"));
@@ -130,20 +129,20 @@ public class RdfXmlMediaTypeFormatterTests
         var rdfXml =
             await SerializeAsync(formatter, changeRequest1, OslcMediaType.APPLICATION_XML_TYPE);
 
-        Debug.WriteLine(rdfXml);
+        TestContext.WriteLine(rdfXml);
 
         var changeRequest2 =
             await DeserializeAsync<ChangeRequest>(formatter, rdfXml,
                 OslcMediaType.APPLICATION_XML_TYPE);
 
-        Assert.NotNull(changeRequest2);
-        Assert.Equal(changeRequest1.GetAbout(), changeRequest2.GetAbout());
-        Assert.Equal(changeRequest1.IsFixed(), changeRequest2.IsFixed());
-        Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
-        Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
+        await Assert.That(changeRequest2).Is.Not.Null();
+        await Assert.That(changeRequest2.GetAbout()).Is.EqualTo(changeRequest1.GetAbout());
+        await Assert.That(changeRequest2.IsFixed()).Is.EqualTo(changeRequest1.IsFixed());
+        await Assert.That(changeRequest2.GetAffectedByDefects()[0].GetValue()).Is.EqualTo(changeRequest1.GetAffectedByDefects()[0].GetValue());
+        await Assert.That(changeRequest2.GetAffectedByDefects()[0].GetLabel()).Is.EqualTo(changeRequest1.GetAffectedByDefects()[0].GetLabel());
     }
 
-    [Fact]
+    [Test]
     public async Task TestTurtleSerializationAsync()
     {
         var changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeReuest"));
@@ -156,20 +155,20 @@ public class RdfXmlMediaTypeFormatterTests
         var turtle =
             await SerializeAsync(formatter, changeRequest1, OslcMediaType.TEXT_TURTLE_TYPE);
 
-        Debug.WriteLine(turtle);
+        TestContext.WriteLine(turtle);
 
         var changeRequest2 =
             await DeserializeAsync<ChangeRequest>(formatter, turtle,
                 OslcMediaType.TEXT_TURTLE_TYPE);
 
-        Assert.NotNull(changeRequest2);
-        Assert.Equal(changeRequest1.GetAbout(), changeRequest2.GetAbout());
-        Assert.Equal(changeRequest1.IsFixed(), changeRequest2.IsFixed());
-        Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
-        Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
+        await Assert.That(changeRequest2).Is.Not.Null();
+        await Assert.That(changeRequest2.GetAbout()).Is.EqualTo(changeRequest1.GetAbout());
+        await Assert.That(changeRequest2.IsFixed()).Is.EqualTo(changeRequest1.IsFixed());
+        await Assert.That(changeRequest2.GetAffectedByDefects()[0].GetValue()).Is.EqualTo(changeRequest1.GetAffectedByDefects()[0].GetValue());
+        await Assert.That(changeRequest2.GetAffectedByDefects()[0].GetLabel()).Is.EqualTo(changeRequest1.GetAffectedByDefects()[0].GetLabel());
     }
 
-    [Fact]
+    [Test]
     public async Task TestJsonLdSerializationAsync()
     {
         var changeRequest1 = new ChangeRequest(new Uri("http://com/somewhere/changeReuest"));
@@ -183,18 +182,18 @@ public class RdfXmlMediaTypeFormatterTests
         var jsonLd =
             await SerializeAsync(formatter, changeRequest1, OslcMediaType.APPLICATION_JSON_LD_TYPE);
 
-        Debug.WriteLine(jsonLd);
+        TestContext.WriteLine(jsonLd);
 
         var changeRequest2 =
             await DeserializeAsync<ChangeRequest>(formatter, jsonLd,
                 OslcMediaType.APPLICATION_JSON_LD_TYPE);
 
-        Assert.NotNull(changeRequest2);
-        Assert.Equal(changeRequest1.GetAbout(), changeRequest2.GetAbout());
-        Assert.Equal(changeRequest1.IsFixed(), changeRequest2.IsFixed());
-        Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetValue(),
+        await Assert.That(changeRequest2).Is.Not.Null();
+        await Assert.That(changeRequest2.GetAbout()).Is.EqualTo(changeRequest1.GetAbout());
+        await Assert.That(changeRequest2.IsFixed()).Is.EqualTo(changeRequest1.IsFixed());
+        await Assert.That(changeRequest2.GetAffectedByDefects()[0].GetValue()).Is.EqualTo(
             changeRequest2.GetAffectedByDefects()[0].GetValue());
-        Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetLabel(),
+        await Assert.That(changeRequest2.GetAffectedByDefects()[0].GetLabel()).Is.EqualTo(
             changeRequest2.GetAffectedByDefects()[0].GetLabel());
     }
 

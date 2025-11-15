@@ -16,7 +16,6 @@
 
 using System.Net;
 using System.Net.Http.Formatting;
-using Meziantou.Extensions.Logging.Xunit.v3;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,8 +25,8 @@ using OSLC4Net.Client;
 using OSLC4Net.Client.Oslc;
 using OSLC4Net.Core.Exceptions;
 using OSLC4Net.Core.Model;
-using Xunit;
-using Xunit.Sdk;
+using TUnit.Assertions;
+using TUnit.Core;
 using Type = OSLC4Net.ChangeManagement.Type;
 
 namespace OSLC4Net.ChangeManagementTest;
@@ -37,11 +36,12 @@ public abstract class TestBase
     private OslcClient? _testClient;
 
     protected string ServiceProviderCatalogUri;
-    protected readonly IConfigurationRoot Config;
+    protected IConfigurationRoot Config;
     protected IHost AppHost { get; set; }
     protected ILoggerFactory LoggerFactory { get; set; }
 
-    protected TestBase(ITestOutputHelper testOutputHelper)
+    [BeforeEachTest]
+    public void Setup()
     {
         Config = new ConfigurationBuilder()
             .AddJsonFile("appsettings.Development.json")
@@ -59,8 +59,7 @@ public abstract class TestBase
             .ConfigureLogging(
                 builder =>
                 {
-                    builder.Services.AddSingleton<ILoggerProvider>(
-                        new XUnitLoggerProvider(testOutputHelper, false));
+                    builder.AddTUnitLogger();
                 }).Build();
         LoggerFactory = AppHost.Services.GetRequiredService<ILoggerFactory>();
     }
