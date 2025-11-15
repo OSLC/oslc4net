@@ -79,10 +79,10 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-24.04, ubuntu-24.04-arm, windows-latest]
-        version: 
-          [ 
-            { setup: "8.x", target: "net8.0" },
-            { setup: "9.x", target: "net9.0" },
+        version:
+          [
+            # { setup: "8.x", target: "net8.0" },
+            # { setup: "9.x", target: "net9.0" },
             { setup: "10.x", target: "net10.0" },
           ]
     runs-on: ${{ matrix.os }}
@@ -119,27 +119,27 @@ jobs:
           source-url: https://nuget.pkg.github.com/oslc/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - name: Target ${{ matrix.version.target }} only
-        shell: pwsh
-        run: |
-          (Get-Content Tests/OSLC4Net.Test.RefImpl/OSLC4Net.Test.RefImpl.csproj) |
-            ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
-            Set-Content Tests/OSLC4Net.Test.RefImpl/OSLC4Net.Test.RefImpl.csproj
-          (Get-Content Tests/OSLC4Net.Client.Tests/OSLC4Net.Client.Tests.csproj) |
-            ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
-            Set-Content Tests/OSLC4Net.Client.Tests/OSLC4Net.Client.Tests.csproj
-          (Get-Content Tests/OSLC4Net.Core.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj) |
-            ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
-            Set-Content Tests/OSLC4Net.Core.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj
-          (Get-Content Tests/OSLC4Net.Core.QueryTests/OSLC4Net.Core.QueryTests.csproj) |
-            ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
-            Set-Content Tests/OSLC4Net.Core.QueryTests/OSLC4Net.Core.QueryTests.csproj
-          (Get-Content Tests/OSLC4Net.Test.AspireHost/OSLC4Net.Test.AspireHost.csproj) |
-            ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
-            Set-Content Tests/OSLC4Net.Test.AspireHost/OSLC4Net.Test.AspireHost.csproj
-          (Get-Content Tests/OSLC4NetExamples.Server.Tests/OSLC4NetExamples.Server.Tests.csproj) |
-            ForEach-Object { $_ -replace '>net8.0<', '>${{ matrix.version.target }}<' } |
-            Set-Content Tests/OSLC4NetExamples.Server.Tests/OSLC4NetExamples.Server.Tests.csproj
+      # - name: Target ${{ matrix.version.target }} only
+      #   shell: pwsh
+      #   run: |
+      #     (Get-Content Tests/OSLC4Net.Test.RefImpl/OSLC4Net.Test.RefImpl.csproj) |
+      #       ForEach-Object { $_ -replace '>net10.0<', '>${{ matrix.version.target }}<' } |
+      #       Set-Content Tests/OSLC4Net.Test.RefImpl/OSLC4Net.Test.RefImpl.csproj
+      #     (Get-Content Tests/OSLC4Net.Client.Tests/OSLC4Net.Client.Tests.csproj) |
+      #       ForEach-Object { $_ -replace '>net10.0<', '>${{ matrix.version.target }}<' } |
+      #       Set-Content Tests/OSLC4Net.Client.Tests/OSLC4Net.Client.Tests.csproj
+      #     (Get-Content Tests/OSLC4Net.Core.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj) |
+      #       ForEach-Object { $_ -replace '>net10.0<', '>${{ matrix.version.target }}<' } |
+      #       Set-Content Tests/OSLC4Net.Core.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj
+      #     (Get-Content Tests/OSLC4Net.Core.QueryTests/OSLC4Net.Core.QueryTests.csproj) |
+      #       ForEach-Object { $_ -replace '>net10.0<', '>${{ matrix.version.target }}<' } |
+      #       Set-Content Tests/OSLC4Net.Core.QueryTests/OSLC4Net.Core.QueryTests.csproj
+      #     (Get-Content Tests/OSLC4Net.Test.AspireHost/OSLC4Net.Test.AspireHost.csproj) |
+      #       ForEach-Object { $_ -replace '>net10.0<', '>${{ matrix.version.target }}<' } |
+      #       Set-Content Tests/OSLC4Net.Test.AspireHost/OSLC4Net.Test.AspireHost.csproj
+      #     (Get-Content Tests/OSLC4NetExamples.Server.Tests/OSLC4NetExamples.Server.Tests.csproj) |
+      #       ForEach-Object { $_ -replace '>net10.0<', '>${{ matrix.version.target }}<' } |
+      #       Set-Content Tests/OSLC4NetExamples.Server.Tests/OSLC4NetExamples.Server.Tests.csproj
       - name: Cache NuGet
         # id: cache-nuget
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
@@ -174,7 +174,7 @@ jobs:
           dotnet pack -c Release -o $env:NuGetDirectory --include-symbols -p:SymbolPackageFormat=snupkg
         if: |
           success() && github.ref == 'refs/heads/main'
-          && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
+          && matrix.version.target == 'net10.0' && matrix.os == 'windows-latest'
           && ! ( github.event_name == 'release' || inputs.release)
       - name: Pack NuGet packages (release)
         shell: pwsh
@@ -190,7 +190,7 @@ jobs:
           }
         if: |
           success()
-          && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
+          && matrix.version.target == 'net10.0' && matrix.os == 'windows-latest'
           && ( github.event_name == 'release' || inputs.release )
       - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
@@ -200,7 +200,7 @@ jobs:
           path: "${{ env.NuGetDirectory }}/*.nupkg"
         if: |
           success()
-          && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
+          && matrix.version.target == 'net10.0' && matrix.os == 'windows-latest'
       - name: Publish NuGet packages (GH/always)
         shell: pwsh
         env:
@@ -211,7 +211,7 @@ jobs:
           }
         if: |
           success()
-          && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
+          && matrix.version.target == 'net10.0' && matrix.os == 'windows-latest'
           && (github.ref == 'refs/heads/main' || github.event_name == 'release' || inputs.release)
       - name: Publish NuGet packages (NuGet.org/release)
         shell: pwsh
@@ -223,5 +223,5 @@ jobs:
           }
         if: |
           success()
-          && matrix.version.target == 'net8.0' && matrix.os == 'windows-latest'
+          && matrix.version.target == 'net10.0' && matrix.os == 'windows-latest'
           && (github.event_name == 'release' || inputs.release )
