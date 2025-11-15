@@ -10,7 +10,7 @@
          "request": "launch",
          "preLaunchTask": "build",
          // If you have changed target frameworks, make sure to update the program path.
-         "program": "${workspaceFolder}/OSLC4Net_SDK/OSLC4Net.ChangeManagementTest/bin/Debug/net8.0/OSLC4Net.ChangeManagementTest.dll",
+         "program": "${workspaceFolder}/OSLC4Net_SDK/OSLC4Net.ChangeManagementTest/bin/Debug/net10.0/OSLC4Net.ChangeManagementTest.dll",
          "args": [],
          "cwd": "${workspaceFolder}/OSLC4Net_SDK/OSLC4Net.ChangeManagementTest",
          // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console

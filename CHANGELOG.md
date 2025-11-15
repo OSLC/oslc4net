@@ -9,7 +9,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Legend: 🔒️ security fixes; ⚡️ major features/updates; ❗️ breaking changes; 👉
 important notes.
 
-## [UNRELEASED] - YYYY-MM-DD
+## [0.6.3] - 2025-11-15
 
 ### Security
 
@@ -21,11 +21,11 @@ This release does not contain new features.
 
 ### Changed
 
-This release does not contain other significant changes.
+- StringValue interface is now publicly accessible and inherits from the Value interface (#422)
 
 ### Deprecated
 
-This release does not introduce deprecations.
+- 👉 Support for .NET 8 and 9 is deprecated. Going forward, only .NET 10 will be supported.
 
 ### Removed
 
@@ -471,7 +471,9 @@ This release does not remove any features.
 This release does not contain bug fixes.
 
 
-[UNRELEASED]: https://github.com/OSLC/oslc4net/compare/v0.6.2...HEAD
+[UNRELEASED]: https://github.com/OSLC/oslc4net/compare/v0.6.3...HEAD
+
+[0.6.3]: https://github.com/OSLC/oslc4net/releases/tag/v0.6.3
 
 [0.6.2]: https://github.com/OSLC/oslc4net/releases/tag/v0.6.2
 
