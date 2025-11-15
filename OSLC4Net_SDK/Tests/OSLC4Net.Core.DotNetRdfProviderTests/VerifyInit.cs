@@ -14,24 +14,38 @@ public static class VerifyInit
         // Verifier.UseProjectRelativeDirectory("Snapshots");
         Verifier.UseSourceFileRelativeDirectory("Snapshots");
 
+
+        // VerifierSettings.AddExtraSettings(
+        //     _ => _.TypeNameHandling = TypeNameHandling.All);
         // VerifierSettings.AddScrubber(_ => _.Replace("String to verify", "new value"));
 
         FileExtensions.AddTextExtension("ttl");
 
         VerifierSettings.RegisterFileConverter<IGraph>((graph, context) =>
         {
-            using var writer = new System.IO.StringWriter();
+            using var writer = new StringWriter();
+
+            var rdfc = new RdfCanonicalizer();
+            var graphCollection = new GraphCollection
+            {
+                { graph, false }
+            };
+            var canonicalizedRdfDataset = rdfc.Canonicalize(new TripleStore(graphCollection));
+
+            var newGraph = canonicalizedRdfDataset.OutputDataset.Graphs.Single();
+
+            // https://www.w3.org/TR/rdf-canon/ prescribes N-Quads serialization, but let's try Turtle for better readability
             var ttlWriter = new VDS.RDF.Writing.CompressingTurtleWriter();
-            ttlWriter.Save(graph, writer);
+            ttlWriter.Save(newGraph, writer);
             return new(null, "ttl", writer.ToString());
         });
 
         VerifierSettings.RegisterFileConverter<IResource>((resource, context) =>
         {
-            using var writer = new System.IO.StringWriter();
+            using var writer = new StringWriter();
             var graph = DotNetRdfHelper.CreateDotNetRdfGraph([resource]);
 
-             var rdfc = new RdfCanonicalizer();
+            var rdfc = new RdfCanonicalizer();
             var graphCollection = new GraphCollection
             {
                 { graph, false }
