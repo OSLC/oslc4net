@@ -28,6 +28,7 @@
     <PackageVersion Include="Aspire.Hosting.Testing" Version="$(AspireVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="10.0.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
+    <PackageVersion Include="Verify.XunitV3" Version="31.7.1" />
     <PackageVersion Include="xunit.v3" Version="3.2.0" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
     <PackageVersion Include="Meziantou.Extensions.Logging.Xunit.v3" Version="1.1.17" />
@@ -45,6 +46,5 @@
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" PrivateAssets="all" ExcludeAssets="runtime" />
-
   </ItemGroup>
 </Project>

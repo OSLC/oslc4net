@@ -53,6 +53,9 @@ public class RdfXmlMediaTypeFormatterTests
         Assert.Equal(changeRequest1.IsFixed(), changeRequest2.IsFixed());
         Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
         Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
+
+        await Verify(changeRequest1);
+        // await Verify(rdfXml);
     }
 
     [Fact]
