@@ -14,26 +14,26 @@
  *******************************************************************************/
 
 using OSLC4Net.Core.Model;
-using Xunit;
+using TUnit.Core;
 
 namespace OSLC4Net.ChangeManagementTest;
 
-[Trait("TestCategory", "RunningOslcServerRequired")]
+[TestFixture]
+[Category("RunningOslcServerRequired")]
 public class TestChangeManagementXml : TestBase
 {
     private readonly RefimplAspireFixture _fixture;
 
-    public TestChangeManagementXml(RefimplAspireFixture fixture, ITestOutputHelper output) :
-        base(output)
+    public TestChangeManagementXml()
     {
-        _fixture = fixture;
+        _fixture = new RefimplAspireFixture();
         ServiceProviderCatalogUri = _fixture.ServiceProviderCatalogUriCM;
     }
 
     /// <summary>
     ///     Ordering of test methods shall not be relied upon for execution order
     /// </summary>
-    [Fact]
+    [Test]
     public async Task TestAcceptance()
     {
         const string mediaType = OslcMediaType.APPLICATION_XML;

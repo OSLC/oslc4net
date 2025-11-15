@@ -18,39 +18,37 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Xml;
-using Xunit;
+using TUnit.Assertions;
+using TUnit.Core;
 
 namespace OSLC4NetExamples.Server.Tests;
 
-[Collection("AspireApp")]
-public class TestOslcNetCoreApi : IDisposable
+[TestFixture]
+public class TestOslcNetCoreApi
 {
-    private readonly RefimplAspireFixture _aspireFixture;
-    private readonly HttpClient _httpClient;
+    private HttpClient _httpClient;
 
-    public TestOslcNetCoreApi(RefimplAspireFixture aspireFixture)
-        {
-        _aspireFixture = aspireFixture;
-
-        // Create HTTP client for direct API testing
+    [BeforeEachTest]
+    public void Setup()
+    {
         _httpClient = new HttpClient();
     }
 
-    [Fact]
+    [Test]
     public async Task TestRootServicesEndpoint()
     {
         // Arrange
-        var rootServicesUrl = $"{_aspireFixture.NetCoreApiBaseUri}.well-known/oslc/rootservices.xml";
+        var rootServicesUrl = $"{AspireAppLifecycle.NetCoreApiBaseUri}.well-known/oslc/rootservices.xml";
 
         // Act
         using var response = await _httpClient.GetAsync(rootServicesUrl);
 
         // Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        Assert.Equal("application/rdf+xml", response.Content.Headers.ContentType?.MediaType);
+        await Assert.That(response.StatusCode).Is.EqualTo(HttpStatusCode.OK);
+        await Assert.That(response.Content.Headers.ContentType?.MediaType).Is.EqualTo("application/rdf+xml");
 
         var content = await response.Content.ReadAsStringAsync();
-        Assert.NotEmpty(content);
+        await Assert.That(content).Is.Not.Empty();
 
         // Verify it's valid XML
         var xmlDoc = new XmlDocument();
@@ -58,19 +56,19 @@ public class TestOslcNetCoreApi : IDisposable
 
         // Verify it contains expected OSLC elements
         // Note: Log the actual content to see what we're getting
-        Console.WriteLine($"Actual XML content: {content}");
+        TestContext.WriteLine($"Actual XML content: {content}");
 
         // Look for the actual XML elements that should be present
-        Assert.Contains("oauthRealmName", content, StringComparison.Ordinal);
-        Assert.Contains("cmServiceProviders", content, StringComparison.Ordinal);
-        Assert.Contains("rmServiceProviders", content, StringComparison.Ordinal);
+        await Assert.That(content).Contains("oauthRealmName");
+        await Assert.That(content).Contains("cmServiceProviders");
+        await Assert.That(content).Contains("rmServiceProviders");
     }
 
-    [Fact]
+    [Test]
     public async Task TestCatalogGetEndpoint()
     {
         // Arrange
-        var catalogUrl = $"{_aspireFixture.NetCoreApiBaseUri}oslc/catalog";
+        var catalogUrl = $"{AspireAppLifecycle.NetCoreApiBaseUri}oslc/catalog";
         _httpClient.DefaultRequestHeaders.Accept.Clear();
         _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/ld+json"));
 
@@ -78,10 +76,10 @@ public class TestOslcNetCoreApi : IDisposable
         using var response = await _httpClient.GetAsync(catalogUrl);
 
         // Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        await Assert.That(response.StatusCode).Is.EqualTo(HttpStatusCode.OK);
 
         var content = await response.Content.ReadAsStringAsync();
-        Assert.NotEmpty(content);
+        await Assert.That(content).Is.Not.Empty();
 
         // Verify it's valid JSON-LD
         using var jsonDoc = JsonDocument.Parse(content);
@@ -89,14 +87,14 @@ public class TestOslcNetCoreApi : IDisposable
         // Check for OSLC catalog structure
         var hasServiceProvider = content.Contains("ServiceProvider", StringComparison.Ordinal) ||
                                  content.Contains("serviceProvider", StringComparison.Ordinal);
-        Assert.True(hasServiceProvider, "Response should contain ServiceProvider reference");
+        await Assert.That(hasServiceProvider).Is.True("Response should contain ServiceProvider reference");
     }
 
-    [Fact]
+    [Test]
     public async Task TestCatalogPutEndpoint()
     {
         // Arrange
-        var catalogUrl = $"{_aspireFixture.NetCoreApiBaseUri}oslc/catalog";
+        var catalogUrl = $"{AspireAppLifecycle.NetCoreApiBaseUri}oslc/catalog";
 
         var serviceProviderJson = """
         [
@@ -123,10 +121,10 @@ public class TestOslcNetCoreApi : IDisposable
         using var response = await _httpClient.PutAsync(catalogUrl, requestContent);
 
         // Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        await Assert.That(response.StatusCode).Is.EqualTo(HttpStatusCode.OK);
 
         var responseContent = await response.Content.ReadAsStringAsync();
-        Assert.NotEmpty(responseContent);
+        await Assert.That(responseContent).Is.Not.Empty();
 
         // Verify response is valid JSON-LD
         using var jsonDoc = JsonDocument.Parse(responseContent);
@@ -134,14 +132,14 @@ public class TestOslcNetCoreApi : IDisposable
         // Verify the service provider was processed
         var hasServiceProvider = responseContent.Contains("ServiceProvider", StringComparison.Ordinal) ||
                                  responseContent.Contains("serviceProvider", StringComparison.Ordinal);
-        Assert.True(hasServiceProvider, "Response should contain ServiceProvider reference");
+        await Assert.That(hasServiceProvider).Is.True("Response should contain ServiceProvider reference");
     }
 
-    [Fact]
+    [Test]
     public async Task TestCatalogGetWithRdfXml()
     {
         // Arrange
-        var catalogUrl = $"{_aspireFixture.NetCoreApiBaseUri}oslc/catalog";
+        var catalogUrl = $"{AspireAppLifecycle.NetCoreApiBaseUri}oslc/catalog";
         _httpClient.DefaultRequestHeaders.Accept.Clear();
         _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/rdf+xml"));
 
@@ -149,25 +147,25 @@ public class TestOslcNetCoreApi : IDisposable
         using var response = await _httpClient.GetAsync(catalogUrl);
 
         // Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        Assert.Equal("application/rdf+xml", response.Content.Headers.ContentType?.MediaType);
+        await Assert.That(response.StatusCode).Is.EqualTo(HttpStatusCode.OK);
+        await Assert.That(response.Content.Headers.ContentType?.MediaType).Is.EqualTo("application/rdf+xml");
 
         var content = await response.Content.ReadAsStringAsync();
-        Assert.NotEmpty(content);
+        await Assert.That(content).Is.Not.Empty();
 
         // Verify it's valid XML
         var xmlDoc = new XmlDocument();
         xmlDoc.LoadXml(content);
 
         // Check for RDF structure
-        Assert.Contains("rdf:RDF", content, StringComparison.Ordinal);
+        await Assert.That(content).Contains("rdf:RDF");
     }
 
-    [Fact]
+    [Test]
     public async Task TestCatalogGetWithTurtle()
     {
         // Arrange
-        var catalogUrl = $"{_aspireFixture.NetCoreApiBaseUri}oslc/catalog";
+        var catalogUrl = $"{AspireAppLifecycle.NetCoreApiBaseUri}oslc/catalog";
         _httpClient.DefaultRequestHeaders.Accept.Clear();
         _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/turtle"));
 
@@ -175,21 +173,21 @@ public class TestOslcNetCoreApi : IDisposable
         using var response = await _httpClient.GetAsync(catalogUrl);
 
         // Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        Assert.Equal("text/turtle", response.Content.Headers.ContentType?.MediaType);
+        await Assert.That(response.StatusCode).Is.EqualTo(HttpStatusCode.OK);
+        await Assert.That(response.Content.Headers.ContentType?.MediaType).Is.EqualTo("text/turtle");
 
         var content = await response.Content.ReadAsStringAsync();
-        Assert.NotEmpty(content);
+        await Assert.That(content).Is.Not.Empty();
 
         // Basic Turtle format validation
-        Assert.Contains("@prefix", content, StringComparison.Ordinal);
+        await Assert.That(content).Contains("@prefix");
     }
 
-    [Fact]
+    [Test]
     public async Task TestCatalogContentNegotiation()
     {
         // Arrange
-        var catalogUrl = $"{_aspireFixture.NetCoreApiBaseUri}oslc/catalog";
+        var catalogUrl = $"{AspireAppLifecycle.NetCoreApiBaseUri}oslc/catalog";
 
         var mediaTypes = new[]
         {
@@ -208,31 +206,31 @@ public class TestOslcNetCoreApi : IDisposable
             using var response = await _httpClient.GetAsync(catalogUrl);
 
             // Assert
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal(mediaType, response.Content.Headers.ContentType?.MediaType);
+            await Assert.That(response.StatusCode).Is.EqualTo(HttpStatusCode.OK);
+            await Assert.That(response.Content.Headers.ContentType?.MediaType).Is.EqualTo(mediaType);
 
             var content = await response.Content.ReadAsStringAsync();
-            Assert.NotEmpty(content);
+            await Assert.That(content).Is.Not.Empty();
         }
     }
 
-    [Fact]
+    [Test]
     public async Task TestRootServicesContainsCorrectUrls()
     {
         // Arrange
-        var rootServicesUrl = $"{_aspireFixture.NetCoreApiBaseUri}.well-known/oslc/rootservices.xml";
+        var rootServicesUrl = $"{AspireAppLifecycle.NetCoreApiBaseUri}.well-known/oslc/rootservices.xml";
 
         // Act
         using var response = await _httpClient.GetAsync(rootServicesUrl);
         var content = await response.Content.ReadAsStringAsync();
 
         // Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        await Assert.That(response.StatusCode).Is.EqualTo(HttpStatusCode.OK);
 
         // Verify dynamic URL generation based on request
-        Assert.Contains(_aspireFixture.NetCoreApiBaseUri.TrimEnd('/'), content, StringComparison.Ordinal);
-        Assert.Contains("/services/catalog/singleton", content, StringComparison.Ordinal);
-        Assert.Contains("/services/oauth/", content, StringComparison.Ordinal);
+        await Assert.That(content).Contains(AspireAppLifecycle.NetCoreApiBaseUri.TrimEnd('/'));
+        await Assert.That(content).Contains("/services/catalog/singleton");
+        await Assert.That(content).Contains("/services/oauth/");
 
         // Verify XML structure
         var xmlDoc = new XmlDocument();
@@ -246,10 +244,11 @@ public class TestOslcNetCoreApi : IDisposable
         var cmServiceProviders = xmlDoc.SelectSingleNode("//oslc_cm:cmServiceProviders", namespaceManager);
         var rmServiceProviders = xmlDoc.SelectSingleNode("//oslc_rm:rmServiceProviders", namespaceManager);
 
-        Assert.NotNull(cmServiceProviders);
-        Assert.NotNull(rmServiceProviders);
+        await Assert.That(cmServiceProviders).Is.Not.Null();
+        await Assert.That(rmServiceProviders).Is.Not.Null();
     }
 
+    [AfterEachTest]
     public void Dispose()
     {
         _httpClient?.Dispose();
