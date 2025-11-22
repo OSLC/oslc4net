@@ -67,8 +67,12 @@ public class RefimplAspireFixture : IAsyncLifetime
         ServiceProviderCatalogUriRM =
             app.GetEndpoint("refimpl-rm", "http").AbsoluteUri + "services/catalog/singleton";
 
-
-        await Task.Delay(TimeSpan.FromSeconds(10)).ConfigureAwait(true);
+        /* Without credentials, our healthcheck can only sense the 500->401 transition. However,
+         * after this, there may be some time until the Jakarta REST providers are fully initialized
+         * to process authenticated requests. Normally, the client would absorb transient failures.
+         */
+        // TODO: remove once OSLC4Net client is integrated with Polly (#460)
+        await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(true);
 
         return app;
     }
