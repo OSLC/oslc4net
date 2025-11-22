@@ -72,7 +72,7 @@ public class RefimplAspireFixture : IAsyncLifetime
          * to process authenticated requests. Normally, the client would absorb transient failures.
          */
         // TODO: remove once OSLC4Net client is integrated with Polly (#460)
-        await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(true);
+        await Task.Delay(TimeSpan.FromSeconds(10)).ConfigureAwait(true);
 
         return app;
     }
