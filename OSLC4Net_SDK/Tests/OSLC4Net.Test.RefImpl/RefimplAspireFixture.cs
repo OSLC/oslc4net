@@ -67,6 +67,9 @@ public class RefimplAspireFixture : IAsyncLifetime
         ServiceProviderCatalogUriRM =
             app.GetEndpoint("refimpl-rm", "http").AbsoluteUri + "services/catalog/singleton";
 
+
+        await Task.Delay(TimeSpan.FromSeconds(10)).ConfigureAwait(true);
+
         return app;
     }
 
