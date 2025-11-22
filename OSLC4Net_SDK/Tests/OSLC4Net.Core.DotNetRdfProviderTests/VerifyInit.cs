@@ -14,7 +14,6 @@ public static class VerifyInit
         // Verifier.UseProjectRelativeDirectory("Snapshots");
         Verifier.UseSourceFileRelativeDirectory("Snapshots");
 
-
         // VerifierSettings.AddExtraSettings(
         //     _ => _.TypeNameHandling = TypeNameHandling.All);
         // VerifierSettings.AddScrubber(_ => _.Replace("String to verify", "new value"));
