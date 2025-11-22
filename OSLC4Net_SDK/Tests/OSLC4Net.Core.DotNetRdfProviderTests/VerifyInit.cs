@@ -12,12 +12,8 @@ public static class VerifyInit
     [ModuleInitializer]
     public static void Initialize()
     {
-        // Verifier.UseProjectRelativeDirectory("Snapshots");
-        Verifier.UseSourceFileRelativeDirectory("Snapshots");
-
-        // VerifierSettings.AddExtraSettings(
-        //     _ => _.TypeNameHandling = TypeNameHandling.All);
-        // VerifierSettings.AddScrubber(_ => _.Replace("String to verify", "new value"));
+        // or UseSourceFileRelativeDirectory
+        Verifier.UseProjectRelativeDirectory("Snapshots");
 
         FileExtensions.AddTextExtension("ttl");
 
