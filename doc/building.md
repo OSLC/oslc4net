@@ -4,7 +4,7 @@ To look at the samples or build **OSLC4Net** from source, follow these steps:
 
 *   install [ASP.NET MVC 4](http://www.asp.net/mvc/mvc4/)
 *   git clone https://git01.codeplex.com/oslc4net master
-*   open the solution OSLC4Net_SDK\OSLC4Net.Core.sln
+*   open the solution OSLC4Net_SDK\OSLC4Net.Core.slnx
 *   build the solution
 
 ## Running the StockQuote provider
