@@ -17,6 +17,7 @@
     <Project Path="Tests/OSLC4Net.Client.Tests/OSLC4Net.Client.Tests.csproj" />
     <Project Path="Tests/OSLC4Net.Core.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj" />
     <Project Path="Tests/OSLC4Net.Core.QueryTests/OSLC4Net.Core.QueryTests.csproj" />
+    <Project Path="Tests/OSLC4Net.Core.Tests/OSLC4Net.Core.Tests.csproj" />
     <Project Path="Tests/OSLC4Net.Test.AspireHost/OSLC4Net.Test.AspireHost.csproj" />
     <Project Path="Tests/OSLC4Net.Test.RefImpl/OSLC4Net.Test.RefImpl.csproj" />
   </Folder>
