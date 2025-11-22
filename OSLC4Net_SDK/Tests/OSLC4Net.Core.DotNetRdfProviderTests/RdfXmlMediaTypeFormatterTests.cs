@@ -20,7 +20,6 @@ using System.Net.Http.Headers;
 using OSLC4Net.ChangeManagement;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
-using Xunit;
 
 [assembly: CaptureConsole]
 [assembly: CaptureTrace]
@@ -53,6 +52,8 @@ public class RdfXmlMediaTypeFormatterTests
         Assert.Equal(changeRequest1.IsFixed(), changeRequest2.IsFixed());
         Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetValue(), changeRequest2.GetAffectedByDefects()[0].GetValue());
         Assert.Equal(changeRequest1.GetAffectedByDefects()[0].GetLabel(), changeRequest2.GetAffectedByDefects()[0].GetLabel());
+
+        await Verify(changeRequest1);
     }
 
     [Fact]
@@ -115,6 +116,7 @@ public class RdfXmlMediaTypeFormatterTests
             }
         }
 
+        await Verify(rdfGraph);
     }
 
     [Fact]

@@ -16,9 +16,9 @@
 namespace OSLC4Net.Core.Query;
 
 /// <summary>
-/// String literal operand from olsc.where clause
+/// String literal operand from oslc.where clause
 /// </summary>
-interface StringValue
+public interface StringValue : Value
 {
     string Value { get; }
 }
