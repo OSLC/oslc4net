@@ -27,7 +27,4 @@
   <Project Path="OSLC4Net.Core/OSLC4Net.Core.csproj" />
   <Project Path="OSLC4Net.Domains.RequirementsManagement/OSLC4Net.Domains.RequirementsManagement.csproj" />
   <Project Path="OSLC4Net.Server.Providers/OSLC4Net.Server.Providers.csproj" />
-  <Properties Name="TestCaseManagementSettings" Scope="PostLoad">
-    <Property Name="CategoryFile" Value="OSLC4Net.Core.vsmdi" />
-  </Properties>
 </Solution>
