@@ -67,8 +67,8 @@ jobs:
         run: dotnet restore
       - name: Verify formatting
         run: |
-          dotnet format OSLC4Net.Core.sln style --verify-no-changes
-          dotnet format OSLC4Net.Core.sln whitespace --verify-no-changes
+          dotnet format OSLC4Net.Core.slnx style --verify-no-changes
+          dotnet format OSLC4Net.Core.slnx whitespace --verify-no-changes
 
   test:
     #needs: [format]
@@ -148,7 +148,7 @@ jobs:
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ${{ env.NUGET_PACKAGES }}
-          key: ${{ runner.os }}-nuget-${{ matrix.version.target }}-${{ hashFiles('.github/workflows/main.yml', '**/Directory.Build.props', '**/packages.config', '**/packages.lock.json', '**/*.sln', '**/*.csproj') }}
+          key: ${{ runner.os }}-nuget-${{ matrix.version.target }}-${{ hashFiles('.github/workflows/main.yml', '**/Directory.Build.props', '**/packages.config', '**/packages.lock.json', '**/*.slnx', '**/*.csproj') }}
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
