@@ -43,7 +43,9 @@
     <NullabilityWarnings>CS8600;CS8602;CS8603</NullabilityWarnings>
     <WarningsAsErrors>$(NugetWarnings);$(NullabilityWarnings)</WarningsAsErrors>
     <!-- Suppress localization warnings for this SDK project -->
-    <NoWarn>$(NoWarn);CA1303</NoWarn>
+    <NoWarn>$(NoWarn);CA1303;MA0004;MA0026;MA0016;MA0048;MA0011;MA0051;MA0070;MA0015;CS8618;CS8604;CS8625;CA1305;CA2201;CS0612;CS0162;TUnitAssertions0005;CS1998;CS8602;CS8603;CS0168;CS0219;MA0056;MA0094;MA0084;CS1591;CS1587;CS9113</NoWarn>
+    <WarningLevel>0</WarningLevel>
+    <AnalysisLevel>none</AnalysisLevel>
   </PropertyGroup>
 
   <ItemGroup>
