@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -17,13 +17,15 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Xml.Linq;
-using log4net;
-using Microsoft.Test.CommandLineParsing;
+using System.CommandLine;
+using Microsoft.Extensions.Logging;
 using OSLC4Net.Client.Exceptions;
 using OSLC4Net.Client.Oslc;
 using OSLC4Net.Client.Oslc.Jazz;
 using OSLC4Net.Client.Oslc.Resources;
+using OSLC4Net.Client.Oslc.Helpers;
 using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client.Samples
@@ -37,7 +39,7 @@ namespace OSLC4Net.Client.Samples
     /// </summary>
     class RRCFormSample
     {
-        private static ILog logger = LogManager.GetLogger(typeof(RRCFormSample));
+        private static ILogger logger;
 	
 	    // Following is a workaround for primaryText issue in DNG ( it is PrimaryText instead of primaryText 
 	    private static readonly QName PROPERTY_PRIMARY_TEXT_WORKAROUND   = new QName(RmConstants.JAZZ_RM_NAMESPACE, "PrimaryText");
@@ -46,27 +48,40 @@ namespace OSLC4Net.Client.Samples
         /// Login to the RRC server and perform some OSLC actions
         /// </summary>
         /// <param name="args"></param>
-	    static void Main(string[] args)
+	    static async Task Main(string[] args)
         {
-            log4net.Config.XmlConfigurator.Configure();
+            using ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole();
+            });
+            logger = loggerFactory.CreateLogger<RRCFormSample>();
 
-		    CommandLineDictionary cmd = CommandLineDictionary.FromArguments(args);
+            var urlOption = new Option<string>("--url", "The URL of the server") { IsRequired = true };
+            var userOption = new Option<string>("--user", "The user name") { IsRequired = true };
+            var passwordOption = new Option<string>("--password", "The password") { IsRequired = true };
+            var projectOption = new Option<string>("--project", "The project area") { IsRequired = true };
 
-		    if (!ValidateOptions(cmd)) {		
-			    logger.Error("Syntax:  /url=https://<server>:port/<context>/ /user=<user> /password=<password> /project=\"<project_area>\"");
-			    logger.Error("Example: /url=https://exmple.com:9443/rm /user=ADMIN /password=ADMIN /project=\"JKE Banking (Requirements Management)\"");
-			    return;
-		    }
-			
-		    String webContextUrl = cmd["url"];
-		    String user = cmd["user"];
-		    String passwd = cmd["password"];
-		    String projectArea = cmd["project"];
-		
+            var rootCommand = new RootCommand("RRC Sample");
+            rootCommand.AddOption(urlOption);
+            rootCommand.AddOption(userOption);
+            rootCommand.AddOption(passwordOption);
+            rootCommand.AddOption(projectOption);
+
+            rootCommand.SetHandler(async (string url, string user, string password, string project) =>
+            {
+                await RunAsync(url, user, password, project, loggerFactory);
+            }, urlOption, userOption, passwordOption, projectOption);
+
+            await rootCommand.InvokeAsync(args);
+	    }
+
+        static async Task RunAsync(string webContextUrl, string user, string passwd, string projectArea, ILoggerFactory loggerFactory)
+        {
 		    try {
 		
 			    //STEP 1: Initialize a Jazz rootservices helper and indicate we're looking for the RequirementManagement catalog
-			    JazzRootServicesHelper helper = new JazzRootServicesHelper(webContextUrl,OSLCConstants.OSLC_RM_V2);
+			    var rootServicesHelper = new RootServicesHelper(webContextUrl,OSLCConstants.OSLC_RM_V2);
+                var rootServices = await rootServicesHelper.DiscoverAsync();
 			
 			    //STEP 2: Create a new Form Auth client with the supplied user/password
 			    //RRC is a fronting server, so need to use the initForm() signature which allows passing of an authentication URL.
@@ -74,37 +89,37 @@ namespace OSLC4Net.Client.Samples
 			
 			    //This is a bit of a hack for readability.  It is assuming RRC is at context /rm.  Could use a regex or UriBuilder instead.
 			    String authUrl = webContextUrl.Replace("/rm","/jts"); // XXX - should be ReplaceFirst(), if it existed
-			    JazzFormAuthClient client = helper.InitFormClient(user, passwd, authUrl);
+			    JazzFormAuthClient client = new JazzFormAuthClient(webContextUrl, authUrl, user, passwd, loggerFactory.CreateLogger<OslcClient>());
 			
 			    //STEP 3: Login in to Jazz Server
-			    if (client.FormLogin() == HttpStatusCode.OK) {
+			    if (await client.FormLoginAsync() == HttpStatusCode.OK) {
 				
 				    //STEP 4: Get the URL of the OSLC ChangeManagement catalog
-				    String catalogUrl = helper.GetCatalogUrl();
+				    String catalogUrl = rootServices.ServiceProviderCatalog;
 				
 				    //STEP 5: Find the OSLC Service Provider for the project area we want to work with
-				    String serviceProviderUrl = client.LookupServiceProviderUrl(catalogUrl, projectArea);
+				    String serviceProviderUrl = await client.LookupServiceProviderUrl(catalogUrl, projectArea);
 				
 				    //STEP 6: Get the Query Capabilities URL so that we can run some OSLC queries
-				    String queryCapability = client.LookupQueryCapability(serviceProviderUrl,
+				    String queryCapability = await client.LookupQueryCapabilityAsync(serviceProviderUrl,
 																	      OSLCConstants.OSLC_RM_V2,
 																	      OSLCConstants.RM_REQUIREMENT_TYPE);
 				    //STEP 7: Create base requirements
 				    //Get the Creation Factory URL for change requests so that we can create one
 				    Requirement requirement = new Requirement();
-				    String requirementFactory = client.LookupCreationFactory(
+				    String requirementFactory = await client.LookupCreationFactoryAsync(
 						    serviceProviderUrl, OSLCConstants.OSLC_RM_V2,
 						    requirement.GetRdfTypes()[0].ToString());
 				
 				    //Get Feature Requirement Type URL
-				    ResourceShape featureInstanceShape = RmUtil.LookupRequirementsInstanceShapes(
+				    ResourceShape featureInstanceShape = await RmUtil.LookupRequirementsInstanceShapesAsync(
 						    serviceProviderUrl, OSLCConstants.OSLC_RM_V2,
 						    requirement.GetRdfTypes()[0].ToString(), client, "Feature");
 				
 				    Uri rootFolder = null;
 				    //Get Collection Type URL
 				    RequirementCollection collection = new RequirementCollection();
-                    ResourceShape collectionInstanceShape = RmUtil.LookupRequirementsInstanceShapes(
+                    ResourceShape collectionInstanceShape = await RmUtil.LookupRequirementsInstanceShapesAsync(
                             serviceProviderUrl, OSLCConstants.OSLC_RM_V2,
                             collection.GetRdfTypes()[0].ToString(), client, "Personal Collection");
 				
@@ -129,7 +144,7 @@ namespace OSLC4Net.Client.Samples
 					    requirement.SetDescription("Created By OSLC4Net");
 					    requirement.AddImplementedBy(new Link(new Uri("http://google.com"), "Link in REQ01"));
 					    //Create the change request
-					    HttpResponseMessage creationResponse = client.CreateResource(
+					    HttpResponseMessage creationResponse = await client.CreateResourceRawAsync(
 							    requirementFactory, requirement,
 							    OslcMediaType.APPLICATION_RDF_XML,
 							    OslcMediaType.APPLICATION_RDF_XML);
@@ -143,7 +158,7 @@ namespace OSLC4Net.Client.Samples
 					    requirement.SetDescription("Created By OSLC4Net");
 					    requirement.AddValidatedBy(new Link(new Uri("http://bancomer.com"), "Link in REQ02"));
 					    //Create the change request
-					    creationResponse = client.CreateResource(
+					    creationResponse = await client.CreateResourceRawAsync(
 							    requirementFactory, requirement,
 							    OslcMediaType.APPLICATION_RDF_XML,
 							    OslcMediaType.APPLICATION_RDF_XML);
@@ -158,7 +173,7 @@ namespace OSLC4Net.Client.Samples
 					    requirement.SetDescription("Created By OSLC4Net");
 					    requirement.AddValidatedBy(new Link(new Uri("http://outlook.com"), "Link in REQ03"));
 					    //Create the change request
-					    creationResponse = client.CreateResource(
+					    creationResponse = await client.CreateResourceRawAsync(
 							    requirementFactory, requirement,
 							    OslcMediaType.APPLICATION_RDF_XML,
 							    OslcMediaType.APPLICATION_RDF_XML);
@@ -172,7 +187,7 @@ namespace OSLC4Net.Client.Samples
 					    requirement.SetDescription("Created By OSLC4Net");
 					
 					    //Create the Requirement
-					    creationResponse = client.CreateResource(
+					    creationResponse = await client.CreateResourceRawAsync(
 							    requirementFactory, requirement,
 							    OslcMediaType.APPLICATION_RDF_XML,
 							    OslcMediaType.APPLICATION_RDF_XML);
@@ -190,7 +205,7 @@ namespace OSLC4Net.Client.Samples
 					    collection.SetTitle("Collection01");
 					    collection.SetDescription("Created By OSLC4Net");
 					    //Create the change request
-					    creationResponse = client.CreateResource(
+					    creationResponse = await client.CreateResourceRawAsync(
 							    requirementFactory, collection,
 							    OslcMediaType.APPLICATION_RDF_XML,
 							    OslcMediaType.APPLICATION_RDF_XML);
@@ -209,8 +224,8 @@ namespace OSLC4Net.Client.Samples
 				     }
 
 				    // GET the root folder based on First requirement created
-				    HttpResponseMessage getResponse = client.GetResource(req01URL,OslcMediaType.APPLICATION_RDF_XML);
-				    requirement = getResponse.Content.ReadAsAsync<Requirement>(client.GetFormatters()).Result;
+				    HttpResponseMessage getResponse = await client.GetResourceRawAsync(req01URL,OslcMediaType.APPLICATION_RDF_XML);
+				    requirement = await getResponse.Content.ReadAsAsync<Requirement>(client.GetFormatters());
 				    String etag1 = getResponse.Headers.ETag.ToString();
 				    // May not be needed getResponse.ConsumeContent();
 				    //Save the Uri of the root folder in order to used it easily 
@@ -223,7 +238,7 @@ namespace OSLC4Net.Client.Samples
 				    }
 				
 				    if ( ( changedPrimaryText != null) && (! changedPrimaryText.Contains(primaryText)) ) {
-					    logger.Error("Error getting primary Text");
+					    logger.LogError("Error getting primary Text");
 				    }
 
 				    //QUERIES
@@ -232,10 +247,10 @@ namespace OSLC4Net.Client.Samples
 				    queryParams.SetPrefix("rdf=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>");
 				    queryParams.SetWhere("rdf:type=<http://open-services.net/ns/rm#Requirement>");
 				    OslcQuery query = new OslcQuery(client, queryCapability, 10, queryParams);
-				    OslcQueryResult result = query.Submit();
+				    OslcQueryResult result = await query.Submit();
 				    bool processAsDotNetObjects = false;
 				    int resultsSize = result.GetMembersUrls().Length;
-				    ProcessPagedQueryResults(result,client, processAsDotNetObjects);
+				    await ProcessPagedQueryResultsAsync(result,client, processAsDotNetObjects);
 				    Console.WriteLine("\n------------------------------\n");
 				    Console.WriteLine("Number of Results for SCENARIO 01 = " + resultsSize + "\n");
 				
@@ -245,10 +260,10 @@ namespace OSLC4Net.Client.Samples
 				    queryParams.SetPrefix("nav=<http://com.ibm.rdm/navigation#>,rdf=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>");
 				    queryParams.SetWhere("rdf:type=<http://open-services.net/ns/rm#Requirement> and nav:parent=<" + rootFolder + ">");
 				    query = new OslcQuery(client, queryCapability, 10, queryParams);
-				    result = query.Submit();
+				    result = await query.Submit();
 				    processAsDotNetObjects = false;
 				    resultsSize = result.GetMembersUrls().Length;
-				    ProcessPagedQueryResults(result,client, processAsDotNetObjects);
+				    await ProcessPagedQueryResultsAsync(result,client, processAsDotNetObjects);
 				    Console.WriteLine("\n------------------------------\n");
 				    Console.WriteLine("Number of Results for SCENARIO 02 = " + resultsSize + "\n");
 				
@@ -257,10 +272,10 @@ namespace OSLC4Net.Client.Samples
 				    queryParams.SetPrefix("dcterms=<http://purl.org/dc/terms/>");
 				    queryParams.SetWhere("dcterms:title=\"Req04\"");
 				    query = new OslcQuery(client, queryCapability, 10, queryParams);
-				    result = query.Submit();
+				    result = await query.Submit();
 				    resultsSize = result.GetMembersUrls().Length;
 				    processAsDotNetObjects = false;
-				    ProcessPagedQueryResults(result,client, processAsDotNetObjects);
+				    await ProcessPagedQueryResultsAsync(result,client, processAsDotNetObjects);
 				    Console.WriteLine("\n------------------------------\n");
 				    Console.WriteLine("Number of Results for SCENARIO 03 = " + resultsSize + "\n");
 				
@@ -269,10 +284,10 @@ namespace OSLC4Net.Client.Samples
 				    queryParams.SetPrefix("oslc_rm=<http://open-services.net/ns/rm#>");
 				    queryParams.SetWhere("oslc_rm:implementedBy=<http://google.com>");
 				    query = new OslcQuery(client, queryCapability, 10, queryParams);
-				    result = query.Submit();
+				    result = await query.Submit();
 				    resultsSize = result.GetMembersUrls().Length;
 				    processAsDotNetObjects = false;
-				    ProcessPagedQueryResults(result,client, processAsDotNetObjects);
+				    await ProcessPagedQueryResultsAsync(result,client, processAsDotNetObjects);
 				    Console.WriteLine("\n------------------------------\n");
 				    Console.WriteLine("Number of Results for SCENARIO 04 = " + resultsSize + "\n");
 				
@@ -281,10 +296,10 @@ namespace OSLC4Net.Client.Samples
 				    queryParams.SetPrefix("oslc_rm=<http://open-services.net/ns/rm#>");
 				    queryParams.SetWhere("oslc_rm:validatedBy in [<http://bancomer.com>,<http://outlook.com>]");
 				    query = new OslcQuery(client, queryCapability, 10, queryParams);
-				    result = query.Submit();
+				    result = await query.Submit();
 				    resultsSize = result.GetMembersUrls().Length;
 				    processAsDotNetObjects = false;
-				    ProcessPagedQueryResults(result,client, processAsDotNetObjects);
+				    await ProcessPagedQueryResultsAsync(result,client, processAsDotNetObjects);
 				    Console.WriteLine("\n------------------------------\n");
 				    Console.WriteLine("Number of Results for SCENARIO 05 = " + resultsSize + "\n");
 				
@@ -293,17 +308,17 @@ namespace OSLC4Net.Client.Samples
 				    queryParams.SetPrefix("nav=<http://com.ibm.rdm/navigation#>,oslc_rm=<http://open-services.net/ns/rm#>");
 				    queryParams.SetWhere("nav:parent=<"+rootFolder+"> and oslc_rm:validatedBy=<http://bancomer.com>"); 
 				    query = new OslcQuery(client, queryCapability, 10, queryParams);
-				    result = query.Submit();
+				    result = await query.Submit();
 				    resultsSize = result.GetMembersUrls().Length;
 				    processAsDotNetObjects = false;
-				    ProcessPagedQueryResults(result,client, processAsDotNetObjects);
+				    await ProcessPagedQueryResultsAsync(result,client, processAsDotNetObjects);
 				    Console.WriteLine("\n------------------------------\n");
 				    Console.WriteLine("Number of Results for SCENARIO 06 = " + resultsSize + "\n");
 				
 
 				    // GET resources from req03 in order edit its values
-				    getResponse = client.GetResource(req03URL,OslcMediaType.APPLICATION_RDF_XML);
-				    requirement = getResponse.Content.ReadAsAsync<Requirement>(client.GetFormatters()).Result;
+				    getResponse = await client.GetResourceRawAsync(req03URL,OslcMediaType.APPLICATION_RDF_XML);
+				    requirement = await getResponse.Content.ReadAsAsync<Requirement>(client.GetFormatters());
 				    // Get the eTAG, we need it to update
 				    String etag = getResponse.Headers.ETag.ToString();
                     getResponse.ConsumeContent();
@@ -311,8 +326,11 @@ namespace OSLC4Net.Client.Samples
 				    requirement.AddImplementedBy(new Link(new Uri("http://google.com"), "Link created by an Eclipse Lyo user"));
 				
 				    // Update the requirement with the proper etag 
-				    HttpResponseMessage updateResponse = client.UpdateResource(req03URL, 
-						    requirement, OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_RDF_XML, etag);
+                    client.GetHttpClient().DefaultRequestHeaders.IfMatch.Clear();
+                    client.GetHttpClient().DefaultRequestHeaders.IfMatch.Add(System.Net.Http.Headers.EntityTagHeaderValue.Parse(etag));
+				    HttpResponseMessage updateResponse = await client.UpdateResourceRawAsync(new Uri(req03URL),
+						    requirement, OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_RDF_XML);
+                    client.GetHttpClient().DefaultRequestHeaders.IfMatch.Clear();
 
                     updateResponse.ConsumeContent();
 				
@@ -322,10 +340,10 @@ namespace OSLC4Net.Client.Samples
 				    queryParams.SetPrefix("dcterms=<http://purl.org/dc/terms/>");
 				    queryParams.SetWhere("dcterms:title=\"My new Title\"");
 				    query = new OslcQuery(client, queryCapability, 10, queryParams);
-				    result = query.Submit();
+				    result = await query.Submit();
 				    resultsSize = result.GetMembersUrls().Length;
 				    processAsDotNetObjects = false;
-				    ProcessPagedQueryResults(result,client, processAsDotNetObjects);
+				    await ProcessPagedQueryResultsAsync(result,client, processAsDotNetObjects);
 				    Console.WriteLine("\n------------------------------\n");
 				    Console.WriteLine("Number of Results for SCENARIO 07 = " + resultsSize + "\n");
 				
@@ -334,29 +352,29 @@ namespace OSLC4Net.Client.Samples
 				    queryParams.SetPrefix("oslc_rm=<http://open-services.net/ns/rm#>");
 				    queryParams.SetWhere("oslc_rm:implementedBy=<http://google.com>");
 				    query = new OslcQuery(client, queryCapability, 10, queryParams);
-				    result = query.Submit();
+				    result = await query.Submit();
 				    resultsSize = result.GetMembersUrls().Length;
 				    processAsDotNetObjects = false;
-				    ProcessPagedQueryResults(result,client, processAsDotNetObjects);
+				    await ProcessPagedQueryResultsAsync(result,client, processAsDotNetObjects);
 				    Console.WriteLine("\n------------------------------\n");
 				    Console.WriteLine("Number of Results for SCENARIO 08 = " + resultsSize + "\n");
 				
 
 			    }
 		    } catch (RootServicesException re) {
-			    logger.Error("Unable to access the Jazz rootservices document at: " + webContextUrl + "/rootservices", re);
+			    logger.LogError(re, "Unable to access the Jazz rootservices document at: " + webContextUrl + "/rootservices");
 		    } catch (Exception e) {
-			    logger.Error(e.Message,e);
+			    logger.LogError(e, e.Message);
 		    }
-	    }
+        }
 	
-	    private static void ProcessPagedQueryResults(OslcQueryResult result, OslcClient client, bool asDotNetObjects) {
+	    private static async Task ProcessPagedQueryResultsAsync(OslcQueryResult result, OslcClient client, bool asDotNetObjects) {
 		    int page = 1;
 		    //For now, just show first 5 pages
 		    do {
 			    Console.WriteLine("\nPage " + page + ":\n");
-			    ProcessCurrentPage(result,client,asDotNetObjects);
-			    if (result.MoveNext() && page < 5) {
+			    await ProcessCurrentPageAsync(result,client,asDotNetObjects);
+			    if (result.MoveNext()) {
 				    result = result.Current;
 				    page++;
 			    } else {
@@ -365,7 +383,7 @@ namespace OSLC4Net.Client.Samples
 		    } while(true);
 	    }
 	
-	    private static void ProcessCurrentPage(OslcQueryResult result, OslcClient client, bool asDotNetObjects) {
+	    private static async Task ProcessCurrentPageAsync(OslcQueryResult result, OslcClient client, bool asDotNetObjects) {
 		
 		    foreach (String resultsUrl in result.GetMembersUrls()) {
 			    Console.WriteLine(resultsUrl);
@@ -374,7 +392,7 @@ namespace OSLC4Net.Client.Samples
 			    try {
 				
 				    //Get a single artifact by its URL 
-				    response = client.GetResource(resultsUrl, OSLCConstants.CT_RDF);
+				    response = await client.GetResourceRawAsync(resultsUrl, OSLCConstants.CT_RDF);
 		
 				    if (response != null) {
 					    //De-serialize it as a .NET object 
@@ -384,21 +402,21 @@ namespace OSLC4Net.Client.Samples
 					    } else {
 						
 						    //Just print the raw RDF/XML (or process the XML as desired)
-						    processRawResponse(response);
+						    await ProcessRawResponseAsync(response);
 						
 					    }
 				    }
 			    } catch (Exception e) {
-				    logger.Error("Unable to process artfiact at url: " + resultsUrl, e);
+				    logger.LogError(e, "Unable to process artfiact at url: " + resultsUrl);
 			    }
 			
 		    }
 		
 	    }
 	
-	    private static void processRawResponse(HttpResponseMessage response) 
+	    private static async Task ProcessRawResponseAsync(HttpResponseMessage response)
         {
-		    Stream inStream = response.Content.ReadAsStreamAsync().Result;
+		    Stream inStream = await response.Content.ReadAsStreamAsync();
 		    StreamReader streamReader = new StreamReader(new BufferedStream(inStream), System.Text.Encoding.UTF8);
 		
 		    String line = null;
@@ -408,20 +426,6 @@ namespace OSLC4Net.Client.Samples
 		    }
 		    Console.WriteLine();
             response.ConsumeContent();
-	    }
-	
-	    private static bool ValidateOptions(CommandLineDictionary cmd) {
-		    bool isValid = true;
-		
-		    if (! (cmd.ContainsKey("url") &&
-                   cmd.ContainsKey("user") &&
-                   cmd.ContainsKey("password") &&
-                   cmd.ContainsKey("project") &&
-                   cmd.Count == 4))
-            {			  
-			    isValid = false;
-		    }
-		    return isValid;		
 	    }
     }
 }
