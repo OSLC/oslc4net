@@ -89,19 +89,92 @@ public abstract class TestBase
 
     protected OslcClient GetTestClient()
     {
-        OslcClient client;
+        // Build a resilient HttpClient to handle transient 5xx during server warm-up
+        var logger = LoggerFactory.CreateLogger<OslcClient>();
+
+        var innerHandler = new HttpClientHandler { AllowAutoRedirect = false };
+        var retryHandler = new TransientRetryHandler(innerHandler, LoggerFactory.CreateLogger<TransientRetryHandler>());
+        var httpClient = new HttpClient(retryHandler)
+        {
+            Timeout = TimeSpan.FromSeconds(30)
+        };
 
         if (Password is not null && Username is not null)
         {
-            client = OslcClient.ForBasicAuth(Username, Password,
-                LoggerFactory.CreateLogger<OslcClient>());
-        }
-        else
-        {
-            client = new OslcClient(LoggerFactory.CreateLogger<OslcClient>());
+            return OslcClient.ForBasicAuth(httpClient, Username, Password, logger);
         }
 
-        return client;
+        return new OslcClient(httpClient, logger);
+    }
+
+    /// <summary>
+    /// Delegating handler implementing exponential backoff retry for transient errors.
+    /// Retries on 500-504 and HttpRequestException up to 5 attempts.
+    /// </summary>
+    private sealed class TransientRetryHandler : DelegatingHandler
+    {
+        private readonly ILogger _logger;
+        private static readonly int[] RetryStatusCodes = { 500, 502, 503, 504 };
+        private const int MaxAttempts = 5;
+        private const int BaseDelayMs = 200;
+        private readonly Random _jitter = new Random();
+
+        public TransientRetryHandler(HttpMessageHandler innerHandler, ILogger logger) : base(innerHandler)
+        {
+            _logger = logger;
+        }
+
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            for (int attempt = 1; attempt <= MaxAttempts; attempt++)
+            {
+                try
+                {
+                    var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
+                    if (!ShouldRetry(response))
+                    {
+                        return response;
+                    }
+
+                    if (attempt == MaxAttempts)
+                    {
+                        _logger.LogWarning("Transient retry attempts exhausted for {Method} {Uri}. Last status: {Status}", request.Method, request.RequestUri, (int)response.StatusCode);
+                        return response;
+                    }
+
+                    var delay = ComputeDelay(attempt);
+                    _logger.LogInformation("Transient error {Status} for {Method} {Uri}. Retrying attempt {Attempt}/{MaxAttempts} after {Delay}ms", (int)response.StatusCode, request.Method, request.RequestUri, attempt, MaxAttempts, delay);
+                    await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
+                }
+                catch (HttpRequestException ex) when (attempt < MaxAttempts)
+                {
+                    var delay = ComputeDelay(attempt);
+                    _logger.LogInformation(ex, "HttpRequestException on attempt {Attempt}/{MaxAttempts} for {Method} {Uri}. Retrying after {Delay}ms", attempt, MaxAttempts, request.Method, request.RequestUri, delay);
+                    await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
+                }
+            }
+
+            // Should never reach here because we return inside loop
+            return new HttpResponseMessage(HttpStatusCode.ServiceUnavailable)
+            {
+                RequestMessage = request,
+                ReasonPhrase = "Transient retries exhausted"
+            };
+        }
+
+        private static bool ShouldRetry(HttpResponseMessage response)
+        {
+            var code = (int)response.StatusCode;
+            return RetryStatusCodes.Contains(code);
+        }
+
+        private int ComputeDelay(int attempt)
+        {
+            // Exponential backoff with jitter
+            var exponential = BaseDelayMs * (int)Math.Pow(2, attempt - 1);
+            var jitter = _jitter.Next(0, 100);
+            return Math.Min(exponential + jitter, 4000); // cap at 4s
+        }
     }
 
     protected async Task<string> GetCreationAsync(string mediaType,
