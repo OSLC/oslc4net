@@ -8,9 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using OSLC4Net.Client.Exceptions;
 using VDS.RDF;
 using VDS.RDF.Parsing;
-using OSLC4Net.Client.Exceptions;
 
 /// <summary>
 /// Helper for OSLC rootservices discovery (Jazz/OSLC servers).
