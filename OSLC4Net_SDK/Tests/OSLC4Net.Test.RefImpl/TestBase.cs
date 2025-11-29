@@ -262,8 +262,13 @@ public abstract class TestBase
                 .GetResourceAsync<ChangeRequest>(aboutURI.ToString(), mediaType)
                 .ConfigureAwait(true);
 
+            if (aboutResponse.Resources == null || !aboutResponse.Resources.Any())
+            {
+                throw new Exception($"Change request GET returned empty or null Resources collection for URI: {aboutURI}");
+            }
+
             await VerifyChangeRequestAsync(mediaType,
-                aboutResponse.Resources!.Single(),
+                aboutResponse.Resources.Single(),
                 false).ConfigureAwait(true);
             if (serviceProviderURI != null)
             {
@@ -540,7 +545,12 @@ public abstract class TestBase
             .GetResourceAsync<ChangeRequest>(ChangeRequestUri.ToString(), mediaType)
             .ConfigureAwait(true);
 
-        var updatedChangeRequest = updatedResponse.Resources!.Single();
+        if (updatedResponse.Resources == null || !updatedResponse.Resources.Any())
+        {
+            throw new Exception($"Updated change request GET returned empty or null Resources collection for URI: {ChangeRequestUri}");
+        }
+
+        var updatedChangeRequest = updatedResponse.Resources.Single();
 
         await VerifyChangeRequestAsync(mediaType,
             updatedChangeRequest,
