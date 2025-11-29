@@ -1,5 +1,20 @@
 # AGENTS.md
 
+
+## Code style
+
+Follow https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/ where possible.
+
+## Tests
+
+Use TUnit for unit tests. Prefer Verify and round-tripping checks when dealing with RDF data. When creating multiline dummy data, prefer `"""` strings.
+
+Follow https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices where relevant.
+
+Follow the key techniques from Working Effectively With Legacy Code by Michael C. Feathers, especially when modifying existing public code. See `misc/instructions/legacy-code-testing.md` for detailed instructions.
+
+Strive to improve coverage but without silly attempts to cover every getter and setter.
+
 ## Docs
 
 - If a change is significant, add a line to CHANGELOG.md
@@ -8,78 +23,71 @@
 
 Overall, follow `misc/instructions/gov-uk-technical-content.md` and `misc/instructions/iso-house-guide.md` to guide the language style.
 
-## Build Output Configuration
+## Running the code and tests
 
-When running builds or tests in this project, set the `AGENT_BUILD` environment variable to minimize build output:
-
-```bash
-export AGENT_BUILD=true
-dotnet build
-```
-
-Or inline:
+When running builds or tests in this project, set the `AGENT_BUILD` environment variable to minimize build output from warnings and analyzer messages:
 
 ```bash
-AGENT_BUILD=true dotnet build
-AGENT_BUILD=true dotnet test
-```
-
-This reduces noise from warnings and analyzer messages, showing primarily errors and critical information.
-
-## Git Hooks: Pre-Commit Formatting (Cross-Platform)
-
-To keep the codebase consistently formatted, a pre-commit hook can run `dotnet format` scoped to the SDK.
-
-- Hook behavior:
-	- Runs `dotnet format` inside `OSLC4Net_SDK`.
-	- Stages any whitespace or formatting changes automatically.
-	- Fails the commit if formatting fails or cannot be applied.
-
-- One-time setup:
-	- Use the provided POSIX shell hook script: `.githooks/pre-commit`.
-	- Point Git to use the repository hooks folder. Quick setup scripts:
-		- macOS/Linux: `scripts/setup-hooks.sh`
-		- Windows (PowerShell): `scripts/setup-hooks.ps1`
-
-```zsh
-# macOS/Linux
-./scripts/setup-hooks.sh
-```
-
-```powershell
-# Windows (PowerShell)
-./scripts/setup-hooks.ps1
-```
-
-- Manual run (if needed):
-
-```zsh
-cd OSLC4Net_SDK
-dotnet format
-```
-
-Notes:
-- Requires `dotnet` to be in PATH.
-- If the hook blocks your commit due to formatting changes, review them and commit again.
-
-## Build Commands
-
-Build the solution:
-```bash
-AGENT_BUILD=true dotnet build OSLC4Net_SDK/OSLC4Net.Core.slnx
+cd OSLC4Net_SDK ; export AGENT_BUILD=true; dotnet build OSLC4Net.Core.slnx
 ```
 
 Run tests (must be run from OSLC4Net_SDK directory or below):
-```bash
-cd OSLC4Net_SDK
 
+```bash
 # Quick test run (no coverage)
-AGENT_BUILD=true dotnet test --solution OSLC4Net.Core.slnx --configuration Release
+cd OSLC4Net_SDK ; export AGENT_BUILD=true; dotnet test --solution OSLC4Net.Core.slnx --configuration Release
 
 # Filter tests using treenode-filter
-AGENT_BUILD=true dotnet test --solution OSLC4Net.Core.slnx --configuration Release --treenode-filter '/*/*/*/*[TestCategory!=RunningOslcServerRequired]'
+cd OSLC4Net_SDK ; export AGENT_BUILD=true; dotnet test --solution OSLC4Net.Core.slnx --configuration Release --treenode-filter '/*/*/*/*[TestCategory!=RunningOslcServerRequired]'
 
 Note: TUnit uses Microsoft.Testing.Platform.
+
+Do not inline the AGENT_BUILD variable!
+
+You must be CD'd into OSLC4Net_SDK or subfolder before running dotnet commands.
+
+Run `dotnet format` before commit.
+
+### Test Filters
+
+Running TUnit via `dotnet run` supports test filters.
+
+TUnit can select tests by:
+
+- Assembly
+- Namespace
+- Class name
+- Test name
+
+You must use the `--treenode-filter` flag on the command line.
+
+The syntax for the filter value is (without the angled brackets) `/<Assembly>/<Namespace>/<Class name>/<Test name>`
+
+Wildcards are also supported with `*`
+
+**Filter Operators** TUnit supports several operators for building complex filters:
+
+- **Wildcard matching:** Use `*` for pattern matching (e.g., `LoginTests*` matches `LoginTests`, `LoginTestsSuite`, etc.)
+- **Equality:** Use `=` for exact match (e.g., `[Category=Unit]`)
+- **Negation:** Use `!=` for excluding values (e.g., `[Category!=Performance]`)
+- **AND operator:** Use `&` to combine conditions (e.g., `[Category=Unit]&[Priority=High]`)
+- **OR operator:** Use `|` to match either condition - requires parentheses (e.g., `(/*/*/Class1/*)|(/*/*/Class2/*)`)
+
+For full information on the treenode filters, see [Microsoft's documentation](https://github.com/microsoft/testfx/blob/main/docs/mstest-runner-graphqueryfiltering/graph-query-filtering.md)
+
+So an example could be:
+
+`dotnet run --treenode-filter /*/*/LoginTests/*` - To run all tests in the class `LoginTests`
+
+or
+
+`dotnet run --treenode-filter /*/*/*/AcceptCookiesTest` - To run all tests with the name `AcceptCookiesTest`
+
+TUnit also supports filtering by your own [properties](https://thomhurst.github.io/TUnit/docs/test-lifecycle/properties). So you could do:
+
+`dotnet run --treenode-filter /*/*/*/*[MyFilterName=*SomeValue*]`
+
+And if your test had a property with the name "MyFilterName" and its value contained "SomeValue", then your test would be executed.
 
 ## Project Structure
 

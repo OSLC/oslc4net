@@ -268,8 +268,8 @@ public class OslcClient : IDisposable
                 response.StatusCode == HttpStatusCode.Moved)
             {
                 _logger.LogTrace("Encountered redirect {code}: {from} -> {to}", response.StatusCode,
-                    requestUrl, response.Headers.Location.AbsoluteUri);
-                requestUrl = response.Headers.Location.AbsoluteUri;
+                    requestUrl, response.Headers.Location?.AbsoluteUri);
+                requestUrl = response.Headers.Location?.AbsoluteUri;
                 response.ConsumeContent();
                 redirect = true;
                 if (++redirectCount > MAX_REDIRECTS)
@@ -316,7 +316,13 @@ public class OslcClient : IDisposable
             if (response.StatusCode == HttpStatusCode.MovedPermanently ||
                 response.StatusCode == HttpStatusCode.Moved)
             {
-                url = response.Headers.Location.AbsoluteUri;
+                var locationUrl = response.Headers.Location?.AbsoluteUri;
+                if (locationUrl is null)
+                {
+                    break;
+                }
+
+                url = locationUrl;
                 response.ConsumeContent();
                 redirect = true;
             }
@@ -368,7 +374,13 @@ public class OslcClient : IDisposable
 
             if (ShallFollowRedirectNonGet(response))
             {
-                url = response.Headers.Location.AbsoluteUri;
+                var locationUrl = response.Headers.Location?.AbsoluteUri;
+                if (locationUrl is null)
+                {
+                    break;
+                }
+
+                url = locationUrl;
                 response.ConsumeContent();
                 redirect = true;
             }
@@ -393,7 +405,7 @@ public class OslcClient : IDisposable
         {
             // we have two options: the Location header points to a newly created resource or the resource is returned directly
             // I think OSLC mandates Location, so let's start with that
-            var createdUri = response.Headers.Location.AbsoluteUri;
+            var createdUri = response.Headers.Location?.AbsoluteUri;
             return await GetResourceAsync<T>(createdUri, mediaType).ConfigureAwait(false);
         }
         else
@@ -457,7 +469,13 @@ public class OslcClient : IDisposable
 
             if (ShallFollowRedirectNonGet(response))
             {
-                url = response.Headers.Location.AbsoluteUri;
+                var locationUrl = response.Headers.Location?.AbsoluteUri;
+                if (locationUrl is null)
+                {
+                    break;
+                }
+
+                url = locationUrl;
                 response.ConsumeContent();
                 redirect = true;
             }
@@ -499,7 +517,13 @@ public class OslcClient : IDisposable
 
             if (ShallFollowRedirectNonGet(response))
             {
-                url = response.Headers.Location.AbsoluteUri;
+                var locationUrl = response.Headers.Location?.AbsoluteUri;
+                if (locationUrl is null)
+                {
+                    break;
+                }
+
+                url = locationUrl;
                 response.ConsumeContent();
                 redirect = true;
             }
@@ -558,7 +582,13 @@ public class OslcClient : IDisposable
 
             if (ShallFollowRedirect(response))
             {
-                url = response.Headers.Location.AbsoluteUri;
+                var locationUrl = response.Headers.Location?.AbsoluteUri;
+                if (locationUrl is null)
+                {
+                    break;
+                }
+
+                url = locationUrl;
                 response.ConsumeContent();
                 redirect = true;
             }
@@ -606,7 +636,13 @@ public class OslcClient : IDisposable
 
             if (ShallFollowRedirect(response))
             {
-                url = response.Headers.Location.AbsoluteUri;
+                var locationUrl = response.Headers.Location?.AbsoluteUri;
+                if (locationUrl is null)
+                {
+                    break;
+                }
+
+                url = locationUrl;
                 response.ConsumeContent();
                 redirect = true;
             }
