@@ -6,6 +6,9 @@
     <None Update="data\multiResponseQuery.rdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="data\singlePageQuery.rdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\OSLC4Net.Client\OSLC4Net.Client.csproj" />

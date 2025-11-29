@@ -65,6 +65,35 @@ public class OslcQueryResultTests
         await Assert.That(oslcQueryResult.GetMembersUrls().Length).IsEqualTo(20);
     }
 
+    [Test]
+    public async Task NextPageAsync_ReturnsNull_WhenNoNextPage_WithNoNextPageHeader()
+    {
+        // Arrange - load an RDF response without a next page link
+        var responseText = await File.ReadAllTextAsync("data/singlePageQuery.rdf").ConfigureAwait(false);
+        var testQuery = new OslcQuery(new OslcClient(LoggerFactory.CreateLogger<OslcClient>()),
+            "https://example.com/oslc/query");
+        var httpResponseMessage = new HttpResponseMessage
+        {
+            StatusCode = HttpStatusCode.OK,
+            Content = new StringContent(responseText)
+        };
+        var oslcQueryResult = new OslcQueryResult(testQuery, httpResponseMessage);
+
+        // Act
+        var nextPage = await oslcQueryResult.NextPageAsync();
+
+        // Assert
+        await Assert.That(nextPage).IsNull();
+    }
+
+    [Test]
+    public async Task TotalCount_ReturnsCorrectValue()
+    {
+        var oslcQueryResult = await GetMockOslcQueryResultMulti();
+
+        await Assert.That(oslcQueryResult.TotalCount).IsEqualTo(537);
+    }
+
     private async Task<OslcQueryResult> GetMockOslcQueryResultMulti()
     {
         var responseText = await File.ReadAllTextAsync("data/multiResponseQuery.rdf").ConfigureAwait(false);

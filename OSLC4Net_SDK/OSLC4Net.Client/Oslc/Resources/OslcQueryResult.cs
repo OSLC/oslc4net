@@ -79,6 +79,15 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
         _pageNumber = prev._pageNumber + 1;
     }
 
+    private OslcQueryResult(OslcQueryResult prev, HttpResponseMessage response, DotNetRdfHelper rdfHelper)
+    {
+        _rdfHelper = rdfHelper;
+        _query = new OslcQuery(prev);
+        _response = response;
+
+        _pageNumber = prev._pageNumber + 1;
+    }
+
     public long? TotalCount
     {
         get { return _totalCount ??= GetTotalCount(); }
@@ -127,6 +136,24 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     public void Reset()
     {
         throw new InvalidOperationException();
+    }
+
+    /// <summary>
+    ///     Asynchronously gets the next page of query results.
+    /// </summary>
+    /// <returns>
+    ///     The next page of results, or null if there are no more pages.
+    /// </returns>
+    public async Task<OslcQueryResult?> NextPageAsync()
+    {
+        if (!MoveNext())
+        {
+            return null;
+        }
+
+        var nextQuery = new OslcQuery(this);
+        var response = await nextQuery.GetResponseRawAsync().ConfigureAwait(false);
+        return new OslcQueryResult(this, response, _rdfHelper);
     }
 
     private long? GetTotalCount()

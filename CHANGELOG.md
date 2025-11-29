@@ -18,6 +18,8 @@ This release does not contain security updates.
 ### Added
 
 - `RootServicesHelper` was added to assist with processing OSLC Root Services documents. It can help with direct lookups (as long as your URI ends with `/rootservices` or `/rootservices.xml`), can look up a standard `/.well-known/oslc/rootservices.xml` location, or fall back to appending `/rootservices` for legacy systems.
+- ⚡️ `OslcQuery.SubmitAsync<T>()` method that returns `IAsyncEnumerable<T>` for lazy, async iteration over OSLC query results with automatic pagination handling.
+- `OslcQueryResult.NextPageAsync()` method for async retrieval of the next page of query results.
 
 ### Changed
 
