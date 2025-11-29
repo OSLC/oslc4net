@@ -169,9 +169,8 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
-          # directory: main/OSLC4Net_SDK/Tests/
           exclude: .nuget
-          files: "./main/OSLC4Net_SDK/Tests/*/TestResults/*.coverage,./main/OSLC4Net_SDK/Tests/*/TestResults/*.xml"
+          files: "${{ github.workspace }}/main/OSLC4Net_SDK/Tests/*/TestResults/*.coverage,${{ github.workspace }}/main/OSLC4Net_SDK/Tests/*/TestResults/*.xml"
       - name: Pack NuGet packages (snapshot)
         shell: pwsh
         run: |
