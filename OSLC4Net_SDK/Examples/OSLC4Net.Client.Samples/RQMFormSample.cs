@@ -79,12 +79,12 @@ namespace OSLC4Net.Client.Samples
 				    String catalogUrl = helper.GetCatalogUrl();
 				
 				    //STEP 5: Find the OSLC Service Provider for the project area we want to work with
-				    String serviceProviderUrl = client.LookupServiceProviderUrl(catalogUrl, projectArea);
+				    String serviceProviderUrl = client.LookupServiceProviderUrl(catalogUrl, projectArea).Result;
 				
 				    //STEP 6: Get the Query Capabilities URL so that we can run some OSLC queries
-				    String queryCapability = client.LookupQueryCapability(serviceProviderUrl,
+				    String queryCapability = client.LookupQueryCapabilityAsync(serviceProviderUrl,
 																	      OSLCConstants.OSLC_QM_V2,
-																	      OSLCConstants.QM_TEST_RESULT_QUERY);
+																	      OSLCConstants.QM_TEST_RESULT_QUERY).Result;
 				
 				    //SCENARIO A: Run a query for all TestResults with a status of passed with OSLC paging of 10 items per
 				    //page turned on and list the members of the result
@@ -92,7 +92,7 @@ namespace OSLC4Net.Client.Samples
 				    queryParams.SetWhere("oslc_qm:status=\"com.ibm.rqm.execution.common.state.passed\"");
 				    OslcQuery query = new OslcQuery(client, queryCapability, 10, queryParams);
 				
-				    OslcQueryResult result = query.Submit();
+				    OslcQueryResult result = query.Submit().Result;
 				
 				    bool processAsDotNetObjects = true;
 				    ProcessPagedQueryResults(result,client, processAsDotNetObjects);
@@ -107,7 +107,7 @@ namespace OSLC4Net.Client.Samples
 				    queryParams2.SetSelect("dcterms:identifier,dcterms:title,dcterms:creator,dcterms:created,oslc_qm:status");
 				    OslcQuery query2 = new OslcQuery(client, queryCapability, queryParams2);
 				
-				    OslcQueryResult result2 = query2.Submit();
+				    OslcQueryResult result2 = query2.Submit().Result;
 				    HttpResponseMessage rawResponse = result2.GetRawResponse();
 				    ProcessRawResponse(rawResponse);
 				    rawResponse.ConsumeContent();
@@ -119,21 +119,21 @@ namespace OSLC4Net.Client.Samples
 				    testcase.AddTestsChangeRequest(new Link(new Uri("http://cmprovider/changerequest/1"), "Implement accessibility in Pet Store application"));
 				
 				    //Get the Creation Factory URL for test cases so that we can create a test case
-				    String testcaseCreation = client.LookupCreationFactory(
+				    String testcaseCreation = client.LookupCreationFactoryAsync(
 						    serviceProviderUrl, OSLCConstants.OSLC_QM_V2,
-						    testcase.GetRdfTypes()[0].ToString());
+						    testcase.GetRdfTypes()[0].ToString()).Result;
 
 				    //Create the test case
-				    HttpResponseMessage creationResponse = client.CreateResource(
+				    HttpResponseMessage creationResponse = client.CreateResourceRawAsync(
 						    testcaseCreation, testcase,
-						    OslcMediaType.APPLICATION_RDF_XML);
+						    OslcMediaType.APPLICATION_RDF_XML).Result;
 				    creationResponse.ConsumeContent();
 				    String testcaseLocation = creationResponse.Headers.Location.ToString();
 				    Console.WriteLine("Test Case created a location " + testcaseLocation);
 				
 				    //Get the test case from the service provider and update its title property 
-				    testcase = client.GetResource(testcaseLocation,
-						    OslcMediaType.APPLICATION_RDF_XML).Content.ReadAsAsync<TestCase>(client.GetFormatters()).Result;
+				    testcase = client.GetResourceRawAsync(testcaseLocation,
+						    OslcMediaType.APPLICATION_RDF_XML).Result.Content.ReadAsAsync<TestCase>(client.GetFormatters()).Result;
 				    testcase.SetTitle(testcase.GetTitle() + " (updated)");
 
 				    //Create a partial update URL so that only the title will be updated.
@@ -141,8 +141,8 @@ namespace OSLC4Net.Client.Samples
 				    String updateUrl = testcase.GetAbout() + "?oslc.properties=dcterms:title";
 				
 				    //Update the test case at the service provider
-				    client.UpdateResource(updateUrl, testcase,
-						    OslcMediaType.APPLICATION_RDF_XML).ConsumeContent();				
+				    client.UpdateResourceRawAsync(new Uri(updateUrl), testcase,
+						    OslcMediaType.APPLICATION_RDF_XML).Result.ConsumeContent();
 				
 							
 			    }
@@ -176,7 +176,7 @@ namespace OSLC4Net.Client.Samples
 			    try {
 				
 				    //Get a single artifact by its URL 
-				    response = client.GetResource(resultsUrl, OSLCConstants.CT_RDF);
+				    response = client.GetResourceRawAsync(resultsUrl, OSLCConstants.CT_RDF).Result;
 		
 				    if (response != null) {
 					    //De-serialize it as a .NET object 

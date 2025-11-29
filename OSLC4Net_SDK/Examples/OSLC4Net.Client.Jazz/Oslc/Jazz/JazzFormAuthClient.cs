@@ -21,6 +21,7 @@ using System.Net.Http;
 using System.Net;
 using System.Net.Http.Headers;
 using OSLC4Net.Client.Exceptions;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace OSLC4Net.Client.Oslc.Jazz
 {
@@ -36,7 +37,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
 	    private const String JAZZ_AUTH_FAILED = "authfailed";
 
 	    public JazzFormAuthClient() :
-            base()
+            base(NullLogger<OslcClient>.Instance)
 	    {
 	    }
 	
@@ -117,7 +118,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
 		    try 
 		    {
 			
-                resp = client.GetAsync(this.authUrl + "/authenticated/identity").Result;
+                resp = GetHttpClient().GetAsync(this.authUrl + "/authenticated/identity").Result;
 			    statusCode = resp.StatusCode;
 
                 if (statusCode == HttpStatusCode.Found)
@@ -127,10 +128,10 @@ namespace OSLC4Net.Client.Oslc.Jazz
                     statusCode = FollowRedirects(statusCode, location);
                 }
 			
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
-			    client.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
-                client.DefaultRequestHeaders.Add("OSLC-Core-Version", "2.0");
+                GetHttpClient().DefaultRequestHeaders.Clear();
+                GetHttpClient().DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+			    GetHttpClient().DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
+                GetHttpClient().DefaultRequestHeaders.Add("OSLC-Core-Version", "2.0");
 
                 String securityCheckUrl = "j_username=" + this.user + "&j_password=" + this.password;
                 StringContent content = new StringContent(securityCheckUrl, System.Text.Encoding.UTF8);
@@ -141,7 +142,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
 
                 content.Headers.ContentType = mediaTypeValue;
 
-                resp = client.PostAsync(this.authUrl + "/j_security_check", content).Result;
+                resp = GetHttpClient().PostAsync(this.authUrl + "/j_security_check", content).Result;
 		        statusCode = resp.StatusCode;
 		    
 		        String jazzAuthMessage = null;
@@ -184,7 +185,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
             while ((statusCode == HttpStatusCode.Found) && (location != null))
 		    {
 			    try {
-                    HttpResponseMessage newResp = client.GetAsync(location).Result;
+                    HttpResponseMessage newResp = GetHttpClient().GetAsync(location).Result;
 				    statusCode = newResp.StatusCode;
 				    location = (newResp.Headers.Location != null) ? newResp.Headers.Location.AbsoluteUri : null;
                     newResp.ConsumeContent();
@@ -201,10 +202,10 @@ namespace OSLC4Net.Client.Oslc.Jazz
 		    HttpResponseMessage resp = null;
 
 		    try {
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(OSLCConstants.ATOM));
+                GetHttpClient().DefaultRequestHeaders.Clear();
+                GetHttpClient().DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(OSLCConstants.ATOM));
 
-			    resp = client.GetAsync(feedUrl).Result;
+			    resp = GetHttpClient().GetAsync(feedUrl).Result;
 
 			    HttpStatusCode statusCode = resp.StatusCode;
 

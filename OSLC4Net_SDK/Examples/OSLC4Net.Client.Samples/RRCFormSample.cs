@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -83,30 +83,30 @@ namespace OSLC4Net.Client.Samples
 				    String catalogUrl = helper.GetCatalogUrl();
 				
 				    //STEP 5: Find the OSLC Service Provider for the project area we want to work with
-				    String serviceProviderUrl = client.LookupServiceProviderUrl(catalogUrl, projectArea);
+				    String serviceProviderUrl = client.LookupServiceProviderUrl(catalogUrl, projectArea).Result;
 				
 				    //STEP 6: Get the Query Capabilities URL so that we can run some OSLC queries
-				    String queryCapability = client.LookupQueryCapability(serviceProviderUrl,
+				    String queryCapability = client.LookupQueryCapabilityAsync(serviceProviderUrl,
 																	      OSLCConstants.OSLC_RM_V2,
-																	      OSLCConstants.RM_REQUIREMENT_TYPE);
+																	      OSLCConstants.RM_REQUIREMENT_TYPE).Result;
 				    //STEP 7: Create base requirements
 				    //Get the Creation Factory URL for change requests so that we can create one
 				    Requirement requirement = new Requirement();
-				    String requirementFactory = client.LookupCreationFactory(
+				    String requirementFactory = client.LookupCreationFactoryAsync(
 						    serviceProviderUrl, OSLCConstants.OSLC_RM_V2,
-						    requirement.GetRdfTypes()[0].ToString());
+						    requirement.GetRdfTypes()[0].ToString()).Result;
 				
 				    //Get Feature Requirement Type URL
-				    ResourceShape featureInstanceShape = RmUtil.LookupRequirementsInstanceShapes(
+				    ResourceShape featureInstanceShape = RmUtil.LookupRequirementsInstanceShapesAsync(
 						    serviceProviderUrl, OSLCConstants.OSLC_RM_V2,
-						    requirement.GetRdfTypes()[0].ToString(), client, "Feature");
+						    requirement.GetRdfTypes()[0].ToString(), client, "Feature").Result;
 				
 				    Uri rootFolder = null;
 				    //Get Collection Type URL
 				    RequirementCollection collection = new RequirementCollection();
-                    ResourceShape collectionInstanceShape = RmUtil.LookupRequirementsInstanceShapes(
+                    ResourceShape collectionInstanceShape = RmUtil.LookupRequirementsInstanceShapesAsync(
                             serviceProviderUrl, OSLCConstants.OSLC_RM_V2,
-                            collection.GetRdfTypes()[0].ToString(), client, "Personal Collection");
+                            collection.GetRdfTypes()[0].ToString(), client, "Personal Collection").Result;
 				
 				    String req01URL=null;
 				    String req02URL=null;
@@ -129,10 +129,10 @@ namespace OSLC4Net.Client.Samples
 					    requirement.SetDescription("Created By OSLC4Net");
 					    requirement.AddImplementedBy(new Link(new Uri("http://google.com"), "Link in REQ01"));
 					    //Create the change request
-					    HttpResponseMessage creationResponse = client.CreateResource(
+					    HttpResponseMessage creationResponse = client.CreateResourceRawAsync(
 							    requirementFactory, requirement,
 							    OslcMediaType.APPLICATION_RDF_XML,
-							    OslcMediaType.APPLICATION_RDF_XML);
+							    OslcMediaType.APPLICATION_RDF_XML).Result;
 					    req01URL = creationResponse.Headers.Location.ToString();
                         creationResponse.ConsumeContent();
 					
@@ -143,10 +143,10 @@ namespace OSLC4Net.Client.Samples
 					    requirement.SetDescription("Created By OSLC4Net");
 					    requirement.AddValidatedBy(new Link(new Uri("http://bancomer.com"), "Link in REQ02"));
 					    //Create the change request
-					    creationResponse = client.CreateResource(
+					    creationResponse = client.CreateResourceRawAsync(
 							    requirementFactory, requirement,
 							    OslcMediaType.APPLICATION_RDF_XML,
-							    OslcMediaType.APPLICATION_RDF_XML);
+							    OslcMediaType.APPLICATION_RDF_XML).Result;
 					
 					    req02URL = creationResponse.Headers.Location.ToString();
                         creationResponse.ConsumeContent();
@@ -158,10 +158,10 @@ namespace OSLC4Net.Client.Samples
 					    requirement.SetDescription("Created By OSLC4Net");
 					    requirement.AddValidatedBy(new Link(new Uri("http://outlook.com"), "Link in REQ03"));
 					    //Create the change request
-					    creationResponse = client.CreateResource(
+					    creationResponse = client.CreateResourceRawAsync(
 							    requirementFactory, requirement,
 							    OslcMediaType.APPLICATION_RDF_XML,
-							    OslcMediaType.APPLICATION_RDF_XML);
+							    OslcMediaType.APPLICATION_RDF_XML).Result;
 					    req03URL = creationResponse.Headers.Location.ToString();
                         creationResponse.ConsumeContent();
 					
@@ -172,10 +172,10 @@ namespace OSLC4Net.Client.Samples
 					    requirement.SetDescription("Created By OSLC4Net");
 					
 					    //Create the Requirement
-					    creationResponse = client.CreateResource(
+					    creationResponse = client.CreateResourceRawAsync(
 							    requirementFactory, requirement,
 							    OslcMediaType.APPLICATION_RDF_XML,
-							    OslcMediaType.APPLICATION_RDF_XML);
+							    OslcMediaType.APPLICATION_RDF_XML).Result;
 					    req04URL = creationResponse.Headers.Location.ToString();
                         creationResponse.ConsumeContent();
 					
@@ -190,10 +190,10 @@ namespace OSLC4Net.Client.Samples
 					    collection.SetTitle("Collection01");
 					    collection.SetDescription("Created By OSLC4Net");
 					    //Create the change request
-					    creationResponse = client.CreateResource(
+					    creationResponse = client.CreateResourceRawAsync(
 							    requirementFactory, collection,
 							    OslcMediaType.APPLICATION_RDF_XML,
-							    OslcMediaType.APPLICATION_RDF_XML);
+							    OslcMediaType.APPLICATION_RDF_XML).Result;
 					    reqcoll01URL = creationResponse.Headers.Location.ToString();
                         creationResponse.ConsumeContent();
 					
@@ -209,7 +209,7 @@ namespace OSLC4Net.Client.Samples
 				     }
 
 				    // GET the root folder based on First requirement created
-				    HttpResponseMessage getResponse = client.GetResource(req01URL,OslcMediaType.APPLICATION_RDF_XML);
+				    HttpResponseMessage getResponse = client.GetResourceRawAsync(req01URL,OslcMediaType.APPLICATION_RDF_XML).Result;
 				    requirement = getResponse.Content.ReadAsAsync<Requirement>(client.GetFormatters()).Result;
 				    String etag1 = getResponse.Headers.ETag.ToString();
 				    // May not be needed getResponse.ConsumeContent();
@@ -232,7 +232,7 @@ namespace OSLC4Net.Client.Samples
 				    queryParams.SetPrefix("rdf=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>");
 				    queryParams.SetWhere("rdf:type=<http://open-services.net/ns/rm#Requirement>");
 				    OslcQuery query = new OslcQuery(client, queryCapability, 10, queryParams);
-				    OslcQueryResult result = query.Submit();
+				    OslcQueryResult result = query.Submit().Result;
 				    bool processAsDotNetObjects = false;
 				    int resultsSize = result.GetMembersUrls().Length;
 				    ProcessPagedQueryResults(result,client, processAsDotNetObjects);
@@ -245,7 +245,7 @@ namespace OSLC4Net.Client.Samples
 				    queryParams.SetPrefix("nav=<http://com.ibm.rdm/navigation#>,rdf=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>");
 				    queryParams.SetWhere("rdf:type=<http://open-services.net/ns/rm#Requirement> and nav:parent=<" + rootFolder + ">");
 				    query = new OslcQuery(client, queryCapability, 10, queryParams);
-				    result = query.Submit();
+				    result = query.Submit().Result;
 				    processAsDotNetObjects = false;
 				    resultsSize = result.GetMembersUrls().Length;
 				    ProcessPagedQueryResults(result,client, processAsDotNetObjects);
@@ -257,7 +257,7 @@ namespace OSLC4Net.Client.Samples
 				    queryParams.SetPrefix("dcterms=<http://purl.org/dc/terms/>");
 				    queryParams.SetWhere("dcterms:title=\"Req04\"");
 				    query = new OslcQuery(client, queryCapability, 10, queryParams);
-				    result = query.Submit();
+				    result = query.Submit().Result;
 				    resultsSize = result.GetMembersUrls().Length;
 				    processAsDotNetObjects = false;
 				    ProcessPagedQueryResults(result,client, processAsDotNetObjects);
@@ -269,7 +269,7 @@ namespace OSLC4Net.Client.Samples
 				    queryParams.SetPrefix("oslc_rm=<http://open-services.net/ns/rm#>");
 				    queryParams.SetWhere("oslc_rm:implementedBy=<http://google.com>");
 				    query = new OslcQuery(client, queryCapability, 10, queryParams);
-				    result = query.Submit();
+				    result = query.Submit().Result;
 				    resultsSize = result.GetMembersUrls().Length;
 				    processAsDotNetObjects = false;
 				    ProcessPagedQueryResults(result,client, processAsDotNetObjects);
@@ -281,7 +281,7 @@ namespace OSLC4Net.Client.Samples
 				    queryParams.SetPrefix("oslc_rm=<http://open-services.net/ns/rm#>");
 				    queryParams.SetWhere("oslc_rm:validatedBy in [<http://bancomer.com>,<http://outlook.com>]");
 				    query = new OslcQuery(client, queryCapability, 10, queryParams);
-				    result = query.Submit();
+				    result = query.Submit().Result;
 				    resultsSize = result.GetMembersUrls().Length;
 				    processAsDotNetObjects = false;
 				    ProcessPagedQueryResults(result,client, processAsDotNetObjects);
@@ -293,7 +293,7 @@ namespace OSLC4Net.Client.Samples
 				    queryParams.SetPrefix("nav=<http://com.ibm.rdm/navigation#>,oslc_rm=<http://open-services.net/ns/rm#>");
 				    queryParams.SetWhere("nav:parent=<"+rootFolder+"> and oslc_rm:validatedBy=<http://bancomer.com>"); 
 				    query = new OslcQuery(client, queryCapability, 10, queryParams);
-				    result = query.Submit();
+				    result = query.Submit().Result;
 				    resultsSize = result.GetMembersUrls().Length;
 				    processAsDotNetObjects = false;
 				    ProcessPagedQueryResults(result,client, processAsDotNetObjects);
@@ -302,7 +302,7 @@ namespace OSLC4Net.Client.Samples
 				
 
 				    // GET resources from req03 in order edit its values
-				    getResponse = client.GetResource(req03URL,OslcMediaType.APPLICATION_RDF_XML);
+				    getResponse = client.GetResourceRawAsync(req03URL,OslcMediaType.APPLICATION_RDF_XML).Result;
 				    requirement = getResponse.Content.ReadAsAsync<Requirement>(client.GetFormatters()).Result;
 				    // Get the eTAG, we need it to update
 				    String etag = getResponse.Headers.ETag.ToString();
@@ -311,8 +311,11 @@ namespace OSLC4Net.Client.Samples
 				    requirement.AddImplementedBy(new Link(new Uri("http://google.com"), "Link created by an Eclipse Lyo user"));
 				
 				    // Update the requirement with the proper etag 
-				    HttpResponseMessage updateResponse = client.UpdateResource(req03URL, 
-						    requirement, OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_RDF_XML, etag);
+                    client.GetHttpClient().DefaultRequestHeaders.IfMatch.Clear();
+                    client.GetHttpClient().DefaultRequestHeaders.IfMatch.Add(System.Net.Http.Headers.EntityTagHeaderValue.Parse(etag));
+				    HttpResponseMessage updateResponse = client.UpdateResourceRawAsync(new Uri(req03URL),
+						    requirement, OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_RDF_XML).Result;
+                    client.GetHttpClient().DefaultRequestHeaders.IfMatch.Clear();
 
                     updateResponse.ConsumeContent();
 				
@@ -322,7 +325,7 @@ namespace OSLC4Net.Client.Samples
 				    queryParams.SetPrefix("dcterms=<http://purl.org/dc/terms/>");
 				    queryParams.SetWhere("dcterms:title=\"My new Title\"");
 				    query = new OslcQuery(client, queryCapability, 10, queryParams);
-				    result = query.Submit();
+				    result = query.Submit().Result;
 				    resultsSize = result.GetMembersUrls().Length;
 				    processAsDotNetObjects = false;
 				    ProcessPagedQueryResults(result,client, processAsDotNetObjects);
@@ -334,7 +337,7 @@ namespace OSLC4Net.Client.Samples
 				    queryParams.SetPrefix("oslc_rm=<http://open-services.net/ns/rm#>");
 				    queryParams.SetWhere("oslc_rm:implementedBy=<http://google.com>");
 				    query = new OslcQuery(client, queryCapability, 10, queryParams);
-				    result = query.Submit();
+				    result = query.Submit().Result;
 				    resultsSize = result.GetMembersUrls().Length;
 				    processAsDotNetObjects = false;
 				    ProcessPagedQueryResults(result,client, processAsDotNetObjects);
@@ -374,7 +377,7 @@ namespace OSLC4Net.Client.Samples
 			    try {
 				
 				    //Get a single artifact by its URL 
-				    response = client.GetResource(resultsUrl, OSLCConstants.CT_RDF);
+				    response = client.GetResourceRawAsync(resultsUrl, OSLCConstants.CT_RDF).Result;
 		
 				    if (response != null) {
 					    //De-serialize it as a .NET object 
