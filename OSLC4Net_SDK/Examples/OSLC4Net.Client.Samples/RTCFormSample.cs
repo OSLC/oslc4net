@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -17,13 +17,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
-using Microsoft.Test.CommandLineParsing;
+using Microsoft.Extensions.Logging;
 using OSLC4Net.Client.Oslc.Jazz;
 using OSLC4Net.Client.Oslc;
 using System.Net;
 using OSLC4Net.Client.Oslc.Resources;
 using System.Net.Http;
+using System.Threading.Tasks;
 using OSLC4Net.Core.Model;
 using OSLC4Net.Client.Exceptions;
 using System.IO;
@@ -43,21 +43,25 @@ namespace OSLC4Net.Client.Samples
     /// </summary>
     class RTCFormSample
     {
-        private static ILog logger = LogManager.GetLogger(typeof(RTCFormSample));
+        private static ILogger logger;
 
         /// <summary>
         /// Login to the RTC server and perform some OSLC actions
         /// </summary>
         /// <param name="args"></param>
-	    static void Main(string[] args)
+	    static async Task Main(string[] args)
         {
-            log4net.Config.XmlConfigurator.Configure();
+            using ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole();
+            });
+            logger = loggerFactory.CreateLogger<RTCFormSample>();
 
-		    CommandLineDictionary cmd = CommandLineDictionary.FromArguments(args);
+		    CommandLineHelper cmd = CommandLineHelper.FromArguments(args);
 		
 		    if (!ValidateOptions(cmd)) {		
-			    logger.Error("Syntax:  /url=https://<server>:port/<context>/ /user=<user> /password=<password> /project=\"<project_area>\"");
-			    logger.Error("Example: /url=https://exmple.com:9443/ccm /user=ADMIN /password=ADMIN /project=\"JKE Banking (Change Management)\"");
+			    logger.LogError("Syntax:  /url=https://<server>:port/<context>/ /user=<user> /password=<password> /project=\"<project_area>\"");
+			    logger.LogError("Example: /url=https://exmple.com:9443/ccm /user=ADMIN /password=ADMIN /project=\"JKE Banking (Change Management)\"");
 			    return;
 		    }
 			
@@ -70,22 +74,23 @@ namespace OSLC4Net.Client.Samples
 		
 			    //STEP 1: Initialize a Jazz rootservices helper and indicate we're looking for the ChangeManagement catalog
 			    //RTC contains a service provider for CM and SCM, so we need to indicate our interest in CM
-			    JazzRootServicesHelper helper = new JazzRootServicesHelper(webContextUrl,OSLCConstants.OSLC_CM_V2);
+			    JazzRootServicesHelper helper = new JazzRootServicesHelper(webContextUrl,OSLCConstants.OSLC_CM_V2, loggerFactory);
+                await helper.InitializeAsync();
 			
 			    //STEP 2: Create a new Form Auth client with the supplied user/password
 			    JazzFormAuthClient client = helper.InitFormClient(user, passwd);
 			
 			    //STEP 3: Login in to Jazz Server
-			    if (client.FormLogin() == HttpStatusCode.OK) {
+			    if (await client.FormLoginAsync() == HttpStatusCode.OK) {
 				
 				    //STEP 4: Get the URL of the OSLC ChangeManagement catalog
 				    String catalogUrl = helper.GetCatalogUrl();
 				
 				    //STEP 5: Find the OSLC Service Provider for the project area we want to work with
-				    String serviceProviderUrl = client.LookupServiceProviderUrl(catalogUrl, projectArea);
+				    String serviceProviderUrl = await client.LookupServiceProviderUrl(catalogUrl, projectArea);
 				
 				    //STEP 6: Get the Query Capabilities URL so that we can run some OSLC queries
-				    String queryCapability = client.LookupQueryCapability(serviceProviderUrl,
+				    String queryCapability = await client.LookupQueryCapabilityAsync(serviceProviderUrl,
 																	      OSLCConstants.OSLC_CM_V2,
 																	      OSLCConstants.CM_CHANGE_REQUEST_TYPE);
 				
@@ -96,10 +101,10 @@ namespace OSLC4Net.Client.Samples
                     queryParams.SetSelect("dcterms:identifier,dcterms:title,oslc_cm:status");
                     OslcQuery query = new OslcQuery(client, queryCapability, 10, queryParams);
 				
-				    OslcQueryResult result = query.Submit();
+				    OslcQueryResult result = await query.Submit();
 				
 				    bool processAsJavaObjects = true;
-				    ProcessPagedQueryResults(result,client, processAsJavaObjects);
+				    await ProcessPagedQueryResultsAsync(result,client, processAsJavaObjects);
 				
 				    Console.WriteLine("\n------------------------------\n");
 				
@@ -111,9 +116,9 @@ namespace OSLC4Net.Client.Samples
 				    queryParams2.SetSelect("dcterms:identifier,dcterms:title,dcterms:creator,dcterms:created,oslc_cm:status");
 				    OslcQuery query2 = new OslcQuery(client, queryCapability, queryParams2);
 				
-				    OslcQueryResult result2 = query2.Submit();
+				    OslcQueryResult result2 = await query2.Submit();
 				    HttpResponseMessage rawResponse = result2.GetRawResponse();
-				    ProcessRawResponse(rawResponse);
+				    await ProcessRawResponseAsync(rawResponse);
 				    rawResponse.ConsumeContent();
 				
 				    //SCENARIO C:  RTC Workitem creation and update
@@ -124,19 +129,19 @@ namespace OSLC4Net.Client.Samples
 				    changeRequest.AddDctermsType("task");
 				
 				    //Get the Creation Factory URL for change requests so that we can create one
-				    String changeRequestCreation = client.LookupCreationFactory(
+				    String changeRequestCreation = await client.LookupCreationFactoryAsync(
 						    serviceProviderUrl, OSLCConstants.OSLC_CM_V2,
 						    changeRequest.GetRdfTypes()[0].ToString());
 
 				    //Create the change request
-				    HttpResponseMessage creationResponse = client.CreateResource( 
+				    HttpResponseMessage creationResponse = await client.CreateResourceRawAsync(
 						    changeRequestCreation, changeRequest,
 						    OslcMediaType.APPLICATION_RDF_XML,
 						    OslcMediaType.APPLICATION_RDF_XML);
 
                     if (creationResponse.StatusCode != HttpStatusCode.Created)
                     {
-                        String errorString = creationResponse.Content.ReadAsStringAsync().Result;
+                        String errorString = await creationResponse.Content.ReadAsStringAsync();
                         Console.Error.WriteLine("Failed to create change request: " + errorString);
                         return;
                     }
@@ -147,8 +152,8 @@ namespace OSLC4Net.Client.Samples
 				
 				
 				    //Get the change request from the service provider and update its title property 
-				    changeRequest = client.GetResource(changeRequestLocation,
-						    OslcMediaType.APPLICATION_RDF_XML).Content.ReadAsAsync<ChangeRequest>(client.GetFormatters()).Result;
+				    changeRequest = await (await client.GetResourceRawAsync(changeRequestLocation,
+						    OslcMediaType.APPLICATION_RDF_XML)).Content.ReadAsAsync<ChangeRequest>(client.GetFormatters());
 				    changeRequest.SetTitle(changeRequest.GetTitle() + " (updated)");
 
 				    //Create a partial update URL so that only the title will be updated.
@@ -156,8 +161,8 @@ namespace OSLC4Net.Client.Samples
 				    String updateUrl = changeRequest.GetAbout() + "?oslc.properties=dcterms:title";
 				
 				    //Update the change request at the service provider
-				    HttpResponseMessage updateResponse = client.UpdateResource(
-						    updateUrl, changeRequest,
+				    HttpResponseMessage updateResponse = await client.UpdateResourceRawAsync(
+						    new Uri(updateUrl), changeRequest,
 						    OslcMediaType.APPLICATION_RDF_XML,
 						    OslcMediaType.APPLICATION_RDF_XML);
 				
@@ -165,20 +170,20 @@ namespace OSLC4Net.Client.Samples
 							
 			    }
 		    } catch (RootServicesException re) {
-			    logger.Error("Unable to access the Jazz rootservices document at: " + webContextUrl + "/rootservices", re);
+			    logger.LogError(re, "Unable to access the Jazz rootservices document at: " + webContextUrl + "/rootservices");
 		    } catch (Exception e) {
-			    logger.Error(e.Message,e);
+			    logger.LogError(e, e.Message);
 		    }
 		
 
 
 	    }
 	
-	    private static void ProcessPagedQueryResults(OslcQueryResult result, OslcClient client, bool asDotNetObjects) {
+	    private static async Task ProcessPagedQueryResultsAsync(OslcQueryResult result, OslcClient client, bool asDotNetObjects) {
 		    int page = 1;
 		    do {
 			    Console.WriteLine("\nPage " + page + ":\n");
-			    processCurrentPage(result,client,asDotNetObjects);
+			    await ProcessCurrentPageAsync(result,client,asDotNetObjects);
 			    if (result.MoveNext()) {
 				    result = result.Current;
 				    page++;
@@ -188,17 +193,18 @@ namespace OSLC4Net.Client.Samples
 		    } while(true);
 	    }
 	
-	    private static void processCurrentPage(OslcQueryResult result, OslcClient client, bool asDotNetObjects)
+	    private static Task ProcessCurrentPageAsync(OslcQueryResult result, OslcClient client, bool asDotNetObjects)
         {
             foreach (ChangeRequest cr in result.GetMembers<ChangeRequest>())
             {
 			    Console.WriteLine("id: " + cr.GetIdentifier() + ", title: " + cr.GetTitle() + ", status: " + cr.GetStatus());			
-		    }		
+		    }
+            return Task.CompletedTask;
 	    }
 	
-	    private static void ProcessRawResponse(HttpResponseMessage response)
+	    private static async Task ProcessRawResponseAsync(HttpResponseMessage response)
         {
-		    Stream inStream = response.Content.ReadAsStreamAsync().Result;
+		    Stream inStream = await response.Content.ReadAsStreamAsync();
 		    StreamReader streamReader = new StreamReader(new BufferedStream(inStream), System.Text.Encoding.UTF8);
 		
 		    String line = null;
@@ -217,7 +223,7 @@ namespace OSLC4Net.Client.Samples
 		    }
 	    }
 	
-	    private static bool ValidateOptions(CommandLineDictionary cmd) {
+	    private static bool ValidateOptions(CommandLineHelper cmd) {
 		    bool isValid = true;
 		
 		    if (! (cmd.ContainsKey("url") &&

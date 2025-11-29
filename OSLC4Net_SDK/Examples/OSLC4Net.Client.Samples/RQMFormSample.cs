@@ -17,13 +17,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
-using Microsoft.Test.CommandLineParsing;
+using Microsoft.Extensions.Logging;
 using OSLC4Net.Client.Oslc.Jazz;
 using OSLC4Net.Client.Oslc;
 using System.Net;
 using OSLC4Net.Client.Oslc.Resources;
 using System.Net.Http;
+using System.Threading.Tasks;
 using OSLC4Net.Core.Model;
 using OSLC4Net.Client.Exceptions;
 using System.IO;
@@ -40,21 +40,25 @@ namespace OSLC4Net.Client.Samples
     /// </summary>
     class RQMFormSample
     {
-        private static ILog logger = LogManager.GetLogger(typeof(RQMFormSample));
+        private static ILogger logger;
 
         /// <summary>
         /// Login to the RQM server and perform some OSLC actions
         /// </summary>
         /// <param name="args"></param>
-	    static void Main(string[] args)
+	    static async Task Main(string[] args)
         {
-            log4net.Config.XmlConfigurator.Configure();
+            using ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole();
+            });
+            logger = loggerFactory.CreateLogger<RQMFormSample>();
 
-		    CommandLineDictionary cmd = CommandLineDictionary.FromArguments(args);
+		    CommandLineHelper cmd = CommandLineHelper.FromArguments(args);
 
 		    if (!ValidateOptions(cmd)) {		
-			    logger.Error("Syntax:  /url=https://<server>:port/<context>/ /user=<user> /password=<password> /project=\"<project_area>\"");
-			    logger.Error("Example: /url=https://exmple.com:9443/qm /user=ADMIN /password=ADMIN /project=\"JKE Banking (Quality Management)\"");
+			    logger.LogError("Syntax:  /url=https://<server>:port/<context>/ /user=<user> /password=<password> /project=\"<project_area>\"");
+			    logger.LogError("Example: /url=https://exmple.com:9443/qm /user=ADMIN /password=ADMIN /project=\"JKE Banking (Quality Management)\"");
 			    return;
 		    }
 			
@@ -67,22 +71,23 @@ namespace OSLC4Net.Client.Samples
 		
 			    //STEP 1: Initialize a Jazz rootservices helper and indicate we're looking for the QualityManagement catalog
 			    //RQM contains both Quality and Change Management providers, so need to look for QM specifically
-			    JazzRootServicesHelper helper = new JazzRootServicesHelper(webContextUrl,OSLCConstants.OSLC_QM_V2);
+			    JazzRootServicesHelper helper = new JazzRootServicesHelper(webContextUrl,OSLCConstants.OSLC_QM_V2, loggerFactory);
+                await helper.InitializeAsync();
 			
 			    //STEP 2: Create a new Form Auth client with the supplied user/password
 			    JazzFormAuthClient client = helper.InitFormClient(user, passwd);
 			
 			    //STEP 3: Login in to Jazz Server
-			    if (client.FormLogin() == HttpStatusCode.OK) {
+			    if (await client.FormLoginAsync() == HttpStatusCode.OK) {
 				
 				    //STEP 4: Get the URL of the OSLC QualityManagement catalog
 				    String catalogUrl = helper.GetCatalogUrl();
 				
 				    //STEP 5: Find the OSLC Service Provider for the project area we want to work with
-				    String serviceProviderUrl = client.LookupServiceProviderUrl(catalogUrl, projectArea);
+				    String serviceProviderUrl = await client.LookupServiceProviderUrl(catalogUrl, projectArea);
 				
 				    //STEP 6: Get the Query Capabilities URL so that we can run some OSLC queries
-				    String queryCapability = client.LookupQueryCapability(serviceProviderUrl,
+				    String queryCapability = await client.LookupQueryCapabilityAsync(serviceProviderUrl,
 																	      OSLCConstants.OSLC_QM_V2,
 																	      OSLCConstants.QM_TEST_RESULT_QUERY);
 				
@@ -92,10 +97,10 @@ namespace OSLC4Net.Client.Samples
 				    queryParams.SetWhere("oslc_qm:status=\"com.ibm.rqm.execution.common.state.passed\"");
 				    OslcQuery query = new OslcQuery(client, queryCapability, 10, queryParams);
 				
-				    OslcQueryResult result = query.Submit();
+				    OslcQueryResult result = await query.Submit();
 				
 				    bool processAsDotNetObjects = true;
-				    ProcessPagedQueryResults(result,client, processAsDotNetObjects);
+				    await ProcessPagedQueryResultsAsync(result,client, processAsDotNetObjects);
 				
 				    Console.WriteLine("\n------------------------------\n");
 				
@@ -107,9 +112,9 @@ namespace OSLC4Net.Client.Samples
 				    queryParams2.SetSelect("dcterms:identifier,dcterms:title,dcterms:creator,dcterms:created,oslc_qm:status");
 				    OslcQuery query2 = new OslcQuery(client, queryCapability, queryParams2);
 				
-				    OslcQueryResult result2 = query2.Submit();
+				    OslcQueryResult result2 = await query2.Submit();
 				    HttpResponseMessage rawResponse = result2.GetRawResponse();
-				    ProcessRawResponse(rawResponse);
+				    await ProcessRawResponseAsync(rawResponse);
 				    rawResponse.ConsumeContent();
 				
 				    //SCENARIO C:  RQM TestCase creation and update
@@ -119,12 +124,12 @@ namespace OSLC4Net.Client.Samples
 				    testcase.AddTestsChangeRequest(new Link(new Uri("http://cmprovider/changerequest/1"), "Implement accessibility in Pet Store application"));
 				
 				    //Get the Creation Factory URL for test cases so that we can create a test case
-				    String testcaseCreation = client.LookupCreationFactory(
+				    String testcaseCreation = await client.LookupCreationFactoryAsync(
 						    serviceProviderUrl, OSLCConstants.OSLC_QM_V2,
 						    testcase.GetRdfTypes()[0].ToString());
 
 				    //Create the test case
-				    HttpResponseMessage creationResponse = client.CreateResource(
+				    HttpResponseMessage creationResponse = await client.CreateResourceRawAsync(
 						    testcaseCreation, testcase,
 						    OslcMediaType.APPLICATION_RDF_XML);
 				    creationResponse.ConsumeContent();
@@ -132,8 +137,8 @@ namespace OSLC4Net.Client.Samples
 				    Console.WriteLine("Test Case created a location " + testcaseLocation);
 				
 				    //Get the test case from the service provider and update its title property 
-				    testcase = client.GetResource(testcaseLocation,
-						    OslcMediaType.APPLICATION_RDF_XML).Content.ReadAsAsync<TestCase>(client.GetFormatters()).Result;
+				    testcase = await (await client.GetResourceRawAsync(testcaseLocation,
+						    OslcMediaType.APPLICATION_RDF_XML)).Content.ReadAsAsync<TestCase>(client.GetFormatters());
 				    testcase.SetTitle(testcase.GetTitle() + " (updated)");
 
 				    //Create a partial update URL so that only the title will be updated.
@@ -141,23 +146,23 @@ namespace OSLC4Net.Client.Samples
 				    String updateUrl = testcase.GetAbout() + "?oslc.properties=dcterms:title";
 				
 				    //Update the test case at the service provider
-				    client.UpdateResource(updateUrl, testcase,
-						    OslcMediaType.APPLICATION_RDF_XML).ConsumeContent();				
+				    (await client.UpdateResourceRawAsync(new Uri(updateUrl), testcase,
+						    OslcMediaType.APPLICATION_RDF_XML)).ConsumeContent();
 				
 							
 			    }
 		    } catch (RootServicesException re) {
-			    logger.Error("Unable to access the Jazz rootservices document at: " + webContextUrl + "/rootservices", re);
+			    logger.LogError(re, "Unable to access the Jazz rootservices document at: " + webContextUrl + "/rootservices");
 		    } catch (Exception e) {
-			    logger.Error(e.Message,e);
+			    logger.LogError(e, e.Message);
 		    }
 	    }
 	
-	    private static void ProcessPagedQueryResults(OslcQueryResult result, OslcClient client, bool asDotNetObjects) {
+	    private static async Task ProcessPagedQueryResultsAsync(OslcQueryResult result, OslcClient client, bool asDotNetObjects) {
 		    int page = 1;
 		    do {
 			    Console.WriteLine("\nPage " + page + ":\n");
-			    ProcessCurrentPage(result,client,asDotNetObjects);
+			    await ProcessCurrentPageAsync(result,client,asDotNetObjects);
 			    if (result.MoveNext()) {
 				    result = result.Current;
 				    page++;
@@ -167,7 +172,7 @@ namespace OSLC4Net.Client.Samples
 		    } while(true);
 	    }
 	
-	    private static void ProcessCurrentPage(OslcQueryResult result, OslcClient client, bool asDotNetObjects) {
+	    private static async Task ProcessCurrentPageAsync(OslcQueryResult result, OslcClient client, bool asDotNetObjects) {
 		
 		    foreach (String resultsUrl in result.GetMembersUrls()) {
 			    Console.WriteLine(resultsUrl);
@@ -176,31 +181,31 @@ namespace OSLC4Net.Client.Samples
 			    try {
 				
 				    //Get a single artifact by its URL 
-				    response = client.GetResource(resultsUrl, OSLCConstants.CT_RDF);
+				    response = await client.GetResourceRawAsync(resultsUrl, OSLCConstants.CT_RDF);
 		
 				    if (response != null) {
 					    //De-serialize it as a .NET object 
 					    if (asDotNetObjects) {
-						       TestResult tr = response.Content.ReadAsAsync<TestResult>(client.GetFormatters()).Result;
+						       TestResult tr = await response.Content.ReadAsAsync<TestResult>(client.GetFormatters());
 						       PrintTestResultInfo(tr);   //print a few attributes
 					    } else {
 						
 						    //Just print the raw RDF/XML (or process the XML as desired)
-						    ProcessRawResponse(response);
+						    await ProcessRawResponseAsync(response);
 						
 					    }
 				    }
 			    } catch (Exception e) {
-				    logger.Error( "Unable to process artifact at url: " + resultsUrl, e);
+				    logger.LogError(e, "Unable to process artifact at url: " + resultsUrl);
 			    }
 			
 		    }
 		
 	    }
 	
-	    private static void ProcessRawResponse(HttpResponseMessage response)
+	    private static async Task ProcessRawResponseAsync(HttpResponseMessage response)
         {
-		    Stream inStream = response.Content.ReadAsStreamAsync().Result;
+		    Stream inStream = await response.Content.ReadAsStreamAsync();
 		    StreamReader streamReader = new StreamReader(new BufferedStream(inStream), System.Text.Encoding.UTF8);
 		
 		    String line = null;
@@ -219,7 +224,7 @@ namespace OSLC4Net.Client.Samples
 		    }
 	    }
 	
-	    private static bool ValidateOptions(CommandLineDictionary cmd) {
+	    private static bool ValidateOptions(CommandLineHelper cmd) {
 		    bool isValid = true;
 		
 		    if (! (cmd.ContainsKey("url") &&

@@ -18,8 +18,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-
-using log4net;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using VDS.RDF;
 using VDS.RDF.Parsing;
 using OSLC4Net.Client.Exceptions;
@@ -51,7 +52,8 @@ namespace OSLC4Net.Client.Oslc.Jazz
 	    private const string JFS_NAMESPACE = "http://jazz.net/xmlns/prod/jazz/jfs/1.0/";
 	    private const string JD_NAMESPACE = "http://jazz.net/xmlns/prod/jazz/discovery/1.0/";
 	
-        private static ILog logger = LogManager.GetLogger(typeof(JazzRootServicesHelper));
+        private readonly ILoggerFactory _loggerFactory;
+        private readonly ILogger<JazzRootServicesHelper> _logger;
 	
         /// <summary>
         /// Initialize Jazz rootservices-related URLs such as the catalog location and OAuth URLs
@@ -60,8 +62,11 @@ namespace OSLC4Net.Client.Oslc.Jazz
         /// </summary>
         /// <param name="url">base URL of the Jazz server, no including /rootservices.  Example:  https://example.com:9443/ccm</param>
         /// <param name="catalogDomain">Namespace of the OSLC domain to find the catalog for.  Example:  OSLCConstants.OSLC_CM</param>
-	    public JazzRootServicesHelper (string url, string catalogDomain)
+        /// <param name="loggerFactory">Logger factory</param>
+	    public JazzRootServicesHelper (string url, string catalogDomain, ILoggerFactory loggerFactory)
         {
+            _loggerFactory = loggerFactory;
+            _logger = _loggerFactory.CreateLogger<JazzRootServicesHelper>();
 		    this.baseUrl = url;
 		    this.rootServicesUrl = this.baseUrl + "/rootservices";
 		    this.catalogDomain = catalogDomain;
@@ -97,11 +102,15 @@ namespace OSLC4Net.Client.Oslc.Jazz
             }
             else
             {
-                logger.Fatal("Jazz rootservices only supports CM, RM, QM, and Automation catalogs");
+                _logger.LogCritical("Jazz rootservices only supports CM, RM, QM, and Automation catalogs");
             }
 
-            ProcessRootServices();
 	    }
+
+        public async Task InitializeAsync()
+        {
+            await ProcessRootServicesAsync();
+        }
 	
         /// <summary>
         /// Get the OSLC Catalog URL
@@ -112,28 +121,6 @@ namespace OSLC4Net.Client.Oslc.Jazz
 		    return catalogUrl;
 	    }
 
-        /// <summary>
-        /// Create an OAuth client
-        /// </summary>
-        /// <param name="consumerKey"></param>
-        /// <param name="secret"></param>
-        /// <param name="user"></param>
-        /// <param name="passwd"></param>
-        /// <param name="authUrl"></param>
-        /// <returns></returns>
-        public JazzOAuthClient InitOAuthClient(string consumerKey, string secret, string user, string passwd, string authUrl)
-        {
-		    return new JazzOAuthClient (
-								    requestTokenUrl,
-								    authorizationTokenUrl,
-								    accessTokenUrl,
-								    consumerKey,
-								    secret,
-								    authorizationRealm,
-                                    user,
-                                    passwd,
-                                    authUrl );		
-	    }
 	
         /// <summary>
         /// 
@@ -143,7 +130,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
         /// <returns></returns>
 	    public JazzFormAuthClient InitFormClient(string userid, string password)
 	    {
-		    return new JazzFormAuthClient(baseUrl, userid, password);
+		    return new JazzFormAuthClient(baseUrl, userid, password, _loggerFactory.CreateLogger<OslcClient>());
 	    }
 	
         /// <summary>
@@ -157,16 +144,16 @@ namespace OSLC4Net.Client.Oslc.Jazz
         /// <returns></returns>
 	    public JazzFormAuthClient InitFormClient(string userid, string password, string authUrl)
 	    {
-		    return new JazzFormAuthClient(baseUrl, authUrl, userid, password);
+		    return new JazzFormAuthClient(baseUrl, authUrl, userid, password, _loggerFactory.CreateLogger<OslcClient>());
 		
 	    }
 	
-	    private void ProcessRootServices()
+	    private async Task ProcessRootServicesAsync()
 	    {
 		    try {
-			    OslcClient rootServicesClient = new OslcClient();
-			    HttpResponseMessage response = rootServicesClient.GetResource(rootServicesUrl, OSLCConstants.CT_RDF);
-			    Stream stream = response.Content.ReadAsStreamAsync().Result;
+			    OslcClient rootServicesClient = new OslcClient(_loggerFactory.CreateLogger<OslcClient>());
+			    HttpResponseMessage response = await rootServicesClient.GetResourceRawAsync(rootServicesUrl, OSLCConstants.CT_RDF);
+			    Stream stream = await response.Content.ReadAsStreamAsync();
                 IGraph rdfGraph = new Graph();
                 IRdfReader parser = new RdfXmlParser();
                 StreamReader streamReader = new StreamReader(stream);
