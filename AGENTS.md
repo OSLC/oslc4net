@@ -18,6 +18,42 @@ AGENT_BUILD=true dotnet test
 
 This reduces noise from warnings and analyzer messages, showing primarily errors and critical information.
 
+## Git Hooks: Pre-Commit Formatting (Cross-Platform)
+
+To keep the codebase consistently formatted, a pre-commit hook can run `dotnet format` scoped to the SDK.
+
+- Hook behavior:
+	- Runs `dotnet format` inside `OSLC4Net_SDK`.
+	- Stages any whitespace or formatting changes automatically.
+	- Fails the commit if formatting fails or cannot be applied.
+
+- One-time setup:
+	- Use the provided POSIX shell hook script: `.githooks/pre-commit`.
+	- Point Git to use the repository hooks folder. Quick setup scripts:
+		- macOS/Linux: `scripts/setup-hooks.sh`
+		- Windows (PowerShell): `scripts/setup-hooks.ps1`
+
+```zsh
+# macOS/Linux
+./scripts/setup-hooks.sh
+```
+
+```powershell
+# Windows (PowerShell)
+./scripts/setup-hooks.ps1
+```
+
+- Manual run (if needed):
+
+```zsh
+cd OSLC4Net_SDK
+dotnet format
+```
+
+Notes:
+- Requires `dotnet` to be in PATH.
+- If the hook blocks your commit due to formatting changes, review them and commit again.
+
 ## Build Commands
 
 Build the solution:
