@@ -154,7 +154,7 @@ jobs:
       - name: Build
         run: dotnet build --no-restore --configuration Release
       - name: Test (with Refimpl CM tests)
-        run: dotnet test --solution OSLC4Net.Core.slnx --no-build --configuration Release --coverage cobertura
+        run: dotnet test --solution OSLC4Net.Core.slnx --no-build --configuration Release --coverage --coverage-output-format cobertura
         if: |
           matrix.os != 'windows-latest'
       - name: Test (without Refimpl CM tests)
@@ -164,12 +164,12 @@ jobs:
       # - name: Set version suffix
       #   id: version
       #   run: echo "::set-output name=suffix::$(date +'-ts.%y%m%d%H%M')"
-      # - name: ReportGenerator
-      #   uses: danielpalme/ReportGenerator-GitHub-Action@5.4.18
-      #   with:
-      #     reports: '${{ github.workspace }}/**/TestResults/**/*.cobertura.xml'
-      #     targetdir: '${{ github.workspace }}/coveragereports'
-      #     reporttypes: 'Cobertura;MarkdownSummaryGithub'
+      - name: ReportGenerator
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.4.18
+        with:
+          reports: '${{ github.workspace }}/**/TestResults/**/*.cobertura.xml'
+          targetdir: '${{ github.workspace }}/coveragereports'
+          reporttypes: 'Cobertura;MarkdownSummaryGithub'
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@5a1091511ad55cbe89839c7260b706298ca349f7 # v5.5.1
@@ -178,6 +178,7 @@ jobs:
         with:
           exclude: .nuget
           # files: "${{ github.workspace }}/main/OSLC4Net_SDK/Tests/*/TestResults/*.coverage,${{ github.workspace }}/main/OSLC4Net_SDK/Tests/*/TestResults/*.xml"
+          files: ${{ github.workspace }}/coveragereports/Cobertura.xml
       - name: Pack NuGet packages (snapshot)
         shell: pwsh
         run: |
