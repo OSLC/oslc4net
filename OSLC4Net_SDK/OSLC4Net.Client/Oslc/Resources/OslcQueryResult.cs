@@ -70,13 +70,16 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     }
 
     private OslcQueryResult(OslcQueryResult prev, DotNetRdfHelper rdfHelper)
+        : this(prev, GetResponseForPrev(prev), rdfHelper)
     {
-        _rdfHelper = rdfHelper;
-        _query = new OslcQuery(prev);
-        // FIXME: we should split the data from logic - ctor should not be making calls; one of the methods should return a record with the data.
-        _response = _query.GetResponseRawAsync().Result;
+    }
 
-        _pageNumber = prev._pageNumber + 1;
+    // Helper method to get response for the previous result - used to avoid duplicating logic
+    private static HttpResponseMessage GetResponseForPrev(OslcQueryResult prev)
+    {
+        var query = new OslcQuery(prev);
+        // FIXME: we should split the data from logic - ctor should not be making calls; one of the methods should return a record with the data.
+        return query.GetResponseRawAsync().Result;
     }
 
     private OslcQueryResult(OslcQueryResult prev, HttpResponseMessage response, DotNetRdfHelper rdfHelper)
