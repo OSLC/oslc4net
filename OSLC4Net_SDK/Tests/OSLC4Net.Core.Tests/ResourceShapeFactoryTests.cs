@@ -1,7 +1,8 @@
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
 using OSLC4Net.Domains.RequirementsManagement;
-using Xunit;
+using TUnit;
+using TUnit.Assertions;
 
 namespace OSLC4Net.Core.Tests;
 
@@ -11,8 +12,8 @@ public class ResourceShapeFactoryTests
     private const string ResourceShapesPath = "resourceShapes";
     private const string ResourceShapePath = "requirement";
 
-    [Fact]
-    public void CreateResourceShape_WithRequirementType_ShouldReturnValidResourceShape()
+    [Test]
+    public async Task CreateResourceShape_WithRequirementType_ShouldReturnValidResourceShape()
     {
         // Arrange
         var resourceType = typeof(Requirement);
@@ -25,13 +26,13 @@ public class ResourceShapeFactoryTests
             resourceType);
 
         // Assert
-        Assert.NotNull(resourceShape);
-        Assert.NotNull(resourceShape.GetAbout());
-        Assert.Equal($"{BaseUri}/{ResourceShapesPath}/{ResourceShapePath}", resourceShape.GetAbout().ToString());
+        await Assert.That(resourceShape).IsNotNull();
+        await Assert.That(resourceShape.GetAbout()).IsNotNull();
+        await Assert.That(resourceShape.GetAbout().ToString()).IsEqualTo($"{BaseUri}/{ResourceShapesPath}/{ResourceShapePath}");
     }
 
-    [Fact]
-    public void CreateResourceShape_WithRequirementType_ShouldHaveCorrectTitle()
+    [Test]
+    public async Task CreateResourceShape_WithRequirementType_ShouldHaveCorrectTitle()
     {
         // Arrange
         var resourceType = typeof(Requirement);
@@ -44,12 +45,12 @@ public class ResourceShapeFactoryTests
             resourceType);
 
         // Assert
-        Assert.NotNull(resourceShape.GetTitle());
-        Assert.Equal("Requirement Resource Shape", resourceShape.GetTitle());
+        await Assert.That(resourceShape.GetTitle()).IsNotNull();
+        await Assert.That(resourceShape.GetTitle()).IsEqualTo("Requirement Resource Shape");
     }
 
-    [Fact]
-    public void CreateResourceShape_WithRequirementType_ShouldHaveDescribes()
+    [Test]
+    public async Task CreateResourceShape_WithRequirementType_ShouldHaveDescribes()
     {
         // Arrange
         var resourceType = typeof(Requirement);
@@ -63,13 +64,13 @@ public class ResourceShapeFactoryTests
 
         // Assert
         var describes = resourceShape.GetDescribes();
-        Assert.NotNull(describes);
-        Assert.NotEmpty(describes);
-        Assert.Contains(describes, uri => uri.ToString().Equals(Constants.Domains.RM.Requirement, StringComparison.Ordinal));
+        await Assert.That(describes).IsNotNull();
+        await Assert.That(describes).IsNotEmpty();
+        await Assert.That(describes.Any(uri => uri.ToString().Equals(Constants.Domains.RM.Requirement, StringComparison.Ordinal))).IsTrue();
     }
 
-    [Fact]
-    public void CreateResourceShape_WithRequirementType_ShouldHaveProperties()
+    [Test]
+    public async Task CreateResourceShape_WithRequirementType_ShouldHaveProperties()
     {
         // Arrange
         var resourceType = typeof(Requirement);
@@ -83,15 +84,15 @@ public class ResourceShapeFactoryTests
 
         // Assert
         var properties = resourceShape.GetProperties();
-        Assert.NotNull(properties);
-        Assert.NotEmpty(properties);
+        await Assert.That(properties).IsNotNull();
+        await Assert.That(properties).IsNotEmpty();
 
         var propertyNames = properties.Select(p => p.GetName()).ToList();
-        Assert.Contains("type", propertyNames);
+        await Assert.That(propertyNames.Contains("type")).IsTrue();
     }
 
-    [Fact]
-    public void CreateResourceShape_WithRequirementType_ShouldHaveTypeProperty()
+    [Test]
+    public async Task CreateResourceShape_WithRequirementType_ShouldHaveTypeProperty()
     {
         // Arrange
         var resourceType = typeof(Requirement);
@@ -107,15 +108,15 @@ public class ResourceShapeFactoryTests
         var properties = resourceShape.GetProperties();
         var typeProperty = properties.FirstOrDefault(p => p.GetName() == "type");
 
-        Assert.NotNull(typeProperty);
-        Assert.Equal("type", typeProperty.GetName());
-        Assert.NotNull(typeProperty.GetValueType());
-        Assert.NotNull(typeProperty.GetOccurs());
-        Assert.Equal("http://www.w3.org/1999/02/22-rdf-syntax-ns#type", typeProperty.GetPropertyDefinition().ToString());
+        await Assert.That(typeProperty).IsNotNull();
+        await Assert.That(typeProperty.GetName()).IsEqualTo("type");
+        await Assert.That(typeProperty.GetValueType()).IsNotNull();
+        await Assert.That(typeProperty.GetOccurs()).IsNotNull();
+        await Assert.That(typeProperty.GetPropertyDefinition().ToString()).IsEqualTo("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
     }
 
-    [Fact]
-    public void CreateResourceShape_WithRequirementType_ShouldOnlyHaveGetterMethods()
+    [Test]
+    public async Task CreateResourceShape_WithRequirementType_ShouldOnlyHaveGetterMethods()
     {
         // Arrange
         var resourceType = typeof(Requirement);
@@ -130,12 +131,12 @@ public class ResourceShapeFactoryTests
         // Assert
         var properties = resourceShape.GetProperties();
 
-        Assert.Single(properties);
-        Assert.Equal("type", properties[0].GetName());
+        await Assert.That(properties.Count).IsEqualTo(1);
+        await Assert.That(properties[0].GetName()).IsEqualTo("type");
     }
 
-    [Fact]
-    public void CreateResourceShape_WithICollectionUriProperty_ShouldMapToResourceValueType()
+    [Test]
+    public async Task CreateResourceShape_WithICollectionUriProperty_ShouldMapToResourceValueType()
     {
         // Arrange
         var resourceType = typeof(TestResourceWithICollectionUri);
@@ -151,15 +152,15 @@ public class ResourceShapeFactoryTests
         var properties = resourceShape.GetProperties();
         var uriCollectionProperty = properties.FirstOrDefault(p => p.GetName() == "uriCollection");
 
-        Assert.NotNull(uriCollectionProperty);
-        Assert.Equal("uriCollection", uriCollectionProperty.GetName());
-        Assert.NotNull(uriCollectionProperty.GetValueType());
-        Assert.NotNull(uriCollectionProperty.GetOccurs());
-        Assert.Equal("http://example.com/uriCollection", uriCollectionProperty.GetPropertyDefinition().ToString());
+        await Assert.That(uriCollectionProperty).IsNotNull();
+        await Assert.That(uriCollectionProperty.GetName()).IsEqualTo("uriCollection");
+        await Assert.That(uriCollectionProperty.GetValueType()).IsNotNull();
+        await Assert.That(uriCollectionProperty.GetOccurs()).IsNotNull();
+        await Assert.That(uriCollectionProperty.GetPropertyDefinition().ToString()).IsEqualTo("http://example.com/uriCollection");
     }
 
-    [Fact]
-    public void CreateResourceShape_WithListUriProperty_ShouldMapToResourceValueType()
+    [Test]
+    public async Task CreateResourceShape_WithListUriProperty_ShouldMapToResourceValueType()
     {
         // Arrange
         var resourceType = typeof(TestResourceWithListUri);
@@ -175,26 +176,26 @@ public class ResourceShapeFactoryTests
         var properties = resourceShape.GetProperties();
         var uriListProperty = properties.FirstOrDefault(p => p.GetName() == "uriList");
 
-        Assert.NotNull(uriListProperty);
-        Assert.Equal("uriList", uriListProperty.GetName());
+        await Assert.That(uriListProperty).IsNotNull();
+    	await Assert.That(uriListProperty.GetName()).IsEqualTo("uriList");
 
         var actualValueType = uriListProperty.GetValueType();
         var actualOccurs = uriListProperty.GetOccurs();
 
-        Assert.NotNull(actualValueType);
-        Assert.NotNull(actualOccurs);
+        await Assert.That(actualValueType).IsNotNull();
+        await Assert.That(actualOccurs).IsNotNull();
 
         // GetValueType() returns a URI, so we need to compare with the URI representation
         var expectedValueTypeUri = new Uri(ValueTypeExtension.ToString(OSLC4Net.Core.Model.ValueType.Resource));
         var expectedOccursUri = new Uri(OccursExtension.ToString(OSLC4Net.Core.Model.Occurs.ZeroOrMany));
 
-        Assert.Equal(expectedValueTypeUri, actualValueType);
-        Assert.Equal(expectedOccursUri, actualOccurs);
-        Assert.Equal("http://example.com/uriList", uriListProperty.GetPropertyDefinition()?.ToString());
+        await Assert.That(actualValueType).IsEqualTo(expectedValueTypeUri);
+        await Assert.That(actualOccurs).IsEqualTo(expectedOccursUri);
+        await Assert.That(uriListProperty.GetPropertyDefinition()?.ToString()).IsEqualTo("http://example.com/uriList");
     }
 
-    [Fact]
-    public void CreateResourceShape_WithUriArrayProperty_ShouldMapToResourceValueType()
+    [Test]
+    public async Task CreateResourceShape_WithUriArrayProperty_ShouldMapToResourceValueType()
     {
         // Arrange
         var resourceType = typeof(TestResourceWithUriArray);
@@ -210,25 +211,25 @@ public class ResourceShapeFactoryTests
         var properties = resourceShape.GetProperties();
         var uriArrayProperty = properties.FirstOrDefault(p => p.GetName() == "uriArray");
 
-        Assert.NotNull(uriArrayProperty);
-        Assert.Equal("uriArray", uriArrayProperty.GetName());
+        await Assert.That(uriArrayProperty).IsNotNull();
+        await Assert.That(uriArrayProperty.GetName()).IsEqualTo("uriArray");
 
         var actualValueType = uriArrayProperty.GetValueType();
         var actualOccurs = uriArrayProperty.GetOccurs();
 
-        Assert.NotNull(actualValueType);
-        Assert.NotNull(actualOccurs);
+        await Assert.That(actualValueType).IsNotNull();
+        await Assert.That(actualOccurs).IsNotNull();
 
         var expectedValueTypeUri = new Uri(ValueTypeExtension.ToString(OSLC4Net.Core.Model.ValueType.Resource));
         var expectedOccursUri = new Uri(OccursExtension.ToString(OSLC4Net.Core.Model.Occurs.ZeroOrMany));
 
-        Assert.Equal(expectedValueTypeUri, actualValueType);
-        Assert.Equal(expectedOccursUri, actualOccurs);
-        Assert.Equal("http://example.com/uriArray", uriArrayProperty.GetPropertyDefinition()?.ToString());
+        await Assert.That(actualValueType).IsEqualTo(expectedValueTypeUri);
+        await Assert.That(actualOccurs).IsEqualTo(expectedOccursUri);
+        await Assert.That(uriArrayProperty.GetPropertyDefinition()?.ToString()).IsEqualTo("http://example.com/uriArray");
     }
 
-    [Fact]
-    public void CreateResourceShape_WithHashSetUriProperty_ShouldMapToResourceValueType()
+    [Test]
+    public async Task CreateResourceShape_WithHashSetUriProperty_ShouldMapToResourceValueType()
     {
         // Arrange
         var resourceType = typeof(TestResourceWithHashSetUri);
@@ -244,25 +245,25 @@ public class ResourceShapeFactoryTests
         var properties = resourceShape.GetProperties();
         var uriHashSetProperty = properties.FirstOrDefault(p => p.GetName() == "uriHashSet");
 
-        Assert.NotNull(uriHashSetProperty);
-        Assert.Equal("uriHashSet", uriHashSetProperty.GetName());
+        await Assert.That(uriHashSetProperty).IsNotNull();
+        await Assert.That(uriHashSetProperty.GetName()).IsEqualTo("uriHashSet");
 
         var actualValueType = uriHashSetProperty.GetValueType();
         var actualOccurs = uriHashSetProperty.GetOccurs();
 
-        Assert.NotNull(actualValueType);
-        Assert.NotNull(actualOccurs);
+        await Assert.That(actualValueType).IsNotNull();
+        await Assert.That(actualOccurs).IsNotNull();
 
         var expectedValueTypeUri = new Uri(ValueTypeExtension.ToString(OSLC4Net.Core.Model.ValueType.Resource));
         var expectedOccursUri = new Uri(OccursExtension.ToString(OSLC4Net.Core.Model.Occurs.ZeroOrMany));
 
-        Assert.Equal(expectedValueTypeUri, actualValueType);
-        Assert.Equal(expectedOccursUri, actualOccurs);
-        Assert.Equal("http://example.com/uriHashSet", uriHashSetProperty.GetPropertyDefinition()?.ToString());
+        await Assert.That(actualValueType).IsEqualTo(expectedValueTypeUri);
+        await Assert.That(actualOccurs).IsEqualTo(expectedOccursUri);
+        await Assert.That(uriHashSetProperty.GetPropertyDefinition()?.ToString()).IsEqualTo("http://example.com/uriHashSet");
     }
 
-    [Fact]
-    public void CreateResourceShape_WithGetterSetterPattern_ShouldMapToResourceValueType()
+    [Test]
+    public async Task CreateResourceShape_WithGetterSetterPattern_ShouldMapToResourceValueType()
     {
         // Arrange
         var resourceType = typeof(TestResourceWithGetterSetterPattern);
@@ -278,27 +279,27 @@ public class ResourceShapeFactoryTests
         var properties = resourceShape.GetProperties();
         var implementedByProperty = properties.FirstOrDefault(p => p.GetName() == "implementedBy");
 
-        Assert.NotNull(implementedByProperty);
-        Assert.Equal("implementedBy", implementedByProperty.GetName());
+        await Assert.That(implementedByProperty).IsNotNull();
+        await Assert.That(implementedByProperty.GetName()).IsEqualTo("implementedBy");
 
         var actualValueType = implementedByProperty.GetValueType();
         var actualOccurs = implementedByProperty.GetOccurs();
 
-        Assert.NotNull(actualValueType);
-        Assert.NotNull(actualOccurs);
+        await Assert.That(actualValueType).IsNotNull();
+        await Assert.That(actualOccurs).IsNotNull();
 
         var expectedValueTypeUri = new Uri(ValueTypeExtension.ToString(OSLC4Net.Core.Model.ValueType.Resource));
         var expectedOccursUri = new Uri(OccursExtension.ToString(OSLC4Net.Core.Model.Occurs.ZeroOrMany));
 
-        Assert.Equal(expectedValueTypeUri, actualValueType);
-        Assert.Equal(expectedOccursUri, actualOccurs);
-        Assert.Equal("http://example.com/implementedBy", implementedByProperty.GetPropertyDefinition()?.ToString());
+        await Assert.That(actualValueType).IsEqualTo(expectedValueTypeUri);
+        await Assert.That(actualOccurs).IsEqualTo(expectedOccursUri);
+        await Assert.That(implementedByProperty.GetPropertyDefinition()?.ToString()).IsEqualTo("http://example.com/implementedBy");
     }
 
     // Note: ResourceShapeFactory only supports getter/setter methods, not direct properties
     // Direct property pattern is not supported by ResourceShapeFactory
-    [Fact]
-    public void CreateResourceShape_WithISetUriProperty_ShouldMapToResourceValueType()
+    [Test]
+    public async Task CreateResourceShape_WithISetUriProperty_ShouldMapToResourceValueType()
     {
         // Arrange
         var resourceType = typeof(TestResourceWithISetUri);
@@ -314,7 +315,7 @@ public class ResourceShapeFactoryTests
         var properties = resourceShape.GetProperties();
         var uriSetProperty = properties.FirstOrDefault(p => p.GetName() == "uriSet");
 
-        Assert.Null(uriSetProperty);
+        await Assert.That(uriSetProperty).IsNull();
         //Assert.Equal("uriSet", uriSetProperty.GetName());
 
         //var actualValueType = uriSetProperty.GetValueType();
