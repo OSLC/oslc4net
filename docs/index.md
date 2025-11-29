@@ -26,15 +26,16 @@ REST requests within an ASP.NET MVC 5 API (ASP.NET Core 8+ migration is
 
 ## Getting started
 
-If you do not have a .NET development environment, start by downloading VS Code
+### Prerequisites
+
+- .NET 10 SDK
+- Dev environment, e.g. VS Code
 [C# Dev
-Kit](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit).
-Make sure to install .NET 8 SDK for development. Libraries target NETStandard
-2.0/2.1 and should run on .NET 6+.
+Kit](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit)
 
 ### A simple OSLC Client
 
-Create a new console application targeting .NET 8+, add a NuGet dependency to
+Create a new console application targeting .NET 10, add a NuGet dependency to
 `OSLC4Net.Client` and add the following code:
 
 ```csharp
@@ -67,10 +68,9 @@ project](./OSLC4Net_SDK/Examples/Oslc4NetExamples.Client/) for more details.
 > Use https://github.com/oslc-op/refimpl to quickly run a few conformant OSLC
 > servers.
 
-## OSLC Server support
+## Next steps
 
-Server parts of the SDK have not yet been migrated from .NET Framework to .NET
-8+.
+Check out the Guides in the table of contents.
 
 ## Contributing
 

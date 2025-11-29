@@ -1,5 +1,13 @@
 # AGENTS.md
 
+## Docs
+
+- If a change is significant, add a line to CHANGELOG.md
+- If a change breaks anything or requires a non-trivial migration step, add a section to MIGRATION.md
+- If a change is noteworthy, add docs to the `docs/articles`. Use snippets where possible. Strive to apply https://diataxis.fr/. Prefer spelling out type names over 'var' except for literals and obvious types. Skip ceremony like setting up loggers or ConfigureAwait. Refrain from numbering sections/subsections to make it easier to restructure content.
+
+Overall, follow `misc/instructions/gov-uk-technical-content.md` and `misc/instructions/iso-house-guide.md` to guide the language style.
+
 ## Build Output Configuration
 
 When running builds or tests in this project, set the `AGENT_BUILD` environment variable to minimize build output:
