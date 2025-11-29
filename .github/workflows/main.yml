@@ -158,7 +158,7 @@ jobs:
         if: |
           matrix.os != 'windows-latest'
       - name: Test (without Refimpl CM tests)
-        run: dotnet test --solution OSLC4Net.Core.slnx --no-build --configuration Release --treenode-filter '/*/*/*/*[TestCategory!=RunningOslcServerRequired]' --coverage
+        run: dotnet test --solution OSLC4Net.Core.slnx --no-build --configuration Release --treenode-filter '/*/*/*/*[TestCategory!=RunningOslcServerRequired]' --coverage --coverage-output-format xml
         if: |
           matrix.os == 'windows-latest'
       # - name: Set version suffix
@@ -169,7 +169,7 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
-          directory: main/OSLC4Net_SDK/Tests/
+          # directory: main/OSLC4Net_SDK/Tests/
           exclude: .nuget
       - name: Pack NuGet packages (snapshot)
         shell: pwsh
