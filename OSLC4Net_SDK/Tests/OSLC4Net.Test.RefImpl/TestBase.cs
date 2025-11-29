@@ -19,12 +19,14 @@ using System.Net.Http.Formatting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Http.Resilience;
 using Microsoft.Extensions.Logging;
 using OSLC4Net.ChangeManagement;
 using OSLC4Net.Client;
 using OSLC4Net.Client.Oslc;
 using OSLC4Net.Core.Exceptions;
 using OSLC4Net.Core.Model;
+using Polly;
 using Type = OSLC4Net.ChangeManagement.Type;
 
 namespace OSLC4Net.ChangeManagementTest;
@@ -53,11 +55,42 @@ public abstract class TestBase
         }
 
         AppHost = Host.CreateDefaultBuilder()
-            .ConfigureLogging(
-                builder =>
-                {
-                    builder.AddConsole();
-                }).Build();
+            .ConfigureServices(services =>
+            {
+                // Register HttpClient with standard resilience handler for transient errors
+                services.AddHttpClient("OslcClient")
+                    .AddStandardResilienceHandler(options =>
+                    {
+                        // Retry on transient server errors (>=500) OR network exceptions during server warm-up
+                        options.Retry.ShouldHandle = args =>
+                        {
+                            if (args.Outcome.Exception is HttpRequestException)
+                                return ValueTask.FromResult(true);
+                            var statusCode = args.Outcome.Result?.StatusCode;
+                            return ValueTask.FromResult(statusCode >= HttpStatusCode.InternalServerError);
+                        };
+                        options.Retry.MaxRetryAttempts = 8; // extend warm-up window
+                        options.Retry.Delay = TimeSpan.FromMilliseconds(250); // slightly longer base before exponential
+                        options.Retry.BackoffType = DelayBackoffType.Exponential;
+                        options.Retry.UseJitter = true;
+
+                        // Circuit breaker tuning: require more throughput and higher failure ratio so a single 500 won't open it
+                        options.CircuitBreaker.SamplingDuration = TimeSpan.FromSeconds(60);
+                        options.CircuitBreaker.MinimumThroughput = 20; // need at least 20 executions before evaluating failures
+                        options.CircuitBreaker.FailureRatio = 0.5; // at least 50% of sampled executions must fail to open
+                        options.CircuitBreaker.BreakDuration = TimeSpan.FromSeconds(5); // short break so recovery is quick
+
+                        // Increase timeouts to allow initial service provider catalog readiness
+                        options.AttemptTimeout.Timeout = TimeSpan.FromSeconds(30); // individual attempt timeout
+                        options.TotalRequestTimeout.Timeout = TimeSpan.FromSeconds(60); // total including retries
+                    });
+            })
+            .ConfigureLogging(builder =>
+            {
+                builder.AddConsole();
+            })
+            .Build();
+
         LoggerFactory = AppHost.Services.GetRequiredService<ILoggerFactory>();
     }
 
@@ -70,38 +103,22 @@ public abstract class TestBase
 
     private ServiceProviderRegistryClient GetTestSPCClient()
     {
-        ServiceProviderRegistryClient registryClient;
-
-        if (Password is not null && Username is not null)
-        {
-            registryClient =
-                ServiceProviderRegistryClient.WithBasicAuth(ServiceProviderCatalogUri, Username,
-                    Password, LoggerFactory);
-        }
-        else
-        {
-            registryClient =
-                new ServiceProviderRegistryClient(ServiceProviderCatalogUri, LoggerFactory);
-        }
-
-        return registryClient;
+        // Use the resilient OslcClient so ServiceProviderRegistryClient inherits retry/circuit breaker policies
+        return new ServiceProviderRegistryClient(ServiceProviderCatalogUri, TestClient, LoggerFactory);
     }
 
     protected OslcClient GetTestClient()
     {
-        OslcClient client;
+        var logger = LoggerFactory.CreateLogger<OslcClient>();
+        var httpClientFactory = AppHost.Services.GetRequiredService<IHttpClientFactory>();
+        var httpClient = httpClientFactory.CreateClient("OslcClient");
 
         if (Password is not null && Username is not null)
         {
-            client = OslcClient.ForBasicAuth(Username, Password,
-                LoggerFactory.CreateLogger<OslcClient>());
-        }
-        else
-        {
-            client = new OslcClient(LoggerFactory.CreateLogger<OslcClient>());
+            return OslcClient.ForBasicAuth(httpClient, Username, Password, logger);
         }
 
-        return client;
+        return new OslcClient(httpClient, logger);
     }
 
     protected async Task<string> GetCreationAsync(string mediaType,
@@ -245,8 +262,13 @@ public abstract class TestBase
                 .GetResourceAsync<ChangeRequest>(aboutURI.ToString(), mediaType)
                 .ConfigureAwait(true);
 
+            if (aboutResponse.Resources == null || !aboutResponse.Resources.Any())
+            {
+                throw new Exception($"Change request GET returned empty or null Resources collection for URI: {aboutURI}");
+            }
+
             await VerifyChangeRequestAsync(mediaType,
-                aboutResponse.Resources!.Single(),
+                aboutResponse.Resources.Single(),
                 false).ConfigureAwait(true);
             if (serviceProviderURI != null)
             {
@@ -523,7 +545,12 @@ public abstract class TestBase
             .GetResourceAsync<ChangeRequest>(ChangeRequestUri.ToString(), mediaType)
             .ConfigureAwait(true);
 
-        var updatedChangeRequest = updatedResponse.Resources!.Single();
+        if (updatedResponse.Resources == null || !updatedResponse.Resources.Any())
+        {
+            throw new Exception($"Updated change request GET returned empty or null Resources collection for URI: {ChangeRequestUri}");
+        }
+
+        var updatedChangeRequest = updatedResponse.Resources.Single();
 
         await VerifyChangeRequestAsync(mediaType,
             updatedChangeRequest,

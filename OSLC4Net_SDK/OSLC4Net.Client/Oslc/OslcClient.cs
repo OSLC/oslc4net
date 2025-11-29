@@ -53,6 +53,18 @@ public class OslcClient : IDisposable
     }
 
     /// <summary>
+    /// Initialize a new OslcClient using an externally managed HttpClient (e.g. with resilience policies).
+    /// </summary>
+    /// <param name="client">Pre-configured HttpClient instance (lifetime managed by caller).</param>
+    /// <param name="logger">Logger instance.</param>
+    public OslcClient(HttpClient client, ILogger<OslcClient> logger)
+    {
+        _logger = logger;
+        _client = client;
+        _formatters = new HashSet<MediaTypeFormatter> { new RdfXmlMediaTypeFormatter() };
+    }
+
+    /// <summary>
     /// Initialize a new OslcClient.
     /// </summary>
     /// <param name="certCallback">optionally control SSL certificate management
@@ -144,6 +156,17 @@ public class OslcClient : IDisposable
         client.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Basic", credentials);
         return oslcClient;
+    }
+
+    /// <summary>
+    /// Create an OslcClient for Basic Auth using a pre-configured HttpClient (e.g. with resilience policies).
+    /// </summary>
+    public static OslcClient ForBasicAuth(HttpClient httpClient, string username, string password,
+        ILogger<OslcClient> logger)
+    {
+        var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}"));
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+        return new OslcClient(httpClient, logger);
     }
 
     /// <summary>
