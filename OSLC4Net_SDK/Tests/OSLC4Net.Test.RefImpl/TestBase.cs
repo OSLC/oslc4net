@@ -103,21 +103,8 @@ public abstract class TestBase
 
     private ServiceProviderRegistryClient GetTestSPCClient()
     {
-        ServiceProviderRegistryClient registryClient;
-
-        if (Password is not null && Username is not null)
-        {
-            registryClient =
-                ServiceProviderRegistryClient.WithBasicAuth(ServiceProviderCatalogUri, Username,
-                    Password, LoggerFactory);
-        }
-        else
-        {
-            registryClient =
-                new ServiceProviderRegistryClient(ServiceProviderCatalogUri, LoggerFactory);
-        }
-
-        return registryClient;
+        // Use the resilient OslcClient so ServiceProviderRegistryClient inherits retry/circuit breaker policies
+        return new ServiceProviderRegistryClient(ServiceProviderCatalogUri, TestClient, LoggerFactory);
     }
 
     protected OslcClient GetTestClient()
