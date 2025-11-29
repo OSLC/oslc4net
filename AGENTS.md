@@ -35,7 +35,7 @@ AGENT_BUILD=true dotnet test --solution OSLC4Net.Core.slnx --configuration Relea
 # Filter tests using treenode-filter
 AGENT_BUILD=true dotnet test --solution OSLC4Net.Core.slnx --configuration Release --treenode-filter '/*/*/*/*[TestCategory!=RunningOslcServerRequired]'
 
-Note: TUnit uses Microsoft.Testing.Platform. When using `dotnet test`, pass MTP flags after `--`.
+Note: TUnit uses Microsoft.Testing.Platform.
 
 ## Project Structure
 
