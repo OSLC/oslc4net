@@ -1,5 +1,3 @@
-
-
 namespace OSLC4Net.Client.Oslc.Helpers;
 
 using System;
