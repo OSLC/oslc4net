@@ -14,23 +14,28 @@
  *******************************************************************************/
 
 using OSLC4Net.Core.Model;
-using Xunit;
 
 namespace OSLC4Net.ChangeManagementTest;
 
-[Trait("TestCategory", "RunningOslcServerRequired")]
+[ClassDataSource<RefimplAspireFixture>(Shared = SharedType.PerAssembly)]
+[Property("TestCategory", "RunningOslcServerRequired")]
 public class TestChangeManagementRdfXml : TestBase
 {
     private readonly RefimplAspireFixture _fixture;
 
-    public TestChangeManagementRdfXml(RefimplAspireFixture fixture, ITestOutputHelper output) :
-        base(output)
+    public TestChangeManagementRdfXml(RefimplAspireFixture fixture)
     {
         _fixture = fixture;
+    }
+
+    [Before(Test)]
+    public async Task Setup()
+    {
+        await _fixture.EnsureInitializedAsync();
         ServiceProviderCatalogUri = _fixture.ServiceProviderCatalogUriCM;
     }
 
-    [Fact]
+    [Test]
     public async Task TestRdfXml()
     {
         const string mediaType = OslcMediaType.APPLICATION_RDF_XML;

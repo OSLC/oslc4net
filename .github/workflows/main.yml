@@ -60,7 +60,7 @@ jobs:
           persist-credentials: false
           path: main
       - name: Setup .NET (8.x)
-        uses: actions/setup-dotnet@d4c94342e560b34958eacfc5d055d21461ed1c5d # v5.0.0
+        uses: actions/setup-dotnet@2016bd2012dba4e32de620c46fe006a3ac9f0602 # v5.0.1
         with:
           dotnet-version: 8.x
       - name: Restore dependencies
@@ -113,7 +113,7 @@ jobs:
           repository: oslc-op/refimpl
           path: refimpl
       - name: Setup .NET
-        uses: actions/setup-dotnet@d4c94342e560b34958eacfc5d055d21461ed1c5d # v5.0.0
+        uses: actions/setup-dotnet@2016bd2012dba4e32de620c46fe006a3ac9f0602 # v5.0.1
         with:
           dotnet-version: ${{ matrix.version.setup }}
           source-url: https://nuget.pkg.github.com/oslc/index.json
@@ -152,22 +152,38 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
-        run: dotnet build --no-restore
+        run: dotnet build --no-restore --configuration Release
       - name: Test (with Refimpl CM tests)
-        run: dotnet test --no-build --verbosity normal  --collect:"XPlat Code Coverage"
+        run: dotnet test --solution OSLC4Net.Core.slnx --no-build --configuration Release --coverage --coverage-output-format cobertura
         if: |
           matrix.os != 'windows-latest'
       - name: Test (without Refimpl CM tests)
-        run: dotnet test --no-build --verbosity normal  --filter TestCategory!=RunningOslcServerRequired --collect:"XPlat Code Coverage"
+        run: dotnet test --solution OSLC4Net.Core.slnx --no-build --configuration Release --treenode-filter '/*/*/*/*[TestCategory!=RunningOslcServerRequired]' --coverage --coverage-output-format cobertura
         if: |
           matrix.os == 'windows-latest'
       # - name: Set version suffix
       #   id: version
       #   run: echo "::set-output name=suffix::$(date +'-ts.%y%m%d%H%M')"
+      - name: ReportGenerator
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.4.18
+        with:
+          reports: '${{ github.workspace }}/**/TestResults/**/*.cobertura.xml'
+          targetdir: '${{ github.workspace }}/coveragereports'
+          reporttypes: 'Cobertura;MarkdownSummaryGithub'
+      - name: Upload coverage into summary
+        # Only on non windows runners
+        if: ${{ runner.os != 'Windows' }}
+        run: |
+          cat $GITHUB_WORKSPACE/coveragereports/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@5a1091511ad55cbe89839c7260b706298ca349f7 # v5.5.1
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          exclude: .nuget
+          # files: "${{ github.workspace }}/main/OSLC4Net_SDK/Tests/*/TestResults/*.coverage,${{ github.workspace }}/main/OSLC4Net_SDK/Tests/*/TestResults/*.xml"
+          files: ${{ github.workspace }}/coveragereports/Cobertura.xml
       - name: Pack NuGet packages (snapshot)
         shell: pwsh
         run: |
