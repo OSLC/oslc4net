@@ -255,14 +255,15 @@ public class OslcClientTests
     [Test]
     public async Task HttpClient_Constructor_AcceptsPreConfiguredClient()
     {
-        var httpClient = new HttpClient();
+        using var httpClient = new HttpClient();
         httpClient.DefaultRequestHeaders.Add("X-Pre-Configured", "true");
 
+        // When using an externally-provided HttpClient, the OslcClient does NOT own it,
+        // so we must ensure the HttpClient is not disposed when the OslcClient is disposed.
+        // In this case, we manage the HttpClient with using and don't dispose the OslcClient.
         var client = new OslcClient(httpClient, LoggerFactory.CreateLogger<OslcClient>());
 
         await Assert.That(client.GetHttpClient()).IsEqualTo(httpClient);
         await Assert.That(client.GetHttpClient().DefaultRequestHeaders.Contains("X-Pre-Configured")).IsTrue();
-
-        // Don't dispose the client as it would dispose the shared HttpClient
     }
 }
