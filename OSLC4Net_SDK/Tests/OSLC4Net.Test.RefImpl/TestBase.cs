@@ -74,9 +74,11 @@ public abstract class TestBase
                         options.Retry.BackoffType = DelayBackoffType.Exponential;
                         options.Retry.UseJitter = true;
 
-                        // Circuit breaker - widen sampling window since startup may be noisy
+                        // Circuit breaker tuning: require more throughput and higher failure ratio so a single 500 won't open it
                         options.CircuitBreaker.SamplingDuration = TimeSpan.FromSeconds(60);
-                        options.CircuitBreaker.MinimumThroughput = 3;
+                        options.CircuitBreaker.MinimumThroughput = 20; // need at least 20 executions before evaluating failures
+                        options.CircuitBreaker.FailureRatio = 0.5; // at least 50% of sampled executions must fail to open
+                        options.CircuitBreaker.BreakDuration = TimeSpan.FromSeconds(5); // short break so recovery is quick
 
                         // Increase timeouts to allow initial service provider catalog readiness
                         options.AttemptTimeout.Timeout = TimeSpan.FromSeconds(30); // individual attempt timeout
