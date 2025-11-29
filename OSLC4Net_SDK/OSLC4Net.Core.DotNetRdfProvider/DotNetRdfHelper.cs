@@ -130,7 +130,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             graph.Assert(new Triple(responseInfoResource,
                 graph.CreateUriNode(
                     new Uri(OslcConstants.OSLC_CORE_NAMESPACE + PROPERTY_TOTAL_COUNT)),
-                graph.CreateLiteralNode(countValue.ToString())));
+                graph.CreateLiteralNode(countValue.ToString(CultureInfo.InvariantCulture))));
 
             if (nextPageAbout != null)
             {
@@ -583,46 +583,46 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                         else if (typeof(byte) == setMethodComponentParameterType ||
                                  typeof(byte?) == setMethodComponentParameterType)
                         {
-                            parameter = byte.Parse(stringValue);
+                            parameter = byte.Parse(stringValue, CultureInfo.InvariantCulture);
                         }
                         else if (typeof(short) == setMethodComponentParameterType ||
                                  typeof(short?) == setMethodComponentParameterType)
                         {
-                            parameter = short.Parse(stringValue);
+                            parameter = short.Parse(stringValue, CultureInfo.InvariantCulture);
                         }
                         else if (typeof(int) == setMethodComponentParameterType ||
                                  typeof(int?) == setMethodComponentParameterType)
                         {
-                            parameter = int.Parse(stringValue);
+                            parameter = int.Parse(stringValue, CultureInfo.InvariantCulture);
                         }
                         else if (typeof(long) == setMethodComponentParameterType ||
                                  typeof(long?) == setMethodComponentParameterType)
                         {
-                            parameter = long.Parse(stringValue);
+                            parameter = long.Parse(stringValue, CultureInfo.InvariantCulture);
                         }
                         else if (typeof(BigInteger) == setMethodComponentParameterType)
                         {
-                            parameter = BigInteger.Parse(stringValue);
+                            parameter = BigInteger.Parse(stringValue, CultureInfo.InvariantCulture);
                         }
                         else if (typeof(float) == setMethodComponentParameterType ||
                                  typeof(float?) == setMethodComponentParameterType)
                         {
-                            parameter = float.Parse(stringValue);
+                            parameter = float.Parse(stringValue, CultureInfo.InvariantCulture);
                         }
                         else if (typeof(decimal) == setMethodComponentParameterType ||
                                  typeof(decimal?) == setMethodComponentParameterType)
                         {
-                            parameter = decimal.Parse(stringValue);
+                            parameter = decimal.Parse(stringValue, CultureInfo.InvariantCulture);
                         }
                         else if (typeof(double) == setMethodComponentParameterType ||
                                  typeof(double?) == setMethodComponentParameterType)
                         {
-                            parameter = double.Parse(stringValue);
+                            parameter = double.Parse(stringValue, CultureInfo.InvariantCulture);
                         }
                         else if (typeof(DateTime) == setMethodComponentParameterType ||
                                  typeof(DateTime?) == setMethodComponentParameterType)
                         {
-                            parameter = DateTime.Parse(stringValue);
+                            parameter = DateTime.Parse(stringValue, CultureInfo.InvariantCulture);
                         }
                     }
                     else if (o is IUriNode)
@@ -1017,7 +1017,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 
             if (node is ByteNode byteNode)
             {
-                return byte.Parse(byteNode.Value);
+                return byte.Parse(byteNode.Value, CultureInfo.InvariantCulture);
             }
 
             if (node is DateTimeNode timeNode)
