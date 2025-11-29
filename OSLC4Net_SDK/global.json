@@ -1,6 +1,6 @@
 {
   "test": {
-    "allowdotnettest": true
+    "runner": "Microsoft.Testing.Platform"
   },
   "msbuild-sdks": {
     "Aspire.AppHost.Sdk": "13.0.0"

@@ -25,20 +25,20 @@ using PROV = OslcConstants.Domains.PROV.Q;
 
 [ClassDataSource<RefimplAspireFixture>(Shared = SharedType.PerAssembly)]
 [Property("TestCategory", "RunningOslcServerRequired")]
-public class TestRequirementsManagementTurtle : OSLC4Net.ChangeManagementTest.TestBase{
+public class TestRequirementsManagementTurtle : TestBase{
     private readonly RefimplAspireFixture _fixture;
     private readonly string MediaType = OslcMediaType.TEXT_TURTLE;
 
     public TestRequirementsManagementTurtle(RefimplAspireFixture fixture)
     {
         _fixture = fixture;
-        ServiceProviderCatalogUri = _fixture.ServiceProviderCatalogUriRM;
     }
 
     [Before(Test)]
     public async Task Setup()
     {
         await _fixture.EnsureInitializedAsync();
+        ServiceProviderCatalogUri = _fixture.ServiceProviderCatalogUriRM;
     }
 
     [Test]

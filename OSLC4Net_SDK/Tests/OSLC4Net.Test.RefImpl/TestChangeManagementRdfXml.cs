@@ -19,19 +19,20 @@ namespace OSLC4Net.ChangeManagementTest;
 
 [ClassDataSource<RefimplAspireFixture>(Shared = SharedType.PerAssembly)]
 [Property("TestCategory", "RunningOslcServerRequired")]
-public class TestChangeManagementRdfXml : OSLC4Net.ChangeManagementTest.TestBase{
+public class TestChangeManagementRdfXml : TestBase
+{
     private readonly RefimplAspireFixture _fixture;
 
     public TestChangeManagementRdfXml(RefimplAspireFixture fixture)
     {
         _fixture = fixture;
-        ServiceProviderCatalogUri = _fixture.ServiceProviderCatalogUriCM;
     }
 
     [Before(Test)]
     public async Task Setup()
     {
         await _fixture.EnsureInitializedAsync();
+        ServiceProviderCatalogUri = _fixture.ServiceProviderCatalogUriCM;
     }
 
     [Test]

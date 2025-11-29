@@ -1,11 +1,11 @@
 using Aspire.Hosting;
 using Aspire.Hosting.Testing;
-using OSLC4Net.ChangeManagementTest;
 using Projects;
 
 namespace OSLC4Net.ChangeManagementTest;
 
-public class RefimplAspireFixture : System.IAsyncDisposable{
+public class RefimplAspireFixture : IAsyncDisposable
+{
     private readonly SemaphoreSlim _initLock = new(1, 1);
 
     public async ValueTask DisposeAsync()
@@ -31,12 +31,12 @@ public class RefimplAspireFixture : System.IAsyncDisposable{
     {
         if (DistributedApplication != null) return;
 
-        await _initLock.WaitAsync().ConfigureAwait(false);
+        await _initLock.WaitAsync().ConfigureAwait(true);
         try
         {
             if (DistributedApplication == null)
             {
-                 DistributedApplication = await SetupAspireAsync().ConfigureAwait(true);
+                DistributedApplication = await SetupAspireAsync().ConfigureAwait(true);
             }
         }
         finally
