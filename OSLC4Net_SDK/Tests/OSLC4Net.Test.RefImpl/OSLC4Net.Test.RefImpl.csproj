@@ -17,6 +17,7 @@
     <PackageReference Include="Aspire.Hosting.Testing"/>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json"/>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client"/>
+    <PackageReference Include="Microsoft.Extensions.Http.Resilience"/>
     <PackageReference Include="TUnit" />
   </ItemGroup>
 

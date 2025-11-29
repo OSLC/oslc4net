@@ -36,6 +36,8 @@
     <!-- Optional TUnit extensions for CI diagnostics -->
     <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.0.2" />
     <PackageVersion Include="Microsoft.Testing.Extensions.HangDump" Version="2.0.2" />
+    <!-- Resilience for tests -->
+    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="10.0.0" />
     <!-- Examples only -->
     <PackageVersion Include="dotNetRdf" Version="$(DotNetRdfVersion)" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
