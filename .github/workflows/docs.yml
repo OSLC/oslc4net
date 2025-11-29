@@ -5,8 +5,6 @@ on:
     branches: ["main", "master"]
     paths:
       - "docs/**"
-      - "OSLC4Net_SDK/**/*.cs"
-      - "OSLC4Net_SDK/**/*.csproj"
       - ".github/workflows/docs.yml"
   workflow_dispatch:
   schedule:

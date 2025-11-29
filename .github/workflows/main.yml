@@ -6,8 +6,14 @@ name: CI
 on:
   push:
     branches: ["main", "master"]
+    paths:
+      - "OSLC4Net_SDK/**"
+      - ".github/workflows/main.yml"
   pull_request:
     branches: ["main", "master"]
+    paths:
+      - "OSLC4Net_SDK/**"
+      - ".github/workflows/main.yml"
   merge_group:
   release:
     types:

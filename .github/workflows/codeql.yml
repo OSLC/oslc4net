@@ -14,9 +14,15 @@ name: "CodeQL"
 on:
   push:
     branches: ["main"]
+    paths:
+      - "OSLC4Net_SDK/**"
+      - ".github/workflows/codeql.yml"
   pull_request:
     # The branches below must be a subset of the branches above
     branches: ["main"]
+    paths:
+      - "OSLC4Net_SDK/**"
+      - ".github/workflows/codeql.yml"
   merge_group:
   schedule:
     - cron: "0 0 * * 1"
