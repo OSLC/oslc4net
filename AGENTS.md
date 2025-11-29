@@ -30,10 +30,10 @@ Run tests (must be run from OSLC4Net_SDK directory or below):
 cd OSLC4Net_SDK
 
 # Run all tests with coverage and TRX reports (MTP flags after --)
-AGENT_BUILD=true dotnet test --solution OSLC4Net.Core.slnx --configuration Release -- --coverage --report-trx
+AGENT_BUILD=true dotnet test --solution OSLC4Net.Core.slnx --configuration Release
 
 # Filter tests using treenode-filter (before --), MTP flags after --
-AGENT_BUILD=true dotnet test --solution OSLC4Net.Core.slnx --configuration Release --treenode-filter '/*/*/*/*[TestCategory!=RunningOslcServerRequired]' -- --coverage --report-trx
+AGENT_BUILD=true dotnet test --solution OSLC4Net.Core.slnx --configuration Release --treenode-filter '/*/*/*/*[TestCategory!=RunningOslcServerRequired]' -- --report-trx
 ```
 
 Note: TUnit uses Microsoft.Testing.Platform. When using `dotnet test`, pass MTP flags after `--`.
