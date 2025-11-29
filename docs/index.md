@@ -1,10 +1,9 @@
-OSLC4Net<img src="doc/logo.svg" align="right" width="96px" height="96px">
+OSLC4Net documentation
 ===========================
 
-[![CI](https://github.com/OSLC/oslc4net/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/OSLC/oslc4net/actions?query=workflow%3ACI)
 [![NuGet Version](https://img.shields.io/nuget/v/OSLC4Net.Core)](https://www.nuget.org/packages/OSLC4Net.Core#versions-body-tab)
-[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/OSLC/oslc4net/badge)](https://scorecard.dev/viewer/?uri=github.com/OSLC/oslc4net)
-[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9671/badge)](https://www.bestpractices.dev/projects/9671)
+[![GitHub Discussions](https://img.shields.io/github/discussions/oslc/oslc4net)
+](https://github.com/OSLC/oslc4net/discussions)
 [![Discourse forum](https://img.shields.io/discourse/users?color=28bd84&server=https%3A%2F%2Fforum.open-services.net%2F)](https://forum.open-services.net/c/sdks/oslc4net/10)
 
 ## OSLC4Net, an OSLC SDK for dotnet
@@ -19,6 +18,12 @@ library based on the [dotNetRDF](https://dotnetrdf.org/) package, which assists
 with representing these resources as RDF and helps parse Turle, RDF/XML, and
 JSON-LD documents into OSLC .NET objects.
 
+The [OSLC4Net.Client package](https://www.nuget.org/packages/OSLC4Net.Client/)
+can be used to help create consumer REST requests. On the server side, the
+project offers an RDF-specific `MediaTypeFormatter` that can help process OSLC
+REST requests within an ASP.NET MVC 5 API (ASP.NET Core 8+ migration is
+[ongoing](https://github.com/OSLC/oslc4net/issues/218)).
+
 ## Getting started
 
 If you do not have a .NET development environment, start by downloading VS Code
@@ -26,15 +31,6 @@ If you do not have a .NET development environment, start by downloading VS Code
 Kit](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit).
 Make sure to install .NET 8 SDK for development. Libraries target NETStandard
 2.0/2.1 and should run on .NET 6+.
-
-### A simple OSLC Server
-
-See under [OSLC4Net_SDK/Examples/OSLC4NetExamples.Server.NetCoreApi](https://github.com/OSLC/oslc4net/tree/main/OSLC4Net_SDK/Examples/OSLC4NetExamples.Server.NetCoreApi)
-for an example of a ASP.NET Core 8+ API that showcases support for
-
-- OSLC Root Services document under `/.well-known` path
-- OSLC Service Provider Catalog
-- OSLC Service Provider
 
 ### A simple OSLC Client
 
@@ -76,11 +72,13 @@ project](./OSLC4Net_SDK/Examples/Oslc4NetExamples.Client/) for more details.
 Server parts of the SDK have not yet been migrated from .NET Framework to .NET
 8+.
 
-## Documentation
+## Contributing
 
-Full documentation is available at [oslc4net.github.io](https://oslc4net.github.io).
+If you would like to contribute to the docs, submit a PR to this repo (or click
+"Edit this page" on the page you wish to modify).
 
-Documentation sources are maintained in the [docs/](docs/) directory of this repository and automatically deployed on push to main.
+If you wish to file an issue, please do it on the main
+[OSLC4Net](https://github.com/OSLC/oslc4net) repository.
 
 ## More information on OSLC
 
@@ -88,16 +86,3 @@ Documentation sources are maintained in the [docs/](docs/) directory of this rep
   specifications and community activities.
 * See the [Eclipse Lyo](http://eclipse.org/lyo) site for information on OSLC
   SDKs and samples for other technologies.
-
-## Contributing
-
-We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) file for details on how to contribute.
-
-## OSLC4Net License
-
-OSLC4Net is licensed under the [Eclipse Public License 1.0](LICENSE)
-
-## Credits
-
-- Steve Pitschke (IBM) did the majority of the initial implementation in
-  2012-2013.
