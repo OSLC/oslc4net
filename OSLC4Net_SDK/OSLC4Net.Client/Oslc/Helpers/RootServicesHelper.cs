@@ -26,8 +26,11 @@ public class RootServicesHelper
     /// <param name="baseUrl">The base URL of the OSLC server.</param>
     /// <param name="catalogNamespace">The namespace of the OSLC domain.</param>
     /// <param name="catalogProperty">The property name for the catalog in the rootservices doc.</param>
-    public RootServicesHelper(string baseUrl, string catalogNamespace, string catalogProperty)
+    public RootServicesHelper(string baseUrl, string catalogNamespace = "http://open-services.net/xmlns/oslc/", string catalogProperty = "serviceProviderCatalog")
     {
+        ArgumentNullException.ThrowIfNull(baseUrl);
+        ArgumentNullException.ThrowIfNull(catalogNamespace);
+        ArgumentNullException.ThrowIfNull(catalogProperty);
         _baseUrl = baseUrl.TrimEnd('/');
         _catalogNamespace = catalogNamespace;
         _catalogProperty = catalogProperty;
