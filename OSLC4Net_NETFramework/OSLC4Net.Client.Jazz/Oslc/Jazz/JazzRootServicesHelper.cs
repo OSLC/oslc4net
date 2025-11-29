@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-
+using Microsoft.Extensions.Logging.Abstractions;
 using log4net;
 using VDS.RDF;
 using VDS.RDF.Parsing;
@@ -112,28 +112,6 @@ namespace OSLC4Net.Client.Oslc.Jazz
 		    return catalogUrl;
 	    }
 
-        /// <summary>
-        /// Create an OAuth client
-        /// </summary>
-        /// <param name="consumerKey"></param>
-        /// <param name="secret"></param>
-        /// <param name="user"></param>
-        /// <param name="passwd"></param>
-        /// <param name="authUrl"></param>
-        /// <returns></returns>
-        public JazzOAuthClient InitOAuthClient(string consumerKey, string secret, string user, string passwd, string authUrl)
-        {
-		    return new JazzOAuthClient (
-								    requestTokenUrl,
-								    authorizationTokenUrl,
-								    accessTokenUrl,
-								    consumerKey,
-								    secret,
-								    authorizationRealm,
-                                    user,
-                                    passwd,
-                                    authUrl );		
-	    }
 	
         /// <summary>
         /// 
@@ -164,8 +142,8 @@ namespace OSLC4Net.Client.Oslc.Jazz
 	    private void ProcessRootServices()
 	    {
 		    try {
-			    OslcClient rootServicesClient = new OslcClient();
-			    HttpResponseMessage response = rootServicesClient.GetResource(rootServicesUrl, OSLCConstants.CT_RDF);
+			    OslcClient rootServicesClient = new OslcClient(NullLogger<OslcClient>.Instance);
+			    HttpResponseMessage response = rootServicesClient.GetResourceRawAsync(rootServicesUrl, OSLCConstants.CT_RDF).Result;
 			    Stream stream = response.Content.ReadAsStreamAsync().Result;
                 IGraph rdfGraph = new Graph();
                 IRdfReader parser = new RdfXmlParser();

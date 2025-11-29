@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -82,12 +82,12 @@ namespace OSLC4Net.Client.Samples
 				    String catalogUrl = helper.GetCatalogUrl();
 				
 				    //STEP 5: Find the OSLC Service Provider for the project area we want to work with
-				    String serviceProviderUrl = client.LookupServiceProviderUrl(catalogUrl, projectArea);
+				    String serviceProviderUrl = client.LookupServiceProviderUrl(catalogUrl, projectArea).Result;
 				
 				    //STEP 6: Get the Query Capabilities URL so that we can run some OSLC queries
-				    String queryCapability = client.LookupQueryCapability(serviceProviderUrl,
+				    String queryCapability = client.LookupQueryCapabilityAsync(serviceProviderUrl,
 																	      OSLCConstants.OSLC_CM_V2,
-																	      OSLCConstants.CM_CHANGE_REQUEST_TYPE);
+																	      OSLCConstants.CM_CHANGE_REQUEST_TYPE).Result;
 				
 				    //SCENARIO A: Run a query for all open ChangeRequests with OSLC paging of 10 items per
 				    //page turned on and list the members of the result
@@ -96,7 +96,7 @@ namespace OSLC4Net.Client.Samples
                     queryParams.SetSelect("dcterms:identifier,dcterms:title,oslc_cm:status");
                     OslcQuery query = new OslcQuery(client, queryCapability, 10, queryParams);
 				
-				    OslcQueryResult result = query.Submit();
+				    OslcQueryResult result = query.Submit().Result;
 				
 				    bool processAsJavaObjects = true;
 				    ProcessPagedQueryResults(result,client, processAsJavaObjects);
@@ -111,7 +111,7 @@ namespace OSLC4Net.Client.Samples
 				    queryParams2.SetSelect("dcterms:identifier,dcterms:title,dcterms:creator,dcterms:created,oslc_cm:status");
 				    OslcQuery query2 = new OslcQuery(client, queryCapability, queryParams2);
 				
-				    OslcQueryResult result2 = query2.Submit();
+				    OslcQueryResult result2 = query2.Submit().Result;
 				    HttpResponseMessage rawResponse = result2.GetRawResponse();
 				    ProcessRawResponse(rawResponse);
 				    rawResponse.ConsumeContent();
@@ -124,15 +124,15 @@ namespace OSLC4Net.Client.Samples
 				    changeRequest.AddDctermsType("task");
 				
 				    //Get the Creation Factory URL for change requests so that we can create one
-				    String changeRequestCreation = client.LookupCreationFactory(
+				    String changeRequestCreation = client.LookupCreationFactoryAsync(
 						    serviceProviderUrl, OSLCConstants.OSLC_CM_V2,
-						    changeRequest.GetRdfTypes()[0].ToString());
+						    changeRequest.GetRdfTypes()[0].ToString()).Result;
 
 				    //Create the change request
-				    HttpResponseMessage creationResponse = client.CreateResource( 
+				    HttpResponseMessage creationResponse = client.CreateResourceRawAsync(
 						    changeRequestCreation, changeRequest,
 						    OslcMediaType.APPLICATION_RDF_XML,
-						    OslcMediaType.APPLICATION_RDF_XML);
+						    OslcMediaType.APPLICATION_RDF_XML).Result;
 
                     if (creationResponse.StatusCode != HttpStatusCode.Created)
                     {
@@ -147,8 +147,8 @@ namespace OSLC4Net.Client.Samples
 				
 				
 				    //Get the change request from the service provider and update its title property 
-				    changeRequest = client.GetResource(changeRequestLocation,
-						    OslcMediaType.APPLICATION_RDF_XML).Content.ReadAsAsync<ChangeRequest>(client.GetFormatters()).Result;
+				    changeRequest = client.GetResourceRawAsync(changeRequestLocation,
+						    OslcMediaType.APPLICATION_RDF_XML).Result.Content.ReadAsAsync<ChangeRequest>(client.GetFormatters()).Result;
 				    changeRequest.SetTitle(changeRequest.GetTitle() + " (updated)");
 
 				    //Create a partial update URL so that only the title will be updated.
@@ -156,10 +156,10 @@ namespace OSLC4Net.Client.Samples
 				    String updateUrl = changeRequest.GetAbout() + "?oslc.properties=dcterms:title";
 				
 				    //Update the change request at the service provider
-				    HttpResponseMessage updateResponse = client.UpdateResource(
-						    updateUrl, changeRequest,
+				    HttpResponseMessage updateResponse = client.UpdateResourceRawAsync(
+						    new Uri(updateUrl), changeRequest,
 						    OslcMediaType.APPLICATION_RDF_XML,
-						    OslcMediaType.APPLICATION_RDF_XML);
+						    OslcMediaType.APPLICATION_RDF_XML).Result;
 				
 				    updateResponse.ConsumeContent();
 							
