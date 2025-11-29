@@ -23,9 +23,7 @@ Install-Package OSLC4Net.Client
 
 ## Prerequisites
 
-- .NET 6 or later runtime
-- For development: .NET 8 SDK or later
-- Libraries target .NET Standard 2.0/2.1
+- .NET 10 SDK
 
 ## Next Steps
 
