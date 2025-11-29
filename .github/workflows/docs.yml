@@ -1,0 +1,68 @@
+name: Build and Deploy Documentation
+
+on:
+  push:
+    branches: ["main", "master"]
+    paths:
+      - "docs/**"
+      - "OSLC4Net_SDK/**/*.cs"
+      - "OSLC4Net_SDK/**/*.csproj"
+      - ".github/workflows/docs.yml"
+  workflow_dispatch:
+  schedule:
+    # Weekly build to keep API docs up to date
+    - cron: "15 03 * * THU"
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+concurrency:
+  group: docs-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-deploy-docs:
+    name: Build and Deploy Docs
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@95d9a5deda9de15063e7595e9719c11c38c90ae2 # v2.13.2
+        with:
+          disable-sudo: true
+          egress-policy: audit
+
+      - name: Checkout main repo
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          show-progress: false
+          persist-credentials: false
+          path: main
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@2016bd2012dba4e32de620c46fe006a3ac9f0602 # v5.0.1
+        with:
+          dotnet-version: 10.x
+
+      - name: Setup DocFX
+        run: dotnet tool install -g docfx
+
+      - name: Build Documentation
+        run: docfx main/docs/docfx.json
+
+      - name: Deploy to oslc4net.github.io
+        uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e # v4.0.0
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          personal_token: ${{ secrets.DOCS_DEPLOY_TOKEN }}
+          external_repository: oslc4net/oslc4net.github.io
+          publish_branch: main
+          publish_dir: ./main/docs/_site
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'docs: deploy from OSLC/oslc4net@${{ github.sha }}'
