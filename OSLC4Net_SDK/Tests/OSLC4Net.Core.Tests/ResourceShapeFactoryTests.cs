@@ -177,7 +177,7 @@ public class ResourceShapeFactoryTests
         var uriListProperty = properties.FirstOrDefault(p => p.GetName() == "uriList");
 
         await Assert.That(uriListProperty).IsNotNull();
-    	await Assert.That(uriListProperty.GetName()).IsEqualTo("uriList");
+        await Assert.That(uriListProperty.GetName()).IsEqualTo("uriList");
 
         var actualValueType = uriListProperty.GetValueType();
         var actualOccurs = uriListProperty.GetOccurs();
