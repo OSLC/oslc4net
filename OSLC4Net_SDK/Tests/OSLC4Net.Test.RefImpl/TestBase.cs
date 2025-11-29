@@ -316,7 +316,7 @@ public abstract class TestBase
 
             if (!propertyDefinition.ToString().EndsWith(name, StringComparison.Ordinal))
             {
-                 throw new Exception($"propertyDefinition [{propertyDefinition}], name [{name}]");
+                throw new Exception($"propertyDefinition [{propertyDefinition}], name [{name}]");
             }
         }
     }

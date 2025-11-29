@@ -25,7 +25,8 @@ using PROV = OslcConstants.Domains.PROV.Q;
 
 [ClassDataSource<RefimplAspireFixture>(Shared = SharedType.PerAssembly)]
 [Property("TestCategory", "RunningOslcServerRequired")]
-public class TestRequirementsManagementTurtle : TestBase{
+public class TestRequirementsManagementTurtle : TestBase
+{
     private readonly RefimplAspireFixture _fixture;
     private readonly string MediaType = OslcMediaType.TEXT_TURTLE;
 

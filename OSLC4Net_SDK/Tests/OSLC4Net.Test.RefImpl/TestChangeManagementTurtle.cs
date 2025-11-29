@@ -19,7 +19,8 @@ namespace OSLC4Net.ChangeManagementTest;
 
 [ClassDataSource<RefimplAspireFixture>(Shared = SharedType.PerAssembly)]
 [Property("TestCategory", "RunningOslcServerRequired")]
-public class TestChangeManagementTurtle : TestBase{
+public class TestChangeManagementTurtle : TestBase
+{
     private readonly RefimplAspireFixture _fixture;
 
     public TestChangeManagementTurtle(RefimplAspireFixture fixture)
