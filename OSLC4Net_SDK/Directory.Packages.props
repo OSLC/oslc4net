@@ -33,6 +33,9 @@
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
     <PackageVersion Include="FluentAssertions" Version="8.3.0" />
     <PackageVersion Include="TUnit" Version="1.2.11" />
+    <!-- Optional TUnit extensions for CI diagnostics -->
+    <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.0.2" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.HangDump" Version="2.0.2" />
     <!-- Examples only -->
     <PackageVersion Include="dotNetRdf" Version="$(DotNetRdfVersion)" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />

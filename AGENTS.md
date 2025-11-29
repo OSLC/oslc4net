@@ -25,10 +25,18 @@ Build the solution:
 AGENT_BUILD=true dotnet build OSLC4Net_SDK/OSLC4Net.Core.slnx
 ```
 
-Run tests:
+Run tests (must be run from OSLC4Net_SDK directory or below):
 ```bash
-AGENT_BUILD=true dotnet test OSLC4Net_SDK/OSLC4Net.Core.slnx
+cd OSLC4Net_SDK
+
+# Run all tests with coverage and TRX reports (MTP flags after --)
+AGENT_BUILD=true dotnet test --solution OSLC4Net.Core.slnx --configuration Release -- --coverage --report-trx
+
+# Filter tests using treenode-filter (before --), MTP flags after --
+AGENT_BUILD=true dotnet test --solution OSLC4Net.Core.slnx --configuration Release --treenode-filter '/*/*/*/*[TestCategory!=RunningOslcServerRequired]' -- --coverage --report-trx
 ```
+
+Note: TUnit uses Microsoft.Testing.Platform. When using `dotnet test`, pass MTP flags after `--`.
 
 ## Project Structure
 
