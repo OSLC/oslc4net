@@ -171,7 +171,7 @@ jobs:
         with:
           # directory: main/OSLC4Net_SDK/Tests/
           exclude: .nuget
-          files: "./OSLC4Net_SDK/Tests/*/TestResults/*.coverage,./OSLC4Net_SDK/Tests/*/TestResults/*.xml"
+          files: "./main/OSLC4Net_SDK/Tests/*/TestResults/*.coverage,./main/OSLC4Net_SDK/Tests/*/TestResults/*.xml"
       - name: Pack NuGet packages (snapshot)
         shell: pwsh
         run: |
