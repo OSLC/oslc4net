@@ -2,5 +2,8 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
   <PropertyGroup>
     <IsPackable>false</IsPackable>
+    <WarningLevel>0</WarningLevel>
+    <AnalysisLevel>none</AnalysisLevel>
+    <NoWarn>$(NoWarn);MA0004;MA0026;MA0016;MA0048;MA0011;MA0051;MA0070;MA0015;CS8618;CS8604;CS8625;CA1305;CA2201;CS0612;CS0162;TUnitAssertions0005;CS1998;CS8602;CS8603;CS0168;CS0219;MA0056;MA0094;MA0084</NoWarn>
   </PropertyGroup>
 </Project>

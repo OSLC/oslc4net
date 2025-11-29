@@ -1,18 +1,13 @@
 using Aspire.Hosting;
 using Aspire.Hosting.Testing;
-using OSLC4Net.ChangeManagementTest;
 using Projects;
-using Xunit;
-
-// TODO: consider a refimpl-aspire collection instead https://xunit.net/docs/shared-context#collection-fixture (@berezovskyi 2025-04)
-[assembly: AssemblyFixture(typeof(RefimplAspireFixture))]
-[assembly: CaptureConsole]
-[assembly: CaptureTrace]
 
 namespace OSLC4Net.ChangeManagementTest;
 
-public class RefimplAspireFixture : IAsyncLifetime
+public class RefimplAspireFixture : IAsyncDisposable
 {
+    private readonly SemaphoreSlim _initLock = new(1, 1);
+
     public async ValueTask DisposeAsync()
     {
         if (DistributedApplication is null)
@@ -28,12 +23,26 @@ public class RefimplAspireFixture : IAsyncLifetime
         {
             await DistributedApplication.DisposeAsync().ConfigureAwait(false);
             DistributedApplication = null;
+            _initLock.Dispose();
         }
     }
 
-    public async ValueTask InitializeAsync()
+    public async Task EnsureInitializedAsync()
     {
-        DistributedApplication ??= await SetupAspireAsync().ConfigureAwait(true);
+        if (DistributedApplication != null) return;
+
+        await _initLock.WaitAsync().ConfigureAwait(true);
+        try
+        {
+            if (DistributedApplication == null)
+            {
+                DistributedApplication = await SetupAspireAsync().ConfigureAwait(true);
+            }
+        }
+        finally
+        {
+            _initLock.Release();
+        }
     }
 
     public DistributedApplication? DistributedApplication { get; set; }

@@ -15,12 +15,8 @@
 
 using System.Diagnostics;
 using OSLC4Net.Core.Query;
-using Xunit;
 //using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParseException = OSLC4Net.Core.Query.ParseException;
-
-[assembly: CaptureConsole]
-[assembly: CaptureTrace]
 
 namespace OSLC4Net.Core.QueryTests;
 
@@ -30,8 +26,8 @@ public class QueryBasicTest
                              "olsc=<http://open-services.net/ns/core#>," +
                              "xs=<http://www.w3.org/2001/XMLSchema>";
 
-    [Fact]
-    public void BasicPrefixesTest()
+    [Test]
+    public async Task BasicPrefixesTest()
     {
         Trial[] trials =
         {
@@ -53,19 +49,19 @@ public class QueryBasicTest
 
                 Debug.WriteLine(prefixMap.ToString());
 
-                Assert.True(trial.ShouldSucceed);
+                await Assert.That(trial.ShouldSucceed).IsTrue();
             }
             catch (ParseException e)
             {
                 Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
-                Assert.False(trial.ShouldSucceed);
+                await Assert.That(trial.ShouldSucceed).IsFalse();
             }
         }
     }
 
-    [Fact]
-    public void BasicOrderByTest()
+    [Test]
+    public async Task BasicOrderByTest()
     {
         var prefixes = "qm=<http://qm.example.com/ns/>," +
                        "oslc=<http://open-services.net/ns/core#>";
@@ -86,19 +82,19 @@ public class QueryBasicTest
 
                 Debug.WriteLine(orderByClause);
 
-                Assert.True(trial.ShouldSucceed);
+                await Assert.That(trial.ShouldSucceed).IsTrue();
             }
             catch (ParseException e)
             {
                 Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
-                Assert.False(trial.ShouldSucceed);
+                await Assert.That(trial.ShouldSucceed).IsFalse();
             }
         }
     }
 
-    [Fact]
-    public void BasicSearchTermsTest()
+    [Test]
+    public async Task BasicSearchTermsTest()
     {
         Trial[] trials =
         {
@@ -115,19 +111,19 @@ public class QueryBasicTest
 
                 Debug.WriteLine(searchTermsClause);
 
-                Assert.True(trial.ShouldSucceed);
+                await Assert.That(trial.ShouldSucceed).IsTrue();
             }
             catch (ParseException e)
             {
                 Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
-                Assert.False(trial.ShouldSucceed);
+                await Assert.That(trial.ShouldSucceed).IsFalse();
             }
         }
     }
 
-    [Fact]
-    public void BasicSelectTest()
+    [Test]
+    public async Task BasicSelectTest()
     {
         var prefixes = "qm=<http://qm.example.com/ns/>," +
                        "oslc=<http://open-services.net/ns/core#>";
@@ -151,19 +147,19 @@ public class QueryBasicTest
 
                 Debug.WriteLine(selectClause);
 
-                Assert.True(trial.ShouldSucceed);
+                await Assert.That(trial.ShouldSucceed).IsTrue();
             }
             catch (ParseException e)
             {
                 Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
-                Assert.False(trial.ShouldSucceed);
+                await Assert.That(trial.ShouldSucceed).IsFalse();
             }
         }
     }
 
-    [Fact]
-    public void BasicWhereTest()
+    [Test]
+    public async Task BasicWhereTest()
     {
         var prefixes = "qm=<http://qm.example.com/ns/>," +
                        "oslc=<http://open-services.net/ns/core#>," +
@@ -192,19 +188,19 @@ public class QueryBasicTest
 
                 Debug.WriteLine(whereClause);
 
-                Assert.True(trial.ShouldSucceed);
+                await Assert.That(trial.ShouldSucceed).IsTrue();
             }
             catch (ParseException e)
             {
                 Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
-                Assert.False(trial.ShouldSucceed);
+                await Assert.That(trial.ShouldSucceed).IsFalse();
             }
         }
     }
 
-    [Fact]
-    public void BasicInvertTest()
+    [Test]
+    public async Task BasicInvertTest()
     {
         const string prefixes = "qm=<http://qm.example.com/ns/>," +
                                 "oslc=<http://open-services.net/ns/core#>";
@@ -228,7 +224,7 @@ public class QueryBasicTest
 
                 Debug.WriteLine(selectClause);
 
-                Assert.True(trial.ShouldSucceed);
+                await Assert.That(trial.ShouldSucceed).IsTrue();
 
                 var _ = QueryUtils.InvertSelectedProperties(selectClause);
             }
@@ -236,13 +232,13 @@ public class QueryBasicTest
             {
                 Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
-                Assert.False(trial.ShouldSucceed);
+                await Assert.That(trial.ShouldSucceed).IsFalse();
             }
         }
     }
 
-    [Fact]
-    public void TestUriRef()
+    [Test]
+    public async Task TestUriRef()
     {
         var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
         var where = QueryUtils.ParseWhere(
@@ -250,21 +246,21 @@ public class QueryBasicTest
 
         var children = where.Children;
         // Where clause should only have one term
-        Assert.Single(children);
+        await Assert.That(children).HasSingleItem();
 
         var simpleTerm = children[0];
         var prop = simpleTerm.Property;
-        Assert.Equal("http://qm.example.com/ns/testCase", prop.ns + prop.local);
-        Assert.True(simpleTerm is ComparisonTerm);
+        await Assert.That(prop.ns + prop.local).IsEqualTo("http://qm.example.com/ns/testCase");
+        await Assert.That(simpleTerm is ComparisonTerm).IsTrue();
 
         var comparison = (ComparisonTerm)simpleTerm;
-        Assert.Equal(Operator.EQUALS, comparison.Operator);
+        await Assert.That(comparison.Operator).IsEqualTo(Operator.EQUALS);
 
         var v = comparison.Operand;
-        Assert.True(v is UriRefValue);
+        await Assert.That(v is UriRefValue).IsTrue();
 
         var uriRef = (UriRefValue)v;
-        Assert.Equal("http://example.org/tests/24", uriRef.Value);
+        await Assert.That(uriRef.Value).IsEqualTo("http://example.org/tests/24");
     }
 }
 
