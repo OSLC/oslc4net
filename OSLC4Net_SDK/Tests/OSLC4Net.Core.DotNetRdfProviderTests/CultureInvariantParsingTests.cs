@@ -14,9 +14,9 @@
  *******************************************************************************/
 
 using System.Globalization;
-using OSLC4Net.ChangeManagement;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using OSLC4Net.ChangeManagement;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
 
@@ -77,8 +77,8 @@ public class CultureInvariantParsingTests
 
             // The key test: RDF should contain URI as-is
             await Assert.That(rdfXml).Contains("http://example.com/cr/12345");
-                    // Verify we got valid RDF
-                    await Assert.That(rdfXml).Contains("rdf:RDF");
+            // Verify we got valid RDF
+            await Assert.That(rdfXml).Contains("rdf:RDF");
         }
         finally
         {
