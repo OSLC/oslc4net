@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
+ * Copyright (c) 2024 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,6 +14,7 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
+using System.Runtime.CompilerServices;
 using OSLC4Net.Core.DotNetRdfProvider;
 
 namespace OSLC4Net.Client.Oslc.Resources;
@@ -196,6 +198,38 @@ public class OslcQuery
     {
         return new OslcQueryResult(this, await GetResponseRawAsync().ConfigureAwait(false),
             _rdfHelper);
+    }
+
+    /// <summary>
+    ///     Execute the OSLC query asynchronously and return all results as an async enumerable.
+    ///     Pagination is handled internally and lazily - pages are only fetched as needed.
+    /// </summary>
+    /// <typeparam name="T">The type of OSLC resource to return</typeparam>
+    /// <param name="cancellationToken">Optional cancellation token</param>
+    /// <returns>An async enumerable of all query results across all pages</returns>
+    public async IAsyncEnumerable<T> SubmitAsync<T>([EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        OslcQueryResult? currentResult = await Submit().ConfigureAwait(false);
+
+        while (currentResult != null)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            foreach (var member in currentResult.GetMembers<T>())
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                yield return member;
+            }
+
+            if (currentResult.MoveNext())
+            {
+                currentResult = await currentResult.NextPageAsync().ConfigureAwait(false);
+            }
+            else
+            {
+                currentResult = null;
+            }
+        }
     }
 
     internal Task<HttpResponseMessage> GetResponseRawAsync()
