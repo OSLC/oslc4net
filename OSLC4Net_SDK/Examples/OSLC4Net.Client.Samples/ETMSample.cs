@@ -33,28 +33,33 @@ using OSLC4Net.Client.Exceptions;
 namespace OSLC4Net.Client.Samples
 {
     /// <summary>
-    /// Samples of logging in to Rational Quality Manager and running OSLC operations
+    /// Samples of logging in to Enterprise Test Management (ETM) and running OSLC operations
     /// 
     /// - run an OLSC TestResult query and retrieve OSLC TestResults and de-serialize them as .NET objects
     /// - retrieve an OSLC TestResult and print it as XML
     /// - create a new TestCase
     /// - update an existing TestCase
     /// </summary>
-    class RQMFormSample
+    class ETMSample
     {
         private static ILogger logger;
 
         /// <summary>
-        /// Login to the RQM server and perform some OSLC actions
+        /// Entry point for ETM Sample
         /// </summary>
         /// <param name="args"></param>
-	    static async Task Main(string[] args)
+	    public static async Task Run(string[] args)
+        {
+            await RunSample(args);
+        }
+
+        private static async Task RunSample(string[] args)
         {
             using ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddConsole();
             });
-            logger = loggerFactory.CreateLogger<RQMFormSample>();
+            logger = loggerFactory.CreateLogger<ETMSample>();
 
             var urlOption = new Option<string>(
                 name: "--url",
@@ -69,7 +74,7 @@ namespace OSLC4Net.Client.Samples
                 name: "--project",
                 description: "The project area") { IsRequired = true };
 
-            var rootCommand = new RootCommand("RQM Sample");
+            var rootCommand = new RootCommand("ETM Sample");
             rootCommand.AddOption(urlOption);
             rootCommand.AddOption(userOption);
             rootCommand.AddOption(passwordOption);
@@ -85,20 +90,21 @@ namespace OSLC4Net.Client.Samples
 
         static async Task RunAsync(string webContextUrl, string user, string passwd, string projectArea, ILoggerFactory loggerFactory)
         {
-		    try {
+	    try {
+	
+		    //STEP 1: Create a new Form Auth client with the supplied user/password
+                // ETM auth is on the same base URL usually
+		    JazzFormAuthClient client = new JazzFormAuthClient(webContextUrl, user, passwd, loggerFactory.CreateLogger<OslcClient>());
 		
-			    //STEP 1: Initialize a Jazz rootservices helper and indicate we're looking for the QualityManagement catalog
-			    //RQM contains both Quality and Change Management providers, so need to look for QM specifically
-                // Replaced JazzRootServicesHelper with RootServicesHelper
-			    var rootServicesHelper = new RootServicesHelper(webContextUrl, OSLCConstants.OSLC_QM_V2);
-                var rootServices = await rootServicesHelper.DiscoverAsync();
-			
-			    //STEP 2: Create a new Form Auth client with the supplied user/password
-                // RQM auth is on the same base URL usually
-			    JazzFormAuthClient client = new JazzFormAuthClient(webContextUrl, user, passwd, loggerFactory.CreateLogger<OslcClient>());
-			
-			    //STEP 3: Login in to Jazz Server
-			    if (await client.FormLoginAsync() == HttpStatusCode.OK) {
+		    //STEP 2: Login in to Jazz Server
+		    if (await client.FormLoginAsync() == HttpStatusCode.OK) {
+		    
+		    //STEP 3: Initialize a Jazz rootservices helper and indicate we're looking for the QualityManagement catalog
+		    //ETM contains both Quality and Change Management providers, so need to look for QM specifically
+		    //For Jazz servers, use the QM-specific property qmServiceProviders in the QM v1.0 namespace
+		    var rootServicesHelper = new RootServicesHelper(webContextUrl,
+		        "http://open-services.net/xmlns/qm/1.0/", "qmServiceProviders");
+                    var rootServices = await rootServicesHelper.DiscoverAsync(client.GetHttpClient());
 				
 				    //STEP 4: Get the URL of the OSLC QualityManagement catalog
 				    String catalogUrl = rootServices.ServiceProviderCatalog;
@@ -126,7 +132,7 @@ namespace OSLC4Net.Client.Samples
 				
 				    //SCENARIO B:  Run a query for a specific TestResult selecting only certain 
 				    //attributes and then print it as raw XML.  Change the dcterms:title below to match a 
-				    //real TestResult in your RQM project area
+				    //real TestResult in your ETM project area
 				    OslcQueryParameters queryParams2 = new OslcQueryParameters();
 				    queryParams2.SetWhere("dcterms:title=\"Consistent_display_of_currency_Firefox_DB2_WAS_Windows_S1\"");
 				    queryParams2.SetSelect("dcterms:identifier,dcterms:title,dcterms:creator,dcterms:created,oslc_qm:status");
@@ -137,7 +143,7 @@ namespace OSLC4Net.Client.Samples
 				    await ProcessRawResponseAsync(rawResponse);
 				    rawResponse.ConsumeContent();
 				
-				    //SCENARIO C:  RQM TestCase creation and update
+				    //SCENARIO C:  ETM TestCase creation and update
 				    TestCase testcase = new TestCase();
 				    testcase.SetTitle("Accessibility verification using a screen reader");
 				    testcase.SetDescription("This test case uses a screen reader application to ensure that the web browser content fully complies with accessibility standards");

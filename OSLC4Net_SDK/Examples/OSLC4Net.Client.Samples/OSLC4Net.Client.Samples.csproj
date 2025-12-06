@@ -6,7 +6,6 @@
     <RootNamespace>OSLC4Net.Client.Samples</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
-    <StartupObject>OSLC4Net.Client.Samples.RQMFormSample</StartupObject>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 

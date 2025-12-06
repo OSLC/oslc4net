@@ -35,7 +35,7 @@ using OSLC4Net.Core.DotNetRdfProvider;
 namespace OSLC4Net.Client.Samples
 {
     /// <summary>
-    /// Samples of logging in to Rational Team Concert and running OSLC operations
+    /// Samples of logging in to Enterprise Workflow Management (EWM) and running OSLC operations
     /// 
     /// 
     /// - run an OLSC ChangeRequest query and retrieve OSLC ChangeRequests and de-serialize them as .NET objects
@@ -43,28 +43,33 @@ namespace OSLC4Net.Client.Samples
     /// - create a new ChangeRequest
     /// - update an existing ChangeRequest
     /// </summary>
-    class RTCFormSample
+    class EWMSample
     {
         private static ILogger logger;
 
         /// <summary>
-        /// Login to the RTC server and perform some OSLC actions
+        /// Entry point for EWM Sample
         /// </summary>
         /// <param name="args"></param>
-	    static async Task Main(string[] args)
+	    public static async Task Run(string[] args)
+        {
+            await RunSample(args);
+        }
+
+        private static async Task RunSample(string[] args)
         {
             using ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddConsole();
             });
-            logger = loggerFactory.CreateLogger<RTCFormSample>();
+            logger = loggerFactory.CreateLogger<EWMSample>();
 
             var urlOption = new Option<string>("--url", "The URL of the server") { IsRequired = true };
             var userOption = new Option<string>("--user", "The user name") { IsRequired = true };
             var passwordOption = new Option<string>("--password", "The password") { IsRequired = true };
             var projectOption = new Option<string>("--project", "The project area") { IsRequired = true };
 
-            var rootCommand = new RootCommand("RTC Sample");
+            var rootCommand = new RootCommand("EWM Sample");
             rootCommand.AddOption(urlOption);
             rootCommand.AddOption(userOption);
             rootCommand.AddOption(passwordOption);
@@ -81,18 +86,20 @@ namespace OSLC4Net.Client.Samples
         static async Task RunAsync(string webContextUrl, string user, string passwd, string projectArea, ILoggerFactory loggerFactory)
         {
 		
-		    try {
+	    try {
+	
+		    //STEP 1: Create a new Form Auth client with the supplied user/password
+		    JazzFormAuthClient client = new JazzFormAuthClient(webContextUrl, user, passwd, loggerFactory.CreateLogger<OslcClient>());
 		
-			    //STEP 1: Initialize a Jazz rootservices helper and indicate we're looking for the ChangeManagement catalog
-			    //RTC contains a service provider for CM and SCM, so we need to indicate our interest in CM
-			    var rootServicesHelper = new RootServicesHelper(webContextUrl,OSLCConstants.OSLC_CM_V2);
-                var rootServices = await rootServicesHelper.DiscoverAsync();
-			
-			    //STEP 2: Create a new Form Auth client with the supplied user/password
-			    JazzFormAuthClient client = new JazzFormAuthClient(webContextUrl, user, passwd, loggerFactory.CreateLogger<OslcClient>());
-			
-			    //STEP 3: Login in to Jazz Server
-			    if (await client.FormLoginAsync() == HttpStatusCode.OK) {
+		    //STEP 2: Login in to Jazz Server
+		    if (await client.FormLoginAsync() == HttpStatusCode.OK) {
+		    
+		    //STEP 3: Initialize a Jazz rootservices helper and indicate we're looking for the ChangeManagement catalog
+		    //EWM contains a service provider for CM and SCM, so we need to indicate our interest in CM
+		    //For Jazz servers, use the CM-specific property cmServiceProviders in the CM v1.0 namespace
+		    var rootServicesHelper = new RootServicesHelper(webContextUrl, 
+		        "http://open-services.net/xmlns/cm/1.0/", "cmServiceProviders");
+                    var rootServices = await rootServicesHelper.DiscoverAsync(client.GetHttpClient());
 				
 				    //STEP 4: Get the URL of the OSLC ChangeManagement catalog
 				    String catalogUrl = rootServices.ServiceProviderCatalog;
@@ -121,7 +128,7 @@ namespace OSLC4Net.Client.Samples
 				
 				    //SCENARIO B:  Run a query for a specific ChangeRequest selecting only certain 
 				    //attributes and then print it as raw XML.  Change the dcterms:identifier below to match a 
-				    //real workitem in your RTC project area
+				    //real workitem in your EWM project area
 				    OslcQueryParameters queryParams2 = new OslcQueryParameters();
 				    queryParams2.SetWhere("dcterms:identifier=\"10\"");
 				    queryParams2.SetSelect("dcterms:identifier,dcterms:title,dcterms:creator,dcterms:created,oslc_cm:status");
@@ -132,7 +139,7 @@ namespace OSLC4Net.Client.Samples
 				    await ProcessRawResponseAsync(rawResponse);
 				    rawResponse.ConsumeContent();
 				
-				    //SCENARIO C:  RTC Workitem creation and update
+				    //SCENARIO C:  EWM Workitem creation and update
 				    ChangeRequest changeRequest = new ChangeRequest();
 				    changeRequest.SetTitle("Implement accessibility in Pet Store application");
 				    changeRequest.SetDescription("Image elements must provide a description in the 'alt' attribute for consumption by screen readers.");

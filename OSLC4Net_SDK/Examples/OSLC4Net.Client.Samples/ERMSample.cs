@@ -31,13 +31,13 @@ using OSLC4Net.Core.Model;
 namespace OSLC4Net.Client.Samples
 {
     /// <summary>
-    /// Samples of logging in to Rational Requirements Composer and running OSLC operations
+    /// Samples of logging in to Enterprise Requirements Management (ERM) and running OSLC operations
     /// 
     /// 
     /// - run an OLSC Requirement query and retrieve OSLC Requirements and de-serialize them as .NET objects
     /// - TODO:  Add more requirement sample scenarios
     /// </summary>
-    class RRCFormSample
+    class ERMSample
     {
         private static ILogger logger;
 	
@@ -45,23 +45,28 @@ namespace OSLC4Net.Client.Samples
 	    private static readonly QName PROPERTY_PRIMARY_TEXT_WORKAROUND   = new QName(RmConstants.JAZZ_RM_NAMESPACE, "PrimaryText");
 
         /// <summary>
-        /// Login to the RRC server and perform some OSLC actions
+        /// Entry point for ERM Sample
         /// </summary>
         /// <param name="args"></param>
-	    static async Task Main(string[] args)
+	    public static async Task Run(string[] args)
+        {
+            await RunSample(args);
+        }
+
+        private static async Task RunSample(string[] args)
         {
             using ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddConsole();
             });
-            logger = loggerFactory.CreateLogger<RRCFormSample>();
+            logger = loggerFactory.CreateLogger<ERMSample>();
 
             var urlOption = new Option<string>("--url", "The URL of the server") { IsRequired = true };
             var userOption = new Option<string>("--user", "The user name") { IsRequired = true };
             var passwordOption = new Option<string>("--password", "The password") { IsRequired = true };
             var projectOption = new Option<string>("--project", "The project area") { IsRequired = true };
 
-            var rootCommand = new RootCommand("RRC Sample");
+            var rootCommand = new RootCommand("ERM Sample");
             rootCommand.AddOption(urlOption);
             rootCommand.AddOption(userOption);
             rootCommand.AddOption(passwordOption);
@@ -77,22 +82,24 @@ namespace OSLC4Net.Client.Samples
 
         static async Task RunAsync(string webContextUrl, string user, string passwd, string projectArea, ILoggerFactory loggerFactory)
         {
-		    try {
+	    try {
+	
+		    //STEP 1: Create a new Form Auth client with the supplied user/password
+		    //ERM is a fronting server, so need to use the initForm() signature which allows passing of an authentication URL.
+		    //For ERM, use the JTS for the authorization URL
 		
-			    //STEP 1: Initialize a Jazz rootservices helper and indicate we're looking for the RequirementManagement catalog
-			    var rootServicesHelper = new RootServicesHelper(webContextUrl,OSLCConstants.OSLC_RM_V2);
-                var rootServices = await rootServicesHelper.DiscoverAsync();
-			
-			    //STEP 2: Create a new Form Auth client with the supplied user/password
-			    //RRC is a fronting server, so need to use the initForm() signature which allows passing of an authentication URL.
-			    //For RRC, use the JTS for the authorization URL
-			
-			    //This is a bit of a hack for readability.  It is assuming RRC is at context /rm.  Could use a regex or UriBuilder instead.
-			    String authUrl = webContextUrl.Replace("/rm","/jts"); // XXX - should be ReplaceFirst(), if it existed
-			    JazzFormAuthClient client = new JazzFormAuthClient(webContextUrl, authUrl, user, passwd, loggerFactory.CreateLogger<OslcClient>());
-			
-			    //STEP 3: Login in to Jazz Server
-			    if (await client.FormLoginAsync() == HttpStatusCode.OK) {
+		    //This is a bit of a hack for readability.  It is assuming ERM is at context /rm.  Could use a regex or UriBuilder instead.
+		    String authUrl = webContextUrl.Replace("/rm","/jts"); // XXX - should be ReplaceFirst(), if it existed
+		    JazzFormAuthClient client = new JazzFormAuthClient(webContextUrl, authUrl, user, passwd, loggerFactory.CreateLogger<OslcClient>());
+		
+		    //STEP 2: Login in to Jazz Server
+		    if (await client.FormLoginAsync() == HttpStatusCode.OK) {
+		    
+		    //STEP 3: Initialize a Jazz rootservices helper and indicate we're looking for the RequirementManagement catalog
+		    //For Jazz servers, use the RM-specific property rmServiceProviders in the RM v1.0 namespace
+		    var rootServicesHelper = new RootServicesHelper(webContextUrl,
+		        "http://open-services.net/xmlns/rm/1.0/", "rmServiceProviders");
+                    var rootServices = await rootServicesHelper.DiscoverAsync(client.GetHttpClient());
 				
 				    //STEP 4: Get the URL of the OSLC ChangeManagement catalog
 				    String catalogUrl = rootServices.ServiceProviderCatalog;
