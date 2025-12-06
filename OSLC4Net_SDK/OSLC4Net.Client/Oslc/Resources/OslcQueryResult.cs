@@ -132,27 +132,23 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     private long? GetTotalCount()
     {
         InitializeRdf();
-
-        // If we don't have a valid info resource, we can't get total count
-        if (_infoResource is null)
+        if (_rdfGraph is null || _infoResource?.Uri is null)
         {
             return null;
         }
 
-        try
+        var predicateNode = _rdfGraph.CreateUriNode(_totalCountPredicateUri);
+        var totalCountObject = _rdfGraph
+            .GetTriplesWithSubjectPredicate(_infoResource, predicateNode)
+            .SingleOrDefault()?.Object as IValuedNode;
+
+        if (totalCountObject is null)
         {
-            var triples = _rdfGraph!.GetTriplesWithSubjectPredicate(_infoResource,
-                _rdfGraph.CreateUriNode(_totalCountPredicateUri));
-            var totalCountObject = triples.SingleOrDefault()?.Object;
-            // sadly, the OSLC spec defines total count as a string
-            var countString = totalCountObject?.AsValuedNode().AsString();
-            return long.TryParse(countString, out var totalCount) ? totalCount : null;
-        }
-        catch (ArgumentNullException)
-        {
-            // Known issue with VDS.RDF: sometimes the IUriNode is malformed internally
             return null;
         }
+
+        var countString = totalCountObject.AsString();
+        return long.TryParse(countString, out var totalCount) ? totalCount : null;
     }
 
     // REVISIT: I don't think the query result shall be thread-safe (@berezovskyi 2024-10)
