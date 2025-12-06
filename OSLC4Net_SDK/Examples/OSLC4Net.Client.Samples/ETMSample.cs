@@ -23,6 +23,8 @@ using System.Threading.Tasks;
 using System.IO;
 using System.CommandLine;
 using Microsoft.Extensions.Logging;
+using System.CommandLine;
+using System.CommandLine.Invocation;
 using OSLC4Net.Client.Oslc.Jazz;
 using OSLC4Net.Client.Oslc;
 using OSLC4Net.Client.Oslc.Resources;
@@ -61,31 +63,34 @@ namespace OSLC4Net.Client.Samples
             });
             logger = loggerFactory.CreateLogger<ETMSample>();
 
-            var urlOption = new Option<string>(
-                name: "--url",
-                description: "The URL of the server") { IsRequired = true };
-            var userOption = new Option<string>(
-                name: "--user",
-                description: "The user name") { IsRequired = true };
-            var passwordOption = new Option<string>(
-                name: "--password",
-                description: "The password") { IsRequired = true };
-            var projectOption = new Option<string>(
-                name: "--project",
-                description: "The project area") { IsRequired = true };
+			var urlOption = new System.CommandLine.Option<string>(name: "--url") { Arity = ArgumentArity.ExactlyOne };
+			var userOption = new System.CommandLine.Option<string>(name: "--user") { Arity = ArgumentArity.ExactlyOne };
+			var passwordOption = new System.CommandLine.Option<string>(name: "--password") { Arity = ArgumentArity.ExactlyOne };
+			var projectOption = new System.CommandLine.Option<string>(name: "--project") { Arity = ArgumentArity.ExactlyOne };
 
-            var rootCommand = new RootCommand("ETM Sample");
-            rootCommand.AddOption(urlOption);
-            rootCommand.AddOption(userOption);
-            rootCommand.AddOption(passwordOption);
-            rootCommand.AddOption(projectOption);
+			var rootCommand = new System.CommandLine.RootCommand("ETM Sample");
+			rootCommand.Add(urlOption);
+			rootCommand.Add(userOption);
+			rootCommand.Add(passwordOption);
+			rootCommand.Add(projectOption);
 
-            rootCommand.SetHandler(async (string url, string user, string password, string project) =>
-            {
-                await RunAsync(url, user, password, project, loggerFactory);
-            }, urlOption, userOption, passwordOption, projectOption);
+			var parseResult = rootCommand.Parse(args);
+			if (parseResult.Errors.Count > 0)
+			{
+				foreach (var error in parseResult.Errors)
+				{
+					Console.Error.WriteLine(error.Message);
+				}
 
-            await rootCommand.InvokeAsync(args);
+				return;
+			}
+
+			var url = parseResult.GetValue(urlOption)!;
+			var user = parseResult.GetValue(userOption)!;
+			var password = parseResult.GetValue(passwordOption)!;
+			var project = parseResult.GetValue(projectOption)!;
+
+			await RunAsync(url, user, password, project, loggerFactory);
 	    }
 
         static async Task RunAsync(string webContextUrl, string user, string passwd, string projectArea, ILoggerFactory loggerFactory)
