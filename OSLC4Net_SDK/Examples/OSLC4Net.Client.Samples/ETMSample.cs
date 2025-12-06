@@ -42,9 +42,11 @@ namespace OSLC4Net.Client.Samples
     /// - create a new TestCase
     /// - update an existing TestCase
     /// </summary>
-    class ETMSample
+    class ETMSample : SampleBase<TestResult>
     {
-        private static ILogger logger;
+        public ETMSample(ILoggerFactory loggerFactory) : base(loggerFactory)
+        {
+        }
 
         /// <summary>
         /// Entry point for ETM Sample
@@ -52,16 +54,11 @@ namespace OSLC4Net.Client.Samples
         /// <param name="args"></param>
 	    public static async Task Run(string[] args)
         {
-            await RunSample(args);
-        }
-
-        private static async Task RunSample(string[] args)
-        {
             using ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddConsole();
+                builder.SetMinimumLevel(LogLevel.Information);
             });
-            logger = loggerFactory.CreateLogger<ETMSample>();
 
 			var urlOption = new System.CommandLine.Option<string>(name: "--url") { Arity = ArgumentArity.ExactlyOne };
 			var userOption = new System.CommandLine.Option<string>(name: "--user") { Arity = ArgumentArity.ExactlyOne };
@@ -90,16 +87,25 @@ namespace OSLC4Net.Client.Samples
 			var password = parseResult.GetValue(passwordOption)!;
 			var project = parseResult.GetValue(projectOption)!;
 
-			await RunAsync(url, user, password, project, loggerFactory);
+            var sample = new ETMSample(loggerFactory);
+			await sample.RunAsync(url, user, password, project);
 	    }
 
-        static async Task RunAsync(string webContextUrl, string user, string passwd, string projectArea, ILoggerFactory loggerFactory)
+        protected override void PrintResourceInfo(TestResult tr)
+        {
+            if (tr != null)
+            {
+                Logger.LogInformation("ID: {Id}, Title: {Title}, Status: {Status}", tr.GetIdentifier(), tr.GetTitle(), tr.GetStatus());
+            }
+        }
+
+        async Task RunAsync(string webContextUrl, string user, string passwd, string projectArea)
         {
 	    try {
 	
 		    //STEP 1: Create a new Form Auth client with the supplied user/password
                 // ETM auth is on the same base URL usually
-		    JazzFormAuthClient client = new JazzFormAuthClient(webContextUrl, user, passwd, loggerFactory.CreateLogger<OslcClient>());
+		    JazzFormAuthClient client = new JazzFormAuthClient(webContextUrl, user, passwd, LoggerFactory.CreateLogger<OslcClient>());
 		
 		    //STEP 2: Login in to Jazz Server
 		    if (await client.FormLoginAsync() == HttpStatusCode.OK) {
@@ -133,7 +139,7 @@ namespace OSLC4Net.Client.Samples
 				    bool processAsDotNetObjects = true;
 				    await ProcessPagedQueryResultsAsync(result,client, processAsDotNetObjects);
 				
-				    Console.WriteLine("\n------------------------------\n");
+				    Logger.LogInformation("\n------------------------------\n");
 				
 				    //SCENARIO B:  Run a query for a specific TestResult selecting only certain 
 				    //attributes and then print it as raw XML.  Change the dcterms:title below to match a 
@@ -165,7 +171,7 @@ namespace OSLC4Net.Client.Samples
 						    OslcMediaType.APPLICATION_RDF_XML);
 				    creationResponse.ConsumeContent();
 				    String testcaseLocation = creationResponse.Headers.Location.ToString();
-				    Console.WriteLine("Test Case created a location " + testcaseLocation);
+				    Logger.LogInformation("Test Case created a location {Location}", testcaseLocation);
 				
 				    //Get the test case from the service provider and update its title property 
 				    testcase = await (await client.GetResourceRawAsync(testcaseLocation,
@@ -183,81 +189,10 @@ namespace OSLC4Net.Client.Samples
 							
 			    }
 		    } catch (RootServicesException re) {
-			    logger.LogError(re, "Unable to access the Jazz rootservices document at: " + webContextUrl + "/rootservices");
+			    Logger.LogError(re, "Unable to access the Jazz rootservices document at: {Url}", webContextUrl + "/rootservices");
 		    } catch (Exception e) {
-			    logger.LogError(e, e.Message);
+			    Logger.LogError(e, "{Message}", e.Message);
 		    }
         }
-	
-	    private static async Task ProcessPagedQueryResultsAsync(OslcQueryResult result, OslcClient client, bool asDotNetObjects) {
-		    int page = 1;
-		    do {
-			    Console.WriteLine("\nPage " + page + ":\n");
-			    await ProcessCurrentPageAsync(result,client,asDotNetObjects);
-			    if (result.MoveNext()) {
-				    result = result.Current;
-				    page++;
-			    } else {
-				    break;
-			    }
-		    } while(true);
-	    }
-	
-	    private static async Task ProcessCurrentPageAsync(OslcQueryResult result, OslcClient client, bool asDotNetObjects) {
-		
-		    foreach (String resultsUrl in result.GetMembersUrls()) {
-			    Console.WriteLine(resultsUrl);
-			
-			    HttpResponseMessage response = null;
-			    try {
-				
-				    //Get a single artifact by its URL 
-				    response = await client.GetResourceRawAsync(resultsUrl, OSLCConstants.CT_RDF);
-		
-				    if (response != null) {
-					    //De-serialize it as a .NET object 
-					    if (asDotNetObjects) {
-						       TestResult tr = await response.Content.ReadAsAsync<TestResult>(client.GetFormatters());
-						       PrintTestResultInfo(tr);   //print a few attributes
-					    } else {
-						
-						    //Just print the raw RDF/XML (or process the XML as desired)
-						    await ProcessRawResponseAsync(response);
-						
-					    }
-				    }
-			    } catch (Exception e) {
-				    logger.LogError(e, "Unable to process artifact at url: " + resultsUrl);
-			    }
-			
-		    }
-		
-	    }
-	
-	    private static async Task ProcessRawResponseAsync(HttpResponseMessage response)
-        {
-		    if (!logger.IsEnabled(LogLevel.Trace))
-		    {
-			    response.ConsumeContent();
-			    return;
-		    }
-
-		    Stream inStream = await response.Content.ReadAsStreamAsync();
-		    StreamReader streamReader = new StreamReader(new BufferedStream(inStream), System.Text.Encoding.UTF8);
-		
-		    String line = null;
-            while ((line = streamReader.ReadLine()) != null)
-            {
-		      logger.LogTrace(line);
-		    }
-		    response.ConsumeContent();
-	    }
-	
-	    private static void PrintTestResultInfo(TestResult tr) {
-		    //See the OSLC4J TestResult class for a full list of attributes you can access.
-		    if (tr != null) {
-			    Console.WriteLine("ID: " + tr.GetIdentifier() + ", Title: " + tr.GetTitle() + ", Status: " + tr.GetStatus());
-		    }
-	    }
     }
 }

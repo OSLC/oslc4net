@@ -23,6 +23,7 @@ This release does not contain security updates.
 
 ### Changed
 
+- `OSLC4Net.Core` requires .NET 10 to be able to use the `[Experimental]` annotation.
 - `OSLC4Net.Client` requires .NET 10.
 
 ### Deprecated

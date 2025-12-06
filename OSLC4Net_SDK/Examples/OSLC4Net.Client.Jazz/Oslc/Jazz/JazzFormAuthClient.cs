@@ -178,7 +178,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
 	        } catch (JazzAuthErrorException jee) {
 	    	    throw jee;
 	        } catch (Exception e) {
-                Console.WriteLine(e.StackTrace);
+                Logger.LogError(e, "Error during login");
             }
 		    return statusCode;
 	    }
@@ -194,7 +194,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
 				    location = (newResp.Headers.Location != null) ? newResp.Headers.Location.AbsoluteUri : null;
                     newResp.ConsumeContent();
 			    } catch (Exception e) {
-				    Console.WriteLine(e.StackTrace);
+				    Logger.LogError(e, "Error following redirect");
 			    }
 
 		    }
@@ -215,11 +215,11 @@ namespace OSLC4Net.Client.Oslc.Jazz
 
                 if (statusCode != HttpStatusCode.OK)
                 {
-                    Console.WriteLine("Status code from feed retrieval: " + statusCode);
+                    Logger.LogWarning("Status code from feed retrieval: {StatusCode}", statusCode);
                 }
 			
 		    } catch (Exception e) {
-                Console.WriteLine(e.StackTrace);
+                Logger.LogError(e, "Error getting artifact feed");
             }
 
 		    return resp;

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>OSLC4Net.Core</RootNamespace>
     <AssemblyName>OSLC4Net.Core</AssemblyName>
   </PropertyGroup>

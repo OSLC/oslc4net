@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:oslc="http://open-services.net/ns/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <oslc:AllowedValues rdf:nodeID="autos1">
+    <oslc:allowedValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://example.com/values/high</oslc:allowedValue>
+    <oslc:allowedValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://example.com/values/low</oslc:allowedValue>
+    <oslc:allowedValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://example.com/values/medium</oslc:allowedValue>
+  </oslc:AllowedValues>
+</rdf:RDF>

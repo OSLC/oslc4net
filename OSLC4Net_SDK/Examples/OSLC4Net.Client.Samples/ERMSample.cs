@@ -42,30 +42,27 @@ namespace OSLC4Net.Client.Samples
     /// - run an OSLC Requirement query and retrieve OSLC Requirements and display results
     /// - demonstrate query result pagination and member enumeration
     /// </summary>
-    class ERMSample
+    class ERMSample : SampleBase<Requirement>
     {
-        private static ILogger logger;
+        public ERMSample(ILoggerFactory loggerFactory) : base(loggerFactory)
+        {
+        }
 
         /// <summary>
         /// Entry point for ERM Sample
         /// </summary>
         public static async Task Run(string[] args)
         {
-            await RunSample(args);
-        }
-
-        private static async Task RunSample(string[] args)
-        {
             using ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddConsole();
+                builder.SetMinimumLevel(LogLevel.Information);
             });
-            logger = loggerFactory.CreateLogger<ERMSample>();
 
             var urlOption = new System.CommandLine.Option<string>("--url") { Arity = ArgumentArity.ExactlyOne };
             var userOption = new System.CommandLine.Option<string>("--user") { Arity = ArgumentArity.ExactlyOne };
             var passwordOption = new System.CommandLine.Option<string>("--password") { Arity = ArgumentArity.ExactlyOne };
-                var projectAreaOption = new System.CommandLine.Option<string>("--project") { Arity = ArgumentArity.ExactlyOne };
+            var projectAreaOption = new System.CommandLine.Option<string>("--project") { Arity = ArgumentArity.ExactlyOne };
 
             var rootCommand = new System.CommandLine.RootCommand("ERM Sample");
             rootCommand.Add(urlOption);
@@ -89,10 +86,19 @@ namespace OSLC4Net.Client.Samples
             var password = parseResult.GetValue(passwordOption)!;
             var projectArea = parseResult.GetValue(projectAreaOption)!;
 
-            await RunAsync(url, user, password, projectArea, loggerFactory);
+            var sample = new ERMSample(loggerFactory);
+            await sample.RunAsync(url, user, password, projectArea);
         }
 
-        static async Task RunAsync(string webContextUrl, string user, string passwd, string projectArea, ILoggerFactory loggerFactory)
+        protected override void PrintResourceInfo(Requirement resource)
+        {
+            if (resource != null)
+            {
+                Logger.LogInformation("Requirement: {Title} ({Identifier})", resource.Title, resource.Identifier);
+            }
+        }
+
+        async Task RunAsync(string webContextUrl, string user, string passwd, string projectArea)
         {
             try
             {
@@ -101,7 +107,7 @@ namespace OSLC4Net.Client.Samples
                 //For ERM, use the JTS for the authorization URL
                 //This assumes ERM is at context /rm
                 String authUrl = webContextUrl.Replace("/rm", "/jts");
-                JazzFormAuthClient client = new JazzFormAuthClient(webContextUrl, authUrl, user, passwd, loggerFactory.CreateLogger<OslcClient>());
+                JazzFormAuthClient client = new JazzFormAuthClient(webContextUrl, authUrl, user, passwd, LoggerFactory.CreateLogger<OslcClient>());
 
                 //STEP 2: Login to Jazz Server
                 if (await client.FormLoginAsync() == HttpStatusCode.OK)
@@ -162,12 +168,12 @@ namespace OSLC4Net.Client.Samples
                         }
                         catch (ResourceNotFoundException ex)
                         {
-                            logger.LogWarning(ex, "Collection instance shape not found; proceeding without it");
+                            Logger.LogWarning(ex, "Collection instance shape not found; proceeding without it");
                         }
                     }
                     catch (Exception ex)
                     {
-                        logger.LogWarning(ex, "Unable to resolve instance shapes; creation may fail");
+                        Logger.LogWarning(ex, "Unable to resolve instance shapes; creation may fail");
                     }
 
                     String req01URL = null;
@@ -199,12 +205,12 @@ namespace OSLC4Net.Client.Samples
                             if (creationResponse.IsSuccessStatusCode)
                             {
                                 req01URL = creationResponse.Headers.Location?.ToString();
-                                logger.LogInformation($"REQ01 created: {req01URL}");
+                                Logger.LogInformation("REQ01 created: {Url}", req01URL);
                                 creationResponse.ConsumeContent();
                             }
                             else
                             {
-                                logger.LogWarning($"Failed to create REQ01: {creationResponse.StatusCode}");
+                                Logger.LogWarning("Failed to create REQ01: {StatusCode}", creationResponse.StatusCode);
                                 creationResponse.ConsumeContent();
                             }
 
@@ -224,12 +230,12 @@ namespace OSLC4Net.Client.Samples
                             if (creationResponse.IsSuccessStatusCode)
                             {
                                 req02URL = creationResponse.Headers.Location?.ToString();
-                                logger.LogInformation($"REQ02 created: {req02URL}");
+                                Logger.LogInformation("REQ02 created: {Url}", req02URL);
                                 creationResponse.ConsumeContent();
                             }
                             else
                             {
-                                logger.LogWarning($"Failed to create REQ02: {creationResponse.StatusCode}");
+                                Logger.LogWarning("Failed to create REQ02: {StatusCode}", creationResponse.StatusCode);
                                 creationResponse.ConsumeContent();
                             }
 
@@ -249,12 +255,12 @@ namespace OSLC4Net.Client.Samples
                             if (creationResponse.IsSuccessStatusCode)
                             {
                                 req03URL = creationResponse.Headers.Location?.ToString();
-                                logger.LogInformation($"REQ03 created: {req03URL}");
+                                Logger.LogInformation("REQ03 created: {Url}", req03URL);
                                 creationResponse.ConsumeContent();
                             }
                             else
                             {
-                                logger.LogWarning($"Failed to create REQ03: {creationResponse.StatusCode}");
+                                Logger.LogWarning("Failed to create REQ03: {StatusCode}", creationResponse.StatusCode);
                                 creationResponse.ConsumeContent();
                             }
 
@@ -272,12 +278,12 @@ namespace OSLC4Net.Client.Samples
                             if (creationResponse.IsSuccessStatusCode)
                             {
                                 req04URL = creationResponse.Headers.Location?.ToString();
-                                logger.LogInformation($"REQ04 created: {req04URL}");
+                                Logger.LogInformation("REQ04 created: {Url}", req04URL);
                                 creationResponse.ConsumeContent();
                             }
                             else
                             {
-                                logger.LogWarning($"Failed to create REQ04: {creationResponse.StatusCode}");
+                                Logger.LogWarning("Failed to create REQ04: {StatusCode}", creationResponse.StatusCode);
                                 creationResponse.ConsumeContent();
                             }
 
@@ -302,19 +308,19 @@ namespace OSLC4Net.Client.Samples
                                 if (creationResponse.IsSuccessStatusCode)
                                 {
                                     reqcoll01URL = creationResponse.Headers.Location?.ToString();
-                                    logger.LogInformation($"Collection01 created: {reqcoll01URL}");
+                                    Logger.LogInformation("Collection01 created: {Url}", reqcoll01URL);
                                     creationResponse.ConsumeContent();
                                 }
                                 else
                                 {
-                                    logger.LogWarning($"Failed to create Collection01: {creationResponse.StatusCode}");
+                                    Logger.LogWarning("Failed to create Collection01: {StatusCode}", creationResponse.StatusCode);
                                     creationResponse.ConsumeContent();
                                 }
                             }
                         }
                         catch (Exception ex)
                         {
-                            logger.LogWarning(ex, "Error during requirement creation");
+                            Logger.LogWarning(ex, "Error during requirement creation");
                         }
                     }
 
@@ -325,92 +331,17 @@ namespace OSLC4Net.Client.Samples
                     OslcQueryResult queryResults = await query.Submit();
                     await ProcessPagedQueryResultsAsync(queryResults, client, false);
 
-                    Console.WriteLine("\n------------------------------\n");
-                    Console.WriteLine("Requirements query completed successfully.");
+                    Logger.LogInformation("Requirements query completed successfully.");
                 }
                 else
                 {
-                    Console.WriteLine("Authentication failed");
+                    Logger.LogError("Authentication failed");
                 }
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Error running ERM sample");
-                Console.WriteLine("Error: " + ex.Message);
+                Logger.LogError(ex, "Error running ERM sample");
             }
-        }
-
-        private static async Task ProcessPagedQueryResultsAsync(OslcQueryResult result, OslcClient client, bool asDotNetObjects)
-        {
-            int page = 1;
-            //For now, just show first 5 pages
-            do
-            {
-                Console.WriteLine("\nPage " + page + ":\n");
-                await ProcessCurrentPageAsync(result, client, asDotNetObjects);
-                if (result.MoveNext())
-                {
-                    result = result.Current;
-                    page++;
-                }
-                else
-                {
-                    break;
-                }
-            } while (true);
-        }
-
-        private static async Task ProcessCurrentPageAsync(OslcQueryResult result, OslcClient client, bool asDotNetObjects)
-        {
-            foreach (String resultsUrl in result.GetMembersUrls())
-            {
-                Console.WriteLine(resultsUrl);
-
-                HttpResponseMessage response = null;
-                try
-                {
-                    //Get a single requirement by its URL 
-                    response = await client.GetResourceRawAsync(resultsUrl, OSLCConstants.CT_RDF);
-
-                    if (response != null)
-                    {
-                        //De-serialize it as a .NET object (commented out - requires specific RM classes)
-                        if (asDotNetObjects)
-                        {
-                            //Requirement req = response.getEntity(Requirement.class);
-                            //printRequirementInfo(req);   //print a few attributes
-                        }
-                        else
-                        {
-                            //Just print the raw RDF/XML (first 500 chars for readability)
-                            await ProcessRawResponseAsync(response);
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    logger.LogError(e, "Unable to process requirement at url: " + resultsUrl);
-                }
-            }
-        }
-
-        private static async Task ProcessRawResponseAsync(HttpResponseMessage response)
-        {
-            if (!logger.IsEnabled(LogLevel.Trace))
-            {
-                response.ConsumeContent();
-                return;
-            }
-
-            Stream inStream = await response.Content.ReadAsStreamAsync();
-            StreamReader streamReader = new StreamReader(new BufferedStream(inStream), System.Text.Encoding.UTF8);
-
-            String line = null;
-            while ((line = streamReader.ReadLine()) != null)
-            {
-                logger.LogTrace(line);
-            }
-            response.ConsumeContent();
         }
     }
 }

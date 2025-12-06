@@ -45,9 +45,14 @@ namespace OSLC4Net.Client.Samples
     /// - create a new ChangeRequest
     /// - update an existing ChangeRequest
     /// </summary>
-    class EWMSample
+    class EWMSample : SampleBase<ChangeRequest>
     {
-        private static ILogger logger;
+        private readonly ILoggerFactory _loggerFactory;
+
+        public EWMSample(ILoggerFactory loggerFactory) : base(loggerFactory.CreateLogger<EWMSample>())
+        {
+            _loggerFactory = loggerFactory;
+        }
 
         /// <summary>
         /// Entry point for EWM Sample
@@ -69,7 +74,7 @@ namespace OSLC4Net.Client.Samples
                     options.TimestampFormat = "HH:mm:ss ";
                 });
             });
-            logger = loggerFactory.CreateLogger<EWMSample>();
+            var logger = loggerFactory.CreateLogger<EWMSample>();
             var urlOption = new System.CommandLine.Option<string>("--url")
             {
                 Arity = ArgumentArity.ExactlyOne
@@ -114,16 +119,21 @@ namespace OSLC4Net.Client.Samples
 
         static async Task RunAsync(string webContextUrl, string user, string passwd, string projectArea, ILoggerFactory loggerFactory)
         {
+            var sample = new EWMSample(loggerFactory);
+            await sample.RunScenarioAsync(webContextUrl, user, passwd, projectArea);
+        }
 
+        public async Task RunScenarioAsync(string webContextUrl, string user, string passwd, string projectArea)
+        {
             try {
 
                     //STEP 1: Create a new Form Auth client with the supplied user/password
-                    JazzFormAuthClient client = new JazzFormAuthClient(webContextUrl, user, passwd, loggerFactory.CreateLogger<OslcClient>());
+                    JazzFormAuthClient client = new JazzFormAuthClient(webContextUrl, user, passwd, _loggerFactory.CreateLogger<OslcClient>());
 
                     //STEP 2: Login in to Jazz Server
                     if (await client.FormLoginAsync() == HttpStatusCode.OK) {
 
-                    Console.WriteLine("[EWM Debug] Entered RunAsync with latest build");
+                    Logger.LogInformation("[EWM Debug] Entered RunAsync with latest build");
 
                     //STEP 3: Initialize a Jazz rootservices helper and indicate we're looking for the ChangeManagement catalog
                     //EWM contains a service provider for CM and SCM, so we need to indicate our interest in CM
@@ -155,7 +165,7 @@ namespace OSLC4Net.Client.Samples
                                     bool processAsJavaObjects = true;
                                     await ProcessPagedQueryResultsAsync(result,client, processAsJavaObjects);
 
-                                    Console.WriteLine("\n------------------------------\n");
+                                    Logger.LogInformation("\n------------------------------\n");
 
                                     //SCENARIO B:  Run a query for a specific ChangeRequest selecting only certain
                                     //attributes and then print it as raw XML.  Change the dcterms:identifier below to match a
@@ -178,17 +188,17 @@ namespace OSLC4Net.Client.Samples
                                     changeRequest.AddDctermsType("task");
 
                                     // Populate required Filed Against/category using allowed values from the creation factory shape
-                                    Console.WriteLine("[FiledAgainst] Starting resolution");
+                                    Logger.LogInformation("[FiledAgainst] Starting resolution");
                                     Uri? filedAgainstValue = await ResolveFiledAgainstAsync(client, serviceProviderUrl, changeRequest, logger);
                                     if (filedAgainstValue != null)
                                     {
                                         changeRequest.GetExtendedProperties()[new QName(JazzConstants.RTC_CM, "filedAgainst")] = filedAgainstValue;
-                                        Console.WriteLine($"[FiledAgainst] Using value {filedAgainstValue}");
+                                        Logger.LogInformation("[FiledAgainst] Using value {Value}", filedAgainstValue);
                                     }
                                     else
                                     {
                                         logger.LogWarning("Could not resolve Filed Against allowed values; creation may fail with 403");
-                                        Console.WriteLine("[FiledAgainst] Resolution returned null");
+                                        Logger.LogWarning("[FiledAgainst] Resolution returned null");
                                     }
 
                                     //Get the Creation Factory URL for change requests so that we can create one
@@ -211,7 +221,7 @@ namespace OSLC4Net.Client.Samples
 
                                     String changeRequestLocation = creationResponse.Headers.Location.ToString();
                                     creationResponse.ConsumeContent();
-                                    Console.WriteLine("Change Request created a location " + changeRequestLocation);
+                                    Logger.LogInformation("Change Request created a location {Location}", changeRequestLocation);
 
 
                                     //Get the change request from the service provider and update its title property
@@ -239,64 +249,22 @@ namespace OSLC4Net.Client.Samples
                     }
             }
 
-            private static async Task ProcessPagedQueryResultsAsync(OslcQueryResult result, OslcClient client, bool asDotNetObjects) {
-                    int page = 1;
-                    do {
-                            Console.WriteLine("\nPage " + page + ":\n");
-                            await ProcessCurrentPageAsync(result,client,asDotNetObjects);
-                            if (result.MoveNext()) {
-                                    result = result.Current;
-                                    page++;
-                            } else {
-                                    break;
-                            }
-                    } while(true);
-            }
-
-            private static Task ProcessCurrentPageAsync(OslcQueryResult result, OslcClient client, bool asDotNetObjects)
+        protected override void PrintResourceInfo(ChangeRequest cr)
         {
-            foreach (ChangeRequest cr in result.GetMembers<ChangeRequest>())
+            if (cr != null)
             {
-                            Console.WriteLine("id: " + cr.GetIdentifier() + ", title: " + cr.GetTitle() + ", status: " + cr.GetStatus());
-                    }
-            return Task.CompletedTask;
+                Logger.LogInformation("id: {Id}, title: {Title}, status: {Status}", cr.GetIdentifier(), cr.GetTitle(), cr.GetStatus());
             }
-
-            private static async Task ProcessRawResponseAsync(HttpResponseMessage response)
-        {
-                    if (!logger.IsEnabled(LogLevel.Trace))
-                    {
-                            response.ConsumeContent();
-                            return;
-                    }
-
-                    Stream inStream = await response.Content.ReadAsStreamAsync();
-                    StreamReader streamReader = new StreamReader(new BufferedStream(inStream), System.Text.Encoding.UTF8);
-
-                    String line = null;
-            while ((line = streamReader.ReadLine()) != null)
-            {
-                      logger.LogTrace(line);
-                    }
-                    response.ConsumeContent();
-            }
-
-            private static void PrintChangeRequestInfo(ChangeRequest cr) {
-                    //See the OSLC4J ChangeRequest class for a full list of attributes you can access.
-                    if (cr != null) {
-                            Console.WriteLine("ID: " + cr.GetIdentifier() + ", Title: " + cr.GetTitle() + ", Status: " + cr.GetStatus());
-                    }
-            }
+        }
 
             /// <summary>
             /// Resolves the "Filed Against" (rtc_cm:filedAgainst) allowed value from the creation factory's resource shape.
             /// This is required by EWM to satisfy the Filed Against precondition when creating work items.
             /// </summary>
-            private static async Task<Uri?> ResolveFiledAgainstAsync(
+            private async Task<Uri?> ResolveFiledAgainstAsync(
                 OslcClient client,
                 string serviceProviderUrl,
-                ChangeRequest changeRequest,
-                ILogger logger)
+                ChangeRequest changeRequest)
             {
                 try
                 {
@@ -308,11 +276,11 @@ namespace OSLC4Net.Client.Samples
 
                     if (string.IsNullOrEmpty(creationFactoryUrl))
                     {
-                        logger.LogWarning("Could not find creation factory URL for Filed Against resolution");
+                        Logger.LogWarning("Could not find creation factory URL for Filed Against resolution");
                         return null;
                     }
 
-                    logger.LogInformation("Creation factory for Filed Against: {FactoryUrl}", creationFactoryUrl);
+                    Logger.LogInformation("Creation factory for Filed Against: {FactoryUrl}", creationFactoryUrl);
 
                     // Step 2: Fetch the ServiceProvider to get the CreationFactory object
                     // Since LookupCreationFactoryAsync only returns URL string, we need to fetch the service provider
@@ -321,7 +289,7 @@ namespace OSLC4Net.Client.Samples
                     var serviceProvider = serviceProviderResponse.Resources?.SingleOrDefault();
                     if (serviceProvider == null)
                     {
-                        logger.LogWarning("Could not fetch ServiceProvider for Filed Against resolution");
+                        Logger.LogWarning("Could not fetch ServiceProvider for Filed Against resolution");
                         return null;
                     }
 
@@ -349,29 +317,29 @@ namespace OSLC4Net.Client.Samples
 
                     if (targetFactory == null)
                     {
-                        logger.LogWarning("Could not find CreationFactory object for Filed Against resolution. Looking for {FactoryUrl}", creationFactoryUrl);
+                        Logger.LogWarning("Could not find CreationFactory object for Filed Against resolution. Looking for {FactoryUrl}", creationFactoryUrl);
                         return null;
                     }
 
-                    logger.LogInformation("Found CreationFactory with {ShapeCount} resource shapes", targetFactory.GetResourceShapes()?.Length ?? 0);
+                    Logger.LogInformation("Found CreationFactory with {ShapeCount} resource shapes", targetFactory.GetResourceShapes()?.Length ?? 0);
 
                     // Step 4: Get the resource shapes from the factory
                     Uri[]? shapeUris = targetFactory.GetResourceShapes();
                     if (shapeUris == null || shapeUris.Length == 0)
                     {
-                        logger.LogWarning("CreationFactory has no resource shapes for Filed Against resolution");
+                        Logger.LogWarning("CreationFactory has no resource shapes for Filed Against resolution");
                         return null;
                     }
 
                     // Try all shapes until we find a filedAgainst property with allowed values
                     foreach (var shapeUri in shapeUris)
                     {
-                        logger.LogInformation("Inspecting ResourceShape {ShapeUri}", shapeUri);
+                        Logger.LogInformation("Inspecting ResourceShape {ShapeUri}", shapeUri);
                         var resourceShapeResponse = await client.GetResourceAsync<ResourceShape>(shapeUri.ToString());
                         var resourceShape = resourceShapeResponse.Resources?.SingleOrDefault();
                         if (resourceShape == null)
                         {
-                            logger.LogWarning("Could not fetch ResourceShape for Filed Against resolution. Shape URI: {ShapeUri}", shapeUri);
+                            Logger.LogWarning("Could not fetch ResourceShape for Filed Against resolution. Shape URI: {ShapeUri}", shapeUri);
                             continue;
                         }
 
@@ -383,7 +351,7 @@ namespace OSLC4Net.Client.Samples
                             if (defString.EndsWith("filedAgainst", StringComparison.OrdinalIgnoreCase) || defString.Contains("filedAgainst", StringComparison.OrdinalIgnoreCase))
                             {
                                 filedAgainstProperty = property;
-                                logger.LogInformation("Found filedAgainst property definition {Definition}", defString);
+                                Logger.LogInformation("Found filedAgainst property definition {Definition}", defString);
                                 break;
                             }
                         }
@@ -396,16 +364,16 @@ namespace OSLC4Net.Client.Samples
                         Uri? allowedValuesRef = filedAgainstProperty.GetAllowedValuesRef();
                         if (allowedValuesRef == null)
                         {
-                            logger.LogWarning("filedAgainst property has no allowed values reference (shape {ShapeUri})", shapeUri);
+                            Logger.LogWarning("filedAgainst property has no allowed values reference (shape {ShapeUri})", shapeUri);
                             continue;
                         }
 
-                        logger.LogInformation("Fetching Filed Against allowed values from {AllowedValuesRef}", allowedValuesRef);
+                        Logger.LogInformation("Fetching Filed Against allowed values from {AllowedValuesRef}", allowedValuesRef);
 
                         var allowedValuesResponse = await client.GetResourceRawAsync(allowedValuesRef.ToString(), OslcMediaType.APPLICATION_RDF_XML);
                         if (!allowedValuesResponse.IsSuccessStatusCode)
                         {
-                            logger.LogWarning("Failed to fetch allowed values: {StatusCode}", allowedValuesResponse.StatusCode);
+                            Logger.LogWarning("Failed to fetch allowed values: {StatusCode}", allowedValuesResponse.StatusCode);
                             continue;
                         }
 
@@ -416,68 +384,45 @@ namespace OSLC4Net.Client.Samples
                             if (allowedValues != null && allowedValues.GetAllowedValues().Length > 0)
                             {
                                 var values = allowedValues.GetAllowedValues();
-                                logger.LogInformation("Found {Count} allowed values", values.Length);
+                                Logger.LogInformation("Found {Count} allowed values", values.Length);
 
                                 foreach (var val in values)
                                 {
-                                    if (!val.ToString().Contains("Unassigned", StringComparison.OrdinalIgnoreCase))
+                                    if (!val.Contains("Unassigned", StringComparison.OrdinalIgnoreCase))
                                     {
-                                        logger.LogInformation("Resolved Filed Against category: {Category}", val);
-                                        return val;
+                                        Logger.LogInformation("Resolved Filed Against category: {Category}", val);
+                                        return new Uri(val);
                                     }
                                 }
 
                                 // Fallback to first if all seem unassigned or check failed
                                 if (values.Length > 0)
                                 {
-                                    logger.LogInformation("Using fallback Filed Against category: {Category}", values[0]);
-                                    return values[0];
+                                    Logger.LogInformation("Using fallback Filed Against category: {Category}", values[0]);
+                                    return new Uri(values[0]);
                                 }
                             }
                             else
                             {
-                                logger.LogWarning("No allowed values found in the response");
+                                Logger.LogWarning("No allowed values found in the response");
                             }
                         }
                         catch (Exception ex)
                         {
-                            logger.LogError(ex, "Failed to deserialize AllowedValues");
+                            Logger.LogError(ex, "Failed to deserialize AllowedValues");
                         }
                     }
 
-                    logger.LogWarning("No allowed values found for Filed Against across all resource shapes");
+                    Logger.LogWarning("No allowed values found for Filed Against across all resource shapes");
                     return null;
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(ex, "Error resolving Filed Against allowed values");
+                    Logger.LogError(ex, "Error resolving Filed Against allowed values");
                     return null;
                 }
             }
     }
-
-    [OslcNamespace(OSLC4Net.Core.Model.OslcConstants.OSLC_CORE_NAMESPACE)]
-    [OslcResourceShape(title = "OSLC Allowed Values Resource Shape", describes = new[] { OSLC4Net.Core.Model.OslcConstants.TYPE_ALLOWED_VALUES })]
-    public class AllowedValues : AbstractResource
-    {
-        private List<Uri> allowedValues = new List<Uri>();
-
-        [OslcDescription("Value allowed for a property")]
-        [OslcName("allowedValue")]
-        [OslcPropertyDefinition(OSLC4Net.Core.Model.OslcConstants.OSLC_CORE_NAMESPACE + "allowedValue")]
-        [OslcTitle("Allowed Values")]
-        public Uri[] GetAllowedValues()
-        {
-            return allowedValues.ToArray();
-        }
-
-        public void SetAllowedValues(Uri[] allowedValues)
-        {
-            this.allowedValues.Clear();
-            if (allowedValues != null)
-            {
-                this.allowedValues.AddRange(allowedValues);
-            }
-        }
-    }
 }
+
+
