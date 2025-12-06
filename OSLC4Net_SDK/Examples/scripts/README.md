@@ -11,9 +11,9 @@ The OSLC4Net samples have been renamed from legacy IBM product names to current 
 
 ## Setup
 
-1. Copy `jazz.env.sample` to `jazz.env`:
+1. Copy `jazz.env.example` to `jazz.env`:
    ```powershell
-   Copy-Item jazz.env.sample jazz.env
+   Copy-Item jazz.env.example jazz.env
    ```
 
 2. Update `jazz.env` with your credentials for the Jazz instance(s) you want to test:
