@@ -20,9 +20,12 @@ This release does not contain security updates.
 - `RootServicesHelper` was added to assist with processing OSLC Root Services documents. It can help with direct lookups (as long as your URI ends with `/rootservices` or `/rootservices.xml`), can look up a standard `/.well-known/oslc/rootservices.xml` location, or fall back to appending `/rootservices` for legacy systems.
 - ⚡️ `OslcQuery.SubmitAsync<T>()` method that returns `IAsyncEnumerable<T>` for lazy, async iteration over OSLC query results with automatic pagination handling.
 - `OslcQueryResult.NextPageAsync()` method for async retrieval of the next page of query results.
+- ⚡️Samples for IBM Jazz ERM (aka Doors NG), ETM, and EWM were migrated to .NET 10 and tested against Jazz.net. You can run them yourself using `OSLC4Net_SDK\Examples\scripts\test-jazz_net.ps1`.
+
 
 ### Changed
 
+- `OSLC4Net.Core` requires .NET 10 to be able to use the `[Experimental]` annotation.
 - `OSLC4Net.Client` requires .NET 10.
 
 ### Deprecated
@@ -34,7 +37,9 @@ This release does not introduce deprecations.
 This release does not remove any features.
 
 ### Fixed
+
 - Properties backed by URI collections are now reflected in OSLC shapes correctly (thanks to @ZUOXIANGE)
+- `OslcQueryResult` now handles cases where RDF graph parsing from query responses produces malformed URI nodes. Instead of throwing `ArgumentNullException`, methods like `GetMembersUrls()`, `GetMembers<T>()`, `GetNextPageUrl()`, and `GetTotalCount()` now gracefully return empty results or null values.
 
 
 ## [0.6.3] - 2025-11-15
