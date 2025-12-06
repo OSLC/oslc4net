@@ -26,7 +26,7 @@ public class AllowedValuesSerializationTests
         // Assert
         await Assert.That(deserialized).IsNotNull();
         await Assert.That(deserialized.GetAllowedValues()).HasCount().EqualTo(allowedValues.GetAllowedValues().Length);
-        
+
         foreach (var val in allowedValues.GetAllowedValues())
         {
             await Assert.That(deserialized.GetAllowedValues()).Contains(val);
