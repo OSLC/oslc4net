@@ -20,7 +20,10 @@ using System.Text;
 using System.Net.Http;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using OSLC4Net.Client.Exceptions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace OSLC4Net.Client.Oslc.Jazz
 {
@@ -35,9 +38,12 @@ namespace OSLC4Net.Client.Oslc.Jazz
 	    private const String JAZZ_AUTH_MESSAGE_HEADER = "X-com-ibm-team-repository-web-auth-msg";
 	    private const String JAZZ_AUTH_FAILED = "authfailed";
 
-	    public JazzFormAuthClient() :
-            base()
+        private readonly ILogger _logger;
+
+	    public JazzFormAuthClient(ILogger<OslcClient> logger) :
+            base(logger)
 	    {
+            _logger = logger;
 	    }
 	
         /// <summary>
@@ -46,8 +52,9 @@ namespace OSLC4Net.Client.Oslc.Jazz
         /// <param name="url">the URL of the Jazz server, including the web app context</param>
         /// <param name="user"></param>
         /// <param name="password"></param>
-	    public JazzFormAuthClient(String url, String user, String password) :
-            this()
+        /// <param name="logger"></param>
+	    public JazzFormAuthClient(String url, String user, String password, ILogger<OslcClient> logger) :
+            this(logger)
 	    {
 		    this.url = url;
 		    this.authUrl = url;  //default to base URL
@@ -64,8 +71,9 @@ namespace OSLC4Net.Client.Oslc.Jazz
 	    /// applications like RRC and DM.</param>
         /// <param name="user"></param>
         /// <param name="password"></param>
-	    public JazzFormAuthClient(String url, String authUrl, String user, String password) :
-            this(url, user, password)
+        /// <param name="logger"></param>
+	    public JazzFormAuthClient(String url, String authUrl, String user, String password, ILogger<OslcClient> logger) :
+            this(url, user, password, logger)
 	    {
 		    this.authUrl = authUrl;		
 	    }
@@ -108,7 +116,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
         /// Execute the sequence of HTTP requests to perform a form login to a Jazz server
         /// </summary>
         /// <returns>The HTTP status code of the final request to verify login is successful</returns>
-	    public HttpStatusCode FormLogin()
+	    public async Task<HttpStatusCode> FormLoginAsync()
         {
             HttpStatusCode statusCode = HttpStatusCode.Unused;
 		    String location = null;
@@ -117,20 +125,20 @@ namespace OSLC4Net.Client.Oslc.Jazz
 		    try 
 		    {
 			
-                resp = client.GetAsync(this.authUrl + "/authenticated/identity").Result;
+                resp = await GetHttpClient().GetAsync(this.authUrl + "/authenticated/identity");
 			    statusCode = resp.StatusCode;
 
                 if (statusCode == HttpStatusCode.Found)
                 {
                     location = resp.Headers.Location.AbsoluteUri;
                     resp.ConsumeContent();
-                    statusCode = FollowRedirects(statusCode, location);
+                    statusCode = await FollowRedirectsAsync(statusCode, location);
                 }
 			
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
-			    client.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
-                client.DefaultRequestHeaders.Add("OSLC-Core-Version", "2.0");
+                GetHttpClient().DefaultRequestHeaders.Clear();
+                GetHttpClient().DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+			    GetHttpClient().DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
+                GetHttpClient().DefaultRequestHeaders.Add("OSLC-Core-Version", "2.0");
 
                 String securityCheckUrl = "j_username=" + this.user + "&j_password=" + this.password;
                 StringContent content = new StringContent(securityCheckUrl, System.Text.Encoding.UTF8);
@@ -141,7 +149,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
 
                 content.Headers.ContentType = mediaTypeValue;
 
-                resp = client.PostAsync(this.authUrl + "/j_security_check", content).Result;
+                resp = await GetHttpClient().PostAsync(this.authUrl + "/j_security_check", content);
 		        statusCode = resp.StatusCode;
 		    
 		        String jazzAuthMessage = null;
@@ -165,7 +173,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
 		        {
 		    	    location = resp.Headers.Location.AbsoluteUri;
                     resp.ConsumeContent();
-		    	    statusCode = FollowRedirects(statusCode, location);
+			    statusCode = await FollowRedirectsAsync(statusCode, location);
 		    	
 		        }
 		    } catch (JazzAuthFailedException jfe) {
@@ -173,23 +181,23 @@ namespace OSLC4Net.Client.Oslc.Jazz
 	        } catch (JazzAuthErrorException jee) {
 	    	    throw jee;
 	        } catch (Exception e) {
-                Console.WriteLine(e.StackTrace);
+                _logger.LogError(e, "Error during login");
             }
 		    return statusCode;
 	    }
 
-        private HttpStatusCode FollowRedirects(HttpStatusCode statusCode, String location)
+        private async Task<HttpStatusCode> FollowRedirectsAsync(HttpStatusCode statusCode, String location)
 	    {
 
             while ((statusCode == HttpStatusCode.Found) && (location != null))
 		    {
 			    try {
-                    HttpResponseMessage newResp = client.GetAsync(location).Result;
+                    HttpResponseMessage newResp = await GetHttpClient().GetAsync(location);
 				    statusCode = newResp.StatusCode;
 				    location = (newResp.Headers.Location != null) ? newResp.Headers.Location.AbsoluteUri : null;
                     newResp.ConsumeContent();
 			    } catch (Exception e) {
-				    Console.WriteLine(e.StackTrace);
+				    _logger.LogError(e, "Error following redirect");
 			    }
 
 		    }
@@ -201,20 +209,20 @@ namespace OSLC4Net.Client.Oslc.Jazz
 		    HttpResponseMessage resp = null;
 
 		    try {
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(OSLCConstants.ATOM));
+                GetHttpClient().DefaultRequestHeaders.Clear();
+                GetHttpClient().DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(OSLCConstants.ATOM));
 
-			    resp = client.GetAsync(feedUrl).Result;
+			    resp = GetHttpClient().GetAsync(feedUrl).Result;
 
 			    HttpStatusCode statusCode = resp.StatusCode;
 
                 if (statusCode != HttpStatusCode.OK)
                 {
-                    Console.WriteLine("Status code from feed retrieval: " + statusCode);
+                    _logger.LogWarning("Status code from feed retrieval: {StatusCode}", statusCode);
                 }
 			
 		    } catch (Exception e) {
-                Console.WriteLine(e.StackTrace);
+                _logger.LogError(e, "Error getting artifact feed");
             }
 
 		    return resp;

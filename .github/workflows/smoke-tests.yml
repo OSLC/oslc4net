@@ -1,0 +1,32 @@
+name: Smoke Tests
+
+on:
+  schedule:
+    - cron: '0 15 * * 1' # 16:00 CET (15:00 UTC)
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
+
+jobs:
+  smoke-test:
+    if: >
+      github.event_name != 'pull_request' ||
+      contains(github.event.pull_request.labels.*.name, 'xtra:smoke-test')
+    runs-on: ubuntu-latest
+    env:
+      JAZZ_NET_USERNAME: ${{ secrets.JAZZ_NET_USERNAME }}
+      JAZZ_NET_PASSWORD: ${{ secrets.JAZZ_NET_PASSWORD }}
+      JAZZ_NET_PROJECT_ID: ${{ secrets.JAZZ_NET_PROJECT_ID }}
+      JAZZ_NET_PROJECT_NAME: ${{ secrets.JAZZ_NET_PROJECT_NAME }}
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Run Smoke Tests
+      shell: pwsh
+      run: ./OSLC4Net_SDK/Examples/scripts/test-jazz_net.ps1

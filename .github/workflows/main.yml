@@ -187,7 +187,7 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
-          exclude: .nuget
+          exclude: .nuget,main/OSLC4Net_SDK/Examples
           # files: "${{ github.workspace }}/main/OSLC4Net_SDK/Tests/*/TestResults/*.coverage,${{ github.workspace }}/main/OSLC4Net_SDK/Tests/*/TestResults/*.xml"
           files: ${{ github.workspace }}/coveragereports/Cobertura.xml
       - name: Pack NuGet packages (snapshot)

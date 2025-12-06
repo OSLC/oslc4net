@@ -91,12 +91,12 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
     /// <param name="objects">members from this page</param>
     /// <param name="properties">filtering list of properties for each member</param>
     /// <returns>RDF graph of collection</returns>
-    public static IGraph CreateDotNetRdfGraph(string descriptionAbout,
-        string responseInfoAbout,
-        string nextPageAbout,
+    public static IGraph CreateDotNetRdfGraph(string? descriptionAbout,
+        string? responseInfoAbout,
+        string? nextPageAbout,
         long? totalCount,
-        IEnumerable<object> objects,
-        IDictionary<string, object> properties)
+        IEnumerable<object>? objects,
+        IDictionary<string, object>? properties)
     {
         IGraph graph = new Graph();
         var namespaceMappings = graph.NamespaceMap;
@@ -126,7 +126,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                 graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType)),
                 graph.CreateUriNode(new Uri(OslcConstants.TYPE_RESPONSE_INFO))));
 
-            var countValue = totalCount ?? objects.Count();
+            var countValue = totalCount ?? objects?.Count() ?? 0;
             graph.Assert(new Triple(responseInfoResource,
                 graph.CreateUriNode(
                     new Uri(OslcConstants.OSLC_CORE_NAMESPACE + PROPERTY_TOTAL_COUNT)),
@@ -141,13 +141,16 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             }
         }
 
-        foreach (var obj in objects)
+        if (objects != null)
         {
-            HandleSingleResource(descriptionResource,
-                obj,
-                graph,
-                namespaceMappings,
-                properties);
+            foreach (var obj in objects)
+            {
+                HandleSingleResource(descriptionResource,
+                    obj,
+                    graph,
+                    namespaceMappings,
+                    properties);
+            }
         }
 
         if (descriptionAbout != null)
@@ -174,11 +177,11 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         return graph;
     }
 
-    private static void HandleSingleResource(INode descriptionResource,
+    private static void HandleSingleResource(INode? descriptionResource,
         object obj,
         IGraph graph,
         INamespaceMapper namespaceMappings,
-        IDictionary<string, object> properties)
+        IDictionary<string, object>? properties)
     {
         var objType = obj.GetType();
 
@@ -244,19 +247,22 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         IGraph? graph,
         Type beanType)
     {
-        var newInstance = Activator.CreateInstance(beanType);
+        var newInstance = Activator.CreateInstance(beanType)!;
         var typePropertyDefinitionsToSetMethods =
             new Dictionary<Type, IDictionary<string, MemberInfo>>();
         // TODO: check that all .Add() calls were converted into [k] = v
         //IDictionary<string, object> visitedResources = new DictionaryWithReplacement<string, object>();
         var visitedResources = new Dictionary<string, object>(StringComparer.Ordinal);
 
-        FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
-            beanType,
-            newInstance,
-            resource,
-            graph,
-            visitedResources);
+        if (graph != null)
+        {
+            FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
+                beanType,
+                newInstance,
+                resource,
+                graph,
+                visitedResources);
+        }
 
         return newInstance;
     }
@@ -271,7 +277,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         Type beanType)
     {
         Type[] types = { beanType };
-        var results = Activator.CreateInstance(typeof(List<>).MakeGenericType(types));
+        var results = Activator.CreateInstance(typeof(List<>).MakeGenericType(types))!;
 
         if (beanType.GetCustomAttributes(typeof(OslcResourceShape), true).Length > 0)
         {
@@ -285,7 +291,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             {
                 triples = new List<Triple>(triples);
 
-                var add = results.GetType().GetMethod("Add", types);
+                var add = results.GetType().GetMethod("Add", types)!;
                 var
                     typePropertyDefinitionsToSetMethods =
                         new Dictionary<Type, IDictionary<string, MemberInfo>>();
@@ -293,7 +299,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                 foreach (var triple in triples)
                 {
                     var resource = triple.Subject;
-                    var newInstance = Activator.CreateInstance(beanType);
+                    var newInstance = Activator.CreateInstance(beanType)!;
                     //IDictionary<string, object> visitedResources = new DictionaryWithReplacement<string, object>();
                     IDictionary<string, object> visitedResources = new Dictionary<string, object>(StringComparer.Ordinal);
 
@@ -334,7 +340,11 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                 setMethodMap);
         }
 
-        visitedResources[GetVisitedResourceName(resource)] = bean;
+        var visitedName = GetVisitedResourceName(resource);
+        if (visitedName != null)
+        {
+            visitedResources[visitedName] = bean;
+        }
 
         if (bean is IResource iResource)
         {
@@ -490,7 +500,11 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 
                     while (listNode != null && !nil.Equals(listNode.Uri))
                     {
-                        visitedResources[GetVisitedResourceName(listNode)] = new object();
+                        var listNodeName = GetVisitedResourceName(listNode);
+                        if (listNodeName != null)
+                        {
+                            visitedResources[listNodeName] = new object();
+                        }
 
                         var o = (IUriNode)graph.GetTriplesWithSubjectPredicate(listNode,
                                 graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfListFirst))).First()
@@ -502,7 +516,11 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                             .Object;
                     }
 
-                    visitedResources[GetVisitedResourceName(node)] = objects;
+                    var nodeName = GetVisitedResourceName(node);
+                    if (nodeName != null)
+                    {
+                        visitedResources[nodeName] = objects;
+                    }
                 }
                 else if (multiple && IsRdfCollectionResource(graph, obj))
                 {
@@ -514,15 +532,23 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                     {
                         var o = trip.Object;
 
-                        if (o is IUriNode)
+                        if (o is IUriNode uriNode)
                         {
-                            visitedResources[GetVisitedResourceName(o as IUriNode)] = new object();
+                            var uriNodeName = GetVisitedResourceName(uriNode);
+                            if (uriNodeName != null)
+                            {
+                                visitedResources[uriNodeName] = new object();
+                            }
                         }
 
                         objects.Add(o);
                     }
 
-                    visitedResources[GetVisitedResourceName(obj as IUriNode)] = objects;
+                    var objName = GetVisitedResourceName(obj as IUriNode);
+                    if (objName != null)
+                    {
+                        visitedResources[objName] = objects;
+                    }
                 }
                 else
                 {
@@ -539,7 +565,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 
                     while (!setMethodComponentParameterType.IsGenericType)
                     {
-                        setMethodComponentParameterType = setMethodComponentParameterType.BaseType;
+                        setMethodComponentParameterType = setMethodComponentParameterType.BaseType!;
                     }
 
                     setMethodComponentParameterType =
@@ -554,75 +580,78 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                         var literal = o as ILiteralNode;
                         var stringValue = literal?.Value;
 
-                        if (typeof(string) == setMethodComponentParameterType)
+                        if (stringValue != null)
                         {
-                            parameter = stringValue;
-                        }
-                        else if (typeof(bool) == setMethodComponentParameterType ||
-                                 typeof(bool?) == setMethodComponentParameterType)
-                        {
-                            // XML supports both 'true' and '1' for a true Boolean.
-                            // Cannot use Boolean.parseBoolean since it supports case-insensitive TRUE.
-                            if ("true".Equals(stringValue) ||
-                                "1".Equals(stringValue))
+                            if (typeof(string) == setMethodComponentParameterType)
                             {
-                                parameter = true;
+                                parameter = stringValue;
                             }
-                            // XML supports both 'false' and '0' for a false Boolean.
-                            else if ("false".Equals(stringValue) ||
-                                     "0".Equals(stringValue))
+                            else if (typeof(bool) == setMethodComponentParameterType ||
+                                     typeof(bool?) == setMethodComponentParameterType)
                             {
-                                parameter = false;
+                                // XML supports both 'true' and '1' for a true Boolean.
+                                // Cannot use Boolean.parseBoolean since it supports case-insensitive TRUE.
+                                if ("true".Equals(stringValue) ||
+                                    "1".Equals(stringValue))
+                                {
+                                    parameter = true;
+                                }
+                                // XML supports both 'false' and '0' for a false Boolean.
+                                else if ("false".Equals(stringValue) ||
+                                         "0".Equals(stringValue))
+                                {
+                                    parameter = false;
+                                }
+                                else
+                                {
+                                    throw new ArgumentException("'" + stringValue +
+                                                                "' has wrong format for Boolean.");
+                                }
                             }
-                            else
+                            else if (typeof(byte) == setMethodComponentParameterType ||
+                                     typeof(byte?) == setMethodComponentParameterType)
                             {
-                                throw new ArgumentException("'" + stringValue +
-                                                            "' has wrong format for Boolean.");
+                                parameter = byte.Parse(stringValue);
                             }
-                        }
-                        else if (typeof(byte) == setMethodComponentParameterType ||
-                                 typeof(byte?) == setMethodComponentParameterType)
-                        {
-                            parameter = byte.Parse(stringValue);
-                        }
-                        else if (typeof(short) == setMethodComponentParameterType ||
-                                 typeof(short?) == setMethodComponentParameterType)
-                        {
-                            parameter = short.Parse(stringValue);
-                        }
-                        else if (typeof(int) == setMethodComponentParameterType ||
-                                 typeof(int?) == setMethodComponentParameterType)
-                        {
-                            parameter = int.Parse(stringValue);
-                        }
-                        else if (typeof(long) == setMethodComponentParameterType ||
-                                 typeof(long?) == setMethodComponentParameterType)
-                        {
-                            parameter = long.Parse(stringValue);
-                        }
-                        else if (typeof(BigInteger) == setMethodComponentParameterType)
-                        {
-                            parameter = BigInteger.Parse(stringValue);
-                        }
-                        else if (typeof(float) == setMethodComponentParameterType ||
-                                 typeof(float?) == setMethodComponentParameterType)
-                        {
-                            parameter = float.Parse(stringValue);
-                        }
-                        else if (typeof(decimal) == setMethodComponentParameterType ||
-                                 typeof(decimal?) == setMethodComponentParameterType)
-                        {
-                            parameter = decimal.Parse(stringValue);
-                        }
-                        else if (typeof(double) == setMethodComponentParameterType ||
-                                 typeof(double?) == setMethodComponentParameterType)
-                        {
-                            parameter = double.Parse(stringValue);
-                        }
-                        else if (typeof(DateTime) == setMethodComponentParameterType ||
-                                 typeof(DateTime?) == setMethodComponentParameterType)
-                        {
-                            parameter = DateTime.Parse(stringValue);
+                            else if (typeof(short) == setMethodComponentParameterType ||
+                                     typeof(short?) == setMethodComponentParameterType)
+                            {
+                                parameter = short.Parse(stringValue);
+                            }
+                            else if (typeof(int) == setMethodComponentParameterType ||
+                                     typeof(int?) == setMethodComponentParameterType)
+                            {
+                                parameter = int.Parse(stringValue);
+                            }
+                            else if (typeof(long) == setMethodComponentParameterType ||
+                                     typeof(long?) == setMethodComponentParameterType)
+                            {
+                                parameter = long.Parse(stringValue);
+                            }
+                            else if (typeof(BigInteger) == setMethodComponentParameterType)
+                            {
+                                parameter = BigInteger.Parse(stringValue);
+                            }
+                            else if (typeof(float) == setMethodComponentParameterType ||
+                                     typeof(float?) == setMethodComponentParameterType)
+                            {
+                                parameter = float.Parse(stringValue);
+                            }
+                            else if (typeof(decimal) == setMethodComponentParameterType ||
+                                     typeof(decimal?) == setMethodComponentParameterType)
+                            {
+                                parameter = decimal.Parse(stringValue);
+                            }
+                            else if (typeof(double) == setMethodComponentParameterType ||
+                                     typeof(double?) == setMethodComponentParameterType)
+                            {
+                                parameter = double.Parse(stringValue);
+                            }
+                            else if (typeof(DateTime) == setMethodComponentParameterType ||
+                                     typeof(DateTime?) == setMethodComponentParameterType)
+                            {
+                                parameter = DateTime.Parse(stringValue);
+                            }
                         }
                     }
                     else if (o is IUriNode)
@@ -664,13 +693,13 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                             {
                                 nestedBean =
                                     Activator.CreateInstance(
-                                        MapToActivatableType(setMethodComponentParameterType));
+                                        MapToActivatableType(setMethodComponentParameterType))!;
                             }
 
                             FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
                                 setMethodComponentParameterType,
                                 nestedBean,
-                                nestedResource,
+                                nestedResource!,
                                 graph,
                                 visitedResources);
 
@@ -692,7 +721,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                         }
                         else
                         {
-                            nestedBean = Activator.CreateInstance(setMethodComponentParameterType);
+                            nestedBean = Activator.CreateInstance(setMethodComponentParameterType)!;
                         }
 
                         FromDotNetRdfNode(typePropertyDefinitionsToSetMethods,
@@ -711,7 +740,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                         {
                             // This property supports reified statements. Create the
                             // new resource to hold the value and any metadata.
-                            var reifiedResource = Activator.CreateInstance(reifiedType);
+                            var reifiedResource = Activator.CreateInstance(reifiedType)!;
 
                             // Find a setter for the actual value.
                             foreach (var method in reifiedType.GetMethods())
@@ -789,7 +818,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 
             if (parameterType.IsArray)
             {
-                var setMethodComponentParameterType = parameterType.GetElementType();
+                var setMethodComponentParameterType = parameterType.GetElementType()!;
 
                 // To support primitive arrays, we have to use Array reflection to
                 // set individual elements. We cannot use Collection.toArray.
@@ -809,7 +838,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             // Else - we are dealing with a collection or a subclass of collection
             else
             {
-                var collection = Activator.CreateInstance(MapToActivatableType(parameterType));
+                var collection = Activator.CreateInstance(MapToActivatableType(parameterType))!;
 
                 if (values.Count > 0)
                 {
@@ -855,7 +884,8 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         {
             MethodInfo methodInfo => methodInfo.GetParameters()[0]
                 .ParameterType,
-            PropertyInfo propertyInfo => propertyInfo.PropertyType
+            PropertyInfo propertyInfo => propertyInfo.PropertyType,
+            _ => throw new ArgumentException("Unsupported backing member type", nameof(backingMember))
         };
     }
 
@@ -865,7 +895,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         if (multiple)
         {
             setMethodComponentParameterType =
-                setMethodComponentParameterType.GetElementType();
+                setMethodComponentParameterType.GetElementType()!;
         }
         else if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(
                      typeof(IEnumerable<>), setMethodComponentParameterType))
@@ -939,7 +969,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         var rdfStatement = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfStatement));
 
         IList<Triple> reificationTriples = new List<Triple>(4);
-        var result = new Triple[1];
+        var result = new Triple?[1];
 
         foreach (var candidate in reifiedSubjects)
         {
@@ -967,7 +997,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             {
                 graph.Retract(reificationTriples);
 
-                return result;
+                return new[] { result[0]! };
             }
 
             reificationTriples.Clear();
@@ -1071,8 +1101,9 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         var nestedResource = obj as IUriNode;
 
         // REVISIT: Is this an inline resource? AND we have not visited it yet?
+        var visitedName = GetVisitedResourceName(obj);
         if ((obj is IBlankNode || graph.GetTriplesWithSubject(nestedResource).Any()) &&
-            !visitedResources.ContainsKey(GetVisitedResourceName(obj)))
+            visitedName != null && !visitedResources.ContainsKey(visitedName))
         {
             AbstractResource any = new AnyResource();
             var typePropertyDefinitionsToSetMethods =
@@ -1087,9 +1118,9 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             return any;
         }
 
-        if (obj is IBlankNode || graph.GetTriplesWithSubject(nestedResource).Any())
+        if ((obj is IBlankNode || graph.GetTriplesWithSubject(nestedResource).Any()) && visitedName != null)
         {
-            return visitedResources[GetVisitedResourceName(nestedResource)];
+            return visitedResources[visitedName];
         }
 
         // It's a resource reference.
@@ -1139,13 +1170,11 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             string setMethodName;
             if (getMethodName.StartsWith(METHOD_NAME_START_GET, StringComparison.Ordinal))
             {
-                setMethodName = METHOD_NAME_START_SET +
-                                getMethodName.Substring(METHOD_NAME_START_GET_LENGTH);
+                setMethodName = string.Concat(METHOD_NAME_START_SET, getMethodName.AsSpan(METHOD_NAME_START_GET_LENGTH));
             }
             else
             {
-                setMethodName = METHOD_NAME_START_SET +
-                                getMethodName.Substring(METHOD_NAME_START_IS_LENGTH);
+                setMethodName = string.Concat(METHOD_NAME_START_SET, getMethodName.AsSpan(METHOD_NAME_START_IS_LENGTH));
             }
 
             var getMethodReturnType = method.ReturnType;
@@ -1185,7 +1214,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         Type resourceType,
         IGraph graph,
         INode mainResource,
-        IDictionary<string, object> oslcProperties)
+        IDictionary<string, object>? oslcProperties)
     {
         if (oslcProperties == OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON)
         {
@@ -1229,10 +1258,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 
             if (oslcProperties != null)
             {
-                var map = (IDictionary<string, object>)oslcProperties[
-                    oslcPropertyDefinitionAnnotation.value];
-
-                if (map != null)
+                if (oslcProperties.TryGetValue(oslcPropertyDefinitionAnnotation.value, out var mapObj) && mapObj is IDictionary<string, object> map)
                 {
                     nestedProperties = map;
                 }
@@ -1286,10 +1312,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 
             if (oslcProperties != null)
             {
-                var map = (IDictionary<string, object>)oslcProperties[
-                    oslcPropertyDefinitionAnnotation.value];
-
-                if (map != null)
+                if (oslcProperties.TryGetValue(oslcPropertyDefinitionAnnotation.value, out var mapObj) && mapObj is IDictionary<string, object> map)
                 {
                     nestedProperties = map;
                 }
@@ -1336,14 +1359,14 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         IGraph graph,
         INode mainResource,
         IExtendedResource extendedResource,
-        IDictionary<string, object> properties)
+        IDictionary<string, object>? properties)
     {
         foreach (var type in extendedResource.GetTypes())
         {
             var propertyName = type.ToString();
 
             if (properties != null &&
-                properties[propertyName] == null &&
+                !properties.ContainsKey(propertyName) &&
                 !(properties is NestedWildcardProperties) &&
                 !(properties is SingletonWildcardProperties))
             {
@@ -1362,15 +1385,13 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 
         foreach (var qName in extendedProperties.Keys)
         {
-            var propertyName = qName.GetNamespaceURI() + qName.GetLocalPart();
+            var propertyName = qName.NamespaceUri + qName.LocalPart;
             IDictionary<string, object>? nestedProperties = null;
             var onlyNested = false;
 
             if (properties != null)
             {
-                var map = (IDictionary<string, object>)properties[propertyName];
-
-                if (map != null)
+                if (properties.TryGetValue(propertyName, out var mapObj) && mapObj is IDictionary<string, object> map)
                 {
                     nestedProperties = map;
                 }
@@ -1427,14 +1448,14 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         IGraph graph,
         INode resource,
         IUriNode property,
-        IDictionary<string, object> nestedProperties,
+        IDictionary<string, object>? nestedProperties,
         bool onlyNested)
     {
         if (value is AnyResource)
         {
             var any = (AbstractResource)value;
             INode nestedResource;
-            var aboutURI = any.GetAbout();
+            var aboutURI = any.About;
             if (aboutURI != null)
             {
                 if (!aboutURI.IsAbsoluteUri)
@@ -1456,7 +1477,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                 var propertyName = type.ToString();
 
                 if (nestedProperties == null ||
-                    nestedProperties[propertyName] != null ||
+                    nestedProperties.ContainsKey(propertyName) ||
                     nestedProperties is NestedWildcardProperties ||
                     nestedProperties is SingletonWildcardProperties)
                 {
@@ -1560,7 +1581,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         IGraph graph,
         INode resource,
         object value,
-        IDictionary<string, object> nestedProperties,
+        IDictionary<string, object>? nestedProperties,
         bool onlyNested)
     {
         var propertyDefinition = propertyDefinitionAnnotation.value;
@@ -1626,14 +1647,14 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             // object wrapping counterparts like Integer, Byte, Double, etc.
 
             var length =
-                (int)value.GetType().GetProperty("Length").GetValue(value, null);
-            var getValue = value.GetType().GetMethod("GetValue", new[] { typeof(int) });
+                (int)value.GetType().GetProperty("Length")!.GetValue(value, null)!;
+            var getValue = value.GetType().GetMethod("GetValue", new[] { typeof(int) })!;
 
             for (var index = 0;
                  index < length;
                  index++)
             {
-                var obj = getValue.Invoke(value, new object[] { index });
+                var obj = getValue.Invoke(value, new object[] { index })!;
 
                 HandleLocalResource(resourceType,
                     method,
@@ -1770,7 +1791,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         IGraph graph,
         INode resource,
         IUriNode attribute,
-        IDictionary<string, object> nestedProperties,
+        IDictionary<string, object>? nestedProperties,
         bool onlyNested,
         List<INode>? rdfNodeContainer)
     {
@@ -1889,7 +1910,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             Uri? aboutUri = null;
             if (value is IResource iResource)
             {
-                aboutUri = iResource.GetAbout();
+                aboutUri = iResource.About;
             }
 
             INode nestedResource;
@@ -1930,7 +1951,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                 {
                     // Reified resource is not supported for rdf collection resources
                     throw new OslcCoreInvalidPropertyDefinitionException(resourceType,
-                        method,
+                        method!,
                         null);
                 }
 
@@ -1944,7 +1965,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                 if (isReifiedResource &&
                     nestedProperties != OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON)
                 {
-                    AddReifiedStatements(graph, triple, obj, nestedProperties);
+                    AddReifiedStatements(graph, triple, obj, nestedProperties!);
                 }
 
                 // Finally, add the triple to the graph.
@@ -1994,8 +2015,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             return lowercasedFirstCharacter;
         }
 
-        return lowercasedFirstCharacter +
-               methodName.Substring(endingIndex);
+        return string.Concat(lowercasedFirstCharacter, methodName.AsSpan(endingIndex));
     }
 
     private static void RecursivelyCollectNamespaceMappings(INamespaceMapper namespaceMappings,
@@ -2008,7 +2028,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         {
             var oslcNamespaceDefinitionAnnotations =
                 (OslcNamespaceDefinition[])oslcSchemaAttribute[0].namespaceType
-                    .GetMethod("GetNamespaces", Type.EmptyTypes).Invoke(null, null);
+                    .GetMethod("GetNamespaces", Type.EmptyTypes)!.Invoke(null, null)!;
 
             foreach (var oslcNamespaceDefinitionAnnotation in oslcNamespaceDefinitionAnnotations)
             {
@@ -2077,14 +2097,14 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
     }
 
     // REVISIT: consider throwing an exception instead of returning null (@berezovskyi 2025-04)
-    private static string? GetVisitedResourceName(INode resource)
+    private static string? GetVisitedResourceName(INode? resource)
     {
-        string? visitedResourceName;
+        string? visitedResourceName = null;
         if (resource is IUriNode)
         {
             visitedResourceName = (resource as IUriNode)?.Uri.ToString();
         }
-        else
+        else if (resource is IBlankNode)
         {
             visitedResourceName = (resource as IBlankNode)?.InternalID;
         }
