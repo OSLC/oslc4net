@@ -60,7 +60,7 @@ public static class ValueTypeExtension
 {
     public static string ToString(ValueType valueType)
     {
-        var attributes = (URI[])valueType.GetType().GetField(valueType.ToString())
+        var attributes = (URI[])valueType.GetType().GetField(valueType.ToString())!
             .GetCustomAttributes(typeof(URI), false);
 
         return attributes.Length > 0 ? attributes[0].uri : string.Empty;

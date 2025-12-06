@@ -35,7 +35,7 @@ public static class TypeExtension
 {
     public static string ToString(Type type)
     {
-        var attributes = (Description[])type.GetType().GetField(type.ToString()).GetCustomAttributes(typeof(Description), false);
+        var attributes = (Description[])type.GetType().GetField(type.ToString())!.GetCustomAttributes(typeof(Description), false);
 
         return attributes.Length > 0 ? attributes[0].value : string.Empty;
     }

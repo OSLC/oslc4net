@@ -132,11 +132,22 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     private long? GetTotalCount()
     {
         InitializeRdf();
-        var triples = _rdfGraph!.GetTriplesWithSubjectPredicate(_infoResource,
-            _rdfGraph.CreateUriNode(_totalCountPredicateUri));
-        var totalCountObject = triples.SingleOrDefault()?.Object;
-        // sadly, the OSLC spec defines total count as a string
-        var countString = totalCountObject?.AsValuedNode().AsString();
+        if (_rdfGraph is null || _infoResource?.Uri is null)
+        {
+            return null;
+        }
+
+        var predicateNode = _rdfGraph.CreateUriNode(_totalCountPredicateUri);
+        var totalCountObject = _rdfGraph
+            .GetTriplesWithSubjectPredicate(_infoResource, predicateNode)
+            .SingleOrDefault()?.Object as IValuedNode;
+
+        if (totalCountObject is null)
+        {
+            return null;
+        }
+
+        var countString = totalCountObject.AsString();
         return long.TryParse(countString, out var totalCount) ? totalCount : null;
     }
 
@@ -172,7 +183,13 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
             _infoResource ??= GetInfoResourceExactCapabilityMatch(_rdfGraph);
             _infoResource ??= GetInfoResourceSubjectStartsWithCapabilityUri(triples);
 
+            // Use the same resource for members container, with same fallback chain
             _resultsMemberContainer ??= GetInfoResourceExactCapabilityMatch(_rdfGraph);
+            _resultsMemberContainer ??= GetSingleInfoResource(triples);
+            _resultsMemberContainer ??= GetInfoResourceExactQueryMatch(triples);
+            _resultsMemberContainer ??= GetInfoResourceSubjectStartsWithQueryUri(triples);
+            _resultsMemberContainer ??= GetInfoResourceSubjectStartsWithCapabilityUri(triples);
+            _resultsMemberContainer ??= _infoResource;
         }
     }
 
@@ -219,7 +236,6 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     {
         InitializeRdf();
 
-        Debug.Assert(_infoResource != null);
         Debug.Assert(_rdfGraph != null);
 
         if (_nextPageChecked)
@@ -228,6 +244,13 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
         }
 
         _nextPageChecked = true;
+
+        // If we don't have a valid info resource with a URI, we can't look for next page
+        if (_infoResource?.Uri == null)
+        {
+            return null;
+        }
+
         var predicate =
             _rdfGraph!.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + "nextPage"));
         var triples = _rdfGraph.GetTriplesWithSubjectPredicate(_infoResource, predicate);
@@ -271,9 +294,15 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     {
         InitializeRdf();
         Debug.Assert(_rdfGraph != null);
-        Debug.Assert(_resultsMemberContainer != null);
 
         IList<string> membersUrls = new List<string>();
+
+        // If we couldn't find a valid members container with a URI, return empty list
+        if (_resultsMemberContainer?.Uri == null)
+        {
+            return membersUrls.ToArray();
+        }
+
         var triples = _rdfGraph!.GetTriplesWithSubject(_resultsMemberContainer);
 
         foreach (var triple in triples)
@@ -302,6 +331,12 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     {
         InitializeRdf();
         Debug.Assert(_rdfGraph != null);
+
+        // If we couldn't find a valid members container with a URI, return empty enumerable
+        if (_resultsMemberContainer?.Uri == null)
+        {
+            return Enumerable.Empty<T>();
+        }
 
         var triples = _rdfGraph!.GetTriplesWithSubject(_resultsMemberContainer);
         IEnumerable<T> result = new TripleEnumerableWrapper<T>(triples, _rdfGraph, _rdfHelper);
