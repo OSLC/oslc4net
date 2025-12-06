@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using OSLC4Net.Core.DotNetRdfProvider;
@@ -19,47 +20,19 @@ public class AllowedValuesSerializationTests
         var formatter = new RdfXmlMediaTypeFormatter();
         var mediaType = OslcMediaType.APPLICATION_RDF_XML_TYPE;
 
-        // Act
-        var rdfXml = await SerializeAsync(formatter, allowedValues, mediaType);
-
-        // Verify serialization
-        await Verify(rdfXml, "xml");
-
-        // Act - Deserialize
-        var deserialized = await DeserializeAsync<AllowedValues>(formatter, rdfXml, mediaType);
+        var rdfXml = await RdfHelpers.SerializeAsync(formatter, allowedValues, mediaType);
+        var deserialized = await RdfHelpers.DeserializeAsync<AllowedValues>(formatter, rdfXml, mediaType);
 
         // Assert
         await Assert.That(deserialized).IsNotNull();
-        await Assert.That(deserialized.GetAllowedValues()).HasCount().EqualTo(3);
-        await Assert.That(deserialized.GetAllowedValues()).Contains("http://example.com/values/high");
-        await Assert.That(deserialized.GetAllowedValues()).Contains("http://example.com/values/medium");
-        await Assert.That(deserialized.GetAllowedValues()).Contains("http://example.com/values/low");
-    }
+        await Assert.That(deserialized.GetAllowedValues()).HasCount().EqualTo(allowedValues.GetAllowedValues().Length);
+        
+        foreach (var val in allowedValues.GetAllowedValues())
+        {
+            await Assert.That(deserialized.GetAllowedValues()).Contains(val);
+        }
 
-    private static async Task<string> SerializeAsync<T>(MediaTypeFormatter formatter, T value, MediaTypeHeaderValue mediaType)
-    {
-        var stream = new MemoryStream();
-        var content = new StringContent(string.Empty);
-        content.Headers.ContentType = mediaType;
-
-        await formatter.WriteToStreamAsync(typeof(T), value, stream, content, null);
-
-        stream.Position = 0;
-        return await new StreamReader(stream).ReadToEndAsync();
-    }
-
-    private static async Task<T> DeserializeAsync<T>(MediaTypeFormatter formatter, string str, MediaTypeHeaderValue mediaType)
-    {
-        var stream = new MemoryStream();
-        var writer = new StreamWriter(stream);
-        await writer.WriteAsync(str);
-        await writer.FlushAsync();
-        stream.Position = 0;
-
-        var content = new StreamContent(stream);
-        content.Headers.ContentType = mediaType;
-
-        return (T)await formatter.ReadFromStreamAsync(typeof(T), stream, content, null);
+        await Verify(deserialized);
     }
 }
 

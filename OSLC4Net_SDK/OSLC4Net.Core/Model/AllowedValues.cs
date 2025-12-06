@@ -7,14 +7,18 @@ namespace OSLC4Net.Core.Model;
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
 [OslcResourceShape(title = "OSLC Allowed Values Resource Shape",
     describes = new[] { OslcConstants.TYPE_ALLOWED_VALUES })]
-public sealed class AllowedValues
+public sealed class AllowedValues : IResource
 {
-    private readonly List<string> allowedValues = new();
+    private readonly List<string> allowedValues = [];
+
+    public Uri About { get; set; } = null!;
 
     public void AddAllowedValue(string allowedValue)
     {
         allowedValues.Add(allowedValue);
     }
+
+    public Uri GetAbout() => About;
 
     [OslcDescription("Value allowed for a property")]
     [OslcName("allowedValue")]
@@ -25,6 +29,11 @@ public sealed class AllowedValues
     public string[] GetAllowedValues()
     {
         return allowedValues.ToArray<string>();
+    }
+
+    public void SetAbout(Uri about)
+    {
+        About = about;
     }
 
     public void SetAllowedValues(string[] allowedValues)
