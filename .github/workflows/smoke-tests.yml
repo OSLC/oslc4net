@@ -17,6 +17,7 @@ jobs:
       JAZZ_NET_USERNAME: ${{ secrets.JAZZ_NET_USERNAME }}
       JAZZ_NET_PASSWORD: ${{ secrets.JAZZ_NET_PASSWORD }}
       JAZZ_NET_PROJECT_ID: ${{ secrets.JAZZ_NET_PROJECT_ID }}
+      JAZZ_NET_PROJECT_NAME: ${{ secrets.JAZZ_NET_PROJECT_NAME }}
 
     steps:
     - uses: actions/checkout@v4
