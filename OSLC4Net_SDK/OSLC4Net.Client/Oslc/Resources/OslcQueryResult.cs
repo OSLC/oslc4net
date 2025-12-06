@@ -132,13 +132,13 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     private long? GetTotalCount()
     {
         InitializeRdf();
-        
+
         // If we don't have a valid info resource, we can't get total count
         if (_infoResource is null)
         {
             return null;
         }
-        
+
         try
         {
             var triples = _rdfGraph!.GetTriplesWithSubjectPredicate(_infoResource,
@@ -248,13 +248,13 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
         }
 
         _nextPageChecked = true;
-        
+
         // If we don't have a valid info resource with a URI, we can't look for next page
         if (_infoResource?.Uri == null)
         {
             return null;
         }
-        
+
         var predicate =
             _rdfGraph!.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + "nextPage"));
         var triples = _rdfGraph.GetTriplesWithSubjectPredicate(_infoResource, predicate);
@@ -300,13 +300,13 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
         Debug.Assert(_rdfGraph != null);
 
         IList<string> membersUrls = new List<string>();
-        
+
         // If we couldn't find a valid members container with a URI, return empty list
         if (_resultsMemberContainer?.Uri == null)
         {
             return membersUrls.ToArray();
         }
-        
+
         var triples = _rdfGraph!.GetTriplesWithSubject(_resultsMemberContainer);
 
         foreach (var triple in triples)
