@@ -28,14 +28,15 @@ if (Test-Path $envFile) {
 }
 
 $JAZZ_NET_PROJECT_ID = if ($env:JAZZ_NET_PROJECT_ID) { $env:JAZZ_NET_PROJECT_ID } else { "sandbox01" }
-$JAZZ_NET_PROJECT_NAME = 'smarx721 Project'
+$JAZZ_NET_PROJECT_NAME = if ($env:JAZZ_NET_PROJECT_NAME) { $env:JAZZ_NET_PROJECT_NAME } else { "smarx721 Project" }
 
 Push-Location $samplesDir
 
 # Build the samples
 Write-Host "Building samples..." -ForegroundColor Cyan
 $env:AGENT_BUILD = $true
-if (-not (& dotnet build . -c Release)) {
+& dotnet build . -c Release
+if ($LASTEXITCODE -ne 0) {
     Write-Host "Build failed!" -ForegroundColor Red
     Pop-Location
     exit 1
@@ -46,47 +47,50 @@ $results = @{}
 
 # Test EWM
 Write-Host "`n=== Testing EWM Sample ===" -ForegroundColor Green
-try {
-    & dotnet run -c Release --no-build -- ewm `
-        --url "$baseUrl-ccm" `
-        --user $env:JAZZ_NET_USERNAME `
-        --password $env:JAZZ_NET_PASSWORD `
-        --project "$JAZZ_NET_PROJECT_NAME (Change and Architecture Management)"
+& dotnet run -c Release --no-build -- ewm `
+    --url "$baseUrl-ccm" `
+    --user $env:JAZZ_NET_USERNAME `
+    --password $env:JAZZ_NET_PASSWORD `
+    --project "$JAZZ_NET_PROJECT_NAME (Change and Architecture Management)"
+
+if ($LASTEXITCODE -eq 0) {
     $results['EWM'] = 'SUCCESS'
     Write-Host "EWM test passed" -ForegroundColor Green
-} catch {
-    $results['EWM'] = "FAILED: $_"
-    Write-Host "EWM test failed: $_" -ForegroundColor Red
+} else {
+    $results['EWM'] = "FAILED: Exit code $LASTEXITCODE"
+    Write-Host "EWM test failed: Exit code $LASTEXITCODE" -ForegroundColor Red
 }
 
 # Test ERM
 Write-Host "`n=== Testing ERM Sample ===" -ForegroundColor Green
-try {
-    & dotnet run -c Release --no-build -- erm `
-        --url "$baseUrl-rm" `
-        --user $env:JAZZ_NET_USERNAME `
-        --password $env:JAZZ_NET_PASSWORD `
-        --project "$JAZZ_NET_PROJECT_NAME (Requirements Management)"
+& dotnet run -c Release --no-build -- erm `
+    --url "$baseUrl-rm" `
+    --user $env:JAZZ_NET_USERNAME `
+    --password $env:JAZZ_NET_PASSWORD `
+    --project "$JAZZ_NET_PROJECT_NAME (Requirements Management)"
+
+if ($LASTEXITCODE -eq 0) {
     $results['ERM'] = 'SUCCESS'
     Write-Host "ERM test passed" -ForegroundColor Green
-} catch {
-    $results['ERM'] = "FAILED: $_"
-    Write-Host "ERM test failed: $_" -ForegroundColor Red
+} else {
+    $results['ERM'] = "FAILED: Exit code $LASTEXITCODE"
+    Write-Host "ERM test failed: Exit code $LASTEXITCODE" -ForegroundColor Red
 }
 
 # Test ETM
 Write-Host "`n=== Testing ETM Sample ===" -ForegroundColor Green
-try {
-    & dotnet run -c Release --no-build -- etm `
-        --url "$baseUrl-qm" `
-        --user $env:JAZZ_NET_USERNAME `
-        --password $env:JAZZ_NET_PASSWORD `
-        --project "$JAZZ_NET_PROJECT_NAME (Quality Management)"
+& dotnet run -c Release --no-build -- etm `
+    --url "$baseUrl-qm" `
+    --user $env:JAZZ_NET_USERNAME `
+    --password $env:JAZZ_NET_PASSWORD `
+    --project "$JAZZ_NET_PROJECT_NAME (Quality Management)"
+
+if ($LASTEXITCODE -eq 0) {
     $results['ETM'] = 'SUCCESS'
     Write-Host "ETM test passed" -ForegroundColor Green
-} catch {
-    $results['ETM'] = "FAILED: $_"
-    Write-Host "ETM test failed: $_" -ForegroundColor Red
+} else {
+    $results['ETM'] = "FAILED: Exit code $LASTEXITCODE"
+    Write-Host "ETM test failed: Exit code $LASTEXITCODE" -ForegroundColor Red
 }
 
 Pop-Location

@@ -27,12 +27,15 @@ if (Test-Path $envFile) {
     Write-Host ".env file not found at $envFile" -ForegroundColor Yellow
 }
 
+$JAZZ_NORDIC_PROJECT_NAME = if ($env:JAZZ_NORDIC_PROJECT_NAME) { $env:JAZZ_NORDIC_PROJECT_NAME } else { "OSLC Open Environment" }
+
 Push-Location $samplesDir
 
 # Build the samples
 Write-Host "Building samples..." -ForegroundColor Cyan
 $env:AGENT_BUILD = $true
-if (-not (& dotnet build . -c Release)) {
+& dotnet build . -c Release
+if ($LASTEXITCODE -ne 0) {
     Write-Host "Build failed!" -ForegroundColor Red
     Pop-Location
     exit 1
@@ -43,32 +46,34 @@ $results = @{}
 
 # Test EWM
 Write-Host "`n=== Testing EWM Sample ===" -ForegroundColor Green
-try {
-    & dotnet run -c Release --no-build -- ewm `
-        --url "$baseUrl/ccm" `
-        --user $env:JAZZ_NORDIC_USERNAME `
-        --password $env:JAZZ_NORDIC_PASSWORD `
-        --project "OSLC Open Environment (EWM)"
+& dotnet run -c Release --no-build -- ewm `
+    --url "$baseUrl/ccm" `
+    --user $env:JAZZ_NORDIC_USERNAME `
+    --password $env:JAZZ_NORDIC_PASSWORD `
+    --project "$JAZZ_NORDIC_PROJECT_NAME (EWM)"
+
+if ($LASTEXITCODE -eq 0) {
     $results['EWM'] = 'SUCCESS'
     Write-Host "EWM test passed" -ForegroundColor Green
-} catch {
-    $results['EWM'] = "FAILED: $_"
-    Write-Host "EWM test failed: $_" -ForegroundColor Red
+} else {
+    $results['EWM'] = "FAILED: Exit code $LASTEXITCODE"
+    Write-Host "EWM test failed: Exit code $LASTEXITCODE" -ForegroundColor Red
 }
 
 # Test ERM
 Write-Host "`n=== Testing ERM Sample ===" -ForegroundColor Green
-try {
-    & dotnet run -c Release --no-build -- erm `
-        --url "$baseUrl/rm" `
-        --user $env:JAZZ_NORDIC_USERNAME `
-        --password $env:JAZZ_NORDIC_PASSWORD `
-        --project "OSLC Open Environment (DNG)"
+& dotnet run -c Release --no-build -- erm `
+    --url "$baseUrl/rm" `
+    --user $env:JAZZ_NORDIC_USERNAME `
+    --password $env:JAZZ_NORDIC_PASSWORD `
+    --project "$JAZZ_NORDIC_PROJECT_NAME (DNG)"
+
+if ($LASTEXITCODE -eq 0) {
     $results['ERM'] = 'SUCCESS'
     Write-Host "ERM test passed" -ForegroundColor Green
-} catch {
-    $results['ERM'] = "FAILED: $_"
-    Write-Host "ERM test failed: $_" -ForegroundColor Red
+} else {
+    $results['ERM'] = "FAILED: Exit code $LASTEXITCODE"
+    Write-Host "ERM test failed: Exit code $LASTEXITCODE" -ForegroundColor Red
 }
 
 Pop-Location
