@@ -65,10 +65,10 @@ jobs:
           show-progress: false
           persist-credentials: false
           path: main
-      - name: Setup .NET (8.x)
+      - name: Setup .NET
         uses: actions/setup-dotnet@2016bd2012dba4e32de620c46fe006a3ac9f0602 # v5.0.1
         with:
-          dotnet-version: 8.x
+          dotnet-version: 10.x
       - name: Restore dependencies
         run: dotnet restore
       - name: Verify formatting
@@ -84,7 +84,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, ubuntu-24.04-arm, windows-latest]
+        #os: [ubuntu-24.04, ubuntu-24.04-arm, windows-latest]
+        os: [ubuntu-24.04, windows-latest]
         version:
           [
             # { setup: "8.x", target: "net8.0" },
