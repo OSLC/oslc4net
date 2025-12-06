@@ -30,6 +30,7 @@ using OSLC4Net.Client.Oslc.Resources;
 using OSLC4Net.Client.Oslc.Helpers;
 using OSLC4Net.Core.Model;
 using OSLC4Net.Client.Exceptions;
+using OSLC4Net.Core.Attribute;
 using VDS.RDF;
 using OSLC4Net.Core.DotNetRdfProvider;
 
@@ -312,7 +313,6 @@ namespace OSLC4Net.Client.Samples
                     }
 
                     logger.LogInformation("Creation factory for Filed Against: {FactoryUrl}", creationFactoryUrl);
-                    Console.WriteLine($"[FiledAgainst] Creation factory: {creationFactoryUrl}");
 
                     // Step 2: Fetch the ServiceProvider to get the CreationFactory object
                     // Since LookupCreationFactoryAsync only returns URL string, we need to fetch the service provider
@@ -354,7 +354,6 @@ namespace OSLC4Net.Client.Samples
                     }
 
                     logger.LogInformation("Found CreationFactory with {ShapeCount} resource shapes", targetFactory.GetResourceShapes()?.Length ?? 0);
-                    Console.WriteLine($"[FiledAgainst] Found creation factory; shapes: {targetFactory.GetResourceShapes()?.Length ?? 0}");
 
                     // Step 4: Get the resource shapes from the factory
                     Uri[]? shapeUris = targetFactory.GetResourceShapes();
@@ -368,7 +367,6 @@ namespace OSLC4Net.Client.Samples
                     foreach (var shapeUri in shapeUris)
                     {
                         logger.LogInformation("Inspecting ResourceShape {ShapeUri}", shapeUri);
-                        Console.WriteLine($"[FiledAgainst] Inspecting shape {shapeUri}");
                         var resourceShapeResponse = await client.GetResourceAsync<ResourceShape>(shapeUri.ToString());
                         var resourceShape = resourceShapeResponse.Resources?.SingleOrDefault();
                         if (resourceShape == null)
@@ -386,7 +384,6 @@ namespace OSLC4Net.Client.Samples
                             {
                                 filedAgainstProperty = property;
                                 logger.LogInformation("Found filedAgainst property definition {Definition}", defString);
-                                Console.WriteLine($"[FiledAgainst] Found property {defString}");
                                 break;
                             }
                         }
@@ -404,7 +401,6 @@ namespace OSLC4Net.Client.Samples
                         }
 
                         logger.LogInformation("Fetching Filed Against allowed values from {AllowedValuesRef}", allowedValuesRef);
-                        Console.WriteLine($"[FiledAgainst] Allowed values ref {allowedValuesRef}");
 
                         var allowedValuesResponse = await client.GetResourceRawAsync(allowedValuesRef.ToString(), OslcMediaType.APPLICATION_RDF_XML);
                         if (!allowedValuesResponse.IsSuccessStatusCode)
@@ -413,42 +409,39 @@ namespace OSLC4Net.Client.Samples
                             continue;
                         }
 
-                        string allowedValuesContent = await allowedValuesResponse.Content.ReadAsStringAsync();
-
-                        logger.LogInformation("Allowed values payload length: {Length}", allowedValuesContent.Length);
-                        if (logger.IsEnabled(LogLevel.Debug))
+                        try
                         {
-                            int previewLength = Math.Min(400, allowedValuesContent.Length);
-                            logger.LogDebug("Allowed values preview: {Preview}", allowedValuesContent.Substring(0, previewLength));
-                        }
-                        Console.WriteLine($"[FiledAgainst] Allowed values length {allowedValuesContent.Length}");
+                            var allowedValues = await allowedValuesResponse.Content.ReadAsAsync<AllowedValues>(client.GetFormatters());
 
-                        // Regex for rdf:resource="..."
-                        var matches = System.Text.RegularExpressions.Regex.Matches(
-                            allowedValuesContent,
-                            "rdf:resource=\"([^\"]+)\"");
-
-                        foreach (System.Text.RegularExpressions.Match match in matches)
-                        {
-                            if (match.Groups.Count > 1)
+                            if (allowedValues != null && allowedValues.GetAllowedValues().Length > 0)
                             {
-                                string uriString = match.Groups[1].Value;
-                                if (!uriString.Contains("Unassigned", StringComparison.OrdinalIgnoreCase))
+                                var values = allowedValues.GetAllowedValues();
+                                logger.LogInformation("Found {Count} allowed values", values.Length);
+
+                                foreach (var val in values)
                                 {
-                                    logger.LogInformation("Resolved Filed Against category: {Category}", uriString);
-                                    Console.WriteLine($"[FiledAgainst] Resolved category {uriString}");
-                                    return new Uri(uriString);
+                                    if (!val.ToString().Contains("Unassigned", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        logger.LogInformation("Resolved Filed Against category: {Category}", val);
+                                        return val;
+                                    }
+                                }
+
+                                // Fallback to first if all seem unassigned or check failed
+                                if (values.Length > 0)
+                                {
+                                    logger.LogInformation("Using fallback Filed Against category: {Category}", values[0]);
+                                    return values[0];
                                 }
                             }
+                            else
+                            {
+                                logger.LogWarning("No allowed values found in the response");
+                            }
                         }
-
-                        logger.LogInformation("No non-Unassigned allowed values found; matches count {Count}", matches.Count);
-
-                        if (matches.Count > 0 && matches[0].Groups.Count > 1)
+                        catch (Exception ex)
                         {
-                            string fallbackUri = matches[0].Groups[1].Value;
-                            logger.LogInformation("Using fallback Filed Against category: {Category}", fallbackUri);
-                            return new Uri(fallbackUri);
+                            logger.LogError(ex, "Failed to deserialize AllowedValues");
                         }
                     }
 
@@ -461,5 +454,30 @@ namespace OSLC4Net.Client.Samples
                     return null;
                 }
             }
+    }
+
+    [OslcNamespace(OSLC4Net.Core.Model.OslcConstants.OSLC_CORE_NAMESPACE)]
+    [OslcResourceShape(title = "OSLC Allowed Values Resource Shape", describes = new[] { OSLC4Net.Core.Model.OslcConstants.TYPE_ALLOWED_VALUES })]
+    public class AllowedValues : AbstractResource
+    {
+        private List<Uri> allowedValues = new List<Uri>();
+
+        [OslcDescription("Value allowed for a property")]
+        [OslcName("allowedValue")]
+        [OslcPropertyDefinition(OSLC4Net.Core.Model.OslcConstants.OSLC_CORE_NAMESPACE + "allowedValue")]
+        [OslcTitle("Allowed Values")]
+        public Uri[] GetAllowedValues()
+        {
+            return allowedValues.ToArray();
+        }
+
+        public void SetAllowedValues(Uri[] allowedValues)
+        {
+            this.allowedValues.Clear();
+            if (allowedValues != null)
+            {
+                this.allowedValues.AddRange(allowedValues);
+            }
+        }
     }
 }
