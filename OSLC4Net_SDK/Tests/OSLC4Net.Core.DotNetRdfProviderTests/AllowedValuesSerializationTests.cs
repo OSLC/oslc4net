@@ -1,7 +1,7 @@
+using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
-using System.Net.Http.Headers;
-using System.Net.Http.Formatting;
 
 namespace OSLC4Net.Core.DotNetRdfProviderTests;
 
@@ -21,7 +21,7 @@ public class AllowedValuesSerializationTests
 
         // Act
         var rdfXml = await SerializeAsync(formatter, allowedValues, mediaType);
-        
+
         // Verify serialization
         await Verify(rdfXml, "xml");
 
