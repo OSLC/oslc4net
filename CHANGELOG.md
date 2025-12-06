@@ -18,6 +18,8 @@ This release does not contain security updates.
 ### Added
 
 - `RootServicesHelper` was added to assist with processing OSLC Root Services documents. It can help with direct lookups (as long as your URI ends with `/rootservices` or `/rootservices.xml`), can look up a standard `/.well-known/oslc/rootservices.xml` location, or fall back to appending `/rootservices` for legacy systems.
+- ⚡️Samples for IBM Jazz ERM (aka Doors NG), ETM, and EWM were migrated to .NET 10 and tested against Jazz.net. You can run them yourself using `OSLC4Net_SDK\Examples\scripts\test-jazz_net.ps1`.
+
 
 ### Changed
 
