@@ -384,7 +384,7 @@ public sealed class ResourceShapeFactory
     {
         if (type.IsArray)
         {
-            return type.GetElementType();
+            return type.GetElementType()!;
         }
 
         if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(ICollection<>),
