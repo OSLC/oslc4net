@@ -30,8 +30,16 @@ using VDS.RDF;
 namespace OSLC4Net.Client.Oslc;
 
 /// <summary>
-/// An OSLC Client.
+/// An OSLC Client. This is the primary client for OSLC operations.
 /// </summary>
+/// <remarks>
+/// OslcClient supports:
+/// <list type="bullet">
+///   <item>Configurable request parameters via <see cref="OslcRequestParams"/> (can be set in constructor or per-request)</item>
+///   <item>Access to both unmarshalled POCOs and raw response graphs via <see cref="OslcResponse{T}"/></item>
+///   <item>Accumulating responses in a single graph for discovery phases via <see cref="AccumulatingGraph"/></item>
+/// </list>
+/// </remarks>
 public class OslcClient : IDisposable
 {
     private readonly ILogger<OslcClient> _logger;
@@ -41,6 +49,17 @@ public class OslcClient : IDisposable
 
     protected readonly ISet<MediaTypeFormatter> _formatters;
     protected readonly HttpClient _client;
+
+    /// <summary>
+    /// Default request parameters used for all requests unless overridden.
+    /// </summary>
+    public OslcRequestParams DefaultRequestParams { get; }
+
+    /// <summary>
+    /// When set, all response graphs will be merged into this graph.
+    /// Useful for the initial discovery phase to accumulate all service provider information.
+    /// </summary>
+    public Graph? AccumulatingGraph { get; private set; }
 
     protected string AcceptHeader { get; } =
         "text/turtle;q=1.0, application/rdf+xml;q=0.9, application/n-triples;q=0.8, text/n3;q=0.7";
@@ -53,15 +72,27 @@ public class OslcClient : IDisposable
     }
 
     /// <summary>
+    /// Initialize a new OslcClient with custom default request parameters.
+    /// </summary>
+    /// <param name="logger">Logger instance.</param>
+    /// <param name="defaultRequestParams">Default request parameters for all requests.</param>
+    public OslcClient(ILogger<OslcClient> logger, OslcRequestParams defaultRequestParams)
+        : this(false, logger, defaultRequestParams)
+    {
+    }
+
+    /// <summary>
     /// Initialize a new OslcClient using an externally managed HttpClient (e.g. with resilience policies).
     /// </summary>
     /// <param name="client">Pre-configured HttpClient instance (lifetime managed by caller).</param>
     /// <param name="logger">Logger instance.</param>
-    public OslcClient(HttpClient client, ILogger<OslcClient> logger)
+    /// <param name="defaultRequestParams">Optional default request parameters for all requests.</param>
+    public OslcClient(HttpClient client, ILogger<OslcClient> logger, OslcRequestParams? defaultRequestParams = null)
     {
         _logger = logger;
         _client = client;
         _formatters = new HashSet<MediaTypeFormatter> { new RdfXmlMediaTypeFormatter() };
+        DefaultRequestParams = defaultRequestParams ?? OslcRequestParams.Default;
     }
 
     /// <summary>
@@ -116,14 +147,23 @@ public class OslcClient : IDisposable
         }
 
         _client = HttpClientFactory.Create(handler);
+        DefaultRequestParams = OslcRequestParams.Default;
     }
 
-    private OslcClient(HttpClientHandler customHandler, ILogger<OslcClient> logger) : this(null,
+    private OslcClient(HttpClientHandler? customHandler, ILogger<OslcClient> logger,
+        OslcRequestParams? defaultRequestParams = null) : this(null,
         customHandler, logger)
     {
+        DefaultRequestParams = defaultRequestParams ?? OslcRequestParams.Default;
     }
 
     private OslcClient(bool allowInvalidTlsCerts, ILogger<OslcClient> logger)
+        : this(allowInvalidTlsCerts, logger, null)
+    {
+    }
+
+    private OslcClient(bool allowInvalidTlsCerts, ILogger<OslcClient> logger,
+        OslcRequestParams? defaultRequestParams)
     {
         _logger = logger;
         var handler = new HttpClientHandler
@@ -144,13 +184,16 @@ public class OslcClient : IDisposable
         _formatters.Add(new RdfXmlMediaTypeFormatter());
 
         _client = new HttpClient(handler);
+        DefaultRequestParams = defaultRequestParams ?? OslcRequestParams.Default;
     }
+
 
     public static OslcClient ForBasicAuth(string username, string password,
         ILogger<OslcClient> logger,
-        HttpClientHandler handler = null)
+        HttpClientHandler? handler = null,
+        OslcRequestParams? defaultRequestParams = null)
     {
-        var oslcClient = new OslcClient(handler, logger);
+        var oslcClient = new OslcClient(handler, logger, defaultRequestParams);
         var client = oslcClient.GetHttpClient();
         var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}"));
         client.DefaultRequestHeaders.Authorization =
@@ -162,11 +205,11 @@ public class OslcClient : IDisposable
     /// Create an OslcClient for Basic Auth using a pre-configured HttpClient (e.g. with resilience policies).
     /// </summary>
     public static OslcClient ForBasicAuth(HttpClient httpClient, string username, string password,
-        ILogger<OslcClient> logger)
+        ILogger<OslcClient> logger, OslcRequestParams? defaultRequestParams = null)
     {
         var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}"));
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
-        return new OslcClient(httpClient, logger);
+        return new OslcClient(httpClient, logger, defaultRequestParams);
     }
 
     /// <summary>
@@ -178,11 +221,60 @@ public class OslcClient : IDisposable
         return _client;
     }
 
+    /// <summary>
+    /// Enables graph accumulation mode. All response graphs will be merged into a single graph.
+    /// Useful for the initial discovery phase to accumulate all service provider information.
+    /// </summary>
+    /// <returns>The accumulating graph that will contain all merged response data.</returns>
+    public Graph EnableGraphAccumulation()
+    {
+        AccumulatingGraph ??= new Graph();
+        return AccumulatingGraph;
+    }
+
+    /// <summary>
+    /// Disables graph accumulation mode and optionally returns the accumulated graph.
+    /// </summary>
+    /// <returns>The accumulated graph, or null if accumulation was not enabled.</returns>
+    public Graph? DisableGraphAccumulation()
+    {
+        var result = AccumulatingGraph;
+        AccumulatingGraph = null;
+        return result;
+    }
+
+    /// <summary>
+    /// Clears the accumulating graph without disabling accumulation mode.
+    /// </summary>
+    public void ClearAccumulatingGraph()
+    {
+        AccumulatingGraph?.Clear();
+    }
+
 
     public async Task<OslcResponse<T>> GetResourceAsync<T>(string resourceUri, string? mediaType)
         where T : IExtendedResource, new()
     {
-        var httpResponseMessage = await GetResourceRawAsync(resourceUri, mediaType).ConfigureAwait(false);
+        return await GetResourceAsync<T>(resourceUri, mediaType, null).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Get an OSLC resource with request parameter overrides.
+    /// </summary>
+    /// <typeparam name="T">The type of resource to retrieve.</typeparam>
+    /// <param name="resourceUri">The URI of the resource.</param>
+    /// <param name="mediaType">The media type to accept (deprecated, use requestParams instead).</param>
+    /// <param name="requestParams">Request parameters to override defaults.</param>
+    /// <returns>An OslcResponse containing the resource(s) and graph.</returns>
+    public async Task<OslcResponse<T>> GetResourceAsync<T>(string resourceUri, string? mediaType,
+        OslcRequestParams? requestParams)
+        where T : IExtendedResource, new()
+    {
+        var effectiveParams = DefaultRequestParams.Merge(requestParams);
+        var acceptHeader = mediaType ?? effectiveParams.AcceptHeader ?? AcceptHeader;
+
+        var httpResponseMessage = await GetResourceRawAsync(resourceUri, acceptHeader, effectiveParams)
+            .ConfigureAwait(false);
         // REVISIT: according to the spec, non-success codes may also come with a RDF response - should, actually! (@berezovskyi 2024-10)
         // consider adding .ErrorResource to the OslcResponse
         if (httpResponseMessage.IsSuccessStatusCode && httpResponseMessage.Content is not null)
@@ -203,6 +295,12 @@ public class OslcClient : IDisposable
 
             var graph = await httpResponseMessage.Content.ReadAsAsync(typeof(Graph), _formatters)
                 .ConfigureAwait(false) as Graph;
+
+            // Merge into accumulating graph if enabled
+            if (AccumulatingGraph is not null && graph is not null)
+            {
+                AccumulatingGraph.Merge(graph);
+            }
 
             return OslcResponse<T>.WithSuccess(resources?.ToList(), graph, httpResponseMessage);
         }
@@ -237,13 +335,26 @@ public class OslcClient : IDisposable
 
     public Task<OslcResponse<T>> GetResourceAsync<T>(string resourceUri) where T : IExtendedResource, new()
     {
-        return GetResourceAsync<T>(resourceUri, null);
+        return GetResourceAsync<T>(resourceUri, null, null);
     }
 
 
     public Task<OslcResponse<T>> GetResourceAsync<T>(Uri typeURI) where T : IExtendedResource, new()
     {
-        return GetResourceAsync<T>(typeURI.ToString(), null);
+        return GetResourceAsync<T>(typeURI.ToString(), null, null);
+    }
+
+    /// <summary>
+    /// Get an OSLC resource with request parameter overrides.
+    /// </summary>
+    /// <typeparam name="T">The type of resource to retrieve.</typeparam>
+    /// <param name="typeURI">The URI of the resource.</param>
+    /// <param name="requestParams">Request parameters to override defaults.</param>
+    /// <returns>An OslcResponse containing the resource(s) and graph.</returns>
+    public Task<OslcResponse<T>> GetResourceAsync<T>(Uri typeURI, OslcRequestParams? requestParams)
+        where T : IExtendedResource, new()
+    {
+        return GetResourceAsync<T>(typeURI.ToString(), null, requestParams);
     }
 
     /// <summary>
@@ -251,11 +362,37 @@ public class OslcClient : IDisposable
     /// </summary>
     public async Task<HttpResponseMessage> GetResourceRawAsync(string url, string? mediaType = null)
     {
+        return await GetResourceRawAsync(url, mediaType, null).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Consider using <see cref="GetResourceAsync{T}"/> instead.
+    /// </summary>
+    /// <param name="url">The URL to fetch.</param>
+    /// <param name="mediaType">The Accept media type.</param>
+    /// <param name="requestParams">Optional request parameters to override defaults.</param>
+    public async Task<HttpResponseMessage> GetResourceRawAsync(string url, string? mediaType,
+        OslcRequestParams? requestParams)
+    {
+        var effectiveParams = DefaultRequestParams.Merge(requestParams);
+        var accept = mediaType ?? effectiveParams.AcceptHeader ?? AcceptHeader;
+        var oslcVersion = effectiveParams.OslcCoreVersion ?? OslcRequestParams.DefaultOslcCoreVersion;
+
         _client.DefaultRequestHeaders.Accept.Clear();
-        // TODO: use uniformly (@berezovskyi 2024-10)
-        _client.DefaultRequestHeaders.Accept.ParseAdd(mediaType ?? AcceptHeader);
+        _client.DefaultRequestHeaders.Accept.ParseAdd(accept);
         _client.DefaultRequestHeaders.Remove(OSLCConstants.OSLC_CORE_VERSION);
-        _client.DefaultRequestHeaders.Add(OSLCConstants.OSLC_CORE_VERSION, "2.0");
+        _client.DefaultRequestHeaders.Add(OSLCConstants.OSLC_CORE_VERSION, oslcVersion);
+
+        // Apply custom headers from request parameters
+        if (effectiveParams.CustomHeaders is not null)
+        {
+            foreach (var header in effectiveParams.CustomHeaders)
+            {
+                _client.DefaultRequestHeaders.Remove(header.Key);
+                _client.DefaultRequestHeaders.Add(header.Key, header.Value);
+            }
+        }
+
         HttpResponseMessage response;
         bool redirect;
         byte redirectCount = 0;
@@ -396,7 +533,28 @@ public class OslcClient : IDisposable
     public async Task<OslcResponse<T>> CreateResourceAsync<T>(string url, T artifact, string? mediaType = null)
         where T : IExtendedResource, new()
     {
-        var response = await CreateResourceRawAsync(url, artifact, mediaType).ConfigureAwait(false);
+        return await CreateResourceAsync(url, artifact, mediaType, null).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Create an OSLC resource with request parameter overrides.
+    /// </summary>
+    /// <typeparam name="T">The type of resource to create.</typeparam>
+    /// <param name="url">The creation factory URL.</param>
+    /// <param name="artifact">The resource to create.</param>
+    /// <param name="mediaType">The Content-Type media type (deprecated, use requestParams instead).</param>
+    /// <param name="requestParams">Request parameters to override defaults.</param>
+    /// <returns>An OslcResponse containing the created resource.</returns>
+    public async Task<OslcResponse<T>> CreateResourceAsync<T>(string url, T artifact, string? mediaType,
+        OslcRequestParams? requestParams)
+        where T : IExtendedResource, new()
+    {
+        var effectiveParams = DefaultRequestParams.Merge(requestParams);
+        var contentType = mediaType ?? effectiveParams.ContentType ?? OSLCConstants.CT_RDF;
+        var acceptType = effectiveParams.AcceptHeader ?? AcceptHeader;
+
+        var response = await CreateResourceRawAsync(url, artifact, contentType, acceptType, effectiveParams)
+            .ConfigureAwait(false);
         // a bit outside the spec, but these should be success statuses
         if (response.StatusCode == HttpStatusCode.OK
             || response.StatusCode == HttpStatusCode.Created
@@ -406,7 +564,7 @@ public class OslcClient : IDisposable
             // we have two options: the Location header points to a newly created resource or the resource is returned directly
             // I think OSLC mandates Location, so let's start with that
             var createdUri = response.Headers.Location?.AbsoluteUri;
-            return await GetResourceAsync<T>(createdUri, mediaType).ConfigureAwait(false);
+            return await GetResourceAsync<T>(createdUri, acceptType, requestParams).ConfigureAwait(false);
         }
         else
         {
@@ -444,14 +602,41 @@ public class OslcClient : IDisposable
     public async Task<HttpResponseMessage> CreateResourceRawAsync(string url, IResource artifact, string mediaType,
         string acceptType)
     {
+        return await CreateResourceRawAsync(url, artifact, mediaType, acceptType, null).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Create (POST) an artifact to a URL - usually an OSLC Creation Factory
+    /// </summary>
+    /// <param name="url">The creation factory URL.</param>
+    /// <param name="artifact">The resource to create.</param>
+    /// <param name="mediaType">The Content-Type.</param>
+    /// <param name="acceptType">The Accept header.</param>
+    /// <param name="requestParams">Optional request parameters to apply custom headers.</param>
+    /// <returns>The HTTP response.</returns>
+    public async Task<HttpResponseMessage> CreateResourceRawAsync(string url, IResource artifact, string mediaType,
+        string acceptType, OslcRequestParams? requestParams)
+    {
+        var effectiveParams = DefaultRequestParams.Merge(requestParams);
+        var oslcVersion = effectiveParams.OslcCoreVersion ?? OslcRequestParams.DefaultOslcCoreVersion;
+
         _client.DefaultRequestHeaders.Accept.Clear();
         foreach (var acceptSingle in acceptType.Split(','))
         {
             _client.DefaultRequestHeaders.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(acceptSingle));
         }
-        //_client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptType));
         _client.DefaultRequestHeaders.Remove(OSLCConstants.OSLC_CORE_VERSION);
-        _client.DefaultRequestHeaders.Add(OSLCConstants.OSLC_CORE_VERSION, "2.0");
+        _client.DefaultRequestHeaders.Add(OSLCConstants.OSLC_CORE_VERSION, oslcVersion);
+
+        // Apply custom headers from request parameters
+        if (effectiveParams.CustomHeaders is not null)
+        {
+            foreach (var header in effectiveParams.CustomHeaders)
+            {
+                _client.DefaultRequestHeaders.Remove(header.Key);
+                _client.DefaultRequestHeaders.Add(header.Key, header.Value);
+            }
+        }
 
         var mediaTypeValue = new MediaTypeHeaderValue(mediaType);
         var formatter =
