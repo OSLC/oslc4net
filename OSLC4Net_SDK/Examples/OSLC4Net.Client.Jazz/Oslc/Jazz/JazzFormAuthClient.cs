@@ -38,9 +38,12 @@ namespace OSLC4Net.Client.Oslc.Jazz
 	    private const String JAZZ_AUTH_MESSAGE_HEADER = "X-com-ibm-team-repository-web-auth-msg";
 	    private const String JAZZ_AUTH_FAILED = "authfailed";
 
+        private readonly ILogger _logger;
+
 	    public JazzFormAuthClient(ILogger<OslcClient> logger) :
             base(logger)
 	    {
+            _logger = logger;
 	    }
 	
         /// <summary>
@@ -178,7 +181,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
 	        } catch (JazzAuthErrorException jee) {
 	    	    throw jee;
 	        } catch (Exception e) {
-                Logger.LogError(e, "Error during login");
+                _logger.LogError(e, "Error during login");
             }
 		    return statusCode;
 	    }
@@ -194,7 +197,7 @@ namespace OSLC4Net.Client.Oslc.Jazz
 				    location = (newResp.Headers.Location != null) ? newResp.Headers.Location.AbsoluteUri : null;
                     newResp.ConsumeContent();
 			    } catch (Exception e) {
-				    Logger.LogError(e, "Error following redirect");
+				    _logger.LogError(e, "Error following redirect");
 			    }
 
 		    }
@@ -215,11 +218,11 @@ namespace OSLC4Net.Client.Oslc.Jazz
 
                 if (statusCode != HttpStatusCode.OK)
                 {
-                    Logger.LogWarning("Status code from feed retrieval: {StatusCode}", statusCode);
+                    _logger.LogWarning("Status code from feed retrieval: {StatusCode}", statusCode);
                 }
 			
 		    } catch (Exception e) {
-                Logger.LogError(e, "Error getting artifact feed");
+                _logger.LogError(e, "Error getting artifact feed");
             }
 
 		    return resp;

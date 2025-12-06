@@ -22,7 +22,6 @@ using System.Threading.Tasks;
 using System.CommandLine;
 using System.Xml.Linq;
 using Microsoft.Extensions.Logging;
-using System.CommandLine;
 using System.CommandLine.Invocation;
 using OSLC4Net.Client.Oslc;
 using OSLC4Net.Client.Oslc.Jazz;
@@ -44,8 +43,11 @@ namespace OSLC4Net.Client.Samples
     /// </summary>
     class ERMSample : SampleBase<Requirement>
     {
-        public ERMSample(ILoggerFactory loggerFactory) : base(loggerFactory)
+        private readonly ILoggerFactory _loggerFactory;
+
+        public ERMSample(ILoggerFactory loggerFactory) : base(loggerFactory.CreateLogger<ERMSample>())
         {
+            _loggerFactory = loggerFactory;
         }
 
         /// <summary>
@@ -107,7 +109,7 @@ namespace OSLC4Net.Client.Samples
                 //For ERM, use the JTS for the authorization URL
                 //This assumes ERM is at context /rm
                 String authUrl = webContextUrl.Replace("/rm", "/jts");
-                JazzFormAuthClient client = new JazzFormAuthClient(webContextUrl, authUrl, user, passwd, LoggerFactory.CreateLogger<OslcClient>());
+                JazzFormAuthClient client = new JazzFormAuthClient(webContextUrl, authUrl, user, passwd, _loggerFactory.CreateLogger<OslcClient>());
 
                 //STEP 2: Login to Jazz Server
                 if (await client.FormLoginAsync() == HttpStatusCode.OK)

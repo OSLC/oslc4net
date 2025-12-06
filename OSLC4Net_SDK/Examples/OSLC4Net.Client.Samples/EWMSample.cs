@@ -189,7 +189,7 @@ namespace OSLC4Net.Client.Samples
 
                                     // Populate required Filed Against/category using allowed values from the creation factory shape
                                     Logger.LogInformation("[FiledAgainst] Starting resolution");
-                                    Uri? filedAgainstValue = await ResolveFiledAgainstAsync(client, serviceProviderUrl, changeRequest, logger);
+                                    Uri? filedAgainstValue = await ResolveFiledAgainstAsync(client, serviceProviderUrl, changeRequest);
                                     if (filedAgainstValue != null)
                                     {
                                         changeRequest.GetExtendedProperties()[new QName(JazzConstants.RTC_CM, "filedAgainst")] = filedAgainstValue;
@@ -197,7 +197,7 @@ namespace OSLC4Net.Client.Samples
                                     }
                                     else
                                     {
-                                        logger.LogWarning("Could not resolve Filed Against allowed values; creation may fail with 403");
+                                        Logger.LogWarning("Could not resolve Filed Against allowed values; creation may fail with 403");
                                         Logger.LogWarning("[FiledAgainst] Resolution returned null");
                                     }
 
@@ -243,9 +243,9 @@ namespace OSLC4Net.Client.Samples
 
                             }
                     } catch (RootServicesException re) {
-                            logger.LogError(re, "Unable to access the Jazz rootservices document at: " + webContextUrl + "/rootservices");
+                            Logger.LogError(re, "Unable to access the Jazz rootservices document at: " + webContextUrl + "/rootservices");
                     } catch (Exception e) {
-                            logger.LogError(e, e.Message);
+                            Logger.LogError(e, e.Message);
                     }
             }
 
@@ -379,7 +379,9 @@ namespace OSLC4Net.Client.Samples
 
                         try
                         {
+#pragma warning disable OSLCEXP001
                             var allowedValues = await allowedValuesResponse.Content.ReadAsAsync<AllowedValues>(client.GetFormatters());
+#pragma warning restore OSLCEXP001
 
                             if (allowedValues != null && allowedValues.GetAllowedValues().Length > 0)
                             {

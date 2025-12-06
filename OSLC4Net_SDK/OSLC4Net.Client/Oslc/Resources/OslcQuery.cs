@@ -209,7 +209,7 @@ public class OslcQuery
 
         if (uriBuilder.Query != null && uriBuilder.Query.Length > 1)
         {
-            uriBuilder.Query = uriBuilder.Query.Substring(1) + '&' + content;
+            uriBuilder.Query = string.Concat(uriBuilder.Query.AsSpan(1), "&", content);
         }
         else
         {

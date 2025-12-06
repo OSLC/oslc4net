@@ -343,7 +343,7 @@ public sealed class ResourceShapeFactory
             return lowercasedFirstCharacter;
         }
 
-        return lowercasedFirstCharacter + methodName.Substring(startingIndex + 1);
+        return string.Concat(lowercasedFirstCharacter, methodName.AsSpan(startingIndex + 1));
     }
 
     private static ValueType GetDefaultValueType(Type resourceType, MethodInfo method,
@@ -409,13 +409,11 @@ public sealed class ResourceShapeFactory
         string setMethodName;
         if (getMethodName.StartsWith(METHOD_NAME_START_GET, StringComparison.Ordinal))
         {
-            setMethodName = METHOD_NAME_START_SET +
-                            getMethodName.Substring(METHOD_NAME_START_GET_LENGTH);
+            setMethodName = string.Concat(METHOD_NAME_START_SET, getMethodName.AsSpan(METHOD_NAME_START_GET_LENGTH));
         }
         else
         {
-            setMethodName = METHOD_NAME_START_SET +
-                            getMethodName.Substring(METHOD_NAME_START_IS_LENGTH);
+            setMethodName = string.Concat(METHOD_NAME_START_SET, getMethodName.AsSpan(METHOD_NAME_START_IS_LENGTH));
         }
 
         if (resourceType.GetMethod(setMethodName, new[] { getMethod.ReturnType }) == null)

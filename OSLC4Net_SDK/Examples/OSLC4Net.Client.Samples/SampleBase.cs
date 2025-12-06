@@ -9,7 +9,7 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client.Samples
 {
-    public abstract class SampleBase<TResource> where TResource : AbstractResource
+    public abstract class SampleBase<TResource> where TResource : IExtendedResource
     {
         protected readonly ILogger Logger;
 

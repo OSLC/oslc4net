@@ -1170,13 +1170,11 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             string setMethodName;
             if (getMethodName.StartsWith(METHOD_NAME_START_GET, StringComparison.Ordinal))
             {
-                setMethodName = METHOD_NAME_START_SET +
-                                getMethodName.Substring(METHOD_NAME_START_GET_LENGTH);
+                setMethodName = string.Concat(METHOD_NAME_START_SET, getMethodName.AsSpan(METHOD_NAME_START_GET_LENGTH));
             }
             else
             {
-                setMethodName = METHOD_NAME_START_SET +
-                                getMethodName.Substring(METHOD_NAME_START_IS_LENGTH);
+                setMethodName = string.Concat(METHOD_NAME_START_SET, getMethodName.AsSpan(METHOD_NAME_START_IS_LENGTH));
             }
 
             var getMethodReturnType = method.ReturnType;
@@ -2017,8 +2015,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             return lowercasedFirstCharacter;
         }
 
-        return lowercasedFirstCharacter +
-               methodName.Substring(endingIndex);
+        return string.Concat(lowercasedFirstCharacter, methodName.AsSpan(endingIndex));
     }
 
     private static void RecursivelyCollectNamespaceMappings(INamespaceMapper namespaceMappings,

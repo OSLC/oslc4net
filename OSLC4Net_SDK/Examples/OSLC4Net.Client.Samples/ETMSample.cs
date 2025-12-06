@@ -23,7 +23,6 @@ using System.Threading.Tasks;
 using System.IO;
 using System.CommandLine;
 using Microsoft.Extensions.Logging;
-using System.CommandLine;
 using System.CommandLine.Invocation;
 using OSLC4Net.Client.Oslc.Jazz;
 using OSLC4Net.Client.Oslc;
@@ -44,8 +43,11 @@ namespace OSLC4Net.Client.Samples
     /// </summary>
     class ETMSample : SampleBase<TestResult>
     {
-        public ETMSample(ILoggerFactory loggerFactory) : base(loggerFactory)
+        private readonly ILoggerFactory _loggerFactory;
+
+        public ETMSample(ILoggerFactory loggerFactory) : base(loggerFactory.CreateLogger<ETMSample>())
         {
+            _loggerFactory = loggerFactory;
         }
 
         /// <summary>
@@ -105,7 +107,7 @@ namespace OSLC4Net.Client.Samples
 	
 		    //STEP 1: Create a new Form Auth client with the supplied user/password
                 // ETM auth is on the same base URL usually
-		    JazzFormAuthClient client = new JazzFormAuthClient(webContextUrl, user, passwd, LoggerFactory.CreateLogger<OslcClient>());
+		    JazzFormAuthClient client = new JazzFormAuthClient(webContextUrl, user, passwd, _loggerFactory.CreateLogger<OslcClient>());
 		
 		    //STEP 2: Login in to Jazz Server
 		    if (await client.FormLoginAsync() == HttpStatusCode.OK) {
