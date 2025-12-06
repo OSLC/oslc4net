@@ -15,6 +15,7 @@
     <ProjectReference Include="..\..\OSLC4Net.Core\OSLC4Net.Core.csproj" />
     <ProjectReference Include="..\..\OSLC4Net.Core.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj" />
     <ProjectReference Include="..\OSLC4Net.Client.Jazz\OSLC4Net.Client.Jazz.csproj" />
+    <ProjectReference Include="..\..\OSLC4Net.Domains.RequirementsManagement\OSLC4Net.Domains.RequirementsManagement.csproj" />
   </ItemGroup>
 
   <ItemGroup>

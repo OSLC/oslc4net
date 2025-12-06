@@ -231,15 +231,20 @@ namespace OSLC4Net.Client.Samples
 	
 	    private static async Task ProcessRawResponseAsync(HttpResponseMessage response)
         {
+		    if (!logger.IsEnabled(LogLevel.Trace))
+		    {
+			    response.ConsumeContent();
+			    return;
+		    }
+
 		    Stream inStream = await response.Content.ReadAsStreamAsync();
 		    StreamReader streamReader = new StreamReader(new BufferedStream(inStream), System.Text.Encoding.UTF8);
 		
 		    String line = null;
             while ((line = streamReader.ReadLine()) != null)
             {
-		      Console.WriteLine(line);
+		      logger.LogTrace(line);
 		    }
-		    Console.WriteLine();
 		    response.ConsumeContent();
 	    }
 	

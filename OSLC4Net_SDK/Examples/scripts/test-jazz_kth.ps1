@@ -31,28 +31,56 @@ Push-Location $samplesDir
 
 # Build the samples
 Write-Host "Building samples..." -ForegroundColor Cyan
-& dotnet build . -c Release
+$env:AGENT_BUILD = $true
+if (-not (& dotnet build . -c Release)) {
+    Write-Host "Build failed!" -ForegroundColor Red
+    Pop-Location
+    exit 1
+}
 
 $baseUrl = "https://oslc.itm.kth.se"
+$results = @{}
 
 # Test EWM
 Write-Host "`n=== Testing EWM Sample ===" -ForegroundColor Green
-& dotnet run -c Release `
-    --no-build -- ewm `
-    --url "$baseUrl/ccm" `
-    --user $env:JAZZ_ITM_USERNAME `
-    --password $env:JAZZ_ITM_PASSWORD `
-    --project "Lyo Smoke Test Lifecycle Project (Change Management)"
+try {
+    & dotnet run -c Release --no-build -- ewm `
+        --url "$baseUrl/ccm" `
+        --user $env:JAZZ_ITM_USERNAME `
+        --password $env:JAZZ_ITM_PASSWORD `
+        --project "Lyo Smoke Test Lifecycle Project (Change Management)"
+    $results['EWM'] = 'SUCCESS'
+    Write-Host "EWM test passed" -ForegroundColor Green
+} catch {
+    $results['EWM'] = "FAILED: $_"
+    Write-Host "EWM test failed: $_" -ForegroundColor Red
+}
 
 # Test ERM
 Write-Host "`n=== Testing ERM Sample ===" -ForegroundColor Green
-& dotnet run -c Release `
-    --no-build -- erm `
-    --url "$baseUrl/rm" `
-    --user $env:JAZZ_ITM_USERNAME `
-    --password $env:JAZZ_ITM_PASSWORD `
-    --project "Lyo Smoke Test Lifecycle Project (Requirements)"
+try {
+    & dotnet run -c Release --no-build -- erm `
+        --url "$baseUrl/rm" `
+        --user $env:JAZZ_ITM_USERNAME `
+        --password $env:JAZZ_ITM_PASSWORD `
+        --project "Lyo Smoke Test Lifecycle Project (Requirements)"
+    $results['ERM'] = 'SUCCESS'
+    Write-Host "ERM test passed" -ForegroundColor Green
+} catch {
+    $results['ERM'] = "FAILED: $_"
+    Write-Host "ERM test failed: $_" -ForegroundColor Red
+}
 
 Pop-Location
 
-Write-Host "`nTest completed!" -ForegroundColor Green
+# Report results
+Write-Host "`n=== Test Results ===" -ForegroundColor Cyan
+$results | Format-Table -AutoSize
+$failedCount = @($results.Values | Where-Object { $_ -ne 'SUCCESS' }).Count
+if ($failedCount -gt 0) {
+    Write-Host "$failedCount test(s) failed!" -ForegroundColor Red
+    exit 1
+} else {
+    Write-Host "All tests passed!" -ForegroundColor Green
+    exit 0
+}
