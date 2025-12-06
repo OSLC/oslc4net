@@ -27,213 +27,175 @@ public class QueryBasicTest
                              "xs=<http://www.w3.org/2001/XMLSchema>";
 
     [Test]
-    public async Task BasicPrefixesTest()
+    [Arguments("qm=<http://qm.example.com/ns/>,olsc=<http://open-services.net/ns/core#>,xs=<http://www.w3.org/2001/XMLSchema>", true)]
+    [Arguments("qm=<http://qm.example.com/ns/>,XXX>", false)]
+    public async Task BasicPrefixesTest(string expression, bool shouldSucceed)
     {
-        Trial[] trials =
+        try
         {
-            new("qm=<http://qm.example.com/ns/>," +
-                "olsc=<http://open-services.net/ns/core#>," +
-                "xs=<http://www.w3.org/2001/XMLSchema>",
-                true),
-            new("qm=<http://qm.example.com/ns/>," +
-                "XXX>",
-                false)
-        };
+            var prefixMap =
+                QueryUtils.ParsePrefixes(expression);
 
-        foreach (var trial in trials)
+            Debug.WriteLine(prefixMap.ToString());
+
+            await Assert.That(shouldSucceed).IsTrue();
+        }
+        catch (ParseException e)
         {
-            try
-            {
-                var prefixMap =
-                    QueryUtils.ParsePrefixes(trial.Expression);
+            Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
-                Debug.WriteLine(prefixMap.ToString());
-
-                await Assert.That(trial.ShouldSucceed).IsTrue();
-            }
-            catch (ParseException e)
-            {
-                Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
-
-                await Assert.That(trial.ShouldSucceed).IsFalse();
-            }
+            await Assert.That(shouldSucceed).IsFalse();
         }
     }
 
     [Test]
-    public async Task BasicOrderByTest()
+    [Arguments("-qm:priority", true)]
+    [Arguments("+qm:priority,-oslc:name", true)]
+    [Arguments("qm:tested_by{+oslc:description}", true)]
+    [Arguments("?qm:blah", false)]
+    public async Task BasicOrderByTest(string expression, bool shouldSucceed)
     {
         var prefixes = "qm=<http://qm.example.com/ns/>," +
                        "oslc=<http://open-services.net/ns/core#>";
         var prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
-        Trial[] trials =
+        try
         {
-            new(expression: "-qm:priority", shouldSucceed: true), new("+qm:priority,-oslc:name", true),
-            new("qm:tested_by{+oslc:description}", true), new("?qm:blah", false)
-        };
+            var orderByClause =
+                QueryUtils.ParseOrderBy(expression, prefixMap);
 
-        foreach (var trial in trials)
+            Debug.WriteLine(orderByClause);
+
+            await Assert.That(shouldSucceed).IsTrue();
+        }
+        catch (ParseException e)
         {
-            try
-            {
-                var orderByClause =
-                    QueryUtils.ParseOrderBy(trial.Expression, prefixMap);
+            Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
-                Debug.WriteLine(orderByClause);
-
-                await Assert.That(trial.ShouldSucceed).IsTrue();
-            }
-            catch (ParseException e)
-            {
-                Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
-
-                await Assert.That(trial.ShouldSucceed).IsFalse();
-            }
+            await Assert.That(shouldSucceed).IsFalse();
         }
     }
 
     [Test]
-    public async Task BasicSearchTermsTest()
+    [Arguments("\"foobar\"", true)]
+    [Arguments("\"foobar\",\"whatsis\",\"yousa\"", true)]
+    [Arguments("", false)]
+    public async Task BasicSearchTermsTest(string expression, bool shouldSucceed)
     {
-        Trial[] trials =
+        try
         {
-            new("\"foobar\"", true), new("\"foobar\",\"whatsis\",\"yousa\"", true),
-            new("", false)
-        };
+            var searchTermsClause =
+                QueryUtils.ParseSearchTerms(expression);
 
-        foreach (var trial in trials)
+            Debug.WriteLine(searchTermsClause);
+
+            await Assert.That(shouldSucceed).IsTrue();
+        }
+        catch (ParseException e)
         {
-            try
-            {
-                var searchTermsClause =
-                    QueryUtils.ParseSearchTerms(trial.Expression);
+            Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
-                Debug.WriteLine(searchTermsClause);
-
-                await Assert.That(trial.ShouldSucceed).IsTrue();
-            }
-            catch (ParseException e)
-            {
-                Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
-
-                await Assert.That(trial.ShouldSucceed).IsFalse();
-            }
+            await Assert.That(shouldSucceed).IsFalse();
         }
     }
 
     [Test]
-    public async Task BasicSelectTest()
+    [Arguments("*{*}", true)]
+    [Arguments("qm:testcase", true)]
+    [Arguments("*", true)]
+    [Arguments("oslc:create,qm:verified", true)]
+    [Arguments("qm:state{oslc:verified_by{oslc:owner,qm:duration}}", true)]
+    [Arguments("qm:submitted{*}", true)]
+    [Arguments("qm:testcase,*", true)]
+    [Arguments("*,qm:state{*}", true)]
+    [Arguments("XXX", false)]
+    public async Task BasicSelectTest(string expression, bool shouldSucceed)
     {
         var prefixes = "qm=<http://qm.example.com/ns/>," +
                        "oslc=<http://open-services.net/ns/core#>";
         var prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
-        Trial[] trials =
+        try
         {
-            new("*{*}", true), new("qm:testcase", true), new("*", true),
-            new("oslc:create,qm:verified", true),
-            new("qm:state{oslc:verified_by{oslc:owner,qm:duration}}", true),
-            new("qm:submitted{*}", true), new("qm:testcase,*", true),
-            new("*,qm:state{*}", true), new("XXX", false)
-        };
+            var selectClause =
+                QueryUtils.ParseSelect(expression, prefixMap);
 
-        foreach (var trial in trials)
+            Debug.WriteLine(selectClause);
+
+            await Assert.That(shouldSucceed).IsTrue();
+        }
+        catch (ParseException e)
         {
-            try
-            {
-                var selectClause =
-                    QueryUtils.ParseSelect(trial.Expression, prefixMap);
+            Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
-                Debug.WriteLine(selectClause);
-
-                await Assert.That(trial.ShouldSucceed).IsTrue();
-            }
-            catch (ParseException e)
-            {
-                Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
-
-                await Assert.That(trial.ShouldSucceed).IsFalse();
-            }
+            await Assert.That(shouldSucceed).IsFalse();
         }
     }
 
     [Test]
-    public async Task BasicWhereTest()
+    [Arguments("qm:testcase=<http://example.com/tests/31459>", true)]
+    [Arguments("qm:duration>=10.4", true)]
+    [Arguments("oslc:create!=\"Bob\" and qm:verified!=true", true)]
+    [Arguments("qm:state in [\"Done\",\"Open\"]", true)]
+    [Arguments("oslc:verified_by{oslc:owner=\"Steve\" and qm:duration=-47.0} and oslc:description=\"very hairy expression\"", true)]
+    [Arguments("qm:submitted<\"2011-10-10T07:00:00Z\"^^xs:dateTime", true)]
+    [Arguments("oslc:label>\"The End\"@en-US", true)]
+    [Arguments("XXX", false)]
+    public async Task BasicWhereTest(string expression, bool shouldSucceed)
     {
         var prefixes = "qm=<http://qm.example.com/ns/>," +
                        "oslc=<http://open-services.net/ns/core#>," +
                        "xs=<http://www.w3.org/2001/XMLSchema>";
         var prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
-        Trial[] trials =
+        try
         {
-            new("qm:testcase=<http://example.com/tests/31459>", true),
-            new("qm:duration>=10.4", true),
-            new("oslc:create!=\"Bob\" and qm:verified!=true", true),
-            new("qm:state in [\"Done\",\"Open\"]", true),
-            new(
-                "oslc:verified_by{oslc:owner=\"Steve\" and qm:duration=-47.0} and oslc:description=\"very hairy expression\"",
-                true),
-            new("qm:submitted<\"2011-10-10T07:00:00Z\"^^xs:dateTime", true),
-            new("oslc:label>\"The End\"@en-US", true), new("XXX", false)
-        };
+            var whereClause =
+                QueryUtils.ParseWhere(expression, prefixMap);
 
-        foreach (var trial in trials)
+            Debug.WriteLine(whereClause);
+
+            await Assert.That(shouldSucceed).IsTrue();
+        }
+        catch (ParseException e)
         {
-            try
-            {
-                var whereClause =
-                    QueryUtils.ParseWhere(trial.Expression, prefixMap);
+            Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
-                Debug.WriteLine(whereClause);
-
-                await Assert.That(trial.ShouldSucceed).IsTrue();
-            }
-            catch (ParseException e)
-            {
-                Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
-
-                await Assert.That(trial.ShouldSucceed).IsFalse();
-            }
+            await Assert.That(shouldSucceed).IsFalse();
         }
     }
 
     [Test]
-    public async Task BasicInvertTest()
+    [Arguments("*{*}", true)]
+    [Arguments("qm:testcase", true)]
+    [Arguments("*", true)]
+    [Arguments("oslc:create,qm:verified", true)]
+    [Arguments("qm:state{oslc:verified_by{oslc:owner,qm:duration}}", true)]
+    [Arguments("qm:submitted{*}", true)]
+    [Arguments("qm:testcase,*", true)]
+    [Arguments("*,qm:state{*}", true)]
+    public async Task BasicInvertTest(string expression, bool shouldSucceed)
     {
         const string prefixes = "qm=<http://qm.example.com/ns/>," +
                                 "oslc=<http://open-services.net/ns/core#>";
         var prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
-        Trial[] trials =
+        try
         {
-            new(expression: "*{*}", shouldSucceed: true), new("qm:testcase", true), new("*", true),
-            new("oslc:create,qm:verified", true),
-            new("qm:state{oslc:verified_by{oslc:owner,qm:duration}}", true),
-            new("qm:submitted{*}", true), new("qm:testcase,*", true),
-            new("*,qm:state{*}", true),
-        };
+            var selectClause =
+                QueryUtils.ParseSelect(expression, prefixMap);
 
-        foreach (var trial in trials)
+            Debug.WriteLine(selectClause);
+
+            await Assert.That(shouldSucceed).IsTrue();
+
+            var _ = QueryUtils.InvertSelectedProperties(selectClause);
+        }
+        catch (ParseException e)
         {
-            try
-            {
-                var selectClause =
-                    QueryUtils.ParseSelect(trial.Expression, prefixMap);
+            Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
-                Debug.WriteLine(selectClause);
-
-                await Assert.That(trial.ShouldSucceed).IsTrue();
-
-                var _ = QueryUtils.InvertSelectedProperties(selectClause);
-            }
-            catch (ParseException e)
-            {
-                Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
-
-                await Assert.That(trial.ShouldSucceed).IsFalse();
-            }
+            await Assert.That(shouldSucceed).IsFalse();
         }
     }
 
@@ -262,24 +224,4 @@ public class QueryBasicTest
         var uriRef = (UriRefValue)v;
         await Assert.That(uriRef.Value).IsEqualTo("http://example.org/tests/24");
     }
-}
-
-public class Trial
-{
-    public Trial(
-        string expression,
-        bool shouldSucceed
-    )
-    {
-        Expression = expression;
-        ShouldSucceed = shouldSucceed;
-    }
-
-    public string
-        Expression
-    { get; }
-
-    public bool
-        ShouldSucceed
-    { get; }
 }
