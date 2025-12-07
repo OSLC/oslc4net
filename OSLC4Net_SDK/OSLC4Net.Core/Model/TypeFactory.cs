@@ -43,6 +43,14 @@ public static class TypeFactory
         var oslcNameAnnotation =
             (OslcName[])objectType.GetCustomAttributes(typeof(OslcName), false);
 
-        return oslcNameAnnotation.Length > 0 ? oslcNameAnnotation[0].value : objectType.Name;
+        if (oslcNameAnnotation.Length > 0)
+        {
+            return oslcNameAnnotation[0].value;
+        }
+
+        // For generic types, strip the generic argument suffix (e.g., `AllowedValuesResource`1 -> AllowedValuesResource)
+        var name = objectType.Name;
+        var backtickIndex = name.IndexOf('`');
+        return backtickIndex > 0 ? name[..backtickIndex] : name;
     }
 }

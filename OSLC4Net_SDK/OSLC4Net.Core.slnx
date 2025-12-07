@@ -5,6 +5,8 @@
     <Platform Name="x86" />
   </Configurations>
   <Folder Name="/Examples/">
+    <Project Path="Examples/OSLC4Net.Client.Jazz/OSLC4Net.Client.Jazz.csproj" />
+    <Project Path="Examples/OSLC4Net.Client.Samples/OSLC4Net.Client.Samples.csproj" />
     <Project Path="Examples/Oslc4NetExamples.Client/Oslc4NetExamples.Client.csproj" />
     <Project Path="Examples/OSLC4NetExamples.Server.NetCoreApi/OSLC4NetExamples.Server.NetCoreApi.csproj" />
   </Folder>

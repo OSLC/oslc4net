@@ -384,35 +384,38 @@ namespace OSLC4Net.Client.Samples
                     var allowedValuesResponse = await client.GetResourceRawAsync(allowedValuesRef.ToString(), OslcMediaType.APPLICATION_RDF_XML);
                     if (!allowedValuesResponse.IsSuccessStatusCode)
                     {
-                        Logger.LogWarning("Failed to fetch allowed values: {StatusCode}", allowedValuesResponse.StatusCode);
+                        Logger.LogError("Failed to fetch allowed values: {StatusCode}", allowedValuesResponse.StatusCode);
                         continue;
                     }
 
                     try
                     {
 #pragma warning disable OSLCEXP001
-                        var allowedValues = await allowedValuesResponse.Content.ReadAsAsync<AllowedValues>(client.GetFormatters());
+                        var allowedValues = await allowedValuesResponse.Content.ReadAsAsync<AllowedValuesResource<Uri>>(client.GetFormatters());
 #pragma warning restore OSLCEXP001
 
-                        if (allowedValues != null && allowedValues.GetAllowedValues().Length > 0)
+                        if (allowedValues != null && allowedValues.AllowedValues.Count > 0)
                         {
-                            var values = allowedValues.GetAllowedValues();
-                            Logger.LogInformation("Found {Count} allowed values", values.Length);
+                            var values = allowedValues.AllowedValues;
+                            Logger.LogInformation("Found {Count} allowed values", values.Count);
 
                             foreach (var val in values)
                             {
-                                if (!val.Contains("Unassigned", StringComparison.OrdinalIgnoreCase))
-                                {
-                                    Logger.LogInformation("Resolved Filed Against category: {Category}", val);
-                                    return new Uri(val);
-                                }
+                                Logger.LogInformation("Found allowed value >{}<", val);
+                                // Skip empty or whitespace values                                
+                                // if (!val.Contains("Unassigned", StringComparison.OrdinalIgnoreCase))
+                                // {
+                                //     Logger.LogInformation("Resolved Filed Against category: {Category}", val);
+                                //     return new Uri(val);
+                                // }
                             }
 
-                            // Fallback to first if all seem unassigned or check failed
-                            if (values.Length > 0)
+                            // Fallback to first non-empty value if all seem unassigned or check failed
+                            var firstNonEmpty = values.FirstOrDefault(v => v is not null);
+                            if (firstNonEmpty != null)
                             {
-                                Logger.LogInformation("Using fallback Filed Against category: {Category}", values[0]);
-                                return new Uri(values[0]);
+                                Logger.LogInformation("Using fallback Filed Against category: {Category}", firstNonEmpty);
+                                return firstNonEmpty;
                             }
                         }
                         else
