@@ -339,12 +339,12 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
         }
 
         var triples = _rdfGraph!.GetTriplesWithSubject(_resultsMemberContainer);
-        
+
         // Filter to only rdfs:member predicates with URI objects (same logic as GetMembersUrls)
         var memberTriples = triples.Where(triple =>
             triple.Predicate.Equals(_rdfGraph.GetUriNode(_rdfsMemberUri)) &&
             triple.Object is IUriNode);
-        
+
         IEnumerable<T> result = new TripleEnumerableWrapper<T>(memberTriples, _rdfGraph, _rdfHelper);
 
         return result;
