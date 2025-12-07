@@ -12,7 +12,7 @@ public class AllowedValuesSerializationTests
     public async Task TestAllowedValuesRoundTrip()
     {
         // Arrange
-        var allowedValues = new AllowedValues();
+        var allowedValues = new AllowedValuesResource<string>();
         allowedValues.AddAllowedValue("http://example.com/values/high");
         allowedValues.AddAllowedValue("http://example.com/values/medium");
         allowedValues.AddAllowedValue("http://example.com/values/low");
@@ -21,15 +21,15 @@ public class AllowedValuesSerializationTests
         var mediaType = OslcMediaType.APPLICATION_RDF_XML_TYPE;
 
         var rdfXml = await RdfHelpers.SerializeAsync(formatter, allowedValues, mediaType);
-        var deserialized = await RdfHelpers.DeserializeAsync<AllowedValues>(formatter, rdfXml, mediaType);
+        var deserialized = await RdfHelpers.DeserializeAsync<AllowedValuesResource<string>>(formatter, rdfXml, mediaType);
 
         // Assert
         await Assert.That(deserialized).IsNotNull();
-        await Assert.That(deserialized.GetAllowedValues()).HasCount().EqualTo(allowedValues.GetAllowedValues().Length);
+        await Assert.That(deserialized.AllowedValues).HasCount().EqualTo(allowedValues.AllowedValues.Count);
 
-        foreach (var val in allowedValues.GetAllowedValues())
+        foreach (var val in allowedValues.AllowedValues)
         {
-            await Assert.That(deserialized.GetAllowedValues()).Contains(val);
+            await Assert.That(deserialized.AllowedValues).Contains(val);
         }
 
         await Verify(deserialized);
