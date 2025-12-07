@@ -46,7 +46,7 @@ sealed class ETMSample : SampleBase<TestResult>
     /// Entry point for ETM Sample
     /// </summary>
     /// <param name="args"></param>
-	    public static async Task Run(string[] args)
+    public static async Task Run(string[] args)
     {
         using ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
         {

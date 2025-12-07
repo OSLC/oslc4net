@@ -119,7 +119,7 @@ public class JazzFormAuthClient : OslcClient
     /// Execute the sequence of HTTP requests to perform a form login to a Jazz server
     /// </summary>
     /// <returns>The HTTP status code of the final request to verify login is successful</returns>
-	    public async Task<HttpStatusCode> FormLoginAsync()
+    public async Task<HttpStatusCode> FormLoginAsync()
     {
         HttpStatusCode statusCode = HttpStatusCode.Unused;
         HttpResponseMessage resp;
