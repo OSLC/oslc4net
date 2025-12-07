@@ -1,0 +1,21 @@
+﻿@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+
+_:c14n0 <http://purl.org/dc/terms/title> "Defect 1";
+        rdf:object <http://example.com/defects/1>;
+        rdf:predicate <http://open-services.net/ns/cm#affectedByDefect>;
+        rdf:subject <http://example.com/changeRequests/1>;
+        a rdf:Statement.
+<http://example.com/changeRequests/1> <http://open-services.net/ns/cm#affectedByDefect> <http://example.com/defects/1>;
+                                      <http://open-services.net/ns/cm#approved> true;
+                                      <http://open-services.net/ns/cm#fixed> false;
+                                      <http://open-services.net/ns/cm#severity> "Normal";
+                                      <http://open-services.net/ns/cm#status> "Submitted";
+                                      <http://purl.org/dc/terms/created> "2023-10-27T10:00:00.000000Z"^^xsd:dateTime;
+                                      <http://purl.org/dc/terms/description> "This is a sample change request."^^rdf:XMLLiteral;
+                                      <http://purl.org/dc/terms/identifier> "101";
+                                      <http://purl.org/dc/terms/subject> "Subject 1",
+                                                                         "Subject 2";
+                                      <http://purl.org/dc/terms/title> "Sample Change Request"^^rdf:XMLLiteral;
+                                      a <http://open-services.net/ns/cm#ChangeRequest>.
