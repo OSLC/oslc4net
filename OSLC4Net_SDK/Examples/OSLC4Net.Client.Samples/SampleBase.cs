@@ -66,6 +66,7 @@ namespace OSLC4Net.Client.Samples
                 catch (Exception e)
                 {
                     Logger.LogError(e, "Unable to process artifact at url: {Url}", resultsUrl);
+                    throw;
                 }
             }
         }

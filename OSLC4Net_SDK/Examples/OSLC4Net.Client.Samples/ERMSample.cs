@@ -15,19 +15,19 @@
 
 using System;
 using System.Collections.Generic;
+using System.CommandLine;
+using System.CommandLine.Invocation;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.CommandLine;
 using System.Xml.Linq;
 using Microsoft.Extensions.Logging;
-using System.CommandLine.Invocation;
-using OSLC4Net.Client.Oslc;
-using OSLC4Net.Client.Oslc.Jazz;
-using OSLC4Net.Client.Oslc.Helpers;
-using OSLC4Net.Client.Oslc.Resources;
 using OSLC4Net.Client.Exceptions;
+using OSLC4Net.Client.Oslc;
+using OSLC4Net.Client.Oslc.Helpers;
+using OSLC4Net.Client.Oslc.Jazz;
+using OSLC4Net.Client.Oslc.Resources;
 using OSLC4Net.Core.Model;
 using OSLC4Net.Domains.RequirementsManagement;
 using Requirement = OSLC4Net.Domains.RequirementsManagement.Requirement;
@@ -328,7 +328,7 @@ namespace OSLC4Net.Client.Samples
 
                     //STEP 8: Query requirements
                     OslcQueryParameters queryParams = new OslcQueryParameters();
-                    
+
                     OslcQuery query = new OslcQuery(client, queryCapability, 10, queryParams);
                     OslcQueryResult queryResults = await query.Submit();
                     await ProcessPagedQueryResultsAsync(queryResults, client, false);
@@ -337,12 +337,13 @@ namespace OSLC4Net.Client.Samples
                 }
                 else
                 {
-                    Logger.LogError("Authentication failed");
+                    throw new InvalidOperationException("Authentication failed");
                 }
             }
             catch (Exception ex)
             {
                 Logger.LogError(ex, "Error running ERM sample");
+                throw;
             }
         }
     }
