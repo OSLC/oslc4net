@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -13,18 +13,12 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+namespace OSLC4Net.Client.Oslc.Jazz;
 
-namespace OSLC4Net.Client.Oslc.Jazz
+public static class JazzConstants
 {
-    public static class JazzConstants
-    {
-        public const string RTC_CM = "http://jazz.net/xmlns/prod/jazz/rtc/cm/1.0/";
-        public const string JFS = "http://jazz.net/xmlns/prod/jazz/jfs/1.0/";
-        public const string JD = "http://jazz.net/xmlns/prod/jazz/discovery/1.0/";
-        public const string JP06 = "http://jazz.net/xmlns/prod/jazz/process/0.6/";
-    }
+    public const string RTC_CM = "http://jazz.net/xmlns/prod/jazz/rtc/cm/1.0/";
+    public const string JFS = "http://jazz.net/xmlns/prod/jazz/jfs/1.0/";
+    public const string JD = "http://jazz.net/xmlns/prod/jazz/discovery/1.0/";
+    public const string JP06 = "http://jazz.net/xmlns/prod/jazz/process/0.6/";
 }
