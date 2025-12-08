@@ -7,7 +7,6 @@
     <RootNamespace>OSLC4Net.ChangeManagement</RootNamespace>
     <AssemblyTitle>OSLC4Net.ChangeManagement</AssemblyTitle>
     <Product>OSLC4Net.ChangeManagement</Product>
-    <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\OSLC4Net.Core\OSLC4Net.Core.csproj" />
