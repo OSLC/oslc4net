@@ -26,47 +26,8 @@ namespace OSLC4Net.ChangeManagement;
 [OslcResourceShape(title = "Change Request Resource Shape", describes = new string[] { Constants.TYPE_CHANGE_REQUEST })]
 public class ChangeRequest : AbstractResource
 {
-    private readonly HashSet<Link> _affectedByDefects = new();
-    private readonly HashSet<Link> _affectsPlanItems = new();
-    private readonly HashSet<Link> _affectsRequirements = new();
-    private readonly HashSet<Link> _affectsTestResults = new();
-    private readonly HashSet<Link> _blocksTestExecutionRecords = new();
-    private readonly HashSet<Uri> _contributors = new(); // XXX - TreeSet<> in Java
-    private readonly HashSet<Uri> _creators = new(); // XXX - TreeSet<> in Java
-    private readonly HashSet<Type> _dctermsTypes = new(); // XXX - TreeSet<> in Java
-    private readonly HashSet<Link> _implementsRequirements = new();
-    private readonly HashSet<Link> _relatedChangeRequests = new();
-
-    private readonly HashSet<Link>
-        _relatedResources = new(); // TODO - Extension to point to any other OSLC resource(s).
-
-    private readonly HashSet<Link> _relatedTestCases = new();
-    private readonly HashSet<Link> _relatedTestExecutionRecords = new();
-    private readonly HashSet<Link> _relatedTestPlans = new();
-    private readonly HashSet<Link> _relatedTestScripts = new();
-    private readonly HashSet<string> _subjects = new(StringComparer.Ordinal); // XXX - TreeSet<> in Java
-    private readonly HashSet<Link> _testedByTestCases = new();
-    private readonly HashSet<Link> _tracksChangeSets = new();
-    private readonly HashSet<Link> _tracksRequirements = new();
-
-    private bool? _approved;
-    private bool? _closed;
-    private DateTime? _closeDate;
-    private DateTime? _created;
-    private string _description;
-    private Uri _discussedBy;
-    private bool? _isFixed;
-    private string _identifier;
-    private bool? _inProgress;
-    private Uri _instanceShape;
-    private DateTime? _modified;
-    private bool? _reviewed;
-    private Uri _serviceProvider;
-    private Severity _severity = Severity.Unclassified; // TODO - Added severity for demo
-    private string _shortTitle;
-    private string _status;
-    private string _title;
-    private bool? _verified;
+    private Severity _severity = ChangeManagement.Severity.Unclassified; // TODO - Added severity for demo
+    private readonly ISet<Type> _dctermsTypes = new HashSet<Type>(); // XXX - TreeSet<> in Java
 
     public ChangeRequest() : base()
     {
@@ -80,37 +41,37 @@ public class ChangeRequest : AbstractResource
 
     public void AddAffectedByDefect(Link affectedByDefect)
     {
-        _affectedByDefects.Add(affectedByDefect);
+        AffectedByDefects.Add(affectedByDefect);
     }
 
     public void AddAffectsPlanItem(Link affectsPlanItem)
     {
-        _affectsPlanItems.Add(affectsPlanItem);
+        AffectsPlanItems.Add(affectsPlanItem);
     }
 
     public void AddAffectsRequirement(Link affectsRequirement)
     {
-        _affectsRequirements.Add(affectsRequirement);
+        AffectsRequirements.Add(affectsRequirement);
     }
 
     public void AddAffectsTestResult(Link affectsTestResult)
     {
-        _affectsTestResults.Add(affectsTestResult);
+        AffectsTestResults.Add(affectsTestResult);
     }
 
     public void AddBlocksTestExecutionRecord(Link blocksTestExecutionRecord)
     {
-        _blocksTestExecutionRecords.Add(blocksTestExecutionRecord);
+        BlocksTestExecutionRecords.Add(blocksTestExecutionRecord);
     }
 
     public void AddContributor(Uri contributor)
     {
-        _contributors.Add(contributor);
+        Contributors.Add(contributor);
     }
 
     public void AddCreator(Uri creator)
     {
-        _creators.Add(creator);
+        Creators.Add(creator);
     }
 
     public void AddDctermsType(string dctermsType)
@@ -120,7 +81,7 @@ public class ChangeRequest : AbstractResource
 
     public void AddImplementsRequirement(Link implementsRequirement)
     {
-        _implementsRequirements.Add(implementsRequirement);
+        ImplementsRequirements.Add(implementsRequirement);
     }
 
     public void AddRdfType(Uri rdfType)
@@ -130,52 +91,52 @@ public class ChangeRequest : AbstractResource
 
     public void AddRelatedChangeRequest(Link relatedChangeRequest)
     {
-        _relatedChangeRequests.Add(relatedChangeRequest);
+        RelatedChangeRequests.Add(relatedChangeRequest);
     }
 
     public void AddRelatedResource(Link relatedResource)
     {
-        _relatedResources.Add(relatedResource);
+        RelatedResources.Add(relatedResource);
     }
 
     public void AddRelatedTestCase(Link relatedTestCase)
     {
-        _relatedTestCases.Add(relatedTestCase);
+        RelatedTestCases.Add(relatedTestCase);
     }
 
     public void AddRelatedTestExecutionRecord(Link relatedTestExecutionRecord)
     {
-        _relatedTestExecutionRecords.Add(relatedTestExecutionRecord);
+        RelatedTestExecutionRecords.Add(relatedTestExecutionRecord);
     }
 
     public void AddRelatedTestPlan(Link relatedTestPlan)
     {
-        _relatedTestPlans.Add(relatedTestPlan);
+        RelatedTestPlans.Add(relatedTestPlan);
     }
 
     public void AddRelatedTestScript(Link relatedTestScript)
     {
-        _relatedTestScripts.Add(relatedTestScript);
+        RelatedTestScripts.Add(relatedTestScript);
     }
 
     public void AddSubject(string subject)
     {
-        _subjects.Add(subject);
+        Subjects.Add(subject);
     }
 
     public void AddTestedByTestCase(Link testedByTestCase)
     {
-        _testedByTestCases.Add(testedByTestCase);
+        TestedByTestCases.Add(testedByTestCase);
     }
 
     public void AddTracksChangeSet(Link tracksChangeSet)
     {
-        _tracksChangeSets.Add(tracksChangeSet);
+        TracksChangeSets.Add(tracksChangeSet);
     }
 
     public void AddTracksRequirement(Link tracksRequirement)
     {
-        _tracksRequirements.Add(tracksRequirement);
+        TracksRequirements.Add(tracksRequirement);
     }
 
     [OslcDescription("Change request is affected by a reported defect.")]
@@ -184,10 +145,19 @@ public class ChangeRequest : AbstractResource
     [OslcRange(Constants.TYPE_CHANGE_REQUEST)]
     [OslcReadOnly(false)]
     [OslcTitle("Affected By Defects")]
-    public Link[] GetAffectedByDefects()
+    public ISet<Link> AffectedByDefects
     {
-        return _affectedByDefects.ToArray();
-    }
+        get;
+        set
+        {
+            if (ReferenceEquals(field, value)) return;
+            field.Clear();
+            if (value != null)
+            {
+                field.AddAll(value);
+            }
+        }
+    } = new HashSet<Link>();
 
     [OslcDescription("Change request affects a plan item. ")]
     [OslcName("affectsPlanItem")]
@@ -195,10 +165,19 @@ public class ChangeRequest : AbstractResource
     [OslcRange(Constants.TYPE_CHANGE_REQUEST)]
     [OslcReadOnly(false)]
     [OslcTitle("Affects Plan Items")]
-    public Link[] GetAffectsPlanItems()
+    public ISet<Link> AffectsPlanItems
     {
-        return _affectsPlanItems.ToArray();
-    }
+        get;
+        set
+        {
+            if (ReferenceEquals(field, value)) return;
+            field.Clear();
+            if (value != null)
+            {
+                field.AddAll(value);
+            }
+        }
+    } = new HashSet<Link>();
 
     [OslcDescription("Change request affecting a Requirement.")]
     [OslcName("affectsRequirement")]
@@ -206,10 +185,19 @@ public class ChangeRequest : AbstractResource
     [OslcRange(Constants.TYPE_REQUIREMENT)]
     [OslcReadOnly(false)]
     [OslcTitle("Affects Requirements")]
-    public Link[] GetAffectsRequirements()
+    public ISet<Link> AffectsRequirements
     {
-        return _affectsRequirements.ToArray();
-    }
+        get;
+        set
+        {
+            if (ReferenceEquals(field, value)) return;
+            field.Clear();
+            if (value != null)
+            {
+                field.AddAll(value);
+            }
+        }
+    } = new HashSet<Link>();
 
     [OslcDescription("Associated QM resource that is affected by this Change Request.")]
     [OslcName("affectsTestResult")]
@@ -217,10 +205,19 @@ public class ChangeRequest : AbstractResource
     [OslcRange(Constants.TYPE_TEST_RESULT)]
     [OslcReadOnly(false)]
     [OslcTitle("Affects Test Results")]
-    public Link[] GetAffectsTestResults()
+    public ISet<Link> AffectsTestResults
     {
-        return _affectsTestResults.ToArray();
-    }
+        get;
+        set
+        {
+            if (ReferenceEquals(field, value)) return;
+            field.Clear();
+            if (value != null)
+            {
+                field.AddAll(value);
+            }
+        }
+    } = new HashSet<Link>();
 
     [OslcDescription("Associated QM resource that is blocked by this Change Request.")]
     [OslcName("blocksTestExecutionRecord")]
@@ -228,95 +225,118 @@ public class ChangeRequest : AbstractResource
     [OslcRange(Constants.TYPE_TEST_EXECUTION_RECORD)]
     [OslcReadOnly(false)]
     [OslcTitle("Blocks Test Execution Records")]
-    public Link[] GetBlocksTestExecutionRecords()
+    public ISet<Link> BlocksTestExecutionRecords
     {
-        return _blocksTestExecutionRecords.ToArray();
-    }
+        get;
+        set
+        {
+            if (ReferenceEquals(field, value)) return;
+            field.Clear();
+            if (value != null)
+            {
+                field.AddAll(value);
+            }
+        }
+    } = new HashSet<Link>();
 
     [OslcDescription("The date at which no further activity or work is intended to be conducted. ")]
     [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "closeDate")]
     [OslcReadOnly]
     [OslcTitle("Close DateTime?")]
-    public DateTime? GetCloseDate()
-    {
-        return _closeDate;
-    }
+    public DateTime? CloseDate { get; set; }
 
     [OslcDescription("The person(s) who are responsible for the work needed to complete the change request.")]
     [OslcName("contributor")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "contributor")]
     [OslcRange(Constants.TYPE_PERSON)]
     [OslcTitle("Contributors")]
-    public Uri[] GetContributors()
+    public ISet<Uri> Contributors
     {
-        return _contributors.ToArray();
-    }
+        get;
+        set
+        {
+            if (ReferenceEquals(field, value)) return;
+            field.Clear();
+            if (value != null)
+            {
+                field.AddAll(value);
+            }
+        }
+    } = new HashSet<Uri>();
 
     [OslcDescription("Timestamp of resource creation.")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "created")]
     [OslcReadOnly]
     [OslcTitle("Created")]
-    public DateTime? GetCreated()
-    {
-        return _created;
-    }
+    public DateTime? Created { get; set; }
 
     [OslcDescription("Creator or creators of resource.")]
     [OslcName("creator")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "creator")]
     [OslcRange(Constants.TYPE_PERSON)]
     [OslcTitle("Creators")]
-    public Uri[] GetCreators()
+    public ISet<Uri> Creators
     {
-        return _creators.ToArray();
-    }
+        get;
+        set
+        {
+            if (ReferenceEquals(field, value)) return;
+            field.Clear();
+            if (value != null)
+            {
+                field.AddAll(value);
+            }
+        }
+    } = new HashSet<Uri>();
 
     [OslcAllowedValue(new string[] { "Defect", "Task", "Story", "Bug Report", "Feature Request" })]
     [OslcDescription("A short string representation for the type, example 'Defect'.")]
     [OslcName("type")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "type")]
     [OslcTitle("Types")]
-    public string[] GetDctermsTypes()
+    public string[] DctermsTypes
     {
-        var result = new string[_dctermsTypes.Count];
-
-        var index = 0;
-
-        foreach (var type in _dctermsTypes)
+        get
         {
-            result[index++] = TypeExtension.ToString(type);
+            var result = new string[_dctermsTypes.Count];
+            var index = 0;
+            foreach (var type in _dctermsTypes)
+            {
+                result[index++] = TypeExtension.ToString(type);
+            }
+            return result;
         }
-
-        return result;
+        set
+        {
+            _dctermsTypes.Clear();
+            if (value != null)
+            {
+                foreach (var type in value)
+                {
+                    _dctermsTypes.Add(TypeExtension.FromString(type));
+                }
+            }
+        }
     }
 
     [OslcDescription("Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
     [OslcTitle("Description")]
     [OslcValueType(ValueType.XMLLiteral)]
-    public string GetDescription()
-    {
-        return _description;
-    }
+    public string Description { get; set; }
 
     [OslcDescription("A series of notes and comments about this change request.")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "discussedBy")]
     [OslcRange(Constants.TYPE_DISCUSSION)]
     [OslcTitle("Discussed By")]
-    public Uri GetDiscussedBy()
-    {
-        return _discussedBy;
-    }
+    public Uri DiscussedBy { get; set; }
 
     [OslcDescription("A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
     [OslcReadOnly]
     [OslcTitle("Identifier")]
-    public string GetIdentifier()
-    {
-        return _identifier;
-    }
+    public string Identifier { get; set; }
 
     [OslcDescription("Implements associated Requirement.")]
     [OslcName("implementsRequirement")]
@@ -324,27 +344,395 @@ public class ChangeRequest : AbstractResource
     [OslcRange(Constants.TYPE_REQUIREMENT)]
     [OslcReadOnly(false)]
     [OslcTitle("Implements Requirements")]
-    public Link[] GetImplementsRequirements()
+    public ISet<Link> ImplementsRequirements
     {
-        return _implementsRequirements.ToArray();
-    }
+        get;
+        set
+        {
+            if (ReferenceEquals(field, value)) return;
+            field.Clear();
+            if (value != null)
+            {
+                field.AddAll(value);
+            }
+        }
+    } = new HashSet<Link>();
 
     [OslcDescription("Resource Shape that provides hints as to resource property value-types and allowed values. ")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "instanceShape")]
     [OslcRange(OslcConstants.TYPE_RESOURCE_SHAPE)]
     [OslcTitle("Instance Shape")]
-    public Uri GetInstanceShape()
-    {
-        return _instanceShape;
-    }
+    public Uri InstanceShape { get; set; }
 
     [OslcDescription("Timestamp last latest resource modification.")]
     [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "modified")]
     [OslcReadOnly]
     [OslcTitle("Modified")]
+    public DateTime? Modified { get; set; }
+
+    [OslcDescription("This relationship is loosely coupled and has no specific meaning.")]
+    [OslcName("relatedChangeRequest")]
+    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "relatedChangeRequest")]
+    [OslcRange(Constants.TYPE_CHANGE_REQUEST)]
+    [OslcReadOnly(false)]
+    [OslcTitle("Related Change Requests")]
+    public ISet<Link> RelatedChangeRequests
+    {
+        get;
+        set
+        {
+            if (ReferenceEquals(field, value)) return;
+            field.Clear();
+            if (value != null)
+            {
+                field.AddAll(value);
+            }
+        }
+    } = new HashSet<Link>();
+
+    [OslcDescription("Related OSLC resources of any type.")]
+    [OslcName("relatedResource")]
+    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "relatedResource")]
+    [OslcTitle("Related Resources")]
+    public ISet<Link> RelatedResources
+    {
+        get;
+        set
+        {
+            if (ReferenceEquals(field, value)) return;
+            field.Clear();
+            if (value != null)
+            {
+                field.AddAll(value);
+            }
+        }
+    } = new HashSet<Link>(); // TODO - Extension to point to any other OSLC resource(s).
+
+    [OslcDescription("Related QM test case resource.")]
+    [OslcName("relatedTestCase")]
+    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "relatedTestCase")]
+    [OslcRange(Constants.TYPE_TEST_CASE)]
+    [OslcReadOnly(false)]
+    [OslcTitle("Related Test Cases")]
+    public ISet<Link> RelatedTestCases
+    {
+        get;
+        set
+        {
+            if (ReferenceEquals(field, value)) return;
+            field.Clear();
+            if (value != null)
+            {
+                field.AddAll(value);
+            }
+        }
+    } = new HashSet<Link>();
+
+    [OslcDescription("Related to a QM test execution resource.")]
+    [OslcName("relatedTestExecutionRecord")]
+    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "relatedTestExecutionRecord")]
+    [OslcRange(Constants.TYPE_TEST_EXECUTION_RECORD)]
+    [OslcReadOnly(false)]
+    [OslcTitle("Related Test Execution Records")]
+    public ISet<Link> RelatedTestExecutionRecords
+    {
+        get;
+        set
+        {
+            if (ReferenceEquals(field, value)) return;
+            field.Clear();
+            if (value != null)
+            {
+                field.AddAll(value);
+            }
+        }
+    } = new HashSet<Link>();
+
+    [OslcDescription("Related QM test plan resource.")]
+    [OslcName("relatedTestPlan")]
+    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "relatedTestPlan")]
+    [OslcRange(Constants.TYPE_TEST_PLAN)]
+    [OslcReadOnly(false)]
+    [OslcTitle("Related Test Plans")]
+    public ISet<Link> RelatedTestPlans
+    {
+        get;
+        set
+        {
+            if (ReferenceEquals(field, value)) return;
+            field.Clear();
+            if (value != null)
+            {
+                field.AddAll(value);
+            }
+        }
+    } = new HashSet<Link>();
+
+    [OslcDescription("Related QM test script resource.")]
+    [OslcName("relatedTestScript")]
+    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "relatedTestScript")]
+    [OslcRange(Constants.TYPE_TEST_SCRIPT)]
+    [OslcReadOnly(false)]
+    [OslcTitle("Related Test Scripts")]
+    public ISet<Link> RelatedTestScripts
+    {
+        get;
+        set
+        {
+            if (ReferenceEquals(field, value)) return;
+            field.Clear();
+            if (value != null)
+            {
+                field.AddAll(value);
+            }
+        }
+    } = new HashSet<Link>();
+
+    [OslcDescription("The scope of a resource is a Uri for the resource's OSLC Service Provider.")]
+    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "serviceProvider")]
+    [OslcRange(OslcConstants.TYPE_SERVICE_PROVIDER)]
+    [OslcTitle("Service Provider")]
+    public Uri ServiceProvider { get; set; }
+
+    [OslcAllowedValue(new string[] { "Unclassified", "Minor", "Normal", "Major", "Critical", "Blocker" })]
+    [OslcDescription("Severity of change request.")]
+    [OslcOccurs(Occurs.ExactlyOne)]
+    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "severity")]
+    [OslcTitle("Severity")]
+    public string Severity
+    {
+        get => _severity.ToString();
+        set => _severity = SeverityExtension.FromString(value);
+    }
+
+    [OslcDescription("Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users.")]
+    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "shortTitle")]
+    [OslcTitle("Short Title")]
+    [OslcValueType(ValueType.XMLLiteral)]
+    public string ShortTitle { get; set; }
+
+    [OslcDescription("Used to indicate the status of the change request based on values defined by the service provider. Most often a read-only property. Some possible values may include: 'Submitted', 'Done', 'InProgress', etc.")]
+    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "status")]
+    [OslcTitle("Status")]
+    public string Status { get; set; }
+
+    [OslcDescription("Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
+    [OslcName("subject")]
+    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "subject")]
+    [OslcReadOnly(false)]
+    [OslcTitle("Subjects")]
+    public ISet<string> Subjects
+    {
+        get;
+        set
+        {
+            if (ReferenceEquals(field, value)) return;
+            field.Clear();
+            if (value != null)
+            {
+                field.AddAll(value);
+            }
+        }
+    } = new HashSet<string>(StringComparer.Ordinal); // XXX - TreeSet<> in Java
+
+    [OslcDescription("Test case by which this change request is tested.")]
+    [OslcName("testedByTestCase")]
+    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "testedByTestCase")]
+    [OslcRange(Constants.TYPE_TEST_CASE)]
+    [OslcReadOnly(false)]
+    [OslcTitle("Tested by Test Cases")]
+    public ISet<Link> TestedByTestCases
+    {
+        get;
+        set
+        {
+            if (ReferenceEquals(field, value)) return;
+            field.Clear();
+            if (value != null)
+            {
+                field.AddAll(value);
+            }
+        }
+    } = new HashSet<Link>();
+
+    [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
+    [OslcOccurs(Occurs.ExactlyOne)]
+    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
+    [OslcTitle("Title")]
+    [OslcValueType(ValueType.XMLLiteral)]
+    public string Title { get; set; }
+
+    [OslcDescription("Tracks SCM change set resource.")]
+    [OslcName("tracksChangeSet")]
+    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "tracksChangeSet")]
+    [OslcRange(Constants.TYPE_CHANGE_SET)]
+    [OslcReadOnly(false)]
+    [OslcTitle("Tracks Change Sets")]
+    public ISet<Link> TracksChangeSets
+    {
+        get;
+        set
+        {
+            if (ReferenceEquals(field, value)) return;
+            field.Clear();
+            if (value != null)
+            {
+                field.AddAll(value);
+            }
+        }
+    } = new HashSet<Link>();
+
+    [OslcDescription("Tracks the associated Requirement or Requirement ChangeSet resources.")]
+    [OslcName("tracksRequirement")]
+    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "tracksRequirement")]
+    [OslcRange(Constants.TYPE_REQUIREMENT)]
+    [OslcReadOnly(false)]
+    [OslcTitle("Tracks Requirements")]
+    public ISet<Link> TracksRequirements
+    {
+        get;
+        set
+        {
+            if (ReferenceEquals(field, value)) return;
+            field.Clear();
+            if (value != null)
+            {
+                field.AddAll(value);
+            }
+        }
+    } = new HashSet<Link>();
+
+    [OslcDescription("Whether or not the Change Request has been approved.")]
+    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "approved")]
+    [OslcReadOnly]
+    [OslcTitle("Approved")]
+    public bool? Approved { get; set; }
+
+    [OslcDescription("Whether or not the Change Request is completely done, no further fixes or fix verification is needed.")]
+    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "closed")]
+    [OslcReadOnly]
+    [OslcTitle("Closed")]
+    public bool? Closed { get; set; }
+
+    [OslcDescription("Whether or not the Change Request has been fixed.")]
+    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "fixed")]
+    [OslcReadOnly]
+    [OslcTitle("Fixed")]
+    public bool? Fixed { get; set; }
+
+    [OslcDescription("Whether or not the Change Request in a state indicating that active work is occurring. If oslc_cm:inprogress is true, then oslc_cm:fixed and oslc_cm:closed must also be false.")]
+    [OslcName("inprogress")]
+    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "inprogress")]
+    [OslcReadOnly]
+    [OslcTitle("In] Progress")]
+    public bool? InProgress { get; set; }
+
+    [OslcDescription("Whether or not the Change Request has been reviewed.")]
+    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "reviewed")]
+    [OslcReadOnly]
+    [OslcTitle("Reviewed")]
+    public bool? Reviewed { get; set; }
+
+    [OslcDescription("Whether or not the resolution or fix of the Change Request has been verified.")]
+    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "verified")]
+    [OslcReadOnly]
+    [OslcTitle("Verified")]
+    public bool? Verified { get; set; }
+
+    [Obsolete("Use AffectedByDefects property instead")]
+    public Link[] GetAffectedByDefects()
+    {
+        return AffectedByDefects.ToArray();
+    }
+
+    [Obsolete("Use AffectsPlanItems property instead")]
+    public Link[] GetAffectsPlanItems()
+    {
+        return AffectsPlanItems.ToArray();
+    }
+
+    [Obsolete("Use AffectsRequirements property instead")]
+    public Link[] GetAffectsRequirements()
+    {
+        return AffectsRequirements.ToArray();
+    }
+
+    [Obsolete("Use AffectsTestResults property instead")]
+    public Link[] GetAffectsTestResults()
+    {
+        return AffectsTestResults.ToArray();
+    }
+
+    [Obsolete("Use BlocksTestExecutionRecords property instead")]
+    public Link[] GetBlocksTestExecutionRecords()
+    {
+        return BlocksTestExecutionRecords.ToArray();
+    }
+
+    [Obsolete("Use CloseDate property instead")]
+    public DateTime? GetCloseDate()
+    {
+        return CloseDate;
+    }
+
+    [Obsolete("Use Contributors property instead")]
+    public Uri[] GetContributors()
+    {
+        return Contributors.ToArray();
+    }
+
+    [Obsolete("Use Created property instead")]
+    public DateTime? GetCreated()
+    {
+        return Created;
+    }
+
+    [Obsolete("Use Creators property instead")]
+    public Uri[] GetCreators()
+    {
+        return Creators.ToArray();
+    }
+
+    [Obsolete("Use DctermsTypes property instead")]
+    public string[] GetDctermsTypes()
+    {
+        return DctermsTypes;
+    }
+
+    [Obsolete("Use Description property instead")]
+    public string GetDescription()
+    {
+        return Description;
+    }
+
+    [Obsolete("Use DiscussedBy property instead")]
+    public Uri GetDiscussedBy()
+    {
+        return DiscussedBy;
+    }
+
+    [Obsolete("Use Identifier property instead")]
+    public string GetIdentifier()
+    {
+        return Identifier;
+    }
+
+    [Obsolete("Use ImplementsRequirements property instead")]
+    public Link[] GetImplementsRequirements()
+    {
+        return ImplementsRequirements.ToArray();
+    }
+
+    [Obsolete("Use InstanceShape property instead")]
+    public Uri GetInstanceShape()
+    {
+        return InstanceShape;
+    }
+
+    [Obsolete("Use Modified property instead")]
     public DateTime? GetModified()
     {
-        return _modified;
+        return Modified;
     }
 
     // [OslcDescription("The resource type URIs.")]
@@ -357,360 +745,290 @@ public class ChangeRequest : AbstractResource
         return GetTypes().ToArray();
     }
 
-    [OslcDescription("This relationship is loosely coupled and has no specific meaning.")]
-    [OslcName("relatedChangeRequest")]
-    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "relatedChangeRequest")]
-    [OslcRange(Constants.TYPE_CHANGE_REQUEST)]
-    [OslcReadOnly(false)]
-    [OslcTitle("Related Change Requests")]
+    [Obsolete("Use RelatedChangeRequests property instead")]
     public Link[] GetRelatedChangeRequests()
     {
-        return _relatedChangeRequests.ToArray();
+        return RelatedChangeRequests.ToArray();
     }
 
-    [OslcDescription("Related OSLC resources of any type.")]
-    [OslcName("relatedResource")]
-    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "relatedResource")]
-    [OslcTitle("Related Resources")]
+    [Obsolete("Use RelatedResources property instead")]
     public Link[] GetRelatedResources()
     {
-        return _relatedResources.ToArray();
+        return RelatedResources.ToArray();
     }
 
-    [OslcDescription("Related QM test case resource.")]
-    [OslcName("relatedTestCase")]
-    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "relatedTestCase")]
-    [OslcRange(Constants.TYPE_TEST_CASE)]
-    [OslcReadOnly(false)]
-    [OslcTitle("Related Test Cases")]
+    [Obsolete("Use RelatedTestCases property instead")]
     public Link[] GetRelatedTestCases()
     {
-        return _relatedTestCases.ToArray();
+        return RelatedTestCases.ToArray();
     }
 
-    [OslcDescription("Related to a QM test execution resource.")]
-    [OslcName("relatedTestExecutionRecord")]
-    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "relatedTestExecutionRecord")]
-    [OslcRange(Constants.TYPE_TEST_EXECUTION_RECORD)]
-    [OslcReadOnly(false)]
-    [OslcTitle("Related Test Execution Records")]
+    [Obsolete("Use RelatedTestExecutionRecords property instead")]
     public Link[] GetRelatedTestExecutionRecords()
     {
-        return _relatedTestExecutionRecords.ToArray();
+        return RelatedTestExecutionRecords.ToArray();
     }
 
-    [OslcDescription("Related QM test plan resource.")]
-    [OslcName("relatedTestPlan")]
-    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "relatedTestPlan")]
-    [OslcRange(Constants.TYPE_TEST_PLAN)]
-    [OslcReadOnly(false)]
-    [OslcTitle("Related Test Plans")]
+    [Obsolete("Use RelatedTestPlans property instead")]
     public Link[] GetRelatedTestPlans()
     {
-        return _relatedTestPlans.ToArray();
+        return RelatedTestPlans.ToArray();
     }
 
-    [OslcDescription("Related QM test script resource.")]
-    [OslcName("relatedTestScript")]
-    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "relatedTestScript")]
-    [OslcRange(Constants.TYPE_TEST_SCRIPT)]
-    [OslcReadOnly(false)]
-    [OslcTitle("Related Test Scripts")]
+    [Obsolete("Use RelatedTestScripts property instead")]
     public Link[] GetRelatedTestScripts()
     {
-        return _relatedTestScripts.ToArray();
+        return RelatedTestScripts.ToArray();
     }
 
-    [OslcDescription("The scope of a resource is a Uri for the resource's OSLC Service Provider.")]
-    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "serviceProvider")]
-    [OslcRange(OslcConstants.TYPE_SERVICE_PROVIDER)]
-    [OslcTitle("Service Provider")]
+    [Obsolete("Use ServiceProvider property instead")]
     public Uri GetServiceProvider()
     {
-        return _serviceProvider;
+        return ServiceProvider;
     }
 
-    [OslcAllowedValue(new string[] { "Unclassified", "Minor", "Normal", "Major", "Critical", "Blocker" })]
-    [OslcDescription("Severity of change request.")]
-    [OslcOccurs(Occurs.ExactlyOne)]
-    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "severity")]
-    [OslcTitle("Severity")]
+    [Obsolete("Use Severity property instead")]
     public string GetSeverity()
     {
-        return _severity.ToString();
+        return Severity;
     }
 
-    [OslcDescription("Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users.")]
-    [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "shortTitle")]
-    [OslcTitle("Short Title")]
-    [OslcValueType(ValueType.XMLLiteral)]
+    [Obsolete("Use ShortTitle property instead")]
     public string GetShortTitle()
     {
-        return _shortTitle;
+        return ShortTitle;
     }
 
-    [OslcDescription("Used to indicate the status of the change request based on values defined by the service provider. Most often a read-only property. Some possible values may include: 'Submitted', 'Done', 'InProgress', etc.")]
-    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "status")]
-    [OslcTitle("Status")]
+    [Obsolete("Use Status property instead")]
     public string GetStatus()
     {
-        return _status;
+        return Status;
     }
 
-    [OslcDescription("Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
-    [OslcName("subject")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "subject")]
-    [OslcReadOnly(false)]
-    [OslcTitle("Subjects")]
+    [Obsolete("Use Subjects property instead")]
     public string[] GetSubjects()
     {
-        return _subjects.ToArray();
+        return Subjects.ToArray();
     }
 
-    [OslcDescription("Test case by which this change request is tested.")]
-    [OslcName("testedByTestCase")]
-    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "testedByTestCase")]
-    [OslcRange(Constants.TYPE_TEST_CASE)]
-    [OslcReadOnly(false)]
-    [OslcTitle("Tested by Test Cases")]
+    [Obsolete("Use TestedByTestCases property instead")]
     public Link[] GetTestedByTestCases()
     {
-        return _testedByTestCases.ToArray();
+        return TestedByTestCases.ToArray();
     }
 
-    [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
-    [OslcOccurs(Occurs.ExactlyOne)]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
-    [OslcTitle("Title")]
-    [OslcValueType(ValueType.XMLLiteral)]
+    [Obsolete("Use Title property instead")]
     public string GetTitle()
     {
-        return _title;
+        return Title;
     }
 
-    [OslcDescription("Tracks SCM change set resource.")]
-    [OslcName("tracksChangeSet")]
-    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "tracksChangeSet")]
-    [OslcRange(Constants.TYPE_CHANGE_SET)]
-    [OslcReadOnly(false)]
-    [OslcTitle("Tracks Change Sets")]
+    [Obsolete("Use TracksChangeSets property instead")]
     public Link[] GetTracksChangeSets()
     {
-        return _tracksChangeSets.ToArray();
+        return TracksChangeSets.ToArray();
     }
 
-    [OslcDescription("Tracks the associated Requirement or Requirement ChangeSet resources.")]
-    [OslcName("tracksRequirement")]
-    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "tracksRequirement")]
-    [OslcRange(Constants.TYPE_REQUIREMENT)]
-    [OslcReadOnly(false)]
-    [OslcTitle("Tracks Requirements")]
+    [Obsolete("Use TracksRequirements property instead")]
     public Link[] GetTracksRequirements()
     {
-        return _tracksRequirements.ToArray();
+        return TracksRequirements.ToArray();
     }
 
-    [OslcDescription("Whether or not the Change Request has been approved.")]
-    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "approved")]
-    [OslcReadOnly]
-    [OslcTitle("Approved")]
+    [Obsolete("Use Approved property instead")]
     public bool? IsApproved()
     {
-        return _approved;
+        return Approved;
     }
 
-    [OslcDescription("Whether or not the Change Request is completely done, no further fixes or fix verification is needed.")]
-    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "closed")]
-    [OslcReadOnly]
-    [OslcTitle("Closed")]
+    [Obsolete("Use Closed property instead")]
     public bool? IsClosed()
     {
-        return _closed;
+        return Closed;
     }
 
-    [OslcDescription("Whether or not the Change Request has been fixed.")]
-    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "fixed")]
-    [OslcReadOnly]
-    [OslcTitle("Fixed")]
+    [Obsolete("Use Fixed property instead")]
     public bool? IsFixed()
     {
-        return _isFixed;
+        return Fixed;
     }
 
-    [OslcDescription("Whether or not the Change Request in a state indicating that active work is occurring. If oslc_cm:inprogress is true, then oslc_cm:fixed and oslc_cm:closed must also be false.")]
-    [OslcName("inprogress")]
-    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "inprogress")]
-    [OslcReadOnly]
-    [OslcTitle("In] Progress")]
+    [Obsolete("Use InProgress property instead")]
     public bool? IsInProgress()
     {
-        return _inProgress;
+        return InProgress;
     }
 
-    [OslcDescription("Whether or not the Change Request has been reviewed.")]
-    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "reviewed")]
-    [OslcReadOnly]
-    [OslcTitle("Reviewed")]
+    [Obsolete("Use Reviewed property instead")]
     public bool? IsReviewed()
     {
-        return _reviewed;
+        return Reviewed;
     }
 
-    [OslcDescription("Whether or not the resolution or fix of the Change Request has been verified.")]
-    [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "verified")]
-    [OslcReadOnly]
-    [OslcTitle("Verified")]
+    [Obsolete("Use Verified property instead")]
     public bool? IsVerified()
     {
-        return _verified;
+        return Verified;
     }
 
+    [Obsolete("Use AffectedByDefects property instead")]
     public void SetAffectedByDefects(Link[] affectedByDefects)
     {
-        _affectedByDefects.Clear();
+        AffectedByDefects.Clear();
 
         if (affectedByDefects != null)
         {
-            _affectedByDefects.AddAll(affectedByDefects);
+            AffectedByDefects.AddAll(affectedByDefects);
         }
     }
 
+    [Obsolete("Use AffectsPlanItems property instead")]
     public void SetAffectsPlanItems(Link[] affectsPlanItems)
     {
-        _affectsPlanItems.Clear();
+        AffectsPlanItems.Clear();
 
         if (affectsPlanItems != null)
         {
-            _affectsPlanItems.AddAll(affectsPlanItems);
+            AffectsPlanItems.AddAll(affectsPlanItems);
         }
     }
 
+    [Obsolete("Use AffectsRequirements property instead")]
     public void SetAffectsRequirements(Link[] affectsRequirements)
     {
-        _affectsRequirements.Clear();
+        AffectsRequirements.Clear();
 
         if (affectsRequirements != null)
         {
-            _affectsRequirements.AddAll(affectsRequirements);
+            AffectsRequirements.AddAll(affectsRequirements);
         }
     }
 
+    [Obsolete("Use AffectsTestResults property instead")]
     public void SetAffectsTestResults(Link[] affectsTestResults)
     {
-        _affectsTestResults.Clear();
+        AffectsTestResults.Clear();
 
         if (affectsTestResults != null)
         {
-            _affectsTestResults.AddAll(affectsTestResults);
+            AffectsTestResults.AddAll(affectsTestResults);
         }
     }
 
+    [Obsolete("Use Approved property instead")]
     public void SetApproved(bool? approved)
     {
-        _approved = approved;
+        Approved = approved;
     }
 
+    [Obsolete("Use BlocksTestExecutionRecords property instead")]
     public void SetBlocksTestExecutionRecords(Link[] blocksTestExecutionRecords)
     {
-        _blocksTestExecutionRecords.Clear();
+        BlocksTestExecutionRecords.Clear();
 
         if (blocksTestExecutionRecords != null)
         {
-            _blocksTestExecutionRecords.AddAll(blocksTestExecutionRecords);
+            BlocksTestExecutionRecords.AddAll(blocksTestExecutionRecords);
         }
     }
 
+    [Obsolete("Use Closed property instead")]
     public void SetClosed(bool? closed)
     {
-        _closed = closed;
+        Closed = closed;
     }
 
+    [Obsolete("Use CloseDate property instead")]
     public void SetCloseDate(DateTime? closeDate)
     {
-        _closeDate = closeDate;
+        CloseDate = closeDate;
     }
 
+    [Obsolete("Use Contributors property instead")]
     public void SetContributors(Uri[] contributors)
     {
-        _contributors.Clear();
+        Contributors.Clear();
 
         if (contributors != null)
         {
-            _contributors.AddAll(contributors);
+            Contributors.AddAll(contributors);
         }
     }
 
+    [Obsolete("Use Created property instead")]
     public void SetCreated(DateTime? created)
     {
-        _created = created;
+        Created = created;
     }
 
+    [Obsolete("Use Creators property instead")]
     public void SetCreators(Uri[] creators)
     {
-        _creators.Clear();
+        Creators.Clear();
 
         if (creators != null)
         {
-            _creators.AddAll(creators);
+            Creators.AddAll(creators);
         }
     }
 
+    [Obsolete("Use DctermsTypes property instead")]
     public void SetDctermsTypes(string[] dctermsTypes)
     {
-        _dctermsTypes.Clear();
-
-        if (dctermsTypes != null)
-        {
-            foreach (var type in dctermsTypes)
-            {
-                _dctermsTypes.Add(TypeExtension.FromString(type));
-            }
-        }
+        DctermsTypes = dctermsTypes;
     }
 
+    [Obsolete("Use Description property instead")]
     public void SetDescription(string description)
     {
-        _description = description;
+        Description = description;
     }
 
+    [Obsolete("Use DiscussedBy property instead")]
     public void SetDiscussedBy(Uri discussedBy)
     {
-        _discussedBy = discussedBy;
+        DiscussedBy = discussedBy;
     }
 
+    [Obsolete("Use Fixed property instead")]
     public void SetFixed(bool? isFixed)
     {
-        _isFixed = isFixed;
+        Fixed = isFixed;
     }
 
+    [Obsolete("Use Identifier property instead")]
     public void SetIdentifier(string identifier)
     {
-        _identifier = identifier;
+        Identifier = identifier;
     }
 
+    [Obsolete("Use ImplementsRequirements property instead")]
     public void SetImplementsRequirements(Link[] implementsRequirements)
     {
-        _implementsRequirements.Clear();
+        ImplementsRequirements.Clear();
 
         if (implementsRequirements != null)
         {
-            _implementsRequirements.AddAll(implementsRequirements);
+            ImplementsRequirements.AddAll(implementsRequirements);
         }
     }
 
+    [Obsolete("Use InProgress property instead")]
     public void SetInProgress(bool? inProgress)
     {
-        _inProgress = inProgress;
+        InProgress = inProgress;
     }
 
+    [Obsolete("Use InstanceShape property instead")]
     public void SetInstanceShape(Uri instanceShape)
     {
-        _instanceShape = instanceShape;
+        InstanceShape = instanceShape;
     }
 
+    [Obsolete("Use Modified property instead")]
     public void SetModified(DateTime? modified)
     {
-        _modified = modified;
+        Modified = modified;
     }
 
     [Obsolete]
@@ -719,138 +1037,155 @@ public class ChangeRequest : AbstractResource
         SetTypes(rdfTypes);
     }
 
+    [Obsolete("Use RelatedChangeRequests property instead")]
     public void SetRelatedChangeRequests(Link[] relatedChangeRequests)
     {
-        _relatedChangeRequests.Clear();
+        RelatedChangeRequests.Clear();
 
         if (relatedChangeRequests != null)
         {
-            _relatedChangeRequests.AddAll(relatedChangeRequests);
+            RelatedChangeRequests.AddAll(relatedChangeRequests);
         }
     }
 
+    [Obsolete("Use RelatedResources property instead")]
     public void SetRelatedResources(Link[] relatedResources)
     {
-        _relatedResources.Clear();
+        RelatedResources.Clear();
 
         if (relatedResources != null)
         {
-            _relatedResources.AddAll(relatedResources);
+            RelatedResources.AddAll(relatedResources);
         }
     }
 
+    [Obsolete("Use RelatedTestCases property instead")]
     public void SetRelatedTestCases(Link[] relatedTestCases)
     {
-        _relatedTestCases.Clear();
+        RelatedTestCases.Clear();
 
         if (relatedTestCases != null)
         {
-            _relatedTestCases.AddAll(relatedTestCases);
+            RelatedTestCases.AddAll(relatedTestCases);
         }
     }
 
+    [Obsolete("Use RelatedTestExecutionRecords property instead")]
     public void SetRelatedTestExecutionRecords(Link[] relatedTestExecutionRecords)
     {
-        _relatedTestExecutionRecords.Clear();
+        RelatedTestExecutionRecords.Clear();
 
         if (relatedTestExecutionRecords != null)
         {
-            _relatedTestExecutionRecords.AddAll(relatedTestExecutionRecords);
+            RelatedTestExecutionRecords.AddAll(relatedTestExecutionRecords);
         }
     }
 
+    [Obsolete("Use RelatedTestPlans property instead")]
     public void SetRelatedTestPlans(Link[] relatedTestPlans)
     {
-        _relatedTestPlans.Clear();
+        RelatedTestPlans.Clear();
 
         if (relatedTestPlans != null)
         {
-            _relatedTestPlans.AddAll(relatedTestPlans);
+            RelatedTestPlans.AddAll(relatedTestPlans);
         }
     }
 
+    [Obsolete("Use RelatedTestScripts property instead")]
     public void SetRelatedTestScripts(Link[] relatedTestScripts)
     {
-        _relatedTestScripts.Clear();
+        RelatedTestScripts.Clear();
 
         if (relatedTestScripts != null)
         {
-            _relatedTestScripts.AddAll(relatedTestScripts);
+            RelatedTestScripts.AddAll(relatedTestScripts);
         }
     }
 
+    [Obsolete("Use Reviewed property instead")]
     public void SetReviewed(bool? reviewed)
     {
-        _reviewed = reviewed;
+        Reviewed = reviewed;
     }
 
+    [Obsolete("Use ServiceProvider property instead")]
     public void SetServiceProvider(Uri serviceProvider)
     {
-        _serviceProvider = serviceProvider;
+        ServiceProvider = serviceProvider;
     }
 
+    [Obsolete("Use Severity property instead")]
     public void SetSeverity(string severity)
     {
-        _severity = SeverityExtension.FromString(severity);
+        Severity = severity;
     }
 
+    [Obsolete("Use ShortTitle property instead")]
     public void SetShortTitle(string shortTitle)
     {
-        _shortTitle = shortTitle;
+        ShortTitle = shortTitle;
     }
 
+    [Obsolete("Use Status property instead")]
     public void SetStatus(string status)
     {
-        _status = status;
+        Status = status;
     }
 
+    [Obsolete("Use Subjects property instead")]
     public void SetSubjects(string[] subjects)
     {
-        _subjects.Clear();
+        Subjects.Clear();
 
         if (subjects != null)
         {
-            _subjects.AddAll(subjects);
+            Subjects.AddAll(subjects);
         }
     }
 
+    [Obsolete("Use TestedByTestCases property instead")]
     public void SetTestedByTestCases(Link[] testedByTestCases)
     {
-        _testedByTestCases.Clear();
+        TestedByTestCases.Clear();
 
         if (testedByTestCases != null)
         {
-            _testedByTestCases.AddAll(testedByTestCases);
+            TestedByTestCases.AddAll(testedByTestCases);
         }
     }
 
+    [Obsolete("Use Title property instead")]
     public void SetTitle(string title)
     {
-        _title = title;
+        Title = title;
     }
 
+    [Obsolete("Use TracksChangeSets property instead")]
     public void SetTracksChangeSets(Link[] tracksChangeSets)
     {
-        _tracksChangeSets.Clear();
+        TracksChangeSets.Clear();
 
         if (tracksChangeSets != null)
         {
-            _tracksChangeSets.AddAll(tracksChangeSets);
+            TracksChangeSets.AddAll(tracksChangeSets);
         }
     }
 
+    [Obsolete("Use TracksRequirements property instead")]
     public void SetTracksRequirements(Link[] tracksRequirements)
     {
-        _tracksRequirements.Clear();
+        TracksRequirements.Clear();
 
         if (tracksRequirements != null)
         {
-            _tracksRequirements.AddAll(tracksRequirements);
+            TracksRequirements.AddAll(tracksRequirements);
         }
     }
 
+    [Obsolete("Use Verified property instead")]
     public void SetVerified(bool? verified)
     {
-        _verified = verified;
+        Verified = verified;
     }
 }

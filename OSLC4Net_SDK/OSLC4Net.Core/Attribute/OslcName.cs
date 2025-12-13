@@ -21,7 +21,8 @@ namespace OSLC4Net.Core.Attribute;
 /// </summary>
 [AttributeUsage(AttributeTargets.Method |
                 AttributeTargets.Class |
-                AttributeTargets.Interface | AttributeTargets.Property)
+                AttributeTargets.Interface |
+                AttributeTargets.Property)
 ]
 public class OslcName : System.Attribute
 {
