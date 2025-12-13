@@ -23,7 +23,6 @@ on:
     paths:
       - "OSLC4Net_SDK/**"
       - ".github/workflows/codeql.yml"
-  merge_group:
   schedule:
     - cron: "0 0 * * 1"
 
