@@ -21,7 +21,7 @@ jobs:
             api.github.com:443
             github.com:443
 
-      - uses: peter-evans/rebase@87c3fd9344792e51ab1c7494c3369620c84ed852 # v3.1.0
+      - uses: peter-evans/rebase@e4945786f7ca41fe6e101cead4395f5489593943 # v4.0.0
         with:
           token: ${{ secrets.GH_PAT }}
           exclude-labels: |
