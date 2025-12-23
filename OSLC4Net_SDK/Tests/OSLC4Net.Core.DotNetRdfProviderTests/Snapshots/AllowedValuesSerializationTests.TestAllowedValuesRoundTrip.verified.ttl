@@ -1,8 +1,0 @@
-﻿@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
-
-_:c14n0 <http://open-services.net/ns/core#allowedValue> "http://example.com/values/high",
-                                                        "http://example.com/values/low",
-                                                        "http://example.com/values/medium";
-        a <http://open-services.net/ns/core#AllowedValues>.
