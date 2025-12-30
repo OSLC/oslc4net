@@ -180,11 +180,11 @@ public class JazzFormAuthClient : OslcClient
 
             }
         }
-        catch (JazzAuthFailedException jfe)
+        catch (JazzAuthFailedException)
         {
             throw;
         }
-        catch (JazzAuthErrorException jee)
+        catch (JazzAuthErrorException)
         {
             throw;
         }

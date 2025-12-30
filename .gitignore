@@ -1,10 +1,14 @@
-/tmp/
+### danielpalme/ReportGenerator
 
-###
+CoverageReport/
+
+### Verify
 
 *.received.*
 
 ############################################
+
+/tmp/
 
 TestResults/**
 **/obj/**/*
