@@ -9,6 +9,10 @@ updates:
     schedule:
       interval: "daily"
     groups:
+      aspire-deps:
+        patterns:
+          - "Aspire.AppHost.Sdk"
+          - "Aspire.Hosting.*"
       test-deps:
         patterns:
           - "xunit*"
