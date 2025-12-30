@@ -15,6 +15,15 @@ Follow the key techniques from Working Effectively With Legacy Code by Michael C
 
 Strive to improve coverage but without silly attempts to cover every getter and setter.
 
+Aim for at least 70% branch (not line) coverage in classes you modify and 95%+ branch coverage in classes you add. To obtain coverage JSON information:
+
+```
+cd OSLC4Net_SDK
+dotnet test --coverage --coverage-output-format cobertura --coverage-output coverage.cobertura.xml
+dotnet reportgenerator -reports:"**/coverage.cobertura.xml" -targetdir:"./CoverageReport" -reporttypes:JsonSummary
+# outputs to OSLC4Net_SDK/CoverageReport/Summary.json
+```
+
 ## Docs
 
 - If a change is significant, add a line to CHANGELOG.md
