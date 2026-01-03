@@ -1050,8 +1050,10 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                 DoubleNode doubleNode => doubleNode.AsDouble(),
                 FloatNode floatNode => floatNode.AsFloat(),
                 LongNode longNode => longNode.AsInteger(),
-                SignedByteNode signedByteNode => (byte)signedByteNode.AsInteger(),
+                SignedByteNode signedByteNode => (sbyte)signedByteNode.AsInteger(),
                 StringNode stringNode => stringNode.AsString(),
+                // DotNetRDF does not expose a ulong directly.
+                // An OverflowException is thrown for illegal conversion attempts.
                 UnsignedLongNode unsignedLongNode => (ulong)unsignedLongNode.AsInteger(),
                 _ => node.Value
             };
