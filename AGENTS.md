@@ -48,12 +48,13 @@ cd OSLC4Net_SDK ; export AGENT_BUILD=true; dotnet test --solution OSLC4Net.Core.
 
 # Filter tests using treenode-filter
 cd OSLC4Net_SDK ; export AGENT_BUILD=true; dotnet test --solution OSLC4Net.Core.slnx --configuration Release --treenode-filter '/*/*/*/*[TestCategory!=RunningOslcServerRequired]'
+```
 
-Note: TUnit uses Microsoft.Testing.Platform.
+> Note: TUnit uses Microsoft.Testing.Platform.
 
-Do not inline the AGENT_BUILD variable!
+Do not inline the `AGENT_BUILD` variable!
 
-You must be CD'd into OSLC4Net_SDK or subfolder before running dotnet commands.
+You must be CD'd into `OSLC4Net_SDK` or subfolder before running `dotnet` commands.
 
 Run `dotnet format` before commit.
 
