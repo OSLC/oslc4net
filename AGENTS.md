@@ -100,9 +100,8 @@ And if your test had a property with the name "MyFilterName" and its value conta
 
 ## Project Structure
 
-- `OSLC4Net_SDK/` - Main SDK projects (.NET 6+)
+- `OSLC4Net_SDK/` - Main SDK projects (.NET 10)
 - `OSLC4Net_SDK/Tests/` - Test projects using TUnit and Verify frameworks
-- `OSLC4Net_NETFramework/` - Legacy .NET Framework samples - do not touch unless instructed.
 
 ## Code Style
 
