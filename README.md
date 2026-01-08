@@ -1,4 +1,4 @@
-OSLC4Net<img src="doc/logo.svg" align="right" width="96px" height="96px">
+OSLC4Net<img src="misc/_static/logo.svg" align="right" width="96px" height="96px">
 ===========================
 
 [![CI](https://github.com/OSLC/oslc4net/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/OSLC/oslc4net/actions?query=workflow%3ACI)
