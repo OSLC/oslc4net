@@ -52,7 +52,7 @@ public class Publisher : AbstractResource
 
     [OslcDescription("A URN that uniquely identifies the implementation")]
     [OslcOccurs(Occurs.ExactlyOne)]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "identifier")]
     [OslcReadOnly] // TODO - Marked as unspecified in the spec, but is this correct?
     [OslcTitle("Identifier")]
     public string GetIdentifier()
@@ -71,7 +71,7 @@ public class Publisher : AbstractResource
 
     [OslcDescription("Title string that could be used for display")]
     [OslcOccurs(Occurs.ExactlyOne)]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]
     [OslcReadOnly]
     [OslcTitle("Title")]
     [OslcValueType(ValueType.XMLLiteral)]

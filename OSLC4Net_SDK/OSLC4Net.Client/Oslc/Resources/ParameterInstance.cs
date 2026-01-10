@@ -57,7 +57,7 @@ public class ParameterInstance : AbstractResource
 
     [OslcDescription(
         "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "description")]
     [OslcTitle("Description")]
     [OslcValueType(ValueType.XMLLiteral)]
     public string GetDescription()

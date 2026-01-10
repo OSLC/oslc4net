@@ -67,7 +67,7 @@ public class TestExecutionRecord : QmResource
 
     [OslcDescription("The person(s) who are responsible for the work needed to complete the change request.")]
     [OslcName("contributor")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "contributor")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "contributor")]
     [OslcRange(QmConstants.TYPE_PERSON)]
     [OslcTitle("Contributors")]
     public Uri[] GetContributors()
@@ -77,7 +77,7 @@ public class TestExecutionRecord : QmResource
 
     [OslcDescription("Creator or creators of resource.")]
     [OslcName("creator")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "creator")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "creator")]
     [OslcRange(QmConstants.TYPE_PERSON)]
     [OslcTitle("Creators")]
     public Uri[] GetCreators()

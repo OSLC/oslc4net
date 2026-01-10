@@ -83,7 +83,7 @@ public class TestCase : QmResource
 
     [OslcDescription("The person(s) who are responsible for the work needed to complete the test case.")]
     [OslcName("contributor")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "contributor")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "contributor")]
     [OslcRange(QmConstants.TYPE_PERSON)]
     [OslcTitle("Contributors")]
     public Uri[] GetContributors()
@@ -93,7 +93,7 @@ public class TestCase : QmResource
 
     [OslcDescription("Creator or creators of resource.")]
     [OslcName("creator")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "creator")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "creator")]
     [OslcRange(QmConstants.TYPE_PERSON)]
     [OslcTitle("Creators")]
     public Uri[] GetCreators()
@@ -103,7 +103,7 @@ public class TestCase : QmResource
 
     [OslcDescription(
         "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "description")]
     [OslcTitle("Description")]
     [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
     public string GetDescription()
@@ -125,7 +125,7 @@ public class TestCase : QmResource
     [OslcDescription(
         "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
     [OslcName("subject")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "subject")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "subject")]
     [OslcReadOnly(false)]
     [OslcTitle("Subjects")]
     public string[] GetSubjects()
