@@ -24,7 +24,7 @@ public static class XmlNamespace
 {
     private static readonly OslcNamespaceDefinition[] namespaces = new[]
     {
-        new OslcNamespaceDefinition(prefix: OslcConstants.Domains.DCTerms.NS_PREFIX,
+        new OslcNamespaceDefinition(prefix: OslcConstants.Domains.DCTerms.Prefix,
             namespaceURI: OslcConstants.Domains.DCTerms.NS),
         new OslcNamespaceDefinition(prefix: OslcConstants.OSLC_CORE_NAMESPACE_PREFIX,
             namespaceURI: OslcConstants.OSLC_CORE_NAMESPACE),
