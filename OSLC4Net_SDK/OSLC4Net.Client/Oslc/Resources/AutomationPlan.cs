@@ -144,7 +144,7 @@ public class AutomationPlan : AbstractResource
     [OslcDescription("Timestamp last latest resource modification.")]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "modified")]
     [OslcReadOnly]
-    [OslcTitle("Mo]dified")]
+    [OslcTitle("Modified")]
     public DateTime? GetModified()
     {
         return modified;
