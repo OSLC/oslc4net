@@ -70,7 +70,7 @@ public class ArchitectureLinkType : AbstractResource
 
     [OslcDescription("The person(s) who are responsible for the work needed to complete the automation plan.")]
     [OslcName("contributor")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "contributor")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "contributor")]
     [OslcRange(QmConstants.TYPE_PERSON)]
     [OslcTitle("Contributors")]
     public Uri[] GetContributors()
@@ -79,7 +79,7 @@ public class ArchitectureLinkType : AbstractResource
     }
 
     [OslcDescription("Timestamp of resource creation.")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "created")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "created")]
     [OslcReadOnly]
     [OslcTitle("Created")]
     public DateTime? GetCreated()
@@ -89,7 +89,7 @@ public class ArchitectureLinkType : AbstractResource
 
     [OslcDescription("Creator or creators of resource.")]
     [OslcName("creator")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "creator")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "creator")]
     [OslcRange(ArchitectureConstants.TYPE_PERSON)]
     [OslcTitle("Creators")]
     public Uri[] GetCreators()
@@ -118,7 +118,7 @@ public class ArchitectureLinkType : AbstractResource
     [OslcDescription(
         "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
     [OslcOccurs(Occurs.ExactlyOne)]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "identifier")]
     [OslcReadOnly]
     [OslcTitle("Identifier")]
     public string GetIdentifier()
@@ -136,7 +136,7 @@ public class ArchitectureLinkType : AbstractResource
     }
 
     [OslcDescription("Timestamp last latest resource modification.")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "modified")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "modified")]
     [OslcReadOnly]
     [OslcTitle("Modified")]
     public DateTime? GetModified()

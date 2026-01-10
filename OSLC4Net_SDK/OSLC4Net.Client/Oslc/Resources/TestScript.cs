@@ -65,7 +65,7 @@ public class TestScript : QmResource
 
     [OslcDescription("The person(s) who are responsible for the work needed to complete the change request.")]
     [OslcName("contributor")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "contributor")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "contributor")]
     [OslcRange(QmConstants.TYPE_PERSON)]
     [OslcTitle("Contributors")]
     public Uri[] GetContributors()
@@ -75,7 +75,7 @@ public class TestScript : QmResource
 
     [OslcDescription("Creator or creators of resource.")]
     [OslcName("creator")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "creator")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "creator")]
     [OslcRange(QmConstants.TYPE_PERSON)]
     [OslcTitle("Creators")]
     public Uri[] GetCreators()
@@ -85,7 +85,7 @@ public class TestScript : QmResource
 
     [OslcDescription(
         "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "description")]
     [OslcTitle("Description")]
     [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
     public string GetDescription()

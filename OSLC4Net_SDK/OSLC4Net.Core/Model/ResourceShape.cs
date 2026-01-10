@@ -73,7 +73,7 @@ public class ResourceShape : AbstractResource
 
     [OslcDescription(
         "Title of the resource shape. SHOULD include only content that is valid and suitable inside an XHTML <div> element")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]
     [OslcReadOnly]
     [OslcTitle("Title")]
     [OslcValueType(ValueType.XMLLiteral)]

@@ -46,7 +46,7 @@ public class ServiceProvider : AbstractResource
     }
 
     [OslcDescription("The date and time that this resource was created")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "created")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "created")]
     [OslcReadOnly]
     [OslcTitle("Created")]
     public DateTime? GetCreated()
@@ -55,7 +55,7 @@ public class ServiceProvider : AbstractResource
     }
 
     [OslcDescription("Description of the service provider")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "description")]
     [OslcReadOnly]
     [OslcTitle("Description")]
     [OslcValueType(ValueType.XMLLiteral)]
@@ -75,7 +75,7 @@ public class ServiceProvider : AbstractResource
     }
 
     [OslcDescription("A unique identifier for this resource")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "identifier")]
     [OslcReadOnly]
     [OslcTitle("Identifier")]
     public string GetIdentifier()
@@ -115,7 +115,7 @@ public class ServiceProvider : AbstractResource
     }
 
     [OslcDescription("Describes the software product that provides the implementation")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "publisher")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "publisher")]
     [OslcRange(OslcConstants.TYPE_PUBLISHER)]
     [OslcReadOnly]
     [OslcRepresentation(Representation.Inline)]
@@ -143,7 +143,7 @@ public class ServiceProvider : AbstractResource
     }
 
     [OslcDescription("Title of the service provider")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]
     [OslcReadOnly]
     [OslcTitle("Title")]
     [OslcValueType(ValueType.XMLLiteral)]

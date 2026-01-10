@@ -108,7 +108,7 @@ public sealed class Property : AbstractResource, IComparable<Property>
 
     [OslcDescription(
         "Description of the property. SHOULD include only content that is valid and suitable inside an XHTML <div> element")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "description")]
     [OslcReadOnly]
     [OslcTitle("Description")]
     [OslcValueType(ValueType.XMLLiteral)]
@@ -214,7 +214,7 @@ public sealed class Property : AbstractResource, IComparable<Property>
 
     [OslcDescription(
         "Title of the property. SHOULD include only content that is valid and suitable inside an XHTML <div> element")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]
     [OslcReadOnly]
     [OslcTitle("Title")]
     [OslcValueType(ValueType.XMLLiteral)]

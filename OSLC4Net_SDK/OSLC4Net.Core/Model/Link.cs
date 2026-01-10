@@ -44,7 +44,7 @@ public class Link : AbstractReifiedResource<Uri>
     /// </summary>
     /// <returns></returns>
     [OslcName("title")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]
     public string GetLabel()
     {
         return label;
