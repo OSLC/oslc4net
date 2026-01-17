@@ -30,39 +30,3 @@ public enum Type
     [Description("Feature Request")]
     Feature_Request
 }
-
-public static class TypeExtension
-{
-    public static string ToString(Type type)
-    {
-        var attributes = (Description[])type.GetType().GetField(type.ToString())!.GetCustomAttributes(typeof(Description), false);
-
-        return attributes.Length > 0 ? attributes[0].value : string.Empty;
-    }
-
-    public static Type FromString(string value)
-    {
-        foreach (Type type in Enum.GetValues(typeof(Type)))
-        {
-            var description = ToString(type);
-
-            if (description.Equals(value))
-            {
-                return type;
-            }
-        }
-
-        throw new ArgumentOutOfRangeException(nameof(value), value,
-            "The string must correspond to one of the Type enum values");
-    }
-}
-
-[AttributeUsage(AttributeTargets.Field)
-]
-internal sealed class Description(string value) : Attribute
-{
-    /**
-     *  Description of element; used in enumerations
-     */
-    public readonly string value = value;
-}
