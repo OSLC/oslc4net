@@ -13,24 +13,28 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Model;
+namespace OSLC4Net.ChangeManagement;
 
-/// <summary>
-///     OSLC Occurs attribute
-/// </summary>
-/// <remarks>see http://open-services.net/bin/view/Main/OslcCoreSpecification#OSLC_Defined_Resources</remarks>
-public enum Occurs
+internal static class SeverityExtension
 {
-    [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Exactly-one")]
-    ExactlyOne,
+    public static string ToString(Severity severity)
+    {
+        return severity.ToString();
+    }
 
-    [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Zero-or-one")]
-    ZeroOrOne,
+    public static Severity FromString(string value)
+    {
+        foreach (Severity severity in Enum.GetValues(typeof(Severity)))
+        {
+            var stringValue = ToString(severity);
 
-    [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Zero-or-many")]
-    ZeroOrMany,
+            if (stringValue.Equals(value))
+            {
+                return severity;
+            }
+        }
 
-    [URI(OslcConstants.OSLC_CORE_NAMESPACE + "One-or-many")]
-    OneOrMany,
-    [URI("")] Unknown
+        throw new ArgumentOutOfRangeException(nameof(value), value,
+            "The string must correspond to one of the Severity enum values");
+    }
 }

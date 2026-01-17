@@ -13,18 +13,12 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query;
+namespace OSLC4Net.Client.Oslc;
 
-/// <summary>
-/// Simple term from oslc.where clause
-/// </summary>
-public interface SimpleTerm
+public static class ConsumeContentExtension
 {
-    TermType Type { get; }
-
-    /**
-     * @return type of simple term.  When {@link CompoundTerm}
-     * return <code>null</code>.
-     */
-    PName Property { get; }
+    public static void ConsumeContent(this HttpResponseMessage response)
+    {
+        response.Content.Dispose();
+    }
 }

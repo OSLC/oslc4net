@@ -15,16 +15,12 @@
 
 namespace OSLC4Net.Core.Query;
 
-/// <summary>
-/// Simple term from oslc.where clause
-/// </summary>
-public interface SimpleTerm
+public enum ValueType
 {
-    TermType Type { get; }
-
-    /**
-     * @return type of simple term.  When {@link CompoundTerm}
-     * return <code>null</code>.
-     */
-    PName Property { get; }
+    URI_REF,
+    BOOLEAN,
+    DECIMAL,
+    STRING,
+    TYPED_STRING,
+    LANGED_STRING
 }

@@ -15,16 +15,12 @@
 
 namespace OSLC4Net.Core.Query;
 
-/// <summary>
-/// Simple term from oslc.where clause
-/// </summary>
-public interface SimpleTerm
+public enum Operator
 {
-    TermType Type { get; }
-
-    /**
-     * @return type of simple term.  When {@link CompoundTerm}
-     * return <code>null</code>.
-     */
-    PName Property { get; }
+    EQUALS, // TODO: rename for CLS compliance
+    NOT_EQUALS,
+    LESS_THAN,
+    GREATER_THAN,
+    LESS_EQUALS,
+    GREATER_EQUALS
 }

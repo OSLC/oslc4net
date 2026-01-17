@@ -13,18 +13,28 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query;
+namespace OSLC4Net.Core.Query.Impl;
 
-/// <summary>
-/// Simple term from oslc.where clause
-/// </summary>
-public interface SimpleTerm
+internal static class OperatorExtension
 {
-    TermType Type { get; }
-
-    /**
-     * @return type of simple term.  When {@link CompoundTerm}
-     * return <code>null</code>.
-     */
-    PName Property { get; }
+    public static string
+    ToString(Operator op)
+    {
+        switch (op)
+        {
+            case Operator.EQUALS:
+                return "=";
+            case Operator.NOT_EQUALS:
+                return "!=";
+            case Operator.LESS_THAN:
+                return "<";
+            case Operator.GREATER_THAN:
+                return ">";
+            case Operator.LESS_EQUALS:
+                return "<=";
+            default:
+            case Operator.GREATER_EQUALS:
+                return ">=";
+        }
+    }
 }

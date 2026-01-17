@@ -15,12 +15,6 @@
 
 namespace OSLC4Net.Core.Query;
 
-public enum SortTermType
-{
-    SIMPLE,
-    SCOPED
-}
-
 public interface SortTerm
 {
     SortTermType Type { get; }

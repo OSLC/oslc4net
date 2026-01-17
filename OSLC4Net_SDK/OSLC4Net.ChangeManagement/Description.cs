@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013 IBM Corporation.
+ * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,18 +13,14 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
-namespace OSLC4Net.Core.Query;
+namespace OSLC4Net.ChangeManagement;
 
-/// <summary>
-/// Simple term from oslc.where clause
-/// </summary>
-public interface SimpleTerm
+[AttributeUsage(AttributeTargets.Field)
+]
+internal sealed class Description(string value) : Attribute
 {
-    TermType Type { get; }
-
     /**
-     * @return type of simple term.  When {@link CompoundTerm}
-     * return <code>null</code>.
+     *  Description of element; used in enumerations
      */
-    PName Property { get; }
+    public readonly string value = value;
 }

@@ -112,27 +112,3 @@ internal sealed class ComparisonTermImpl : SimpleTermImpl, ComparisonTerm
     private readonly Operator op;
     private Value operand;
 }
-
-internal static class OperatorExtension
-{
-    public static string
-    ToString(Operator op)
-    {
-        switch (op)
-        {
-            case Operator.EQUALS:
-                return "=";
-            case Operator.NOT_EQUALS:
-                return "!=";
-            case Operator.LESS_THAN:
-                return "<";
-            case Operator.GREATER_THAN:
-                return ">";
-            case Operator.LESS_EQUALS:
-                return "<=";
-            default:
-            case Operator.GREATER_EQUALS:
-                return ">=";
-        }
-    }
-}
