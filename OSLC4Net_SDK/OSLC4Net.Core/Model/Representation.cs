@@ -32,34 +32,3 @@ public enum Representation
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Either")]
     Either
 }
-
-public static class RepresentationExtension
-{
-    public static string ToString(Representation representation)
-    {
-        var attributes = (URI[])representation.GetType().GetField(representation.ToString())!
-            .GetCustomAttributes(typeof(URI), false);
-
-        return attributes.Length > 0 ? attributes[0].uri : string.Empty;
-    }
-
-    public static Representation FromString(string value)
-    {
-        foreach (Representation representation in Enum.GetValues(typeof(Representation)))
-        {
-            var uri = ToString(representation);
-
-            if (uri.Equals(value))
-            {
-                return representation;
-            }
-        }
-
-        throw new ArgumentException();
-    }
-
-    public static Representation FromURI(URI uri)
-    {
-        return FromString(uri.ToString());
-    }
-}
