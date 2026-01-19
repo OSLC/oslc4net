@@ -1,3 +1,6 @@
+using System.Net;
+using System.Net.Http.Headers;
+using System.Text;
 using Aspire.Hosting;
 using Aspire.Hosting.Testing;
 using Projects;
@@ -76,10 +79,51 @@ public class RefimplAspireFixture : IAsyncDisposable
         ServiceProviderCatalogUriRM =
             app.GetEndpoint("refimpl-rm", "http").AbsoluteUri + "services/catalog/singleton";
 
+        // Wait for the catalog endpoints to be fully ready
+        // The health check only verifies /services/rootservices, but the catalog
+        // may take additional time to initialize, especially on slower CI runners
+        await WaitForCatalogReadyAsync(ServiceProviderCatalogUriCM).ConfigureAwait(true);
+        await WaitForCatalogReadyAsync(ServiceProviderCatalogUriRM).ConfigureAwait(true);
+
         return app;
     }
 
-    public string ServiceProviderCatalogUriRM { get; private set; }
+    /// <summary>
+    /// Polls the catalog endpoint until it returns a successful response (401 Unauthorized
+    /// indicates the endpoint is ready but requires auth, which is expected).
+    /// This ensures the service is fully initialized before tests run.
+    /// </summary>
+    private static async Task WaitForCatalogReadyAsync(string catalogUri, int maxRetries = 30, int delayMs = 1000)
+    {
+        using var httpClient = new HttpClient();
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+            "Basic",
+            Convert.ToBase64String(Encoding.ASCII.GetBytes("admin:admin")));
 
-    public string ServiceProviderCatalogUriCM { get; private set; }
+        for (var i = 0; i < maxRetries; i++)
+        {
+            try
+            {
+                var response = await httpClient.GetAsync(catalogUri).ConfigureAwait(false);
+                // 200 OK means catalog is ready and responded
+                // 401 Unauthorized also indicates the endpoint is working (just needs auth)
+                if (response.StatusCode is HttpStatusCode.OK or HttpStatusCode.Unauthorized)
+                {
+                    return;
+                }
+            }
+            catch (HttpRequestException)
+            {
+                // Connection refused or other network error - service not ready yet
+            }
+
+            await Task.Delay(delayMs).ConfigureAwait(false);
+        }
+
+        throw new TimeoutException($"Catalog endpoint {catalogUri} did not become ready within {maxRetries * delayMs / 1000} seconds");
+    }
+
+    public string ServiceProviderCatalogUriRM { get; private set; } = null!;
+
+    public string ServiceProviderCatalogUriCM { get; private set; } = null!;
 }
