@@ -34,12 +34,12 @@ public class RefimplAspireFixture : IAsyncDisposable
     {
         if (DistributedApplication != null) return;
 
-        await _initLock.WaitAsync().ConfigureAwait(true);
+        await _initLock.WaitAsync().ConfigureAwait(false);
         try
         {
             if (DistributedApplication == null)
             {
-                DistributedApplication = await SetupAspireAsync().ConfigureAwait(true);
+                DistributedApplication = await SetupAspireAsync().ConfigureAwait(false);
             }
         }
         finally
@@ -53,7 +53,7 @@ public class RefimplAspireFixture : IAsyncDisposable
     protected async Task<DistributedApplication> SetupAspireAsync()
     {
         var builder = await DistributedApplicationTestingBuilder
-            .CreateAsync<OSLC4Net_Test_AspireHost>().ConfigureAwait(true);
+            .CreateAsync<OSLC4Net_Test_AspireHost>().ConfigureAwait(false);
 
         //builder.Services.ConfigureHttpClientDefaults(clientBuilder =>
         //{
@@ -66,12 +66,12 @@ public class RefimplAspireFixture : IAsyncDisposable
         // builder.
         var app = await builder.BuildAsync().ConfigureAwait(false);
 
-        await app.StartAsync().WaitAsync(TimeSpan.FromSeconds(300)).ConfigureAwait(true);
+        await app.StartAsync().WaitAsync(TimeSpan.FromSeconds(300)).ConfigureAwait(false);
 
         await app.ResourceNotifications.WaitForResourceHealthyAsync("refimpl-cm")
-            .WaitAsync(TimeSpan.FromSeconds(300)).ConfigureAwait(true);
+            .WaitAsync(TimeSpan.FromSeconds(300)).ConfigureAwait(false);
         await app.ResourceNotifications.WaitForResourceHealthyAsync("refimpl-rm")
-            .WaitAsync(TimeSpan.FromSeconds(300)).ConfigureAwait(true);
+            .WaitAsync(TimeSpan.FromSeconds(300)).ConfigureAwait(false);
 
         var endpoint = app.GetEndpoint("refimpl-cm", "http");
         ServiceProviderCatalogUriCM =
@@ -82,8 +82,8 @@ public class RefimplAspireFixture : IAsyncDisposable
         // Wait for the catalog endpoints to be fully ready
         // The health check only verifies /services/rootservices, but the catalog
         // may take additional time to initialize, especially on slower CI runners
-        await WaitForCatalogReadyAsync(ServiceProviderCatalogUriCM).ConfigureAwait(true);
-        await WaitForCatalogReadyAsync(ServiceProviderCatalogUriRM).ConfigureAwait(true);
+        await WaitForCatalogReadyAsync(ServiceProviderCatalogUriCM).ConfigureAwait(false);
+        await WaitForCatalogReadyAsync(ServiceProviderCatalogUriRM).ConfigureAwait(false);
 
         return app;
     }
