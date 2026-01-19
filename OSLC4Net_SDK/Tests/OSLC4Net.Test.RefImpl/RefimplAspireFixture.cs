@@ -89,8 +89,7 @@ public class RefimplAspireFixture : IAsyncDisposable
     }
 
     /// <summary>
-    /// Polls the catalog endpoint until it returns a successful response (401 Unauthorized
-    /// indicates the endpoint is ready but requires auth, which is expected).
+    /// Polls the catalog endpoint until it returns 200 OK.
     /// This ensures the service is fully initialized before tests run.
     /// </summary>
     private static async Task WaitForCatalogReadyAsync(string catalogUri, int maxRetries = 30, int delayMs = 1000)
@@ -105,9 +104,7 @@ public class RefimplAspireFixture : IAsyncDisposable
             try
             {
                 var response = await httpClient.GetAsync(catalogUri).ConfigureAwait(false);
-                // 200 OK means catalog is ready and responded
-                // 401 Unauthorized also indicates the endpoint is working (just needs auth)
-                if (response.StatusCode is HttpStatusCode.OK or HttpStatusCode.Unauthorized)
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
                     return;
                 }
