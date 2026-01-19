@@ -112,9 +112,15 @@ public class RefimplAspireFixture : IAsyncDisposable
                     return;
                 }
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException ex)
             {
                 // Connection refused or other network error - service not ready yet
+                System.Diagnostics.Trace.TraceInformation(
+                    "Attempt {0}/{1} to reach catalog '{2}' failed with HttpRequestException: {3}",
+                    i + 1,
+                    maxRetries,
+                    catalogUri,
+                    ex.Message);
             }
 
             await Task.Delay(delayMs).ConfigureAwait(false);
