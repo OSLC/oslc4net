@@ -106,7 +106,7 @@ public class Dialog : AbstractResource
 
     [OslcDescription("Title string that could be used for display")]
     [OslcOccurs(Occurs.ExactlyOne)]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]
     [OslcReadOnly]
     [OslcTitle("Title")]
     [OslcValueType(ValueType.XMLLiteral)]

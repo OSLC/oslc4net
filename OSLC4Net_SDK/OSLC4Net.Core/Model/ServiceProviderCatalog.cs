@@ -53,7 +53,7 @@ public class ServiceProviderCatalog : AbstractResource
     }
 
     [OslcDescription("Description of the service provider catalog")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "description")]
     [OslcReadOnly]
     [OslcTitle("Description")]
     [OslcValueType(ValueType.XMLLiteral)]
@@ -89,7 +89,7 @@ public class ServiceProviderCatalog : AbstractResource
     }
 
     [OslcDescription("Describes the software product that provides the implementation")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "publisher")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "publisher")]
     [OslcRange(OslcConstants.TYPE_PUBLISHER)]
     [OslcReadOnly]
     [OslcRepresentation(Representation.Inline)]
@@ -129,7 +129,7 @@ public class ServiceProviderCatalog : AbstractResource
     }
 
     [OslcDescription("Title of the service provider catalog")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]
     [OslcReadOnly]
     [OslcTitle("Title")]
     [OslcValueType(ValueType.XMLLiteral)]
