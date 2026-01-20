@@ -497,21 +497,15 @@ public abstract class TestBase
         await Assert.That(response.Resources?.FirstOrDefault()).IsNotNull();
         await Assert.That(response.Resources.Count > 0).IsTrue();
 
-        var found = false;
+        // Find and verify only the change request that THIS test created.
+        // We don't verify all change requests because other parallel tests may
+        // create/delete their own change requests, causing race conditions.
+        var ourChangeRequest = response.Resources
+            .FirstOrDefault(cr => ChangeRequestUri.Equals(cr.GetAbout()));
 
-        // FIXME add paging
-        foreach (var changeRequest in response.Resources)
-        {
-            await VerifyChangeRequestAsync(mediaType, changeRequest, true)
-                .ConfigureAwait(true);
-
-            if (ChangeRequestUri.Equals(changeRequest.GetAbout()))
-            {
-                found = true;
-            }
-        }
-
-        await Assert.That(found).IsTrue();
+        await Assert.That(ourChangeRequest).IsNotNull();
+        await VerifyChangeRequestAsync(mediaType, ourChangeRequest!, true)
+            .ConfigureAwait(true);
     }
 
     protected async Task TestUpdateAsync(string mediaType)

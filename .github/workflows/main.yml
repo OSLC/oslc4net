@@ -86,8 +86,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        #os: [ubuntu-24.04, ubuntu-24.04-arm, windows-latest]
-        os: [ubuntu-24.04, windows-latest]
+        os: [ubuntu-24.04, ubuntu-24.04-arm, windows-latest]
         version:
           [
             # { setup: "8.x", target: "net8.0" },
