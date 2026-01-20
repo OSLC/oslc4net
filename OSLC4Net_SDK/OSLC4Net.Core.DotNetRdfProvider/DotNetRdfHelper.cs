@@ -1040,62 +1040,23 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         // TODO: use modern C#
         if (obj is ILiteralNode node)
         {
-            if (node is BooleanNode booleanNode)
+            var valuedNode = node.AsValuedNode();
+            return valuedNode switch
             {
-                return booleanNode.AsBoolean();
-            }
-
-            if (node is ByteNode byteNode)
-            {
-                return byte.Parse(byteNode.Value);
-            }
-
-            if (node is DateTimeNode timeNode)
-            {
-                return timeNode.AsDateTime();
-            }
-
-            if (node is DecimalNode decimalNode)
-            {
-                return decimalNode.AsDecimal();
-            }
-
-            if (node is DoubleNode doubleNode)
-            {
-                return doubleNode.AsDouble();
-            }
-
-            if (node is FloatNode floatNode)
-            {
-                return floatNode.AsFloat();
-            }
-
-            if (node is DecimalNode node1)
-            {
-                return node1.AsDecimal();
-            }
-
-            if (node is LongNode longNode)
-            {
-                return longNode.AsInteger();
-            }
-
-            if (node is SignedByteNode signedByteNode)
-            {
-                return (byte)signedByteNode.AsInteger();
-            }
-
-            if (node is StringNode stringNode)
-            {
-                return stringNode.AsString();
-            }
-
-            if (node is UnsignedLongNode unsignedLongNode)
-            {
-                return unsignedLongNode.AsInteger();
-            }
-
-            return node.Value;
+                BooleanNode booleanNode => booleanNode.AsBoolean(),
+                ByteNode byteNode => byte.Parse(byteNode.Value, CultureInfo.InvariantCulture),
+                DateTimeNode timeNode => timeNode.AsDateTime(),
+                DecimalNode decimalNode => decimalNode.AsDecimal(),
+                DoubleNode doubleNode => doubleNode.AsDouble(),
+                FloatNode floatNode => floatNode.AsFloat(),
+                LongNode longNode => longNode.AsInteger(),
+                SignedByteNode signedByteNode => (sbyte)signedByteNode.AsInteger(),
+                StringNode stringNode => stringNode.AsString(),
+                // DotNetRDF does not expose a ulong directly.
+                // An OverflowException is thrown for illegal conversion attempts.
+                UnsignedLongNode unsignedLongNode => (ulong)unsignedLongNode.AsInteger(),
+                _ => node.Value
+            };
         }
 
         var nestedResource = obj as IUriNode;

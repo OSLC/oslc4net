@@ -21,11 +21,26 @@ internal sealed class SortedUriSet : SortedSet<Uri>
     {
     }
 
-    protected sealed class SortByAbsoluteUri : IComparer<Uri>
+    private sealed class SortByAbsoluteUri : IComparer<Uri>
     {
-        public int Compare(Uri x, Uri y)
+        public int Compare(Uri? x, Uri? y)
         {
-            return x.AbsoluteUri.CompareTo(y.AbsoluteUri);
+            if (ReferenceEquals(x, y))
+            {
+                return 0;
+            }
+
+            if (y is null)
+            {
+                return 1;
+            }
+
+            if (x is null)
+            {
+                return -1;
+            }
+
+            return string.Compare(x.AbsoluteUri, y.AbsoluteUri, StringComparison.Ordinal);
         }
     }
 }

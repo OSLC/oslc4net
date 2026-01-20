@@ -15,14 +15,6 @@
 
 namespace OSLC4Net.Core.Query;
 
-public enum TermType
-{
-    COMPARISON,
-    IN_TERM,
-    NESTED,
-    TOP_LEVEL
-}
-
 /// <summary>
 /// Simple term from oslc.where clause
 /// </summary>

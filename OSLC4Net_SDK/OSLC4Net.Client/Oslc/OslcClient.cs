@@ -1080,10 +1080,3 @@ public class OslcClient : IDisposable
     }
 }
 
-public static class ConsumeContentExtension
-{
-    public static void ConsumeContent(this HttpResponseMessage response)
-    {
-        response.Content.Dispose();
-    }
-}
