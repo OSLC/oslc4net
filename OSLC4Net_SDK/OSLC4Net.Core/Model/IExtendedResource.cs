@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
@@ -25,7 +25,7 @@ namespace OSLC4Net.Core.Model;
 ///     unknown content when performing updates of resources.
 ///     see
 ///     <a
-///         href="http://open-services.net/bin/view/Main/OslcCoreSpecification?sortcol=table;up=#Unknown_properties_and_content">
+///         href="https://docs.oasis-open-projects.org/oslc-op/core/v3.0/os/oslc-core.html">
 ///         OSLC
 ///         Core 2.0: Unknown properties and content
 ///     </a>

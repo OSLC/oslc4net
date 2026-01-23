@@ -21,7 +21,7 @@ using ValueType = OSLC4Net.Core.Model.ValueType;
 namespace OSLC4Net.Client.Oslc.Resources;
 
 /// <summary>
-/// http://open-services.net/wiki/automation/OSLC-Automation-Specification-Version-2.0/#Resource_AutomationPlan
+/// https://archive.open-services.net/wiki/automation/OSLC-Automation-Specification-Version-2.0/index.html#Resource_AutomationPlan
 /// </summary>
 [OslcResourceShape(title = "Automation Plan Resource Shape",
     describes = new string[] { AutomationConstants.TYPE_AUTOMATION_PLAN })]
