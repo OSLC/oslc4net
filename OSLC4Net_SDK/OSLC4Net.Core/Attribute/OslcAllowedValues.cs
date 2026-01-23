@@ -24,11 +24,15 @@ namespace OSLC4Net.Core.Attribute;
 ]
 public class OslcAllowedValues : System.Attribute
 {
-    /**
-     * Specify how the resource will be represented (for properties with a resource value-type).
-     */
+    /// <summary>
+    ///     URI of the allowed values resource for the OSLC property.  
+    /// </summary>
     public readonly string value;
 
+    /// <summary>
+    ///    Define an OSLC AllowedValues (enumeration) attribute
+    /// </summary>
+    /// <param name="value">URI of the allowed values resource for the OSLC property.</param>
     public OslcAllowedValues(string value)
     {
         this.value = value;
