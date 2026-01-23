@@ -27,7 +27,7 @@ namespace OSLC4Net.Core.Model;
 ///     <a
 ///         href="https://docs.oasis-open-projects.org/oslc-op/core/v3.0/os/oslc-core.html">
 ///         OSLC
-///         Core 2.0: Unknown properties and content
+///         Core 3.0: Unknown properties and content
 ///     </a>
 /// </summary>
 public interface IExtendedResource : IResource

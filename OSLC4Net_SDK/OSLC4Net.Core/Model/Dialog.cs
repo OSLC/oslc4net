@@ -134,10 +134,10 @@ public class Dialog : AbstractResource
     }
 
     /// <summary>
-    /// An identifier Uri for the domain specified usage of this dialog. If a service provides multiple selection or creation dialogs, it may designate the primary or default one that should be used with a property value of http://open-services/ns/core#default
+    /// An identifier Uri for the domain specified usage of this dialog. If a service provides multiple selection or creation dialogs, it may designate the primary or default one that should be used with a property value of http://open-services.net/ns/core#default
     /// </summary>
     [OslcDescription(
-        "An identifier Uri for the domain specified usage of this dialog. If a service provides multiple selection or creation dialogs, it may designate the primary or default one that should be used with a property value of http://open-services/ns/core#default")]
+        "An identifier Uri for the domain specified usage of this dialog. If a service provides multiple selection or creation dialogs, it may designate the primary or default one that should be used with a property value of http://open-services.net/ns/core#default")]
     [OslcName("usage")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "usage")]
     [OslcReadOnly]
