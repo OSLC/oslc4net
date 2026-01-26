@@ -20,7 +20,7 @@ using ValueType = OSLC4Net.Core.Model.ValueType;
 namespace OSLC4Net.Client.Oslc.Resources;
 
 /// <summary>
-/// http://open-services.net/bin/view/Main/QmSpecificationV2
+/// https://docs.oasis-open-projects.org/oslc-op/qm/v2.1/os/quality-management-spec.html
 /// </summary>
 public abstract class QmResource : AbstractResource
 {

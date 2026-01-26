@@ -21,7 +21,7 @@ using ValueType = OSLC4Net.Core.Model.ValueType;
 namespace OSLC4Net.Client.Oslc.Resources;
 
 /// <summary>
-/// http://open-services.net/wiki/automation/OSLC-Automation-Specification-Version-2.0/#Resource_ParameterInstance
+/// https://archive.open-services.net/wiki/automation/OSLC-Automation-Specification-Version-2.0/index.html#Resource_ParameterInstance
 /// </summary>
 [OslcResourceShape(title = "Parameter Instance Resource Shape",
     describes = new string[] { AutomationConstants.TYPE_PARAMETER_INSTANCE })]
