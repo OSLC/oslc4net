@@ -19,7 +19,7 @@ namespace OSLC4Net.Core.Attribute;
 /// <summary>
 ///     OSLC AllowedValue attribute
 /// </summary>
-/// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
+/// <remarks>See https://docs.oasis-open-projects.org/oslc-op/core/v3.0/os/core-vocab.html </remarks>
 [AttributeUsage(AttributeTargets.Method)
 ]
 public class OslcAllowedValue : System.Attribute

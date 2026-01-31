@@ -40,6 +40,9 @@ public class Publisher : AbstractResource
         this.identifier = identifier;
     }
 
+    /// <summary>
+    /// URL to an icon file that represents the provider. This icon should be a favicon format and 16x16 pixels in size
+    /// </summary>
     [OslcDescription(
         "URL to an icon file that represents the provider. This icon should be a favicon format and 16x16 pixels in size")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "icon")]
@@ -50,6 +53,9 @@ public class Publisher : AbstractResource
         return icon;
     }
 
+    /// <summary>
+    /// A URN that uniquely identifies the implementation
+    /// </summary>
     [OslcDescription("A URN that uniquely identifies the implementation")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "identifier")]
@@ -60,6 +66,9 @@ public class Publisher : AbstractResource
         return identifier;
     }
 
+    /// <summary>
+    /// Very short label for use in menu items
+    /// </summary>
     [OslcDescription("Very short label for use in menu items")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "label")]
     [OslcReadOnly]
@@ -69,6 +78,9 @@ public class Publisher : AbstractResource
         return label;
     }
 
+    /// <summary>
+    /// Title string that could be used for display
+    /// </summary>
     [OslcDescription("Title string that could be used for display")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]

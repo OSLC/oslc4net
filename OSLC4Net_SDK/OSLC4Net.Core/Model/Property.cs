@@ -20,7 +20,7 @@ namespace OSLC4Net.Core.Model;
 /// <summary>
 ///     OSLC Property attributes
 /// </summary>
-/// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
+/// <remarks>See https://docs.oasis-open-projects.org/oslc-op/core/v3.0/os/core-vocab.html </remarks>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
 [OslcResourceShape(title = "OSLC Property Resource Shape",
     describes = new[] { OslcConstants.TYPE_PROPERTY })]
@@ -74,6 +74,9 @@ public sealed class Property : AbstractResource, IComparable<Property>
         this.range.Add(range);
     }
 
+    /// <summary>
+    /// A value allowed for property, inlined into property definition. If there are both oslc:allowedValue elements and an oslc:allowedValue resource, then the full-set of allowed values is the union of both
+    /// </summary>
     [OslcDescription(
         "A value allowed for property, inlined into property definition. If there are both oslc:allowedValue elements and an oslc:allowedValue resource, then the full-set of allowed values is the union of both")]
     [OslcName("allowedValue")]
@@ -85,6 +88,9 @@ public sealed class Property : AbstractResource, IComparable<Property>
         return allowedValues.ToArray();
     }
 
+    /// <summary>
+    /// Resource with allowed values for the property being defined
+    /// </summary>
     [OslcDescription("Resource with allowed values for the property being defined")]
     [OslcName("allowedValues")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "allowedValues")]
@@ -97,6 +103,9 @@ public sealed class Property : AbstractResource, IComparable<Property>
         return allowedValuesRef;
     }
 
+    /// <summary>
+    /// A default value for property, inlined into property definition
+    /// </summary>
     [OslcDescription("A default value for property, inlined into property definition")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "defaultValue")]
     [OslcReadOnly]
@@ -106,6 +115,9 @@ public sealed class Property : AbstractResource, IComparable<Property>
         return defaultValue;
     }
 
+    /// <summary>
+    /// Description of the property. SHOULD include only content that is valid and suitable inside an XHTML &lt;div&gt; element
+    /// </summary>
     [OslcDescription(
         "Description of the property. SHOULD include only content that is valid and suitable inside an XHTML <div> element")]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "description")]
@@ -117,6 +129,9 @@ public sealed class Property : AbstractResource, IComparable<Property>
         return description;
     }
 
+    /// <summary>
+    /// For string properties only, specifies maximum characters allowed. If not set, then there is no maximum or maximum is specified elsewhere
+    /// </summary>
     [OslcDescription(
         "For string properties only, specifies maximum characters allowed. If not set, then there is no maximum or maximum is specified elsewhere")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "maxSize")]
@@ -127,6 +142,9 @@ public sealed class Property : AbstractResource, IComparable<Property>
         return maxSize;
     }
 
+    /// <summary>
+    /// Name of property being defined, i.e. second part of property's Prefixed Name
+    /// </summary>
     [OslcDescription(
         "Name of property being defined, i.e. second part of property's Prefixed Name")]
     [OslcOccurs(Occurs.ExactlyOne)]
@@ -138,6 +156,9 @@ public sealed class Property : AbstractResource, IComparable<Property>
         return name;
     }
 
+    /// <summary>
+    /// MUST be either http://open-services.net/ns/core#Exactly-one, http://open-services.net/ns/core#Zero-or-one, http://open-services.net/ns/core#Zero-or-many or http://open-services.net/ns/core#One-or-many
+    /// </summary>
     [OslcAllowedValue(OslcConstants.OSLC_CORE_NAMESPACE + "Exactly-one",
         OslcConstants.OSLC_CORE_NAMESPACE + "Zero-or-one",
         OslcConstants.OSLC_CORE_NAMESPACE + "Zero-or-many",
@@ -166,6 +187,9 @@ public sealed class Property : AbstractResource, IComparable<Property>
         return null;
     }
 
+    /// <summary>
+    /// Uri of the property whose usage is being described
+    /// </summary>
     [OslcDescription("Uri of the property whose usage is being described")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "propertyDefinition")]
@@ -176,6 +200,9 @@ public sealed class Property : AbstractResource, IComparable<Property>
         return propertyDefinition;
     }
 
+    /// <summary>
+    /// For properties with a resource value-type, Providers MAY also specify the range of possible resource classes allowed, each specified by Uri. The default range is http://open-services.net/ns/core#Any
+    /// </summary>
     [OslcDescription(
         "For properties with a resource value-type, Providers MAY also specify the range of possible resource classes allowed, each specified by Uri. The default range is http://open-services.net/ns/core#Any")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "range")]
@@ -186,6 +213,9 @@ public sealed class Property : AbstractResource, IComparable<Property>
         return range.ToArray();
     }
 
+    /// <summary>
+    /// Should be http://open-services.net/ns/core#Reference, http://open-services.net/ns/core#Inline or http://open-services.net/ns/core#Either
+    /// </summary>
     [OslcAllowedValue(OslcConstants.OSLC_CORE_NAMESPACE + "Reference",
         OslcConstants.OSLC_CORE_NAMESPACE + "Inline",
         OslcConstants.OSLC_CORE_NAMESPACE + "Either")]
@@ -212,6 +242,9 @@ public sealed class Property : AbstractResource, IComparable<Property>
         }
     }
 
+    /// <summary>
+    /// Title of the property. SHOULD include only content that is valid and suitable inside an XHTML &lt;div&gt; element
+    /// </summary>
     [OslcDescription(
         "Title of the property. SHOULD include only content that is valid and suitable inside an XHTML <div> element")]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]
@@ -223,6 +256,9 @@ public sealed class Property : AbstractResource, IComparable<Property>
         return title;
     }
 
+    /// <summary>
+    /// if the value-type is a resource type, then Property MAY provide a shape value to indicate the Resource Shape that applies to the resource
+    /// </summary>
     [OslcDescription(
         "if the value-type is a resource type, then Property MAY provide a shape value to indicate the Resource Shape that applies to the resource")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "valueShape")]
@@ -234,6 +270,9 @@ public sealed class Property : AbstractResource, IComparable<Property>
         return valueShape;
     }
 
+    /// <summary>
+    /// See list of allowed values for oslc:valueType
+    /// </summary>
     [OslcAllowedValue(OslcConstants.XML_NAMESPACE + "boolean",
         OslcConstants.XML_NAMESPACE + "dateTime",
         OslcConstants.XML_NAMESPACE + "decimal",
@@ -268,6 +307,9 @@ public sealed class Property : AbstractResource, IComparable<Property>
         return null;
     }
 
+    /// <summary>
+    /// A hint that indicates that property MAY be hidden when presented in a user interface
+    /// </summary>
     [OslcDescription(
         "A hint that indicates that property MAY be hidden when presented in a user interface")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hidden")]
@@ -278,6 +320,9 @@ public sealed class Property : AbstractResource, IComparable<Property>
         return hidden;
     }
 
+    /// <summary>
+    /// If set to true, this indicates that the property is a membership property, as described in the Query Syntax Specification: Member List Patterns. This is useful when the resource whose shape is being defined is viewed as a container of other resources. For example, look at the last example in Appendix B's RDF/XML Representation Examples: Specifying the shape of a query result, where blog:comment is defined as a membership property and comment that matches the query is returned as value of that property.
+    /// </summary>
     [OslcDescription(
         "If set to true, this indicates that the property is a membership property, as described in the Query Syntax Specification: Member List Patterns. This is useful when the resource whose shape is being defined is viewed as a container of other resources. For example, look at the last example in Appendix B's RDF/XML Representation Examples: Specifying the shape of a query result, where blog:comment is defined as a membership property and comment that matches the query is returned as value of that property.")]
     [OslcName("isMemberProperty")]
@@ -289,6 +334,9 @@ public sealed class Property : AbstractResource, IComparable<Property>
         return memberProperty;
     }
 
+    /// <summary>
+    /// true if the property is read-only. If not set, or set to false, then the property is writable. Providers SHOULD declare a property read-only when changes to the value of that property will not be accepted on PUT. Consumers should note that the converse does not apply: Providers MAY reject a change to the value of a writable property.
+    /// </summary>
     [OslcDescription(
         "true if the property is read-only. If not set, or set to false, then the property is writable. Providers SHOULD declare a property read-only when changes to the value of that property will not be accepted on PUT. Consumers should note that the converse does not apply: Providers MAY reject a change to the value of a writable property.")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "readOnly")]
