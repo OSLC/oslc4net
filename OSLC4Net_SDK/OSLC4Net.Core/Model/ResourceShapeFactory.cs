@@ -13,6 +13,7 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
+using System.Globalization;
 using System.Numerics;
 using System.Reflection;
 using OSLC4Net.Core.Attribute;
@@ -337,7 +338,7 @@ public sealed class ResourceShapeFactory
             : METHOD_NAME_START_IS_LENGTH;
 
         // We want the name to start with a lower-case letter
-        var lowercasedFirstCharacter = methodName.Substring(startingIndex, 1).ToLower();
+        var lowercasedFirstCharacter = methodName.Substring(startingIndex, 1).ToLower(CultureInfo.InvariantCulture);
         if (methodName.Length == 1)
         {
             return lowercasedFirstCharacter;
