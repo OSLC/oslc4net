@@ -16,6 +16,7 @@
 
 using System.Collections;
 using System.Diagnostics;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
@@ -148,7 +149,7 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
         }
 
         var countString = totalCountObject.AsString();
-        return long.TryParse(countString, out var totalCount) ? totalCount : null;
+        return long.TryParse(countString, NumberStyles.Integer, CultureInfo.InvariantCulture, out var totalCount) ? totalCount : null;
     }
 
     // REVISIT: I don't think the query result shall be thread-safe (@berezovskyi 2024-10)
