@@ -70,11 +70,23 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     }
 
     private OslcQueryResult(OslcQueryResult prev, DotNetRdfHelper rdfHelper)
+        : this(prev, GetResponseForPrev(prev), rdfHelper)
+    {
+    }
+
+    // Helper method to get response for the previous result - used to avoid duplicating logic
+    private static HttpResponseMessage GetResponseForPrev(OslcQueryResult prev)
+    {
+        var query = new OslcQuery(prev);
+        // FIXME: we should split the data from logic - ctor should not be making calls; one of the methods should return a record with the data.
+        return query.GetResponseRawAsync().Result;
+    }
+
+    private OslcQueryResult(OslcQueryResult prev, HttpResponseMessage response, DotNetRdfHelper rdfHelper)
     {
         _rdfHelper = rdfHelper;
         _query = new OslcQuery(prev);
-        // FIXME: we should split the data from logic - ctor should not be making calls; one of the methods should return a record with the data.
-        _response = _query.GetResponseRawAsync().Result;
+        _response = response;
 
         _pageNumber = prev._pageNumber + 1;
     }
@@ -127,6 +139,24 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     public void Reset()
     {
         throw new InvalidOperationException();
+    }
+
+    /// <summary>
+    ///     Asynchronously gets the next page of query results.
+    /// </summary>
+    /// <returns>
+    ///     The next page of results, or null if there are no more pages.
+    /// </returns>
+    public async Task<OslcQueryResult?> NextPageAsync()
+    {
+        if (!MoveNext())
+        {
+            return null;
+        }
+
+        var nextQuery = new OslcQuery(this);
+        var response = await nextQuery.GetResponseRawAsync().ConfigureAwait(false);
+        return new OslcQueryResult(this, response, _rdfHelper);
     }
 
     private long? GetTotalCount()
