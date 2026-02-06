@@ -17,7 +17,10 @@ This release does not contain security updates.
 
 ### Added
 
+- ⚡️ `OslcRequestParams` class for configuring request options (media types, headers, OSLC Core version). Parameters can be pre-set in the library, set in the `OslcClient` constructor, or overridden on a per-request basis.
+- ⚡️ Graph accumulation mode in `OslcClient` via `EnableGraphAccumulation()` - useful for the initial discovery phase to accumulate all service provider information in a single graph.
 - `RootServicesHelper` was added to assist with processing OSLC Root Services documents. It can help with direct lookups (as long as your URI ends with `/rootservices` or `/rootservices.xml`), can look up a standard `/.well-known/oslc/rootservices.xml` location, or fall back to appending `/rootservices` for legacy systems.
+- New overloads for `GetResourceAsync` and `CreateResourceAsync` accepting `OslcRequestParams` for per-request parameter customization.
 - ⚡️Samples for IBM Jazz ERM (aka Doors NG), ETM, and EWM were migrated to .NET 10 and tested against Jazz.net. You can run them yourself using `OSLC4Net_SDK\Examples\scripts\test-jazz_net.ps1`.
 
 
@@ -25,11 +28,12 @@ This release does not contain security updates.
 
 - `OSLC4Net.Core` requires .NET 10 to be able to use the `[Experimental]` annotation.
 - `OSLC4Net.Client` requires .NET 10.
+- `OslcClient` now has a `DefaultRequestParams` property for default request parameters configuration.
 - ❗️ `SignedByteNode` (which corresponds to `xsd:byte`) is now parsed as C# `sbyte` (signed byte) instead of `byte`.
 
 ### Deprecated
 
-This release does not introduce deprecations.
+- 👉 `OslcRestClient` remains deprecated since 0.5.0. Use `OslcClient` instead.
 
 ### Removed
 
