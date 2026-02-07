@@ -46,18 +46,18 @@ public class OslcMediaType
     public static readonly MediaTypeHeaderValue APPLICATION_X_OSLC_COMPACT_JSON_TYPE =
         new(APPLICATION_X_OSLC_COMPACT_JSON);
 
-    [Obsolete] public const string APPLICATION_JSON = "application/json";
+    [Obsolete("Use RDF/XML, JSON-LD or Turtle media types instead")] public const string APPLICATION_JSON = "application/json";
 
-    [Obsolete] public const string APPLICATION_XML = "application/xml";
+    [Obsolete("Use RDF/XML, JSON-LD or Turtle media types instead")] public const string APPLICATION_XML = "application/xml";
 
-    [Obsolete] public const string TEXT_XML = "text/xml";
+    [Obsolete("Use RDF/XML, JSON-LD or Turtle media types instead")] public const string TEXT_XML = "text/xml";
 
-    [Obsolete]
+    [Obsolete("Use RDF/XML, JSON-LD or Turtle media types instead")]
     public static readonly MediaTypeHeaderValue APPLICATION_JSON_TYPE = new(APPLICATION_JSON);
 
-    [Obsolete]
+    [Obsolete("Use RDF/XML, JSON-LD or Turtle media types instead")]
     public static readonly MediaTypeHeaderValue APPLICATION_XML_TYPE = new(APPLICATION_XML);
 
-    [Obsolete] public static readonly MediaTypeHeaderValue TEXT_XML_TYPE = new(TEXT_XML);
+    [Obsolete("Use RDF/XML, JSON-LD or Turtle media types instead")] public static readonly MediaTypeHeaderValue TEXT_XML_TYPE = new(TEXT_XML);
 
 }

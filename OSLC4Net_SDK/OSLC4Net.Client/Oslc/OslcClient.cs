@@ -69,7 +69,7 @@ public class OslcClient : IDisposable
     /// </summary>
     /// <param name="certCallback">optionally control SSL certificate management
     /// (null will not replace the default validation callback)</param>
-    [Obsolete]
+    [Obsolete("Use the constructor taking HttpClient instead and configure the handler externally.")]
     public OslcClient(Func<HttpRequestMessage, X509Certificate2, X509Chain,
         SslPolicyErrors, bool> certCallback, ILogger<OslcClient> logger) : this(certCallback, null,
         logger)
@@ -82,7 +82,7 @@ public class OslcClient : IDisposable
     /// <param name="certCallback">optionally control SSL certificate management
     /// (null will not replace the default validation callback)</param>
     /// <param name="userHttpMessageHandler">optionally use OAuth</param>
-    [Obsolete]
+    [Obsolete("Use the constructor taking HttpClient instead and configure the handler externally.")]
     protected OslcClient(Func<HttpRequestMessage, X509Certificate2, X509Chain,
             SslPolicyErrors, bool> certCallback, HttpMessageHandler userHttpMessageHandler,
         ILogger<OslcClient> logger)
@@ -300,7 +300,7 @@ public class OslcClient : IDisposable
     /// </summary>
     /// <param name="url"></param>
     /// <returns></returns>
-    [Obsolete]
+    [Obsolete("Use DeleteResourceAsync instead.")]
     public HttpResponseMessage DeleteResource(string url)
     {
         _client.DefaultRequestHeaders.Accept.Clear();
@@ -543,7 +543,7 @@ public class OslcClient : IDisposable
     /// <param name="artifact"></param>
     /// <param name="mediaType"></param>
     /// <returns></returns>
-    [Obsolete]
+    [Obsolete("Use UpdateResourceRawAsync instead.")]
     public HttpResponseMessage UpdateResource(string url, object artifact, string mediaType)
     {
         return UpdateResource(url, artifact, mediaType, "*/*");
@@ -557,7 +557,7 @@ public class OslcClient : IDisposable
     /// <param name="mediaType"></param>
     /// <param name="acceptType"></param>
     /// <returns></returns>
-    [Obsolete]
+    [Obsolete("Use UpdateResourceRawAsync instead.")]
     public HttpResponseMessage UpdateResource(string url, object artifact, string mediaType,
         string acceptType)
     {
@@ -610,7 +610,7 @@ public class OslcClient : IDisposable
     /// <param name="acceptType"></param>
     /// <param name="ifMatch"></param>
     /// <returns></returns>
-    [Obsolete]
+    [Obsolete("Use UpdateResourceRawAsync instead.")]
     public HttpResponseMessage UpdateResource(string url, object artifact, string mediaType,
         string acceptType, string ifMatch)
     {
@@ -865,7 +865,7 @@ public class OslcClient : IDisposable
     /// <param name="chain"></param>
     /// <param name="errors"></param>
     /// <returns></returns>
-    [Obsolete]
+    [Obsolete("Use HttpClientHandler.ServerCertificateCustomValidationCallback instead.")]
     public static bool AcceptAllServerCertificates(object sender, X509Certificate certificate,
         X509Chain chain, SslPolicyErrors errors)
     {
