@@ -351,7 +351,7 @@ public class ChangeRequest : AbstractResource
     // [OslcName("type")]
     // [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
     // [OslcTitle("Types")]
-    [Obsolete("Use GetTypes() or .Types instead")]
+    [Obsolete("Use .Types instead")]
     public Uri[] GetRdfTypes()
     {
         return GetTypes().ToArray();
@@ -713,7 +713,7 @@ public class ChangeRequest : AbstractResource
         _modified = modified;
     }
 
-    [Obsolete("Use SetTypes() or .Types instead")]
+    [Obsolete("Use .Types instead")]
     public void SetRdfTypes(Uri[] rdfTypes)
     {
         SetTypes(rdfTypes);
