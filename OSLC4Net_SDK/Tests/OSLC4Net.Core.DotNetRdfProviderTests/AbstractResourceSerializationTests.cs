@@ -31,6 +31,8 @@ public class AbstractResourceSerializationTests
 
         await Assert.That(deserializedResource).IsNotNull();
         await Assert.That(deserializedResource.Types).Contains(typeUri);
+        // Verify that the type defined in OslcResourceShape is also present
+        await Assert.That(deserializedResource.Types).Contains(new Uri("http://example.com/ns#ConcreteResource"));
         await Assert.That(deserializedResource.GetAbout()).IsEqualTo(resource.GetAbout());
     }
 }
