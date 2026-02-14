@@ -42,6 +42,7 @@ public interface IExtendedResource : IResource
     [OslcName("type")]
     [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
     [OslcTitle("Types")]
+    [Obsolete("Use .Types property instead")]
     ICollection<Uri> GetTypes();
 
     /// <summary>
@@ -50,7 +51,15 @@ public interface IExtendedResource : IResource
     ///     OslcResourceShape#describes() annotation.
     /// </summary>
     /// <param name="types"></param>
+    [Obsolete("Use .Types property instead")]
     void SetTypes(ICollection<Uri> types);
+
+    /// <summary>
+    ///     Gets or sets the RDF types of this resource. These types will be added to the
+    ///     serialization of the resource in addition to the
+    ///     OslcResourceShape#describes() annotation.
+    /// </summary>
+    ICollection<Uri> Types { get; set; }
 
     /// <summary>
     ///     Adds an RDF type to this resource. These types will be added to the

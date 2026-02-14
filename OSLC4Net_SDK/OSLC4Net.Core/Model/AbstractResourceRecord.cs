@@ -18,6 +18,13 @@ public abstract record AbstractResourceRecord : IExtendedResource
 
     public List<Uri> Types { get; private set; } = new();
 
+    /// <inheritdoc/>
+    ICollection<Uri> IExtendedResource.Types
+    {
+        get => Types;
+        set => Types = new List<Uri>(value);
+    }
+
     public IDictionary<QName, object> ExtendedProperties { get; private set; } =
         new Dictionary<QName, object>();
 
@@ -47,12 +54,14 @@ public abstract record AbstractResourceRecord : IExtendedResource
     [OslcName("type")]
     [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
     [OslcTitle("Types")]
+    [Obsolete("Use .Types property instead")]
     public ICollection<Uri> GetTypes()
     {
         return Types;
     }
 
     /// <inheritdoc cref="IExtendedResource.SetTypes" />
+    [Obsolete("Use .Types property instead")]
     public void SetTypes(ICollection<Uri> types)
     {
         Types = new List<Uri>(types);
