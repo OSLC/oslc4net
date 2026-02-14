@@ -16,9 +16,13 @@ public abstract record AbstractResourceRecord : IExtendedResource
 {
     public Uri About { get; set; }
 
+    /// <inheritdoc/>
+    [OslcDescription("The resource type URIs.")]
+    [OslcName("type")]
+    [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
+    [OslcTitle("Types")]
     public List<Uri> Types { get; private set; } = new();
 
-    /// <inheritdoc/>
     ICollection<Uri> IExtendedResource.Types
     {
         get => Types;
@@ -50,10 +54,6 @@ public abstract record AbstractResourceRecord : IExtendedResource
     }
 
     /// <inheritdoc cref="IExtendedResource.GetTypes" />
-    [OslcDescription("The resource type URIs.")]
-    [OslcName("type")]
-    [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
-    [OslcTitle("Types")]
     [Obsolete("Use .Types property instead")]
     public ICollection<Uri> GetTypes()
     {

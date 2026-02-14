@@ -75,10 +75,6 @@ public abstract class AbstractResource : IExtendedResource
     ///     Get the RDF types
     /// </summary>
     /// <returns></returns>
-    [OslcDescription("The resource type URIs.")]
-    [OslcName("type")]
-    [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
-    [OslcTitle("Types")]
     [Obsolete("Use .Types property instead")]
     public ICollection<Uri> GetTypes()
     {
@@ -96,6 +92,10 @@ public abstract class AbstractResource : IExtendedResource
     }
 
     /// <inheritdoc/>
+    [OslcDescription("The resource type URIs.")]
+    [OslcName("type")]
+    [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
+    [OslcTitle("Types")]
     public ICollection<Uri> Types
     {
         get => types;

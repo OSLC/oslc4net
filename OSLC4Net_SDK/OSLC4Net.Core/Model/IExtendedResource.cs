@@ -38,10 +38,6 @@ public interface IExtendedResource : IResource
     ///     OslcResourceShape#describes() annotation
     /// </summary>
     /// <returns></returns>
-    [OslcDescription("The resource type URIs.")]
-    [OslcName("type")]
-    [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
-    [OslcTitle("Types")]
     [Obsolete("Use .Types property instead")]
     ICollection<Uri> GetTypes();
 
@@ -59,6 +55,10 @@ public interface IExtendedResource : IResource
     ///     serialization of the resource in addition to the
     ///     OslcResourceShape#describes() annotation.
     /// </summary>
+    [OslcDescription("The resource type URIs.")]
+    [OslcName("type")]
+    [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
+    [OslcTitle("Types")]
     ICollection<Uri> Types { get; set; }
 
     /// <summary>
