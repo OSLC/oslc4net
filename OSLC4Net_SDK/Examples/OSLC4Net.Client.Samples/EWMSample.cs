@@ -195,7 +195,7 @@ sealed class EWMSample : SampleBase<ChangeRequest>
                 //Get the Creation Factory URL for change requests so that we can create one
                 String changeRequestCreation = await client.LookupCreationFactoryAsync(
                                 serviceProviderUrl, OSLCConstants.OSLC_CM_V2,
-                                changeRequest.GetRdfTypes()[0].ToString()).ConfigureAwait(false);
+                                changeRequest.GetTypes().First().ToString()).ConfigureAwait(false);
 
                 //Create the change request
                 HttpResponseMessage creationResponse = await client.CreateResourceRawAsync(
@@ -271,7 +271,7 @@ sealed class EWMSample : SampleBase<ChangeRequest>
             string creationFactoryUrl = await client.LookupCreationFactoryAsync(
                 serviceProviderUrl,
                 OSLCConstants.OSLC_CM_V2,
-                changeRequest.GetRdfTypes()[0].ToString()).ConfigureAwait(false);
+                changeRequest.GetTypes().First().ToString()).ConfigureAwait(false);
 
             if (string.IsNullOrEmpty(creationFactoryUrl))
             {
