@@ -53,6 +53,7 @@ public sealed class ResourceShapeFactory
         // Object types
         TYPE_TO_VALUE_TYPE[typeof(BigInteger)] = ValueType.Integer;
         TYPE_TO_VALUE_TYPE[typeof(DateTime)] = ValueType.DateTime;
+        TYPE_TO_VALUE_TYPE[typeof(DateTimeOffset)] = ValueType.DateTime;
         TYPE_TO_VALUE_TYPE[typeof(Uri)] = ValueType.Resource;
         TYPE_TO_VALUE_TYPE[typeof(ICollection<Uri>)] = ValueType.Resource;
         TYPE_TO_VALUE_TYPE[typeof(IEnumerable<Uri>)] = ValueType.Resource;
@@ -391,7 +392,7 @@ public sealed class ResourceShapeFactory
         return string.Concat(lowercasedFirstCharacter, methodName.AsSpan(startingIndex + 1));
     }
 
-    private static ValueType GetDefaultValueType(Type resourceType, MethodInfo method,
+    private static ValueType GetDefaultValueType(Type resourceType, MemberInfo method,
         Type componentType)
     {
         var valueType = TYPE_TO_VALUE_TYPE[componentType];
@@ -425,7 +426,7 @@ public sealed class ResourceShapeFactory
         return Occurs.ZeroOrOne;
     }
 
-    private static Type GetComponentType(Type resourceType, MethodInfo method, Type type)
+    private static Type GetComponentType(Type resourceType, MemberInfo method, Type type)
     {
         if (type.IsArray)
         {
@@ -442,6 +443,12 @@ public sealed class ResourceShapeFactory
             }
 
             throw new OslcCoreInvalidPropertyTypeException(resourceType, method, type);
+        }
+
+        var underlyingType = Nullable.GetUnderlyingType(type);
+        if (underlyingType != null)
+        {
+            return underlyingType;
         }
 
         return type;
