@@ -21,7 +21,7 @@ public abstract record AbstractResourceRecord : IExtendedResource
     [OslcName("type")]
     [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
     [OslcTitle("Types")]
-    public List<Uri> Types { get; private set; } = new();
+    public List<Uri> Types { get; set; } = new();
 
     ICollection<Uri> IExtendedResource.Types
     {
