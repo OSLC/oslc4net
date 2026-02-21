@@ -120,7 +120,7 @@ public class ChangeRequest : AbstractResource
         this.implementsRequirements.Add(implementsRequirement);
     }
 
-    [Obsolete]
+    [Obsolete("Use AddType instead")]
     public void AddRdfType(Uri rdfType)
     {
         AddType(rdfType);
