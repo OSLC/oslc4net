@@ -5,7 +5,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <AspireVersion>13.1.1</AspireVersion>
-    <DotNetRdfVersion>3.5.0</DotNetRdfVersion>
+    <DotNetRdfVersion>3.5.1</DotNetRdfVersion>
   </PropertyGroup>
   <ItemGroup>
     <!-- For removal -->
