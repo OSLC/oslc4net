@@ -1322,7 +1322,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         IExtendedResource extendedResource,
         IDictionary<string, object>? properties)
     {
-        foreach (var type in extendedResource.GetTypes())
+        foreach (var type in extendedResource.Types)
         {
             var propertyName = type.ToString();
 
@@ -1433,7 +1433,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                 nestedResource = graph.CreateBlankNode();
             }
 
-            foreach (var type in any.GetTypes())
+            foreach (var type in any.Types)
             {
                 var propertyName = type.ToString();
 

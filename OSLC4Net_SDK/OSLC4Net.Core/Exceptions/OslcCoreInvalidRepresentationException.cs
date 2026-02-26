@@ -18,11 +18,11 @@ namespace OSLC4Net.Core.Exceptions;
 
 public class OslcCoreInvalidRepresentationException(
     Type resourceType,
-    MethodInfo method,
+    MemberInfo method,
     Representation representation) : OslcCoreApplicationException(
     $"OSLC1006: Invalid representation {RepresentationExtension.ToString(representation)} defined for method {method.Name} of class {resourceType.Name}")
 {
     public Type ResourceType { get; } = resourceType;
-    public MethodInfo Method { get; } = method;
+    public MemberInfo Method { get; } = method;
     public Representation Representation { get; } = representation;
 }

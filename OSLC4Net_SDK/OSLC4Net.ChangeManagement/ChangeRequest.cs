@@ -354,7 +354,7 @@ public class ChangeRequest : AbstractResource
     [Obsolete]
     public Uri[] GetRdfTypes()
     {
-        return GetTypes().ToArray();
+        return Types.ToArray();
     }
 
     [OslcDescription("This relationship is loosely coupled and has no specific meaning.")]
@@ -716,7 +716,7 @@ public class ChangeRequest : AbstractResource
     [Obsolete]
     public void SetRdfTypes(Uri[] rdfTypes)
     {
-        SetTypes(rdfTypes);
+        Types = rdfTypes;
     }
 
     public void SetRelatedChangeRequests(Link[] relatedChangeRequests)
