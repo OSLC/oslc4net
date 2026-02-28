@@ -25,7 +25,7 @@ public record Requirement : AbstractResourceRecord
     // [OslcRepresentation(Representation.Reference)]
     // [OslcReadOnly(false)] // Assuming read_only property exists
     // [OslcTitle("type")] // Use prop name as fallback title
-    [Obsolete] public HashSet<Uri> Type => new(Types);
+    [Obsolete("Use Types instead")] public HashSet<Uri> Type => new(Types);
 
     [OslcDescription(
         "An identifier for a resource. This identifier may be unique with a scope that is defined by the RM provider. Assigned by the service provider when a resource is created. Not intended for end-user display.")] // Escape quotes in description

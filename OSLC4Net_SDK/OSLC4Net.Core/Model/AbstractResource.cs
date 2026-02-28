@@ -39,6 +39,15 @@ public abstract class AbstractResource : IExtendedResource
     public Uri About { get; set; }
 
     /// <summary>
+    ///     The RDF types of this resource.
+    /// </summary>
+    public ICollection<Uri> Types
+    {
+        get => types;
+        set => types = value;
+    }
+
+    /// <summary>
     ///     Get the subject URI
     /// </summary>
     /// <returns></returns>
