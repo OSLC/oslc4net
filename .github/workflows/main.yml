@@ -173,7 +173,7 @@ jobs:
       #   id: version
       #   run: echo "::set-output name=suffix::$(date +'-ts.%y%m%d%H%M')"
       - name: ReportGenerator
-        uses: danielpalme/ReportGenerator-GitHub-Action@5.5.1
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.5.2
         with:
           reports: '${{ github.workspace }}/**/TestResults/**/*.cobertura.xml'
           targetdir: '${{ github.workspace }}/coveragereports'
