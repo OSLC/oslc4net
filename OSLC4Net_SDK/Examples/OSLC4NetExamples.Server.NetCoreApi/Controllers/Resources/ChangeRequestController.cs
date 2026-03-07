@@ -5,8 +5,8 @@ namespace OSLC4NetExamples.Server.NetCoreApi.Controllers;
 
 [ApiController]
 [Route("resources/[controller]")]
-public abstract class ChangeRequestController(ILogger<ChangeRequestController> logger)
-    : ResourceController<ChangeRequest>(logger)
+public abstract class ChangeRequestController
+    : ResourceController<ChangeRequest>
 {
     [HttpGet]
     [Route("{id}")]
