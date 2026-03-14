@@ -29,7 +29,8 @@ This release does not contain security updates.
 
 ### Deprecated
 
-This release does not introduce deprecations.
+- Getters and setters for the RDF type (both `GetRdfTypes()` and `GetTypes()`)
+  are deprecated in favor of the `.Types` property.
 
 ### Removed
 
