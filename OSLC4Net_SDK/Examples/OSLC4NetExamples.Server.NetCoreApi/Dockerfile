@@ -12,7 +12,11 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+COPY ["Directory.Packages.props", "."]
+COPY ["Directory.Build.props", "."]
 COPY ["Examples/Directory.Build.props", "Examples/"]
+COPY ["OSLC4Net.Server.Providers/OSLC4Net.Server.Providers.csproj", "OSLC4Net.Server.Providers/"]
+COPY ["OSLC4Net.ChangeManagement/OSLC4Net.ChangeManagementCommon.csproj", "OSLC4Net.ChangeManagement/"]
 COPY ["Examples/OSLC4NetExamples.Server.NetCoreApi/OSLC4NetExamples.Server.NetCoreApi.csproj", "Examples/OSLC4NetExamples.Server.NetCoreApi/"]
 RUN dotnet restore "./Examples/OSLC4NetExamples.Server.NetCoreApi/OSLC4NetExamples.Server.NetCoreApi.csproj"
 COPY . .

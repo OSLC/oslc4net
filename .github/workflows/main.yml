@@ -169,31 +169,6 @@ jobs:
         run: dotnet test --solution OSLC4Net.Core.slnx --no-build --configuration Release --treenode-filter '/*/*/*/*[TestCategory!=RunningOslcServerRequired]' --coverage --coverage-output-format cobertura
         if: |
           matrix.os == 'windows-latest'
-
-  build-docker-example:
-    name: Build Docker Image (Example)
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@58077d3c7e43986b6b15fba718e8ea69e387dfcc # v2.15.1
-        with:
-          disable-sudo: true
-          egress-policy: audit
-      - name: Checkout Code
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
-        with:
-          show-progress: false
-          persist-credentials: false
-          path: main
-      - name: Build Docker image
-        run: |
-          cd main/OSLC4Net_SDK
-          docker build -t oslc4net-example-api -f Examples/OSLC4NetExamples.Server.NetCoreApi/Dockerfile .
-
-      # - name: Set version suffix
-      #   id: version
-      #   run: echo "::set-output name=suffix::$(date +'-ts.%y%m%d%H%M')"
       - name: ReportGenerator
         uses: danielpalme/ReportGenerator-GitHub-Action@5.5.3
         with:
@@ -205,7 +180,6 @@ jobs:
         if: ${{ runner.os != 'Windows' }}
         run: |
           cat $GITHUB_WORKSPACE/coveragereports/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
-
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
         env:
@@ -271,3 +245,24 @@ jobs:
           success()
           && matrix.version.target == 'net10.0' && matrix.os == 'windows-latest'
           && (github.event_name == 'release' || inputs.release )
+
+  build-docker-example:
+    name: Build Docker Image (Example)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@58077d3c7e43986b6b15fba718e8ea69e387dfcc # v2.15.1
+        with:
+          disable-sudo: true
+          egress-policy: audit
+      - name: Checkout Code
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          show-progress: false
+          persist-credentials: false
+          path: main
+      - name: Build Docker image
+        run: |
+          cd main/OSLC4Net_SDK
+          docker build -t oslc4net-example-api -f Examples/OSLC4NetExamples.Server.NetCoreApi/Dockerfile .
