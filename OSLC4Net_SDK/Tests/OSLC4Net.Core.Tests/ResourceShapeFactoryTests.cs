@@ -116,7 +116,7 @@ public class ResourceShapeFactoryTests
     }
 
     [Test]
-    public async Task CreateResourceShape_WithRequirementType_ShouldOnlyHaveGetterMethods()
+    public async Task CreateResourceShape_WithRequirementType_ShouldHaveMethodAndPropertyAnnotations()
     {
         // Arrange
         var resourceType = typeof(Requirement);
@@ -131,8 +131,10 @@ public class ResourceShapeFactoryTests
         // Assert
         var properties = resourceShape.GetProperties();
 
-        await Assert.That(properties.Count).IsEqualTo(1);
-        await Assert.That(properties[0].GetName()).IsEqualTo("type");
+        // Requirement has both Get* methods and C# properties with OSLC annotations
+        // The Types property from AbstractResourceRecord is also discovered
+        await Assert.That(properties.Length).IsGreaterThan(1);
+        await Assert.That(properties.Any(p => p.GetName() == "type")).IsTrue();
     }
 
     [Test]
@@ -315,21 +317,22 @@ public class ResourceShapeFactoryTests
         var properties = resourceShape.GetProperties();
         var uriSetProperty = properties.FirstOrDefault(p => p.GetName() == "uriSet");
 
-        await Assert.That(uriSetProperty).IsNull();
-        //Assert.Equal("uriSet", uriSetProperty.GetName());
+        // ISet<Uri> properties are discovered via property scanning
+        await Assert.That(uriSetProperty).IsNotNull();
+        await Assert.That(uriSetProperty.GetName()).IsEqualTo("uriSet");
 
-        //var actualValueType = uriSetProperty.GetValueType();
-        //var actualOccurs = uriSetProperty.GetOccurs();
+        var actualValueType = uriSetProperty.GetValueType();
+        var actualOccurs = uriSetProperty.GetOccurs();
 
-        //Assert.NotNull(actualValueType);
-        //Assert.NotNull(actualOccurs);
+        await Assert.That(actualValueType).IsNotNull();
+        await Assert.That(actualOccurs).IsNotNull();
 
-        //var expectedValueTypeUri = new Uri(ValueTypeExtension.ToString(OSLC4Net.Core.Model.ValueType.Resource));
-        //var expectedOccursUri = new Uri(OccursExtension.ToString(OSLC4Net.Core.Model.Occurs.ZeroOrMany));
+        var expectedValueTypeUri = new Uri(ValueTypeExtension.ToString(OSLC4Net.Core.Model.ValueType.Resource));
+        var expectedOccursUri = new Uri(OccursExtension.ToString(OSLC4Net.Core.Model.Occurs.ZeroOrMany));
 
-        //Assert.Equal(expectedValueTypeUri, actualValueType);
-        //Assert.Equal(expectedOccursUri, actualOccurs);
-        //Assert.Equal("http://example.com/uriSet", uriSetProperty.GetPropertyDefinition()?.ToString());
+        await Assert.That(actualValueType).IsEqualTo(expectedValueTypeUri);
+        await Assert.That(actualOccurs).IsEqualTo(expectedOccursUri);
+        await Assert.That(uriSetProperty.GetPropertyDefinition()?.ToString()).IsEqualTo("http://example.com/uriSet");
     }
 }
 

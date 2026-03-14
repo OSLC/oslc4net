@@ -37,6 +37,6 @@ public static class OccursExtension
 
     public static Occurs FromURI(URI uri)
     {
-        return FromString(uri.ToString());
+        return FromString(uri.uri);
     }
 }

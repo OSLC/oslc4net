@@ -54,6 +54,9 @@ public class Dialog : AbstractResource
         usages.Add(usage);
     }
 
+    /// <summary>
+    /// The Uri of the dialog
+    /// </summary>
     [OslcDescription("The Uri of the dialog")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "dialog")]
@@ -64,6 +67,9 @@ public class Dialog : AbstractResource
         return dialog;
     }
 
+    /// <summary>
+    /// Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1) Em and ex units are interpreted relative to the default system font (at 100% size)
+    /// </summary>
     [OslcDescription(
         "Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1) Em and ex units are interpreted relative to the default system font (at 100% size)")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintHeight")]
@@ -74,6 +80,9 @@ public class Dialog : AbstractResource
         return hintHeight;
     }
 
+    /// <summary>
+    /// Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1) Em and ex units are interpreted relative to the default system font (at 100% size)
+    /// </summary>
     [OslcDescription(
         "Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1) Em and ex units are interpreted relative to the default system font (at 100% size)")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintWidth")]
@@ -84,6 +93,9 @@ public class Dialog : AbstractResource
         return hintWidth;
     }
 
+    /// <summary>
+    /// Very short label for use in menu items
+    /// </summary>
     [OslcDescription("Very short label for use in menu items")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "label")]
     [OslcReadOnly]
@@ -93,6 +105,9 @@ public class Dialog : AbstractResource
         return label;
     }
 
+    /// <summary>
+    /// The expected resource type Uri for the resources that will be returned when using this dialog. These would be the Uris found in the result resource's rdf:type property
+    /// </summary>
     [OslcDescription(
         "The expected resource type Uri for the resources that will be returned when using this dialog. These would be the Uris found in the result resource's rdf:type property")]
     [OslcName("resourceType")]
@@ -104,6 +119,9 @@ public class Dialog : AbstractResource
         return resourceTypes.ToArray();
     }
 
+    /// <summary>
+    /// Title string that could be used for display
+    /// </summary>
     [OslcDescription("Title string that could be used for display")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]
@@ -115,8 +133,11 @@ public class Dialog : AbstractResource
         return title;
     }
 
+    /// <summary>
+    /// An identifier Uri for the domain specified usage of this dialog. If a service provides multiple selection or creation dialogs, it may designate the primary or default one that should be used with a property value of http://open-services.net/ns/core#default
+    /// </summary>
     [OslcDescription(
-        "An identifier Uri for the domain specified usage of this dialog. If a service provides multiple selection or creation dialogs, it may designate the primary or default one that should be used with a property value of http://open-services/ns/core#default")]
+        "An identifier Uri for the domain specified usage of this dialog. If a service provides multiple selection or creation dialogs, it may designate the primary or default one that should be used with a property value of http://open-services.net/ns/core#default")]
     [OslcName("usage")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "usage")]
     [OslcReadOnly]

@@ -34,6 +34,8 @@ This release does not contain security updates.
 ### Deprecated
 
 - 👉 `OslcRestClient` remains deprecated since 0.5.0. Use `OslcClient` instead.
+- Getters and setters for the RDF type (both `GetRdfTypes()` and `GetTypes()`)
+  are deprecated in favor of the `.Types` property.
 
 ### Removed
 

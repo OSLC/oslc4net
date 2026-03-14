@@ -37,6 +37,6 @@ public static class RepresentationExtension
 
     public static Representation FromURI(URI uri)
     {
-        return FromString(uri.ToString());
+        return FromString(uri.uri);
     }
 }
