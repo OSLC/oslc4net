@@ -59,8 +59,13 @@ public sealed class Property : AbstractResource, IComparable<Property>
         this.valueType = valueType;
     }
 
-    public int CompareTo(Property o)
+    public int CompareTo(Property? o)
     {
+        if (o is null)
+        {
+            return 1;
+        }
+
         var nameComparison = string.Compare(name, o.GetName(), StringComparison.Ordinal);
         if (nameComparison != 0)
         {
