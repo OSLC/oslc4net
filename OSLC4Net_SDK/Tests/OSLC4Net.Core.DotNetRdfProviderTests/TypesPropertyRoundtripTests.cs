@@ -1,4 +1,3 @@
-using System.Net.Http.Headers;
 using OSLC4Net.ChangeManagement;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
@@ -63,7 +62,9 @@ public class TypesPropertyRoundtripTests
             OslcMediaType.APPLICATION_RDF_XML_TYPE);
 
         await Assert.That(deserialized).IsNotNull();
+
         // The ChangeRequest will have its own rdf:type from OslcResourceShape describes,
         // but no extra types should appear beyond that
+        await Assert.That(deserialized!.Types.Count).IsEqualTo(1);
     }
 }
