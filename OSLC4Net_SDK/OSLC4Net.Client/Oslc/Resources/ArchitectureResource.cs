@@ -147,7 +147,7 @@ public class ArchitectureResource : AbstractResource
     [Obsolete("User GetTypes() or .Types instead")]
     public Uri[] GetRdfTypes()
     {
-        return GetTypes().ToArray();
+        return Types.ToArray();
     }
 
     [OslcDescription("A short string representation for the type, example 'Defect'.")]
@@ -236,7 +236,7 @@ public class ArchitectureResource : AbstractResource
     [Obsolete("User SetTypes() or .Types instead")]
     public void SetRdfTypes(Uri[] rdfTypes)
     {
-        SetTypes(rdfTypes);
+        Types = rdfTypes;
     }
 
     public void SetDctermsTypes(string[] dctermsTypes)

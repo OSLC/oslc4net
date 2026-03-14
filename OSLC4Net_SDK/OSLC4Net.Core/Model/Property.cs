@@ -59,9 +59,21 @@ public sealed class Property : AbstractResource, IComparable<Property>
         this.valueType = valueType;
     }
 
-    public int CompareTo(Property o)
+    public int CompareTo(Property? o)
     {
-        return name.CompareTo(o.GetName());
+        if (o is null)
+        {
+            return 1;
+        }
+
+        var nameComparison = string.Compare(name, o.GetName(), StringComparison.Ordinal);
+        if (nameComparison != 0)
+        {
+            return nameComparison;
+        }
+
+        return Uri.Compare(propertyDefinition, o.propertyDefinition,
+            UriComponents.AbsoluteUri, UriFormat.UriEscaped, StringComparison.Ordinal);
     }
 
     public void AddAllowedValue(string allowedValue)

@@ -153,7 +153,7 @@ public class AutomationPlan : AbstractResource
     [Obsolete("User GetTypes() or .Types instead")]
     public Uri[] GetRdfTypes()
     {
-        return GetTypes().ToArray();
+        return Types.ToArray();
     }
 
     [OslcDescription("The scope of a resource is a Uri for the resource's OSLC Service Provider.")]
@@ -245,7 +245,7 @@ public class AutomationPlan : AbstractResource
     [Obsolete("User SetTypes() or .Types instead")]
     public void SetRdfTypes(Uri[] rdfTypes)
     {
-        SetTypes(rdfTypes);
+        Types = rdfTypes;
     }
 
     public void SetServiceProvider(Uri serviceProvider)
