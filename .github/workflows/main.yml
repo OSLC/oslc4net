@@ -170,7 +170,7 @@ jobs:
         if: |
           matrix.os == 'windows-latest'
       - name: ReportGenerator
-        uses: danielpalme/ReportGenerator-GitHub-Action@5.5.3
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.5.4
         with:
           reports: '${{ github.workspace }}/**/TestResults/**/*.cobertura.xml'
           targetdir: '${{ github.workspace }}/coveragereports'
