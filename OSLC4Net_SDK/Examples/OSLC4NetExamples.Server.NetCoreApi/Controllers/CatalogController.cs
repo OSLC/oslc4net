@@ -8,12 +8,11 @@ namespace OSLC4NetExamples.Server.NetCoreApi.Controllers;
 /// <summary>
 /// In its current form, only a flat catalog is supported. The spec allows for nested catalogs.
 /// </summary>
-/// <param name="logger"></param>
 [ApiController]
 [Route("/oslc/catalog")]
 [Produces(OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.TEXT_TURTLE, OslcMediaType.APPLICATION_JSON_LD, OslcMediaType.APPLICATION_NTRIPLES)]
 [Consumes(OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.TEXT_TURTLE, OslcMediaType.APPLICATION_JSON_LD, OslcMediaType.APPLICATION_NTRIPLES)]
-public class CatalogController(ILogger<CatalogController> logger) : ControllerBase
+public class CatalogController : ControllerBase
 {
     [HttpGet]
     public ServiceProviderCatalog Get()
