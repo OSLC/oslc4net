@@ -14,6 +14,7 @@ public class ServiceProviderController(ILogger<ServiceProviderController> logger
     [Route("{id}")]
     public ServiceProvider GetProvider(string id)
     {
+        logger.LogGetProvider(id);
         var sp = new ServiceProvider();
         sp.SetAbout(new Uri(Request.GetEncodedUrl()));
         sp.SetDescription($"Service Provider for {id}");
