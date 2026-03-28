@@ -13,18 +13,12 @@ namespace OSLC4NetExamples.Server.NetCoreApi.Controllers;
 [Route("/oslc/catalog")]
 [Produces(OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.TEXT_TURTLE, OslcMediaType.APPLICATION_JSON_LD, OslcMediaType.APPLICATION_NTRIPLES)]
 [Consumes(OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.TEXT_TURTLE, OslcMediaType.APPLICATION_JSON_LD, OslcMediaType.APPLICATION_NTRIPLES)]
-public partial class CatalogController(ILogger<CatalogController> logger) : ControllerBase
+public class CatalogController(ILogger<CatalogController> logger) : ControllerBase
 {
-    [LoggerMessage(EventId = 1, Level = LogLevel.Information, Message = "Getting service provider catalog.")]
-    private partial void LogGetCatalog();
-
-    [LoggerMessage(EventId = 2, Level = LogLevel.Information, Message = "Putting service provider catalog.")]
-    private partial void LogPutCatalog();
-
     [HttpGet]
     public ServiceProviderCatalog Get()
     {
-        LogGetCatalog();
+        logger.LogGetCatalog();
         var catalog = new ServiceProviderCatalog();
         catalog.SetAbout(new Uri(Request.GetEncodedUrl()));
         var sp = new ServiceProvider();
@@ -36,7 +30,7 @@ public partial class CatalogController(ILogger<CatalogController> logger) : Cont
     [HttpPut]
     public ServiceProviderCatalog Put(ServiceProvider sp)
     {
-        LogPutCatalog();
+        logger.LogPutCatalog();
         var catalog = new ServiceProviderCatalog();
         catalog.AddServiceProvider(sp);
         return catalog;
