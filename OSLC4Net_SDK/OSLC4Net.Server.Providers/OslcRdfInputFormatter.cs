@@ -48,8 +48,7 @@ public class OslcRdfInputFormatter : TextInputFormatter
             OslcMediaType.TEXT_TURTLE => RdfFormat.Turtle,
             OslcMediaType.APPLICATION_NTRIPLES => RdfFormat.NTriples,
             OslcMediaType.APPLICATION_JSON_LD => RdfFormat.JsonLd,
-            _ => throw new ArgumentOutOfRangeException(nameof(requestedType),
-                "Unknown RDF format"),
+            _ => throw new NotSupportedException($"Unknown RDF format: {requestedType}"),
         };
         using var reader = new StreamReader(context.HttpContext.Request.Body, encoding);
 

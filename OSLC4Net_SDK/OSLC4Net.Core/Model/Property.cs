@@ -24,7 +24,7 @@ namespace OSLC4Net.Core.Model;
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
 [OslcResourceShape(title = "OSLC Property Resource Shape",
     describes = new[] { OslcConstants.TYPE_PROPERTY })]
-public sealed class Property : AbstractResource, IComparable<Property>
+public sealed class Property : AbstractResource, IComparable<Property>, IEquatable<Property>
 {
     private readonly IList<string> allowedValues = new List<string>();
     private readonly List<Uri> range = new();
@@ -495,4 +495,6 @@ public sealed class Property : AbstractResource, IComparable<Property>
             this.valueType = ValueType.Unknown;
         }
     }
+
+    public bool Equals(Property other) => CompareTo(other) == 0;
 }
