@@ -15,9 +15,9 @@
 
 namespace OSLC4Net.Client;
 
-/// <summary>
-/// This class calculates and store a ServiceProvider Registry URI.
-/// </summary>
+// <summary>
+// This class calculates and store a ServiceProvider Registry URI.
+// </summary>
 // public static class ServiceProviderRegistryURIs
 // {
 //

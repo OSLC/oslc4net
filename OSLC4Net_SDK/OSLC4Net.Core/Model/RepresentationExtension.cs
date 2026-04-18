@@ -32,7 +32,7 @@ public static class RepresentationExtension
             }
         }
 
-        throw new ArgumentException();
+        throw new ArgumentException("Value is not a valid Representation URI", nameof(value));
     }
 
     public static Representation FromURI(URI uri)

@@ -112,7 +112,7 @@ public class OslcClient : IDisposable
                     "Must be an instance of HttpClientHandler if the certCallback is provided",
                     nameof(userHttpMessageHandler));
             }
-#pragma warning enable MA0039
+#pragma warning restore MA0039
         }
 
         _client = HttpClientFactory.Create(handler);
@@ -134,10 +134,12 @@ public class OslcClient : IDisposable
         };
         if (allowInvalidTlsCerts)
         {
+#pragma warning disable MA0039
             _logger.LogWarning(
                 "TLS certificate validation is compromised! DO NOT USE IN PRODUCTION");
             handler.ServerCertificateCustomValidationCallback =
                 HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+#pragma warning restore MA0039
         }
 
         _formatters = new HashSet<MediaTypeFormatter>();
@@ -177,7 +179,6 @@ public class OslcClient : IDisposable
     {
         return _client;
     }
-
 
     public async Task<OslcResponse<T>> GetResourceAsync<T>(string resourceUri, string? mediaType)
         where T : IExtendedResource, new()
@@ -240,14 +241,13 @@ public class OslcClient : IDisposable
         return GetResourceAsync<T>(resourceUri, null);
     }
 
-
     public Task<OslcResponse<T>> GetResourceAsync<T>(Uri typeURI) where T : IExtendedResource, new()
     {
         return GetResourceAsync<T>(typeURI.ToString(), null);
     }
 
     /// <summary>
-    /// Consider using <see cref="GetResourceAsync{T}"/> instead.
+    /// Consider using <see cref="GetResourceAsync{T}(string, string?)"/> instead.
     /// </summary>
     public async Task<HttpResponseMessage> GetResourceRawAsync(string url, string? mediaType = null)
     {
@@ -710,7 +710,6 @@ public class OslcClient : IDisposable
         QueryCapability? firstQueryCapability = null;
 
         var response = await GetResourceAsync<ServiceProvider>(serviceProviderUrl).ConfigureAwait(false);
-
 
         if (response.StatusCode != HttpStatusCode.OK)
         {

@@ -42,15 +42,11 @@ sealed class SortTermsImpl : OrderByClause
                 foreach (var child in rawChildren)
                 {
 
-                    object simpleTerm;
-
                     switch (child.Token.Type)
                     {
                         default:
                             throw new InvalidOperationException("unimplemented type of sort term: " + child.Token.Text);
                     }
-
-                    children.Add((SortTerm)simpleTerm);
                 }
 
                 // XXX - Can't figure out why this doesn't work

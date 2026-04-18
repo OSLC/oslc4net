@@ -101,7 +101,7 @@ public class OslcQueryParameters
     {
         try
         {
-            var encodedQueryParms = Uri.EscapeUriString(oslcQueryParam);
+            var encodedQueryParms = Uri.EscapeDataString(oslcQueryParam);
             // NOTE: CLM is picky about encoding and native .NET URL encoder doesn't encode these extra substitutions
             return encodedQueryParms.Replace("#", "%23").Replace("/", "%2F").Replace(":", "%3A")
                 .Replace("=", "%3D");

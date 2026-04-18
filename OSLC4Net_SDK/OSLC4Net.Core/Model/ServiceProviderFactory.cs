@@ -365,23 +365,19 @@ public class ServiceProviderFactory
         string returnUri;
 
         //Build the path from the @Path template + map of parameter value replacements
+        //Build the path from the @Path template + map of parameter value replacements
+        /* TODO - not supported yet
         if (pathParameterValues != null && pathParameterValues.Count > 0)
         {
-            /* TODO - not supported yet
             UriBuilder builder = UriBuilder.fromUri(basePath);
             URI resolvedUri = builder.path(pathAttribute).buildFromMap(pathParameterValues);
             if (resolvedUri != null)
             {
                 returnUri = resolvedUri.tostring();
             }
+        }
         */
-            returnUri = basePath + "/" + pathAttribute;
-        }
-        else
-        {
-            // no parameters supplied - assume @Path not templated
-            returnUri = basePath + "/" + pathAttribute;
-        }
+        returnUri = basePath + "/" + pathAttribute;
 
         return returnUri;
     }

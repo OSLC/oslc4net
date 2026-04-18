@@ -26,7 +26,7 @@ namespace OSLC4Net.Client.Oslc.Resources;
 [OslcResourceShape(title = "Parameter Instance Resource Shape",
     describes = new string[] { AutomationConstants.TYPE_PARAMETER_INSTANCE })]
 [OslcNamespace(AutomationConstants.AUTOMATION_NAMESPACE)]
-public class ParameterInstance : AbstractResource
+public class ParameterInstance : AbstractResource, IComparable<ParameterInstance>
 {
 
     private string name;

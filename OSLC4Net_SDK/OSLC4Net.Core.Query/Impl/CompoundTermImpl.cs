@@ -114,7 +114,7 @@ internal class CompoundTermImpl : SimpleTermImpl, CompoundTerm
         return builder.ToString();
     }
 
-    private readonly CommonTree tree;
+    private new readonly CommonTree tree;
     private readonly bool isTopLevel;
     private IList<SimpleTerm> children;
 }

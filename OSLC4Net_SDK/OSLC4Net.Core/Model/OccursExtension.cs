@@ -32,7 +32,7 @@ public static class OccursExtension
             }
         }
 
-        throw new ArgumentException();
+        throw new ArgumentException("Value is not a valid Occurs URI", nameof(value));
     }
 
     public static Occurs FromURI(URI uri)
