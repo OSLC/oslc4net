@@ -112,7 +112,7 @@ public class OslcClient : IDisposable
                     "Must be an instance of HttpClientHandler if the certCallback is provided",
                     nameof(userHttpMessageHandler));
             }
-#pragma warning enable MA0039
+#pragma warning restore MA0039
         }
 
         _client = HttpClientFactory.Create(handler);
@@ -136,8 +136,10 @@ public class OslcClient : IDisposable
         {
             _logger.LogWarning(
                 "TLS certificate validation is compromised! DO NOT USE IN PRODUCTION");
+#pragma warning disable MA0039
             handler.ServerCertificateCustomValidationCallback =
                 HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+#pragma warning restore MA0039
         }
 
         _formatters = new HashSet<MediaTypeFormatter>();
