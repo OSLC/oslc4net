@@ -8,6 +8,8 @@ updates:
     open-pull-requests-limit: 99
     schedule:
       interval: "daily"
+    cooldown:
+      default-days: 2
     groups:
       aspire-deps:
         patterns:
@@ -26,5 +28,7 @@ updates:
   - package-ecosystem: "github-actions" # See documentation for possible values
     directory: "/" # Location of package manifests
     open-pull-requests-limit: 99
+    cooldown:
+      default-days: 2
     schedule:
       interval: "daily"
