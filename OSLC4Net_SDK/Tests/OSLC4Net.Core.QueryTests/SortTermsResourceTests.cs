@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using OSLC4Net.Core.Query;
-using OSLC4Net.Core.Model;
 using OSLC4Net.Core.Attribute;
+using OSLC4Net.Core.Model;
+using OSLC4Net.Core.Query;
 using TUnit.Assertions;
 using TUnit.Assertions.Extensions;
 
