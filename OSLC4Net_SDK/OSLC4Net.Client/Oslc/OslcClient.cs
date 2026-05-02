@@ -180,7 +180,6 @@ public class OslcClient : IDisposable
         return _client;
     }
 
-
     public async Task<OslcResponse<T>> GetResourceAsync<T>(string resourceUri, string? mediaType)
         where T : IExtendedResource, new()
     {
@@ -241,7 +240,6 @@ public class OslcClient : IDisposable
     {
         return GetResourceAsync<T>(resourceUri, null);
     }
-
 
     public Task<OslcResponse<T>> GetResourceAsync<T>(Uri typeURI) where T : IExtendedResource, new()
     {
@@ -712,7 +710,6 @@ public class OslcClient : IDisposable
         QueryCapability? firstQueryCapability = null;
 
         var response = await GetResourceAsync<ServiceProvider>(serviceProviderUrl).ConfigureAwait(false);
-
 
         if (response.StatusCode != HttpStatusCode.OK)
         {
