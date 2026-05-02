@@ -137,6 +137,7 @@ public class OslcClient : IDisposable
 #pragma warning disable MA0039
             _logger.LogWarning(
                 "TLS certificate validation is compromised! DO NOT USE IN PRODUCTION");
+#pragma warning disable MA0039
             handler.ServerCertificateCustomValidationCallback =
                 HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
 #pragma warning restore MA0039
