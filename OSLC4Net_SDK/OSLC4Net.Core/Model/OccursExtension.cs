@@ -32,7 +32,7 @@ public static class OccursExtension
             }
         }
 
-        throw new ArgumentException();
+        throw new ArgumentException($"Invalid string representation of Occurs value: {value}", nameof(value));
     }
 
     public static Occurs FromURI(URI uri)
