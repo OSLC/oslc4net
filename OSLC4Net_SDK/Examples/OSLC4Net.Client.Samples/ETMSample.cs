@@ -159,7 +159,7 @@ sealed class ETMSample : SampleBase<TestResult>
                 //Get the Creation Factory URL for test cases so that we can create a test case
                 String testcaseCreation = await client.LookupCreationFactoryAsync(
                         serviceProviderUrl, OSLCConstants.OSLC_QM_V2,
-                        testcase.GetRdfTypes()[0].ToString()).ConfigureAwait(false);
+                        testcase.Types.First().ToString()).ConfigureAwait(false);
 
                 //Create the test case
                 HttpResponseMessage creationResponse = await client.CreateResourceRawAsync(

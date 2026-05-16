@@ -13,6 +13,7 @@
  *     Michael Fiedler  - initial API and implementation
  *******************************************************************************/
 
+using System.Globalization;
 using System.Reflection;
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Exceptions;
@@ -204,7 +205,7 @@ public class ServiceProviderFactory
         var controllerName = typeName.Substring(0, pos);
 
         var creation =
-            ResolvePathParameters(baseURI, controllerName.ToLower(), pathParameterValues);
+            ResolvePathParameters(baseURI, controllerName.ToLower(CultureInfo.InvariantCulture), pathParameterValues);
         /* TODO Path methodPathAttribute = method.getAttribute(Path.class);
         if (methodPathAttribute != null) {
             creation = creation + '/' + methodPathAttribute.value();
@@ -254,7 +255,7 @@ public class ServiceProviderFactory
         var pos = typeName.IndexOf("Controller", StringComparison.Ordinal);
         var controllerName = typeName.Substring(0, pos);
 
-        var query = ResolvePathParameters(baseURI, controllerName.ToLower(), pathParameterValues);
+        var query = ResolvePathParameters(baseURI, controllerName.ToLower(CultureInfo.InvariantCulture), pathParameterValues);
         /* TODO
         Path methodPathAttribute = method.getAttribute(Path.class);
         if (methodPathAttribute != null) {

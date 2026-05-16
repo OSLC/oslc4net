@@ -18,6 +18,7 @@ public class CatalogController(ILogger<CatalogController> logger) : ControllerBa
     [HttpGet]
     public ServiceProviderCatalog Get()
     {
+        logger.LogGetCatalog();
         var catalog = new ServiceProviderCatalog();
         catalog.SetAbout(new Uri(Request.GetEncodedUrl()));
         var sp = new ServiceProvider();
@@ -29,6 +30,7 @@ public class CatalogController(ILogger<CatalogController> logger) : ControllerBa
     [HttpPut]
     public ServiceProviderCatalog Put(ServiceProvider sp)
     {
+        logger.LogPutCatalog();
         var catalog = new ServiceProviderCatalog();
         catalog.AddServiceProvider(sp);
         return catalog;

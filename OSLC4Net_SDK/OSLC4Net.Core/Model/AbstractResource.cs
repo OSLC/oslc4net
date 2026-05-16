@@ -75,10 +75,7 @@ public abstract class AbstractResource : IExtendedResource
     ///     Get the RDF types
     /// </summary>
     /// <returns></returns>
-    [OslcDescription("The resource type URIs.")]
-    [OslcName("type")]
-    [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
-    [OslcTitle("Types")]
+    [Obsolete("Use .Types property instead")]
     public ICollection<Uri> GetTypes()
     {
         return types;
@@ -88,9 +85,21 @@ public abstract class AbstractResource : IExtendedResource
     ///     Set the RDF types
     /// </summary>
     /// <param name="types"></param>
+    [Obsolete("Use .Types property instead")]
     public void SetTypes(ICollection<Uri> types)
     {
         this.types = types;
+    }
+
+    /// <inheritdoc/>
+    [OslcDescription("The resource type URIs.")]
+    [OslcName("type")]
+    [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
+    [OslcTitle("Types")]
+    public ICollection<Uri> Types
+    {
+        get => types;
+        set => types = new List<Uri>(value);
     }
 
     /// <summary>
@@ -100,71 +109,5 @@ public abstract class AbstractResource : IExtendedResource
     public void AddType(Uri type)
     {
         types.Add(type);
-    }
-}
-
-public abstract record AbstractResourceRecord : IExtendedResource
-{
-    public Uri About { get; set; }
-
-    public List<Uri> Types { get; private set; } = new();
-
-    public IDictionary<QName, object> ExtendedProperties { get; private set; } =
-        new Dictionary<QName, object>();
-
-    protected AbstractResourceRecord(Uri about)
-    {
-        About = about;
-    }
-
-    protected AbstractResourceRecord()
-    {
-    }
-
-    /// <inheritdoc cref="IResource.GetAbout" />
-    public Uri GetAbout()
-    {
-        return About;
-    }
-
-    /// <inheritdoc cref="IResource.SetAbout" />
-    public void SetAbout(Uri about)
-    {
-        About = about;
-    }
-
-    /// <inheritdoc cref="IExtendedResource.GetTypes" />
-    [OslcDescription("The resource type URIs.")]
-    [OslcName("type")]
-    [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
-    [OslcTitle("Types")]
-    public ICollection<Uri> GetTypes()
-    {
-        return Types;
-    }
-
-    /// <inheritdoc cref="IExtendedResource.SetTypes" />
-    public void SetTypes(ICollection<Uri> types)
-    {
-        Types = new List<Uri>(types);
-    }
-
-    /// <inheritdoc cref="IExtendedResource.AddType" />
-    public void AddType(Uri type)
-    {
-        Types.Add(type);
-    }
-
-    /// <inheritdoc cref="IExtendedResource.SetExtendedProperties" />
-    public void SetExtendedProperties(IDictionary<QName, object> properties)
-    {
-        // must be implemented this way due to how DotNetRdfHelper works - do not Clear+AddRange
-        ExtendedProperties = properties;
-    }
-
-    /// <inheritdoc cref="IExtendedResource.GetExtendedProperties" />
-    public IDictionary<QName, object> GetExtendedProperties()
-    {
-        return ExtendedProperties;
     }
 }

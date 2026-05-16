@@ -15,12 +15,6 @@
 
 namespace OSLC4Net.Core.Query;
 
-public enum PropertyType
-{
-    IDENTIFIER,
-    NESTED_PROPERTY
-}
-
 /// <summary>
 /// Property list element from olsc.select of oslc.properties clause
 /// </summary>

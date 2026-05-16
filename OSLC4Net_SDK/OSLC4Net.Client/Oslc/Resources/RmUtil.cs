@@ -72,7 +72,7 @@ public static class RmUtil
                             typeResponse.Resources?.SingleOrDefault();
                         var typeTitle = resourceShape?.GetTitle();
                         if (typeTitle == null || string.Compare(typeTitle,
-                                requiredInstanceShape, true) != 0)
+                                requiredInstanceShape, StringComparison.OrdinalIgnoreCase) != 0)
                         {
                             continue;
                         }

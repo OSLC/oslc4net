@@ -45,8 +45,11 @@ public class ServiceProvider : AbstractResource
         _services.Add(service);
     }
 
+    /// <summary>
+    /// The date and time that this resource was created
+    /// </summary>
     [OslcDescription("The date and time that this resource was created")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "created")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "created")]
     [OslcReadOnly]
     [OslcTitle("Created")]
     public DateTime? GetCreated()
@@ -54,8 +57,11 @@ public class ServiceProvider : AbstractResource
         return _created;
     }
 
+    /// <summary>
+    /// Description of the service provider
+    /// </summary>
     [OslcDescription("Description of the service provider")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "description")]
     [OslcReadOnly]
     [OslcTitle("Description")]
     [OslcValueType(ValueType.XMLLiteral)]
@@ -64,6 +70,9 @@ public class ServiceProvider : AbstractResource
         return _description;
     }
 
+    /// <summary>
+    /// URLs that may be used to retrieve web pages to determine additional details about the service provider
+    /// </summary>
     [OslcDescription(
         "URLs that may be used to retrieve web pages to determine additional details about the service provider")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "details")]
@@ -74,8 +83,11 @@ public class ServiceProvider : AbstractResource
         return _details.ToArray();
     }
 
+    /// <summary>
+    /// A unique identifier for this resource
+    /// </summary>
     [OslcDescription("A unique identifier for this resource")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "identifier")]
     [OslcReadOnly]
     [OslcTitle("Identifier")]
     public string GetIdentifier()
@@ -83,6 +95,9 @@ public class ServiceProvider : AbstractResource
         return _identifier;
     }
 
+    /// <summary>
+    /// Defines the three OAuth URIs required for a client to act as an OAuth consumer
+    /// </summary>
     [OslcDescription(
         "Defines the three OAuth URIs required for a client to act as an OAuth consumer")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "oauthConfiguration")]
@@ -98,6 +113,9 @@ public class ServiceProvider : AbstractResource
         return _oauthConfiguration;
     }
 
+    /// <summary>
+    /// Defines namespace prefixes for use in JSON representations and in forming OSLC Query Syntax strings
+    /// </summary>
     [OslcDescription(
         "Defines namespace prefixes for use in JSON representations and in forming OSLC Query Syntax strings")]
     [OslcName("prefixDefinition")]
@@ -114,8 +132,11 @@ public class ServiceProvider : AbstractResource
         return _prefixDefinitions.ToArray();
     }
 
+    /// <summary>
+    /// Describes the software product that provides the implementation
+    /// </summary>
     [OslcDescription("Describes the software product that provides the implementation")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "publisher")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "publisher")]
     [OslcRange(OslcConstants.TYPE_PUBLISHER)]
     [OslcReadOnly]
     [OslcRepresentation(Representation.Inline)]
@@ -127,6 +148,9 @@ public class ServiceProvider : AbstractResource
         return _publisher;
     }
 
+    /// <summary>
+    /// Describes services offered by the service provider
+    /// </summary>
     [OslcDescription("Describes services offered by the service provider")]
     [OslcName("service")]
     [OslcOccurs(Occurs.OneOrMany)]
@@ -142,8 +166,11 @@ public class ServiceProvider : AbstractResource
         return _services.ToArray();
     }
 
+    /// <summary>
+    /// Title of the service provider
+    /// </summary>
     [OslcDescription("Title of the service provider")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]
     [OslcReadOnly]
     [OslcTitle("Title")]
     [OslcValueType(ValueType.XMLLiteral)]

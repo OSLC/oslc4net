@@ -22,7 +22,7 @@ public static class XmlNamespace
 {
     private static readonly OslcNamespaceDefinition[] namespaces = new OslcNamespaceDefinition[]
     {
-        new OslcNamespaceDefinition(prefix: OslcConstants.DCTERMS_NAMESPACE_PREFIX,             namespaceURI: OslcConstants.DCTERMS_NAMESPACE),
+        new OslcNamespaceDefinition(prefix: OslcConstants.Domains.DCTerms.Prefix,             namespaceURI: OslcConstants.Domains.DCTerms.NS),
         new OslcNamespaceDefinition(prefix: OslcConstants.OSLC_CORE_NAMESPACE_PREFIX,           namespaceURI: OslcConstants.OSLC_CORE_NAMESPACE),
         new OslcNamespaceDefinition(prefix: OslcConstants.OSLC_DATA_NAMESPACE_PREFIX,           namespaceURI: OslcConstants.OSLC_DATA_NAMESPACE),
         new OslcNamespaceDefinition(prefix: OslcConstants.RDF_NAMESPACE_PREFIX,                 namespaceURI: OslcConstants.RDF_NAMESPACE),

@@ -21,7 +21,7 @@ using ValueType = OSLC4Net.Core.Model.ValueType;
 namespace OSLC4Net.Client.Oslc.Resources;
 
 /// <summary>
-/// http://open-services.net/wiki/automation/OSLC-Automation-Specification-Version-2.0/#Resource_AutomationPlan
+/// https://archive.open-services.net/wiki/automation/OSLC-Automation-Specification-Version-2.0/index.html#Resource_AutomationPlan
 /// </summary>
 [OslcResourceShape(title = "Automation Plan Resource Shape",
     describes = new string[] { AutomationConstants.TYPE_AUTOMATION_PLAN })]
@@ -84,7 +84,7 @@ public class AutomationPlan : AbstractResource
 
     [OslcDescription("The person(s) who are responsible for the work needed to complete the automation plan.")]
     [OslcName("contributor")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "contributor")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "contributor")]
     [OslcRange(QmConstants.TYPE_PERSON)]
     [OslcTitle("Contributors")]
     public Uri[] GetContributors()
@@ -93,7 +93,7 @@ public class AutomationPlan : AbstractResource
     }
 
     [OslcDescription("Timestamp of resource creation.")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "created")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "created")]
     [OslcReadOnly]
     [OslcTitle("Created")]
     public DateTime? GetCreated()
@@ -103,7 +103,7 @@ public class AutomationPlan : AbstractResource
 
     [OslcDescription("Creator or creators of resource.")]
     [OslcName("creator")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "creator")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "creator")]
     [OslcRange(QmConstants.TYPE_PERSON)]
     [OslcTitle("Creators")]
     public Uri[] GetCreators()
@@ -113,7 +113,7 @@ public class AutomationPlan : AbstractResource
 
     [OslcDescription(
         "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "description")]
     [OslcTitle("Description")]
     [OslcValueType(ValueType.XMLLiteral)]
     public string GetDescription()
@@ -124,7 +124,7 @@ public class AutomationPlan : AbstractResource
     [OslcDescription(
         "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
     [OslcOccurs(Occurs.ExactlyOne)]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "identifier")]
     [OslcReadOnly]
     [OslcTitle("Identifier")]
     public string GetIdentifier()
@@ -142,9 +142,9 @@ public class AutomationPlan : AbstractResource
     }
 
     [OslcDescription("Timestamp last latest resource modification.")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "modified")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "modified")]
     [OslcReadOnly]
-    [OslcTitle("Mo]dified")]
+    [OslcTitle("Modified")]
     public DateTime? GetModified()
     {
         return modified;
@@ -153,7 +153,7 @@ public class AutomationPlan : AbstractResource
     [Obsolete("User GetTypes() or .Types instead")]
     public Uri[] GetRdfTypes()
     {
-        return GetTypes().ToArray();
+        return Types.ToArray();
     }
 
     [OslcDescription("The scope of a resource is a Uri for the resource's OSLC Service Provider.")]
@@ -168,7 +168,7 @@ public class AutomationPlan : AbstractResource
     [OslcDescription(
         "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
     [OslcName("subject")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "subject")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "subject")]
     [OslcReadOnly(false)]
     [OslcTitle("Subjects")]
     public string[] GetSubjects()
@@ -179,7 +179,7 @@ public class AutomationPlan : AbstractResource
     [OslcDescription(
         "Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
     [OslcOccurs(Occurs.ExactlyOne)]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]
     [OslcTitle("Title")]
     [OslcValueType(ValueType.XMLLiteral)]
     public string GetTitle()
@@ -245,7 +245,7 @@ public class AutomationPlan : AbstractResource
     [Obsolete("User SetTypes() or .Types instead")]
     public void SetRdfTypes(Uri[] rdfTypes)
     {
-        SetTypes(rdfTypes);
+        Types = rdfTypes;
     }
 
     public void SetServiceProvider(Uri serviceProvider)

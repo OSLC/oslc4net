@@ -3,6 +3,7 @@
  * Usage: dotnet run [ewm|erm|etm] -- --url ... --user ... --password ... --project ...
  *******************************************************************************/
 
+using System.Globalization;
 using System.Reflection;
 
 namespace OSLC4Net.Client.Samples;
@@ -17,7 +18,7 @@ sealed class Program
 
         if (args.Length > 0 && !args[0].StartsWith("--", StringComparison.Ordinal))
         {
-            sampleName = args[0].ToLower() switch
+            sampleName = args[0].ToLower(CultureInfo.InvariantCulture) switch
             {
                 "ewm" => "EWMSample",
                 "erm" => "ERMSample",

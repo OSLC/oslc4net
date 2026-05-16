@@ -247,7 +247,7 @@ public class ChangeRequest : AbstractResource
 
     [OslcDescription("The person(s) who are responsible for the work needed to complete the change request.")]
     [OslcName("contributor")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "contributor")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "contributor")]
     [OslcRange(Constants.TYPE_PERSON)]
     [OslcTitle("Contributors")]
     public ISet<Uri> Contributors
@@ -265,14 +265,14 @@ public class ChangeRequest : AbstractResource
     } = new HashSet<Uri>();
 
     [OslcDescription("Timestamp of resource creation.")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "created")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "created")]
     [OslcReadOnly]
     [OslcTitle("Created")]
     public DateTime? Created { get; set; }
 
     [OslcDescription("Creator or creators of resource.")]
     [OslcName("creator")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "creator")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "creator")]
     [OslcRange(Constants.TYPE_PERSON)]
     [OslcTitle("Creators")]
     public ISet<Uri> Creators
@@ -292,7 +292,7 @@ public class ChangeRequest : AbstractResource
     [OslcAllowedValue(new string[] { "Defect", "Task", "Story", "Bug Report", "Feature Request" })]
     [OslcDescription("A short string representation for the type, example 'Defect'.")]
     [OslcName("type")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "type")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "type")]
     [OslcTitle("Types")]
     public string[] DctermsTypes
     {
@@ -320,7 +320,7 @@ public class ChangeRequest : AbstractResource
     }
 
     [OslcDescription("Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "description")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "description")]
     [OslcTitle("Description")]
     [OslcValueType(ValueType.XMLLiteral)]
     public string Description { get; set; }
@@ -333,7 +333,7 @@ public class ChangeRequest : AbstractResource
 
     [OslcDescription("A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
     [OslcOccurs(Occurs.ExactlyOne)]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "identifier")]
     [OslcReadOnly]
     [OslcTitle("Identifier")]
     public string Identifier { get; set; }
@@ -365,7 +365,7 @@ public class ChangeRequest : AbstractResource
     public Uri InstanceShape { get; set; }
 
     [OslcDescription("Timestamp last latest resource modification.")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "modified")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "modified")]
     [OslcReadOnly]
     [OslcTitle("Modified")]
     public DateTime? Modified { get; set; }
@@ -518,7 +518,7 @@ public class ChangeRequest : AbstractResource
 
     [OslcDescription("Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
     [OslcName("subject")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "subject")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "subject")]
     [OslcReadOnly(false)]
     [OslcTitle("Subjects")]
     public ISet<string> Subjects
@@ -557,7 +557,7 @@ public class ChangeRequest : AbstractResource
 
     [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
     [OslcOccurs(Occurs.ExactlyOne)]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]
     [OslcTitle("Title")]
     [OslcValueType(ValueType.XMLLiteral)]
     public string Title { get; set; }
@@ -742,7 +742,7 @@ public class ChangeRequest : AbstractResource
     [Obsolete]
     public Uri[] GetRdfTypes()
     {
-        return GetTypes().ToArray();
+        return Types.ToArray();
     }
 
     [Obsolete("Use RelatedChangeRequests property instead")]
@@ -1034,7 +1034,7 @@ public class ChangeRequest : AbstractResource
     [Obsolete]
     public void SetRdfTypes(Uri[] rdfTypes)
     {
-        SetTypes(rdfTypes);
+        Types = rdfTypes;
     }
 
     [Obsolete("Use RelatedChangeRequests property instead")]

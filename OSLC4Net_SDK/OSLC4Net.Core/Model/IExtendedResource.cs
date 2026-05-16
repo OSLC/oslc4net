@@ -25,9 +25,9 @@ namespace OSLC4Net.Core.Model;
 ///     unknown content when performing updates of resources.
 ///     see
 ///     <a
-///         href="http://open-services.net/bin/view/Main/OslcCoreSpecification?sortcol=table;up=#Unknown_properties_and_content">
+///         href="https://docs.oasis-open-projects.org/oslc-op/core/v3.0/os/oslc-core.html">
 ///         OSLC
-///         Core 2.0: Unknown properties and content
+///         Core 3.0: Unknown properties and content
 ///     </a>
 /// </summary>
 public interface IExtendedResource : IResource
@@ -38,10 +38,7 @@ public interface IExtendedResource : IResource
     ///     OslcResourceShape#describes() annotation
     /// </summary>
     /// <returns></returns>
-    [OslcDescription("The resource type URIs.")]
-    [OslcName("type")]
-    [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
-    [OslcTitle("Types")]
+    [Obsolete("Use .Types property instead")]
     ICollection<Uri> GetTypes();
 
     /// <summary>
@@ -50,7 +47,19 @@ public interface IExtendedResource : IResource
     ///     OslcResourceShape#describes() annotation.
     /// </summary>
     /// <param name="types"></param>
+    [Obsolete("Use .Types property instead")]
     void SetTypes(ICollection<Uri> types);
+
+    /// <summary>
+    ///     Gets or sets the RDF types of this resource. These types will be added to the
+    ///     serialization of the resource in addition to the
+    ///     OslcResourceShape#describes() annotation.
+    /// </summary>
+    [OslcDescription("The resource type URIs.")]
+    [OslcName("type")]
+    [OslcPropertyDefinition(OslcConstants.RDF_NAMESPACE + "type")]
+    [OslcTitle("Types")]
+    ICollection<Uri> Types { get; set; }
 
     /// <summary>
     ///     Adds an RDF type to this resource. These types will be added to the

@@ -116,7 +116,7 @@ public class ResourceShapeFactoryTests
     }
 
     [Test]
-    public async Task CreateResourceShape_WithRequirementType_ShouldOnlyHaveGetterMethods()
+    public async Task CreateResourceShape_WithRequirementType_ShouldHaveMethodAndPropertyAnnotations()
     {
         // Arrange
         var resourceType = typeof(Requirement);
@@ -131,11 +131,9 @@ public class ResourceShapeFactoryTests
         // Assert
         var properties = resourceShape.GetProperties();
 
-        // The exact count depends on how many properties Requirement class has.
-        // We verify that "type" property exists, which comes from a getter method in Requirement.
-        // It seems Requirement class has more properties now or methods are being picked up differently.
-        // We relax this check to just ensure "type" property exists.
-
+        // Requirement has both Get* methods and C# properties with OSLC annotations
+        // The Types property from AbstractResourceRecord is also discovered
+        await Assert.That(properties.Length).IsGreaterThan(1);
         await Assert.That(properties.Any(p => p.GetName() == "type")).IsTrue();
     }
 
@@ -300,6 +298,8 @@ public class ResourceShapeFactoryTests
         await Assert.That(implementedByProperty.GetPropertyDefinition()?.ToString()).IsEqualTo("http://example.com/implementedBy");
     }
 
+    // Note: ResourceShapeFactory only supports getter/setter methods, not direct properties
+    // Direct property pattern is not supported by ResourceShapeFactory
     [Test]
     public async Task CreateResourceShape_WithISetUriProperty_ShouldMapToResourceValueType()
     {
@@ -317,6 +317,7 @@ public class ResourceShapeFactoryTests
         var properties = resourceShape.GetProperties();
         var uriSetProperty = properties.FirstOrDefault(p => p.GetName() == "uriSet");
 
+        // ISet<Uri> properties are discovered via property scanning
         await Assert.That(uriSetProperty).IsNotNull();
         await Assert.That(uriSetProperty.GetName()).IsEqualTo("uriSet");
 

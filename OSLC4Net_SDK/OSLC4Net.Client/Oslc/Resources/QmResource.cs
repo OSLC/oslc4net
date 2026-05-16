@@ -20,7 +20,7 @@ using ValueType = OSLC4Net.Core.Model.ValueType;
 namespace OSLC4Net.Client.Oslc.Resources;
 
 /// <summary>
-/// http://open-services.net/bin/view/Main/QmSpecificationV2
+/// https://docs.oasis-open-projects.org/oslc-op/qm/v2.1/os/quality-management-spec.html
 /// </summary>
 public abstract class QmResource : AbstractResource
 {
@@ -50,7 +50,7 @@ public abstract class QmResource : AbstractResource
     }
 
     [OslcDescription("Timestamp of resource creation.")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "created")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "created")]
     [OslcReadOnly]
     [OslcTitle("Created")]
     public DateTime? GetCreated()
@@ -61,7 +61,7 @@ public abstract class QmResource : AbstractResource
     [OslcDescription(
         "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
     [OslcOccurs(Occurs.ExactlyOne)]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "identifier")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "identifier")]
     [OslcReadOnly]
     [OslcTitle("Identifier")]
     public string GetIdentifier()
@@ -79,7 +79,7 @@ public abstract class QmResource : AbstractResource
     }
 
     [OslcDescription("Timestamp last latest resource modification.")]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "modified")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "modified")]
     [OslcReadOnly]
     [OslcTitle("Modified")]
     public DateTime? GetModified()
@@ -90,7 +90,7 @@ public abstract class QmResource : AbstractResource
     [Obsolete("User GetTypes() or .Types instead")]
     public Uri[] GetRdfTypes()
     {
-        return GetTypes().ToArray();
+        return Types.ToArray();
     }
 
     [OslcDescription("The scope of a resource is a Uri for the resource's OSLC Service Provider.")]
@@ -105,7 +105,7 @@ public abstract class QmResource : AbstractResource
     [OslcDescription(
         "Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
     [OslcOccurs(Occurs.ExactlyOne)]
-    [OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "title")]
+    [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]
     [OslcTitle("Title")]
     [OslcValueType(ValueType.XMLLiteral)]
     public string GetTitle()
@@ -136,7 +136,7 @@ public abstract class QmResource : AbstractResource
     [Obsolete("User SetTypes() or .Types instead")]
     public void SetRdfTypes(Uri[] rdfTypes)
     {
-        SetTypes(rdfTypes);
+        Types = rdfTypes;
     }
 
     public void SetServiceProvider(Uri serviceProvider)
