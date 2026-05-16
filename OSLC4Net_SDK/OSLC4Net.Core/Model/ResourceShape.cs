@@ -48,6 +48,9 @@ public class ResourceShape : AbstractResource
         properties.Add(property);
     }
 
+    /// <summary>
+    /// Type or types of resource described by this shape
+    /// </summary>
     [OslcDescription("Type or types of resource described by this shape")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "describes")]
     [OslcReadOnly]
@@ -57,6 +60,9 @@ public class ResourceShape : AbstractResource
         return describes.ToArray();
     }
 
+    /// <summary>
+    /// The properties that are allowed or required by this shape
+    /// </summary>
     [OslcDescription("The properties that are allowed or required by this shape")]
     [OslcName("property")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "property")]
@@ -71,6 +77,9 @@ public class ResourceShape : AbstractResource
         return properties.ToArray();
     }
 
+    /// <summary>
+    /// Title of the resource shape. SHOULD include only content that is valid and suitable inside an XHTML &lt;div&gt; element
+    /// </summary>
     [OslcDescription(
         "Title of the resource shape. SHOULD include only content that is valid and suitable inside an XHTML <div> element")]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]

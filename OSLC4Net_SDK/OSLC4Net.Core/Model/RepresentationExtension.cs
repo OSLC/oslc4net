@@ -32,11 +32,11 @@ public static class RepresentationExtension
             }
         }
 
-        throw new ArgumentException();
+        throw new ArgumentException($"Invalid string representation of Representation value: {value}", nameof(value));
     }
 
     public static Representation FromURI(URI uri)
     {
-        return FromString(uri.ToString());
+        return FromString(uri.uri);
     }
 }

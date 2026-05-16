@@ -37,6 +37,6 @@ public static class ValueTypeExtension
 
     public static ValueType FromURI(URI uri)
     {
-        return FromString(uri.ToString());
+        return FromString(uri.uri);
     }
 }

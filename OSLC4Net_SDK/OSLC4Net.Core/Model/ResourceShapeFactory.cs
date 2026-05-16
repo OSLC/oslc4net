@@ -13,6 +13,7 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
+using System.Globalization;
 using System.Numerics;
 using System.Reflection;
 using OSLC4Net.Core.Attribute;
@@ -52,6 +53,7 @@ public sealed class ResourceShapeFactory
         // Object types
         TYPE_TO_VALUE_TYPE[typeof(BigInteger)] = ValueType.Integer;
         TYPE_TO_VALUE_TYPE[typeof(DateTime)] = ValueType.DateTime;
+        TYPE_TO_VALUE_TYPE[typeof(DateTimeOffset)] = ValueType.DateTime;
         TYPE_TO_VALUE_TYPE[typeof(Uri)] = ValueType.Resource;
         TYPE_TO_VALUE_TYPE[typeof(ICollection<Uri>)] = ValueType.Resource;
         TYPE_TO_VALUE_TYPE[typeof(IEnumerable<Uri>)] = ValueType.Resource;
@@ -145,10 +147,31 @@ public sealed class ResourceShapeFactory
             }
         }
 
+        foreach (var prop in resourceType.GetProperties())
+        {
+            var propertyDefinitionAttribute =
+                InheritedMethodAttributeHelper.GetAttribute<OslcPropertyDefinition>(prop);
+            if (propertyDefinitionAttribute != null)
+            {
+                var propertyDefinition = propertyDefinitionAttribute.value;
+                if (propertyDefinitions.Contains(propertyDefinition))
+                {
+                    throw new OslcCoreDuplicatePropertyDefinitionException(resourceType,
+                        propertyDefinitionAttribute);
+                }
+
+                propertyDefinitions.Add(propertyDefinition);
+
+                var property = CreateProperty(baseURI, resourceType, prop,
+                    propertyDefinitionAttribute, verifiedTypes);
+                resourceShape.AddProperty(property);
+            }
+        }
+
         return resourceShape;
     }
 
-    private static Property CreateProperty(string baseURI, Type resourceType, MethodInfo method,
+    private static Property CreateProperty(string baseURI, Type resourceType, MemberInfo method,
         OslcPropertyDefinition propertyDefinitionAttribute, ISet<Type> verifiedTypes)
     {
         string name;
@@ -159,7 +182,12 @@ public sealed class ResourceShapeFactory
         }
         else
         {
-            name = GetDefaultPropertyName(method);
+            name = method switch
+            {
+                MethodInfo methodInfo => GetDefaultPropertyName(methodInfo),
+                PropertyInfo propertyInfo => GetDefaultPropertyName(propertyInfo),
+                _ => throw new ArgumentException("Unsupported member type", nameof(method))
+            };
         }
 
         var propertyDefinition = propertyDefinitionAttribute.value;
@@ -170,7 +198,13 @@ public sealed class ResourceShapeFactory
                 propertyDefinitionAttribute);
         }
 
-        var returnType = method.ReturnType;
+        var returnType = method switch
+        {
+            MethodInfo methodInfo => methodInfo.ReturnType,
+            PropertyInfo propertyInfo => propertyInfo.PropertyType,
+            _ => throw new ArgumentException("Unsupported member type", nameof(method))
+        };
+
         Occurs occurs;
         var occursAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcOccurs>(method);
         if (occursAttribute != null)
@@ -329,6 +363,18 @@ public sealed class ResourceShapeFactory
         return property;
     }
 
+    private static string GetDefaultPropertyName(PropertyInfo property)
+    {
+        var name = property.Name;
+        var lowercasedFirstCharacter = name.Substring(0, 1).ToLower(CultureInfo.InvariantCulture);
+        if (name.Length == 1)
+        {
+            return lowercasedFirstCharacter;
+        }
+
+        return string.Concat(lowercasedFirstCharacter, name.AsSpan(1));
+    }
+
     private static string GetDefaultPropertyName(MethodInfo method)
     {
         var methodName = method.Name;
@@ -337,7 +383,7 @@ public sealed class ResourceShapeFactory
             : METHOD_NAME_START_IS_LENGTH;
 
         // We want the name to start with a lower-case letter
-        var lowercasedFirstCharacter = methodName.Substring(startingIndex, 1).ToLower();
+        var lowercasedFirstCharacter = methodName.Substring(startingIndex, 1).ToLower(CultureInfo.InvariantCulture);
         if (methodName.Length == 1)
         {
             return lowercasedFirstCharacter;
@@ -346,7 +392,7 @@ public sealed class ResourceShapeFactory
         return string.Concat(lowercasedFirstCharacter, methodName.AsSpan(startingIndex + 1));
     }
 
-    private static ValueType GetDefaultValueType(Type resourceType, MethodInfo method,
+    private static ValueType GetDefaultValueType(Type resourceType, MemberInfo method,
         Type componentType)
     {
         var valueType = TYPE_TO_VALUE_TYPE[componentType];
@@ -380,7 +426,7 @@ public sealed class ResourceShapeFactory
         return Occurs.ZeroOrOne;
     }
 
-    private static Type GetComponentType(Type resourceType, MethodInfo method, Type type)
+    private static Type GetComponentType(Type resourceType, MemberInfo method, Type type)
     {
         if (type.IsArray)
         {
@@ -397,6 +443,12 @@ public sealed class ResourceShapeFactory
             }
 
             throw new OslcCoreInvalidPropertyTypeException(resourceType, method, type);
+        }
+
+        var underlyingType = Nullable.GetUnderlyingType(type);
+        if (underlyingType != null)
+        {
+            return underlyingType;
         }
 
         return type;
@@ -422,10 +474,15 @@ public sealed class ResourceShapeFactory
         }
     }
 
-    private static void ValidateUserSpecifiedOccurs(Type resourceType, MethodInfo method,
+    private static void ValidateUserSpecifiedOccurs(Type resourceType, MemberInfo method,
         OslcOccurs occursAttribute)
     {
-        var returnType = method.ReturnType;
+        var returnType = method switch
+        {
+            MethodInfo methodInfo => methodInfo.ReturnType,
+            PropertyInfo propertyInfo => propertyInfo.PropertyType,
+            _ => throw new ArgumentException("Unsupported member type", nameof(method))
+        };
         var occurs = occursAttribute.value;
 
         if (returnType.IsArray ||
@@ -448,7 +505,7 @@ public sealed class ResourceShapeFactory
         }
     }
 
-    private static void ValidateUserSpecifiedValueType(Type resourceType, MethodInfo method,
+    private static void ValidateUserSpecifiedValueType(Type resourceType, MemberInfo method,
         ValueType userSpecifiedValueType, Type componentType)
     {
         var calculatedValueType = TYPE_TO_VALUE_TYPE[componentType];
@@ -487,7 +544,7 @@ public sealed class ResourceShapeFactory
         throw new OslcCoreInvalidValueTypeException(resourceType, method, userSpecifiedValueType);
     }
 
-    private static void ValidateUserSpecifiedRepresentation(Type resourceType, MethodInfo method,
+    private static void ValidateUserSpecifiedRepresentation(Type resourceType, MemberInfo method,
         Representation userSpecifiedRepresentation, Type componentType)
     {
         // If user-specified representation is reference and component is not Uri

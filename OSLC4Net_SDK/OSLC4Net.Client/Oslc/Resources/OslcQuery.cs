@@ -14,6 +14,7 @@
  *     Steve Pitschke  - initial API and implementation
  *******************************************************************************/
 
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using OSLC4Net.Core.DotNetRdfProvider;
 
@@ -136,7 +137,7 @@ public class OslcQuery
         if (pageSize > 0)
         {
             QueryParam("oslc.paging", "true");
-            QueryParam("oslc.pageSize", pageSize.ToString());
+            QueryParam("oslc.pageSize", pageSize.ToString(CultureInfo.InvariantCulture));
         }
     }
 

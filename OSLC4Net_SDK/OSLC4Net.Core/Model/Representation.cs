@@ -18,7 +18,7 @@ namespace OSLC4Net.Core.Model;
 /// <summary>
 ///     OSLC Representation attribute
 /// </summary>
-/// <remarks>see http://open-services.net/bin/view/Main/OslcCoreSpecification#OSLC_Defined_Resources</remarks>
+/// <remarks>see https://docs.oasis-open-projects.org/oslc-op/core/v3.0/os/core-vocab.html</remarks>
 public enum Representation
 {
     [URI("")] Unknown,

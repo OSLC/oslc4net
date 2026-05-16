@@ -162,7 +162,7 @@ public class JazzFormAuthClient : OslcClient
                 jazzAuthMessage = values.Last();
             }
 
-            if (jazzAuthMessage != null && String.Compare(jazzAuthMessage, JAZZ_AUTH_FAILED, true) == 0)
+            if (jazzAuthMessage != null && String.Compare(jazzAuthMessage, JAZZ_AUTH_FAILED, StringComparison.OrdinalIgnoreCase) == 0)
             {
                 resp.ConsumeContent();
                 throw new JazzAuthFailedException(this.user, this.url);

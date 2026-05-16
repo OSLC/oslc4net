@@ -20,7 +20,7 @@ using OSLC4Net.Core.Model;
 namespace OSLC4Net.Client.Oslc.Resources;
 
 /// <summary>
-/// http://open-services.net/bin/view/Main/QmSpecificationV2#Resource_TestExecutionRecord
+/// https://docs.oasis-open-projects.org/oslc-op/qm/v2.1/os/quality-management-shapes.html#TestExecutionRecordShape
 /// </summary>
 [OslcResourceShape(title = "Quality Management Resource Shape",
     describes = new string[] { QmConstants.TYPE_TEST_EXECUTION_RECORD })]

@@ -21,7 +21,7 @@ using ValueType = OSLC4Net.Core.Model.ValueType;
 namespace OSLC4Net.Client.Oslc.Resources;
 
 /// <summary>
-/// http://open-services.net/wiki/architecture-management/OSLC-Architecture-Management-Specification-Version-2.0/
+/// https://docs.oasis-open-projects.org/oslc-op/am/v3.0/os/architecture-management-spec.html
 /// </summary>
 [OslcResourceShape(title = "Architecture Management Resource Resource Shape",
     describes = new string[] { ArchitectureConstants.TYPE_ARCHITECTURE_RESOURCE })]
@@ -147,7 +147,7 @@ public class ArchitectureResource : AbstractResource
     [Obsolete("User GetTypes() or .Types instead")]
     public Uri[] GetRdfTypes()
     {
-        return GetTypes().ToArray();
+        return Types.ToArray();
     }
 
     [OslcDescription("A short string representation for the type, example 'Defect'.")]
@@ -236,7 +236,7 @@ public class ArchitectureResource : AbstractResource
     [Obsolete("User SetTypes() or .Types instead")]
     public void SetRdfTypes(Uri[] rdfTypes)
     {
-        SetTypes(rdfTypes);
+        Types = rdfTypes;
     }
 
     public void SetDctermsTypes(string[] dctermsTypes)
