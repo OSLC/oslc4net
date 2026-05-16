@@ -26,7 +26,7 @@ namespace OSLC4Net.Client.Oslc.Resources;
 [OslcResourceShape(title = "Parameter Instance Resource Shape",
     describes = new string[] { AutomationConstants.TYPE_PARAMETER_INSTANCE })]
 [OslcNamespace(AutomationConstants.AUTOMATION_NAMESPACE)]
-public class ParameterInstance : AbstractResource
+public class ParameterInstance : AbstractResource, IComparable<ParameterInstance>, IEquatable<ParameterInstance>
 {
 
     private string name;
@@ -138,8 +138,102 @@ public class ParameterInstance : AbstractResource
         this.serviceProvider = serviceProvider;
     }
 
-    public int CompareTo(ParameterInstance o)
+    public int CompareTo(ParameterInstance? o)
     {
-        return o.GetName().CompareTo(name);
+        if (o is null)
+        {
+            return 1;
+        }
+
+        var otherName = o.GetName();
+        if (otherName == null)
+        {
+            return name == null ? 0 : 1;
+        }
+        if (name == null)
+        {
+            return -1;
+        }
+        return string.Compare(otherName, name, StringComparison.Ordinal);
+    }
+
+    public bool Equals(ParameterInstance? other)
+    {
+        if (other is null)
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(this, other))
+        {
+            return true;
+        }
+
+        return string.Equals(name, other.name, StringComparison.Ordinal);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return Equals(obj as ParameterInstance);
+    }
+
+    public override int GetHashCode()
+    {
+        return name != null ? StringComparer.Ordinal.GetHashCode(name) : 0;
+    }
+
+    public static bool operator ==(ParameterInstance? left, ParameterInstance? right)
+    {
+        if (left is null)
+        {
+            return right is null;
+        }
+
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(ParameterInstance? left, ParameterInstance? right)
+    {
+        return !(left == right);
+    }
+
+    public static bool operator <(ParameterInstance? left, ParameterInstance? right)
+    {
+        if (left is null)
+        {
+            return right is not null;
+        }
+
+        return left.CompareTo(right) < 0;
+    }
+
+    public static bool operator <=(ParameterInstance? left, ParameterInstance? right)
+    {
+        if (left is null)
+        {
+            return true;
+        }
+
+        return left.CompareTo(right) <= 0;
+    }
+
+    public static bool operator >(ParameterInstance? left, ParameterInstance? right)
+    {
+        if (left is null)
+        {
+            return false;
+        }
+
+        return left.CompareTo(right) > 0;
+    }
+
+    public static bool operator >=(ParameterInstance? left, ParameterInstance? right)
+    {
+        if (left is null)
+        {
+            return right is null;
+        }
+
+        return left.CompareTo(right) >= 0;
     }
 }

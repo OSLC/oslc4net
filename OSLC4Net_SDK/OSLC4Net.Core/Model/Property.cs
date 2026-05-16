@@ -24,7 +24,7 @@ namespace OSLC4Net.Core.Model;
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
 [OslcResourceShape(title = "OSLC Property Resource Shape",
     describes = new[] { OslcConstants.TYPE_PROPERTY })]
-public sealed class Property : AbstractResource, IComparable<Property>
+public sealed class Property : AbstractResource, IComparable<Property>, IEquatable<Property>
 {
     private readonly IList<string> allowedValues = new List<string>();
     private readonly List<Uri> range = new();
@@ -74,6 +74,87 @@ public sealed class Property : AbstractResource, IComparable<Property>
 
         return Uri.Compare(propertyDefinition, o.propertyDefinition,
             UriComponents.AbsoluteUri, UriFormat.UriEscaped, StringComparison.Ordinal);
+    }
+
+    public bool Equals(Property? other)
+    {
+        if (other is null)
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(this, other))
+        {
+            return true;
+        }
+
+        return string.Equals(name, other.name, StringComparison.Ordinal) &&
+               propertyDefinition == other.propertyDefinition;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return Equals(obj as Property);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(name != null ? StringComparer.Ordinal.GetHashCode(name) : 0, propertyDefinition);
+    }
+
+    public static bool operator ==(Property? left, Property? right)
+    {
+        if (left is null)
+        {
+            return right is null;
+        }
+
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(Property? left, Property? right)
+    {
+        return !(left == right);
+    }
+
+    public static bool operator <(Property? left, Property? right)
+    {
+        if (left is null)
+        {
+            return right is not null;
+        }
+
+        return left.CompareTo(right) < 0;
+    }
+
+    public static bool operator <=(Property? left, Property? right)
+    {
+        if (left is null)
+        {
+            return true;
+        }
+
+        return left.CompareTo(right) <= 0;
+    }
+
+    public static bool operator >(Property? left, Property? right)
+    {
+        if (left is null)
+        {
+            return false;
+        }
+
+        return left.CompareTo(right) > 0;
+    }
+
+    public static bool operator >=(Property? left, Property? right)
+    {
+        if (left is null)
+        {
+            return right is null;
+        }
+
+        return left.CompareTo(right) >= 0;
     }
 
     public void AddAllowedValue(string allowedValue)
