@@ -82,6 +82,20 @@ public sealed class ServiceProviderRegistryClient
     {
     }
 
+    /// <summary>
+    /// Create a ServiceProviderRegistryClient with an externally-managed OslcClient.
+    /// Useful when the OslcClient needs custom configuration (e.g., resilience policies, custom handlers).
+    /// </summary>
+    /// <param name="uri">OSLC Service Provider Catalog URI</param>
+    /// <param name="oslcClient">Pre-configured OslcClient instance</param>
+    /// <param name="loggerFactory">Logger factory for creating loggers</param>
+    public ServiceProviderRegistryClient(string uri, OslcClient oslcClient, ILoggerFactory loggerFactory)
+    {
+        Endpoint = uri;
+        Client = oslcClient;
+        _logger = loggerFactory.CreateLogger<ServiceProviderRegistryClient>();
+    }
+
     public static ServiceProviderRegistryClient WithBasicAuth(string uri, string username,
         string password, ILoggerFactory loggerFactory)
     {

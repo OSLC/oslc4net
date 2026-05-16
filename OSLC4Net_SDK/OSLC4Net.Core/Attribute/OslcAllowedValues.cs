@@ -19,16 +19,20 @@ namespace OSLC4Net.Core.Attribute;
 /// <summary>
 ///     OSLC AllowedValues (enumeration) attribute
 /// </summary>
-/// <remarks>See http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA </remarks>
+/// <remarks>See https://docs.oasis-open-projects.org/oslc-op/core/v3.0/os/core-vocab.html </remarks>
 [AttributeUsage(AttributeTargets.Method)
 ]
 public class OslcAllowedValues : System.Attribute
 {
-    /**
-     * Specify how the resource will be represented (for properties with a resource value-type).
-     */
+    /// <summary>
+    ///     URI of the allowed values resource for the OSLC property.  
+    /// </summary>
     public readonly string value;
 
+    /// <summary>
+    ///    Define an OSLC AllowedValues (enumeration) attribute
+    /// </summary>
+    /// <param name="value">URI of the allowed values resource for the OSLC property.</param>
     public OslcAllowedValues(string value)
     {
         this.value = value;

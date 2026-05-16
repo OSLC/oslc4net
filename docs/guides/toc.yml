@@ -1,0 +1,12 @@
+- name: Introduction
+  href: ../index.md
+- name: Minimal Client
+  href: minimal-oslc-client.md
+- name: Architecture Overview
+  href: oslc4net-architecture-overview.md
+- name: Formatters & Media Types
+  href: output-formatters-media-types.md
+- name: Extended Properties
+  href: extended-properties-namespaces.md
+- name: Delegated UI & Preview
+  href: delegated-ui-resource-preview.md

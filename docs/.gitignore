@@ -1,0 +1,8 @@
+# DocFX build output
+_site/
+api/
+obj/
+.manifest
+
+# DocFX log
+docfx.log

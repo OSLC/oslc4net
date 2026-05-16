@@ -29,16 +29,3 @@ public interface IResource
     void SetAbout(Uri about);
 }
 
-public static class AddAllExtension
-{
-    public static void AddAll<T>(
-        this ICollection<T> target,
-        IEnumerable<T> source
-    )
-    {
-        foreach (var item in source)
-        {
-            target.Add(item);
-        }
-    }
-}

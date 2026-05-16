@@ -29,14 +29,14 @@ public class EnumerableWrapper : IEnumerable<object>
 
     public IEnumerator<object> GetEnumerator()
     {
-        var method = opaqueObj.GetType().GetMethod("GetEnumerator", Type.EmptyTypes);
+        var method = opaqueObj.GetType().GetMethod("GetEnumerator", Type.EmptyTypes)!;
 
         if (method.IsGenericMethod)
         {
             method = method.MakeGenericMethod();
         }
 
-        return new EnumeratorWrapper(method.Invoke(opaqueObj, null));
+        return new EnumeratorWrapper(method.Invoke(opaqueObj, null)!);
     }
 
     IEnumerator IEnumerable.GetEnumerator()
@@ -54,26 +54,26 @@ public class EnumerableWrapper : IEnumerable<object>
         public EnumeratorWrapper(object opaqueEnumerator)
         {
             this.opaqueEnumerator = opaqueEnumerator;
-            currentInfo = opaqueEnumerator.GetType().GetProperty("Current");
-            moveNext = opaqueEnumerator.GetType().GetMethod("MoveNext", Type.EmptyTypes);
+            currentInfo = opaqueEnumerator.GetType().GetProperty("Current")!;
+            moveNext = opaqueEnumerator.GetType().GetMethod("MoveNext", Type.EmptyTypes)!;
         }
 
-        public object Current => currentInfo.GetValue(opaqueEnumerator, null);
+        public object Current => currentInfo.GetValue(opaqueEnumerator, null)!;
 
         public void Dispose()
         {
-            opaqueEnumerator.GetType().GetMethod("Dispose", Type.EmptyTypes)
+            opaqueEnumerator.GetType().GetMethod("Dispose", Type.EmptyTypes)!
                 .Invoke(opaqueEnumerator, Type.EmptyTypes);
         }
 
         public bool MoveNext()
         {
-            return (bool)moveNext.Invoke(opaqueEnumerator, Type.EmptyTypes);
+            return (bool)moveNext.Invoke(opaqueEnumerator, Type.EmptyTypes)!;
         }
 
         public void Reset()
         {
-            opaqueEnumerator.GetType().GetMethod("Reset", Type.EmptyTypes)
+            opaqueEnumerator.GetType().GetMethod("Reset", Type.EmptyTypes)!
                 .Invoke(opaqueEnumerator, Type.EmptyTypes);
         }
     }

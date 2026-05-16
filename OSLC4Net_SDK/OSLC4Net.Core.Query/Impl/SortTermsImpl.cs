@@ -17,6 +17,14 @@ using Antlr.Runtime.Tree;
 
 namespace OSLC4Net.Core.Query.Impl;
 
+/// <summary>
+/// Implementation of OrderByClause interface that parses and resolves sort terms from an oslc.orderBy query parameter.
+///
+/// It lazily evaluates the Antlr CommonTree representing the terms, generating a read-only list of
+/// <see cref="SortTerm"/> implementations (either <see cref="SimpleSortTermImpl"/> or <see cref="ScopedSortTermImpl"/>).
+/// For example, parsing "+oslc:name,-oslc:shortId,dcterms:creator{+foaf:name}" will yield three sort terms:
+/// two simple terms and one scoped term.
+/// </summary>
 sealed class SortTermsImpl : OrderByClause
 {
     public SortTermsImpl(
@@ -34,27 +42,29 @@ sealed class SortTermsImpl : OrderByClause
         {
             if (children == null)
             {
+                var treeChildren = tree.Children;
+                var list = new List<SortTerm>(treeChildren.Count);
 
-                var rawChildren = (IList<CommonTree>)tree.Children;
-
-                children = new List<SortTerm>(rawChildren.Count);
-
-                foreach (var child in rawChildren)
+                foreach (CommonTree child in treeChildren)
                 {
-
-                    object simpleTerm;
+                    SortTerm term;
 
                     switch (child.Token.Type)
                     {
+                        case OslcOrderByParser.SIMPLE_TERM:
+                            term = new SimpleSortTermImpl(child, prefixMap);
+                            break;
+                        case OslcOrderByParser.SCOPED_TERM:
+                            term = new ScopedSortTermImpl(child, prefixMap);
+                            break;
                         default:
                             throw new InvalidOperationException("unimplemented type of sort term: " + child.Token.Text);
                     }
 
-                    children.Add((SortTerm)simpleTerm);
+                    list.Add(term);
                 }
 
-                // XXX - Can't figure out why this doesn't work
-                // children = children.AsReadOnly();
+                children = list.AsReadOnly();
             }
 
             return children;

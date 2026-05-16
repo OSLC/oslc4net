@@ -38,7 +38,7 @@ namespace OSLC4Net.Core.DotNetRdfProvider;
 public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 {
     const int STREAM_BUFFER_SIZE = 8192;
-    private HttpRequestMessage httpRequest;
+    private HttpRequestMessage? httpRequest;
     private readonly DotNetRdfHelper _rdfHelper;
 
     /// <summary>
@@ -70,7 +70,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         Graph = graph;
     }
 
-    public IGraph Graph { get; set; }
+    public IGraph? Graph { get; set; }
     public bool RebuildGraph { get; set; }
 
     /// <summary>
@@ -164,22 +164,22 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         {
             if (ImplementsGenericType(typeof(FilteredResource<>), type))
             {
-                var resourceProp = value.GetType().GetProperty("Resource");
+                var resourceProp = value.GetType().GetProperty("Resource")!;
                 var actualTypeArguments =
                     GetChildClassParameterArguments(typeof(FilteredResource<>), type);
                 var objects = resourceProp.GetValue(value, null);
-                var propertiesProp = value.GetType().GetProperty("Properties");
+                var propertiesProp = value.GetType().GetProperty("Properties")!;
 
                 if (!ImplementsICollection(actualTypeArguments[0]))
                 {
-                    objects = new EnumerableWrapper(objects);
+                    objects = new EnumerableWrapper(objects!);
                 }
 
                 if (ImplementsGenericType(typeof(ResponseInfo<>), type))
                 {
                     //Subject URI for the collection is the query capability
                     // FIXME: should this be set by the app based on service provider info
-                    var portNum = httpRequest.RequestUri.Port;
+                    var portNum = httpRequest!.RequestUri!.Port;
                     string portString;
                     if (portNum == 80 || portNum == 443)
                     {
@@ -198,21 +198,21 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                     //Subject URI for the responseInfo is the full request URI
                     var responseInfoAbout = httpRequest.RequestUri.ToString();
 
-                    var totalCountProp = value.GetType().GetProperty("TotalCount");
-                    var nextPageProp = value.GetType().GetProperty("NextPage");
+                    var totalCountProp = value.GetType().GetProperty("TotalCount")!;
+                    var nextPageProp = value.GetType().GetProperty("NextPage")!;
 
                     Graph = DotNetRdfHelper.CreateDotNetRdfGraph(descriptionAbout,
                         responseInfoAbout,
-                        (string)nextPageProp.GetValue(value, null),
-                        (int)totalCountProp.GetValue(value, null),
+                        (string?)nextPageProp.GetValue(value, null),
+                        (long?)totalCountProp.GetValue(value, null),
                         objects as IEnumerable<object>,
-                        (IDictionary<string, object>)propertiesProp.GetValue(value, null));
+                        (IDictionary<string, object>?)propertiesProp.GetValue(value, null));
                 }
                 else
                 {
                     Graph = DotNetRdfHelper.CreateDotNetRdfGraph(null, null, null, null,
                         objects as IEnumerable<object>,
-                        (IDictionary<string, object>)propertiesProp.GetValue(value, null));
+                        (IDictionary<string, object>?)propertiesProp.GetValue(value, null));
                 }
             }
             else if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(
@@ -233,7 +233,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         IRdfWriter? tripleWriter = null;
         IStoreWriter? quadWriter = null;
 
-        if (content == null || content.Headers == null ||
+        if (content?.Headers?.ContentType?.MediaType == null ||
             content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_RDF_XML,
                 StringComparison.Ordinal))
         {
@@ -357,23 +357,23 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             IStoreReader? quadReader = null;
 
             // TODO: one class per RDF content type
-            var mediaType = content.Headers.ContentType.MediaType;
-            if (mediaType.Equals(OslcMediaType.APPLICATION_RDF_XML))
+            var mediaType = content.Headers.ContentType?.MediaType;
+            if (OslcMediaType.APPLICATION_RDF_XML.Equals(mediaType))
             {
                 tripleReader = new RdfXmlParser();
             }
-            else if (mediaType.Equals(OslcMediaType.TEXT_TURTLE))
+            else if (OslcMediaType.TEXT_TURTLE.Equals(mediaType))
             {
                 // TODO: make IRI validation configurable
                 tripleReader = new TurtleParser(TurtleSyntax.Rdf11Star, false);
             }
-            else if (mediaType.Equals(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML)
-                     || mediaType.Equals(OslcMediaType.APPLICATION_XML))
+            else if (OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML.Equals(mediaType)
+                     || OslcMediaType.APPLICATION_XML.Equals(mediaType))
             {
                 //For now, use the dotNetRDF RdfXmlParser() for application/xml.  This could change
                 tripleReader = new RdfXmlParser();
             }
-            else if (mediaType.Equals(OslcMediaType.APPLICATION_JSON_LD))
+            else if (OslcMediaType.APPLICATION_JSON_LD.Equals(mediaType))
             {
                 //For now, use the dotNetRDF RdfXmlParser() for application/xml.  This could change
                 quadReader = new JsonLdParser(new JsonLdProcessorOptions
@@ -384,8 +384,8 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             else
             {
                 throw new UnsupportedMediaTypeException(
-                    $"Given type is not supported or is not valid RDF: ${content.Headers.ContentType.MediaType}",
-                    content.Headers.ContentType);
+                    $"Given type is not supported or is not valid RDF: ${content.Headers.ContentType?.MediaType}",
+                    content.Headers.ContentType!);
             }
 
             IGraph graph = new Graph();
@@ -449,20 +449,20 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                 var isSingleton = IsOslcSingleton(type);
                 var output =
                     _rdfHelper.FromDotNetRdfGraph(graph,
-                        isSingleton ? type : GetMemberType(type));
+                        isSingleton ? type : GetMemberType(type)!);
 
                 if (isSingleton)
                 {
                     var haveOne =
-                        (int)output.GetType().GetProperty("Count").GetValue(output, null) > 0;
+                        (int)output.GetType().GetProperty("Count")!.GetValue(output, null)! > 0;
 
                     return haveOne
-                        ? output.GetType().GetProperty("Item").GetValue(output, new object[] { 0 })
+                        ? output.GetType().GetProperty("Item")!.GetValue(output, new object[] { 0 })
                         : null;
                 }
                 else if (type.IsArray)
                 {
-                    return output.GetType().GetMethod("ToArray", Type.EmptyTypes)
+                    return output.GetType().GetMethod("ToArray", Type.EmptyTypes)!
                         .Invoke(output, null);
                 }
                 else
@@ -525,14 +525,14 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         return null;
     }
 
-    public static bool ImplementsGenericType(Type genericType, Type typeToTest)
+    public static bool ImplementsGenericType(Type genericType, Type? typeToTest)
     {
         var isParentGeneric = genericType.IsGenericType;
 
         return ImplementsGenericType(genericType, typeToTest, isParentGeneric);
     }
 
-    public static bool ImplementsGenericType(Type genericType, Type typeToTest,
+    public static bool ImplementsGenericType(Type genericType, Type? typeToTest,
         bool isParentGeneric)
     {
         if (typeToTest == null)
@@ -558,7 +558,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 
         while (true)
         {
-            var parentType = typeToTest.BaseType;
+            var parentType = typeToTest.BaseType!;
             var parentToTest = isParentGeneric && parentType.IsGenericType
                 ? parentType.GetGenericTypeDefinition()
                 : parentType;

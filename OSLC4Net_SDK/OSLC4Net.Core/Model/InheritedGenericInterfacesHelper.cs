@@ -24,6 +24,12 @@ public static class InheritedGenericInterfacesHelper
     /// <returns></returns>
     public static bool ImplementsGenericInterface(Type genericType, Type typeToTest)
     {
+        // Check if typeToTest itself is the generic type (important for interface types)
+        if (typeToTest.IsGenericType && genericType == typeToTest.GetGenericTypeDefinition())
+        {
+            return true;
+        }
+
         var interfaces = typeToTest.GetInterfaces();
 
         foreach (var interfac in interfaces)

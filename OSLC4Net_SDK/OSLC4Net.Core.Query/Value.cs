@@ -15,16 +15,6 @@
 
 namespace OSLC4Net.Core.Query;
 
-public enum ValueType
-{
-    URI_REF,
-    BOOLEAN,
-    DECIMAL,
-    STRING,
-    TYPED_STRING,
-    LANGED_STRING
-}
-
 /// <summary>
 /// Operand from ComparisonTerm or InTerm
 /// impleTerm from olsc.where clause

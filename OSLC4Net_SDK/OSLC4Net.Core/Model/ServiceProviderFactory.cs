@@ -13,6 +13,7 @@
  *     Michael Fiedler  - initial API and implementation
  *******************************************************************************/
 
+using System.Globalization;
 using System.Reflection;
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Exceptions;
@@ -66,7 +67,7 @@ public class ServiceProviderFactory
             }
 
             var domain = serviceAttribute[0].value;
-            Service service;
+            Service? service;
             var serviceExists = serviceMap.TryGetValue(domain, out service);
             if (!serviceExists && service == null)
             {
@@ -198,13 +199,13 @@ public class ServiceProviderFactory
         var resourceTypes = creationFactoryAttribute[0].resourceTypes;
         var usages = creationFactoryAttribute[0].usages;
 
-        var typeName = method.DeclaringType.Name;
+        var typeName = method.DeclaringType!.Name;
         //controller names must end with Controller
         var pos = typeName.IndexOf("Controller", StringComparison.Ordinal);
         var controllerName = typeName.Substring(0, pos);
 
         var creation =
-            ResolvePathParameters(baseURI, controllerName.ToLower(), pathParameterValues);
+            ResolvePathParameters(baseURI, controllerName.ToLower(CultureInfo.InvariantCulture), pathParameterValues);
         /* TODO Path methodPathAttribute = method.getAttribute(Path.class);
         if (methodPathAttribute != null) {
             creation = creation + '/' + methodPathAttribute.value();
@@ -249,12 +250,12 @@ public class ServiceProviderFactory
         var resourceTypes = queryCapabilityAttribute[0].ResourceTypes;
         var usages = queryCapabilityAttribute[0].Usages;
 
-        var typeName = method.DeclaringType.Name;
+        var typeName = method.DeclaringType!.Name;
         //controller names must end with Controller
         var pos = typeName.IndexOf("Controller", StringComparison.Ordinal);
         var controllerName = typeName.Substring(0, pos);
 
-        var query = ResolvePathParameters(baseURI, controllerName.ToLower(), pathParameterValues);
+        var query = ResolvePathParameters(baseURI, controllerName.ToLower(CultureInfo.InvariantCulture), pathParameterValues);
         /* TODO
         Path methodPathAttribute = method.getAttribute(Path.class);
         if (methodPathAttribute != null) {
@@ -311,7 +312,7 @@ public class ServiceProviderFactory
         var hintHeight = dialogAttribute.hintHeight;
         var resourceTypes = dialogAttribute.resourceTypes;
         var usages = dialogAttribute.usages;
-        var typeName = method.DeclaringType.Name;
+        var typeName = method.DeclaringType!.Name;
         //controller names must end with Controller
         var pos = typeName.IndexOf("Controller", StringComparison.Ordinal);
         _ = typeName.Substring(0, pos);

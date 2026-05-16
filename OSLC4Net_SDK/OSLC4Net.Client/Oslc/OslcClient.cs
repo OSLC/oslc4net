@@ -53,6 +53,18 @@ public class OslcClient : IDisposable
     }
 
     /// <summary>
+    /// Initialize a new OslcClient using an externally managed HttpClient (e.g. with resilience policies).
+    /// </summary>
+    /// <param name="client">Pre-configured HttpClient instance (lifetime managed by caller).</param>
+    /// <param name="logger">Logger instance.</param>
+    public OslcClient(HttpClient client, ILogger<OslcClient> logger)
+    {
+        _logger = logger;
+        _client = client;
+        _formatters = new HashSet<MediaTypeFormatter> { new RdfXmlMediaTypeFormatter() };
+    }
+
+    /// <summary>
     /// Initialize a new OslcClient.
     /// </summary>
     /// <param name="certCallback">optionally control SSL certificate management
@@ -100,7 +112,7 @@ public class OslcClient : IDisposable
                     "Must be an instance of HttpClientHandler if the certCallback is provided",
                     nameof(userHttpMessageHandler));
             }
-#pragma warning enable MA0039
+#pragma warning restore MA0039
         }
 
         _client = HttpClientFactory.Create(handler);
@@ -124,8 +136,10 @@ public class OslcClient : IDisposable
         {
             _logger.LogWarning(
                 "TLS certificate validation is compromised! DO NOT USE IN PRODUCTION");
+#pragma warning disable MA0039
             handler.ServerCertificateCustomValidationCallback =
                 HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+#pragma warning restore MA0039
         }
 
         _formatters = new HashSet<MediaTypeFormatter>();
@@ -147,6 +161,17 @@ public class OslcClient : IDisposable
     }
 
     /// <summary>
+    /// Create an OslcClient for Basic Auth using a pre-configured HttpClient (e.g. with resilience policies).
+    /// </summary>
+    public static OslcClient ForBasicAuth(HttpClient httpClient, string username, string password,
+        ILogger<OslcClient> logger)
+    {
+        var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}"));
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+        return new OslcClient(httpClient, logger);
+    }
+
+    /// <summary>
     /// Returns the HTTP client associated with this OSLC Client
     /// </summary>
     /// <returns>the HTTP client</returns>
@@ -154,7 +179,6 @@ public class OslcClient : IDisposable
     {
         return _client;
     }
-
 
     public async Task<OslcResponse<T>> GetResourceAsync<T>(string resourceUri, string? mediaType)
         where T : IExtendedResource, new()
@@ -217,7 +241,6 @@ public class OslcClient : IDisposable
         return GetResourceAsync<T>(resourceUri, null);
     }
 
-
     public Task<OslcResponse<T>> GetResourceAsync<T>(Uri typeURI) where T : IExtendedResource, new()
     {
         return GetResourceAsync<T>(typeURI.ToString(), null);
@@ -245,8 +268,8 @@ public class OslcClient : IDisposable
                 response.StatusCode == HttpStatusCode.Moved)
             {
                 _logger.LogTrace("Encountered redirect {code}: {from} -> {to}", response.StatusCode,
-                    requestUrl, response.Headers.Location.AbsoluteUri);
-                requestUrl = response.Headers.Location.AbsoluteUri;
+                    requestUrl, response.Headers.Location?.AbsoluteUri);
+                requestUrl = response.Headers.Location?.AbsoluteUri;
                 response.ConsumeContent();
                 redirect = true;
                 if (++redirectCount > MAX_REDIRECTS)
@@ -293,7 +316,13 @@ public class OslcClient : IDisposable
             if (response.StatusCode == HttpStatusCode.MovedPermanently ||
                 response.StatusCode == HttpStatusCode.Moved)
             {
-                url = response.Headers.Location.AbsoluteUri;
+                var locationUrl = response.Headers.Location?.AbsoluteUri;
+                if (locationUrl is null)
+                {
+                    break;
+                }
+
+                url = locationUrl;
                 response.ConsumeContent();
                 redirect = true;
             }
@@ -345,7 +374,13 @@ public class OslcClient : IDisposable
 
             if (ShallFollowRedirectNonGet(response))
             {
-                url = response.Headers.Location.AbsoluteUri;
+                var locationUrl = response.Headers.Location?.AbsoluteUri;
+                if (locationUrl is null)
+                {
+                    break;
+                }
+
+                url = locationUrl;
                 response.ConsumeContent();
                 redirect = true;
             }
@@ -370,7 +405,7 @@ public class OslcClient : IDisposable
         {
             // we have two options: the Location header points to a newly created resource or the resource is returned directly
             // I think OSLC mandates Location, so let's start with that
-            var createdUri = response.Headers.Location.AbsoluteUri;
+            var createdUri = response.Headers.Location?.AbsoluteUri;
             return await GetResourceAsync<T>(createdUri, mediaType).ConfigureAwait(false);
         }
         else
@@ -434,7 +469,13 @@ public class OslcClient : IDisposable
 
             if (ShallFollowRedirectNonGet(response))
             {
-                url = response.Headers.Location.AbsoluteUri;
+                var locationUrl = response.Headers.Location?.AbsoluteUri;
+                if (locationUrl is null)
+                {
+                    break;
+                }
+
+                url = locationUrl;
                 response.ConsumeContent();
                 redirect = true;
             }
@@ -476,7 +517,13 @@ public class OslcClient : IDisposable
 
             if (ShallFollowRedirectNonGet(response))
             {
-                url = response.Headers.Location.AbsoluteUri;
+                var locationUrl = response.Headers.Location?.AbsoluteUri;
+                if (locationUrl is null)
+                {
+                    break;
+                }
+
+                url = locationUrl;
                 response.ConsumeContent();
                 redirect = true;
             }
@@ -535,7 +582,13 @@ public class OslcClient : IDisposable
 
             if (ShallFollowRedirect(response))
             {
-                url = response.Headers.Location.AbsoluteUri;
+                var locationUrl = response.Headers.Location?.AbsoluteUri;
+                if (locationUrl is null)
+                {
+                    break;
+                }
+
+                url = locationUrl;
                 response.ConsumeContent();
                 redirect = true;
             }
@@ -583,7 +636,13 @@ public class OslcClient : IDisposable
 
             if (ShallFollowRedirect(response))
             {
-                url = response.Headers.Location.AbsoluteUri;
+                var locationUrl = response.Headers.Location?.AbsoluteUri;
+                if (locationUrl is null)
+                {
+                    break;
+                }
+
+                url = locationUrl;
                 response.ConsumeContent();
                 redirect = true;
             }
@@ -651,7 +710,6 @@ public class OslcClient : IDisposable
         QueryCapability? firstQueryCapability = null;
 
         var response = await GetResourceAsync<ServiceProvider>(serviceProviderUrl).ConfigureAwait(false);
-
 
         if (response.StatusCode != HttpStatusCode.OK)
         {
@@ -836,10 +894,3 @@ public class OslcClient : IDisposable
     }
 }
 
-public static class ConsumeContentExtension
-{
-    public static void ConsumeContent(this HttpResponseMessage response)
-    {
-        response.Content.Dispose();
-    }
-}

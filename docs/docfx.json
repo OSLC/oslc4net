@@ -1,0 +1,50 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "../OSLC4Net_SDK/",
+          "files": [
+            "*/*.csproj"
+          ]
+        }
+      ],
+      "dest": "api"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "**/*.{md,yml}"
+        ],
+        "exclude": [
+          "_site/**"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ]
+      }
+    ],
+    "output": "_site",
+    "template": [
+      "default",
+      "modern",
+      "template"
+    ],
+    "globalMetadata": {
+      "_appName": "OSLC4Net",
+      "_appTitle": "OSLC4Net",
+      "_appLogoPath": "images/logo_docfx.png",
+      "_appFaviconPath": "images/favicon.ico",
+      "_appFooter": "<script defer src=\"https://umami.open-services.net/script.js\" data-website-id=\"058571d1-b69b-4b21-a24a-2cc26e4eb3e1\"></script>",
+      "_enableSearch": true,
+      "pdf": false
+    }
+  }
+}

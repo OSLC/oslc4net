@@ -48,6 +48,9 @@ public class OAuthConfiguration : AbstractResource
         this.oauthAccessTokenURI = oauthAccessTokenURI;
     }
 
+    /// <summary>
+    /// Uri for obtaining OAuth authorization
+    /// </summary>
     [OslcDescription("Uri for obtaining OAuth authorization")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "authorizationURI")]
@@ -58,6 +61,9 @@ public class OAuthConfiguration : AbstractResource
         return authorizationURI;
     }
 
+    /// <summary>
+    /// Uri for obtaining OAuth access token
+    /// </summary>
     [OslcDescription("Uri for obtaining OAuth access token")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "oauthAccessTokenURI")]
@@ -68,6 +74,9 @@ public class OAuthConfiguration : AbstractResource
         return oauthAccessTokenURI;
     }
 
+    /// <summary>
+    /// Uri for obtaining OAuth request token
+    /// </summary>
     [OslcDescription("Uri for obtaining OAuth request token")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "oauthRequestTokenURI")]

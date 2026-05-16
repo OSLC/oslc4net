@@ -12,53 +12,44 @@
  *******************************************************************************/
 
 using System.Net;
-using Meziantou.Extensions.Logging.Xunit.v3;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Xunit;
-
-[assembly: CaptureConsole]
-[assembly: CaptureTrace]
 
 namespace OSLC4Net.Client.Oslc.Resources;
 
 public class OslcQueryResultTests
 {
-    private readonly ITestOutputHelper _testOutputHelper;
     private IHost AppHost { get; }
     private ILoggerFactory LoggerFactory { get; }
 
-    public OslcQueryResultTests(ITestOutputHelper testOutputHelper)
+    public OslcQueryResultTests()
     {
-        _testOutputHelper = testOutputHelper;
         AppHost = Host.CreateDefaultBuilder()
             .ConfigureLogging(
                 builder =>
                 {
-                    builder.Services.AddSingleton<ILoggerProvider>(
-                        new XUnitLoggerProvider(testOutputHelper, false));
+                    builder.AddConsole();
                 }).Build();
         LoggerFactory = AppHost.Services.GetRequiredService<ILoggerFactory>();
     }
 
-    [Fact]
+    [Test]
     public async Task OslcQueryMultiResponseTest()
     {
         var oslcQueryResult = await GetMockOslcQueryResultMulti();
 
-        Assert.Equal(20, oslcQueryResult.GetMembersUrls().Length);
+        await Assert.That(oslcQueryResult.GetMembersUrls().Length).IsEqualTo(20);
     }
 
-    [Fact(Skip =
-        "TODO: figure out if .Current is supposed to work only if the next page is present")]
+    [Test, Skip("TODO: figure out if .Current is supposed to work only if the next page is present")]
     public async Task OslcQueryMultiResponsePagingTest()
     {
         var oslcQueryResult = await GetMockOslcQueryResultMulti();
-        Assert.Equal(20, oslcQueryResult.Current?.GetMembersUrls().Length);
+        await Assert.That(oslcQueryResult.Current?.GetMembersUrls().Length).IsEqualTo(20);
     }
 
-    [Fact]
+    [Test]
     public async Task OslcQueryMultiResponseIterTest()
     {
         var oslcQueryResult = await GetMockOslcQueryResultMulti();
@@ -66,12 +57,12 @@ public class OslcQueryResultTests
         // oslcQueryResult.
         foreach (var resultItem in oslcQueryResult.GetMembers<ChangeRequest>())
         {
-            _testOutputHelper.WriteLine(resultItem.GetAbout().ToString());
+            Console.WriteLine(resultItem.GetAbout().ToString());
         }
 
-        _testOutputHelper.WriteLine($"Total: {oslcQueryResult.TotalCount}");
+        Console.WriteLine($"Total: {oslcQueryResult.TotalCount}");
 
-        Assert.Equal(20, oslcQueryResult.GetMembersUrls().Length);
+        await Assert.That(oslcQueryResult.GetMembersUrls().Length).IsEqualTo(20);
     }
 
     private async Task<OslcQueryResult> GetMockOslcQueryResultMulti()

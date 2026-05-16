@@ -15,16 +15,6 @@
 
 namespace OSLC4Net.Core.Query;
 
-public enum Operator
-{
-    EQUALS, // TODO: rename for CLS compliance
-    NOT_EQUALS,
-    LESS_THAN,
-    GREATER_THAN,
-    LESS_EQUALS,
-    GREATER_EQUALS
-}
-
 /// <summary>
 /// Simple comparison term from oslc.where clause
 /// </summary>

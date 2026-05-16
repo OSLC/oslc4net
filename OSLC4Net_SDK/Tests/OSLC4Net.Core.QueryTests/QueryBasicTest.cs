@@ -15,371 +15,303 @@
 
 using System.Diagnostics;
 using OSLC4Net.Core.Query;
-using Xunit;
 //using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParseException = OSLC4Net.Core.Query.ParseException;
-using Antlr.Runtime.Tree; // Added for new tests
-using System.Linq; // Added for new tests
-using System; // Required for Uri in new tests, might have been in original ifdefs
 
-[assembly: CaptureConsole]
-[assembly: CaptureTrace]
+namespace OSLC4Net.Core.QueryTests;
 
-namespace OSLC4Net.Core.QueryTests
+public class QueryBasicTest
 {
-    public class QueryBasicTest
+    const string PREFIXES = "qm=<http://qm.example.com/ns/>," +
+                             "olsc=<http://open-services.net/ns/core#>," +
+                             "xs=<http://www.w3.org/2001/XMLSchema>";
+
+    [Test]
+    [Arguments("qm=<http://qm.example.com/ns/>,olsc=<http://open-services.net/ns/core#>,xs=<http://www.w3.org/2001/XMLSchema>", true)]
+    [Arguments("qm=<http://qm.example.com/ns/>,XXX>", false)]
+    public async Task BasicPrefixesTest(string expression, bool shouldSucceed)
     {
-        const string PREFIXES = "qm=<http://qm.example.com/ns/>," +
-                                 "olsc=<http://open-services.net/ns/core#>," +
-                                 "xs=<http://www.w3.org/2001/XMLSchema>";
-
-        [Fact]
-        public void BasicPrefixesTest()
+        try
         {
-            Trial[] trials =
-            {
-                new("qm=<http://qm.example.com/ns/>," +
-                    "olsc=<http://open-services.net/ns/core#>," +
-                    "xs=<http://www.w3.org/2001/XMLSchema>",
-                    true),
-                new("qm=<http://qm.example.com/ns/>," +
-                    "XXX>",
-                    false)
-            };
+            var prefixMap =
+                QueryUtils.ParsePrefixes(expression);
 
-            foreach (var trial in trials)
-            {
-                try
-                {
-                    var prefixMap =
-                        QueryUtils.ParsePrefixes(trial.Expression);
+            Debug.WriteLine(prefixMap.ToString());
 
-                    Debug.WriteLine(prefixMap.ToString());
-
-                    Assert.True(trial.ShouldSucceed);
-                }
-                catch (ParseException e)
-                {
-                    Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
-
-                    Assert.False(trial.ShouldSucceed);
-                }
-            }
+            await Assert.That(shouldSucceed).IsTrue();
         }
-
-        [Fact]
-        public void BasicOrderByTest()
+        catch (ParseException e)
         {
-            var prefixes = "qm=<http://qm.example.com/ns/>," +
-                           "oslc=<http://open-services.net/ns/core#>";
-            var prefixMap = QueryUtils.ParsePrefixes(prefixes);
+            Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
 
-            Trial[] trials =
-            {
-                new(expression: "-qm:priority", shouldSucceed: true), new("+qm:priority,-oslc:name", true),
-                new("qm:tested_by{+oslc:description}", true), new("?qm:blah", false)
-            };
-
-            foreach (var trial in trials)
-            {
-                try
-                {
-                    var orderByClause =
-                        QueryUtils.ParseOrderBy(trial.Expression, prefixMap);
-
-                    Debug.WriteLine(orderByClause);
-
-                    Assert.True(trial.ShouldSucceed);
-                }
-                catch (ParseException e)
-                {
-                    Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
-
-                    Assert.False(trial.ShouldSucceed);
-                }
-            }
+            await Assert.That(shouldSucceed).IsFalse();
         }
-
-        [Fact]
-        public void BasicSearchTermsTest()
-        {
-            Trial[] trials =
-            {
-                new("\"foobar\"", true), new("\"foobar\",\"whatsis\",\"yousa\"", true),
-                new("", false)
-            };
-
-            foreach (var trial in trials)
-            {
-                try
-                {
-                    var searchTermsClause =
-                        QueryUtils.ParseSearchTerms(trial.Expression);
-
-                    Debug.WriteLine(searchTermsClause);
-
-                    Assert.True(trial.ShouldSucceed);
-                }
-                catch (ParseException e)
-                {
-                    Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
-
-                    Assert.False(trial.ShouldSucceed);
-                }
-            }
-        }
-
-        [Fact]
-        public void BasicSelectTest()
-        {
-            var prefixes = "qm=<http://qm.example.com/ns/>," +
-                           "oslc=<http://open-services.net/ns/core#>";
-            var prefixMap = QueryUtils.ParsePrefixes(prefixes);
-
-            Trial[] trials =
-            {
-                new("*{*}", true), new("qm:testcase", true), new("*", true),
-                new("oslc:create,qm:verified", true),
-                new("qm:state{oslc:verified_by{oslc:owner,qm:duration}}", true),
-                new("qm:submitted{*}", true), new("qm:testcase,*", true),
-                new("*,qm:state{*}", true), new("XXX", false)
-            };
-
-            foreach (var trial in trials)
-            {
-                try
-                {
-                    var selectClause =
-                        QueryUtils.ParseSelect(trial.Expression, prefixMap);
-
-                    Debug.WriteLine(selectClause);
-
-                    Assert.True(trial.ShouldSucceed);
-                }
-                catch (ParseException e)
-                {
-                    Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
-
-                    Assert.False(trial.ShouldSucceed);
-                }
-            }
-        }
-
-        [Fact]
-        public void BasicWhereTest()
-        {
-            var prefixes = "qm=<http://qm.example.com/ns/>," +
-                           "oslc=<http://open-services.net/ns/core#>," +
-                           "xs=<http://www.w3.org/2001/XMLSchema>";
-            var prefixMap = QueryUtils.ParsePrefixes(prefixes);
-
-            Trial[] trials =
-            {
-                new("qm:testcase=<http://example.com/tests/31459>", true),
-                new("qm:duration>=10.4", true),
-                new("oslc:create!=\"Bob\" and qm:verified!=true", true),
-                new("qm:state in [\"Done\",\"Open\"]", true),
-                new(
-                    "oslc:verified_by{oslc:owner=\"Steve\" and qm:duration=-47.0} and oslc:description=\"very hairy expression\"",
-                    true),
-                new("qm:submitted<\"2011-10-10T07:00:00Z\"^^xs:dateTime", true),
-                new("oslc:label>\"The End\"@en-US", true), new("XXX", false)
-            };
-
-            foreach (var trial in trials)
-            {
-                try
-                {
-                    var whereClause =
-                        QueryUtils.ParseWhere(trial.Expression, prefixMap);
-
-                    Debug.WriteLine(whereClause);
-
-                    Assert.True(trial.ShouldSucceed);
-                }
-                catch (ParseException e)
-                {
-                    Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
-
-                    Assert.False(trial.ShouldSucceed);
-                }
-            }
-        }
-
-        [Fact]
-        public void BasicInvertTest()
-        {
-            const string prefixes = "qm=<http://qm.example.com/ns/>," +
-                                    "oslc=<http://open-services.net/ns/core#>";
-            var prefixMap = QueryUtils.ParsePrefixes(prefixes);
-
-            Trial[] trials =
-            {
-                new(expression: "*{*}", shouldSucceed: true), new("qm:testcase", true), new("*", true),
-                new("oslc:create,qm:verified", true),
-                new("qm:state{oslc:verified_by{oslc:owner,qm:duration}}", true),
-                new("qm:submitted{*}", true), new("qm:testcase,*", true),
-                new("*,qm:state{*}", true),
-            };
-
-            foreach (var trial in trials)
-            {
-                try
-                {
-                    var selectClause =
-                        QueryUtils.ParseSelect(trial.Expression, prefixMap);
-
-                    Debug.WriteLine(selectClause);
-
-                    Assert.True(trial.ShouldSucceed);
-
-                    var _ = QueryUtils.InvertSelectedProperties(selectClause);
-                }
-                catch (ParseException e)
-                {
-                    Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
-
-                    Assert.False(trial.ShouldSucceed);
-                }
-            }
-        }
-
-        [Fact]
-        public void TestUriRef()
-        {
-            var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
-            var where = QueryUtils.ParseWhere(
-                "qm:testCase=<http://example.org/tests/24>", prefixMap);
-
-            var children = where.Children;
-            // Where clause should only have one term
-            Assert.Single(children);
-
-            var simpleTerm = children[0];
-            var prop = simpleTerm.Property;
-            Assert.Equal("http://qm.example.com/ns/testCase", prop.ns + prop.local);
-            Assert.True(simpleTerm is ComparisonTerm);
-
-            var comparison = (ComparisonTerm)simpleTerm;
-            Assert.Equal(Operator.EQUALS, comparison.Operator);
-
-            var v = comparison.Operand;
-            Assert.True(v is UriRefValue);
-
-            var uriRef = (UriRefValue)v;
-            Assert.Equal("http://example.org/tests/24", uriRef.Value);
-        }
-
-        // Tests for enhancements from kuribara-hideaki/oslc4net fork
-
-        // Related to fork commit db49995, efcacd7
-        [Fact]
-        public void TestInvalidWhereClauseSetsErrorProperty()
-        {
-            var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
-            // Intentionally invalid syntax (e.g., missing operand)
-            string invalidWhereExpression = "qm:testcase=";
-
-            var whereClause = QueryUtils.ParseWhere(invalidWhereExpression, prefixMap);
-
-            // Assuming IBaseClause is implemented by WhereClauseImpl and has IsError property
-            // This will likely fail until the actual code from the fork is integrated.
-            Assert.True((whereClause as dynamic)?.IsError, "WhereClause should have IsError set to true for invalid expression.");
-            // Optionally, check ErrorReason if it's standardized
-            // Assert.NotEmpty((whereClause as dynamic)?.ErrorReason);
-        }
-
-        // Related to fork commit db49995, efcacd7
-        [Fact]
-        public void TestInvalidOrderByClauseSetsErrorProperty()
-        {
-            var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
-            // Intentionally invalid syntax (e.g., unknown prefix, invalid character)
-            string invalidOrderByExpression = "unknown:property+";
-
-            var orderByClause = QueryUtils.ParseOrderBy(invalidOrderByExpression, prefixMap);
-
-            // Assuming IBaseClause is implemented by OrderByClause/SortTermsImpl
-            // This will likely fail until the actual code from the fork is integrated.
-            Assert.True((orderByClause as dynamic)?.IsError, "OrderByClause should have IsError set to true for invalid expression.");
-            // Assert.NotEmpty((orderByClause as dynamic)?.ErrorReason);
-        }
-
-        // Related to fork commit 127e068
-        [Fact]
-        public void TestWhereInClauseWithSyntaxErrorSetsErrorProperty()
-        {
-            var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
-            // Syntax error within the 'in' list (e.g., unclosed string)
-            // Corrected the intentionally broken string for C# syntax, error is for the parser
-            string whereExpression = "qm:state in [\"Done\", \"Open\"";
-
-            var whereClause = QueryUtils.ParseWhere(whereExpression, prefixMap);
-
-            // This will likely fail until the actual code from the fork is integrated.
-            Assert.True((whereClause as dynamic)?.IsError, "WhereClause should have IsError set for syntax error in 'in' list.");
-        }
-
-        // Related to fork commit 31d2858
-        [Fact]
-        public void TestWhereClauseWithAsteriskOperand()
-        {
-            var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
-            string whereExpression = "dcterms:title = \"*\"";
-
-            var whereClause = QueryUtils.ParseWhere(whereExpression, prefixMap);
-
-            Assert.False((whereClause as dynamic)?.IsError ?? true, "WhereClause should not have IsError for valid asterisk operand."); // Default to true if IsError is not found
-
-            var children = whereClause.Children;
-            Assert.Single(children);
-            var simpleTerm = children[0];
-            Assert.True(simpleTerm is ComparisonTerm, "Term should be a ComparisonTerm.");
-
-            var comparison = (ComparisonTerm)simpleTerm;
-            Assert.Equal(Operator.EQUALS, comparison.Operator);
-
-            var operand = comparison.Operand;
-            Assert.True(operand is StringValue, "Operand should be StringValue.");
-            Assert.Equal("*", ((StringValue)operand).Value);
-        }
-
-        // Related to fork commit 834cddd
-        [Fact]
-        public void TestOrderByReturnsITreeChildren()
-        {
-            var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
-            string orderByExpression = "dcterms:title";
-
-            var orderByClause = QueryUtils.ParseOrderBy(orderByExpression, prefixMap);
-
-            Assert.False((orderByClause as dynamic)?.IsError ?? true, "OrderByClause should not have IsError for valid expression."); // Default to true if IsError is not found
-
-            // Test the signature of Children property
-            // This will fail until the SortTerms interface and Impl are updated from the fork.
-            var children = ((SortTerms)orderByClause).Children;
-            Assert.NotNull(children);
-            // Could add: if (children.Count > 0) Assert.True(children[0] is Antlr.Runtime.Tree.ITree);
-        }
-    } // Closing brace for QueryBasicTest class
-
-    public class Trial
-    {
-        public Trial(
-            string expression,
-            bool shouldSucceed
-        )
-        {
-            Expression = expression;
-            ShouldSucceed = shouldSucceed;
-        }
-
-        public string
-            Expression
-        { get; }
-
-        public bool
-            ShouldSucceed
-        { get; }
     }
-} // Closing brace for namespace
+
+    [Test]
+    [Arguments("-qm:priority", true)]
+    [Arguments("+qm:priority,-oslc:name", true)]
+    [Arguments("qm:tested_by{+oslc:description}", true)]
+    [Arguments("?qm:blah", false)]
+    public async Task BasicOrderByTest(string expression, bool shouldSucceed)
+    {
+        var prefixes = "qm=<http://qm.example.com/ns/>," +
+                       "oslc=<http://open-services.net/ns/core#>";
+        var prefixMap = QueryUtils.ParsePrefixes(prefixes);
+
+        try
+        {
+            var orderByClause =
+                QueryUtils.ParseOrderBy(expression, prefixMap);
+
+            Debug.WriteLine(orderByClause);
+
+            await Assert.That(shouldSucceed).IsTrue();
+        }
+        catch (ParseException e)
+        {
+            Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
+
+            await Assert.That(shouldSucceed).IsFalse();
+        }
+    }
+
+    [Test]
+    [Arguments("\"foobar\"", true)]
+    [Arguments("\"foobar\",\"whatsis\",\"yousa\"", true)]
+    [Arguments("", false)]
+    public async Task BasicSearchTermsTest(string expression, bool shouldSucceed)
+    {
+        try
+        {
+            var searchTermsClause =
+                QueryUtils.ParseSearchTerms(expression);
+
+            Debug.WriteLine(searchTermsClause);
+
+            await Assert.That(shouldSucceed).IsTrue();
+        }
+        catch (ParseException e)
+        {
+            Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
+
+            await Assert.That(shouldSucceed).IsFalse();
+        }
+    }
+
+    [Test]
+    [Arguments("*{*}", true)]
+    [Arguments("qm:testcase", true)]
+    [Arguments("*", true)]
+    [Arguments("oslc:create,qm:verified", true)]
+    [Arguments("qm:state{oslc:verified_by{oslc:owner,qm:duration}}", true)]
+    [Arguments("qm:submitted{*}", true)]
+    [Arguments("qm:testcase,*", true)]
+    [Arguments("*,qm:state{*}", true)]
+    [Arguments("XXX", false)]
+    public async Task BasicSelectTest(string expression, bool shouldSucceed)
+    {
+        var prefixes = "qm=<http://qm.example.com/ns/>," +
+                       "oslc=<http://open-services.net/ns/core#>";
+        var prefixMap = QueryUtils.ParsePrefixes(prefixes);
+
+        try
+        {
+            var selectClause =
+                QueryUtils.ParseSelect(expression, prefixMap);
+
+            Debug.WriteLine(selectClause);
+
+            await Assert.That(shouldSucceed).IsTrue();
+        }
+        catch (ParseException e)
+        {
+            Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
+
+            await Assert.That(shouldSucceed).IsFalse();
+        }
+    }
+
+    [Test]
+    [Arguments("qm:testcase=<http://example.com/tests/31459>", true)]
+    [Arguments("qm:duration>=10.4", true)]
+    [Arguments("oslc:create!=\"Bob\" and qm:verified!=true", true)]
+    [Arguments("qm:state in [\"Done\",\"Open\"]", true)]
+    [Arguments("oslc:verified_by{oslc:owner=\"Steve\" and qm:duration=-47.0} and oslc:description=\"very hairy expression\"", true)]
+    [Arguments("qm:submitted<\"2011-10-10T07:00:00Z\"^^xs:dateTime", true)]
+    [Arguments("oslc:label>\"The End\"@en-US", true)]
+    [Arguments("XXX", false)]
+    public async Task BasicWhereTest(string expression, bool shouldSucceed)
+    {
+        var prefixes = "qm=<http://qm.example.com/ns/>," +
+                       "oslc=<http://open-services.net/ns/core#>," +
+                       "xs=<http://www.w3.org/2001/XMLSchema>";
+        var prefixMap = QueryUtils.ParsePrefixes(prefixes);
+
+        try
+        {
+            var whereClause =
+                QueryUtils.ParseWhere(expression, prefixMap);
+
+            Debug.WriteLine(whereClause);
+
+            await Assert.That(shouldSucceed).IsTrue();
+        }
+        catch (ParseException e)
+        {
+            Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
+
+            await Assert.That(shouldSucceed).IsFalse();
+        }
+    }
+
+    [Test]
+    [Arguments("*{*}", true)]
+    [Arguments("qm:testcase", true)]
+    [Arguments("*", true)]
+    [Arguments("oslc:create,qm:verified", true)]
+    [Arguments("qm:state{oslc:verified_by{oslc:owner,qm:duration}}", true)]
+    [Arguments("qm:submitted{*}", true)]
+    [Arguments("qm:testcase,*", true)]
+    [Arguments("*,qm:state{*}", true)]
+    public async Task BasicInvertTest(string expression, bool shouldSucceed)
+    {
+        const string prefixes = "qm=<http://qm.example.com/ns/>," +
+                                "oslc=<http://open-services.net/ns/core#>";
+        var prefixMap = QueryUtils.ParsePrefixes(prefixes);
+
+        try
+        {
+            var selectClause =
+                QueryUtils.ParseSelect(expression, prefixMap);
+
+            Debug.WriteLine(selectClause);
+
+            await Assert.That(shouldSucceed).IsTrue();
+
+            var _ = QueryUtils.InvertSelectedProperties(selectClause);
+        }
+        catch (ParseException e)
+        {
+            Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
+
+            await Assert.That(shouldSucceed).IsFalse();
+        }
+    }
+
+    [Test]
+    public async Task TestUriRef()
+    {
+        var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
+        var where = QueryUtils.ParseWhere(
+            "qm:testCase=<http://example.org/tests/24>", prefixMap);
+
+        var children = where.Children;
+        // Where clause should only have one term
+        await Assert.That(children).HasSingleItem();
+
+        var simpleTerm = children[0];
+        var prop = simpleTerm.Property;
+        await Assert.That(prop.ns + prop.local).IsEqualTo("http://qm.example.com/ns/testCase");
+        await Assert.That(simpleTerm is ComparisonTerm).IsTrue();
+
+        var comparison = (ComparisonTerm)simpleTerm;
+        await Assert.That(comparison.Operator).IsEqualTo(Operator.EQUALS);
+
+        var v = comparison.Operand;
+        await Assert.That(v is UriRefValue).IsTrue();
+
+        var uriRef = (UriRefValue)v;
+        await Assert.That(uriRef.Value).IsEqualTo("http://example.org/tests/24");
+    }
+
+    // Tests for enhancements from kuribara-hideaki/oslc4net fork
+    // These tests are expected to FAIL until the underlying code from the fork is integrated.
+
+    // Related to fork commit db49995, efcacd7
+    [Test]
+    public async Task TestInvalidWhereClauseSetsErrorProperty()
+    {
+        var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
+        // Intentionally invalid syntax (e.g., missing operand)
+        string invalidWhereExpression = "qm:testcase=";
+
+        var whereClause = QueryUtils.ParseWhere(invalidWhereExpression, prefixMap);
+
+        // Assuming IBaseClause is implemented by WhereClauseImpl and has IsError property
+        bool? isError = (whereClause as dynamic)?.IsError;
+        await Assert.That(isError).IsTrue();
+    }
+
+    // Related to fork commit db49995, efcacd7
+    [Test]
+    public async Task TestInvalidOrderByClauseSetsErrorProperty()
+    {
+        var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
+        // Intentionally invalid syntax (e.g., unknown prefix, invalid character)
+        string invalidOrderByExpression = "unknown:property+";
+
+        var orderByClause = QueryUtils.ParseOrderBy(invalidOrderByExpression, prefixMap);
+
+        // Assuming IBaseClause is implemented by OrderByClause/SortTermsImpl
+        bool? isError = (orderByClause as dynamic)?.IsError;
+        await Assert.That(isError).IsTrue();
+    }
+
+    // Related to fork commit 127e068
+    [Test]
+    public async Task TestWhereInClauseWithSyntaxErrorSetsErrorProperty()
+    {
+        var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
+        // Syntax error within the 'in' list (e.g., unclosed string)
+        string whereExpression = "qm:state in [\"Done\", \"Open\"";
+
+        var whereClause = QueryUtils.ParseWhere(whereExpression, prefixMap);
+
+        bool? isError = (whereClause as dynamic)?.IsError;
+        await Assert.That(isError).IsTrue();
+    }
+
+    // Related to fork commit 31d2858
+    [Test]
+    public async Task TestWhereClauseWithAsteriskOperand()
+    {
+        var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
+        string whereExpression = "dcterms:title = \"*\"";
+
+        var whereClause = QueryUtils.ParseWhere(whereExpression, prefixMap);
+
+        bool? isError = (whereClause as dynamic)?.IsError;
+        await Assert.That(isError ?? true).IsFalse();
+
+        var children = whereClause.Children;
+        await Assert.That(children).HasSingleItem();
+        var simpleTerm = children[0];
+        await Assert.That(simpleTerm is ComparisonTerm).IsTrue();
+
+        var comparison = (ComparisonTerm)simpleTerm;
+        await Assert.That(comparison.Operator).IsEqualTo(Operator.EQUALS);
+
+        var operand = comparison.Operand;
+        await Assert.That(operand is StringValue).IsTrue();
+        await Assert.That(((StringValue)operand).Value).IsEqualTo("*");
+    }
+
+    // Related to fork commit 834cddd
+    [Test]
+    public async Task TestOrderByReturnsITreeChildren()
+    {
+        var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
+        string orderByExpression = "dcterms:title";
+
+        var orderByClause = QueryUtils.ParseOrderBy(orderByExpression, prefixMap);
+
+        bool? isError = (orderByClause as dynamic)?.IsError;
+        await Assert.That(isError ?? true).IsFalse();
+
+        // Test the signature of Children property
+        // This will fail until the SortTerms interface and Impl are updated from the fork.
+        var children = ((SortTerms)orderByClause).Children;
+        await Assert.That(children).IsNotNull();
+    }
+}
