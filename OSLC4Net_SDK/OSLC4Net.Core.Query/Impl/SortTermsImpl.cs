@@ -36,10 +36,26 @@ sealed class SortTermsImpl : OrderByClause
         this.prefixMap = prefixMap;
     }
 
+    public SortTermsImpl(string errorReason)
+    {
+        tree = null!;
+        prefixMap = new Dictionary<string, string>(StringComparer.Ordinal);
+        IsError = true;
+        ErrorReason = errorReason;
+    }
+
+    public bool IsError { get; }
+    public string? ErrorReason { get; }
+
     public IList<SortTerm> Children
     {
         get
         {
+            if (IsError)
+            {
+                return Array.Empty<SortTerm>();
+            }
+
             if (children == null)
             {
                 var treeChildren = tree.Children;

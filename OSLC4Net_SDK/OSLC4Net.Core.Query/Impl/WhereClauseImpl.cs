@@ -19,12 +19,21 @@ namespace OSLC4Net.Core.Query.Impl;
 
 sealed class WhereClauseImpl : CompoundTermImpl, WhereClause
 {
-    public
-    WhereClauseImpl(
+    public WhereClauseImpl(
         CommonTree tree,
         IDictionary<string, string> prefixMap
     )
         : base(tree, true, prefixMap)
     {
     }
+
+    public WhereClauseImpl(string errorReason)
+        : base(null, true, new Dictionary<string, string>(StringComparer.Ordinal))
+    {
+        IsError = true;
+        ErrorReason = errorReason;
+    }
+
+    public bool IsError { get; }
+    public string? ErrorReason { get; }
 }

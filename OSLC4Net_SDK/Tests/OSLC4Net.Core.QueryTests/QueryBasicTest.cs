@@ -59,21 +59,11 @@ public class QueryBasicTest
                        "oslc=<http://open-services.net/ns/core#>";
         var prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
-        try
-        {
-            var orderByClause =
-                QueryUtils.ParseOrderBy(expression, prefixMap);
+        var orderByClause = QueryUtils.ParseOrderBy(expression, prefixMap);
 
-            Debug.WriteLine(orderByClause);
+        Debug.WriteLine(orderByClause);
 
-            await Assert.That(shouldSucceed).IsTrue();
-        }
-        catch (ParseException e)
-        {
-            Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
-
-            await Assert.That(shouldSucceed).IsFalse();
-        }
+        await Assert.That(orderByClause.IsError).IsEqualTo(!shouldSucceed);
     }
 
     [Test]
@@ -148,21 +138,11 @@ public class QueryBasicTest
                        "xs=<http://www.w3.org/2001/XMLSchema>";
         var prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
-        try
-        {
-            var whereClause =
-                QueryUtils.ParseWhere(expression, prefixMap);
+        var whereClause = QueryUtils.ParseWhere(expression, prefixMap);
 
-            Debug.WriteLine(whereClause);
+        Debug.WriteLine(whereClause);
 
-            await Assert.That(shouldSucceed).IsTrue();
-        }
-        catch (ParseException e)
-        {
-            Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
-
-            await Assert.That(shouldSucceed).IsFalse();
-        }
+        await Assert.That(whereClause.IsError).IsEqualTo(!shouldSucceed);
     }
 
     [Test]
@@ -238,9 +218,7 @@ public class QueryBasicTest
 
         var whereClause = QueryUtils.ParseWhere(invalidWhereExpression, prefixMap);
 
-        // Assuming IBaseClause is implemented by WhereClauseImpl and has IsError property
-        bool? isError = (whereClause as dynamic)?.IsError;
-        await Assert.That(isError).IsTrue();
+        await Assert.That(whereClause.IsError).IsTrue();
     }
 
     // Related to fork commit db49995, efcacd7
@@ -253,9 +231,7 @@ public class QueryBasicTest
 
         var orderByClause = QueryUtils.ParseOrderBy(invalidOrderByExpression, prefixMap);
 
-        // Assuming IBaseClause is implemented by OrderByClause/SortTermsImpl
-        bool? isError = (orderByClause as dynamic)?.IsError;
-        await Assert.That(isError).IsTrue();
+        await Assert.That(orderByClause.IsError).IsTrue();
     }
 
     // Related to fork commit 127e068
@@ -268,8 +244,7 @@ public class QueryBasicTest
 
         var whereClause = QueryUtils.ParseWhere(whereExpression, prefixMap);
 
-        bool? isError = (whereClause as dynamic)?.IsError;
-        await Assert.That(isError).IsTrue();
+        await Assert.That(whereClause.IsError).IsTrue();
     }
 
     // Related to fork commit 31d2858
@@ -277,12 +252,13 @@ public class QueryBasicTest
     public async Task TestWhereClauseWithAsteriskOperand()
     {
         var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
-        string whereExpression = "dcterms:title = \"*\"";
+        // Quoted asterisk used as a string operand. Whitespace around `=` is not
+        // permitted by the current grammar, so the expression has none.
+        string whereExpression = "qm:title=\"*\"";
 
         var whereClause = QueryUtils.ParseWhere(whereExpression, prefixMap);
 
-        bool? isError = (whereClause as dynamic)?.IsError;
-        await Assert.That(isError ?? true).IsFalse();
+        await Assert.That(whereClause.IsError).IsFalse();
 
         var children = whereClause.Children;
         await Assert.That(children).HasSingleItem();
@@ -302,15 +278,13 @@ public class QueryBasicTest
     public async Task TestOrderByReturnsITreeChildren()
     {
         var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
-        string orderByExpression = "dcterms:title";
+        // The grammar requires +/- prefix on each sort term; using +qm:priority.
+        string orderByExpression = "+qm:priority";
 
         var orderByClause = QueryUtils.ParseOrderBy(orderByExpression, prefixMap);
 
-        bool? isError = (orderByClause as dynamic)?.IsError;
-        await Assert.That(isError ?? true).IsFalse();
+        await Assert.That(orderByClause.IsError).IsFalse();
 
-        // Test the signature of Children property
-        // This will fail until the SortTerms interface and Impl are updated from the fork.
         var children = ((SortTerms)orderByClause).Children;
         await Assert.That(children).IsNotNull();
     }
