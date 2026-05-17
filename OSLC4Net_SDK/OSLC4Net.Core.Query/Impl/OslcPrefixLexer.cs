@@ -93,7 +93,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:7:10: 'prefix'
 			{
 			DebugLocation(7, 10);
-			Match("prefix"); 
+			Match("prefix");
 
 
 			}
@@ -129,7 +129,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:8:15: 'prefix_list'
 			{
 			DebugLocation(8, 15);
-			Match("prefix_list"); 
+			Match("prefix_list");
 
 
 			}
@@ -165,7 +165,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:9:9: '='
 			{
 			DebugLocation(9, 9);
-			Match('='); 
+			Match('=');
 
 			}
 
@@ -245,7 +245,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			} finally { DebugExitSubRule(1); }
 
 			DebugLocation(54, 25);
-			 Skip(); 
+			 Skip();
 
 			}
 
@@ -322,7 +322,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:63:7: PN_CHARS_BASE ( ( PN_CHARS | DOT )* PN_CHARS )?
 			{
 			DebugLocation(63, 7);
-			mPN_CHARS_BASE(); 
+			mPN_CHARS_BASE();
 			DebugLocation(63, 21);
 			// ../Grammars/OslcPrefix.g:63:21: ( ( PN_CHARS | DOT )* PN_CHARS )?
 			int alt3=2;
@@ -392,7 +392,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 				} finally { DebugExitSubRule(2); }
 
 				DebugLocation(63, 38);
-				mPN_CHARS(); 
+				mPN_CHARS();
 
 				}
 				break;
@@ -602,7 +602,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:104:7: LESS ( options {greedy=false; } :~ ( LESS | GREATER | '\"' | OPEN_CURLY_BRACE | CLOSE_CURLY_BRACE | '|' | '^' | '\\\\' | '`' | ( '\\u0000' .. '\\u0020' ) ) )* GREATER
 			{
 			DebugLocation(104, 7);
-			mLESS(); 
+			mLESS();
 			DebugLocation(104, 12);
 			// ../Grammars/OslcPrefix.g:104:12: ( options {greedy=false; } :~ ( LESS | GREATER | '\"' | OPEN_CURLY_BRACE | CLOSE_CURLY_BRACE | '|' | '^' | '\\\\' | '`' | ( '\\u0000' .. '\\u0020' ) ) )*
 			try { DebugEnterSubRule(4);
@@ -647,7 +647,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			} finally { DebugExitSubRule(4); }
 
 			DebugLocation(104, 154);
-			mGREATER(); 
+			mGREATER();
 
 			}
 
@@ -682,7 +682,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:108:7: ','
 			{
 			DebugLocation(108, 7);
-			Match(','); 
+			Match(',');
 
 			}
 
@@ -717,7 +717,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:112:7: '.'
 			{
 			DebugLocation(112, 7);
-			Match('.'); 
+			Match('.');
 
 			}
 
@@ -752,7 +752,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:116:7: '-'
 			{
 			DebugLocation(116, 7);
-			Match('-'); 
+			Match('-');
 
 			}
 
@@ -787,7 +787,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:120:7: '{'
 			{
 			DebugLocation(120, 7);
-			Match('{'); 
+			Match('{');
 
 			}
 
@@ -822,7 +822,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:124:7: '}'
 			{
 			DebugLocation(124, 7);
-			Match('}'); 
+			Match('}');
 
 			}
 
@@ -857,7 +857,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:128:7: '<'
 			{
 			DebugLocation(128, 7);
-			Match('<'); 
+			Match('<');
 
 			}
 
@@ -892,7 +892,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:132:7: '>'
 			{
 			DebugLocation(132, 7);
-			Match('>'); 
+			Match('>');
 
 			}
 
@@ -1085,7 +1085,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:1:10: PREFIX
 			{
 			DebugLocation(1, 10);
-			mPREFIX(); 
+			mPREFIX();
 
 			}
 			break;
@@ -1094,7 +1094,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:1:17: PREFIX_LIST
 			{
 			DebugLocation(1, 17);
-			mPREFIX_LIST(); 
+			mPREFIX_LIST();
 
 			}
 			break;
@@ -1103,7 +1103,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:1:29: T__21
 			{
 			DebugLocation(1, 29);
-			mT__21(); 
+			mT__21();
 
 			}
 			break;
@@ -1112,7 +1112,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:1:35: WS
 			{
 			DebugLocation(1, 35);
-			mWS(); 
+			mWS();
 
 			}
 			break;
@@ -1121,7 +1121,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:1:38: PN_PREFIX
 			{
 			DebugLocation(1, 38);
-			mPN_PREFIX(); 
+			mPN_PREFIX();
 
 			}
 			break;
@@ -1130,7 +1130,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:1:48: IRI_REF
 			{
 			DebugLocation(1, 48);
-			mIRI_REF(); 
+			mIRI_REF();
 
 			}
 			break;
@@ -1139,7 +1139,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:1:56: COMMA
 			{
 			DebugLocation(1, 56);
-			mCOMMA(); 
+			mCOMMA();
 
 			}
 			break;
@@ -1148,7 +1148,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:1:62: DOT
 			{
 			DebugLocation(1, 62);
-			mDOT(); 
+			mDOT();
 
 			}
 			break;
@@ -1157,7 +1157,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:1:66: MINUS
 			{
 			DebugLocation(1, 66);
-			mMINUS(); 
+			mMINUS();
 
 			}
 			break;
@@ -1166,7 +1166,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:1:72: OPEN_CURLY_BRACE
 			{
 			DebugLocation(1, 72);
-			mOPEN_CURLY_BRACE(); 
+			mOPEN_CURLY_BRACE();
 
 			}
 			break;
@@ -1175,7 +1175,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:1:89: CLOSE_CURLY_BRACE
 			{
 			DebugLocation(1, 89);
-			mCLOSE_CURLY_BRACE(); 
+			mCLOSE_CURLY_BRACE();
 
 			}
 			break;
@@ -1184,7 +1184,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:1:107: LESS
 			{
 			DebugLocation(1, 107);
-			mLESS(); 
+			mLESS();
 
 			}
 			break;
@@ -1193,7 +1193,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcPrefix.g:1:112: GREATER
 			{
 			DebugLocation(1, 112);
-			mGREATER(); 
+			mGREATER();
 
 			}
 			break;
@@ -1210,7 +1210,7 @@ public partial class OslcPrefixLexer : Antlr.Runtime.Lexer
 		base.InitDFAs();
 	}
 
- 
+
 	#endregion
 
 }

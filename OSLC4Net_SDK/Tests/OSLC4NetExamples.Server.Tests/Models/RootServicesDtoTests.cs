@@ -19,7 +19,7 @@ public class RootServicesDtoTests
     {        // Arrange
         var xmlContent = File.ReadAllText("TestData/rootservices.rdf");
         Console.WriteLine($"XML Content: {xmlContent}");
-        
+
         // Act
         var result = RootServicesDto.FromXml(xmlContent);
 
@@ -87,9 +87,9 @@ public class RootServicesDtoTests
         // Act - Serialize back to XML
         string serializedXmlContent;
         using (var stringWriter = new StringWriter())
-        using (var xmlWriter = XmlWriter.Create(stringWriter, new XmlWriterSettings 
-        { 
-            Indent = true, 
+        using (var xmlWriter = XmlWriter.Create(stringWriter, new XmlWriterSettings
+        {
+            Indent = true,
             IndentChars = "    ",
             Encoding = Encoding.UTF8,
             OmitXmlDeclaration = false
@@ -179,9 +179,9 @@ public class RootServicesDtoTests
         // Act
         string xmlContent;
         using (var stringWriter = new StringWriter())
-        using (var xmlWriter = XmlWriter.Create(stringWriter, new XmlWriterSettings 
-        { 
-            Indent = true, 
+        using (var xmlWriter = XmlWriter.Create(stringWriter, new XmlWriterSettings
+        {
+            Indent = true,
             IndentChars = "    ",
             Encoding = Encoding.UTF8,
             OmitXmlDeclaration = false
@@ -210,7 +210,7 @@ public class RootServicesDtoTests
 
         // Assert
         dto.Namespaces.Should().NotBeNull();
-        
+
         // Check that all required namespaces are present
         var namespaces = new Dictionary<string, string>();
         dto.Namespaces.ToArray().ToList().ForEach(ns => namespaces.Add(ns.Name, ns.Namespace));

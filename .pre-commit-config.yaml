@@ -1,10 +1,18 @@
 repos:
 - repo: https://github.com/gitleaks/gitleaks
-  rev: v8.16.3
+  rev: v8.30.0
   hooks:
   - id: gitleaks
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.4.0
+  rev: v6.0.0
   hooks:
   - id: end-of-file-fixer
   - id: trailing-whitespace
+- repo: local
+  hooks:
+  - id: dotnet-format
+    name: dotnet format (whitespace + style, verify only)
+    entry: bash -c 'cd OSLC4Net_SDK && dotnet format whitespace . --verify-no-changes && dotnet format style . --verify-no-changes --no-restore'
+    language: system
+    pass_filenames: false
+    files: '\.cs$'

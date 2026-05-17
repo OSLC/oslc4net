@@ -3,13 +3,13 @@
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
- * and Eclipse Distribution License v. 1.0 which accompanies this distribution. 
+ * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
  *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
- * and the Eclipse Distribution License is available at 
+ * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
  *
- * Contributors: 
+ * Contributors:
  *
  *    Steve Pitchke - initial API and implementation
  *******************************************************************************/
@@ -33,18 +33,18 @@ tokens {
 		this(new CommonTokenStream(new OslcOrderByLexer(new ANTLRStringStream(orderBy))))
     {
     }
-	
+
 	public object Result
 	{
 		get { return oslc_order_by().Tree; }
 	}
 }
 
-oslc_order_by : sort_terms 
+oslc_order_by : sort_terms
 	;
 
 sort_terms  : sort_term ( ',' sort_term )*  -> ^( 'terms' sort_term (sort_term)* )
-	; 
+	;
 
 sort_term   : scoped_sort_term | DIRECTION identifier -> ^( 'simple_term' identifier DIRECTION )
 	;
@@ -77,7 +77,7 @@ PNAME_LN
     ;
 
 
-DIRECTION       
+DIRECTION
     : PLUS
     | MINUS
     ;
@@ -92,7 +92,7 @@ PN_CHARS
     : PN_CHARS_U
     | MINUS
     | DIGIT
-    | '\u00B7' 
+    | '\u00B7'
     | '\u0300'..'\u036F'
     | '\u203F'..'\u2040'
     ;

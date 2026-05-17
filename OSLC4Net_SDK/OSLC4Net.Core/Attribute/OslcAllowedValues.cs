@@ -25,7 +25,7 @@ namespace OSLC4Net.Core.Attribute;
 public class OslcAllowedValues : System.Attribute
 {
     /// <summary>
-    ///     URI of the allowed values resource for the OSLC property.  
+    ///     URI of the allowed values resource for the OSLC property.
     /// </summary>
     public readonly string value;
 
