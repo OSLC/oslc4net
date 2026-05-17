@@ -8,3 +8,11 @@ repos:
   hooks:
   - id: end-of-file-fixer
   - id: trailing-whitespace
+- repo: local
+  hooks:
+  - id: dotnet-format
+    name: dotnet format (whitespace + style, verify only)
+    entry: bash -c 'cd OSLC4Net_SDK && dotnet format whitespace . --verify-no-changes && dotnet format style . --verify-no-changes --no-restore'
+    language: system
+    pass_filenames: false
+    files: '\.cs$'
