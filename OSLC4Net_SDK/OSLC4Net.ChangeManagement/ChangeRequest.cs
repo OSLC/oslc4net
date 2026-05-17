@@ -150,7 +150,11 @@ public class ChangeRequest : AbstractResource
         get;
         set
         {
-            if (ReferenceEquals(field, value)) return;
+            if (ReferenceEquals(field, value))
+            {
+                return;
+            }
+
             field.Clear();
             if (value != null)
             {
@@ -170,7 +174,11 @@ public class ChangeRequest : AbstractResource
         get;
         set
         {
-            if (ReferenceEquals(field, value)) return;
+            if (ReferenceEquals(field, value))
+            {
+                return;
+            }
+
             field.Clear();
             if (value != null)
             {
@@ -190,7 +198,11 @@ public class ChangeRequest : AbstractResource
         get;
         set
         {
-            if (ReferenceEquals(field, value)) return;
+            if (ReferenceEquals(field, value))
+            {
+                return;
+            }
+
             field.Clear();
             if (value != null)
             {
@@ -210,7 +222,11 @@ public class ChangeRequest : AbstractResource
         get;
         set
         {
-            if (ReferenceEquals(field, value)) return;
+            if (ReferenceEquals(field, value))
+            {
+                return;
+            }
+
             field.Clear();
             if (value != null)
             {
@@ -230,7 +246,11 @@ public class ChangeRequest : AbstractResource
         get;
         set
         {
-            if (ReferenceEquals(field, value)) return;
+            if (ReferenceEquals(field, value))
+            {
+                return;
+            }
+
             field.Clear();
             if (value != null)
             {
@@ -255,7 +275,11 @@ public class ChangeRequest : AbstractResource
         get;
         set
         {
-            if (ReferenceEquals(field, value)) return;
+            if (ReferenceEquals(field, value))
+            {
+                return;
+            }
+
             field.Clear();
             if (value != null)
             {
@@ -280,7 +304,11 @@ public class ChangeRequest : AbstractResource
         get;
         set
         {
-            if (ReferenceEquals(field, value)) return;
+            if (ReferenceEquals(field, value))
+            {
+                return;
+            }
+
             field.Clear();
             if (value != null)
             {
@@ -349,7 +377,11 @@ public class ChangeRequest : AbstractResource
         get;
         set
         {
-            if (ReferenceEquals(field, value)) return;
+            if (ReferenceEquals(field, value))
+            {
+                return;
+            }
+
             field.Clear();
             if (value != null)
             {
@@ -381,7 +413,11 @@ public class ChangeRequest : AbstractResource
         get;
         set
         {
-            if (ReferenceEquals(field, value)) return;
+            if (ReferenceEquals(field, value))
+            {
+                return;
+            }
+
             field.Clear();
             if (value != null)
             {
@@ -399,7 +435,11 @@ public class ChangeRequest : AbstractResource
         get;
         set
         {
-            if (ReferenceEquals(field, value)) return;
+            if (ReferenceEquals(field, value))
+            {
+                return;
+            }
+
             field.Clear();
             if (value != null)
             {
@@ -419,7 +459,11 @@ public class ChangeRequest : AbstractResource
         get;
         set
         {
-            if (ReferenceEquals(field, value)) return;
+            if (ReferenceEquals(field, value))
+            {
+                return;
+            }
+
             field.Clear();
             if (value != null)
             {
@@ -439,7 +483,11 @@ public class ChangeRequest : AbstractResource
         get;
         set
         {
-            if (ReferenceEquals(field, value)) return;
+            if (ReferenceEquals(field, value))
+            {
+                return;
+            }
+
             field.Clear();
             if (value != null)
             {
@@ -459,7 +507,11 @@ public class ChangeRequest : AbstractResource
         get;
         set
         {
-            if (ReferenceEquals(field, value)) return;
+            if (ReferenceEquals(field, value))
+            {
+                return;
+            }
+
             field.Clear();
             if (value != null)
             {
@@ -479,7 +531,11 @@ public class ChangeRequest : AbstractResource
         get;
         set
         {
-            if (ReferenceEquals(field, value)) return;
+            if (ReferenceEquals(field, value))
+            {
+                return;
+            }
+
             field.Clear();
             if (value != null)
             {
@@ -526,7 +582,11 @@ public class ChangeRequest : AbstractResource
         get;
         set
         {
-            if (ReferenceEquals(field, value)) return;
+            if (ReferenceEquals(field, value))
+            {
+                return;
+            }
+
             field.Clear();
             if (value != null)
             {
@@ -546,7 +606,11 @@ public class ChangeRequest : AbstractResource
         get;
         set
         {
-            if (ReferenceEquals(field, value)) return;
+            if (ReferenceEquals(field, value))
+            {
+                return;
+            }
+
             field.Clear();
             if (value != null)
             {
@@ -573,7 +637,11 @@ public class ChangeRequest : AbstractResource
         get;
         set
         {
-            if (ReferenceEquals(field, value)) return;
+            if (ReferenceEquals(field, value))
+            {
+                return;
+            }
+
             field.Clear();
             if (value != null)
             {
@@ -593,7 +661,11 @@ public class ChangeRequest : AbstractResource
         get;
         set
         {
-            if (ReferenceEquals(field, value)) return;
+            if (ReferenceEquals(field, value))
+            {
+                return;
+            }
+
             field.Clear();
             if (value != null)
             {
