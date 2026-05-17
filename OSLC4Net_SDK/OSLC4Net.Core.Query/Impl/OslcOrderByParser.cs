@@ -28,20 +28,20 @@ using Antlr.Runtime.Misc;
 using Antlr.Runtime.Tree;
 using RewriteRuleITokenStream = Antlr.Runtime.Tree.RewriteRuleTokenStream;
 
-namespace  OSLC4Net.Core.Query.Impl 
+namespace  OSLC4Net.Core.Query.Impl
 {
 /******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
- * and Eclipse Distribution License v. 1.0 which accompanies this distribution. 
+ * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
  *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
- * and the Eclipse Distribution License is available at 
+ * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
  *
- * Contributors: 
+ * Contributors:
  *
  *    Steve Pitchke - initial API and implementation
  *******************************************************************************/
@@ -113,7 +113,7 @@ public partial class OslcOrderByParser : Antlr.Runtime.Parser
 			this(new CommonTokenStream(new OslcOrderByLexer(new ANTLRStringStream(orderBy))))
 	    {
 	    }
-		
+
 		public object Result
 		{
 			get { return oslc_order_by().Tree; }
@@ -246,7 +246,7 @@ public partial class OslcOrderByParser : Antlr.Runtime.Parser
 					// ../Grammars/OslcOrderBy.g:46:27: ',' sort_term
 					{
 					DebugLocation(46, 27);
-					char_literal3=(IToken)Match(input,COMMA,Follow._COMMA_in_sort_terms86);  
+					char_literal3=(IToken)Match(input,COMMA,Follow._COMMA_in_sort_terms86);
 					stream_COMMA.Add(char_literal3);
 
 					DebugLocation(46, 31);
@@ -274,11 +274,11 @@ public partial class OslcOrderByParser : Antlr.Runtime.Parser
 			{
 			// AST REWRITE
 			// elements: sort_term, sort_term, TERMS
-			// token labels: 
+			// token labels:
 			// rule labels: retval
-			// token list labels: 
-			// rule list labels: 
-			// wildcard labels: 
+			// token list labels:
+			// rule list labels:
+			// wildcard labels:
 			retval.Tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
@@ -408,7 +408,7 @@ public partial class OslcOrderByParser : Antlr.Runtime.Parser
 				// ../Grammars/OslcOrderBy.g:49:34: DIRECTION identifier
 				{
 				DebugLocation(49, 34);
-				DIRECTION6=(IToken)Match(input,DIRECTION,Follow._DIRECTION_in_sort_term124);  
+				DIRECTION6=(IToken)Match(input,DIRECTION,Follow._DIRECTION_in_sort_term124);
 				stream_DIRECTION.Add(DIRECTION6);
 
 				DebugLocation(49, 44);
@@ -422,11 +422,11 @@ public partial class OslcOrderByParser : Antlr.Runtime.Parser
 				{
 				// AST REWRITE
 				// elements: identifier, DIRECTION, SIMPLE_TERM
-				// token labels: 
+				// token labels:
 				// rule labels: retval
-				// token list labels: 
-				// rule list labels: 
-				// wildcard labels: 
+				// token list labels:
+				// rule list labels:
+				// wildcard labels:
 				retval.Tree = root_0;
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
@@ -524,7 +524,7 @@ public partial class OslcOrderByParser : Antlr.Runtime.Parser
 
 			stream_identifier.Add(identifier8.Tree);
 			DebugLocation(52, 31);
-			char_literal9=(IToken)Match(input,OPEN_CURLY_BRACE,Follow._OPEN_CURLY_BRACE_in_scoped_sort_term150);  
+			char_literal9=(IToken)Match(input,OPEN_CURLY_BRACE,Follow._OPEN_CURLY_BRACE_in_scoped_sort_term150);
 			stream_OPEN_CURLY_BRACE.Add(char_literal9);
 
 			DebugLocation(52, 35);
@@ -534,7 +534,7 @@ public partial class OslcOrderByParser : Antlr.Runtime.Parser
 
 			stream_sort_terms.Add(sort_terms10.Tree);
 			DebugLocation(52, 46);
-			char_literal11=(IToken)Match(input,CLOSE_CURLY_BRACE,Follow._CLOSE_CURLY_BRACE_in_scoped_sort_term154);  
+			char_literal11=(IToken)Match(input,CLOSE_CURLY_BRACE,Follow._CLOSE_CURLY_BRACE_in_scoped_sort_term154);
 			stream_CLOSE_CURLY_BRACE.Add(char_literal11);
 
 
@@ -542,11 +542,11 @@ public partial class OslcOrderByParser : Antlr.Runtime.Parser
 			{
 			// AST REWRITE
 			// elements: SCOPED_TERM, identifier, sort_terms
-			// token labels: 
+			// token labels:
 			// rule labels: retval
-			// token list labels: 
-			// rule list labels: 
-			// wildcard labels: 
+			// token list labels:
+			// rule list labels:
+			// wildcard labels:
 			retval.Tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
@@ -757,4 +757,4 @@ public partial class OslcOrderByParser : Antlr.Runtime.Parser
 	#endregion Follow sets
 }
 
-} // namespace  OSLC4Net.Core.Query.Impl 
+} // namespace  OSLC4Net.Core.Query.Impl

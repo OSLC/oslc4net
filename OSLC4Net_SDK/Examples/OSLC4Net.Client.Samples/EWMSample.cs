@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -27,8 +27,8 @@ namespace OSLC4Net.Client.Samples;
 
 /// <summary>
 /// Samples of logging in to Enterprise Workflow Management (EWM) and running OSLC operations
-/// 
-/// 
+///
+///
 /// - run an OLSC ChangeRequest query and retrieve OSLC ChangeRequests and de-serialize them as .NET objects
 /// - retrieve an OSLC ChangeRequest and print it as XML
 /// - create a new ChangeRequest
@@ -390,7 +390,7 @@ sealed class EWMSample : SampleBase<ChangeRequest>
                         foreach (var val in values)
                         {
                             Logger.LogInformation("Found allowed value >{}<", val);
-                            // Skip empty or whitespace values                                
+                            // Skip empty or whitespace values
                             // if (!val.Contains("Unassigned", StringComparison.OrdinalIgnoreCase))
                             // {
                             //     Logger.LogInformation("Resolved Filed Against category: {Category}", val);
@@ -427,4 +427,3 @@ sealed class EWMSample : SampleBase<ChangeRequest>
         }
     }
 }
-

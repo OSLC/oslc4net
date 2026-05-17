@@ -124,7 +124,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:7:17: 'compound_term'
 			{
 			DebugLocation(7, 17);
-			Match("compound_term"); 
+			Match("compound_term");
 
 
 			}
@@ -160,7 +160,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:8:11: 'in_term'
 			{
 			DebugLocation(8, 11);
-			Match("in_term"); 
+			Match("in_term");
 
 
 			}
@@ -196,7 +196,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:9:13: 'in_values'
 			{
 			DebugLocation(9, 13);
-			Match("in_values"); 
+			Match("in_values");
 
 
 			}
@@ -232,7 +232,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:10:16: 'langed_value'
 			{
 			DebugLocation(10, 16);
-			Match("langed_value"); 
+			Match("langed_value");
 
 
 			}
@@ -268,7 +268,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:11:15: 'simple_term'
 			{
 			DebugLocation(11, 15);
-			Match("simple_term"); 
+			Match("simple_term");
 
 
 			}
@@ -304,7 +304,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:12:9: 'terms'
 			{
 			DebugLocation(12, 9);
-			Match("terms"); 
+			Match("terms");
 
 
 			}
@@ -340,7 +340,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:13:15: 'typed_value'
 			{
 			DebugLocation(13, 15);
-			Match("typed_value"); 
+			Match("typed_value");
 
 
 			}
@@ -376,7 +376,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:14:9: ' '
 			{
 			DebugLocation(14, 9);
-			Match(' '); 
+			Match(' ');
 
 			}
 
@@ -411,7 +411,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:15:9: ' and '
 			{
 			DebugLocation(15, 9);
-			Match(" and "); 
+			Match(" and ");
 
 
 			}
@@ -447,7 +447,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:16:9: ' in'
 			{
 			DebugLocation(16, 9);
-			Match(" in"); 
+			Match(" in");
 
 
 			}
@@ -528,7 +528,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			} finally { DebugExitSubRule(1); }
 
 			DebugLocation(135, 25);
-			 _channel=Hidden; 
+			 _channel=Hidden;
 
 			}
 
@@ -586,7 +586,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 				int pStart139 = CharIndex;
 				int pStartLine139 = Line;
 				int pStartCharPos139 = CharPositionInLine;
-				mPN_PREFIX(); 
+				mPN_PREFIX();
 				p = new CommonToken(input, TokenTypes.Invalid, TokenChannels.Default, pStart139, CharIndex-1);
 				p.Line = pStartLine139;
 				p.CharPositionInLine = pStartCharPos139;
@@ -598,7 +598,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			} finally { DebugExitSubRule(2); }
 
 			DebugLocation(139, 20);
-			Match(':'); 
+			Match(':');
 
 			}
 
@@ -633,9 +633,9 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:143:7: PNAME_NS PN_LOCAL
 			{
 			DebugLocation(143, 7);
-			mPNAME_NS(); 
+			mPNAME_NS();
 			DebugLocation(143, 16);
-			mPN_LOCAL(); 
+			mPN_LOCAL();
 
 			}
 
@@ -670,7 +670,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:148:7: LESS ( options {greedy=false; } :~ ( LESS | GREATER | '\"' | OPEN_CURLY_BRACE | CLOSE_CURLY_BRACE | '|' | '^' | '\\\\' | '`' | ( '\\u0000' .. '\\u0020' ) ) )* GREATER
 			{
 			DebugLocation(148, 7);
-			mLESS(); 
+			mLESS();
 			DebugLocation(148, 12);
 			// ../Grammars/OslcWhere.g:148:12: ( options {greedy=false; } :~ ( LESS | GREATER | '\"' | OPEN_CURLY_BRACE | CLOSE_CURLY_BRACE | '|' | '^' | '\\\\' | '`' | ( '\\u0000' .. '\\u0020' ) ) )*
 			try { DebugEnterSubRule(3);
@@ -715,7 +715,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			} finally { DebugExitSubRule(3); }
 
 			DebugLocation(148, 154);
-			mGREATER(); 
+			mGREATER();
 
 			}
 
@@ -750,7 +750,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:153:7: '@' ( ALPHA_CHARS )+ ( MINUS ( DIGIT | ALPHA_CHARS )+ )*
 			{
 			DebugLocation(153, 7);
-			Match('@'); 
+			Match('@');
 			DebugLocation(153, 11);
 			// ../Grammars/OslcWhere.g:153:11: ( ALPHA_CHARS )+
 			int cnt4=0;
@@ -819,7 +819,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 					// ../Grammars/OslcWhere.g:153:25: MINUS ( DIGIT | ALPHA_CHARS )+
 					{
 					DebugLocation(153, 25);
-					mMINUS(); 
+					mMINUS();
 					DebugLocation(153, 31);
 					// ../Grammars/OslcWhere.g:153:31: ( DIGIT | ALPHA_CHARS )+
 					int cnt5=0;
@@ -977,7 +977,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 				// ../Grammars/OslcWhere.g:163:7: 'true'
 				{
 				DebugLocation(163, 7);
-				Match("true"); 
+				Match("true");
 
 
 				}
@@ -987,7 +987,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 				// ../Grammars/OslcWhere.g:164:7: 'false'
 				{
 				DebugLocation(164, 7);
-				Match("false"); 
+				Match("false");
 
 
 				}
@@ -1113,7 +1113,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 				} finally { DebugExitSubRule(9); }
 
 				DebugLocation(168, 30);
-				mDOT(); 
+				mDOT();
 				DebugLocation(168, 34);
 				// ../Grammars/OslcWhere.g:168:34: ( DIGIT )*
 				try { DebugEnterSubRule(10);
@@ -1189,7 +1189,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 				} finally { DebugExitSubRule(11); }
 
 				DebugLocation(169, 23);
-				mDOT(); 
+				mDOT();
 				DebugLocation(169, 27);
 				// ../Grammars/OslcWhere.g:169:27: ( DIGIT )+
 				int cnt12=0;
@@ -1351,7 +1351,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:174:7: '\"' ( options {greedy=false; } :~ ( '\\u0022' | '\\u005C' | '\\u000A' | '\\u000D' ) | ECHAR )* '\"'
 			{
 			DebugLocation(174, 7);
-			Match('\"'); 
+			Match('\"');
 			DebugLocation(174, 12);
 			// ../Grammars/OslcWhere.g:174:12: ( options {greedy=false; } :~ ( '\\u0022' | '\\u005C' | '\\u000A' | '\\u000D' ) | ECHAR )*
 			try { DebugEnterSubRule(16);
@@ -1393,7 +1393,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 					// ../Grammars/OslcWhere.g:174:87: ECHAR
 					{
 					DebugLocation(174, 87);
-					mECHAR(); 
+					mECHAR();
 
 					}
 					break;
@@ -1409,7 +1409,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			} finally { DebugExitSubRule(16); }
 
 			DebugLocation(174, 96);
-			Match('\"'); 
+			Match('\"');
 
 			}
 
@@ -1442,7 +1442,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:180:7: '\\\\' ( 't' | 'b' | 'n' | 'r' | 'f' | '\\\\' | '\"' | '\\'' )
 			{
 			DebugLocation(180, 7);
-			Match('\\'); 
+			Match('\\');
 			DebugLocation(180, 12);
 			if (input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t')
 			{
@@ -1570,7 +1570,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:200:7: PN_CHARS_BASE ( ( PN_CHARS | DOT )* PN_CHARS )?
 			{
 			DebugLocation(200, 7);
-			mPN_CHARS_BASE(); 
+			mPN_CHARS_BASE();
 			DebugLocation(200, 21);
 			// ../Grammars/OslcWhere.g:200:21: ( ( PN_CHARS | DOT )* PN_CHARS )?
 			int alt18=2;
@@ -1640,7 +1640,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 				} finally { DebugExitSubRule(17); }
 
 				DebugLocation(200, 38);
-				mPN_CHARS(); 
+				mPN_CHARS();
 
 				}
 				break;
@@ -1759,7 +1759,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 				} finally { DebugExitSubRule(19); }
 
 				DebugLocation(205, 47);
-				mPN_CHARS(); 
+				mPN_CHARS();
 
 				}
 				break;
@@ -1925,7 +1925,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:235:7: '^^'
 			{
 			DebugLocation(235, 7);
-			Match("^^"); 
+			Match("^^");
 
 
 			}
@@ -1961,7 +1961,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:239:7: '<='
 			{
 			DebugLocation(239, 7);
-			Match("<="); 
+			Match("<=");
 
 
 			}
@@ -1997,7 +1997,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:243:7: '>='
 			{
 			DebugLocation(243, 7);
-			Match(">="); 
+			Match(">=");
 
 
 			}
@@ -2033,7 +2033,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:247:7: '!='
 			{
 			DebugLocation(247, 7);
-			Match("!="); 
+			Match("!=");
 
 
 			}
@@ -2069,7 +2069,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:251:7: '&&'
 			{
 			DebugLocation(251, 7);
-			Match("&&"); 
+			Match("&&");
 
 
 			}
@@ -2105,7 +2105,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:255:7: '||'
 			{
 			DebugLocation(255, 7);
-			Match("||"); 
+			Match("||");
 
 
 			}
@@ -2141,7 +2141,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:259:7: '('
 			{
 			DebugLocation(259, 7);
-			Match('('); 
+			Match('(');
 
 			}
 
@@ -2176,7 +2176,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:263:7: ')'
 			{
 			DebugLocation(263, 7);
-			Match(')'); 
+			Match(')');
 
 			}
 
@@ -2211,7 +2211,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:267:7: '{'
 			{
 			DebugLocation(267, 7);
-			Match('{'); 
+			Match('{');
 
 			}
 
@@ -2246,7 +2246,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:271:7: '}'
 			{
 			DebugLocation(271, 7);
-			Match('}'); 
+			Match('}');
 
 			}
 
@@ -2281,7 +2281,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:275:7: '['
 			{
 			DebugLocation(275, 7);
-			Match('['); 
+			Match('[');
 
 			}
 
@@ -2316,7 +2316,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:279:7: ']'
 			{
 			DebugLocation(279, 7);
-			Match(']'); 
+			Match(']');
 
 			}
 
@@ -2351,7 +2351,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:283:7: ';'
 			{
 			DebugLocation(283, 7);
-			Match(';'); 
+			Match(';');
 
 			}
 
@@ -2386,7 +2386,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:287:7: '.'
 			{
 			DebugLocation(287, 7);
-			Match('.'); 
+			Match('.');
 
 			}
 
@@ -2421,7 +2421,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:291:7: '+'
 			{
 			DebugLocation(291, 7);
-			Match('+'); 
+			Match('+');
 
 			}
 
@@ -2456,7 +2456,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:295:7: '-'
 			{
 			DebugLocation(295, 7);
-			Match('-'); 
+			Match('-');
 
 			}
 
@@ -2491,7 +2491,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:299:7: '*'
 			{
 			DebugLocation(299, 7);
-			Match('*'); 
+			Match('*');
 
 			}
 
@@ -2526,7 +2526,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:303:7: ','
 			{
 			DebugLocation(303, 7);
-			Match(','); 
+			Match(',');
 
 			}
 
@@ -2561,7 +2561,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:307:7: '!'
 			{
 			DebugLocation(307, 7);
-			Match('!'); 
+			Match('!');
 
 			}
 
@@ -2596,7 +2596,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:311:7: '='
 			{
 			DebugLocation(311, 7);
-			Match('='); 
+			Match('=');
 
 			}
 
@@ -2631,7 +2631,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:315:7: '<'
 			{
 			DebugLocation(315, 7);
-			Match('<'); 
+			Match('<');
 
 			}
 
@@ -2666,7 +2666,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:319:7: '>'
 			{
 			DebugLocation(319, 7);
-			Match('>'); 
+			Match('>');
 
 			}
 
@@ -2704,7 +2704,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:10: COMPOUND_TERM
 			{
 			DebugLocation(1, 10);
-			mCOMPOUND_TERM(); 
+			mCOMPOUND_TERM();
 
 			}
 			break;
@@ -2713,7 +2713,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:24: IN_TERM
 			{
 			DebugLocation(1, 24);
-			mIN_TERM(); 
+			mIN_TERM();
 
 			}
 			break;
@@ -2722,7 +2722,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:32: IN_VALUES
 			{
 			DebugLocation(1, 32);
-			mIN_VALUES(); 
+			mIN_VALUES();
 
 			}
 			break;
@@ -2731,7 +2731,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:42: LANGED_VALUE
 			{
 			DebugLocation(1, 42);
-			mLANGED_VALUE(); 
+			mLANGED_VALUE();
 
 			}
 			break;
@@ -2740,7 +2740,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:55: SIMPLE_TERM
 			{
 			DebugLocation(1, 55);
-			mSIMPLE_TERM(); 
+			mSIMPLE_TERM();
 
 			}
 			break;
@@ -2749,7 +2749,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:67: TERMS
 			{
 			DebugLocation(1, 67);
-			mTERMS(); 
+			mTERMS();
 
 			}
 			break;
@@ -2758,7 +2758,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:73: TYPED_VALUE
 			{
 			DebugLocation(1, 73);
-			mTYPED_VALUE(); 
+			mTYPED_VALUE();
 
 			}
 			break;
@@ -2767,7 +2767,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:85: T__50
 			{
 			DebugLocation(1, 85);
-			mT__50(); 
+			mT__50();
 
 			}
 			break;
@@ -2776,7 +2776,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:91: T__51
 			{
 			DebugLocation(1, 91);
-			mT__51(); 
+			mT__51();
 
 			}
 			break;
@@ -2785,7 +2785,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:97: T__52
 			{
 			DebugLocation(1, 97);
-			mT__52(); 
+			mT__52();
 
 			}
 			break;
@@ -2794,7 +2794,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:103: WS
 			{
 			DebugLocation(1, 103);
-			mWS(); 
+			mWS();
 
 			}
 			break;
@@ -2803,7 +2803,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:106: PNAME_NS
 			{
 			DebugLocation(1, 106);
-			mPNAME_NS(); 
+			mPNAME_NS();
 
 			}
 			break;
@@ -2812,7 +2812,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:115: PNAME_LN
 			{
 			DebugLocation(1, 115);
-			mPNAME_LN(); 
+			mPNAME_LN();
 
 			}
 			break;
@@ -2821,7 +2821,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:124: IRI_REF
 			{
 			DebugLocation(1, 124);
-			mIRI_REF(); 
+			mIRI_REF();
 
 			}
 			break;
@@ -2830,7 +2830,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:132: LANGTAG
 			{
 			DebugLocation(1, 132);
-			mLANGTAG(); 
+			mLANGTAG();
 
 			}
 			break;
@@ -2839,7 +2839,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:140: BOOLEAN
 			{
 			DebugLocation(1, 140);
-			mBOOLEAN(); 
+			mBOOLEAN();
 
 			}
 			break;
@@ -2848,7 +2848,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:148: DECIMAL
 			{
 			DebugLocation(1, 148);
-			mDECIMAL(); 
+			mDECIMAL();
 
 			}
 			break;
@@ -2857,7 +2857,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:156: STRING_LITERAL
 			{
 			DebugLocation(1, 156);
-			mSTRING_LITERAL(); 
+			mSTRING_LITERAL();
 
 			}
 			break;
@@ -2866,7 +2866,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:171: REFERENCE
 			{
 			DebugLocation(1, 171);
-			mREFERENCE(); 
+			mREFERENCE();
 
 			}
 			break;
@@ -2875,7 +2875,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:181: LESS_EQUAL
 			{
 			DebugLocation(1, 181);
-			mLESS_EQUAL(); 
+			mLESS_EQUAL();
 
 			}
 			break;
@@ -2884,7 +2884,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:192: GREATER_EQUAL
 			{
 			DebugLocation(1, 192);
-			mGREATER_EQUAL(); 
+			mGREATER_EQUAL();
 
 			}
 			break;
@@ -2893,7 +2893,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:206: NOT_EQUAL
 			{
 			DebugLocation(1, 206);
-			mNOT_EQUAL(); 
+			mNOT_EQUAL();
 
 			}
 			break;
@@ -2902,7 +2902,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:216: AND
 			{
 			DebugLocation(1, 216);
-			mAND(); 
+			mAND();
 
 			}
 			break;
@@ -2911,7 +2911,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:220: OR
 			{
 			DebugLocation(1, 220);
-			mOR(); 
+			mOR();
 
 			}
 			break;
@@ -2920,7 +2920,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:223: OPEN_BRACE
 			{
 			DebugLocation(1, 223);
-			mOPEN_BRACE(); 
+			mOPEN_BRACE();
 
 			}
 			break;
@@ -2929,7 +2929,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:234: CLOSE_BRACE
 			{
 			DebugLocation(1, 234);
-			mCLOSE_BRACE(); 
+			mCLOSE_BRACE();
 
 			}
 			break;
@@ -2938,7 +2938,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:246: OPEN_CURLY_BRACE
 			{
 			DebugLocation(1, 246);
-			mOPEN_CURLY_BRACE(); 
+			mOPEN_CURLY_BRACE();
 
 			}
 			break;
@@ -2947,7 +2947,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:263: CLOSE_CURLY_BRACE
 			{
 			DebugLocation(1, 263);
-			mCLOSE_CURLY_BRACE(); 
+			mCLOSE_CURLY_BRACE();
 
 			}
 			break;
@@ -2956,7 +2956,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:281: OPEN_SQUARE_BRACE
 			{
 			DebugLocation(1, 281);
-			mOPEN_SQUARE_BRACE(); 
+			mOPEN_SQUARE_BRACE();
 
 			}
 			break;
@@ -2965,7 +2965,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:299: CLOSE_SQUARE_BRACE
 			{
 			DebugLocation(1, 299);
-			mCLOSE_SQUARE_BRACE(); 
+			mCLOSE_SQUARE_BRACE();
 
 			}
 			break;
@@ -2974,7 +2974,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:318: SEMICOLON
 			{
 			DebugLocation(1, 318);
-			mSEMICOLON(); 
+			mSEMICOLON();
 
 			}
 			break;
@@ -2983,7 +2983,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:328: DOT
 			{
 			DebugLocation(1, 328);
-			mDOT(); 
+			mDOT();
 
 			}
 			break;
@@ -2992,7 +2992,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:332: PLUS
 			{
 			DebugLocation(1, 332);
-			mPLUS(); 
+			mPLUS();
 
 			}
 			break;
@@ -3001,7 +3001,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:337: MINUS
 			{
 			DebugLocation(1, 337);
-			mMINUS(); 
+			mMINUS();
 
 			}
 			break;
@@ -3010,7 +3010,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:343: ASTERISK
 			{
 			DebugLocation(1, 343);
-			mASTERISK(); 
+			mASTERISK();
 
 			}
 			break;
@@ -3019,7 +3019,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:352: COMMA
 			{
 			DebugLocation(1, 352);
-			mCOMMA(); 
+			mCOMMA();
 
 			}
 			break;
@@ -3028,7 +3028,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:358: NOT
 			{
 			DebugLocation(1, 358);
-			mNOT(); 
+			mNOT();
 
 			}
 			break;
@@ -3037,7 +3037,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:362: EQUAL
 			{
 			DebugLocation(1, 362);
-			mEQUAL(); 
+			mEQUAL();
 
 			}
 			break;
@@ -3046,7 +3046,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:368: LESS
 			{
 			DebugLocation(1, 368);
-			mLESS(); 
+			mLESS();
 
 			}
 			break;
@@ -3055,7 +3055,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcWhere.g:1:373: GREATER
 			{
 			DebugLocation(1, 373);
-			mGREATER(); 
+			mGREATER();
 
 			}
 			break;
@@ -3651,7 +3651,7 @@ public partial class OslcWhereLexer : Antlr.Runtime.Lexer
 		}
 	}
 
- 
+
 	#endregion
 
 }
