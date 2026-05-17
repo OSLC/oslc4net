@@ -1,0 +1,28 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:oslc="http://open-services.net/ns/core#"
+    xmlns:oslc_cm="http://open-services.net/ns/cm#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" >
+  <rdf:Description rdf:about="https://example.com/oslc/query">
+    <rdfs:member rdf:resource="https://example.com/resource/1"/>
+    <rdfs:member rdf:resource="https://example.com/resource/2"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/oslc/query">
+    <dcterms:title>Work Items</dcterms:title>
+    <oslc:totalCount>2</oslc:totalCount>
+    <rdf:type rdf:resource="http://open-services.net/ns/core#ResponseInfo"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/resource/1">
+    <dcterms:title rdf:parseType="Literal">Test Resource 1</dcterms:title>
+    <dcterms:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1</dcterms:identifier>
+    <oslc:shortId rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1</oslc:shortId>
+    <rdf:type rdf:resource="http://open-services.net/ns/cm#ChangeRequest"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/resource/2">
+    <dcterms:title rdf:parseType="Literal">Test Resource 2</dcterms:title>
+    <dcterms:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2</dcterms:identifier>
+    <oslc:shortId rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2</oslc:shortId>
+    <rdf:type rdf:resource="http://open-services.net/ns/cm#ChangeRequest"/>
+  </rdf:Description>
+</rdf:RDF>
