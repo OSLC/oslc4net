@@ -81,7 +81,7 @@ public partial class OslcSearchTermsLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcSearchTerms.g:7:15: 'string_list'
 			{
 			DebugLocation(7, 15);
-			Match("string_list"); 
+			Match("string_list");
 
 
 			}
@@ -162,7 +162,7 @@ public partial class OslcSearchTermsLexer : Antlr.Runtime.Lexer
 			} finally { DebugExitSubRule(1); }
 
 			DebugLocation(51, 25);
-			 _channel=Hidden; 
+			 _channel=Hidden;
 
 			}
 
@@ -239,7 +239,7 @@ public partial class OslcSearchTermsLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcSearchTerms.g:60:7: '\"' ( options {greedy=false; } :~ ( '\\u0022' | '\\u005C' | '\\u000A' | '\\u000D' ) | ECHAR )* '\"'
 			{
 			DebugLocation(60, 7);
-			Match('\"'); 
+			Match('\"');
 			DebugLocation(60, 12);
 			// ../Grammars/OslcSearchTerms.g:60:12: ( options {greedy=false; } :~ ( '\\u0022' | '\\u005C' | '\\u000A' | '\\u000D' ) | ECHAR )*
 			try { DebugEnterSubRule(2);
@@ -281,7 +281,7 @@ public partial class OslcSearchTermsLexer : Antlr.Runtime.Lexer
 					// ../Grammars/OslcSearchTerms.g:60:87: ECHAR
 					{
 					DebugLocation(60, 87);
-					mECHAR(); 
+					mECHAR();
 
 					}
 					break;
@@ -297,7 +297,7 @@ public partial class OslcSearchTermsLexer : Antlr.Runtime.Lexer
 			} finally { DebugExitSubRule(2); }
 
 			DebugLocation(60, 96);
-			Match('\"'); 
+			Match('\"');
 
 			}
 
@@ -330,7 +330,7 @@ public partial class OslcSearchTermsLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcSearchTerms.g:66:7: '\\\\' ( 't' | 'b' | 'n' | 'r' | 'f' | '\\\\' | '\"' | '\\'' )
 			{
 			DebugLocation(66, 7);
-			Match('\\'); 
+			Match('\\');
 			DebugLocation(66, 12);
 			if (input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t')
 			{
@@ -376,7 +376,7 @@ public partial class OslcSearchTermsLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcSearchTerms.g:69:7: ','
 			{
 			DebugLocation(69, 7);
-			Match(','); 
+			Match(',');
 
 			}
 
@@ -438,7 +438,7 @@ public partial class OslcSearchTermsLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcSearchTerms.g:1:10: STRING_LIST
 			{
 			DebugLocation(1, 10);
-			mSTRING_LIST(); 
+			mSTRING_LIST();
 
 			}
 			break;
@@ -447,7 +447,7 @@ public partial class OslcSearchTermsLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcSearchTerms.g:1:22: WS
 			{
 			DebugLocation(1, 22);
-			mWS(); 
+			mWS();
 
 			}
 			break;
@@ -456,7 +456,7 @@ public partial class OslcSearchTermsLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcSearchTerms.g:1:25: STRING_LITERAL
 			{
 			DebugLocation(1, 25);
-			mSTRING_LITERAL(); 
+			mSTRING_LITERAL();
 
 			}
 			break;
@@ -465,7 +465,7 @@ public partial class OslcSearchTermsLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcSearchTerms.g:1:40: COMMA
 			{
 			DebugLocation(1, 40);
-			mCOMMA(); 
+			mCOMMA();
 
 			}
 			break;
@@ -482,7 +482,7 @@ public partial class OslcSearchTermsLexer : Antlr.Runtime.Lexer
 		base.InitDFAs();
 	}
 
- 
+
 	#endregion
 
 }

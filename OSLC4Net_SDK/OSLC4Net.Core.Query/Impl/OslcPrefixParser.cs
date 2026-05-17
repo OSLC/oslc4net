@@ -28,20 +28,20 @@ using Antlr.Runtime.Misc;
 using Antlr.Runtime.Tree;
 using RewriteRuleITokenStream = Antlr.Runtime.Tree.RewriteRuleTokenStream;
 
-namespace  OSLC4Net.Core.Query.Impl 
+namespace  OSLC4Net.Core.Query.Impl
 {
 /******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
- * and Eclipse Distribution License v. 1.0 which accompanies this distribution. 
+ * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
  *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
- * and the Eclipse Distribution License is available at 
+ * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
  *
- * Contributors: 
+ * Contributors:
  *
  *    Steve Pitchke - initial API and implementation
  *******************************************************************************/
@@ -110,11 +110,11 @@ public partial class OslcPrefixParser : Antlr.Runtime.Parser
 			this(new CommonTokenStream(new OslcPrefixLexer(new ANTLRStringStream(prefixes))))
 	    {
 	    }
-		
+
 		public object Result
 		{
 			get { return oslc_prefixes().Tree; }
-		}       
+		}
 
 
 	partial void OnCreated();
@@ -181,7 +181,7 @@ public partial class OslcPrefixParser : Antlr.Runtime.Parser
 					// ../Grammars/OslcPrefix.g:43:37: ',' prefix_binding
 					{
 					DebugLocation(43, 37);
-					char_literal2=(IToken)Match(input,COMMA,Follow._COMMA_in_oslc_prefixes73);  
+					char_literal2=(IToken)Match(input,COMMA,Follow._COMMA_in_oslc_prefixes73);
 					stream_COMMA.Add(char_literal2);
 
 					DebugLocation(43, 41);
@@ -209,11 +209,11 @@ public partial class OslcPrefixParser : Antlr.Runtime.Parser
 			{
 			// AST REWRITE
 			// elements: prefix_binding, PREFIX_LIST, prefix_binding
-			// token labels: 
+			// token labels:
 			// rule labels: retval
-			// token list labels: 
-			// rule list labels: 
-			// wildcard labels: 
+			// token list labels:
+			// rule list labels:
+			// wildcard labels:
 			retval.Tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
@@ -309,15 +309,15 @@ public partial class OslcPrefixParser : Antlr.Runtime.Parser
 			// ../Grammars/OslcPrefix.g:46:18: PN_PREFIX '=' IRI_REF
 			{
 			DebugLocation(46, 18);
-			PN_PREFIX4=(IToken)Match(input,PN_PREFIX,Follow._PN_PREFIX_in_prefix_binding105);  
+			PN_PREFIX4=(IToken)Match(input,PN_PREFIX,Follow._PN_PREFIX_in_prefix_binding105);
 			stream_PN_PREFIX.Add(PN_PREFIX4);
 
 			DebugLocation(46, 28);
-			char_literal5=(IToken)Match(input,21,Follow._21_in_prefix_binding107);  
+			char_literal5=(IToken)Match(input,21,Follow._21_in_prefix_binding107);
 			stream_21.Add(char_literal5);
 
 			DebugLocation(46, 32);
-			IRI_REF6=(IToken)Match(input,IRI_REF,Follow._IRI_REF_in_prefix_binding109);  
+			IRI_REF6=(IToken)Match(input,IRI_REF,Follow._IRI_REF_in_prefix_binding109);
 			stream_IRI_REF.Add(IRI_REF6);
 
 
@@ -325,11 +325,11 @@ public partial class OslcPrefixParser : Antlr.Runtime.Parser
 			{
 			// AST REWRITE
 			// elements: IRI_REF, PREFIX, PN_PREFIX
-			// token labels: 
+			// token labels:
 			// rule labels: retval
-			// token list labels: 
-			// rule list labels: 
-			// wildcard labels: 
+			// token list labels:
+			// rule list labels:
+			// wildcard labels:
 			retval.Tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
@@ -399,4 +399,4 @@ public partial class OslcPrefixParser : Antlr.Runtime.Parser
 	#endregion Follow sets
 }
 
-} // namespace  OSLC4Net.Core.Query.Impl 
+} // namespace  OSLC4Net.Core.Query.Impl

@@ -50,7 +50,7 @@ public abstract class SampleBase<TResource> where TResource : IExtendedResource
 
             try
             {
-                //Get a single artifact by its URL 
+                //Get a single artifact by its URL
                 HttpResponseMessage response = await client.GetResourceRawAsync(resultsUrl, OSLCConstants.CT_RDF).ConfigureAwait(false);
 
                 if (response != null)

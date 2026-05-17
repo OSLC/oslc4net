@@ -56,8 +56,6 @@ Do not inline the `AGENT_BUILD` variable!
 
 You must be CD'd into `OSLC4Net_SDK` or subfolder before running `dotnet` commands.
 
-Run `dotnet format` before commit.
-
 ### Test Filters
 
 Running TUnit via `dotnet run` supports test filters.
@@ -98,6 +96,19 @@ TUnit also supports filtering by your own [properties](https://thomhurst.github.
 `dotnet run --treenode-filter /*/*/*/*[MyFilterName=*SomeValue*]`
 
 And if your test had a property with the name "MyFilterName" and its value contained "SomeValue", then your test would be executed.
+
+## Formatting (required before every commit)
+
+Run from the repo root:
+
+```bash
+dotnet format whitespace ./OSLC4Net_SDK && dotnet format style ./OSLC4Net_SDK --no-restore
+```
+
+- Use `whitespace` + `style` only. Skip `analyzers` — it runs third-party rules (Meziantou etc.) and is slow/noisy.
+- `--no-restore` on the second call avoids a redundant restore.
+- Also run this **after resolving merge conflicts**. Hand-edited hunks re-introduce style drift even when both parents were clean.
+- A pre-commit hook (`.pre-commit-config.yaml`) enforces this; install once with `pre-commit install`.
 
 ## Project Structure
 

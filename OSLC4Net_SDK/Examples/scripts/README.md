@@ -6,7 +6,7 @@ This directory contains test scripts for the OSLC4Net client samples targeting E
 
 The OSLC4Net samples have been renamed from legacy IBM product names to current product names:
 - **RTC** (Rational Team Concert) → **EWM** (Enterprise Workflow Management)
-- **RRC** (Rational Requirements Composer) → **ERM** (Enterprise Requirements Management)  
+- **RRC** (Rational Requirements Composer) → **ERM** (Enterprise Requirements Management)
 - **RQM** (Rational Quality Manager) → **ETM** (Enterprise Test Management)
 
 ## Setup
@@ -40,7 +40,7 @@ The test scripts will:
 ```
 
 This tests:
-- **EWM** (Enterprise Workflow Management)  
+- **EWM** (Enterprise Workflow Management)
   - Queries for open change requests
   - Creates, updates, and retrieves change requests
 - **ERM** (Enterprise Requirements Management)
@@ -48,7 +48,7 @@ This tests:
   - Builds requirement collections
   - Queries requirements by various criteria
 - **ETM** (Enterprise Test Management)
-  - Queries for passed test results  
+  - Queries for passed test results
   - Creates and updates test cases
 
 ### Test against Nordic (IBM Cloud instance)
@@ -101,7 +101,7 @@ dotnet run --project ../OSLC4Net.Client.Samples/ -- etm `
 ### Sample Classes
 Located in `../OSLC4Net.Client.Samples/`:
 - `EWMSample.cs` - Demonstrates OSLC 2.0 Change Management operations
-- `ERMSample.cs` - Demonstrates OSLC 2.0 Requirements Management operations  
+- `ERMSample.cs` - Demonstrates OSLC 2.0 Requirements Management operations
 - `ETMSample.cs` - Demonstrates OSLC 2.0 Quality Management operations
 
 ### Program Architecture
@@ -136,4 +136,3 @@ Located in `../OSLC4Net.Client.Samples/`:
 - See `lyo-samples` repository for similar Java samples
 - [OSLC Specifications](http://open-services.net/)
 - [Eclipse Lyo Documentation](https://projects.eclipse.org/projects/technology.lyo)
-

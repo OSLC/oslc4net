@@ -35,4 +35,3 @@ public class AllowedValuesSerializationTests
         await Verify(deserialized);
     }
 }
-

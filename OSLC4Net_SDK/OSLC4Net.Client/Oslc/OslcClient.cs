@@ -1077,4 +1077,3 @@ public class OslcClient : IDisposable
         _client.Dispose();
     }
 }
-

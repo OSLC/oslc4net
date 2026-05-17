@@ -22,11 +22,11 @@ function Get-AssemblySignature {
     try {
         # --- ATTEMPT 1: REFLECTION (Preferred, Cleaner Output) ---
         $asm = [System.Reflection.Assembly]::LoadFrom($DllPath)
-        
+
         # Iterate over all exported types
         foreach ($type in $asm.GetExportedTypes()) {
             "Class: $($type.FullName)"
-            
+
             # Get methods and signatures
             foreach ($method in $type.GetMethods([System.Reflection.BindingFlags]"Public,Instance,Static,DeclaredOnly")) {
                 "  Method: $($method.ReturnType.Name) $($method.Name)($(($method.GetParameters() | ForEach-Object { $_.ParameterType.Name }) -join ', '))"

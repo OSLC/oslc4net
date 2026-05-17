@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -27,7 +27,7 @@ namespace OSLC4Net.Client.Samples;
 
 /// <summary>
 /// Samples of logging in to Enterprise Test Management (ETM) and running OSLC operations
-/// 
+///
 /// - run an OLSC TestResult query and retrieve OSLC TestResults and de-serialize them as .NET objects
 /// - retrieve an OSLC TestResult and print it as XML
 /// - create a new TestCase
@@ -137,8 +137,8 @@ sealed class ETMSample : SampleBase<TestResult>
 
                 Logger.LogInformation("\n------------------------------\n");
 
-                //SCENARIO B:  Run a query for a specific TestResult selecting only certain 
-                //attributes and then print it as raw XML.  Change the dcterms:title below to match a 
+                //SCENARIO B:  Run a query for a specific TestResult selecting only certain
+                //attributes and then print it as raw XML.  Change the dcterms:title below to match a
                 //real TestResult in your ETM project area
                 OslcQueryParameters queryParams2 = new OslcQueryParameters();
                 queryParams2.SetWhere("dcterms:title=\"Consistent_display_of_currency_Firefox_DB2_WAS_Windows_S1\"");
@@ -169,7 +169,7 @@ sealed class ETMSample : SampleBase<TestResult>
                 String testcaseLocation = creationResponse.Headers.Location.ToString();
                 Logger.LogInformation("Test Case created a location {Location}", testcaseLocation);
 
-                //Get the test case from the service provider and update its title property 
+                //Get the test case from the service provider and update its title property
                 testcase = await (await client.GetResourceRawAsync(testcaseLocation,
                         OslcMediaType.APPLICATION_RDF_XML).ConfigureAwait(false)).Content.ReadAsAsync<TestCase>(client.GetFormatters()).ConfigureAwait(false);
                 testcase.SetTitle(testcase.GetTitle() + " (updated)");
