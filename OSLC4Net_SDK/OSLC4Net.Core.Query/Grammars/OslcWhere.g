@@ -15,6 +15,36 @@
  *******************************************************************************/
 grammar OslcWhere;
 
+// =============================================================================
+// OSLC Query v3.0 conformance notes
+//   spec: https://docs.oasis-open-projects.org/oslc-op/query/v3.0/oslc-query.html
+//
+// Wildcards (`*`):
+//   - The spec says implementations MAY support wildcards "in property names
+//     and nested properties". The `identifier_wc` / `wildcard` rules below
+//     implement that on the LEFT side of comparisons.
+//   - The spec does NOT permit a bare `*` as a comparison VALUE. Use a quoted
+//     string literal `"*"` if a literal asterisk is required. The
+//     kuribara-hideaki/oslc4net fork's `case ASTERISK` in
+//     ComparisonTermImpl.CreateValue was dead code because of this and was
+//     not ported.
+//
+// Whitespace:
+//   - The spec allows optional whitespace around the boolean and `in`
+//     operators. This grammar bakes one mandatory space into `boolean_op`
+//     (' and '!) and `in_op` (' in') for parsing simplicity. Strict
+//     spec-compliance would lift this restriction; see issue tracker before
+//     changing, as it requires a parser regeneration.
+//
+// Regeneration:
+//   The ANTLR 3 CSharp3 target is unmaintained and crashes StringTemplate
+//   (`null.attributes` template errors) on every modern Java/ST4 combo we
+//   have tried. Edits to this `.g` will NOT propagate to OslcWhereParser.cs
+//   without either an ANTLR 4 migration or hand-patching the generated file.
+//   See Impl/GeneratingParsers.txt. (eclipse-lyo regenerates fine because it
+//   targets Java; the C# target is the broken one.)
+// =============================================================================
+
 options {
 	output=AST;
 	language='CSharp3';
