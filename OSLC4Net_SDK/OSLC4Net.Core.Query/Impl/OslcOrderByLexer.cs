@@ -96,7 +96,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:7:15: 'scoped_term'
 			{
 			DebugLocation(7, 15);
-			Match("scoped_term"); 
+			Match("scoped_term");
 
 
 			}
@@ -132,7 +132,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:8:15: 'simple_term'
 			{
 			DebugLocation(8, 15);
-			Match("simple_term"); 
+			Match("simple_term");
 
 
 			}
@@ -168,7 +168,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:9:9: 'terms'
 			{
 			DebugLocation(9, 9);
-			Match("terms"); 
+			Match("terms");
 
 
 			}
@@ -249,7 +249,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			} finally { DebugExitSubRule(1); }
 
 			DebugLocation(68, 25);
-			 _channel=Hidden; 
+			 _channel=Hidden;
 
 			}
 
@@ -307,7 +307,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 				int pStart83 = CharIndex;
 				int pStartLine83 = Line;
 				int pStartCharPos83 = CharPositionInLine;
-				mPN_PREFIX(); 
+				mPN_PREFIX();
 				p = new CommonToken(input, TokenTypes.Invalid, TokenChannels.Default, pStart83, CharIndex-1);
 				p.Line = pStartLine83;
 				p.CharPositionInLine = pStartCharPos83;
@@ -319,7 +319,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			} finally { DebugExitSubRule(2); }
 
 			DebugLocation(72, 20);
-			Match(':'); 
+			Match(':');
 
 			}
 
@@ -354,9 +354,9 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:76:7: PNAME_NS PN_LOCAL
 			{
 			DebugLocation(76, 7);
-			mPNAME_NS(); 
+			mPNAME_NS();
 			DebugLocation(76, 16);
-			mPN_LOCAL(); 
+			mPN_LOCAL();
 
 			}
 
@@ -519,7 +519,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:103:7: PN_CHARS_BASE ( ( PN_CHARS | DOT )* PN_CHARS )?
 			{
 			DebugLocation(103, 7);
-			mPN_CHARS_BASE(); 
+			mPN_CHARS_BASE();
 			DebugLocation(103, 21);
 			// ../Grammars/OslcOrderBy.g:103:21: ( ( PN_CHARS | DOT )* PN_CHARS )?
 			int alt4=2;
@@ -589,7 +589,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 				} finally { DebugExitSubRule(3); }
 
 				DebugLocation(103, 38);
-				mPN_CHARS(); 
+				mPN_CHARS();
 
 				}
 				break;
@@ -708,7 +708,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 				} finally { DebugExitSubRule(5); }
 
 				DebugLocation(108, 47);
-				mPN_CHARS(); 
+				mPN_CHARS();
 
 				}
 				break;
@@ -830,7 +830,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:135:7: '.'
 			{
 			DebugLocation(135, 7);
-			Match('.'); 
+			Match('.');
 
 			}
 
@@ -905,7 +905,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:143:7: '{'
 			{
 			DebugLocation(143, 7);
-			Match('{'); 
+			Match('{');
 
 			}
 
@@ -940,7 +940,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:147:7: '}'
 			{
 			DebugLocation(147, 7);
-			Match('}'); 
+			Match('}');
 
 			}
 
@@ -973,7 +973,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:153:7: '+'
 			{
 			DebugLocation(153, 7);
-			Match('+'); 
+			Match('+');
 
 			}
 
@@ -1004,7 +1004,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:158:7: '-'
 			{
 			DebugLocation(158, 7);
-			Match('-'); 
+			Match('-');
 
 			}
 
@@ -1037,7 +1037,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:161:7: '*'
 			{
 			DebugLocation(161, 7);
-			Match('*'); 
+			Match('*');
 
 			}
 
@@ -1072,7 +1072,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:165:7: ','
 			{
 			DebugLocation(165, 7);
-			Match(','); 
+			Match(',');
 
 			}
 
@@ -1110,7 +1110,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:1:10: SCOPED_TERM
 			{
 			DebugLocation(1, 10);
-			mSCOPED_TERM(); 
+			mSCOPED_TERM();
 
 			}
 			break;
@@ -1119,7 +1119,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:1:22: SIMPLE_TERM
 			{
 			DebugLocation(1, 22);
-			mSIMPLE_TERM(); 
+			mSIMPLE_TERM();
 
 			}
 			break;
@@ -1128,7 +1128,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:1:34: TERMS
 			{
 			DebugLocation(1, 34);
-			mTERMS(); 
+			mTERMS();
 
 			}
 			break;
@@ -1137,7 +1137,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:1:40: WS
 			{
 			DebugLocation(1, 40);
-			mWS(); 
+			mWS();
 
 			}
 			break;
@@ -1146,7 +1146,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:1:43: PNAME_NS
 			{
 			DebugLocation(1, 43);
-			mPNAME_NS(); 
+			mPNAME_NS();
 
 			}
 			break;
@@ -1155,7 +1155,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:1:52: PNAME_LN
 			{
 			DebugLocation(1, 52);
-			mPNAME_LN(); 
+			mPNAME_LN();
 
 			}
 			break;
@@ -1164,7 +1164,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:1:61: DIRECTION
 			{
 			DebugLocation(1, 61);
-			mDIRECTION(); 
+			mDIRECTION();
 
 			}
 			break;
@@ -1173,7 +1173,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:1:71: OPEN_CURLY_BRACE
 			{
 			DebugLocation(1, 71);
-			mOPEN_CURLY_BRACE(); 
+			mOPEN_CURLY_BRACE();
 
 			}
 			break;
@@ -1182,7 +1182,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:1:88: CLOSE_CURLY_BRACE
 			{
 			DebugLocation(1, 88);
-			mCLOSE_CURLY_BRACE(); 
+			mCLOSE_CURLY_BRACE();
 
 			}
 			break;
@@ -1191,7 +1191,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:1:106: ASTERISK
 			{
 			DebugLocation(1, 106);
-			mASTERISK(); 
+			mASTERISK();
 
 			}
 			break;
@@ -1200,7 +1200,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 			// ../Grammars/OslcOrderBy.g:1:115: COMMA
 			{
 			DebugLocation(1, 115);
-			mCOMMA(); 
+			mCOMMA();
 
 			}
 			break;
@@ -1445,7 +1445,7 @@ public partial class OslcOrderByLexer : Antlr.Runtime.Lexer
 		}
 	}
 
- 
+
 	#endregion
 
 }
