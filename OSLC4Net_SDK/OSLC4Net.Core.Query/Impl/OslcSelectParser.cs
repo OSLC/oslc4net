@@ -28,20 +28,20 @@ using Antlr.Runtime.Misc;
 using Antlr.Runtime.Tree;
 using RewriteRuleITokenStream = Antlr.Runtime.Tree.RewriteRuleTokenStream;
 
-namespace  OSLC4Net.Core.Query.Impl 
+namespace  OSLC4Net.Core.Query.Impl
 {
 /******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
- * and Eclipse Distribution License v. 1.0 which accompanies this distribution. 
+ * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
  *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
- * and the Eclipse Distribution License is available at 
+ * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
  *
- * Contributors: 
+ * Contributors:
  *
  *    Steve Pitchke - initial API and implementation
  *******************************************************************************/
@@ -115,7 +115,7 @@ public partial class OslcSelectParser : Antlr.Runtime.Parser
 			this(new CommonTokenStream(new OslcSelectLexer(new ANTLRStringStream(select))))
 	    {
 	    }
-		
+
 		public object Result
 		{
 			get { return oslc_select().Tree; }
@@ -248,7 +248,7 @@ public partial class OslcSelectParser : Antlr.Runtime.Parser
 					// ../Grammars/OslcSelect.g:47:26: ',' property
 					{
 					DebugLocation(47, 26);
-					char_literal3=(IToken)Match(input,COMMA,Follow._COMMA_in_properties93);  
+					char_literal3=(IToken)Match(input,COMMA,Follow._COMMA_in_properties93);
 					stream_COMMA.Add(char_literal3);
 
 					DebugLocation(47, 30);
@@ -276,11 +276,11 @@ public partial class OslcSelectParser : Antlr.Runtime.Parser
 			{
 			// AST REWRITE
 			// elements: PROPERTIES, property, property
-			// token labels: 
+			// token labels:
 			// rule labels: retval
-			// token list labels: 
-			// rule list labels: 
-			// wildcard labels: 
+			// token list labels:
+			// rule list labels:
+			// wildcard labels:
 			retval.Tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
@@ -515,7 +515,7 @@ public partial class OslcSelectParser : Antlr.Runtime.Parser
 
 			stream_identifier.Add(identifier7.Tree);
 			DebugLocation(53, 30);
-			OPEN_CURLY_BRACE8=(IToken)Match(input,OPEN_CURLY_BRACE,Follow._OPEN_CURLY_BRACE_in_nested_property147);  
+			OPEN_CURLY_BRACE8=(IToken)Match(input,OPEN_CURLY_BRACE,Follow._OPEN_CURLY_BRACE_in_nested_property147);
 			stream_OPEN_CURLY_BRACE.Add(OPEN_CURLY_BRACE8);
 
 			DebugLocation(53, 47);
@@ -525,7 +525,7 @@ public partial class OslcSelectParser : Antlr.Runtime.Parser
 
 			stream_properties.Add(properties9.Tree);
 			DebugLocation(53, 58);
-			CLOSE_CURLY_BRACE10=(IToken)Match(input,CLOSE_CURLY_BRACE,Follow._CLOSE_CURLY_BRACE_in_nested_property151);  
+			CLOSE_CURLY_BRACE10=(IToken)Match(input,CLOSE_CURLY_BRACE,Follow._CLOSE_CURLY_BRACE_in_nested_property151);
 			stream_CLOSE_CURLY_BRACE.Add(CLOSE_CURLY_BRACE10);
 
 
@@ -533,11 +533,11 @@ public partial class OslcSelectParser : Antlr.Runtime.Parser
 			{
 			// AST REWRITE
 			// elements: properties, NESTED_PROPERTIES, identifier
-			// token labels: 
+			// token labels:
 			// rule labels: retval
-			// token list labels: 
-			// rule list labels: 
-			// wildcard labels: 
+			// token list labels:
+			// rule list labels:
+			// wildcard labels:
 			retval.Tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
@@ -654,11 +654,11 @@ public partial class OslcSelectParser : Antlr.Runtime.Parser
 				{
 				// AST REWRITE
 				// elements: prefixedName, PREFIXED_NAME
-				// token labels: 
+				// token labels:
 				// rule labels: retval
-				// token list labels: 
-				// rule list labels: 
-				// wildcard labels: 
+				// token list labels:
+				// rule list labels:
+				// wildcard labels:
 				retval.Tree = root_0;
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
@@ -690,7 +690,7 @@ public partial class OslcSelectParser : Antlr.Runtime.Parser
 				// ../Grammars/OslcSelect.g:57:7: ASTERISK
 				{
 				DebugLocation(57, 7);
-				ASTERISK12=(IToken)Match(input,ASTERISK,Follow._ASTERISK_in_identifier191);  
+				ASTERISK12=(IToken)Match(input,ASTERISK,Follow._ASTERISK_in_identifier191);
 				stream_ASTERISK.Add(ASTERISK12);
 
 
@@ -698,11 +698,11 @@ public partial class OslcSelectParser : Antlr.Runtime.Parser
 				{
 				// AST REWRITE
 				// elements: WILDCARD
-				// token labels: 
+				// token labels:
 				// rule labels: retval
-				// token list labels: 
-				// rule list labels: 
-				// wildcard labels: 
+				// token list labels:
+				// rule list labels:
+				// wildcard labels:
 				retval.Tree = root_0;
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
@@ -848,4 +848,4 @@ public partial class OslcSelectParser : Antlr.Runtime.Parser
 	#endregion Follow sets
 }
 
-} // namespace  OSLC4Net.Core.Query.Impl 
+} // namespace  OSLC4Net.Core.Query.Impl

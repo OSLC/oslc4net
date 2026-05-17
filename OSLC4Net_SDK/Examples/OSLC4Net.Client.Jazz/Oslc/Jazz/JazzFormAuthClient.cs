@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -59,7 +59,7 @@ public class JazzFormAuthClient : OslcClient
     /// Create a new Jazz Form Auth client for the given URL, user and password
     /// </summary>
     /// <param name="url">the URL of the Jazz server, including the web app context</param>
-    /// <param name="authUrl">the base URL to use for authentication.  This is normally the 
+    /// <param name="authUrl">the base URL to use for authentication.  This is normally the
     /// application base URL for RQM and RTC and is the JTS application URL for fronting
     /// applications like RRC and DM.</param>
     /// <param name="user"></param>

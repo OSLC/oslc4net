@@ -378,8 +378,8 @@ Use “e.g.” when giving an example in brackets or at the end of a sentence: 
 Use “for example” when the example is given as part of the sentence or to introduce a list:
 
 *   “Applicable actions can include, for example, the provision of training or the re-assignment of personnel.” 
-*   “Processing can involve a range of processes, including, for example:   
-    —   addition of stabilizing agents;   
+*   “Processing can involve a range of processes, including, for example: 
+    —   addition of stabilizing agents; 
     —   homogenization prior to packaging.” 
 
 Use “i.e.” when clarifying a point or explaining something in another way:
@@ -498,7 +498,7 @@ ISO documents use two formats for lists.
     *   the penultimate list item does not include “and” or “or”, except to avoid ambiguity;
     *   the final list item ends with a full stop.
 
-EXAMPLES  
+EXAMPLES
 When preparing the Foreword, add all document-specific elements into the fixed text.
 
 *   The number and title of the responsible TC and SC.
@@ -618,4 +618,3 @@ For a duration of time, write:
 *   “the twenty-first century” and not “the 21st century”
 
 In tables or figures, use the format “2020-10-31” (YYYY-MM-DD), as specified in [ISO 8601-1](https://www.iso.org/obp/ui/#iso:std:iso:8601:-1:ed-1:v1:en). Avoid ambiguous phrases such as “last year” or “recently” since a publication is likely to remain in use for several years. Give the date instead.
-
