@@ -28,20 +28,20 @@ using Antlr.Runtime.Misc;
 using Antlr.Runtime.Tree;
 using RewriteRuleITokenStream = Antlr.Runtime.Tree.RewriteRuleTokenStream;
 
-namespace  OSLC4Net.Core.Query.Impl 
+namespace  OSLC4Net.Core.Query.Impl
 {
 /******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
- * and Eclipse Distribution License v. 1.0 which accompanies this distribution. 
+ * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
  *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
- * and the Eclipse Distribution License is available at 
+ * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
  *
- * Contributors: 
+ * Contributors:
  *
  *    Steve Pitchke - initial API and implementation
  *******************************************************************************/
@@ -98,11 +98,11 @@ public partial class OslcSearchTermsParser : Antlr.Runtime.Parser
 			this(new CommonTokenStream(new OslcSearchTermsLexer(new ANTLRStringStream(searcTerms))))
 	    {
 	    }
-		
+
 		public object Result
 		{
 			get { return oslc_search_terms().Tree; }
-		}       
+		}
 
 
 	partial void OnCreated();
@@ -169,7 +169,7 @@ public partial class OslcSearchTermsParser : Antlr.Runtime.Parser
 					// ../Grammars/OslcSearchTerms.g:41:37: ',' string_esc
 					{
 					DebugLocation(41, 37);
-					char_literal2=(IToken)Match(input,COMMA,Follow._COMMA_in_oslc_search_terms64);  
+					char_literal2=(IToken)Match(input,COMMA,Follow._COMMA_in_oslc_search_terms64);
 					stream_COMMA.Add(char_literal2);
 
 					DebugLocation(41, 41);
@@ -197,11 +197,11 @@ public partial class OslcSearchTermsParser : Antlr.Runtime.Parser
 			{
 			// AST REWRITE
 			// elements: string_esc, STRING_LIST, string_esc
-			// token labels: 
+			// token labels:
 			// rule labels: retval
-			// token list labels: 
-			// rule list labels: 
-			// wildcard labels: 
+			// token list labels:
+			// rule list labels:
+			// wildcard labels:
 			retval.Tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
@@ -292,7 +292,7 @@ public partial class OslcSearchTermsParser : Antlr.Runtime.Parser
 			root_0 = (object)adaptor.Nil();
 
 			DebugLocation(44, 17);
-			STRING_LITERAL4=(IToken)Match(input,STRING_LITERAL,Follow._STRING_LITERAL_in_string_esc97); 
+			STRING_LITERAL4=(IToken)Match(input,STRING_LITERAL,Follow._STRING_LITERAL_in_string_esc97);
 			STRING_LITERAL4_tree = (object)adaptor.Create(STRING_LITERAL4);
 			adaptor.AddChild(root_0, STRING_LITERAL4_tree);
 
@@ -337,4 +337,4 @@ public partial class OslcSearchTermsParser : Antlr.Runtime.Parser
 	#endregion Follow sets
 }
 
-} // namespace  OSLC4Net.Core.Query.Impl 
+} // namespace  OSLC4Net.Core.Query.Impl

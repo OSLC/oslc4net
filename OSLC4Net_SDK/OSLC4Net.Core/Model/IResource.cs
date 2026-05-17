@@ -28,4 +28,3 @@ public interface IResource
     [Obsolete("Use .About instead")]
     void SetAbout(Uri about);
 }
-

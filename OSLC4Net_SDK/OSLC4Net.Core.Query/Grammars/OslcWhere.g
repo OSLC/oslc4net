@@ -3,13 +3,13 @@
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
- * and Eclipse Distribution License v. 1.0 which accompanies this distribution. 
+ * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
  *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
- * and the Eclipse Distribution License is available at 
+ * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
  *
- * Contributors: 
+ * Contributors:
  *
  *    Steve Pitchke - initial API and implementation
  *******************************************************************************/
@@ -37,20 +37,20 @@ tokens {
 		this(new CommonTokenStream(new OslcWhereLexer(new ANTLRStringStream(where))))
     {
     }
-	
+
 	public object Result
 	{
 		get { return oslc_where().Tree; }
 	}
 }
 
-oslc_where    : compound_term 
+oslc_where    : compound_term
 	;
 
 compound_term : simple_term ( boolean_op simple_term)*  -> ^( 'terms' simple_term (simple_term)* )
-	; 
+	;
 
-simple_term   : term | scoped_term  
+simple_term   : term | scoped_term
 	;
 
 space         : ' '! ;
@@ -60,7 +60,7 @@ boolean_op    : ' and '! ;
 term	:	term_simple | in_term ;
 
 term_simple
-	:	identifier_wc comparison_op value -> ^( 'simple_term' identifier_wc comparison_op value ) 
+	:	identifier_wc comparison_op value -> ^( 'simple_term' identifier_wc comparison_op value )
 	;
 
 in_term	:	identifier_wc in_op space? in_val -> ^( 'in_term' identifier_wc in_val )
@@ -87,13 +87,13 @@ value         : iriRef | literal_value ;
 
 literal_value : boolean_val | decimal | string_esc | typed_string  | langed_string
 	;
-	
+
 typed_string
-	:	string_esc ( '^^' prefixedName ) -> ^( 'typed_value' string_esc prefixedName?  ) 
+	:	string_esc ( '^^' prefixedName ) -> ^( 'typed_value' string_esc prefixedName?  )
 	;
 
 langed_string
-	:	string_esc LANGTAG  -> ^( 'langed_value' string_esc LANGTAG ) 
+	:	string_esc LANGTAG  -> ^( 'langed_value' string_esc LANGTAG )
 	;
 
 
@@ -103,18 +103,18 @@ decimal       : DECIMAL ;
 
 string_esc    : STRING_LITERAL ;
 
-properties 	:	 
-	property (',' property )* 
+properties 	:
+	property (',' property )*
 	;
 
-property 	:	
-	prefixedName ( nested_property )*  
+property 	:
+	prefixedName ( nested_property )*
 	;
 
 nested_property :
 	'{' property (',' property )*  '}'
 	;
-	
+
 iriRef
     : IRI_REF
     | prefixedName
@@ -145,21 +145,21 @@ PNAME_LN
 
 
 IRI_REF
-    : LESS ( options {greedy=false;} : ~(LESS | GREATER | '"' | OPEN_CURLY_BRACE | CLOSE_CURLY_BRACE | '|' | '^' | '\\' | '`' | ('\u0000'..'\u0020')) )* GREATER 
+    : LESS ( options {greedy=false;} : ~(LESS | GREATER | '"' | OPEN_CURLY_BRACE | CLOSE_CURLY_BRACE | '|' | '^' | '\\' | '`' | ('\u0000'..'\u0020')) )* GREATER
     ;
 
 
 LANGTAG
     : '@' ALPHA_CHARS+ (MINUS (DIGIT | ALPHA_CHARS)+)*
     ;
-    
+
 fragment
 ALPHA_CHARS
     : 'a'..'z'
     | 'A'..'Z'
     ;
 
-BOOLEAN       
+BOOLEAN
     : 'true'
     | 'false'
     ;
@@ -189,7 +189,7 @@ PN_CHARS
     : PN_CHARS_U
     | MINUS
     | DIGIT
-    | '\u00B7' 
+    | '\u00B7'
     | '\u0300'..'\u036F'
     | '\u203F'..'\u2040'
     ;
