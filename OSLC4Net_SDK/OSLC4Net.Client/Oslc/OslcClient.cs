@@ -189,7 +189,6 @@ public class OslcClient : IDisposable
         DefaultRequestParams = defaultRequestParams ?? OslcRequestParams.Default;
     }
 
-
     public static OslcClient ForBasicAuth(string username, string password,
         ILogger<OslcClient> logger,
         HttpClientHandler? handler = null,
