@@ -19,6 +19,7 @@ This release does not contain security updates.
 
 - `RootServicesHelper` was added to assist with processing OSLC Root Services documents. It can help with direct lookups (as long as your URI ends with `/rootservices` or `/rootservices.xml`), can look up a standard `/.well-known/oslc/rootservices.xml` location, or fall back to appending `/rootservices` for legacy systems.
 - ⚡️Samples for IBM Jazz ERM (aka Doors NG), ETM, and EWM were migrated to .NET 10 and tested against Jazz.net. You can run them yourself using `OSLC4Net_SDK\Examples\scripts\test-jazz_net.ps1`.
+- New `IBaseClause` interface with `IsError` and `ErrorReason` properties. `WhereClause` and `SortTerms` (and therefore `OrderByClause`) now implement it, so callers can inspect parse failures without `try`/`catch`. Ported from kuribara-hideaki/oslc4net commits `db49995`, `efcacd76`, `127e068a`.
 
 
 ### Changed
@@ -26,6 +27,7 @@ This release does not contain security updates.
 - `OSLC4Net.Core` requires .NET 10 to be able to use the `[Experimental]` annotation.
 - `OSLC4Net.Client` requires .NET 10.
 - ❗️ `SignedByteNode` (which corresponds to `xsd:byte`) is now parsed as C# `sbyte` (signed byte) instead of `byte`.
+- ❗️ `QueryUtils.ParseWhere` and `QueryUtils.ParseOrderBy` no longer throw `ParseException` on invalid input. They return a clause whose `IsError` is `true` and `ErrorReason` holds the parser message. Existing call sites that rely on the throw will need to inspect `IsError` instead.
 
 ### Deprecated
 
