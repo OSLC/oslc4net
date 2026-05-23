@@ -24,7 +24,7 @@ namespace OSLC4Net.Core.Model;
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
 [OslcResourceShape(title = "OSLC Property Resource Shape",
     describes = new[] { OslcConstants.TYPE_PROPERTY })]
-public sealed class Property : AbstractResource, IComparable<Property>
+public sealed class Property : AbstractResource, IComparable<Property>, IEquatable<Property>
 {
     private readonly IList<string> allowedValues = new List<string>();
     private readonly List<Uri> range = new();
@@ -74,6 +74,34 @@ public sealed class Property : AbstractResource, IComparable<Property>
 
         return Uri.Compare(propertyDefinition, o.propertyDefinition,
             UriComponents.AbsoluteUri, UriFormat.UriEscaped, StringComparison.Ordinal);
+    }
+
+    public bool Equals(Property? other)
+    {
+        if (other is null)
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(this, other))
+        {
+            return true;
+        }
+
+        return CompareTo(other) == 0;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return Equals(obj as Property);
+    }
+
+    public override int GetHashCode()
+    {
+        var nameHash = name != null ? StringComparer.Ordinal.GetHashCode(name) : 0;
+        var uriString = propertyDefinition?.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped);
+        var uriHash = uriString != null ? StringComparer.Ordinal.GetHashCode(uriString) : 0;
+        return HashCode.Combine(nameHash, uriHash);
     }
 
     public void AddAllowedValue(string allowedValue)

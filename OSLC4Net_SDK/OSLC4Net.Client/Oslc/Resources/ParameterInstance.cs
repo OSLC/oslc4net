@@ -26,7 +26,7 @@ namespace OSLC4Net.Client.Oslc.Resources;
 [OslcResourceShape(title = "Parameter Instance Resource Shape",
     describes = new string[] { AutomationConstants.TYPE_PARAMETER_INSTANCE })]
 [OslcNamespace(AutomationConstants.AUTOMATION_NAMESPACE)]
-public class ParameterInstance : AbstractResource
+public class ParameterInstance : AbstractResource, IComparable<ParameterInstance>, IEquatable<ParameterInstance>
 {
 
     private string name;
@@ -138,8 +138,54 @@ public class ParameterInstance : AbstractResource
         this.serviceProvider = serviceProvider;
     }
 
-    public int CompareTo(ParameterInstance o)
+    public int CompareTo(ParameterInstance? o)
     {
-        return o.GetName().CompareTo(name);
+        if (o is null)
+        {
+            return 1;
+        }
+
+        var oName = o.GetName();
+        if (name is null && oName is null)
+        {
+            return 0;
+        }
+
+        if (oName is null)
+        {
+            return 1;
+        }
+
+        if (name is null)
+        {
+            return -1;
+        }
+
+        return string.Compare(oName, name, StringComparison.Ordinal);
+    }
+
+    public bool Equals(ParameterInstance? other)
+    {
+        if (other is null)
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(this, other))
+        {
+            return true;
+        }
+
+        return CompareTo(other) == 0;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return Equals(obj as ParameterInstance);
+    }
+
+    public override int GetHashCode()
+    {
+        return name != null ? StringComparer.Ordinal.GetHashCode(name) : 0;
     }
 }
