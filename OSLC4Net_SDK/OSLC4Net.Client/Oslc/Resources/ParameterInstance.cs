@@ -161,7 +161,7 @@ public class ParameterInstance : AbstractResource, IComparable<ParameterInstance
             return -1;
         }
 
-        return string.Compare(oName, name, StringComparison.Ordinal);
+        return string.Compare(name, oName, StringComparison.Ordinal);
     }
 
     public bool Equals(ParameterInstance? other)
