@@ -399,7 +399,7 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
                 get
                 {
                     var member = _triples.Current ??
-                                 throw new ArgumentNullException(nameof(_triples.Current));
+                                 throw new InvalidOperationException("Current element is null");
                     return (T)_dotNetRdfHelper.FromDotNetRdfNode((IUriNode)member.Object, _graph,
                         typeof(T));
                 }

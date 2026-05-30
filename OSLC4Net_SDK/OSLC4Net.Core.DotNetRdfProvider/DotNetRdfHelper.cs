@@ -604,7 +604,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                                 }
                                 else
                                 {
-                                    throw new ArgumentException("'" + stringValue +
+                                    throw new FormatException("'" + stringValue +
                                                                 "' has wrong format for Boolean.");
                                 }
                             }
