@@ -83,6 +83,7 @@ jobs:
     permissions:
       contents: read  # for actions/checkout to fetch code
       packages: write  # for setup-dotnet to create package
+      code-quality: write  # for actions/upload-code-coverage
     strategy:
       fail-fast: false
       matrix:
@@ -188,6 +189,15 @@ jobs:
           exclude: .nuget,main/OSLC4Net_SDK/Examples
           # files: "${{ github.workspace }}/main/OSLC4Net_SDK/Tests/*/TestResults/*.coverage,${{ github.workspace }}/main/OSLC4Net_SDK/Tests/*/TestResults/*.xml"
           files: ${{ github.workspace }}/coveragereports/Cobertura.xml
+      - name: Upload coverage report to GitHub
+        # Upload from a single matrix leg to avoid duplicate reports for the same SHA.
+        if: matrix.os == 'ubuntu-24.04'
+        uses: actions/upload-code-coverage@abb5995db9e0199b0e2bb9dbd136fce4cb1ec4d3 # v1.3.0
+        with:
+          file: ${{ github.workspace }}/coveragereports/Cobertura.xml
+          language: 'C#'
+          label: 'dotnet/cobertura'
+          fail-on-error: false
       - name: Pack NuGet packages (snapshot)
         shell: pwsh
         run: |
