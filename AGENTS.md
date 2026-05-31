@@ -110,6 +110,31 @@ dotnet format whitespace ./OSLC4Net_SDK && dotnet format style ./OSLC4Net_SDK --
 - Also run this **after resolving merge conflicts**. Hand-edited hunks re-introduce style drift even when both parents were clean.
 - A pre-commit hook (`.pre-commit-config.yaml`) enforces this; install once with `pre-commit install`.
 
+## Copyright headers
+
+Any file you've **significantly** touched (substantive code, docs, or
+non-trivial test changes — not just whitespace, renames, or a one-line
+tweak) should carry the line:
+
+```
+Copyright (c) <YYYY> Andrii Berezovskyi and OSLC4Net contributors.
+```
+
+where `<YYYY>` is the current year **at the time you add the line**.
+
+Rules:
+- **New files**: include this line as the sole copyright attribution (no
+  inherited IBM/contributor headers).
+- **Existing files** that already have other copyright attributions
+  (e.g. `Copyright (c) 2012 IBM Corporation.`): add the
+  `Andrii Berezovskyi and OSLC4Net contributors.` line immediately after
+  the last existing copyright line. Preserve all other attributions and
+  the `Contributors:` block.
+- **Existing files** that already carry an
+  `Andrii Berezovskyi and OSLC4Net contributors.` line: leave the year
+  alone. Do not "refresh" it to the current year.
+- Never remove other copyright attributions.
+
 ## Project Structure
 
 - `OSLC4Net_SDK/` - Main SDK projects (.NET 10)
