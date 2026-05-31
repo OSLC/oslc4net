@@ -182,7 +182,7 @@ jobs:
         run: |
           cat $GITHUB_WORKSPACE/coveragereports/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
+        uses: codecov/codecov-action@e79a6962e0d4c0c17b229090214935d2e33f8354 # v6.0.1
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
