@@ -97,6 +97,10 @@ TUnit also supports filtering by your own [properties](https://thomhurst.github.
 
 And if your test had a property with the name "MyFilterName" and its value contained "SomeValue", then your test would be executed.
 
+## Commit messages
+
+Use the scoped-commit convention defined in [CONTRIBUTING.md](CONTRIBUTING.md#commit-messages): `scope: imperative summary in lowercase`, no `feat:` / `fix:` / `chore:` / `refactor:` type prefixes. Top-level scopes are `core` / `query` / `client` / `server` / `domains` / `trs` / `tests` / `docs` / `build`. Apply the same convention to PR titles — the squash-merge subject becomes the commit subject.
+
 ## Formatting (required before every commit)
 
 Run from the repo root:
