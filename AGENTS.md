@@ -26,7 +26,7 @@ dotnet reportgenerator -reports:"**/coverage.cobertura.xml" -targetdir:"./Covera
 
 ## Docs
 
-- If a change is significant, add a line to CHANGELOG.md
+- Every breaking change must have at least a one-liner in the CHANGELOG.md. If a change is significant, add a line as well.
 - If a change breaks anything or requires a non-trivial migration step, add a section to MIGRATION.md
 - If a change is noteworthy, add docs to the `docs/articles`. Use snippets where possible. Strive to apply https://diataxis.fr/. Prefer spelling out type names over 'var' except for literals and obvious types. Skip ceremony like setting up loggers or ConfigureAwait. Refrain from numbering sections/subsections to make it easier to restructure content.
 
