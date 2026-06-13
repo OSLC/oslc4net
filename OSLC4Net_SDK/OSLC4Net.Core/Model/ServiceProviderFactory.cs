@@ -375,13 +375,10 @@ public class ServiceProviderFactory
                 returnUri = resolvedUri.tostring();
             }
         */
-            returnUri = basePath + "/" + pathAttribute;
         }
-        else
-        {
-            // no parameters supplied - assume @Path not templated
-            returnUri = basePath + "/" + pathAttribute;
-        }
+
+        // Fallback or no parameters supplied - assume @Path not templated
+        returnUri = basePath + "/" + pathAttribute;
 
         return returnUri;
     }
