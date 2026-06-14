@@ -132,7 +132,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                     new Uri(OslcConstants.OSLC_CORE_NAMESPACE + PROPERTY_TOTAL_COUNT)),
                 graph.CreateLiteralNode(countValue.ToString(CultureInfo.InvariantCulture))));
 
-            if (nextPageAbout != null)
+            if (!string.IsNullOrEmpty(nextPageAbout))
             {
                 graph.Assert(new Triple(responseInfoResource,
                     graph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE +
@@ -2027,7 +2027,10 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
     {
         var uri = new Uri(ns);
 
-        if (namespaceMappings.GetPrefix(uri) == null)
+        // INamespaceMapper.GetPrefix throws RdfException when the URI is not mapped, so it
+        // cannot be used as a presence check: a ResponseInfo container with no members (a
+        // valid empty query result) would never register the oslc prefix and would throw.
+        if (!namespaceMappings.TryGetPrefix(uri, out _))
         {
             if (!namespaceMappings.HasNamespace(prefix))
             {

@@ -10,6 +10,8 @@ updates:
       interval: "daily"
     cooldown:
       default-days: 2
+    commit-message:
+      prefix: "build"
     groups:
       aspire-deps:
         patterns:
@@ -32,3 +34,5 @@ updates:
       default-days: 2
     schedule:
       interval: "daily"
+    commit-message:
+      prefix: "build"

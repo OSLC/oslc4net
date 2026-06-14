@@ -17,6 +17,7 @@ This release does not contain security updates.
 
 ### Added
 
+- `OslcQuery.SubmitPost()` submits form-encoded OSLC queries over HTTP POST.
 - `RootServicesHelper` was added to assist with processing OSLC Root Services documents. It can help with direct lookups (as long as your URI ends with `/rootservices` or `/rootservices.xml`), can look up a standard `/.well-known/oslc/rootservices.xml` location, or fall back to appending `/rootservices` for legacy systems.
 - ⚡️Samples for IBM Jazz ERM (aka Doors NG), ETM, and EWM were migrated to .NET 10 and tested against Jazz.net. You can run them yourself using `OSLC4Net_SDK\Examples\scripts\test-jazz_net.ps1`.
 - New `IBaseClause` interface with `IsError` and `ErrorReason` properties. `WhereClause` and `SortTerms` (and therefore `OrderByClause`) now implement it, so callers can inspect parse failures without `try`/`catch`. Ported from kuribara-hideaki/oslc4net commits `db49995`, `efcacd76`, `127e068a`.
@@ -40,8 +41,13 @@ This release does not remove any features.
 
 ### Fixed
 
+- Query results recognize membership predicates declared through `ldp:hasMemberRelation` or explicitly supplied to `OslcQuery`, and support `ldp:contains` query containers.
+- Query result total counts are parsed from RDF literal nodes.
 - Properties backed by URI collections are now reflected in OSLC shapes correctly (thanks to @ZUOXIANGE)
 - `OslcQueryResult` now handles cases where RDF graph parsing from query responses produces malformed URI nodes. Instead of throwing `ArgumentNullException`, methods like `GetMembersUrls()`, `GetMembers<T>()`, `GetNextPageUrl()`, and `GetTotalCount()` now gracefully return empty results or null values.
+- Replaced the use of `SystemException` with `InvalidOperationException` in `Property.cs` to resolve compiler warning CA2201.
+- `OslcRdfOutputFormatter` no longer throws on a `ResponseInfo` without a next page: a missing next page is kept as `null` instead of being coerced to an empty string that reached `new Uri("")`. Server-side OSLC query responses without paging now serialize correctly.
+- `DotNetRdfHelper.CreateDotNetRdfGraph` serializes an empty `ResponseInfo` container (a query that matched no members) instead of throwing when the `oslc` namespace prefix is not already registered.
 
 
 ## [0.6.3] - 2025-11-15
