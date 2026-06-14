@@ -34,6 +34,12 @@ namespace OSLC4Net.Client.Oslc.Resources;
 public class OslcQueryResult : IEnumerator<OslcQueryResult>
 {
     private static readonly Uri _rdfsMemberUri = new("http://www.w3.org/2000/01/rdf-schema#member");
+    private static readonly Uri _ldpContainsUri = new(
+        global::OSLC4Net.Core.Model.OslcConstants.Domains.LDP.P.Contains);
+    private static readonly Uri _ldpHasMemberRelationUri = new(
+        global::OSLC4Net.Core.Model.OslcConstants.Domains.LDP.P.HasMemberRelation);
+    private static readonly Uri _ldpMembershipResourceUri = new(
+        global::OSLC4Net.Core.Model.OslcConstants.Domains.LDP.P.MembershipResource);
 
     private static readonly Uri _responsePredicateUri = new(OslcConstants.OSLC_CORE_NAMESPACE +
                                                             "ResponseInfo");
@@ -55,6 +61,8 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     private bool _rdfInitialized;
 
     private IUriNode? _rdfType;
+    private IUriNode? _memberRelation;
+    private IUriNode? _membershipResource;
     private IUriNode? _resultsMemberContainer;
 
     private long? _totalCount;
@@ -184,13 +192,18 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
             _infoResource ??= GetInfoResourceExactCapabilityMatch(_rdfGraph);
             _infoResource ??= GetInfoResourceSubjectStartsWithCapabilityUri(triples);
 
-            // Use the same resource for members container, with same fallback chain
+            // OSLC Query requires the result container subject to be the query base URI.
+            _resultsMemberContainer ??= GetExactCapabilityResource(_rdfGraph);
+
+            // Retain the legacy fallback chain for non-conforming OSLC 2.0 responses.
             _resultsMemberContainer ??= GetInfoResourceExactCapabilityMatch(_rdfGraph);
             _resultsMemberContainer ??= GetSingleInfoResource(triples);
             _resultsMemberContainer ??= GetInfoResourceExactQueryMatch(triples);
             _resultsMemberContainer ??= GetInfoResourceSubjectStartsWithQueryUri(triples);
             _resultsMemberContainer ??= GetInfoResourceSubjectStartsWithCapabilityUri(triples);
             _resultsMemberContainer ??= _infoResource;
+
+            ResolveMembershipRelation();
         }
     }
 
@@ -217,6 +230,55 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
         return triples?.FirstOrDefault(spo =>
             spo.Subject is IUriNode node &&
             node.Uri.Equals(new Uri(_query.CapabilityUrl)))?.Subject as IUriNode;
+    }
+
+    private IUriNode? GetExactCapabilityResource(IGraph graph)
+    {
+        var subject = graph.CreateUriNode(new Uri(_query.CapabilityUrl));
+        return graph.GetTriplesWithSubject(subject).Any()
+            ? subject
+            : null;
+    }
+
+    private void ResolveMembershipRelation()
+    {
+        if (_rdfGraph is null || _resultsMemberContainer is null)
+        {
+            return;
+        }
+
+        _membershipResource = GetUriObject(
+            _resultsMemberContainer,
+            _ldpMembershipResourceUri) ?? _resultsMemberContainer;
+
+        // A DirectContainer declaration describes the actual response representation and wins
+        // over a client-supplied relation discovered from the query capability's resource shape.
+        _memberRelation = GetUriObject(_resultsMemberContainer, _ldpHasMemberRelationUri);
+        _memberRelation ??= _query.MemberRelation is null
+            ? null
+            : _rdfGraph.CreateUriNode(_query.MemberRelation);
+        _memberRelation ??= HasUriMembers(_membershipResource, _rdfsMemberUri)
+            ? _rdfGraph.CreateUriNode(_rdfsMemberUri)
+            : null;
+        _memberRelation ??= HasUriMembers(_membershipResource, _ldpContainsUri)
+            ? _rdfGraph.CreateUriNode(_ldpContainsUri)
+            : null;
+    }
+
+    private IUriNode? GetUriObject(IUriNode subject, Uri predicate)
+    {
+        return _rdfGraph!
+            .GetTriplesWithSubjectPredicate(subject, _rdfGraph.CreateUriNode(predicate))
+            .Select(triple => triple.Object)
+            .OfType<IUriNode>()
+            .FirstOrDefault();
+    }
+
+    private bool HasUriMembers(IUriNode subject, Uri predicate)
+    {
+        return _rdfGraph!
+            .GetTriplesWithSubjectPredicate(subject, _rdfGraph.CreateUriNode(predicate))
+            .Any(triple => triple.Object is IUriNode);
     }
 
     private IUriNode? GetInfoResourceSubjectStartsWithQueryUri(Triple[]? triples)
@@ -304,16 +366,8 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
             return membersUrls.ToArray();
         }
 
-        var triples = _rdfGraph!.GetTriplesWithSubject(_resultsMemberContainer);
-
-        foreach (var triple in triples)
+        foreach (var triple in GetMemberTriples())
         {
-            if (!triple.Predicate.Equals(
-                    _rdfGraph.GetUriNode(_rdfsMemberUri)))
-            {
-                continue;
-            }
-
             if (triple.Object is IUriNode uriNode)
             {
                 membersUrls.Add(uriNode.Uri.ToString());
@@ -339,16 +393,23 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
             return Enumerable.Empty<T>();
         }
 
-        var triples = _rdfGraph!.GetTriplesWithSubject(_resultsMemberContainer);
-
-        // Filter to only rdfs:member predicates with URI objects (same logic as GetMembersUrls)
-        var memberTriples = triples.Where(triple =>
-            triple.Predicate.Equals(_rdfGraph.GetUriNode(_rdfsMemberUri)) &&
-            triple.Object is IUriNode);
+        var memberTriples = GetMemberTriples();
 
         IEnumerable<T> result = new TripleEnumerableWrapper<T>(memberTriples, _rdfGraph, _rdfHelper);
 
         return result;
+    }
+
+    private IEnumerable<Triple> GetMemberTriples()
+    {
+        if (_membershipResource is null || _memberRelation is null)
+        {
+            return Enumerable.Empty<Triple>();
+        }
+
+        return _rdfGraph!
+            .GetTriplesWithSubjectPredicate(_membershipResource, _memberRelation)
+            .Where(triple => triple.Object is IUriNode);
     }
 
     private sealed class TripleEnumerableWrapper<T> : IEnumerable<T>

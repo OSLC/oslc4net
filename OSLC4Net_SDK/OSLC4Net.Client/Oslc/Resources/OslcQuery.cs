@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,12 +15,14 @@
  *******************************************************************************/
 
 using System.Globalization;
+using System.Net.Http.Headers;
+using System.Text;
 using OSLC4Net.Core.DotNetRdfProvider;
 
 namespace OSLC4Net.Client.Oslc.Resources;
 
 /// <summary>
-///     Represents an OSLC query (HTTP GET) request to be made of a remote system.
+///     Represents an OSLC query request to be made of a remote system.
 ///     Immutable.
 /// </summary>
 public class OslcQuery
@@ -28,6 +31,7 @@ public class OslcQuery
     private readonly string capabilityUrl;
     private readonly string orderBy;
     private readonly OslcClient oslcClient;
+    private readonly Uri? memberRelation;
 
     private readonly int pageSize;
     private readonly string prefix;
@@ -110,6 +114,30 @@ public class OslcQuery
         queryUrl = GetQueryUrl();
     }
 
+    /// <summary>
+    ///     Create an OSLC query with an explicitly declared query-result membership relation.
+    /// </summary>
+    /// <param name="oslcClient">the authenticated OSLC client</param>
+    /// <param name="capabilityUrl">the URL that is the query base</param>
+    /// <param name="pageSize">the number of results to include on each page</param>
+    /// <param name="oslcQueryParams">an <see cref="OslcQueryParameters" /> object</param>
+    /// <param name="memberRelation">
+    ///     the RDF property that relates the query result container to each result member
+    /// </param>
+    public OslcQuery(OslcClient oslcClient, string capabilityUrl,
+        int pageSize, OslcQueryParameters oslcQueryParams, Uri memberRelation) :
+        this(oslcClient, capabilityUrl, pageSize, oslcQueryParams)
+    {
+        ArgumentNullException.ThrowIfNull(memberRelation);
+        if (!memberRelation.IsAbsoluteUri)
+        {
+            throw new ArgumentException("The member relation must be an absolute URI.",
+                nameof(memberRelation));
+        }
+
+        this.memberRelation = memberRelation;
+    }
+
     internal OslcQuery(OslcQueryResult previousResult) :
         this(previousResult.GetQuery(), previousResult.GetNextPageUrl())
     {
@@ -118,6 +146,7 @@ public class OslcQuery
     private OslcQuery(OslcQuery previousQuery, string nextPageUrl) :
         this(previousQuery.oslcClient, previousQuery.capabilityUrl, previousQuery.pageSize)
     {
+        memberRelation = previousQuery.memberRelation;
         queryUrl = nextPageUrl;
         uriBuilder = new UriBuilder(nextPageUrl);
     }
@@ -129,6 +158,8 @@ public class OslcQuery
     ///     results will have the same subject URI.
     /// </summary>
     public Uri QueryUri => uriBuilder.Uri;
+
+    internal Uri? MemberRelation => memberRelation;
 
     private void ApplyPagination()
     {
@@ -199,9 +230,31 @@ public class OslcQuery
             _rdfHelper);
     }
 
+    /// <summary>
+    ///     Submits the query as an HTTP POST whose body uses
+    ///     <c>application/x-www-form-urlencoded</c>, as defined by OSLC Query 3.0.
+    /// </summary>
+    public async Task<OslcQueryResult> SubmitPost()
+    {
+        return new OslcQueryResult(this, await GetPostResponseRawAsync().ConfigureAwait(false),
+            _rdfHelper);
+    }
+
     internal Task<HttpResponseMessage> GetResponseRawAsync()
     {
         return oslcClient.GetResourceRawAsync(QueryUri.ToString(), OSLCConstants.CT_RDF);
+    }
+
+    internal async Task<HttpResponseMessage> GetPostResponseRawAsync()
+    {
+        var query = QueryUri.Query.TrimStart('?');
+        using var request = new HttpRequestMessage(HttpMethod.Post, CapabilityUrl);
+        request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(OSLCConstants.CT_RDF));
+        request.Headers.TryAddWithoutValidation(OSLCConstants.OSLC_CORE_VERSION, "2.0");
+        request.Content = new ByteArrayContent(Encoding.UTF8.GetBytes(query));
+        request.Content.Headers.ContentType = new MediaTypeHeaderValue(
+            "application/x-www-form-urlencoded");
+        return await oslcClient.GetHttpClient().SendAsync(request).ConfigureAwait(false);
     }
 
     private void QueryParam(string name, string value)
