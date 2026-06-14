@@ -21,7 +21,6 @@ using System.Runtime.CompilerServices;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
 using VDS.RDF;
-using VDS.RDF.Nodes;
 using VDS.RDF.Parsing;
 
 namespace OSLC4Net.Client.Oslc.Resources;
@@ -149,14 +148,14 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
         var predicateNode = _rdfGraph.CreateUriNode(_totalCountPredicateUri);
         var totalCountObject = _rdfGraph
             .GetTriplesWithSubjectPredicate(_infoResource, predicateNode)
-            .SingleOrDefault()?.Object as IValuedNode;
+            .SingleOrDefault()?.Object as ILiteralNode;
 
         if (totalCountObject is null)
         {
             return null;
         }
 
-        var countString = totalCountObject.AsString();
+        var countString = totalCountObject.Value;
         return long.TryParse(countString, NumberStyles.Integer, CultureInfo.InvariantCulture, out var totalCount) ? totalCount : null;
     }
 

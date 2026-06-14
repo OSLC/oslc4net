@@ -181,6 +181,40 @@ public class OslcQueryResultTests
     }
 
     [Test]
+    public async Task ResponseInfoReturnsMembersAndLiteralTotalCount()
+    {
+        const string capabilityUrl =
+            "https://example.test/oslc/workitems/query/release";
+        const string memberUrl =
+            "https://example.test/oslc/workitems/REL-1";
+        var responseText = """
+            <?xml version="1.0" encoding="UTF-8"?>
+            <rdf:RDF
+                xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+                xmlns:oslc="http://open-services.net/ns/core#"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+              <oslc:ResponseInfo rdf:about="https://example.test/oslc/workitems/query/release">
+                <rdfs:member rdf:resource="https://example.test/oslc/workitems/REL-1" />
+                <oslc:totalCount rdf:datatype="http://www.w3.org/2001/XMLSchema#int">1</oslc:totalCount>
+              </oslc:ResponseInfo>
+            </rdf:RDF>
+            """;
+        var testQuery = new OslcQuery(
+            new OslcClient(LoggerFactory.CreateLogger<OslcClient>()),
+            capabilityUrl);
+        var response = new HttpResponseMessage
+        {
+            StatusCode = HttpStatusCode.OK,
+            Content = new StringContent(responseText)
+        };
+        var result = new OslcQueryResult(testQuery, response);
+
+        await Assert.That(result.GetMembersUrls()).IsEquivalentTo([memberUrl]);
+        await Assert.That(result.TotalCount).IsEqualTo(1);
+    }
+
+    [Test]
     public async Task UndeclaredDomainPredicateIsNotGuessed()
     {
         const string capabilityUrl = "https://example.test/qm/testcases";

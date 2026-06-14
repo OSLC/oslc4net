@@ -40,6 +40,7 @@ This release does not remove any features.
 ### Fixed
 
 - Query results recognize membership predicates declared through `ldp:hasMemberRelation` or explicitly supplied to `OslcQuery`, and support `ldp:contains` query containers.
+- Query result total counts are parsed from RDF literal nodes.
 - Properties backed by URI collections are now reflected in OSLC shapes correctly (thanks to @ZUOXIANGE)
 - `OslcQueryResult` now handles cases where RDF graph parsing from query responses produces malformed URI nodes. Instead of throwing `ArgumentNullException`, methods like `GetMembersUrls()`, `GetMembers<T>()`, `GetNextPageUrl()`, and `GetTotalCount()` now gracefully return empty results or null values.
 
