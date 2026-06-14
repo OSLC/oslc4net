@@ -44,6 +44,10 @@ This release does not remove any features.
 - Properties backed by URI collections are now reflected in OSLC shapes correctly (thanks to @ZUOXIANGE)
 - `OslcQueryResult` now handles cases where RDF graph parsing from query responses produces malformed URI nodes. Instead of throwing `ArgumentNullException`, methods like `GetMembersUrls()`, `GetMembers<T>()`, `GetNextPageUrl()`, and `GetTotalCount()` now gracefully return empty results or null values.
 - Replaced the use of `SystemException` with `InvalidOperationException` in `Property.cs` to resolve compiler warning CA2201.
+- `OslcRdfOutputFormatter` no longer throws on a `ResponseInfo` without a next page: a missing next page is kept as `null` instead of being coerced to an empty string that reached `new Uri("")`. Server-side OSLC query responses without paging now serialize correctly.
+- `DotNetRdfHelper.CreateDotNetRdfGraph` serializes an empty `ResponseInfo` container (a query that matched no members) instead of throwing when the `oslc` namespace prefix is not already registered.
+- `OslcRdfOutputFormatter` builds the `ResponseInfo` container subject URI with `UriHelper.BuildAbsolute` instead of re-appending the port to a host string that already carried it, which produced an invalid `host:port:port` authority and threw `UriFormatException` whenever the request used a non-default port.
+- `EnumerableWrapper` disposes the wrapped enumerator through `IDisposable` instead of reflecting a public `Dispose` method, which is absent on enumerators (such as an array's) that implement `IDisposable` explicitly. Previously this threw `NullReferenceException` while serializing any `ResponseInfo` container whose members were wrapped.
 
 
 ## [0.6.3] - 2025-11-15
