@@ -192,7 +192,7 @@ public sealed class Property : AbstractResource, IComparable<Property>
             catch (UriFormatException exception)
             {
                 // This should never happen since we control the possible values of the Occurs enum.
-                throw new SystemException(exception.Message, exception);
+                throw new InvalidOperationException(exception.Message, exception);
             }
         }
 
@@ -250,7 +250,7 @@ public sealed class Property : AbstractResource, IComparable<Property>
         catch (UriFormatException exception)
         {
             // This should never happen since we control the possible values of the Representation enum.
-            throw new SystemException(exception.Message, exception);
+            throw new InvalidOperationException(exception.Message, exception);
         }
     }
 
@@ -312,7 +312,7 @@ public sealed class Property : AbstractResource, IComparable<Property>
             catch (UriFormatException exception)
             {
                 // This should never happen since we control the possible values of the ValueType enum.
-                throw new SystemException(exception.Message, exception);
+                throw new InvalidOperationException(exception.Message, exception);
             }
         }
 
