@@ -21,7 +21,7 @@ public class OslcRdfOutputFormatterTests
         httpContext.Request.Host = host;
         httpContext.Request.Path = Path;
         httpContext.Request.QueryString = new QueryString("?oslc.where=dcterms:identifier=\"X\"");
-        var body = new MemoryStream();
+        using var body = new MemoryStream();
         httpContext.Response.Body = body;
 
         var context = new OutputFormatterWriteContext(
@@ -36,7 +36,8 @@ public class OslcRdfOutputFormatterTests
         await new OslcRdfOutputFormatter().WriteResponseBodyAsync(context, Encoding.UTF8);
 
         body.Position = 0;
-        return await new StreamReader(body).ReadToEndAsync();
+        using var reader = new StreamReader(body);
+        return await reader.ReadToEndAsync();
     }
 
     private static ResponseInfoArray<ServiceProvider> EmptyContainer() =>
