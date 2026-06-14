@@ -62,7 +62,16 @@ public class EnumerableWrapper : IEnumerable<object>
 
         public void Dispose()
         {
-            opaqueEnumerator.GetType().GetMethod("Dispose", Type.EmptyTypes)!
+            // The wrapped enumerator may implement IDisposable.Dispose explicitly (an array's
+            // enumerator does), so GetMethod("Dispose") returns null. Dispose through the
+            // interface when available instead of reflecting a public method that may not exist.
+            if (opaqueEnumerator is IDisposable disposable)
+            {
+                disposable.Dispose();
+                return;
+            }
+
+            opaqueEnumerator.GetType().GetMethod("Dispose", Type.EmptyTypes)?
                 .Invoke(opaqueEnumerator, Type.EmptyTypes);
         }
 
