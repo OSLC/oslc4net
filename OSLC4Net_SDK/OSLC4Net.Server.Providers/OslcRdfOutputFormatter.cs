@@ -120,7 +120,10 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
                 var totalCountProp = value.GetType().GetProperty("TotalCount");
                 var nextPageProp = value.GetType().GetProperty("NextPage");
 
-                var nextPageValue = nextPageProp?.GetValue(value, null) as string ?? string.Empty;
+                // A missing next page must stay null: passing string.Empty here makes
+                // CreateDotNetRdfGraph call new Uri(""), which throws for every non-paged query.
+                var nextPageRaw = nextPageProp?.GetValue(value, null) as string;
+                var nextPageValue = string.IsNullOrEmpty(nextPageRaw) ? null : nextPageRaw;
                 var totalCountValue = totalCountProp?.GetValue(value, null);
                 var totalCount = totalCountValue as int? ?? 0;
                 var propertiesValue =

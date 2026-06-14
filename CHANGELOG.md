@@ -44,6 +44,8 @@ This release does not remove any features.
 - Properties backed by URI collections are now reflected in OSLC shapes correctly (thanks to @ZUOXIANGE)
 - `OslcQueryResult` now handles cases where RDF graph parsing from query responses produces malformed URI nodes. Instead of throwing `ArgumentNullException`, methods like `GetMembersUrls()`, `GetMembers<T>()`, `GetNextPageUrl()`, and `GetTotalCount()` now gracefully return empty results or null values.
 - Replaced the use of `SystemException` with `InvalidOperationException` in `Property.cs` to resolve compiler warning CA2201.
+- `OslcRdfOutputFormatter` no longer throws on a `ResponseInfo` without a next page: a missing next page is kept as `null` instead of being coerced to an empty string that reached `new Uri("")`. Server-side OSLC query responses without paging now serialize correctly.
+- `DotNetRdfHelper.CreateDotNetRdfGraph` serializes an empty `ResponseInfo` container (a query that matched no members) instead of throwing when the `oslc` namespace prefix is not already registered.
 
 
 ## [0.6.3] - 2025-11-15
