@@ -39,6 +39,7 @@ This release does not remove any features.
 
 ### Fixed
 
+- Meziantou.Analyzer is configured with PrivateAssets="all" to avoid leaking it as a transitive dependency in built NuGet packages.
 - Query results recognize membership predicates declared through `ldp:hasMemberRelation` or explicitly supplied to `OslcQuery`, and support `ldp:contains` query containers.
 - Query result total counts are parsed from RDF literal nodes.
 - Properties backed by URI collections are now reflected in OSLC shapes correctly (thanks to @ZUOXIANGE)
