@@ -33,7 +33,7 @@
     <PackageVersion Include="NSubstitute" Version="5.3.0" />
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
     <PackageVersion Include="FluentAssertions" Version="8.3.0" />
-    <PackageVersion Include="TUnit" Version="1.53.0" />
+    <PackageVersion Include="TUnit" Version="1.55.2" />
     <!-- Optional TUnit extensions for CI diagnostics -->
     <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.2.3" />
     <PackageVersion Include="Microsoft.Testing.Extensions.HangDump" Version="2.2.3" />
