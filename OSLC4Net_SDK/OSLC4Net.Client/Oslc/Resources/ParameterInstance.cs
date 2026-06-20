@@ -26,7 +26,7 @@ namespace OSLC4Net.Client.Oslc.Resources;
 [OslcResourceShape(title = "Parameter Instance Resource Shape",
     describes = new string[] { AutomationConstants.TYPE_PARAMETER_INSTANCE })]
 [OslcNamespace(AutomationConstants.AUTOMATION_NAMESPACE)]
-public class ParameterInstance : AbstractResource, IComparable<ParameterInstance>, IEquatable<ParameterInstance>
+public class ParameterInstance : AbstractResource
 {
 
     private string name;
@@ -136,68 +136,5 @@ public class ParameterInstance : AbstractResource, IComparable<ParameterInstance
     public void SetServiceProvider(Uri serviceProvider)
     {
         this.serviceProvider = serviceProvider;
-    }
-
-    public int CompareTo(ParameterInstance? o)
-    {
-        if (o is null)
-        {
-            return 1;
-        }
-        return string.Compare(o.GetName(), name, StringComparison.Ordinal);
-    }
-
-    public bool Equals(ParameterInstance? other)
-    {
-        if (other is null)
-        {
-            return false;
-        }
-
-        if (ReferenceEquals(this, other))
-        {
-            return true;
-        }
-
-        var thisAbout = GetAbout();
-        var otherAbout = other.GetAbout();
-
-        if (thisAbout != null && otherAbout != null)
-        {
-            return Uri.Compare(thisAbout, otherAbout, UriComponents.AbsoluteUri, UriFormat.UriEscaped, StringComparison.Ordinal) == 0;
-        }
-
-        return false;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return Equals(obj as ParameterInstance);
-    }
-
-    public override int GetHashCode()
-    {
-        var thisAbout = GetAbout();
-        if (thisAbout != null)
-        {
-            return StringComparer.Ordinal.GetHashCode(thisAbout.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped));
-        }
-
-        return base.GetHashCode();
-    }
-
-    public static bool operator ==(ParameterInstance? left, ParameterInstance? right)
-    {
-        if (left is null)
-        {
-            return right is null;
-        }
-
-        return left.Equals(right);
-    }
-
-    public static bool operator !=(ParameterInstance? left, ParameterInstance? right)
-    {
-        return !(left == right);
     }
 }

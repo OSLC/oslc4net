@@ -24,7 +24,7 @@ namespace OSLC4Net.Core.Model;
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
 [OslcResourceShape(title = "OSLC Property Resource Shape",
     describes = new[] { OslcConstants.TYPE_PROPERTY })]
-public sealed class Property : AbstractResource, IComparable<Property>, IEquatable<Property>
+public sealed class Property : AbstractResource
 {
     private readonly IList<string> allowedValues = new List<string>();
     private readonly List<Uri> range = new();
@@ -57,77 +57,6 @@ public sealed class Property : AbstractResource, IComparable<Property>, IEquatab
         this.occurs = occurs;
         this.propertyDefinition = propertyDefinition;
         this.valueType = valueType;
-    }
-
-    public int CompareTo(Property? o)
-    {
-        if (o is null)
-        {
-            return 1;
-        }
-
-        var nameComparison = string.Compare(name, o.GetName(), StringComparison.Ordinal);
-        if (nameComparison != 0)
-        {
-            return nameComparison;
-        }
-
-        return Uri.Compare(propertyDefinition, o.propertyDefinition,
-            UriComponents.AbsoluteUri, UriFormat.UriEscaped, StringComparison.Ordinal);
-    }
-
-    public bool Equals(Property? other)
-    {
-        if (other is null)
-        {
-            return false;
-        }
-
-        if (ReferenceEquals(this, other))
-        {
-            return true;
-        }
-
-        var thisAbout = GetAbout();
-        var otherAbout = other.GetAbout();
-
-        if (thisAbout != null && otherAbout != null)
-        {
-            return Uri.Compare(thisAbout, otherAbout, UriComponents.AbsoluteUri, UriFormat.UriEscaped, StringComparison.Ordinal) == 0;
-        }
-
-        return false;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return Equals(obj as Property);
-    }
-
-    public override int GetHashCode()
-    {
-        var thisAbout = GetAbout();
-        if (thisAbout != null)
-        {
-            return StringComparer.Ordinal.GetHashCode(thisAbout.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped));
-        }
-
-        return base.GetHashCode();
-    }
-
-    public static bool operator ==(Property? left, Property? right)
-    {
-        if (left is null)
-        {
-            return right is null;
-        }
-
-        return left.Equals(right);
-    }
-
-    public static bool operator !=(Property? left, Property? right)
-    {
-        return !(left == right);
     }
 
     public void AddAllowedValue(string allowedValue)
