@@ -59,6 +59,6 @@ public sealed class PropertyNameComparer : IComparer<Property>
         }
 
         // Lastly, fallback to object identity hash code for stable sorting of BNodes
-        return x.GetHashCode().CompareTo(y.GetHashCode());
+        return System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(x).CompareTo(System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(y));
     }
 }
