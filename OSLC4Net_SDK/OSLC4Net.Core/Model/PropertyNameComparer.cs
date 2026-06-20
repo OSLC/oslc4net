@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace OSLC4Net.Core.Model;
 
 public sealed class PropertyNameComparer : IComparer<Property>
