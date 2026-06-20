@@ -32,7 +32,7 @@ public class AutomationPlan : AbstractResource
     private readonly ISet<Uri> creators = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
     private readonly ISet<string> subjects = new HashSet<string>(StringComparer.Ordinal); // XXX - TreeSet<> in Java
-    private readonly ISet<Property> parameterDefinitions = new HashSet<Property>(); // XXX - TreeSet<> in Java
+    private readonly ISet<Property> parameterDefinitions = new SortedSet<Property>(new PropertyNameComparer()); // Corresponds to TreeSet<> in Java
 
     private DateTime? created;
     private string description;

@@ -24,7 +24,7 @@ namespace OSLC4Net.Core.Model;
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
 [OslcResourceShape(title = "OSLC Property Resource Shape",
     describes = new[] { OslcConstants.TYPE_PROPERTY })]
-public sealed class Property : AbstractResource, IComparable<Property>
+public sealed class Property : AbstractResource
 {
     private readonly IList<string> allowedValues = new List<string>();
     private readonly List<Uri> range = new();
@@ -57,23 +57,6 @@ public sealed class Property : AbstractResource, IComparable<Property>
         this.occurs = occurs;
         this.propertyDefinition = propertyDefinition;
         this.valueType = valueType;
-    }
-
-    public int CompareTo(Property? o)
-    {
-        if (o is null)
-        {
-            return 1;
-        }
-
-        var nameComparison = string.Compare(name, o.GetName(), StringComparison.Ordinal);
-        if (nameComparison != 0)
-        {
-            return nameComparison;
-        }
-
-        return Uri.Compare(propertyDefinition, o.propertyDefinition,
-            UriComponents.AbsoluteUri, UriFormat.UriEscaped, StringComparison.Ordinal);
     }
 
     public void AddAllowedValue(string allowedValue)
