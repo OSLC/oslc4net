@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -59,21 +60,11 @@ public class QueryBasicTest
                        "oslc=<http://open-services.net/ns/core#>";
         var prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
-        try
-        {
-            var orderByClause =
-                QueryUtils.ParseOrderBy(expression, prefixMap);
+        var orderByClause = QueryUtils.ParseOrderBy(expression, prefixMap);
 
-            Debug.WriteLine(orderByClause);
+        Debug.WriteLine(orderByClause);
 
-            await Assert.That(shouldSucceed).IsTrue();
-        }
-        catch (ParseException e)
-        {
-            Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
-
-            await Assert.That(shouldSucceed).IsFalse();
-        }
+        await Assert.That(orderByClause.IsError).IsEqualTo(!shouldSucceed);
     }
 
     [Test]
@@ -148,21 +139,11 @@ public class QueryBasicTest
                        "xs=<http://www.w3.org/2001/XMLSchema>";
         var prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
-        try
-        {
-            var whereClause =
-                QueryUtils.ParseWhere(expression, prefixMap);
+        var whereClause = QueryUtils.ParseWhere(expression, prefixMap);
 
-            Debug.WriteLine(whereClause);
+        Debug.WriteLine(whereClause);
 
-            await Assert.That(shouldSucceed).IsTrue();
-        }
-        catch (ParseException e)
-        {
-            Debug.WriteLine(e.GetType().ToString() + ": " + e.Message + ":\n" + e.StackTrace);
-
-            await Assert.That(shouldSucceed).IsFalse();
-        }
+        await Assert.That(whereClause.IsError).IsEqualTo(!shouldSucceed);
     }
 
     [Test]
@@ -223,5 +204,89 @@ public class QueryBasicTest
 
         var uriRef = (UriRefValue)v;
         await Assert.That(uriRef.Value).IsEqualTo("http://example.org/tests/24");
+    }
+
+    // Tests for enhancements from kuribara-hideaki/oslc4net fork
+    // These tests are expected to FAIL until the underlying code from the fork is integrated.
+
+    // Related to fork commit db49995, efcacd7
+    [Test]
+    public async Task TestInvalidWhereClauseSetsErrorProperty()
+    {
+        var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
+        // Intentionally invalid syntax (e.g., missing operand)
+        string invalidWhereExpression = "qm:testcase=";
+
+        var whereClause = QueryUtils.ParseWhere(invalidWhereExpression, prefixMap);
+
+        await Assert.That(whereClause.IsError).IsTrue();
+    }
+
+    // Related to fork commit db49995, efcacd7
+    [Test]
+    public async Task TestInvalidOrderByClauseSetsErrorProperty()
+    {
+        var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
+        // Intentionally invalid syntax (e.g., unknown prefix, invalid character)
+        string invalidOrderByExpression = "unknown:property+";
+
+        var orderByClause = QueryUtils.ParseOrderBy(invalidOrderByExpression, prefixMap);
+
+        await Assert.That(orderByClause.IsError).IsTrue();
+    }
+
+    // Related to fork commit 127e068
+    [Test]
+    public async Task TestWhereInClauseWithSyntaxErrorSetsErrorProperty()
+    {
+        var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
+        // Syntax error within the 'in' list (e.g., unclosed string)
+        string whereExpression = "qm:state in [\"Done\", \"Open\"";
+
+        var whereClause = QueryUtils.ParseWhere(whereExpression, prefixMap);
+
+        await Assert.That(whereClause.IsError).IsTrue();
+    }
+
+    // Related to fork commit 31d2858
+    [Test]
+    public async Task TestWhereClauseWithAsteriskOperand()
+    {
+        var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
+        // Quoted asterisk used as a string operand. Whitespace around `=` is not
+        // permitted by the current grammar, so the expression has none.
+        string whereExpression = "qm:title=\"*\"";
+
+        var whereClause = QueryUtils.ParseWhere(whereExpression, prefixMap);
+
+        await Assert.That(whereClause.IsError).IsFalse();
+
+        var children = whereClause.Children;
+        await Assert.That(children).HasSingleItem();
+        var simpleTerm = children[0];
+        await Assert.That(simpleTerm is ComparisonTerm).IsTrue();
+
+        var comparison = (ComparisonTerm)simpleTerm;
+        await Assert.That(comparison.Operator).IsEqualTo(Operator.EQUALS);
+
+        var operand = comparison.Operand;
+        await Assert.That(operand is StringValue).IsTrue();
+        await Assert.That(((StringValue)operand).Value).IsEqualTo("*");
+    }
+
+    // Related to fork commit 834cddd
+    [Test]
+    public async Task TestOrderByReturnsITreeChildren()
+    {
+        var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
+        // The grammar requires +/- prefix on each sort term; using +qm:priority.
+        string orderByExpression = "+qm:priority";
+
+        var orderByClause = QueryUtils.ParseOrderBy(orderByExpression, prefixMap);
+
+        await Assert.That(orderByClause.IsError).IsFalse();
+
+        var children = ((SortTerms)orderByClause).Children;
+        await Assert.That(children).IsNotNull();
     }
 }
