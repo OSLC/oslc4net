@@ -27,6 +27,8 @@ This release does not contain security updates.
 - `OSLC4Net.Core` requires .NET 10 to be able to use the `[Experimental]` annotation.
 - `OSLC4Net.Client` requires .NET 10.
 - ❗️ `SignedByteNode` (which corresponds to `xsd:byte`) is now parsed as C# `sbyte` (signed byte) instead of `byte`.
+- 👉 Core `Property` is no longer `IComparable<T>` (because it is not immutable). Use `PropertyNameComparer` instead if you need sorting by name in some context.
+  - Users of `Property` collections are responsible to prevent duplicates, e.g. in `AutomationPlan`.
 
 ### Deprecated
 
