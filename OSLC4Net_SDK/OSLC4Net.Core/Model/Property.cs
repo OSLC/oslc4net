@@ -88,8 +88,15 @@ public sealed class Property : AbstractResource, IComparable<Property>, IEquatab
             return true;
         }
 
-        return string.Equals(name, other.name, StringComparison.Ordinal) &&
-               Uri.Compare(propertyDefinition, other.propertyDefinition, UriComponents.AbsoluteUri, UriFormat.UriEscaped, StringComparison.Ordinal) == 0;
+        var thisAbout = GetAbout();
+        var otherAbout = other.GetAbout();
+
+        if (thisAbout != null && otherAbout != null)
+        {
+            return Uri.Compare(thisAbout, otherAbout, UriComponents.AbsoluteUri, UriFormat.UriEscaped, StringComparison.Ordinal) == 0;
+        }
+
+        return false;
     }
 
     public override bool Equals(object? obj)
@@ -99,10 +106,13 @@ public sealed class Property : AbstractResource, IComparable<Property>, IEquatab
 
     public override int GetHashCode()
     {
-        int hash = 17;
-        hash = hash * 31 + (name != null ? StringComparer.Ordinal.GetHashCode(name) : 0);
-        hash = hash * 31 + (propertyDefinition != null ? StringComparer.Ordinal.GetHashCode(propertyDefinition.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped)) : 0);
-        return hash;
+        var thisAbout = GetAbout();
+        if (thisAbout != null)
+        {
+            return StringComparer.Ordinal.GetHashCode(thisAbout.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped));
+        }
+
+        return base.GetHashCode();
     }
 
     public static bool operator ==(Property? left, Property? right)

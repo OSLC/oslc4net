@@ -159,7 +159,15 @@ public class ParameterInstance : AbstractResource, IComparable<ParameterInstance
             return true;
         }
 
-        return string.Equals(name, other.name, StringComparison.Ordinal);
+        var thisAbout = GetAbout();
+        var otherAbout = other.GetAbout();
+
+        if (thisAbout != null && otherAbout != null)
+        {
+            return Uri.Compare(thisAbout, otherAbout, UriComponents.AbsoluteUri, UriFormat.UriEscaped, StringComparison.Ordinal) == 0;
+        }
+
+        return false;
     }
 
     public override bool Equals(object? obj)
@@ -169,7 +177,13 @@ public class ParameterInstance : AbstractResource, IComparable<ParameterInstance
 
     public override int GetHashCode()
     {
-        return name != null ? StringComparer.Ordinal.GetHashCode(name) : 0;
+        var thisAbout = GetAbout();
+        if (thisAbout != null)
+        {
+            return StringComparer.Ordinal.GetHashCode(thisAbout.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped));
+        }
+
+        return base.GetHashCode();
     }
 
     public static bool operator ==(ParameterInstance? left, ParameterInstance? right)
