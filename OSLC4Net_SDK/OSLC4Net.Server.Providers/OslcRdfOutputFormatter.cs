@@ -47,7 +47,7 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
         var type = context.ObjectType;
         var value = context.Object;
         var httpRequest = httpContext.Request;
-        var graph = ConvertOslcObjectsToGraph(type, value, httpContext, httpRequest);
+        var graph = ConvertOslcObjectsToGraph(type, value, httpRequest);
 
         var contentType = context.ContentType.ToString();
         var requestedMediaType = new MediaType(contentType);
@@ -70,7 +70,6 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
     }
 
     private static IGraph ConvertOslcObjectsToGraph(Type? type, object? value,
-        HttpContext httpContext,
         HttpRequest httpRequest)
     {
         IGraph graph;
@@ -97,23 +96,12 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
 
             if (ImplementsGenericType(typeof(ResponseInfo<>), type))
             {
-                //Subject URI for the collection is the query capability
+                //Subject URI for the collection is the query capability: the full request URI
+                //without the query string. HostString already carries the port, so it must not be
+                //appended again (doing so produced an invalid "host:port:port" authority).
                 // FIXME: should this be set by the app based on service provider info
-                var portNum = httpContext.Request.Host.Port;
-                string? portString;
-                if (portNum == 80 || portNum == 443)
-                {
-                    portString = "";
-                }
-                else
-                {
-                    portString = ":" + portNum;
-                }
-
-                var descriptionAbout = httpRequest.Scheme + "://" +
-                                       httpRequest.Host +
-                                       portString +
-                                       httpRequest.Path;
+                var descriptionAbout = UriHelper.BuildAbsolute(httpRequest.Scheme,
+                    httpRequest.Host, httpRequest.PathBase, httpRequest.Path);
 
                 //Subject URI for the responseInfo is the full request URI
                 var responseInfoAbout = httpRequest.GetEncodedUrl();
