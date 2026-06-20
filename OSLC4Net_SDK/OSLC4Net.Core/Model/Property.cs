@@ -24,7 +24,7 @@ namespace OSLC4Net.Core.Model;
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
 [OslcResourceShape(title = "OSLC Property Resource Shape",
     describes = new[] { OslcConstants.TYPE_PROPERTY })]
-public sealed class Property : AbstractResource, IComparable<Property>
+public sealed class Property : AbstractResource, IComparable<Property>, IEquatable<Property>
 {
     private readonly IList<string> allowedValues = new List<string>();
     private readonly List<Uri> range = new();
@@ -74,6 +74,50 @@ public sealed class Property : AbstractResource, IComparable<Property>
 
         return Uri.Compare(propertyDefinition, o.propertyDefinition,
             UriComponents.AbsoluteUri, UriFormat.UriEscaped, StringComparison.Ordinal);
+    }
+
+    public bool Equals(Property? other)
+    {
+        if (other is null)
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(this, other))
+        {
+            return true;
+        }
+
+        return string.Equals(name, other.name, StringComparison.Ordinal) &&
+               Uri.Compare(propertyDefinition, other.propertyDefinition, UriComponents.AbsoluteUri, UriFormat.UriEscaped, StringComparison.Ordinal) == 0;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return Equals(obj as Property);
+    }
+
+    public override int GetHashCode()
+    {
+        int hash = 17;
+        hash = hash * 31 + (name != null ? StringComparer.Ordinal.GetHashCode(name) : 0);
+        hash = hash * 31 + (propertyDefinition != null ? StringComparer.Ordinal.GetHashCode(propertyDefinition.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped)) : 0);
+        return hash;
+    }
+
+    public static bool operator ==(Property? left, Property? right)
+    {
+        if (left is null)
+        {
+            return right is null;
+        }
+
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(Property? left, Property? right)
+    {
+        return !(left == right);
     }
 
     public void AddAllowedValue(string allowedValue)
