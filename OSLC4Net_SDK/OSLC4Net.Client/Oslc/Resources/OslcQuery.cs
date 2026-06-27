@@ -218,7 +218,7 @@ public class OslcQuery
     /// <summary>
     ///     Query URI string. Use <see cref="QueryUri" /> instead.
     /// </summary>
-    [Obsolete]
+    [Obsolete("Use QueryUri instead")]
     public string GetQueryUrl()
     {
         return queryUrl ??= uriBuilder.ToString();
