@@ -116,14 +116,25 @@ public sealed class OslcRdfInputFormatterSysMLInterfaceTests
         using TestServer server = CreateServer();
         using HttpClient client = server.CreateClient();
 
-        using HttpResponseMessage response = await client.PostAsync(
-            "/sysml-input/request",
-            new StringContent(Turtle, Encoding.UTF8, OslcMediaType.TEXT_TURTLE));
+        using var request = new HttpRequestMessage(HttpMethod.Post, "/sysml-input/request")
+        {
+            Content = new StringContent(Turtle, Encoding.UTF8, OslcMediaType.TEXT_TURTLE),
+        };
+        request.Headers.Add("OSLC-Core-Version", "2.0");
+        request.Headers.Add("Configuration-Context", "http://example.org/configuration");
+        request.Headers.Add("Prefer", "return=representation");
+        request.Headers.Add("Slug", "accepted-action");
+
+        using HttpResponseMessage response = await client.SendAsync(request);
 
         await Assert.That(response.IsSuccessStatusCode).IsTrue();
         RequestResult result = await ReadRequestResult(response);
         await Assert.That(result.TypeNames).IsEquivalentTo([nameof(Element), nameof(Relationship)]);
         await Assert.That(result.TripleCount).IsEqualTo(2);
+        await Assert.That(result.OslcCoreVersion).IsEqualTo("2.0");
+        await Assert.That(result.ConfigurationContext).IsEqualTo("http://example.org/configuration");
+        await Assert.That(result.Prefer).IsEquivalentTo(["return=representation"]);
+        await Assert.That(result.Slug).IsEqualTo("accepted-action");
     }
 
     private static TestServer CreateServer()
@@ -204,11 +215,16 @@ public sealed class SysMLInterfaceInputController : ControllerBase
 
     [HttpPost("request")]
     [Consumes(OslcMediaType.TEXT_TURTLE)]
-    public IActionResult Request([FromBody] OslcRequest<IElement> request)
+    public IActionResult Request([FromBody] OslcRequest request)
     {
+        IReadOnlyList<IElement> resources = request.ResourcesOfType<IElement>();
         return Ok(new RequestResult(
-            request.Resources.Select(static resource => resource.GetType().Name).ToArray(),
-            request.Graph.Triples.Count));
+            resources.Select(static resource => resource.GetType().Name).ToArray(),
+            request.Graph.Triples.Count,
+            request.OslcCoreVersion,
+            request.ConfigurationContext?.AbsoluteUri,
+            request.Prefer.ToArray(),
+            request.Slug));
     }
 }
 
@@ -228,4 +244,10 @@ public sealed record ResourceResult(
 
 public sealed record ResourcesResult(string[] TypeNames);
 
-public sealed record RequestResult(string[] TypeNames, int TripleCount);
+public sealed record RequestResult(
+    string[] TypeNames,
+    int TripleCount,
+    string? OslcCoreVersion,
+    string? ConfigurationContext,
+    string[] Prefer,
+    string? Slug);

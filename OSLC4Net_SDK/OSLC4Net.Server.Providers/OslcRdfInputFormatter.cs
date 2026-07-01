@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Text;
 using CommunityToolkit.Diagnostics;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Net.Http.Headers;
 using OSLC4Net.Core;
-using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
 using VDS.RDF;
@@ -72,12 +72,15 @@ public class OslcRdfInputFormatter : TextInputFormatter
                     .ConfigureAwait(false);
         }
 
-        var obj = GraphToObjects(graph, context.ModelType);
+        var obj = GraphToObjects(graph, context.ModelType, SnapshotHeaders(context.HttpContext.Request.Headers));
 
         return await InputFormatterResult.SuccessAsync(obj).ConfigureAwait(false);
     }
 
-    private object? GraphToObjects(IGraph? graph, Type type)
+    private object? GraphToObjects(
+        IGraph? graph,
+        Type type,
+        IReadOnlyDictionary<string, string[]> headers)
     {
         if (type == typeof(Graph) || type == typeof(BaseGraph) || type == typeof(IGraph))
         {
@@ -89,24 +92,28 @@ public class OslcRdfInputFormatter : TextInputFormatter
             return null;
         }
 
-        if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(OslcRequest<>))
+        if (type == typeof(OslcRequest))
         {
-            var resourceType = type.GetGenericArguments()[0];
-            var resources = GraphToPolymorphicResources(graph, resourceType);
-            return Activator.CreateInstance(type, resources, graph);
+            return new OslcRequest(graph, headers, _rdfHelper);
         }
 
-        if (RequiresPolymorphicResolution(type))
+        if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(OslcRequest<>))
         {
-            var resources = GraphToPolymorphicResources(graph, type);
+            return Activator.CreateInstance(type, graph, headers, _rdfHelper);
+        }
+
+        if (OslcResourceMaterializer.RequiresPolymorphicResolution(type))
+        {
+            var resources = OslcResourceMaterializer.Materialize(graph, type, _rdfHelper);
             return resources is IList { Count: > 0 } list ? list[0] : null;
         }
 
         var isSingleton = type.IsOslcSingleton();
         Type? polymorphicMemberType = GetEnumerableMemberType(type);
-        if (!isSingleton && polymorphicMemberType is not null && RequiresPolymorphicResolution(polymorphicMemberType))
+        if (!isSingleton && polymorphicMemberType is not null &&
+            OslcResourceMaterializer.RequiresPolymorphicResolution(polymorphicMemberType))
         {
-            var resources = GraphToPolymorphicResources(graph, polymorphicMemberType);
+            var resources = OslcResourceMaterializer.Materialize(graph, polymorphicMemberType, _rdfHelper);
             if (type.IsArray)
             {
                 return resources.GetType().GetMethod("ToArray", Type.EmptyTypes)?
@@ -117,9 +124,10 @@ public class OslcRdfInputFormatter : TextInputFormatter
         }
 
         var memberType = type.GetMemberType();
-        if (!isSingleton && memberType is not null && RequiresPolymorphicResolution(memberType))
+        if (!isSingleton && memberType is not null &&
+            OslcResourceMaterializer.RequiresPolymorphicResolution(memberType))
         {
-            var resources = GraphToPolymorphicResources(graph, memberType);
+            var resources = OslcResourceMaterializer.Materialize(graph, memberType, _rdfHelper);
             if (type.IsArray)
             {
                 return resources.GetType().GetMethod("ToArray", Type.EmptyTypes)?
@@ -171,113 +179,12 @@ public class OslcRdfInputFormatter : TextInputFormatter
             .FirstOrDefault();
     }
 
-    private object GraphToPolymorphicResources(IGraph graph, Type requestedType)
+    private static IReadOnlyDictionary<string, string[]> SnapshotHeaders(IHeaderDictionary headers)
     {
-        var listType = typeof(List<>).MakeGenericType(requestedType);
-        var resources = (IList)Activator.CreateInstance(listType)!;
-        var add = listType.GetMethod("Add", [requestedType])!;
-        foreach ((IUriNode subject, Type concreteType) in ResolveResourceTypes(graph, requestedType))
-        {
-            var resource = _rdfHelper.FromDotNetRdfNode(subject, graph, concreteType);
-            add.Invoke(resources, [resource]);
-        }
-
-        return resources;
-    }
-
-    private static bool RequiresPolymorphicResolution(Type type)
-    {
-        return type.IsInterface || type.IsAbstract;
-    }
-
-    private static IEnumerable<(IUriNode Subject, Type ConcreteType)> ResolveResourceTypes(
-        IGraph graph,
-        Type requestedType)
-    {
-        IUriNode rdfType = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
-        Dictionary<string, Type> candidateTypes = GetCandidateResourceTypes(requestedType);
-        var candidatesBySubject = new Dictionary<IUriNode, List<Type>>();
-        foreach (Triple triple in graph.GetTriplesWithPredicate(rdfType))
-        {
-            if (triple.Subject is not IUriNode subject || triple.Object is not IUriNode objectNode)
-            {
-                continue;
-            }
-
-            if (!candidateTypes.TryGetValue(objectNode.Uri.AbsoluteUri, out Type? candidateType))
-            {
-                continue;
-            }
-
-            if (!candidatesBySubject.TryGetValue(subject, out List<Type>? subjectCandidates))
-            {
-                subjectCandidates = new List<Type>();
-                candidatesBySubject.Add(subject, subjectCandidates);
-            }
-
-            if (!subjectCandidates.Contains(candidateType))
-            {
-                subjectCandidates.Add(candidateType);
-            }
-        }
-
-        return candidatesBySubject
-            .OrderBy(entry => entry.Key.Uri.AbsoluteUri, StringComparer.Ordinal)
-            .Select(entry => (entry.Key, GetMostConcreteType(entry.Key, entry.Value)));
-    }
-
-    private static Dictionary<string, Type> GetCandidateResourceTypes(Type requestedType)
-    {
-        var candidates = new Dictionary<string, Type>(StringComparer.Ordinal);
-        foreach (Type type in AppDomain.CurrentDomain.GetAssemblies()
-            .Where(static assembly => !assembly.IsDynamic)
-            .SelectMany(GetLoadableTypes)
-            .Where(type => !type.IsAbstract &&
-                !type.IsInterface &&
-                requestedType.IsAssignableFrom(type)))
-        {
-            foreach (OslcResourceShape resourceShape in type.GetCustomAttributes(typeof(OslcResourceShape), false))
-            {
-                foreach (string describedType in resourceShape.describes)
-                {
-                    candidates[describedType] = type;
-                }
-            }
-        }
-
-        return candidates;
-    }
-
-    private static IEnumerable<Type> GetLoadableTypes(System.Reflection.Assembly assembly)
-    {
-        try
-        {
-            return assembly.GetTypes();
-        }
-        catch (System.Reflection.ReflectionTypeLoadException ex)
-        {
-            return ex.Types.OfType<Type>();
-        }
-    }
-
-    private static Type GetMostConcreteType(IUriNode subject, List<Type> candidates)
-    {
-        for (int i = candidates.Count - 1; i >= 0; i--)
-        {
-            Type current = candidates[i];
-            if (candidates.Any(candidate => current != candidate && current.IsAssignableFrom(candidate)))
-            {
-                candidates.RemoveAt(i);
-            }
-        }
-
-        if (candidates.Count == 1)
-        {
-            return candidates[0];
-        }
-
-        throw new InvalidOperationException(
-            $"Multiple unrelated CLR resource types match RDF resource '{subject.Uri}': {string.Join(", ", candidates.Select(static type => type.FullName))}.");
+        return headers.ToDictionary(
+            static header => header.Key,
+            static header => header.Value.ToArray(),
+            StringComparer.OrdinalIgnoreCase);
     }
 
     private static async Task<IGraph> DeserializeRdfTriplesAsync(StreamReader streamReader,

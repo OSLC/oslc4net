@@ -188,23 +188,23 @@ public sealed class DomainPolymorphismController : ControllerBase
 {
     [HttpPost("change-management")]
     [Consumes(OslcMediaType.TEXT_TURTLE)]
-    public IActionResult ChangeManagement([FromBody] OslcRequest<CM.IChangeRequest> request)
+    public IActionResult ChangeManagement([FromBody] OslcRequest request)
     {
-        return Ok(PolymorphicDomainResult.From(request.Resources, request.Graph));
+        return Ok(PolymorphicDomainResult.From(request.ResourcesOfType<CM.IChangeRequest>(), request.Graph));
     }
 
     [HttpPost("configuration-management")]
     [Consumes(OslcMediaType.TEXT_TURTLE)]
-    public IActionResult ConfigurationManagement([FromBody] OslcRequest<IExtendedResource> request)
+    public IActionResult ConfigurationManagement([FromBody] OslcRequest request)
     {
-        return Ok(PolymorphicDomainResult.From(request.Resources, request.Graph));
+        return Ok(PolymorphicDomainResult.From(request.ResourcesOfType<IExtendedResource>(), request.Graph));
     }
 
     [HttpPost("trs")]
     [Consumes(OslcMediaType.TEXT_TURTLE)]
-    public IActionResult TrackedResourceSet([FromBody] OslcRequest<IExtendedResource> request)
+    public IActionResult TrackedResourceSet([FromBody] OslcRequest request)
     {
-        return Ok(PolymorphicDomainResult.From(request.Resources, request.Graph));
+        return Ok(PolymorphicDomainResult.From(request.ResourcesOfType<IExtendedResource>(), request.Graph));
     }
 }
 
