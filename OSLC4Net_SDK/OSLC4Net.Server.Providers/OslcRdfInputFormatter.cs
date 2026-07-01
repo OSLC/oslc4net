@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Net.Http.Headers;
 using OSLC4Net.Core;
+using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.DotNetRdfProvider;
 using OSLC4Net.Core.Model;
 using VDS.RDF;
@@ -83,10 +84,54 @@ public class OslcRdfInputFormatter : TextInputFormatter
             return graph;
         }
 
+        if (graph is null)
+        {
+            return null;
+        }
+
+        if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(OslcRequest<>))
+        {
+            var resourceType = type.GetGenericArguments()[0];
+            var resources = GraphToPolymorphicResources(graph, resourceType);
+            return Activator.CreateInstance(type, resources, graph);
+        }
+
+        if (RequiresPolymorphicResolution(type))
+        {
+            var resources = GraphToPolymorphicResources(graph, type);
+            return resources is IList { Count: > 0 } list ? list[0] : null;
+        }
+
         var isSingleton = type.IsOslcSingleton();
+        Type? polymorphicMemberType = GetEnumerableMemberType(type);
+        if (!isSingleton && polymorphicMemberType is not null && RequiresPolymorphicResolution(polymorphicMemberType))
+        {
+            var resources = GraphToPolymorphicResources(graph, polymorphicMemberType);
+            if (type.IsArray)
+            {
+                return resources.GetType().GetMethod("ToArray", Type.EmptyTypes)?
+                    .Invoke(resources, null);
+            }
+
+            return resources;
+        }
+
+        var memberType = type.GetMemberType();
+        if (!isSingleton && memberType is not null && RequiresPolymorphicResolution(memberType))
+        {
+            var resources = GraphToPolymorphicResources(graph, memberType);
+            if (type.IsArray)
+            {
+                return resources.GetType().GetMethod("ToArray", Type.EmptyTypes)?
+                    .Invoke(resources, null);
+            }
+
+            return resources;
+        }
+
         var output =
             _rdfHelper.FromDotNetRdfGraph(graph,
-                isSingleton ? type : type.GetMemberType());
+                isSingleton ? type : memberType);
 
         if (isSingleton)
         {
@@ -105,6 +150,134 @@ public class OslcRdfInputFormatter : TextInputFormatter
         {
             return output;
         }
+    }
+
+    private static Type? GetEnumerableMemberType(Type type)
+    {
+        if (type.IsArray)
+        {
+            return type.GetElementType();
+        }
+
+        if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+        {
+            return type.GetGenericArguments()[0];
+        }
+
+        return type.GetInterfaces()
+            .Where(static interfaceType => interfaceType.IsGenericType &&
+                interfaceType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+            .Select(static interfaceType => interfaceType.GetGenericArguments()[0])
+            .FirstOrDefault();
+    }
+
+    private object GraphToPolymorphicResources(IGraph graph, Type requestedType)
+    {
+        var listType = typeof(List<>).MakeGenericType(requestedType);
+        var resources = (IList)Activator.CreateInstance(listType)!;
+        var add = listType.GetMethod("Add", [requestedType])!;
+        foreach ((IUriNode subject, Type concreteType) in ResolveResourceTypes(graph, requestedType))
+        {
+            var resource = _rdfHelper.FromDotNetRdfNode(subject, graph, concreteType);
+            add.Invoke(resources, [resource]);
+        }
+
+        return resources;
+    }
+
+    private static bool RequiresPolymorphicResolution(Type type)
+    {
+        return type.IsInterface || type.IsAbstract;
+    }
+
+    private static IEnumerable<(IUriNode Subject, Type ConcreteType)> ResolveResourceTypes(
+        IGraph graph,
+        Type requestedType)
+    {
+        IUriNode rdfType = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
+        Dictionary<string, Type> candidateTypes = GetCandidateResourceTypes(requestedType);
+        var candidatesBySubject = new Dictionary<IUriNode, List<Type>>();
+        foreach (Triple triple in graph.GetTriplesWithPredicate(rdfType))
+        {
+            if (triple.Subject is not IUriNode subject || triple.Object is not IUriNode objectNode)
+            {
+                continue;
+            }
+
+            if (!candidateTypes.TryGetValue(objectNode.Uri.AbsoluteUri, out Type? candidateType))
+            {
+                continue;
+            }
+
+            if (!candidatesBySubject.TryGetValue(subject, out List<Type>? subjectCandidates))
+            {
+                subjectCandidates = new List<Type>();
+                candidatesBySubject.Add(subject, subjectCandidates);
+            }
+
+            if (!subjectCandidates.Contains(candidateType))
+            {
+                subjectCandidates.Add(candidateType);
+            }
+        }
+
+        return candidatesBySubject
+            .OrderBy(entry => entry.Key.Uri.AbsoluteUri, StringComparer.Ordinal)
+            .Select(entry => (entry.Key, GetMostConcreteType(entry.Key, entry.Value)));
+    }
+
+    private static Dictionary<string, Type> GetCandidateResourceTypes(Type requestedType)
+    {
+        var candidates = new Dictionary<string, Type>(StringComparer.Ordinal);
+        foreach (Type type in AppDomain.CurrentDomain.GetAssemblies()
+            .Where(static assembly => !assembly.IsDynamic)
+            .SelectMany(GetLoadableTypes)
+            .Where(type => !type.IsAbstract &&
+                !type.IsInterface &&
+                requestedType.IsAssignableFrom(type)))
+        {
+            foreach (OslcResourceShape resourceShape in type.GetCustomAttributes(typeof(OslcResourceShape), false))
+            {
+                foreach (string describedType in resourceShape.describes)
+                {
+                    candidates[describedType] = type;
+                }
+            }
+        }
+
+        return candidates;
+    }
+
+    private static IEnumerable<Type> GetLoadableTypes(System.Reflection.Assembly assembly)
+    {
+        try
+        {
+            return assembly.GetTypes();
+        }
+        catch (System.Reflection.ReflectionTypeLoadException ex)
+        {
+            return ex.Types.OfType<Type>();
+        }
+    }
+
+    private static Type GetMostConcreteType(IUriNode subject, List<Type> candidates)
+    {
+        for (int i = candidates.Count - 1; i >= 0; i--)
+        {
+            Type current = candidates[i];
+            if (candidates.Any(candidate => current != candidate && current.IsAssignableFrom(candidate)))
+            {
+                candidates.RemoveAt(i);
+            }
+        }
+
+        if (candidates.Count == 1)
+        {
+            return candidates[0];
+        }
+
+        throw new InvalidOperationException(
+            $"Multiple unrelated CLR resource types match RDF resource '{subject.Uri}': {string.Join(", ", candidates.Select(static type => type.FullName))}.");
     }
 
     private static async Task<IGraph> DeserializeRdfTriplesAsync(StreamReader streamReader,

@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+    <!-- IDE0060 is expected for partial code-generated types; MA0048 is acceptable for compact domain stub files with many partial type declarations. -->
+    <NoWarn>$(NoWarn);IDE0060;MA0048</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

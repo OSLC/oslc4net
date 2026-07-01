@@ -9,8 +9,13 @@
   <ItemGroup>
     <ProjectReference Include="..\..\OSLC4Net.Server.Providers\OSLC4Net.Server.Providers.csproj" />
     <ProjectReference Include="..\..\OSLC4Net.Core\OSLC4Net.Core.csproj" />
+    <ProjectReference Include="..\..\OSLC4Net.Domains.ChangeManagement\OSLC4Net.Domains.ChangeManagement.csproj" />
+    <ProjectReference Include="..\..\OSLC4Net.Domains.ConfigurationManagement\OSLC4Net.Domains.ConfigurationManagement.csproj" />
+    <ProjectReference Include="..\..\OSLC4Net.Domains.SysMLV2\OSLC4Net.Domains.SysMLV2.csproj" />
+    <ProjectReference Include="..\..\OSLC4Net.Domains.TrackedResourceSet\OSLC4Net.Domains.TrackedResourceSet.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="TUnit" />
   </ItemGroup>
