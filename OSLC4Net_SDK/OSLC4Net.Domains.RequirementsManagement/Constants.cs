@@ -47,6 +47,7 @@ public static class Constants
                 public const string ElaboratedBy = NS + "elaboratedBy";
                 public const string Elaborates = NS + "elaborates";
                 public const string ImplementedBy = NS + "implementedBy";
+                public const string ManagedBy = NS + "managedBy";
                 public const string SatisfiedBy = NS + "satisfiedBy";
                 public const string Satisfies = NS + "satisfies";
                 public const string SpecifiedBy = NS + "specifiedBy";
@@ -66,6 +67,7 @@ public static class Constants
                 public static QName ElaboratedBy => QNameFor("elaboratedBy");
                 public static QName Elaborates => QNameFor("elaborates");
                 public static QName ImplementedBy => QNameFor("implementedBy");
+                public static QName ManagedBy => QNameFor("managedBy");
                 public static QName SatisfiedBy => QNameFor("satisfiedBy");
                 public static QName Satisfies => QNameFor("satisfies");
                 public static QName SpecifiedBy => QNameFor("specifiedBy");

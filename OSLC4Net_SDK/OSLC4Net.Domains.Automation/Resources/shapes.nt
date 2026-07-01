@@ -1,0 +1,344 @@
+<http://open-services.net/ns/auto/shapes/2.1#> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShapeConstraints> .
+<http://open-services.net/ns/auto/shapes/2.1#> <http://purl.org/dc/terms/title> "OSLC Automation (AUTO) Constraints" .
+<http://open-services.net/ns/auto/shapes/2.1#> <http://www.w3.org/2000/01/rdf-schema#label> "OSLC Architecture Management (AM) Constraints" .
+<http://open-services.net/ns/auto/shapes/2.1#> <http://purl.org/dc/terms/description> "All vocabulary URIs defined in the OSLC Automation (AUTO) namespace."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#> <http://purl.org/dc/terms/publisher> <https://open-services.net/about/> .
+<http://open-services.net/ns/auto/shapes/2.1#> <http://purl.org/dc/terms/issued> "2021-01-21"^^<http://www.w3.org/2001/XMLSchema#date> .
+<http://open-services.net/ns/auto/shapes/2.1#> <http://purl.org/dc/terms/license> <http://www.apache.org/licenses/LICENSE-2.0> .
+<http://open-services.net/ns/auto/shapes/2.1#> <http://purl.org/dc/terms/source> <https://docs.oasis-open-projects.org/oslc-op/auto/v2.1/psd01/automation-shapes.ttl> .
+<http://open-services.net/ns/auto/shapes/2.1#> <http://purl.org/dc/terms/isPartOf> <https://docs.oasis-open-projects.org/oslc-op/auto/v2.1/psd01/automation-spec.html> .
+<http://open-services.net/ns/auto/shapes/2.1#> <http://purl.org/dc/terms/hasVersion> "PSD01" .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationPlanShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationPlanShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/auto#AutomationPlan> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationPlanShape> <http://purl.org/dc/terms/title> "Statement of need." .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationPlanShape> <http://purl.org/dc/terms/description> "A resource representing the unit of automation which is available for execution."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationPlanShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#serviceProvider> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationPlanShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#usesExecutionEnvironment> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationPlanShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#parameterDefinition> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationPlanShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#creator> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationPlanShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#type> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationPlanShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#created> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationPlanShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#contributor> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationPlanShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#modified> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationPlanShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#title> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationPlanShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#futureAction> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationPlanShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#subject> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationPlanShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#identifier> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationPlanShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#description> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationPlanShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#instanceShape> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationRequestShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationRequestShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/auto#AutomationRequest> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationRequestShape> <http://purl.org/dc/terms/title> "AutomationRequest" .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationRequestShape> <http://purl.org/dc/terms/description> "A resource representing the intention to execute an Automation Plan. The Automation Request contains the information required to request that the provider execute an Automation Plan."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#inputParameter> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#modified> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#type> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#created> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#state> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#creator> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#executesAutomationPlan> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#desiredState> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#description> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#instanceShape> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#identifier> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#contributor> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#serviceProvider> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#title> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/auto#AutomationResult> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://purl.org/dc/terms/title> "AutomationResult" .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://purl.org/dc/terms/description> "A resource representing the intermediate and final execution state of an Automation Request, along with contributions to the result."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#desiredState> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#instanceShape> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#creator> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#contribution> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#state> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#identifier> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#created> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#title> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#modified> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#outputParameter> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#subject> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#contributor> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#producedByAutomationRequest> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#serviceProvider> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#inputParameter> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#progress> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#verdict> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#reportsOnAutomationPlan> .
+<http://open-services.net/ns/auto/shapes/2.1#AutomationResultShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#type> .
+<http://open-services.net/ns/auto/shapes/2.1#ParameterInstanceShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/auto/shapes/2.1#ParameterInstanceShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/auto#ParameterInstance> .
+<http://open-services.net/ns/auto/shapes/2.1#ParameterInstanceShape> <http://purl.org/dc/terms/title> "ParameterInstance" .
+<http://open-services.net/ns/auto/shapes/2.1#ParameterInstanceShape> <http://purl.org/dc/terms/description> "A resource representing an individual input or output parameter instance for an automation request or result. \nAutomation requests or results may have zero or more parameter instances."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#ParameterInstanceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#name> .
+<http://open-services.net/ns/auto/shapes/2.1#ParameterInstanceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#description> .
+<http://open-services.net/ns/auto/shapes/2.1#ParameterInstanceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#serviceProvider> .
+<http://open-services.net/ns/auto/shapes/2.1#ParameterInstanceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#instanceShape> .
+<http://open-services.net/ns/auto/shapes/2.1#ParameterInstanceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#type> .
+<http://open-services.net/ns/auto/shapes/2.1#ParameterInstanceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#value> .
+<http://open-services.net/ns/auto/shapes/2.1#DialogShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/auto/shapes/2.1#DialogShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/core#dialog> .
+<http://open-services.net/ns/auto/shapes/2.1#DialogShape> <http://purl.org/dc/terms/title> "Dialog" .
+<http://open-services.net/ns/auto/shapes/2.1#DialogShape> <http://purl.org/dc/terms/description> "Dialogs in general are defined by OSLC Core 2.0, and this specification defines two specific types of dialogs: the immediate-execution creation dialog, which can be used to allow a user to interactively create a new Automation request which is immediately available for execution, and the deferred-execution creation dialog, which creates a new Automation Request that is not immediately available for execution, but which requires further work on the part of the consumer."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#DialogShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#hintWidth> .
+<http://open-services.net/ns/auto/shapes/2.1#DialogShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#dialog> .
+<http://open-services.net/ns/auto/shapes/2.1#DialogShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#resourceType> .
+<http://open-services.net/ns/auto/shapes/2.1#DialogShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#binding> .
+<http://open-services.net/ns/auto/shapes/2.1#DialogShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#label> .
+<http://open-services.net/ns/auto/shapes/2.1#DialogShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#title> .
+<http://open-services.net/ns/auto/shapes/2.1#DialogShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#hintHeight> .
+<http://open-services.net/ns/auto/shapes/2.1#DialogShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/auto/shapes/2.1#usage> .
+<http://open-services.net/ns/auto/shapes/2.1#hintWidth> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#hintWidth> <http://open-services.net/ns/core#name> "hintWidth" .
+<http://open-services.net/ns/auto/shapes/2.1#hintWidth> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/auto/shapes/2.1#hintWidth> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#hintWidth> .
+<http://open-services.net/ns/auto/shapes/2.1#hintWidth> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/auto/shapes/2.1#hintWidth> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+<http://open-services.net/ns/auto/shapes/2.1#hintWidth> <http://purl.org/dc/terms/description> "Values MUST be expressed as described in OSLC Core 2.0."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#resourceType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#resourceType> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/auto/shapes/2.1#resourceType> <http://open-services.net/ns/core#name> "resourceType" .
+<http://open-services.net/ns/auto/shapes/2.1#resourceType> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/auto/shapes/2.1#resourceType> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#resourceType> .
+<http://open-services.net/ns/auto/shapes/2.1#resourceType> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/auto/shapes/2.1#resourceType> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/auto/shapes/2.1#resourceType> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/auto/shapes/2.1#resourceType> <http://purl.org/dc/terms/description> "The expected resource type URI(s) for the resources that will be returned when using this dialog. These would be the URIs found in the result resource’s rdf:type property. In a deferred execution creation dialog, clients will expect at least one of these types to be oslc_auto:AutomationRequest."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#binding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#binding> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/auto/shapes/2.1#binding> <http://open-services.net/ns/core#name> "binding" .
+<http://open-services.net/ns/auto/shapes/2.1#binding> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#One-or-many> .
+<http://open-services.net/ns/auto/shapes/2.1#binding> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/auto#binding> .
+<http://open-services.net/ns/auto/shapes/2.1#binding> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/auto/shapes/2.1#binding> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/auto/shapes/2.1#binding> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/auto/shapes/2.1#binding> <http://purl.org/dc/terms/description> "A resource providing instructions that a client can follow to immediately execute the action, when the client is ready to do so. In this context (a deferred execution creation dialog), each binding is likely to be an immediate-execution binding, used during the execution phase of the deferred execution dialog interaction pattern first defined in OSLC Automation 2.1. It is likely that the target resource will be one of the following, but that is not necessarily the case: http:Request , oslc:CreationFactory , oslc:Dialog. This property is only used by the deferred-execution creation dialog. This is new for 2.1: END."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#modified> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#modified> <http://open-services.net/ns/core#name> "modified" .
+<http://open-services.net/ns/auto/shapes/2.1#modified> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/auto/shapes/2.1#modified> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/modified> .
+<http://open-services.net/ns/auto/shapes/2.1#modified> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/auto/shapes/2.1#modified> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://open-services.net/ns/auto/shapes/2.1#modified> <http://purl.org/dc/terms/description> "Timestamp of latest resource modification (reference: Dublin Core)."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#outputParameter> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#outputParameter> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/auto/shapes/2.1#outputParameter> <http://open-services.net/ns/core#name> "outputParameter" .
+<http://open-services.net/ns/auto/shapes/2.1#outputParameter> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/auto/shapes/2.1#outputParameter> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/auto#outputParameter> .
+<http://open-services.net/ns/auto/shapes/2.1#outputParameter> <http://open-services.net/ns/core#range> <http://open-services.net/ns/auto#ParameterInstance> .
+<http://open-services.net/ns/auto/shapes/2.1#outputParameter> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/auto/shapes/2.1#outputParameter> <http://purl.org/dc/terms/description> "Automation Result output parameters are parameters associated with the automation execution which produced this Result. This includes the final value of all parameters used to initiate the execution and any additional parameters which may have been created during automation execution by the service provider or external agents. The value of a given oslc_auto:outputParameter MAY change as the execution proceeds. Point-in-time accuracy of the values of output parameters is not covered by this specification. Once the Automation Result is in a final state ( oslc_auto:complete or oslc_auto:canceled), the oslc_auto:outputParameter values MUST NOT change."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#reportsOnAutomationPlan> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#reportsOnAutomationPlan> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/auto/shapes/2.1#reportsOnAutomationPlan> <http://open-services.net/ns/core#name> "reportsOnAutomationPlan" .
+<http://open-services.net/ns/auto/shapes/2.1#reportsOnAutomationPlan> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+<http://open-services.net/ns/auto/shapes/2.1#reportsOnAutomationPlan> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/auto#reportsOnAutomationPlan> .
+<http://open-services.net/ns/auto/shapes/2.1#reportsOnAutomationPlan> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/auto/shapes/2.1#reportsOnAutomationPlan> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/auto/shapes/2.1#reportsOnAutomationPlan> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/auto/shapes/2.1#reportsOnAutomationPlan> <http://purl.org/dc/terms/description> "Automation Plan which the Automation Result reports on. It is likely that the target resource will be an  oslc_auto:AutomationPlan but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#contributor> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#contributor> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/auto/shapes/2.1#contributor> <http://open-services.net/ns/core#name> "contributor" .
+<http://open-services.net/ns/auto/shapes/2.1#contributor> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/auto/shapes/2.1#contributor> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/contributor> .
+<http://open-services.net/ns/auto/shapes/2.1#contributor> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/auto/shapes/2.1#contributor> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/auto/shapes/2.1#contributor> <http://purl.org/dc/terms/description> "Contributor or contributors to resource. It is likely that the target resource will be an foaf:Person but that is not necessarily the case. When the service provider or its agents is the contributor to the resource, a foaf:Agent could be used."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#futureAction> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#futureAction> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/auto/shapes/2.1#futureAction> <http://open-services.net/ns/core#name> "futureAction" .
+<http://open-services.net/ns/auto/shapes/2.1#futureAction> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/auto/shapes/2.1#futureAction> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#futureAction> .
+<http://open-services.net/ns/auto/shapes/2.1#futureAction> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/auto/shapes/2.1#futureAction> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/auto/shapes/2.1#futureAction> <http://purl.org/dc/terms/description> "A resource representing actions that will become available on Automation Results that result from execution of this Plan. The resource is likely to be of type oslc:Action, but it can be of any type. Automation defines oslc_auto:TeardownAction as one kind of future action."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#instanceShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#instanceShape> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/auto/shapes/2.1#instanceShape> <http://open-services.net/ns/core#name> "instanceShape" .
+<http://open-services.net/ns/auto/shapes/2.1#instanceShape> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/auto/shapes/2.1#instanceShape> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#instanceShape> .
+<http://open-services.net/ns/auto/shapes/2.1#instanceShape> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/auto/shapes/2.1#instanceShape> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/auto/shapes/2.1#instanceShape> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/auto/shapes/2.1#instanceShape> <http://purl.org/dc/terms/description> "Resource Shape that provides hints as to resource property value-types and allowed values."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#inputParameter> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#inputParameter> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/auto/shapes/2.1#inputParameter> <http://open-services.net/ns/core#name> "inputParameter" .
+<http://open-services.net/ns/auto/shapes/2.1#inputParameter> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/auto/shapes/2.1#inputParameter> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/auto#inputParameter> .
+<http://open-services.net/ns/auto/shapes/2.1#inputParameter> <http://open-services.net/ns/core#range> <http://open-services.net/ns/auto#ParameterInstance> .
+<http://open-services.net/ns/auto/shapes/2.1#inputParameter> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/auto/shapes/2.1#inputParameter> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/auto/shapes/2.1#inputParameter> <http://purl.org/dc/terms/description> "A copy of the parameters provided during creation of the Automation Request which produced this Automation Result (see oslc_auto:producedByAutomationRequest). The oslc_auto:inputParameter resources on an Automation Result should be considered a point-in-time copy of the parameter at the time the Automation Request was created."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#label> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#label> <http://open-services.net/ns/core#name> "label" .
+<http://open-services.net/ns/auto/shapes/2.1#label> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/auto/shapes/2.1#label> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#label> .
+<http://open-services.net/ns/auto/shapes/2.1#label> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/auto/shapes/2.1#label> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+<http://open-services.net/ns/auto/shapes/2.1#label> <http://purl.org/dc/terms/description> "Very short label for use in menu items."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#description> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#description> <http://open-services.net/ns/core#name> "description" .
+<http://open-services.net/ns/auto/shapes/2.1#description> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/auto/shapes/2.1#description> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/description> .
+<http://open-services.net/ns/auto/shapes/2.1#description> <http://open-services.net/ns/core#valueType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#description> <http://purl.org/dc/terms/description> "Descriptive text about resource represented as rich text in XHTML content."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#hintHeight> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#hintHeight> <http://open-services.net/ns/core#name> "hintHeight" .
+<http://open-services.net/ns/auto/shapes/2.1#hintHeight> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/auto/shapes/2.1#hintHeight> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#hintHeight> .
+<http://open-services.net/ns/auto/shapes/2.1#hintHeight> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/auto/shapes/2.1#hintHeight> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+<http://open-services.net/ns/auto/shapes/2.1#hintHeight> <http://purl.org/dc/terms/description> "Values MUST be expressed as described in OSLC Core 2.0."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#usesExecutionEnvironment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#usesExecutionEnvironment> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/auto/shapes/2.1#usesExecutionEnvironment> <http://open-services.net/ns/core#name> "usesExecutionEnvironment" .
+<http://open-services.net/ns/auto/shapes/2.1#usesExecutionEnvironment> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/auto/shapes/2.1#usesExecutionEnvironment> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/auto#usesExecutionEnvironment> .
+<http://open-services.net/ns/auto/shapes/2.1#usesExecutionEnvironment> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/auto/shapes/2.1#usesExecutionEnvironment> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/auto/shapes/2.1#usesExecutionEnvironment> <http://purl.org/dc/terms/description> "A resource representing the environment(s) which this Automation Plan can be executed in. The execution environment resource could represent a grouping of environmental details such as operating system, database, browser, compiler, etc. See also the execution environments section."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#subject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#subject> <http://open-services.net/ns/core#name> "subject" .
+<http://open-services.net/ns/auto/shapes/2.1#subject> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/auto/shapes/2.1#subject> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/subject> .
+<http://open-services.net/ns/auto/shapes/2.1#subject> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+<http://open-services.net/ns/auto/shapes/2.1#subject> <http://purl.org/dc/terms/description> "Tag or keyword for a resource. Each occurrence of a dc:subject property denotes an additional tag for the resource."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#producedByAutomationRequest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#producedByAutomationRequest> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/auto/shapes/2.1#producedByAutomationRequest> <http://open-services.net/ns/core#name> "producedByAutomationRequest" .
+<http://open-services.net/ns/auto/shapes/2.1#producedByAutomationRequest> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/auto/shapes/2.1#producedByAutomationRequest> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/auto#producedByAutomationRequest> .
+<http://open-services.net/ns/auto/shapes/2.1#producedByAutomationRequest> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/auto/shapes/2.1#producedByAutomationRequest> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/auto/shapes/2.1#producedByAutomationRequest> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/auto/shapes/2.1#producedByAutomationRequest> <http://purl.org/dc/terms/description> "Automation Request which produced the Automation Result. It is likely that the target resource will be an  oslc_auto:AutomationRequest but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#parameterDefinition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#parameterDefinition> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/auto/shapes/2.1#parameterDefinition> <http://open-services.net/ns/core#name> "parameterDefinition" .
+<http://open-services.net/ns/auto/shapes/2.1#parameterDefinition> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/auto/shapes/2.1#parameterDefinition> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/auto#parameterDefinition> .
+<http://open-services.net/ns/auto/shapes/2.1#parameterDefinition> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#parameterDefinition> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/auto/shapes/2.1#parameterDefinition> <http://purl.org/dc/terms/description> "The definition of a parameter for this Automation Plan. parameterDefinitions are either a local (inline) or referenced resource and use the attributes (the range) of the  oslc:Property resource with one exception. When used in the context of an oslc_auto:parameterDefinition, the cardinality of oslc:propertyDefinition becomes zero-or-one instead of exactly-one. Automation consumers creating Automation Requests MUST use the oslc:occurs attribute of the parameterDefinition, if present, to determine if a given parameter is required when creating the Automation Request. If the oslc:occurs attribute indicates the parameter is required (exactly-one or one-or-more), the service provider must guarantee the named parameter will be present in the Automation Result either as an oslc_auto:inputParmeter when unmodified during execution, or as an oslc_auto:outputParameter when modified during execution."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#created> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#created> <http://open-services.net/ns/core#name> "created" .
+<http://open-services.net/ns/auto/shapes/2.1#created> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/auto/shapes/2.1#created> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/created> .
+<http://open-services.net/ns/auto/shapes/2.1#created> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/auto/shapes/2.1#created> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://open-services.net/ns/auto/shapes/2.1#created> <http://purl.org/dc/terms/description> "Timestamp of resource creation (reference: Dublin Core)."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#creator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#creator> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/auto/shapes/2.1#creator> <http://open-services.net/ns/core#name> "creator" .
+<http://open-services.net/ns/auto/shapes/2.1#creator> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/auto/shapes/2.1#creator> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/creator> .
+<http://open-services.net/ns/auto/shapes/2.1#creator> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/auto/shapes/2.1#creator> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/auto/shapes/2.1#creator> <http://purl.org/dc/terms/description> "Creator or creators of resource. It is likely that the target resource will be an foaf:Person but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#contribution> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#contribution> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/auto/shapes/2.1#contribution> <http://open-services.net/ns/core#name> "contribution" .
+<http://open-services.net/ns/auto/shapes/2.1#contribution> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/auto/shapes/2.1#contribution> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/auto#contribution> .
+<http://open-services.net/ns/auto/shapes/2.1#contribution> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/auto/shapes/2.1#contribution> <http://purl.org/dc/terms/description> "A result contribution associated with this automation result. It is recommended that the contribution be an inline resource which can be retrieved with the automation result. The recommended attributes beyond the contribution itself are dcterms:title, dcterms:description and dcterms:type to provide a description of the contribution which would be appropriate for display in a simple UI for an automation result."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#progress> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#progress> <http://open-services.net/ns/core#name> "progress" .
+<http://open-services.net/ns/auto/shapes/2.1#progress> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/auto#progress> .
+<http://open-services.net/ns/auto/shapes/2.1#progress> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/auto/shapes/2.1#progress> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/auto/shapes/2.1#progress> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#integer> .
+<http://open-services.net/ns/auto/shapes/2.1#progress> <http://purl.org/dc/terms/description> "The percentage (0-100) of completion, if known."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#verdict> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#verdict> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/auto/shapes/2.1#verdict> <http://open-services.net/ns/core#name> "verdict" .
+<http://open-services.net/ns/auto/shapes/2.1#verdict> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#One-or-many> .
+<http://open-services.net/ns/auto/shapes/2.1#verdict> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/auto#verdict> .
+<http://open-services.net/ns/auto/shapes/2.1#verdict> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/auto/shapes/2.1#verdict> <http://purl.org/dc/terms/description> "Used to indicate the verdict of the automation result based on values defined by the service provider. Most often a read-only property. It is expected that this will be a resource reference to a definition of a valid automation result verdict on the service provider."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#desiredState> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#desiredState> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/auto/shapes/2.1#desiredState> <http://open-services.net/ns/core#name> "desiredState" .
+<http://open-services.net/ns/auto/shapes/2.1#desiredState> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/auto/shapes/2.1#desiredState> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/auto#desiredState> .
+<http://open-services.net/ns/auto/shapes/2.1#desiredState> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/auto/shapes/2.1#desiredState> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/auto/shapes/2.1#desiredState> <http://purl.org/dc/terms/description> "Used to indicate the desired state of the Automation Request based on values defined by the service provider. It is expected that this will be a resource reference to a definition of a valid automation request state on the service provider."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#name> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#name> <http://open-services.net/ns/core#name> "name" .
+<http://open-services.net/ns/auto/shapes/2.1#name> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+<http://open-services.net/ns/auto/shapes/2.1#name> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#name> .
+<http://open-services.net/ns/auto/shapes/2.1#name> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+<http://open-services.net/ns/auto/shapes/2.1#name> <http://purl.org/dc/terms/description> "The name of the parameter instance."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#usage> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#usage> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/auto/shapes/2.1#usage> <http://open-services.net/ns/core#name> "usage" .
+<http://open-services.net/ns/auto/shapes/2.1#usage> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#One-or-many> .
+<http://open-services.net/ns/auto/shapes/2.1#usage> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#usage> .
+<http://open-services.net/ns/auto/shapes/2.1#usage> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/auto/shapes/2.1#usage> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/auto/shapes/2.1#usage> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/auto/shapes/2.1#usage> <http://purl.org/dc/terms/description> "An identifier URI for the domain specified usage of this dialog. For example, for a deferred execution creation dialog this will be oslc_auto:DeferredExecution."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#identifier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#identifier> <http://open-services.net/ns/core#name> "identifier" .
+<http://open-services.net/ns/auto/shapes/2.1#identifier> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+<http://open-services.net/ns/auto/shapes/2.1#identifier> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/identifier> .
+<http://open-services.net/ns/auto/shapes/2.1#identifier> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/auto/shapes/2.1#identifier> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+<http://open-services.net/ns/auto/shapes/2.1#identifier> <http://purl.org/dc/terms/description> "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#type> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/auto/shapes/2.1#type> <http://open-services.net/ns/core#name> "type" .
+<http://open-services.net/ns/auto/shapes/2.1#type> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/auto/shapes/2.1#type> <http://open-services.net/ns/core#propertyDefinition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> .
+<http://open-services.net/ns/auto/shapes/2.1#type> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/auto/shapes/2.1#type> <http://purl.org/dc/terms/description> "The resource type URIs."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#serviceProvider> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#serviceProvider> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/auto/shapes/2.1#serviceProvider> <http://open-services.net/ns/core#name> "serviceProvider" .
+<http://open-services.net/ns/auto/shapes/2.1#serviceProvider> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/auto/shapes/2.1#serviceProvider> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#serviceProvider> .
+<http://open-services.net/ns/auto/shapes/2.1#serviceProvider> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#serviceProvider> .
+<http://open-services.net/ns/auto/shapes/2.1#serviceProvider> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/auto/shapes/2.1#serviceProvider> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/auto/shapes/2.1#serviceProvider> <http://purl.org/dc/terms/description> "The scope of a resource is a link to the resource’s OSLC Service Provider."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#dialog> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#dialog> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/auto/shapes/2.1#dialog> <http://open-services.net/ns/core#name> "dialog" .
+<http://open-services.net/ns/auto/shapes/2.1#dialog> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+<http://open-services.net/ns/auto/shapes/2.1#dialog> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#dialog> .
+<http://open-services.net/ns/auto/shapes/2.1#dialog> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/auto/shapes/2.1#dialog> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/auto/shapes/2.1#dialog> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/auto/shapes/2.1#dialog> <http://purl.org/dc/terms/description> "The URI of the dialog."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#title> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#title> <http://open-services.net/ns/core#name> "title" .
+<http://open-services.net/ns/auto/shapes/2.1#title> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+<http://open-services.net/ns/auto/shapes/2.1#title> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/title> .
+<http://open-services.net/ns/auto/shapes/2.1#title> <http://open-services.net/ns/core#valueType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#title> <http://purl.org/dc/terms/description> "Title (reference: Dublin Core) of the resource represented as rich text in XHTML content."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#value> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#value> <http://open-services.net/ns/core#name> "value" .
+<http://open-services.net/ns/auto/shapes/2.1#value> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/auto/shapes/2.1#value> <http://open-services.net/ns/core#propertyDefinition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#value> .
+<http://open-services.net/ns/auto/shapes/2.1#value> <http://purl.org/dc/terms/description> "The value of the parameter. The value may be an RDF literal or a resource. If the value is an RDF literal, then it SHOULD be an RDF typed literal."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#state> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#state> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/auto/shapes/2.1#state> <http://open-services.net/ns/core#name> "state" .
+<http://open-services.net/ns/auto/shapes/2.1#state> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#One-or-many> .
+<http://open-services.net/ns/auto/shapes/2.1#state> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/auto#state> .
+<http://open-services.net/ns/auto/shapes/2.1#state> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/auto/shapes/2.1#state> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/auto/shapes/2.1#state> <http://purl.org/dc/terms/description> "Used to indicate the state of the automation request based on values defined by the service provider. Most often a read-only property. It is expected that this will be a resource reference to a definition of a valid automation request state on the service provider."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/auto/shapes/2.1#executesAutomationPlan> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/auto/shapes/2.1#executesAutomationPlan> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/auto/shapes/2.1#executesAutomationPlan> <http://open-services.net/ns/core#name> "executesAutomationPlan" .
+<http://open-services.net/ns/auto/shapes/2.1#executesAutomationPlan> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+<http://open-services.net/ns/auto/shapes/2.1#executesAutomationPlan> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/auto#executesAutomationPlan> .
+<http://open-services.net/ns/auto/shapes/2.1#executesAutomationPlan> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/auto/shapes/2.1#executesAutomationPlan> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/auto/shapes/2.1#executesAutomationPlan> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/auto/shapes/2.1#executesAutomationPlan> <http://purl.org/dc/terms/description> "Automation Plan run by the Automation Request. It is likely that the target resource will be an  oslc_auto:AutomationPlan but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .

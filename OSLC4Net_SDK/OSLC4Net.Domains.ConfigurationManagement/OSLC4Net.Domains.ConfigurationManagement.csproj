@@ -1,0 +1,31 @@
+<!--
+ Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
+
+ All rights reserved. This program and the accompanying materials
+ are made available under the terms of the Eclipse Public License v1.0
+ which accompanies this distribution.
+
+ The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
+-->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <!-- IDE0060 is expected for partial code-generated types; MA0048 is acceptable for compact
+    domain stub files with many partial type declarations. -->
+    <NoWarn>$(NoWarn);IDE0060;MA0048</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="Resources\vocab.nt" />
+    <AdditionalFiles Include="Resources\shapes.nt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OSLC4Net.Core\OSLC4Net.Core.csproj" />
+    <ProjectReference Include="..\OSLC4Net.CodeGen\OSLC4Net.CodeGen.csproj"
+      OutputItemType="Analyzer"
+      ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+</Project>
