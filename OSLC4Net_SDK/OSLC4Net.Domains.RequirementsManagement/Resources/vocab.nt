@@ -1,0 +1,80 @@
+<http://open-services.net/ns/rm#validatedBy> <http://www.w3.org/2000/01/rdf-schema#label> "validatedBy" .
+<http://open-services.net/ns/rm#validatedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/rm#> .
+<http://open-services.net/ns/rm#validatedBy> <http://www.w3.org/2000/01/rdf-schema#comment> "Expresses a validation relationship between entities, where the object entity in some way validates the subject entity. For example, a requirement collection may be said to be validated by a test plan." .
+<http://open-services.net/ns/rm#validatedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/rm#specifies> <http://www.w3.org/2000/01/rdf-schema#label> "specifies" .
+<http://open-services.net/ns/rm#specifies> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/rm#> .
+<http://open-services.net/ns/rm#specifies> <http://www.w3.org/2000/01/rdf-schema#comment> "Expresses a specification relationship between entities, where the subject entity further clarifies or specifies the object entity. For example, a model element specifies a requirement." .
+<http://open-services.net/ns/rm#specifies> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/rm#Requirement> <http://www.w3.org/2000/01/rdf-schema#label> "Requirement" .
+<http://open-services.net/ns/rm#Requirement> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/rm#> .
+<http://open-services.net/ns/rm#Requirement> <http://www.w3.org/2000/01/rdf-schema#comment> "Statement of need." .
+<http://open-services.net/ns/rm#Requirement> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/rm#trackedBy> <http://www.w3.org/2000/01/rdf-schema#label> "trackedBy" .
+<http://open-services.net/ns/rm#trackedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/rm#> .
+<http://open-services.net/ns/rm#trackedBy> <http://www.w3.org/2000/01/rdf-schema#comment> "Expresses a tracking relationship between entities, where the object entity in some way tracks or governs the evolution of the subject entity. For example, a requirement may be said to be tracked by a change request, in that it governs the changes to a requirement according to some process machinery." .
+<http://open-services.net/ns/rm#trackedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/rm#RequirementCollection> <http://www.w3.org/2000/01/rdf-schema#label> "RequirementCollection" .
+<http://open-services.net/ns/rm#RequirementCollection> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/rm#> .
+<http://open-services.net/ns/rm#RequirementCollection> <http://www.w3.org/2000/01/rdf-schema#comment> "Collection of requirements. A collection uses zero or more requirements." .
+<http://open-services.net/ns/rm#RequirementCollection> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/rm#elaboratedBy> <http://www.w3.org/2000/01/rdf-schema#label> "elaboratedBy" .
+<http://open-services.net/ns/rm#elaboratedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/rm#> .
+<http://open-services.net/ns/rm#elaboratedBy> <http://www.w3.org/2000/01/rdf-schema#comment> "Expresses an elaboration relationship between entities, where the object entity elaborates the subject entity. For example, a requirement is elaborated by a model element." .
+<http://open-services.net/ns/rm#elaboratedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/rm#> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <https://github.com/oslc-op/oslc-specs/blob/master/specs/rm/requirements-management-vocab.ttl> .
+<http://open-services.net/ns/rm#> <http://purl.org/dc/terms/source> <https://docs.oasis-open-projects.org/oslc-op/rm/v2.1/os/requirements-management-vocab.ttl> .
+<http://open-services.net/ns/rm#> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<http://open-services.net/ns/rm#> <http://purl.org/dc/terms/publisher> <https://open-services.net/about/> .
+<http://open-services.net/ns/rm#> <http://purl.org/dc/terms/issued> "2021-06-21"^^<http://www.w3.org/2001/XMLSchema#date> .
+<http://open-services.net/ns/rm#> <http://purl.org/dc/terms/isPartOf> <https://docs.oasis-open-projects.org/oslc-op/rm/v2.1/os/requirements-management-spec.html> .
+<http://open-services.net/ns/rm#> <http://purl.org/dc/terms/license> <http://www.apache.org/licenses/LICENSE-2.0> .
+<http://open-services.net/ns/rm#> <http://purl.org/vocab/vann/preferredNamespacePrefix> "oslc_rm" .
+<http://open-services.net/ns/rm#> <http://purl.org/dc/terms/hasVersion> "OS" .
+<http://open-services.net/ns/rm#> <http://purl.org/dc/terms/title> "OSLC Requirements Management (RM) Vocabulary" .
+<http://open-services.net/ns/rm#> <http://www.w3.org/2000/01/rdf-schema#label> "OSLC Requirements Management (RM) Vocabulary" .
+<http://open-services.net/ns/rm#> <http://purl.org/dc/terms/description> "All vocabulary URIs defined in the OSLC Requirements Management (RM) namespace."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm#satisfies> <http://www.w3.org/2000/01/rdf-schema#label> "satisfies" .
+<http://open-services.net/ns/rm#satisfies> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/rm#> .
+<http://open-services.net/ns/rm#satisfies> <http://www.w3.org/2000/01/rdf-schema#comment> "Expresses a relationship between entities, where the subject entity satisfies the object entity. For example, a system requirement satisfies a user requirement." .
+<http://open-services.net/ns/rm#satisfies> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/rm#decomposes> <http://www.w3.org/2000/01/rdf-schema#label> "decomposes" .
+<http://open-services.net/ns/rm#decomposes> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/rm#> .
+<http://open-services.net/ns/rm#decomposes> <http://www.w3.org/2000/01/rdf-schema#comment> "Expresses a decomposition relationship between entities, where the subject entity decomposes the object entity. For example, a collection of system requirements decompose a system requirement." .
+<http://open-services.net/ns/rm#decomposes> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/rm#implementedBy> <http://www.w3.org/2000/01/rdf-schema#label> "implementedBy" .
+<http://open-services.net/ns/rm#implementedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/rm#> .
+<http://open-services.net/ns/rm#implementedBy> <http://www.w3.org/2000/01/rdf-schema#comment> "Expresses an implementation relationship between entities, where the object entity is a necessary or desirable aspect of an implementation of the subject entity." .
+<http://open-services.net/ns/rm#implementedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/rm#uses> <http://www.w3.org/2000/01/rdf-schema#label> "uses" .
+<http://open-services.net/ns/rm#uses> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/rm#> .
+<http://open-services.net/ns/rm#uses> <http://www.w3.org/2000/01/rdf-schema#comment> "Expresses a use relationship between entities, where the object entity is used by the subject entity. For example, a requirement collection may use a requirement." .
+<http://open-services.net/ns/rm#uses> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/rm#decomposedBy> <http://www.w3.org/2000/01/rdf-schema#label> "decomposedBy" .
+<http://open-services.net/ns/rm#decomposedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/rm#> .
+<http://open-services.net/ns/rm#decomposedBy> <http://www.w3.org/2000/01/rdf-schema#comment> "Expresses a decomposition relationship between entities, where the object entity decomposes the subject entity. For example, a system requirement is decomposed into a collection of system requirements." .
+<http://open-services.net/ns/rm#decomposedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/rm#specifiedBy> <http://www.w3.org/2000/01/rdf-schema#label> "specifiedBy" .
+<http://open-services.net/ns/rm#specifiedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/rm#> .
+<http://open-services.net/ns/rm#specifiedBy> <http://www.w3.org/2000/01/rdf-schema#comment> "Expresses a specification relationship between entities, where the object entity further clarifies or specifies the subject entity. For example, a requirement is specified by a model element." .
+<http://open-services.net/ns/rm#specifiedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/rm#affectedBy> <http://www.w3.org/2000/01/rdf-schema#label> "affectedBy" .
+<http://open-services.net/ns/rm#affectedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/rm#> .
+<http://open-services.net/ns/rm#affectedBy> <http://www.w3.org/2000/01/rdf-schema#comment> "Expresses an affects relationship between entities, where the object entity in some way affects the subject entity. For example, a requirement is affected by a defect." .
+<http://open-services.net/ns/rm#affectedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/rm#elaborates> <http://www.w3.org/2000/01/rdf-schema#label> "elaborates" .
+<http://open-services.net/ns/rm#elaborates> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/rm#> .
+<http://open-services.net/ns/rm#elaborates> <http://www.w3.org/2000/01/rdf-schema#comment> "Expresses an elaboration relationship between entities, where the subject entity elaborates the object entity. For example, a model element elaborates a requirement." .
+<http://open-services.net/ns/rm#elaborates> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/rm#constrainedBy> <http://www.w3.org/2000/01/rdf-schema#label> "constrainedBy" .
+<http://open-services.net/ns/rm#constrainedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/rm#> .
+<http://open-services.net/ns/rm#constrainedBy> <http://www.w3.org/2000/01/rdf-schema#comment> "Expresses a constraining relationship between entities, where the object entity constrains the subject entity. For example, a functional requirement is constrained by a safety requirement." .
+<http://open-services.net/ns/rm#constrainedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/rm#constrains> <http://www.w3.org/2000/01/rdf-schema#label> "constrains" .
+<http://open-services.net/ns/rm#constrains> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/rm#> .
+<http://open-services.net/ns/rm#constrains> <http://www.w3.org/2000/01/rdf-schema#comment> "Expresses a constraining relationship between entities, where the subject entity constrains the object entity. For example, a safety requirement constrains a functional requirement." .
+<http://open-services.net/ns/rm#constrains> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/rm#satisfiedBy> <http://www.w3.org/2000/01/rdf-schema#label> "satisfiedBy" .
+<http://open-services.net/ns/rm#satisfiedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/rm#> .
+<http://open-services.net/ns/rm#satisfiedBy> <http://www.w3.org/2000/01/rdf-schema#comment> "The subject is satisfied by the object. For example, a user requirement is satisfied by a system requirement." .
+<http://open-services.net/ns/rm#satisfiedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .

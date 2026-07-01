@@ -1,0 +1,543 @@
+<http://open-services.net/ns/cm/shapes/3.0#verified> <http://purl.org/dc/terms/description> "Whether or not the resolution or fix of the Change Request has been verified."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#verified> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/cm/shapes/3.0#verified> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#verified> .
+<http://open-services.net/ns/cm/shapes/3.0#verified> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/cm/shapes/3.0#verified> <http://open-services.net/ns/core#name> "verified" .
+<http://open-services.net/ns/cm/shapes/3.0#verified> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#testedByTestCase> <http://purl.org/dc/terms/title> "Tested By Test Case" .
+<http://open-services.net/ns/cm/shapes/3.0#testedByTestCase> <http://purl.org/dc/terms/description> "Test case by which this change request is tested. It is likely that the target resource will be an oslc_qm:TestCase but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#testedByTestCase> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/cm/shapes/3.0#testedByTestCase> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/cm/shapes/3.0#testedByTestCase> <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#ChangeSet> .
+<http://open-services.net/ns/cm/shapes/3.0#testedByTestCase> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#testedByTestCase> .
+<http://open-services.net/ns/cm/shapes/3.0#testedByTestCase> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#testedByTestCase> <http://open-services.net/ns/core#name> "testedByTestCase" .
+<http://open-services.net/ns/cm/shapes/3.0#testedByTestCase> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#closed> <http://purl.org/dc/terms/description> "Whether or not the Change Request is completely done, no further fixes or fix verification is needed."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#closed> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/cm/shapes/3.0#closed> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#closed> .
+<http://open-services.net/ns/cm/shapes/3.0#closed> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/cm/shapes/3.0#closed> <http://open-services.net/ns/core#name> "closed" .
+<http://open-services.net/ns/cm/shapes/3.0#closed> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#> <http://purl.org/dc/terms/publisher> <https://open-services.net/about/> .
+<http://open-services.net/ns/cm/shapes/3.0#> <http://www.w3.org/2000/01/rdf-schema#label> "The OSLC Change Management(CM) Constraints" .
+<http://open-services.net/ns/cm/shapes/3.0#> <http://purl.org/dc/terms/source> <https://docs.oasis-open-projects.org/oslc-op/cm/v3.0/errata01/os/change-mgt-shapes.ttl> .
+<http://open-services.net/ns/cm/shapes/3.0#> <http://purl.org/dc/terms/issued> "2023-07-06"^^<http://www.w3.org/2001/XMLSchema#date> .
+<http://open-services.net/ns/cm/shapes/3.0#> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShapeConstraints> .
+<http://open-services.net/ns/cm/shapes/3.0#> <http://purl.org/dc/terms/description> "Constraints on vocabulary terms defined in the OSLC Change Management (CM) namespace."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#> <http://purl.org/dc/terms/title> "The OSLC Change Management(CM) Constraints" .
+<http://open-services.net/ns/cm/shapes/3.0#> <http://purl.org/dc/terms/license> <http://www.apache.org/licenses/LICENSE-2.0> .
+<http://open-services.net/ns/cm/shapes/3.0#> <http://purl.org/dc/terms/hasVersion> "OS" .
+<http://open-services.net/ns/cm/shapes/3.0#> <http://purl.org/dc/terms/isPartOf> <https://docs.oasis-open-projects.org/oslc-op/cm/v3.0/errata01/os/change-mgt-spec.html> .
+<http://open-services.net/ns/cm/shapes/3.0#instanceShape> <http://purl.org/dc/terms/description> "Resource Shape that provides hints as to resource property value-types and allowed values."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#instanceShape> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/cm/shapes/3.0#instanceShape> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/cm/shapes/3.0#instanceShape> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/cm/shapes/3.0#instanceShape> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#instanceShape> .
+<http://open-services.net/ns/cm/shapes/3.0#instanceShape> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#instanceShape> <http://open-services.net/ns/core#name> "instanceShape" .
+<http://open-services.net/ns/cm/shapes/3.0#instanceShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#closeDate> <http://purl.org/dc/terms/description> "The date at which no further activity or work is intended to be conducted."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#closeDate> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://open-services.net/ns/cm/shapes/3.0#closeDate> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/cm/shapes/3.0#closeDate> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#closeDate> .
+<http://open-services.net/ns/cm/shapes/3.0#closeDate> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/cm/shapes/3.0#closeDate> <http://open-services.net/ns/core#name> "closeDate" .
+<http://open-services.net/ns/cm/shapes/3.0#closeDate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#contributor> <http://purl.org/dc/terms/description> "The person(s) who are responsible for the work needed to complete the change request (reference: Dublin Core). It is likely that the target resource will be a <code>foaf:Person</code> but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#contributor> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/cm/shapes/3.0#contributor> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/cm/shapes/3.0#contributor> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/cm/shapes/3.0#contributor> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/contributor> .
+<http://open-services.net/ns/cm/shapes/3.0#contributor> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#contributor> <http://open-services.net/ns/core#name> "contributor" .
+<http://open-services.net/ns/cm/shapes/3.0#contributor> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#verified> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#inProgress> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectedByDefect> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://purl.org/dc/terms/title> "A request for new functionality." .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#testedByTestCase> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#relatedTestExecutionRecord> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectsRequirement> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#contributor> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#implementsRequirement> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#identifier> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#title> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#creator> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#reviewed> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/cm#Enhancement> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#approved> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#relatedChangeRequest> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectsTestResult> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#blocksTestExecutionRecord> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectsPlanItem> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#relatedTestCase> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#relatedTestScript> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#shortTitle> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#relatedTestPlan> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#subject> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#parent> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#type> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#modified> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#discussedBy> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#serviceProvider> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#authorizer> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#status> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#description> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#closed> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#tracksChangeSet> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#state> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#closeDate> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#instanceShape> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#priority> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#fixed> .
+<http://open-services.net/ns/cm/shapes/3.0#EnhancementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#created> .
+<http://open-services.net/ns/cm/shapes/3.0#tracksChangeSet> <http://purl.org/dc/terms/title> "Tracks Change Set" .
+<http://open-services.net/ns/cm/shapes/3.0#tracksChangeSet> <http://purl.org/dc/terms/description> "Tracks a resource that represents a set of changes on the resource."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#tracksChangeSet> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/cm/shapes/3.0#tracksChangeSet> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/cm/shapes/3.0#tracksChangeSet> <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#ChangeSet> .
+<http://open-services.net/ns/cm/shapes/3.0#tracksChangeSet> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#tracksChangeSet> .
+<http://open-services.net/ns/cm/shapes/3.0#tracksChangeSet> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#tracksChangeSet> <http://open-services.net/ns/core#name> "tracksChangeSet" .
+<http://open-services.net/ns/cm/shapes/3.0#tracksChangeSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#status> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#description> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#type> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#identifier> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#inProgress> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#creator> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#subject> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#contributor> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#instanceShape> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#approved> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#reviewed> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#relatedChangeRequest> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#created> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectsPlanItem> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#parent> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#serviceProvider> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#closed> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#shortTitle> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#fixed> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/cm#Task> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectedByDefect> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://purl.org/dc/terms/description> "Used to track assigned work that to be completed within a certain time." .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectsRequirement> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#priority> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#title> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#closeDate> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#tracksChangeSet> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#state> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#discussedBy> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://purl.org/dc/terms/title> "An executable and trackable activity." .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#modified> .
+<http://open-services.net/ns/cm/shapes/3.0#TaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#authorizer> .
+<http://open-services.net/ns/cm/shapes/3.0#status> <http://purl.org/dc/terms/description> "Used to indicate the status of the change request. This property is often read-only."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#status> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+<http://open-services.net/ns/cm/shapes/3.0#status> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#status> .
+<http://open-services.net/ns/cm/shapes/3.0#status> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/cm/shapes/3.0#status> <http://open-services.net/ns/core#name> "status" .
+<http://open-services.net/ns/cm/shapes/3.0#status> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#affectedByDefect> <http://purl.org/dc/terms/title> "Affected by Defect" .
+<http://open-services.net/ns/cm/shapes/3.0#affectedByDefect> <http://purl.org/dc/terms/description> "Change request is affected by a reported defect. It is likely that the target resource will be an <code>oslc_cm:Defect</code> but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#affectedByDefect> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/cm/shapes/3.0#affectedByDefect> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/cm/shapes/3.0#affectedByDefect> <http://open-services.net/ns/core#range> <http://open-services.net/ns/cm#Defect> .
+<http://open-services.net/ns/cm/shapes/3.0#affectedByDefect> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#affectedByDefect> .
+<http://open-services.net/ns/cm/shapes/3.0#affectedByDefect> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#affectedByDefect> <http://open-services.net/ns/core#name> "affectedByDefect" .
+<http://open-services.net/ns/cm/shapes/3.0#affectedByDefect> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#type> <http://purl.org/dc/terms/description> "The resource type URIs, at least one of which should be oslc_cm:ChangeRequest."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#type> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/cm/shapes/3.0#type> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/cm/shapes/3.0#type> <http://open-services.net/ns/core#propertyDefinition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> .
+<http://open-services.net/ns/cm/shapes/3.0#type> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#type> <http://open-services.net/ns/core#name> "type" .
+<http://open-services.net/ns/cm/shapes/3.0#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#affectsPlanItem> <http://purl.org/dc/terms/title> "Affects PlanItem" .
+<http://open-services.net/ns/cm/shapes/3.0#affectsPlanItem> <http://purl.org/dc/terms/description> "Change request affects plan item."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#affectsPlanItem> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/cm/shapes/3.0#affectsPlanItem> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/cm/shapes/3.0#affectsPlanItem> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#affectsPlanItem> .
+<http://open-services.net/ns/cm/shapes/3.0#affectsPlanItem> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#affectsPlanItem> <http://open-services.net/ns/core#name> "affectsPlanItem" .
+<http://open-services.net/ns/cm/shapes/3.0#affectsPlanItem> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#fixed> <http://purl.org/dc/terms/description> "Whether or not the Change Request has been fixed."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#fixed> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/cm/shapes/3.0#fixed> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#fixed> .
+<http://open-services.net/ns/cm/shapes/3.0#fixed> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/cm/shapes/3.0#fixed> <http://open-services.net/ns/core#name> "fixed" .
+<http://open-services.net/ns/cm/shapes/3.0#fixed> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestScript> <http://purl.org/dc/terms/title> "Related Test Script" .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestScript> <http://purl.org/dc/terms/description> "Related QM test script resource. It is likely that the target resource will be an oslc_qm:TestScript but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestScript> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestScript> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestScript> <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#ChangeSet> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestScript> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#relatedTestScript> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestScript> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestScript> <http://open-services.net/ns/core#name> "relatedTestScript" .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestScript> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#serviceProvider> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/cm/shapes/3.0#serviceProvider> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/cm/shapes/3.0#serviceProvider> <http://purl.org/dc/terms/description> "A link to the resource's OSLC Service Provider. There may be cases when the\nsubject resource is available from a service provider that implements multiple domain\nspecifications, which could result in multiple values for this property."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#serviceProvider> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#serviceProvider> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#ServiceProvider> .
+<http://open-services.net/ns/cm/shapes/3.0#serviceProvider> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#serviceProvider> .
+<http://open-services.net/ns/cm/shapes/3.0#serviceProvider> <http://open-services.net/ns/core#name> "serviceProvider" .
+<http://open-services.net/ns/cm/shapes/3.0#serviceProvider> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#creator> <http://purl.org/dc/terms/description> "Creator or creators of resource (reference: Dublin Core). It is likely that the target resource will be a <code>foaf:Person</code> but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#creator> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/cm/shapes/3.0#creator> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/cm/shapes/3.0#creator> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/cm/shapes/3.0#creator> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/creator> .
+<http://open-services.net/ns/cm/shapes/3.0#creator> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#creator> <http://open-services.net/ns/core#name> "creator" .
+<http://open-services.net/ns/cm/shapes/3.0#creator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#affectsRequirement> <http://purl.org/dc/terms/title> "Affects Requirement" .
+<http://open-services.net/ns/cm/shapes/3.0#affectsRequirement> <http://purl.org/dc/terms/description> "Change request affecting a Requirement. It is likely that the target resource will be an <code>oslc_rm:Requirement</code> but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#affectsRequirement> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/cm/shapes/3.0#affectsRequirement> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/cm/shapes/3.0#affectsRequirement> <http://open-services.net/ns/core#range> <http://open-services.net/ns/rm#Requirement> .
+<http://open-services.net/ns/cm/shapes/3.0#affectsRequirement> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#affectsRequirement> .
+<http://open-services.net/ns/cm/shapes/3.0#affectsRequirement> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#affectsRequirement> <http://open-services.net/ns/core#name> "affectsRequirement" .
+<http://open-services.net/ns/cm/shapes/3.0#affectsRequirement> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#created> <http://purl.org/dc/terms/description> "Timestamp of resource creation (reference: Dublin Core)."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#created> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://open-services.net/ns/cm/shapes/3.0#created> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/cm/shapes/3.0#created> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/created> .
+<http://open-services.net/ns/cm/shapes/3.0#created> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/cm/shapes/3.0#created> <http://open-services.net/ns/core#name> "created" .
+<http://open-services.net/ns/cm/shapes/3.0#created> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#modified> <http://purl.org/dc/terms/description> "Timestamp of latest resource modification (reference: Dublin Core)."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#modified> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://open-services.net/ns/cm/shapes/3.0#modified> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/cm/shapes/3.0#modified> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/modified> .
+<http://open-services.net/ns/cm/shapes/3.0#modified> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/cm/shapes/3.0#modified> <http://open-services.net/ns/core#name> "modified" .
+<http://open-services.net/ns/cm/shapes/3.0#modified> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#blocksTestExecutionRecord> <http://purl.org/dc/terms/title> "Blocks Test Execution Record" .
+<http://open-services.net/ns/cm/shapes/3.0#blocksTestExecutionRecord> <http://purl.org/dc/terms/description> "Associated QM resource that is blocked by this Change Request. It is likely that the target resource will be an oslc_qm:TestExecutionRecord but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#blocksTestExecutionRecord> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/cm/shapes/3.0#blocksTestExecutionRecord> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/cm/shapes/3.0#blocksTestExecutionRecord> <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#ChangeSet> .
+<http://open-services.net/ns/cm/shapes/3.0#blocksTestExecutionRecord> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#blocksTestExecutionRecord> .
+<http://open-services.net/ns/cm/shapes/3.0#blocksTestExecutionRecord> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#blocksTestExecutionRecord> <http://open-services.net/ns/core#name> "blocksTestExecutionRecord" .
+<http://open-services.net/ns/cm/shapes/3.0#blocksTestExecutionRecord> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#identifier> <http://purl.org/dc/terms/description> "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#identifier> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+<http://open-services.net/ns/cm/shapes/3.0#identifier> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/cm/shapes/3.0#identifier> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/identifier> .
+<http://open-services.net/ns/cm/shapes/3.0#identifier> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+<http://open-services.net/ns/cm/shapes/3.0#identifier> <http://open-services.net/ns/core#name> "identifier" .
+<http://open-services.net/ns/cm/shapes/3.0#identifier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#implementsRequirement> <http://purl.org/dc/terms/title> "Implements Requirement" .
+<http://open-services.net/ns/cm/shapes/3.0#implementsRequirement> <http://purl.org/dc/terms/description> "Implements associated Requirement. It is likely that the target resource will be an <code>oslc_rm:Requirement</code> but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#implementsRequirement> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/cm/shapes/3.0#implementsRequirement> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/cm/shapes/3.0#implementsRequirement> <http://open-services.net/ns/core#range> <http://open-services.net/ns/rm#Requirement> .
+<http://open-services.net/ns/cm/shapes/3.0#implementsRequirement> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#implementsRequirement> .
+<http://open-services.net/ns/cm/shapes/3.0#implementsRequirement> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#implementsRequirement> <http://open-services.net/ns/core#name> "implementsRequirement" .
+<http://open-services.net/ns/cm/shapes/3.0#implementsRequirement> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#tracksRequirement> <http://purl.org/dc/terms/title> "Tracks Requirement" .
+<http://open-services.net/ns/cm/shapes/3.0#tracksRequirement> <http://purl.org/dc/terms/description> "Tracks the associated Requirement or Requirement ChangeSet resources. It is likely that the target resource will be an <code>oslc_rm:Requirement</code> but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#tracksRequirement> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/cm/shapes/3.0#tracksRequirement> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/cm/shapes/3.0#tracksRequirement> <http://open-services.net/ns/core#range> <http://open-services.net/ns/rm#Requirement> .
+<http://open-services.net/ns/cm/shapes/3.0#tracksRequirement> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#tracksRequirement> .
+<http://open-services.net/ns/cm/shapes/3.0#tracksRequirement> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#tracksRequirement> <http://open-services.net/ns/core#name> "tracksRequirement" .
+<http://open-services.net/ns/cm/shapes/3.0#tracksRequirement> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#status> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://purl.org/dc/terms/title> "A notification of a change request that requires authorization to address." .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectsPlanItem> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#shortTitle> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#closed> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#modified> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#serviceProvider> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#state> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#contributor> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectedByDefect> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#relatedChangeRequest> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#type> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://purl.org/dc/terms/description> "Represents an assignment notification of a change request. May be used also to bestow authority onto the assigned user to effect the changes." .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#created> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#creator> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#description> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectsRequirement> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#discussedBy> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#parent> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#approved> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#verified> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#subject> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#reviewed> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#closeDate> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/cm#ChangeNotice> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#authorizer> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#instanceShape> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#fixed> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#inProgress> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#title> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#severity> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#identifier> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#tracksChangeSet> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeNoticeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#priority> .
+<http://open-services.net/ns/cm/shapes/3.0#description> <http://purl.org/dc/terms/description> "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content. SHOULD include only content that is valid and suitable inside an XHTML &lt;div&gt; element."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#description> <http://open-services.net/ns/core#valueType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#description> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/description> .
+<http://open-services.net/ns/cm/shapes/3.0#description> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/cm/shapes/3.0#description> <http://open-services.net/ns/core#name> "description" .
+<http://open-services.net/ns/cm/shapes/3.0#description> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#approved> <http://purl.org/dc/terms/description> "Whether or not the Change Request has been approved."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#approved> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/cm/shapes/3.0#approved> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#approved> .
+<http://open-services.net/ns/cm/shapes/3.0#approved> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/cm/shapes/3.0#approved> <http://open-services.net/ns/core#name> "approved" .
+<http://open-services.net/ns/cm/shapes/3.0#approved> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedChangeRequest> <http://purl.org/dc/terms/title> "Related ChangeRequest" .
+<http://open-services.net/ns/cm/shapes/3.0#relatedChangeRequest> <http://purl.org/dc/terms/description> "This relationship is loosely coupled and has no specific meaning."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedChangeRequest> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedChangeRequest> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedChangeRequest> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#relatedChangeRequest> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedChangeRequest> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedChangeRequest> <http://open-services.net/ns/core#name> "relatedChangeRequest" .
+<http://open-services.net/ns/cm/shapes/3.0#relatedChangeRequest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#inProgress> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#status> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#type> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#verified> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#instanceShape> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#contributor> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#relatedTestExecutionRecord> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#reviewed> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#fixed> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#relatedTestPlan> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#closeDate> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectsPlanItem> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectedByDefect> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#relatedTestScript> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#blocksTestExecutionRecord> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectsTestResult> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#subject> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#approved> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#creator> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#modified> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#relatedChangeRequest> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectsRequirement> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#parent> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#title> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#priority> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#state> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#severity> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://purl.org/dc/terms/description> "Used to report defects in testing." .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#closed> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#relatedTestCase> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#description> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#testedByTestCase> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#serviceProvider> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://purl.org/dc/terms/title> "A software or product defect." .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#discussedBy> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#created> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#authorizer> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#shortTitle> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#identifier> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#tracksChangeSet> .
+<http://open-services.net/ns/cm/shapes/3.0#DefectShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/cm#Defect> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#modified> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectsRequirement> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#state> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#created> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#inProgress> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#subject> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#identifier> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#shortTitle> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#title> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#contributor> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#priority> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#tracksChangeSet> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#parent> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://purl.org/dc/terms/description> "A review task can be used to request and approve changes to requirements, test plans, test cases or other resources." .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#verified> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#serviceProvider> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/cm#ReviewTask> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#description> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#type> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#closeDate> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#authorizer> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#reviewed> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#discussedBy> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#instanceShape> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#status> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#fixed> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#closed> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#tracksRequirement> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#approved> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://purl.org/dc/terms/title> "A request to make a changes and review the change." .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectsPlanItem> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#creator> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectedByDefect> .
+<http://open-services.net/ns/cm/shapes/3.0#ReviewTaskShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#relatedChangeRequest> .
+<http://open-services.net/ns/cm/shapes/3.0#parent> <http://purl.org/dc/terms/title> "Parent of Change Request" .
+<http://open-services.net/ns/cm/shapes/3.0#parent> <http://purl.org/dc/terms/description> "The related parent change requests of the subject change request. Establishes a parent/child relationship between change requests."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#parent> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/cm/shapes/3.0#parent> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/cm/shapes/3.0#parent> <http://open-services.net/ns/core#range> <http://open-services.net/ns/cm#ChangeRequest> .
+<http://open-services.net/ns/cm/shapes/3.0#parent> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#parent> .
+<http://open-services.net/ns/cm/shapes/3.0#parent> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#parent> <http://open-services.net/ns/core#name> "parent" .
+<http://open-services.net/ns/cm/shapes/3.0#parent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestExecutionRecord> <http://purl.org/dc/terms/title> "Related Test Execution Record" .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestExecutionRecord> <http://purl.org/dc/terms/description> "Related to a QM test execution resource. It is likely that the target resource will be an oslc_qm:TestExecutionRecord but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestExecutionRecord> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestExecutionRecord> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestExecutionRecord> <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#ChangeSet> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestExecutionRecord> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#relatedTestExecutionRecord> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestExecutionRecord> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestExecutionRecord> <http://open-services.net/ns/core#name> "relatedTestExecutionRecord" .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestExecutionRecord> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#subject> <http://purl.org/dc/terms/description> "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#subject> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+<http://open-services.net/ns/cm/shapes/3.0#subject> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/subject> .
+<http://open-services.net/ns/cm/shapes/3.0#subject> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#subject> <http://open-services.net/ns/core#name> "subject" .
+<http://open-services.net/ns/cm/shapes/3.0#subject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#inProgress> <http://purl.org/dc/terms/description> "Whether or not the Change Request in a state indicating that active work is occurring. If oslc_cm:inProgress is true, then oslc_cm:fixed and oslc_cm:closed must also be false."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#inProgress> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/cm/shapes/3.0#inProgress> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#inProgress> .
+<http://open-services.net/ns/cm/shapes/3.0#inProgress> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/cm/shapes/3.0#inProgress> <http://open-services.net/ns/core#name> "inProgress" .
+<http://open-services.net/ns/cm/shapes/3.0#inProgress> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#affectsTestResult> <http://purl.org/dc/terms/title> "Zffects Test Result" .
+<http://open-services.net/ns/cm/shapes/3.0#affectsTestResult> <http://purl.org/dc/terms/description> "Associated QM resource that is affected by this Change Request. It is likely that the target resource will be an oslc_qm:TestResult but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#affectsTestResult> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/cm/shapes/3.0#affectsTestResult> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/cm/shapes/3.0#affectsTestResult> <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#ChangeSet> .
+<http://open-services.net/ns/cm/shapes/3.0#affectsTestResult> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#affectsTestResult> .
+<http://open-services.net/ns/cm/shapes/3.0#affectsTestResult> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#affectsTestResult> <http://open-services.net/ns/core#name> "affectsTestResult" .
+<http://open-services.net/ns/cm/shapes/3.0#affectsTestResult> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#discussedBy> <http://purl.org/dc/terms/description> "A series of notes and comments about this change request."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#discussedBy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/cm/shapes/3.0#discussedBy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/cm/shapes/3.0#discussedBy> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Discussion> .
+<http://open-services.net/ns/cm/shapes/3.0#discussedBy> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#discussedBy> .
+<http://open-services.net/ns/cm/shapes/3.0#discussedBy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/cm/shapes/3.0#discussedBy> <http://open-services.net/ns/core#name> "discussedBy" .
+<http://open-services.net/ns/cm/shapes/3.0#discussedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#state> <http://purl.org/dc/terms/description> "Used to indicate the state of the change request. This property is often read-only, but could be changed using OSLC Actions."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#state> <http://open-services.net/ns/core#range> <http://open-services.net/ns/cm#State> .
+<http://open-services.net/ns/cm/shapes/3.0#state> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#state> .
+<http://open-services.net/ns/cm/shapes/3.0#state> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/cm/shapes/3.0#state> <http://open-services.net/ns/core#name> "state" .
+<http://open-services.net/ns/cm/shapes/3.0#state> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#title> <http://purl.org/dc/terms/description> "Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content. SHOULD include only content that is valid and suitable inside an XHTML &lt;div&gt; element."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#title> <http://open-services.net/ns/core#valueType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#title> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/title> .
+<http://open-services.net/ns/cm/shapes/3.0#title> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+<http://open-services.net/ns/cm/shapes/3.0#title> <http://open-services.net/ns/core#name> "title" .
+<http://open-services.net/ns/cm/shapes/3.0#title> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#closed> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/cm#ChangeRequest> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#relatedTestPlan> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#fixed> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#verified> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#implementsRequirement> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#state> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#status> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://purl.org/dc/terms/title> "A general type for records in a Change Management." .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#priority> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectsRequirement> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#relatedTestCase> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#testedByTestCase> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#instanceShape> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#identifier> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#modified> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#tracksRequirement> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#approved> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectsPlanItem> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#subject> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#serviceProvider> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#shortTitle> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#relatedTestExecutionRecord> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#contributor> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#description> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#parent> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#closeDate> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#relatedTestScript> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#creator> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#reviewed> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#blocksTestExecutionRecord> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#created> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#title> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#inProgress> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#discussedBy> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#tracksChangeSet> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#type> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#relatedChangeRequest> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#authorizer> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectsTestResult> .
+<http://open-services.net/ns/cm/shapes/3.0#ChangeRequestShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/cm/shapes/3.0#affectedByDefect> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestCase> <http://purl.org/dc/terms/title> "Related Test Case" .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestCase> <http://purl.org/dc/terms/description> "Related QM test case resource. It is likely that the target resource will be an oslc_qm:TestCase but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestCase> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestCase> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestCase> <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#ChangeSet> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestCase> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#relatedTestCase> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestCase> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestCase> <http://open-services.net/ns/core#name> "relatedTestCase" .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestCase> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestPlan> <http://purl.org/dc/terms/title> "Related Test Plan" .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestPlan> <http://purl.org/dc/terms/description> "Related QM test plan resource. It is likely that the target resource will be an oslc_qm:TestPlan but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestPlan> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestPlan> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestPlan> <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#ChangeSet> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestPlan> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#relatedTestPlan> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestPlan> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestPlan> <http://open-services.net/ns/core#name> "relatedTestPlan" .
+<http://open-services.net/ns/cm/shapes/3.0#relatedTestPlan> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#reviewed> <http://purl.org/dc/terms/description> "Whether or not the Change Request has been reviewed."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#reviewed> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/cm/shapes/3.0#reviewed> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#reviewed> .
+<http://open-services.net/ns/cm/shapes/3.0#reviewed> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/cm/shapes/3.0#reviewed> <http://open-services.net/ns/core#name> "reviewed" .
+<http://open-services.net/ns/cm/shapes/3.0#reviewed> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#shortTitle> <http://purl.org/dc/terms/title> "Short title" .
+<http://open-services.net/ns/cm/shapes/3.0#shortTitle> <http://purl.org/dc/terms/description> "Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users. SHOULD include only content that is valid inside an XHTML &lt;span&gt; element."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#shortTitle> <http://open-services.net/ns/core#valueType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#shortTitle> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#shortTitle> .
+<http://open-services.net/ns/cm/shapes/3.0#shortTitle> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/cm/shapes/3.0#shortTitle> <http://open-services.net/ns/core#name> "shortTitle" .
+<http://open-services.net/ns/cm/shapes/3.0#shortTitle> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#severity> <http://purl.org/dc/terms/description> "Severity or criticality of this change request."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#severity> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/cm/shapes/3.0#severity> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/cm/shapes/3.0#severity> <http://open-services.net/ns/core#range> <http://open-services.net/ns/cm#Severity> .
+<http://open-services.net/ns/cm/shapes/3.0#severity> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#severity> .
+<http://open-services.net/ns/cm/shapes/3.0#severity> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#severity> <http://open-services.net/ns/core#name> "severity" .
+<http://open-services.net/ns/cm/shapes/3.0#severity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#authorizer> <http://purl.org/dc/terms/description> "Agents who are responsible authorizing and/or has authorized effort to be expended to address a set of child change requests."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#authorizer> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/cm/shapes/3.0#authorizer> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/cm/shapes/3.0#authorizer> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#authorizer> .
+<http://open-services.net/ns/cm/shapes/3.0#authorizer> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#authorizer> <http://open-services.net/ns/core#range> <http://xmlns.com/foaf/0.1/Agent> .
+<http://open-services.net/ns/cm/shapes/3.0#authorizer> <http://open-services.net/ns/core#name> "authorizer" .
+<http://open-services.net/ns/cm/shapes/3.0#authorizer> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/cm/shapes/3.0#priority> <http://purl.org/dc/terms/description> "Priority of this change request."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm/shapes/3.0#priority> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/cm/shapes/3.0#priority> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/cm/shapes/3.0#priority> <http://open-services.net/ns/core#range> <http://open-services.net/ns/cm#Priority> .
+<http://open-services.net/ns/cm/shapes/3.0#priority> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/cm#priority> .
+<http://open-services.net/ns/cm/shapes/3.0#priority> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/cm/shapes/3.0#priority> <http://open-services.net/ns/core#name> "priority" .
+<http://open-services.net/ns/cm/shapes/3.0#priority> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .

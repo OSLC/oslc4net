@@ -1,0 +1,108 @@
+<http://open-services.net/ns/qm#runsTestCase> <http://open-services.net/ns/core#inverseLabel> "run by" .
+<http://open-services.net/ns/qm#runsTestCase> <http://www.w3.org/2000/01/rdf-schema#label> "runsTestCase" .
+<http://open-services.net/ns/qm#runsTestCase> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#runsTestCase> <http://www.w3.org/2000/01/rdf-schema#comment> "Test Case run by the Test Execution Record. It is likely that the target resource will be an oslc_qm:TestCase but that is not necessarily the case." .
+<http://open-services.net/ns/qm#runsTestCase> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/qm#affectedByChangeRequest> <http://open-services.net/ns/core#inverseLabel> "affects" .
+<http://open-services.net/ns/qm#affectedByChangeRequest> <http://www.w3.org/2000/01/rdf-schema#label> "affectedByChangeRequest" .
+<http://open-services.net/ns/qm#affectedByChangeRequest> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#affectedByChangeRequest> <http://www.w3.org/2000/01/rdf-schema#comment> "Change request that affects the Test Result. It is likely that the target resource will be an oslc_cm:ChangeRequest but that is not necessarily the case." .
+<http://open-services.net/ns/qm#affectedByChangeRequest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/qm#reportsOnTestPlan> <http://open-services.net/ns/core#inverseLabel> "reported by" .
+<http://open-services.net/ns/qm#reportsOnTestPlan> <http://www.w3.org/2000/01/rdf-schema#label> "reportsOnTestPlan" .
+<http://open-services.net/ns/qm#reportsOnTestPlan> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#reportsOnTestPlan> <http://www.w3.org/2000/01/rdf-schema#comment> "Test Plan that a test or execution record reports on. It is likely that the target resource will be an oslc_qm:TestPlan but that is not necessarily the case." .
+<http://open-services.net/ns/qm#reportsOnTestPlan> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/qm#relatedChangeRequest> <http://open-services.net/ns/core#inverseLabel> "relates to" .
+<http://open-services.net/ns/qm#relatedChangeRequest> <http://www.w3.org/2000/01/rdf-schema#label> "relatedChangeRequest" .
+<http://open-services.net/ns/qm#relatedChangeRequest> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#relatedChangeRequest> <http://www.w3.org/2000/01/rdf-schema#comment> "A related change request. It is likely that the target resource will be an oslc_cm:ChangeRequest but that is not necessarily the case." .
+<http://open-services.net/ns/qm#relatedChangeRequest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/qm#testsChangeRequest> <http://open-services.net/ns/core#inverseLabel> "tested by" .
+<http://open-services.net/ns/qm#testsChangeRequest> <http://www.w3.org/2000/01/rdf-schema#label> "testsChangeRequest" .
+<http://open-services.net/ns/qm#testsChangeRequest> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#testsChangeRequest> <http://www.w3.org/2000/01/rdf-schema#comment> "Change Request tested by the Test Case. It is likely that the target resource will be an oslc_cm:ChangeRequest but that is not necessarily the case." .
+<http://open-services.net/ns/qm#testsChangeRequest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/qm#executesTestScript> <http://open-services.net/ns/core#inverseLabel> "executed by" .
+<http://open-services.net/ns/qm#executesTestScript> <http://www.w3.org/2000/01/rdf-schema#label> "executesTestScript" .
+<http://open-services.net/ns/qm#executesTestScript> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#executesTestScript> <http://www.w3.org/2000/01/rdf-schema#comment> "Test Script executed to produce the Test Result. It is likely that the target resource will be an oslc_qm:TestScript but that is not necessarily the case." .
+<http://open-services.net/ns/qm#executesTestScript> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/qm#TestPlan> <http://www.w3.org/2000/01/rdf-schema#label> "TestPlan" .
+<http://open-services.net/ns/qm#TestPlan> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#TestPlan> <http://www.w3.org/2000/01/rdf-schema#comment> "The QM Test Plan resource." .
+<http://open-services.net/ns/qm#TestPlan> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/qm#usesTestCase> <http://open-services.net/ns/core#inverseLabel> "used by" .
+<http://open-services.net/ns/qm#usesTestCase> <http://www.w3.org/2000/01/rdf-schema#label> "usesTestCase" .
+<http://open-services.net/ns/qm#usesTestCase> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#usesTestCase> <http://www.w3.org/2000/01/rdf-schema#comment> "Test Case used by the Test Plan. It is likely that the target resource will be an oslc_qm:TestCase but that is not necessarily the case." .
+<http://open-services.net/ns/qm#usesTestCase> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/qm#status> <http://www.w3.org/2000/01/rdf-schema#label> "status" .
+<http://open-services.net/ns/qm#status> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#status> <http://www.w3.org/2000/01/rdf-schema#comment> "Used to indicate the state of the Test Result based on values defined by the service provider." .
+<http://open-services.net/ns/qm#status> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/qm#TestExecutionRecord> <http://www.w3.org/2000/01/rdf-schema#label> "TestExecutionRecord" .
+<http://open-services.net/ns/qm#TestExecutionRecord> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#TestExecutionRecord> <http://www.w3.org/2000/01/rdf-schema#comment> "The QM Test Execution Record resource." .
+<http://open-services.net/ns/qm#TestExecutionRecord> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/qm#validatesRequirementCollection> <http://open-services.net/ns/core#inverseLabel> "validated by" .
+<http://open-services.net/ns/qm#validatesRequirementCollection> <http://www.w3.org/2000/01/rdf-schema#label> "validatesRequirementCollection" .
+<http://open-services.net/ns/qm#validatesRequirementCollection> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#validatesRequirementCollection> <http://www.w3.org/2000/01/rdf-schema#comment> "Requirement Collection that is validated by the Test Plan. It is likely that the target resource will be an oslc_rm:RequirementCollection but that is not necessarily the case." .
+<http://open-services.net/ns/qm#validatesRequirementCollection> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/qm#> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <https://github.com/oslc-op/oslc-specs/blob/master/specs/qm/quality-management-vocab.ttl> .
+<http://open-services.net/ns/qm#> <http://purl.org/dc/terms/hasVersion> "OS" .
+<http://open-services.net/ns/qm#> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<http://open-services.net/ns/qm#> <http://purl.org/dc/terms/source> <https://docs.oasis-open-projects.org/oslc-op/qm/v2.1/os/quality-management-vocab.ttl> .
+<http://open-services.net/ns/qm#> <http://purl.org/dc/terms/publisher> <https://open-services.net/about/> .
+<http://open-services.net/ns/qm#> <http://purl.org/dc/terms/license> <http://www.apache.org/licenses/LICENSE-2.0> .
+<http://open-services.net/ns/qm#> <http://www.w3.org/2000/01/rdf-schema#label> "OSLC Quality Management (QM) Vocabulary" .
+<http://open-services.net/ns/qm#> <http://purl.org/vocab/vann/preferredNamespacePrefix> "oslc_qm" .
+<http://open-services.net/ns/qm#> <http://purl.org/dc/terms/description> "All vocabulary URIs defined in the OSLC Quality Management (QM) namespace."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/qm#> <http://purl.org/dc/terms/isPartOf> <https://docs.oasis-open-projects.org/oslc-op/qm/v2.1/os/quality-management-spec.html> .
+<http://open-services.net/ns/qm#> <http://purl.org/dc/terms/title> "OSLC Quality Management (QM) Vocabulary" .
+<http://open-services.net/ns/qm#> <http://purl.org/dc/terms/issued> "2022-01-19"^^<http://www.w3.org/2001/XMLSchema#date> .
+<http://open-services.net/ns/qm#TestScript> <http://www.w3.org/2000/01/rdf-schema#label> "TestScript" .
+<http://open-services.net/ns/qm#TestScript> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#TestScript> <http://www.w3.org/2000/01/rdf-schema#comment> "The QM Test Script resource." .
+<http://open-services.net/ns/qm#TestScript> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/qm#blockedByChangeRequest> <http://open-services.net/ns/core#inverseLabel> "blocks" .
+<http://open-services.net/ns/qm#blockedByChangeRequest> <http://www.w3.org/2000/01/rdf-schema#label> "blockedByChangeRequest" .
+<http://open-services.net/ns/qm#blockedByChangeRequest> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#blockedByChangeRequest> <http://www.w3.org/2000/01/rdf-schema#comment> "Change Request that prevents execution of the Test Execution Record. It is likely that the target resource will be an oslc_cm:ChangeRequest but that is not necessarily the case." .
+<http://open-services.net/ns/qm#blockedByChangeRequest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/qm#usesTestScript> <http://open-services.net/ns/core#inverseLabel> "used by" .
+<http://open-services.net/ns/qm#usesTestScript> <http://www.w3.org/2000/01/rdf-schema#label> "usesTestScript" .
+<http://open-services.net/ns/qm#usesTestScript> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#usesTestScript> <http://www.w3.org/2000/01/rdf-schema#comment> "Test Script used by the Test Case. It is likely that the target resource will be an oslc_qm:TestScript but that is not necessarily the case." .
+<http://open-services.net/ns/qm#usesTestScript> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/qm#validatesRequirement> <http://open-services.net/ns/core#inverseLabel> "validated by" .
+<http://open-services.net/ns/qm#validatesRequirement> <http://www.w3.org/2000/01/rdf-schema#label> "validatesRequirement" .
+<http://open-services.net/ns/qm#validatesRequirement> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#validatesRequirement> <http://www.w3.org/2000/01/rdf-schema#comment> "Requirement that is validated by the Test Case. It is likely that the target resource will be an oslc_rm:Requirement but that is not necessarily the case." .
+<http://open-services.net/ns/qm#validatesRequirement> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/qm#runsOnTestEnvironment> <http://www.w3.org/2000/01/rdf-schema#label> "runsOnTestEnvironment" .
+<http://open-services.net/ns/qm#runsOnTestEnvironment> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#runsOnTestEnvironment> <http://www.w3.org/2000/01/rdf-schema#comment> "Indicates the environment details of the test case for this execution record." .
+<http://open-services.net/ns/qm#runsOnTestEnvironment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/qm#producedByTestExecutionRecord> <http://www.w3.org/2000/01/rdf-schema#label> "producedByTestExecutionRecord" .
+<http://open-services.net/ns/qm#producedByTestExecutionRecord> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#producedByTestExecutionRecord> <http://www.w3.org/2000/01/rdf-schema#comment> "Test Execution Record that the Test Result was produced by. It is likely that the target resource will be an oslc_qm:TestExecutionRecord but that is not necessarily the case." .
+<http://open-services.net/ns/qm#producedByTestExecutionRecord> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/qm#reportsOnTestCase> <http://open-services.net/ns/core#inverseLabel> "reported by" .
+<http://open-services.net/ns/qm#reportsOnTestCase> <http://www.w3.org/2000/01/rdf-schema#label> "reportsOnTestCase" .
+<http://open-services.net/ns/qm#reportsOnTestCase> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#reportsOnTestCase> <http://www.w3.org/2000/01/rdf-schema#comment> "Test Case that the Test Result reports on. It is likely that the target resource will be an oslc_qm:TestCase but that is not necessarily the case." .
+<http://open-services.net/ns/qm#reportsOnTestCase> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/qm#TestResult> <http://www.w3.org/2000/01/rdf-schema#label> "TestResult" .
+<http://open-services.net/ns/qm#TestResult> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#TestResult> <http://www.w3.org/2000/01/rdf-schema#comment> "The QM Test Result resource." .
+<http://open-services.net/ns/qm#TestResult> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/qm#TestCase> <http://www.w3.org/2000/01/rdf-schema#label> "TestCase" .
+<http://open-services.net/ns/qm#TestCase> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#TestCase> <http://www.w3.org/2000/01/rdf-schema#comment> "The QM Test Case resource." .
+<http://open-services.net/ns/qm#TestCase> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/qm#executionInstructions> <http://www.w3.org/2000/01/rdf-schema#label> "executionInstructions" .
+<http://open-services.net/ns/qm#executionInstructions> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/qm#> .
+<http://open-services.net/ns/qm#executionInstructions> <http://www.w3.org/2000/01/rdf-schema#comment> "Instructions for executing the test script. Note that the value of Occurs is undefined. The resource shape document provided by the QM service provider may be consulted for its value." .
+<http://open-services.net/ns/qm#executionInstructions> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .

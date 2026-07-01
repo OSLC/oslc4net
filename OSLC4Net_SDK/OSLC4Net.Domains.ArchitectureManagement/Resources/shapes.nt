@@ -1,0 +1,198 @@
+<http://open-services.net/ns/am/shapes/3.0#comment> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+<http://open-services.net/ns/am/shapes/3.0#comment> <http://purl.org/dc/terms/description> "Descriptive text about link type. Provides a description of this link\ntype that could be used in hover help or other areas of the UI where the user wants to understand more about what a link of this type means."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#comment> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/am/shapes/3.0#comment> <http://open-services.net/ns/core#propertyDefinition> <http://www.w3.org/2000/01/rdf-schema#comment> .
+<http://open-services.net/ns/am/shapes/3.0#comment> <http://open-services.net/ns/core#name> "comment" .
+<http://open-services.net/ns/am/shapes/3.0#comment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/am/shapes/3.0#instanceShape> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/am/shapes/3.0#instanceShape> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/am/shapes/3.0#instanceShape> <http://purl.org/dc/terms/description> "The URI of a Resource Shape that describes the possible properties, occurrence,\nvalue types, allowed values and labels. This shape information is useful in displaying the subject\nresource as well as guiding clients in performing modifications. Instance shapes may be specific\nto the authenticated user associated with the request that retrieved the resource, the current\nstate of the resource and other factors and thus should not be cached."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#instanceShape> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/am/shapes/3.0#instanceShape> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/am/shapes/3.0#instanceShape> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#instanceShape> .
+<http://open-services.net/ns/am/shapes/3.0#instanceShape> <http://open-services.net/ns/core#name> "instanceShape" .
+<http://open-services.net/ns/am/shapes/3.0#instanceShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/am/shapes/3.0#derives> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/am/shapes/3.0#derives> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/am/shapes/3.0#derives> <http://purl.org/dc/terms/description> "The resource that derives from another resource originated from or is\nsignificantly influenced by the referenced resource. For example a model element derives from a\nrequirement."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#derives> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/am/shapes/3.0#derives> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/am/shapes/3.0#derives> <http://open-services.net/ns/core#propertyDefinition> <http://jazz.net/ns/dm/linktypes#derives> .
+<http://open-services.net/ns/am/shapes/3.0#derives> <http://open-services.net/ns/core#name> "derives" .
+<http://open-services.net/ns/am/shapes/3.0#derives> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/am/shapes/3.0#serviceProvider> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/am/shapes/3.0#serviceProvider> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/am/shapes/3.0#serviceProvider> <http://purl.org/dc/terms/description> "A link to the resource's OSLC Service Provider. There may be cases when the\nsubject resource is available from a service provider that implements multiple domain\nspecifications, which could result in multiple values for this property."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#serviceProvider> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/am/shapes/3.0#serviceProvider> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#ServiceProvider> .
+<http://open-services.net/ns/am/shapes/3.0#serviceProvider> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#serviceProvider> .
+<http://open-services.net/ns/am/shapes/3.0#serviceProvider> <http://open-services.net/ns/core#name> "serviceProvider" .
+<http://open-services.net/ns/am/shapes/3.0#serviceProvider> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/am/shapes/3.0#LinkTypeShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/am#LinkType> .
+<http://open-services.net/ns/am/shapes/3.0#LinkTypeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#identifier> .
+<http://open-services.net/ns/am/shapes/3.0#LinkTypeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#label> .
+<http://open-services.net/ns/am/shapes/3.0#LinkTypeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#creator> .
+<http://open-services.net/ns/am/shapes/3.0#LinkTypeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#serviceProvider> .
+<http://open-services.net/ns/am/shapes/3.0#LinkTypeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#instanceShape> .
+<http://open-services.net/ns/am/shapes/3.0#LinkTypeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#contributor> .
+<http://open-services.net/ns/am/shapes/3.0#LinkTypeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#created> .
+<http://open-services.net/ns/am/shapes/3.0#LinkTypeShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/am/shapes/3.0#LinkTypeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#comment> .
+<http://open-services.net/ns/am/shapes/3.0#LinkTypeShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#modified> .
+<http://open-services.net/ns/am/shapes/3.0#LinkTypeShape> <http://purl.org/dc/terms/title> "LinkType" .
+<http://open-services.net/ns/am/shapes/3.0#LinkTypeShape> <http://purl.org/dc/terms/description> "Represents type of link that is or can be used when defining links from AM resources."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#created> <http://purl.org/dc/terms/description> "Timestamp of resource creation."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#created> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://open-services.net/ns/am/shapes/3.0#created> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/created> .
+<http://open-services.net/ns/am/shapes/3.0#created> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/am/shapes/3.0#created> <http://open-services.net/ns/core#name> "created" .
+<http://open-services.net/ns/am/shapes/3.0#created> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/am/shapes/3.0#title> <http://open-services.net/ns/core#valueType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#title> <http://purl.org/dc/terms/description> "Title of the resource represented as rich text in XHTML content."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#title> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+<http://open-services.net/ns/am/shapes/3.0#title> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/title> .
+<http://open-services.net/ns/am/shapes/3.0#title> <http://open-services.net/ns/core#name> "title" .
+<http://open-services.net/ns/am/shapes/3.0#title> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/am/shapes/3.0#refine> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/am/shapes/3.0#refine> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/am/shapes/3.0#refine> <http://purl.org/dc/terms/description> "The target is a refinement of the source. (e.g. a use case scenario\nmight be a refinement of a textual requirement that describes the interaction)."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#refine> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/am/shapes/3.0#refine> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/am/shapes/3.0#refine> <http://open-services.net/ns/core#propertyDefinition> <http://jazz.net/ns/dm/linktypes#refine> .
+<http://open-services.net/ns/am/shapes/3.0#refine> <http://open-services.net/ns/core#name> "refine" .
+<http://open-services.net/ns/am/shapes/3.0#refine> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/am/shapes/3.0#elaborates> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/am/shapes/3.0#elaborates> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/am/shapes/3.0#elaborates> <http://purl.org/dc/terms/description> "This resource elaborates the referenced resource."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#elaborates> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/am/shapes/3.0#elaborates> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/am/shapes/3.0#elaborates> <http://open-services.net/ns/core#propertyDefinition> <http://jazz.net/ns/dm/linktypes#elaborates> .
+<http://open-services.net/ns/am/shapes/3.0#elaborates> <http://open-services.net/ns/core#name> "elaborates" .
+<http://open-services.net/ns/am/shapes/3.0#elaborates> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/am/shapes/3.0#dctype> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+<http://open-services.net/ns/am/shapes/3.0#dctype> <http://purl.org/dc/terms/description> "A short string representation for the type, for example ‘Car’."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#dctype> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/am/shapes/3.0#dctype> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/type> .
+<http://open-services.net/ns/am/shapes/3.0#dctype> <http://open-services.net/ns/core#name> "dctype" .
+<http://open-services.net/ns/am/shapes/3.0#dctype> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/am/shapes/3.0#external> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/am/shapes/3.0#external> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/am/shapes/3.0#external> <http://purl.org/dc/terms/description> "A generic link from a resource to an external web page."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#external> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/am/shapes/3.0#external> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/am/shapes/3.0#external> <http://open-services.net/ns/core#propertyDefinition> <http://jazz.net/ns/dm/linktypes#external> .
+<http://open-services.net/ns/am/shapes/3.0#external> <http://open-services.net/ns/core#name> "external" .
+<http://open-services.net/ns/am/shapes/3.0#external> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/am/shapes/3.0#type> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/am/shapes/3.0#type> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/am/shapes/3.0#type> <http://purl.org/dc/terms/description> "The resource type URIs."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#type> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/am/shapes/3.0#type> <http://open-services.net/ns/core#propertyDefinition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> .
+<http://open-services.net/ns/am/shapes/3.0#type> <http://open-services.net/ns/core#range> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/am/shapes/3.0#type> <http://open-services.net/ns/core#name> "type" .
+<http://open-services.net/ns/am/shapes/3.0#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/am/shapes/3.0#> <http://purl.org/dc/terms/description> "All vocabulary URIs defined in the OSLC Architecture Management (AM) namespace."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#> <http://purl.org/dc/terms/dateCopyrighted> "2012-2022" .
+<http://open-services.net/ns/am/shapes/3.0#> <http://purl.org/dc/terms/hasVersion> "OS" .
+<http://open-services.net/ns/am/shapes/3.0#> <http://purl.org/dc/terms/source> <https://docs.oasis-open-projects.org/oslc-op/am/v3.0/os/architecture-management-shapes.ttl> .
+<http://open-services.net/ns/am/shapes/3.0#> <http://purl.org/dc/terms/isPartOf> <https://docs.oasis-open-projects.org/oslc-op/am/v3.0/os/architecture-management-spec.html> .
+<http://open-services.net/ns/am/shapes/3.0#> <http://www.w3.org/2000/01/rdf-schema#label> "OSLC Architecture Management (AM) Constraints" .
+<http://open-services.net/ns/am/shapes/3.0#> <http://purl.org/dc/terms/title> "OSLC Architecture Management (AM) Constraints" .
+<http://open-services.net/ns/am/shapes/3.0#> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShapeConstraints> .
+<http://open-services.net/ns/am/shapes/3.0#> <http://purl.org/dc/terms/publisher> <https://open-services.net/about/> .
+<http://open-services.net/ns/am/shapes/3.0#> <http://purl.org/dc/terms/issued> "2022-07-11"^^<http://www.w3.org/2001/XMLSchema#date> .
+<http://open-services.net/ns/am/shapes/3.0#> <http://purl.org/dc/terms/license> <http://www.apache.org/licenses/LICENSE-2.0> .
+<http://open-services.net/ns/am/shapes/3.0#creator> <http://purl.org/dc/terms/description> "Creator or creators of the resource. It is likely that the target resource will be a foaf:Person but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#creator> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/am/shapes/3.0#creator> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/am/shapes/3.0#creator> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/creator> .
+<http://open-services.net/ns/am/shapes/3.0#creator> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/am/shapes/3.0#creator> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/am/shapes/3.0#creator> <http://open-services.net/ns/core#name> "creator" .
+<http://open-services.net/ns/am/shapes/3.0#creator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/am/shapes/3.0#shortTitle> <http://purl.org/dc/terms/title> "Short title" .
+<http://open-services.net/ns/am/shapes/3.0#shortTitle> <http://purl.org/dc/terms/description> "{{Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users. SHOULD include only content that is valid inside an XHTML &lt;span&gt; element}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#shortTitle> <http://open-services.net/ns/core#valueType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#shortTitle> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#shortTitle> .
+<http://open-services.net/ns/am/shapes/3.0#shortTitle> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/am/shapes/3.0#shortTitle> <http://open-services.net/ns/core#name> "shortTitle" .
+<http://open-services.net/ns/am/shapes/3.0#shortTitle> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/am/shapes/3.0#source> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/am/shapes/3.0#source> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/am/shapes/3.0#source> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/am/shapes/3.0#source> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/source> .
+<http://open-services.net/ns/am/shapes/3.0#source> <http://purl.org/dc/terms/description> "The resource URI a client can perform a get on to obtain the original non-OSLC AM formatted resource that was used to create this resource. The source resource is usually a binary or proprietary format that the service provider can consume and convert into an OSLC AM format. The service may use content negotiation with the Accept header to obtain the desired content type."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#source> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/am/shapes/3.0#source> <http://open-services.net/ns/core#name> "source" .
+<http://open-services.net/ns/am/shapes/3.0#source> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/am/shapes/3.0#trace> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/am/shapes/3.0#trace> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/am/shapes/3.0#trace> <http://purl.org/dc/terms/description> "The model element has a trace to the requirement (e.g. An attribute\nor its value are traced to a requirement)."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#trace> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/am/shapes/3.0#trace> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/am/shapes/3.0#trace> <http://open-services.net/ns/core#propertyDefinition> <http://jazz.net/ns/dm/linktypes#trace> .
+<http://open-services.net/ns/am/shapes/3.0#trace> <http://open-services.net/ns/core#name> "trace" .
+<http://open-services.net/ns/am/shapes/3.0#trace> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#shortTitle> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#serviceProvider> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#identifier> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#description> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#contributor> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#trace> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#dctype> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#external> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://purl.org/dc/terms/description> "A generic resource format that can be used to represent any type of specific architecture\nresource like a UML Class, Use Case, or Business Process Diagram."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#modified> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#created> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#satisfy> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#source> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#type> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#derives> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#elaborates> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/am#Resource> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#creator> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#refine> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://purl.org/dc/terms/title> "Resource" .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#title> .
+<http://open-services.net/ns/am/shapes/3.0#ResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/am/shapes/3.0#instanceShape> .
+<http://open-services.net/ns/am/shapes/3.0#contributor> <http://purl.org/dc/terms/description> "Contributor or contributors to the resource. It is likely that the target resource will be a foaf:Person but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#contributor> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/am/shapes/3.0#contributor> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/am/shapes/3.0#contributor> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/contributor> .
+<http://open-services.net/ns/am/shapes/3.0#contributor> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/am/shapes/3.0#contributor> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/am/shapes/3.0#contributor> <http://open-services.net/ns/core#name> "contributor" .
+<http://open-services.net/ns/am/shapes/3.0#contributor> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/am/shapes/3.0#modified> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://open-services.net/ns/am/shapes/3.0#modified> <http://purl.org/dc/terms/description> "Timestamp of latest resource modification."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#modified> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/am/shapes/3.0#modified> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/modified> .
+<http://open-services.net/ns/am/shapes/3.0#modified> <http://open-services.net/ns/core#name> "modified" .
+<http://open-services.net/ns/am/shapes/3.0#modified> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/am/shapes/3.0#identifier> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+<http://open-services.net/ns/am/shapes/3.0#identifier> <http://purl.org/dc/terms/description> "A unique identifier for a resource. Typically read-only and assigned by the\nservice provider when a resource is created. Not typically intended for end-user display."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#identifier> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+<http://open-services.net/ns/am/shapes/3.0#identifier> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/identifier> .
+<http://open-services.net/ns/am/shapes/3.0#identifier> <http://open-services.net/ns/core#name> "identifier" .
+<http://open-services.net/ns/am/shapes/3.0#identifier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/am/shapes/3.0#label> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+<http://open-services.net/ns/am/shapes/3.0#label> <http://purl.org/dc/terms/description> "The human readable name for this link type. This value is expected to be used\nin drop down lists and in tables where a link of this type is involved."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#label> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+<http://open-services.net/ns/am/shapes/3.0#label> <http://open-services.net/ns/core#propertyDefinition> <http://www.w3.org/2000/01/rdf-schema#label> .
+<http://open-services.net/ns/am/shapes/3.0#label> <http://open-services.net/ns/core#name> "label" .
+<http://open-services.net/ns/am/shapes/3.0#label> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/am/shapes/3.0#description> <http://open-services.net/ns/core#valueType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#description> <http://purl.org/dc/terms/description> "Descriptive text about resource represented as rich text in XHTML content."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#description> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/am/shapes/3.0#description> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/description> .
+<http://open-services.net/ns/am/shapes/3.0#description> <http://open-services.net/ns/core#name> "description" .
+<http://open-services.net/ns/am/shapes/3.0#description> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/am/shapes/3.0#satisfy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/am/shapes/3.0#satisfy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/am/shapes/3.0#satisfy> <http://purl.org/dc/terms/description> "The model element satisfies the requirement (e.g. The use case\nsatisfies a functional requirement)."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am/shapes/3.0#satisfy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/am/shapes/3.0#satisfy> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Any> .
+<http://open-services.net/ns/am/shapes/3.0#satisfy> <http://open-services.net/ns/core#propertyDefinition> <http://jazz.net/ns/dm/linktypes#satisfy> .
+<http://open-services.net/ns/am/shapes/3.0#satisfy> <http://open-services.net/ns/core#name> "satisfy" .
+<http://open-services.net/ns/am/shapes/3.0#satisfy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .

@@ -1,0 +1,241 @@
+<http://open-services.net/ns/cm#Enhancement> <http://www.w3.org/2000/01/rdf-schema#comment> "A request for new functionality." .
+<http://open-services.net/ns/cm#Enhancement> <http://www.w3.org/2000/01/rdf-schema#label> "Enhancement" .
+<http://open-services.net/ns/cm#Enhancement> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#Enhancement> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://open-services.net/ns/cm#ChangeRequest> .
+<http://open-services.net/ns/cm#Enhancement> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/cm#tracksRequirement> <http://www.w3.org/2000/01/rdf-schema#comment> "Tracks the associated Requirement or Requirement\nChangeSet resources. It is likely that the target resource will be an\noslc_rm:Requirement." .
+<http://open-services.net/ns/cm#tracksRequirement> <http://www.w3.org/2000/01/rdf-schema#label> "tracksRequirement" .
+<http://open-services.net/ns/cm#tracksRequirement> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#tracksRequirement> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#authorizer> <http://www.w3.org/2000/01/rdf-schema#comment> "The URI of a resource describing an agent who is responsible authorizing for and/or has authorized effort to be expended to address a set of change requests." .
+<http://open-services.net/ns/cm#authorizer> <http://www.w3.org/2000/01/rdf-schema#label> "authorizer" .
+<http://open-services.net/ns/cm#authorizer> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#authorizer> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#testedByTestCase> <http://www.w3.org/2000/01/rdf-schema#comment> "Test case by which this change request is tested. It is\nlikely that the target resource will be an oslc_qm:TestCase." .
+<http://open-services.net/ns/cm#testedByTestCase> <http://www.w3.org/2000/01/rdf-schema#label> "testedByTestCase" .
+<http://open-services.net/ns/cm#testedByTestCase> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#testedByTestCase> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#relatedChangeRequest> <http://www.w3.org/2000/01/rdf-schema#comment> "This relationship is loosely coupled, has no specific\nmeaning, and can be used to link related change requests. It is likely\nthat the target resource will be an oslc_cm:ChangeRequest." .
+<http://open-services.net/ns/cm#relatedChangeRequest> <http://www.w3.org/2000/01/rdf-schema#label> "relatedChangeRequest" .
+<http://open-services.net/ns/cm#relatedChangeRequest> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#relatedChangeRequest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#reviewed> <http://www.w3.org/2000/01/rdf-schema#comment> "Whether or not the Change Request has been reviewed." .
+<http://open-services.net/ns/cm#reviewed> <http://www.w3.org/2000/01/rdf-schema#label> "reviewed" .
+<http://open-services.net/ns/cm#reviewed> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#reviewed> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#affectsPlanItem> <http://www.w3.org/2000/01/rdf-schema#comment> "Change request affects a plan item. It is likely that\nthe target resource will be an oslc_cm:ChangeRequest." .
+<http://open-services.net/ns/cm#affectsPlanItem> <http://www.w3.org/2000/01/rdf-schema#label> "affectsPlanItem" .
+<http://open-services.net/ns/cm#affectsPlanItem> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#affectsPlanItem> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#Reviewed> <http://www.w3.org/2000/01/rdf-schema#comment> "Whether or not the Change Request has been reviewed." .
+<http://open-services.net/ns/cm#Reviewed> <http://www.w3.org/2000/01/rdf-schema#label> "reviewed" .
+<http://open-services.net/ns/cm#Reviewed> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#Reviewed> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/cm#State> .
+<http://open-services.net/ns/cm#severity> <http://www.w3.org/2000/01/rdf-schema#comment> "Used to indicate the severity or potential impact of a defect.\nIt is likely that the target resource will be an oslc_cm:Severity." .
+<http://open-services.net/ns/cm#severity> <http://www.w3.org/2000/01/rdf-schema#label> "severity" .
+<http://open-services.net/ns/cm#severity> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#severity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#requirementsChangeRequest> <http://www.w3.org/2000/01/rdf-schema#comment> "Used for associating a change request for usage in tracking changes to a Requirements resource." .
+<http://open-services.net/ns/cm#requirementsChangeRequest> <http://www.w3.org/2000/01/rdf-schema#label> "requirementsChangeRequest" .
+<http://open-services.net/ns/cm#requirementsChangeRequest> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#requirementsChangeRequest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Resource> .
+<http://open-services.net/ns/cm#Severity> <http://www.w3.org/2000/01/rdf-schema#comment> "Defines the possible oslc_cm:severity property values." .
+<http://open-services.net/ns/cm#Severity> <http://www.w3.org/2000/01/rdf-schema#label> "Severity" .
+<http://open-services.net/ns/cm#Severity> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#Severity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/cm#status> <http://www.w3.org/2000/01/rdf-schema#comment> "Used to indicate the status of the change request based\non values defined by the service provider. Most often a read-only\nproperty. It is likely that the target resource will be a string corresponding to an\noslc_cm:State value." .
+<http://open-services.net/ns/cm#status> <http://www.w3.org/2000/01/rdf-schema#label> "status" .
+<http://open-services.net/ns/cm#status> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "archaic" .
+<http://open-services.net/ns/cm#status> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#status> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#priority> <http://www.w3.org/2000/01/rdf-schema#comment> "Used to indicate the relative importance of ChangeRequests.\nIt is likely that the target resource will be an\noslc_cm:Priority." .
+<http://open-services.net/ns/cm#priority> <http://www.w3.org/2000/01/rdf-schema#label> "priority" .
+<http://open-services.net/ns/cm#priority> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#priority> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#Fixed> <http://www.w3.org/2000/01/rdf-schema#comment> "Whether or not the Change Request has been fixed." .
+<http://open-services.net/ns/cm#Fixed> <http://www.w3.org/2000/01/rdf-schema#label> "fixed" .
+<http://open-services.net/ns/cm#Fixed> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#Fixed> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/cm#State> .
+<http://open-services.net/ns/cm#verified> <http://www.w3.org/2000/01/rdf-schema#comment> "Whether or not the resolution or fix of the Change Request has been verified." .
+<http://open-services.net/ns/cm#verified> <http://www.w3.org/2000/01/rdf-schema#label> "verified" .
+<http://open-services.net/ns/cm#verified> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#verified> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#Priority> <http://www.w3.org/2000/01/rdf-schema#comment> "Defines the possible oslc_cm:priority property values." .
+<http://open-services.net/ns/cm#Priority> <http://www.w3.org/2000/01/rdf-schema#label> "Priority" .
+<http://open-services.net/ns/cm#Priority> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#Priority> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/cm#Normal> <http://www.w3.org/2000/01/rdf-schema#comment> "Affects non-critical functionality. There is a workaround." .
+<http://open-services.net/ns/cm#Normal> <http://www.w3.org/2000/01/rdf-schema#label> "Normal" .
+<http://open-services.net/ns/cm#Normal> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#Normal> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/cm#Severity> .
+<http://open-services.net/ns/cm#state> <http://www.w3.org/2000/01/rdf-schema#comment> "Used to indicate the status of the change request." .
+<http://open-services.net/ns/cm#state> <http://www.w3.org/2000/01/rdf-schema#label> "state" .
+<http://open-services.net/ns/cm#state> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#state> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#affectsTestResult> <http://www.w3.org/2000/01/rdf-schema#comment> "Associated resource that is affected by this Change\nRequest. It is likely that the target resource will be an\noslc_qm:TestResult." .
+<http://open-services.net/ns/cm#affectsTestResult> <http://www.w3.org/2000/01/rdf-schema#label> "affectsTestResult" .
+<http://open-services.net/ns/cm#affectsTestResult> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#affectsTestResult> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#Blocker> <http://www.w3.org/2000/01/rdf-schema#comment> "Severe problem. No workaround. Blocks development, test, or usage." .
+<http://open-services.net/ns/cm#Blocker> <http://www.w3.org/2000/01/rdf-schema#label> "Blocker" .
+<http://open-services.net/ns/cm#Blocker> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#Blocker> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/cm#Severity> .
+<http://open-services.net/ns/cm#SeverityUnassigned> <http://www.w3.org/2000/01/rdf-schema#comment> "The severity of the change request is intentionally not set." .
+<http://open-services.net/ns/cm#SeverityUnassigned> <http://www.w3.org/2000/01/rdf-schema#label> "SeverityUnassigned" .
+<http://open-services.net/ns/cm#SeverityUnassigned> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#SeverityUnassigned> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/cm#Severity> .
+<http://open-services.net/ns/cm#State> <http://www.w3.org/2000/01/rdf-schema#comment> "Defines the possible oslc_cm:state property values." .
+<http://open-services.net/ns/cm#State> <http://www.w3.org/2000/01/rdf-schema#label> "State" .
+<http://open-services.net/ns/cm#State> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#State> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/cm#Critical> <http://www.w3.org/2000/01/rdf-schema#comment> "Severe problem. No workaround." .
+<http://open-services.net/ns/cm#Critical> <http://www.w3.org/2000/01/rdf-schema#label> "Critical" .
+<http://open-services.net/ns/cm#Critical> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#Critical> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/cm#Severity> .
+<http://open-services.net/ns/cm#closeDate> <http://www.w3.org/2000/01/rdf-schema#comment> "The date at which no further activity or work is intended to be conducted." .
+<http://open-services.net/ns/cm#closeDate> <http://www.w3.org/2000/01/rdf-schema#label> "closeDate" .
+<http://open-services.net/ns/cm#closeDate> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#closeDate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#affectedByDefect> <http://www.w3.org/2000/01/rdf-schema#comment> "Change request is affected by a reported defect. It is\nlikely that the target resource will be an oslc_cm:Defect." .
+<http://open-services.net/ns/cm#affectedByDefect> <http://www.w3.org/2000/01/rdf-schema#label> "affectedByDefect" .
+<http://open-services.net/ns/cm#affectedByDefect> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#affectedByDefect> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#Low> <http://www.w3.org/2000/01/rdf-schema#comment> "Action on the change request can be safely deferred." .
+<http://open-services.net/ns/cm#Low> <http://www.w3.org/2000/01/rdf-schema#label> "Low" .
+<http://open-services.net/ns/cm#Low> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#Low> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/cm#Priority> .
+<http://open-services.net/ns/cm#planItem> <http://www.w3.org/2000/01/rdf-schema#comment> "Used for associating change requests into plans (project, release, sprint, etc)." .
+<http://open-services.net/ns/cm#planItem> <http://www.w3.org/2000/01/rdf-schema#label> "planItem" .
+<http://open-services.net/ns/cm#planItem> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#planItem> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Resource> .
+<http://open-services.net/ns/cm#ReviewTask> <http://www.w3.org/2000/01/rdf-schema#comment> "A request to make a change and review the change." .
+<http://open-services.net/ns/cm#ReviewTask> <http://www.w3.org/2000/01/rdf-schema#label> "ReviewTask" .
+<http://open-services.net/ns/cm#ReviewTask> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#ReviewTask> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://open-services.net/ns/cm#Task> .
+<http://open-services.net/ns/cm#ReviewTask> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/cm#> <http://purl.org/dc/terms/issued> "2023-07-06"^^<http://www.w3.org/2001/XMLSchema#date> .
+<http://open-services.net/ns/cm#> <http://purl.org/dc/terms/license> <http://www.apache.org/licenses/LICENSE-2.0> .
+<http://open-services.net/ns/cm#> <http://purl.org/dc/terms/hasVersion> "OS" .
+<http://open-services.net/ns/cm#> <http://purl.org/dc/terms/description> "All vocabulary URIs defined in the OSLC Change Management (CM) namespace."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/cm#> <http://purl.org/dc/terms/publisher> <https://open-services.net/about/> .
+<http://open-services.net/ns/cm#> <http://purl.org/dc/terms/title> "The OSLC Change Management(CM) Vocabulary" .
+<http://open-services.net/ns/cm#> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<http://open-services.net/ns/cm#> <http://www.w3.org/2000/01/rdf-schema#label> "The OSLC Change Management(CM) Vocabulary" .
+<http://open-services.net/ns/cm#> <http://purl.org/dc/terms/isPartOf> <https://docs.oasis-open-projects.org/oslc-op/cm/v3.0/errata01/os/change-mgt-spec.html> .
+<http://open-services.net/ns/cm#> <http://purl.org/dc/terms/source> <https://docs.oasis-open-projects.org/oslc-op/cm/v3.0/errata01/os/change-mgt-vocab.ttl> .
+<http://open-services.net/ns/cm#> <http://purl.org/vocab/vann/preferredNamespacePrefix> "oslc_cm" .
+<http://open-services.net/ns/cm#affectsRequirement> <http://www.w3.org/2000/01/rdf-schema#comment> "The ChangeRequest affects a Requirement. It is likely\nthat the target resource will be an oslc_rm:Requirement." .
+<http://open-services.net/ns/cm#affectsRequirement> <http://www.w3.org/2000/01/rdf-schema#label> "affectsRequirement" .
+<http://open-services.net/ns/cm#affectsRequirement> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#affectsRequirement> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#defect> <http://www.w3.org/2000/01/rdf-schema#comment> "Used to report defects in testing." .
+<http://open-services.net/ns/cm#defect> <http://www.w3.org/2000/01/rdf-schema#label> "defect" .
+<http://open-services.net/ns/cm#defect> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#defect> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Resource> .
+<http://open-services.net/ns/cm#Closed> <http://www.w3.org/2000/01/rdf-schema#comment> "Whether or not the Change Request is completely done, no further fixes or fix verification is needed." .
+<http://open-services.net/ns/cm#Closed> <http://www.w3.org/2000/01/rdf-schema#label> "closed" .
+<http://open-services.net/ns/cm#Closed> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#Closed> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/cm#State> .
+<http://open-services.net/ns/cm#ChangeRequest> <http://www.w3.org/2000/01/rdf-schema#comment> "The CM Change Request resource." .
+<http://open-services.net/ns/cm#ChangeRequest> <http://www.w3.org/2000/01/rdf-schema#label> "ChangeRequest" .
+<http://open-services.net/ns/cm#ChangeRequest> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#ChangeRequest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/cm#relatedTestCase> <http://www.w3.org/2000/01/rdf-schema#comment> "Related test case resource. It is likely that the\ntarget resource will be an oslc_qm:TestCase." .
+<http://open-services.net/ns/cm#relatedTestCase> <http://www.w3.org/2000/01/rdf-schema#label> "relatedTestCase" .
+<http://open-services.net/ns/cm#relatedTestCase> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#relatedTestCase> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#relatedTestPlan> <http://www.w3.org/2000/01/rdf-schema#comment> "Related test plan resource. It is likely that the\ntarget resource will be an oslc_qm:TestPlan." .
+<http://open-services.net/ns/cm#relatedTestPlan> <http://www.w3.org/2000/01/rdf-schema#label> "relatedTestPlan" .
+<http://open-services.net/ns/cm#relatedTestPlan> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#relatedTestPlan> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#parent> <http://www.w3.org/2000/01/rdf-schema#comment> "The related parent change requests of the subject change request." .
+<http://open-services.net/ns/cm#parent> <http://www.w3.org/2000/01/rdf-schema#label> "parent" .
+<http://open-services.net/ns/cm#parent> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#parent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#ChangeNotice> <http://www.w3.org/2000/01/rdf-schema#comment> "Represents an assignment notification of a change request. May be used also to bestow authority onto the assigned user to effect the changes." .
+<http://open-services.net/ns/cm#ChangeNotice> <http://www.w3.org/2000/01/rdf-schema#label> "ChangeNotice" .
+<http://open-services.net/ns/cm#ChangeNotice> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#ChangeNotice> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://open-services.net/ns/cm#ChangeRequest> .
+<http://open-services.net/ns/cm#ChangeNotice> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/cm#Approved> <http://www.w3.org/2000/01/rdf-schema#comment> "Whether or not the Change Request has been approved." .
+<http://open-services.net/ns/cm#Approved> <http://www.w3.org/2000/01/rdf-schema#label> "approved" .
+<http://open-services.net/ns/cm#Approved> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#Approved> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/cm#State> .
+<http://open-services.net/ns/cm#tracksChangeSet> <http://www.w3.org/2000/01/rdf-schema#comment> "Tracks a change set resource. It is likely that the\ntarget resource will be an oslc_config:ChangeSet." .
+<http://open-services.net/ns/cm#tracksChangeSet> <http://www.w3.org/2000/01/rdf-schema#label> "tracksChangeSet" .
+<http://open-services.net/ns/cm#tracksChangeSet> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#tracksChangeSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#implementsRequirement> <http://www.w3.org/2000/01/rdf-schema#comment> "The ChangeRequest implements the associated Requirement. It is likely that the\ntarget resource will be an oslc_rm:Requirement." .
+<http://open-services.net/ns/cm#implementsRequirement> <http://www.w3.org/2000/01/rdf-schema#label> "implementsRequirement" .
+<http://open-services.net/ns/cm#implementsRequirement> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#implementsRequirement> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#relatedTestScript> <http://www.w3.org/2000/01/rdf-schema#comment> "Related test script resource. It is likely that the\ntarget resource will be an oslc_qm:TestScript." .
+<http://open-services.net/ns/cm#relatedTestScript> <http://www.w3.org/2000/01/rdf-schema#label> "relatedTestScript" .
+<http://open-services.net/ns/cm#relatedTestScript> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#relatedTestScript> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#Major> <http://www.w3.org/2000/01/rdf-schema#comment> "Prevents function from being used. There is a workaround." .
+<http://open-services.net/ns/cm#Major> <http://www.w3.org/2000/01/rdf-schema#label> "Major" .
+<http://open-services.net/ns/cm#Major> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#Major> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/cm#Severity> .
+<http://open-services.net/ns/cm#Minor> <http://www.w3.org/2000/01/rdf-schema#comment> "Minimal impact." .
+<http://open-services.net/ns/cm#Minor> <http://www.w3.org/2000/01/rdf-schema#label> "Minor" .
+<http://open-services.net/ns/cm#Minor> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#Minor> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/cm#Severity> .
+<http://open-services.net/ns/cm#Defect> <http://www.w3.org/2000/01/rdf-schema#comment> "A software or product defect." .
+<http://open-services.net/ns/cm#Defect> <http://www.w3.org/2000/01/rdf-schema#label> "Defect" .
+<http://open-services.net/ns/cm#Defect> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#Defect> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://open-services.net/ns/cm#ChangeRequest> .
+<http://open-services.net/ns/cm#Defect> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/cm#High> <http://www.w3.org/2000/01/rdf-schema#comment> "Highest priority, action on the change request highly recommended." .
+<http://open-services.net/ns/cm#High> <http://www.w3.org/2000/01/rdf-schema#label> "High" .
+<http://open-services.net/ns/cm#High> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#High> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/cm#Priority> .
+<http://open-services.net/ns/cm#Task> <http://www.w3.org/2000/01/rdf-schema#comment> "An executable and trackable activity." .
+<http://open-services.net/ns/cm#Task> <http://www.w3.org/2000/01/rdf-schema#label> "Task" .
+<http://open-services.net/ns/cm#Task> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#Task> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://open-services.net/ns/cm#ChangeRequest> .
+<http://open-services.net/ns/cm#Task> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/cm#Inprogress> <http://www.w3.org/2000/01/rdf-schema#comment> "Whether or not the Change Request in a state indicating that active work is occurring." .
+<http://open-services.net/ns/cm#Inprogress> <http://www.w3.org/2000/01/rdf-schema#label> "inprogress" .
+<http://open-services.net/ns/cm#Inprogress> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#Inprogress> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/cm#State> .
+<http://open-services.net/ns/cm#task> <http://www.w3.org/2000/01/rdf-schema#comment> "Used for associating change requests into executable and track-able items." .
+<http://open-services.net/ns/cm#task> <http://www.w3.org/2000/01/rdf-schema#label> "task" .
+<http://open-services.net/ns/cm#task> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#task> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Resource> .
+<http://open-services.net/ns/cm#approved> <http://www.w3.org/2000/01/rdf-schema#comment> "Whether or not the Change Request has been approved." .
+<http://open-services.net/ns/cm#approved> <http://www.w3.org/2000/01/rdf-schema#label> "approved" .
+<http://open-services.net/ns/cm#approved> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#approved> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#fixed> <http://www.w3.org/2000/01/rdf-schema#comment> "Whether or not the Change Request has been fixed." .
+<http://open-services.net/ns/cm#fixed> <http://www.w3.org/2000/01/rdf-schema#label> "fixed" .
+<http://open-services.net/ns/cm#fixed> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#fixed> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#blocksTestExecutionRecord> <http://www.w3.org/2000/01/rdf-schema#comment> "Associated resource that is blocked by this Change\nRequest. It is likely that the target resource will be an\noslc_qm:TestExecutionRecord." .
+<http://open-services.net/ns/cm#blocksTestExecutionRecord> <http://www.w3.org/2000/01/rdf-schema#label> "blocksTestExecutionRecord" .
+<http://open-services.net/ns/cm#blocksTestExecutionRecord> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#blocksTestExecutionRecord> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#inProgress> <http://www.w3.org/2000/01/rdf-schema#comment> "Whether or not the Change Request in a state indicating that active work is occurring." .
+<http://open-services.net/ns/cm#inProgress> <http://www.w3.org/2000/01/rdf-schema#label> "inProgress" .
+<http://open-services.net/ns/cm#inProgress> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#inProgress> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#Verified> <http://www.w3.org/2000/01/rdf-schema#comment> "Whether or not the resolution or fix of the Change Request has been verified." .
+<http://open-services.net/ns/cm#Verified> <http://www.w3.org/2000/01/rdf-schema#label> "verified" .
+<http://open-services.net/ns/cm#Verified> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#Verified> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/cm#State> .
+<http://open-services.net/ns/cm#closed> <http://www.w3.org/2000/01/rdf-schema#comment> "Whether or not the Change Request is completely done, no further fixes or fix verification is needed." .
+<http://open-services.net/ns/cm#closed> <http://www.w3.org/2000/01/rdf-schema#label> "closed" .
+<http://open-services.net/ns/cm#closed> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#closed> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#relatedTestExecutionRecord> <http://www.w3.org/2000/01/rdf-schema#comment> "Related to a test execution resource. It is likely\nthat the target resource will be an oslc_qm:TestExecutionRecord." .
+<http://open-services.net/ns/cm#relatedTestExecutionRecord> <http://www.w3.org/2000/01/rdf-schema#label> "relatedTestExecutionRecord" .
+<http://open-services.net/ns/cm#relatedTestExecutionRecord> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#relatedTestExecutionRecord> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/cm#PriorityUnassigned> <http://www.w3.org/2000/01/rdf-schema#comment> "The priority of the change request is intentionally not set." .
+<http://open-services.net/ns/cm#PriorityUnassigned> <http://www.w3.org/2000/01/rdf-schema#label> "PriorityUnassigned" .
+<http://open-services.net/ns/cm#PriorityUnassigned> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#PriorityUnassigned> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/cm#Priority> .
+<http://open-services.net/ns/cm#Medium> <http://www.w3.org/2000/01/rdf-schema#comment> "Acting on the change request can wait, but not forever." .
+<http://open-services.net/ns/cm#Medium> <http://www.w3.org/2000/01/rdf-schema#label> "Medium" .
+<http://open-services.net/ns/cm#Medium> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/cm#> .
+<http://open-services.net/ns/cm#Medium> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/cm#Priority> .

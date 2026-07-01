@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="..\..\misc\codegen\quality-management-vocab.nt" />
-    <AdditionalFiles Include="..\..\misc\codegen\quality-management-shapes.nt" />
+    <AdditionalFiles Include="Resources\vocab.nt" />
+    <AdditionalFiles Include="Resources\shapes.nt" />
   </ItemGroup>
 
   <ItemGroup>
