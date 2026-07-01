@@ -292,18 +292,44 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         builder.AppendLine("using ValueType = OSLC4Net.Core.Model.ValueType;");
         builder.AppendLine();
         AppendNamespaceStart(builder, target.Namespace);
+        List<ShapePropertyBinding> propertyBindings = BindProperties(target, properties);
+        List<GenerationTarget> superTypes = GetDirectSuperTypes(target, shape, graph, resourceTypesByUri);
+        GenerationTarget? baseTarget = superTypes.FirstOrDefault();
+        string baseType = baseTarget is null
+            ? target.IsRecord ? "AbstractResourceRecord" : "AbstractResource"
+            : GetTypeReference(target, baseTarget);
+
+        builder.Append("public partial interface ").Append(GetInterfaceName(target));
+        List<string> interfaceBases = superTypes
+            .Select(superType => GetInterfaceTypeReference(target, superType))
+            .Distinct(StringComparer.Ordinal)
+            .ToList();
+        if (interfaceBases.Count > 0)
+        {
+            builder.Append(" : ").Append(string.Join(", ", interfaceBases));
+        }
+        else
+        {
+            builder.Append(" : IExtendedResource");
+        }
+
+        builder.AppendLine();
+        builder.AppendLine("{");
+        builder.AppendLine("}");
+        builder.AppendLine();
+
         builder.Append("[OslcNamespace(").Append(ToLiteral(NamespaceFromShape(shape))).AppendLine(")]");
         builder.Append("[OslcResourceShape(title = ").Append(ToLiteral(target.ShapeTitle ?? shape.Title ?? Humanize(target.TypeName))).Append(", describes = new string[] { ");
         builder.Append(string.Join(", ", shape.Describes.Select(ToLiteral)));
         builder.AppendLine(" })]");
-        string baseType = GetBaseType(target, shape, graph, resourceTypesByUri);
+        string interfaceName = GetInterfaceName(target);
         if (target.IsRecord)
         {
-            builder.Append("public partial record ").Append(target.TypeName).Append(" : ").Append(baseType).AppendLine();
+            builder.Append("public partial record ").Append(target.TypeName).Append(" : ").Append(baseType).Append(", ").Append(interfaceName).AppendLine();
         }
         else
         {
-            builder.Append("public partial class ").Append(target.TypeName).Append(" : ").Append(baseType).AppendLine();
+            builder.Append("public partial class ").Append(target.TypeName).Append(" : ").Append(baseType).Append(", ").Append(interfaceName).AppendLine();
         }
 
         builder.AppendLine("{");
@@ -312,15 +338,11 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         builder.AppendLine();
         builder.Append("    public ").Append(target.TypeName).AppendLine("() { }");
 
-        var usedPropertyNames = new HashSet<string>(StringComparer.Ordinal)
-        {
-            target.TypeName,
-        };
-        foreach (ShapeProperty property in properties.Where(static property => !string.Equals(property.Name, "type", StringComparison.Ordinal)))
+        foreach (ShapePropertyBinding property in propertyBindings)
         {
             builder.AppendLine();
             builder.AppendLine();
-            AppendProperty(builder, property, GetPropertyName(property, usedPropertyNames));
+            AppendProperty(builder, property.Property, property.PropertyName);
         }
 
         builder.AppendLine();
@@ -329,25 +351,44 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         return builder.ToString();
     }
 
-    private static string GetBaseType(
+    private static List<ShapePropertyBinding> BindProperties(GenerationTarget target, IEnumerable<ShapeProperty> properties)
+    {
+        var usedPropertyNames = new HashSet<string>(StringComparer.Ordinal)
+        {
+            target.TypeName,
+            GetInterfaceName(target),
+        };
+        var bindings = new List<ShapePropertyBinding>();
+        foreach (ShapeProperty property in properties.Where(static property => !string.Equals(property.Name, "type", StringComparison.Ordinal)))
+        {
+            bindings.Add(new ShapePropertyBinding(property, GetPropertyName(property, usedPropertyNames)));
+        }
+
+        return bindings;
+    }
+
+    private static List<GenerationTarget> GetDirectSuperTypes(
         GenerationTarget target,
         Shape shape,
         Graph graph,
         IReadOnlyDictionary<string, GenerationTarget> resourceTypesByUri)
     {
+        var superTypes = new List<GenerationTarget>();
+        var seen = new HashSet<string>(StringComparer.Ordinal);
         foreach (string describedResource in shape.Describes)
         {
             foreach (Node superClass in graph.Objects(describedResource, Rdfs + "subClassOf").Where(static node => node.Kind == NodeKind.Uri))
             {
                 if (resourceTypesByUri.TryGetValue(superClass.Value, out GenerationTarget? baseTarget) &&
-                    !string.Equals(baseTarget.TypeName, target.TypeName, StringComparison.Ordinal))
+                    !string.Equals(baseTarget.TypeName, target.TypeName, StringComparison.Ordinal) &&
+                    seen.Add(GetTypeReference(target, baseTarget)))
                 {
-                    return GetTypeReference(target, baseTarget);
+                    superTypes.Add(baseTarget);
                 }
             }
         }
 
-        return target.IsRecord ? "AbstractResourceRecord" : "AbstractResource";
+        return superTypes;
     }
 
     private static string GetTypeReference(GenerationTarget target, GenerationTarget referencedTarget)
@@ -357,42 +398,21 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
             : "global::" + referencedTarget.Namespace + "." + referencedTarget.TypeName;
     }
 
+    private static string GetInterfaceTypeReference(GenerationTarget target, GenerationTarget referencedTarget)
+    {
+        return string.Equals(target.Namespace, referencedTarget.Namespace, StringComparison.Ordinal) || string.IsNullOrWhiteSpace(referencedTarget.Namespace)
+            ? GetInterfaceName(referencedTarget)
+            : "global::" + referencedTarget.Namespace + "." + GetInterfaceName(referencedTarget);
+    }
+
+    private static string GetInterfaceName(GenerationTarget target)
+    {
+        return "I" + target.TypeName;
+    }
+
     private static void AppendProperty(StringBuilder builder, ShapeProperty property, string propertyName)
     {
-        if (!string.IsNullOrWhiteSpace(property.Description))
-        {
-            builder.Append("    [OslcDescription(").Append(ToLiteral(property.Description!)).AppendLine(")]");
-        }
-
-        if (MapOccurs(property.Occurs) is { } occurs)
-        {
-            builder.Append("    [OslcOccurs(Occurs.").Append(occurs).AppendLine(")]");
-        }
-
-        builder.Append("    [OslcPropertyDefinition(").Append(ToLiteral(property.PropertyDefinition)).AppendLine(")]");
-        builder.Append("    [OslcName(").Append(ToLiteral(property.Name)).AppendLine(")]");
-
-        if (MapValueType(property.ValueType) is { } valueType)
-        {
-            builder.Append("    [OslcValueType(ValueType.").Append(valueType).AppendLine(")]");
-        }
-
-        if (MapRepresentation(property.Representation) is { } representation)
-        {
-            builder.Append("    [OslcRepresentation(Representation.").Append(representation).AppendLine(")]");
-        }
-
-        if (property.Ranges.Count > 0)
-        {
-            builder.Append("    [OslcRange(").Append(string.Join(", ", property.Ranges.Select(ToLiteral))).AppendLine(")]");
-        }
-
-        if (property.ReadOnly is { } readOnly)
-        {
-            builder.Append("    [OslcReadOnly(").Append(readOnly ? "true" : "false").AppendLine(")]");
-        }
-
-        builder.Append("    [OslcTitle(").Append(ToLiteral(property.Title ?? property.Name)).AppendLine(")]");
+        AppendPropertyAttributes(builder, property, "    ");
         string typeName = GetClrType(property);
         builder.Append("    public ").Append(typeName).Append(' ').Append(propertyName).Append(" { get; set; }");
         if (typeName.StartsWith("HashSet<", StringComparison.Ordinal))
@@ -407,6 +427,44 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         }
 
         builder.AppendLine();
+    }
+
+    private static void AppendPropertyAttributes(StringBuilder builder, ShapeProperty property, string indentation)
+    {
+        if (!string.IsNullOrWhiteSpace(property.Description))
+        {
+            builder.Append(indentation).Append("[OslcDescription(").Append(ToLiteral(property.Description!)).AppendLine(")]");
+        }
+
+        if (MapOccurs(property.Occurs) is { } occurs)
+        {
+            builder.Append(indentation).Append("[OslcOccurs(Occurs.").Append(occurs).AppendLine(")]");
+        }
+
+        builder.Append(indentation).Append("[OslcPropertyDefinition(").Append(ToLiteral(property.PropertyDefinition)).AppendLine(")]");
+        builder.Append(indentation).Append("[OslcName(").Append(ToLiteral(property.Name)).AppendLine(")]");
+
+        if (MapValueType(property.ValueType) is { } valueType)
+        {
+            builder.Append(indentation).Append("[OslcValueType(ValueType.").Append(valueType).AppendLine(")]");
+        }
+
+        if (MapRepresentation(property.Representation) is { } representation)
+        {
+            builder.Append(indentation).Append("[OslcRepresentation(Representation.").Append(representation).AppendLine(")]");
+        }
+
+        if (property.Ranges.Count > 0)
+        {
+            builder.Append(indentation).Append("[OslcRange(").Append(string.Join(", ", property.Ranges.Select(ToLiteral))).AppendLine(")]");
+        }
+
+        if (property.ReadOnly is { } readOnly)
+        {
+            builder.Append(indentation).Append("[OslcReadOnly(").Append(readOnly ? "true" : "false").AppendLine(")]");
+        }
+
+        builder.Append(indentation).Append("[OslcTitle(").Append(ToLiteral(property.Title ?? property.Name)).AppendLine(")]");
     }
 
     private static string GetPropertyName(ShapeProperty property, HashSet<string> usedPropertyNames)
@@ -617,6 +675,18 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         public string? ShapeUri { get; }
         public string? ShapeTitle { get; }
         public ImmutableArray<string> SelectedPropertyUris { get; }
+    }
+
+    private readonly struct ShapePropertyBinding
+    {
+        public ShapePropertyBinding(ShapeProperty property, string propertyName)
+        {
+            Property = property;
+            PropertyName = propertyName;
+        }
+
+        public ShapeProperty Property { get; }
+        public string PropertyName { get; }
     }
 
     private sealed class Shape

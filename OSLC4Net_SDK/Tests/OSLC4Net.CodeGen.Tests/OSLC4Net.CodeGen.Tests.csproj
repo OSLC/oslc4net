@@ -15,6 +15,7 @@
                       OutputItemType="Analyzer"
                       ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\..\OSLC4Net.Domains.ChangeManagement\OSLC4Net.Domains.ChangeManagement.csproj" />
+    <ProjectReference Include="..\..\OSLC4Net.Domains.KerML\OSLC4Net.Domains.KerML.csproj" />
     <ProjectReference Include="..\..\OSLC4Net.Domains.QualityManagement\OSLC4Net.Domains.QualityManagement.csproj" />
     <ProjectReference Include="..\..\OSLC4Net.Domains.RequirementsManagement\OSLC4Net.Domains.RequirementsManagement.csproj" />
     <ProjectReference Include="..\..\OSLC4Net.Domains.SysMLV2\OSLC4Net.Domains.SysMLV2.csproj" />
