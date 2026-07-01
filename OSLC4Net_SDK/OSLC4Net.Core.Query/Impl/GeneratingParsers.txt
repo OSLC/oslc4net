@@ -1,4 +1,41 @@
-﻿cd into Impl directory
-execute a command similar to this
-	c:\ANTLR3.5\bin\antlrgen.bat -o . ../Grammars/OslcOrderBy.g
-ignoring all the warnings
+Regenerating the parsers
+========================
+
+Historical instructions (from Steve Pitschke):
+
+  cd into Impl directory
+  execute a command similar to this
+    c:\ANTLR3.5\bin\antlrgen.bat -o . ../Grammars/OslcOrderBy.g
+  ignoring all the warnings
+
+Current status (2026-05)
+------------------------
+
+The ANTLR 3 CSharp3 target is broken on every Java/StringTemplate combo
+we have tried (Java 8 zulu, Java 17 temurin, Java 21 temurin, with the
+antlr-3.5.2-complete.jar from both Maven Central and antlr3.org).
+StringTemplate crashes inside the C# rule templates with hundreds of
+
+  warning(24): template error: ... no such property or can't access: null.attributes
+
+emitted before the recogniser file is written. The `.tokens` file does
+get regenerated but the `.cs` parser/lexer files are not.
+
+This is a known unmaintained-tool situation: the CSharp3 target was
+contributed by a third party, never updated for StringTemplate v4
+changes, and ANTLR 3 itself has been unmaintained since 2014.
+
+Workarounds, none of them clean:
+  1. Hand-patch the generated .cs file and document the hunk to re-apply.
+     The kuribara-hideaki/oslc4net fork went this route. Fragile.
+  2. Migrate the grammars to ANTLR 4. Significant effort: ANTLR 4
+     dropped `output=AST` and tree-rewrite rules, so all of the
+     consumer code (ComparisonTermImpl, CompoundTermImpl, SortTermsImpl,
+     etc.) needs to be rewritten against visitors/listeners. This is
+     the right long-term answer.
+  3. Track down a working CSharp3 toolchain (older StringTemplate
+     bundle, custom build of ANTLR 3). Not pursued.
+
+Until (2) lands, treat the .g files as the spec and the generated .cs
+files as the ground truth. Changes to a .g that affect output will not
+propagate without one of the workarounds above.
