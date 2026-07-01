@@ -12,8 +12,19 @@ using OSLC4Net.Core.Attribute;
 
 namespace OSLC4Net.CodeGen.Tests;
 
-[OslcVocabulary("https://example.test/oslc/multiplicity#")]
+internal static class MultiplicityUris
+{
+    public const string Vocabulary = "https://example.test/oslc/multiplicity#";
+    public const string Shape =
+        "https://example.test/oslc/multiplicity/shapes#MultiplicityProbeShape";
+    public const string ShapeTitle = "Constant title";
+}
+
+[OslcVocabulary(MultiplicityUris.Vocabulary)]
 public static partial class MultiplicityVocabulary;
 
-[OslcShape("https://example.test/oslc/multiplicity/shapes#MultiplicityProbeShape")]
+[OslcShape(MultiplicityUris.Shape)]
 public partial record MultiplicityProbe;
+
+[OslcShape(MultiplicityUris.Shape, Title = MultiplicityUris.ShapeTitle)]
+public partial record ConstantAttributeProbe;

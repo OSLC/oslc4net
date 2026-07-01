@@ -27,8 +27,7 @@ namespace OSLC4Net.Server.Providers.Tests;
 
 public sealed class OslcRdfInputFormatterDomainPolymorphismTests
 {
-    private const string ChangeManagementDefect =
-        """
+    private const string ChangeManagementDefect = """
         @prefix dcterms: <http://purl.org/dc/terms/> .
         @prefix oslc: <http://open-services.net/ns/core#> .
         @prefix oslc_cm: <http://open-services.net/ns/cm#> .
@@ -42,8 +41,7 @@ public sealed class OslcRdfInputFormatterDomainPolymorphismTests
            oslc_cm:severity <http://example.com/enums#S1> .
         """;
 
-    private const string ConfigurationBaseline =
-        """
+    private const string ConfigurationBaseline = """
         @prefix dcterms: <http://purl.org/dc/terms/> .
         @prefix oslc_config: <http://open-services.net/ns/config#> .
 
@@ -52,8 +50,7 @@ public sealed class OslcRdfInputFormatterDomainPolymorphismTests
            dcterms:title "Release baseline" .
         """;
 
-    private const string TrackedResourceSetChangeLog =
-        """
+    private const string TrackedResourceSetChangeLog = """
         @prefix trs: <http://open-services.net/ns/core/trs#> .
         @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -93,7 +90,8 @@ public sealed class OslcRdfInputFormatterDomainPolymorphismTests
         PolymorphicDomainResult result = await PostForResult(
             client,
             "/domain-polymorphism/change-management",
-            ChangeManagementDefect);
+            ChangeManagementDefect
+        );
 
         await Assert.That(result.TypeNames).IsEquivalentTo([nameof(CM.Defect)]);
         await Assert.That(result.Abouts).IsEquivalentTo(["http://example.com/bugs/2314"]);
@@ -110,10 +108,13 @@ public sealed class OslcRdfInputFormatterDomainPolymorphismTests
         PolymorphicDomainResult result = await PostForResult(
             client,
             "/domain-polymorphism/configuration-management",
-            ConfigurationBaseline);
+            ConfigurationBaseline
+        );
 
         await Assert.That(result.TypeNames).IsEquivalentTo([nameof(Config.Baseline)]);
-        await Assert.That(result.Abouts).IsEquivalentTo(["http://example.com/configurations/baseline-1"]);
+        await Assert
+            .That(result.Abouts)
+            .IsEquivalentTo(["http://example.com/configurations/baseline-1"]);
         await Assert.That(result.RdfTypes).Contains("http://open-services.net/ns/config#Baseline");
     }
 
@@ -130,18 +131,29 @@ public sealed class OslcRdfInputFormatterDomainPolymorphismTests
         PolymorphicDomainResult result = await PostForResult(
             client,
             "/domain-polymorphism/trs",
-            TrackedResourceSetChangeLog);
+            TrackedResourceSetChangeLog
+        );
 
-        await Assert.That(result.TypeNames).IsEquivalentTo([
-            nameof(TRS.CreationEvent),
-            nameof(TRS.DeletionEvent),
-            nameof(TRS.ModificationEvent),
-            nameof(TRS.TrackedResourceSetResource),
-        ]);
-        await Assert.That(result.RdfTypes).Contains("http://open-services.net/ns/core/trs#TrackedResourceSet");
-        await Assert.That(result.RdfTypes).Contains("http://open-services.net/ns/core/trs#Creation");
-        await Assert.That(result.RdfTypes).Contains("http://open-services.net/ns/core/trs#Modification");
-        await Assert.That(result.RdfTypes).Contains("http://open-services.net/ns/core/trs#Deletion");
+        await Assert
+            .That(result.TypeNames)
+            .IsEquivalentTo([
+                nameof(TRS.CreationEvent),
+                nameof(TRS.DeletionEvent),
+                nameof(TRS.ModificationEvent),
+                nameof(TRS.TrackedResourceSetResource),
+            ]);
+        await Assert
+            .That(result.RdfTypes)
+            .Contains("http://open-services.net/ns/core/trs#TrackedResourceSet");
+        await Assert
+            .That(result.RdfTypes)
+            .Contains("http://open-services.net/ns/core/trs#Creation");
+        await Assert
+            .That(result.RdfTypes)
+            .Contains("http://open-services.net/ns/core/trs#Modification");
+        await Assert
+            .That(result.RdfTypes)
+            .Contains("http://open-services.net/ns/core/trs#Deletion");
     }
 
     private static TestServer CreateServer()
@@ -149,7 +161,8 @@ public sealed class OslcRdfInputFormatterDomainPolymorphismTests
         var builder = new WebHostBuilder()
             .ConfigureServices(static services =>
             {
-                services.AddControllers(options =>
+                services
+                    .AddControllers(options =>
                     {
                         options.InputFormatters.Insert(0, new OslcRdfInputFormatter());
                     })
@@ -161,24 +174,23 @@ public sealed class OslcRdfInputFormatterDomainPolymorphismTests
                 app.UseEndpoints(static endpoints => endpoints.MapControllers());
             });
 
-        return new TestServer(builder)
-        {
-            AllowSynchronousIO = true,
-        };
+        return new TestServer(builder) { AllowSynchronousIO = true };
     }
 
     private static async Task<PolymorphicDomainResult> PostForResult(
         HttpClient client,
         string requestUri,
-        string turtle)
+        string turtle
+    )
     {
-        using HttpResponseMessage response = await client.PostAsync(
-            requestUri,
-            new StringContent(turtle, Encoding.UTF8, OslcMediaType.TEXT_TURTLE));
+        using StringContent content = new(turtle, Encoding.UTF8, OslcMediaType.TEXT_TURTLE);
+        using HttpResponseMessage response = await client.PostAsync(requestUri, content);
 
         await Assert.That(response.IsSuccessStatusCode).IsTrue();
-        return await response.Content.ReadFromJsonAsync<PolymorphicDomainResult>() ??
-            throw new InvalidOperationException("The response did not contain a polymorphic domain result.");
+        return await response.Content.ReadFromJsonAsync<PolymorphicDomainResult>()
+            ?? throw new InvalidOperationException(
+                "The response did not contain a polymorphic domain result."
+            );
     }
 }
 
@@ -190,21 +202,36 @@ public sealed class DomainPolymorphismController : ControllerBase
     [Consumes(OslcMediaType.TEXT_TURTLE)]
     public IActionResult ChangeManagement([FromBody] OslcRequest request)
     {
-        return Ok(PolymorphicDomainResult.From(request.ResourcesOfType<CM.IChangeRequest>(), request.Graph));
+        return Ok(
+            PolymorphicDomainResult.From(
+                request.ResourcesOfType<CM.IChangeRequest>(),
+                request.Graph
+            )
+        );
     }
 
     [HttpPost("configuration-management")]
     [Consumes(OslcMediaType.TEXT_TURTLE)]
     public IActionResult ConfigurationManagement([FromBody] OslcRequest request)
     {
-        return Ok(PolymorphicDomainResult.From(request.ResourcesOfType<IExtendedResource>(), request.Graph));
+        return Ok(
+            PolymorphicDomainResult.From(
+                request.ResourcesOfType<IExtendedResource>(),
+                request.Graph
+            )
+        );
     }
 
     [HttpPost("trs")]
     [Consumes(OslcMediaType.TEXT_TURTLE)]
     public IActionResult TrackedResourceSet([FromBody] OslcRequest request)
     {
-        return Ok(PolymorphicDomainResult.From(request.ResourcesOfType<IExtendedResource>(), request.Graph));
+        return Ok(
+            PolymorphicDomainResult.From(
+                request.ResourcesOfType<IExtendedResource>(),
+                request.Graph
+            )
+        );
     }
 }
 
@@ -212,21 +239,30 @@ public sealed record PolymorphicDomainResult(
     string[] TypeNames,
     string[] Abouts,
     string[] RdfTypes,
-    int TripleCount)
+    int TripleCount
+)
 {
     public static PolymorphicDomainResult From(IEnumerable<IResource> resources, IGraph graph)
     {
         return new PolymorphicDomainResult(
-            resources.Select(static resource => resource.GetType().Name).Order(StringComparer.Ordinal).ToArray(),
-            resources.Select(static resource => resource.About?.AbsoluteUri ?? string.Empty).Order(StringComparer.Ordinal).ToArray(),
+            resources
+                .Select(static resource => resource.GetType().Name)
+                .Order(StringComparer.Ordinal)
+                .ToArray(),
+            resources
+                .Select(static resource => resource.About?.AbsoluteUri ?? string.Empty)
+                .Order(StringComparer.Ordinal)
+                .ToArray(),
             ExtractRdfTypes(graph).Order(StringComparer.Ordinal).ToArray(),
-            graph.Triples.Count);
+            graph.Triples.Count
+        );
     }
 
     private static IEnumerable<string> ExtractRdfTypes(IGraph graph)
     {
         IUriNode rdfType = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
-        return graph.GetTriplesWithPredicate(rdfType)
+        return graph
+            .GetTriplesWithPredicate(rdfType)
             .Select(static triple => triple.Object)
             .OfType<IUriNode>()
             .Select(static node => node.Uri.AbsoluteUri)

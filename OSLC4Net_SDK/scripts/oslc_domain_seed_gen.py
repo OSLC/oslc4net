@@ -26,6 +26,32 @@ from rdflib import Graph, URIRef
 
 OSLC = "http://open-services.net/ns/core#"
 RDF = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+BCL_TYPE_NAMES = {
+    "Action",
+    "Attribute",
+    "Boolean",
+    "Byte",
+    "Char",
+    "DateTime",
+    "DateTimeOffset",
+    "Decimal",
+    "Delegate",
+    "Double",
+    "Enum",
+    "Exception",
+    "Guid",
+    "Int16",
+    "Int32",
+    "Int64",
+    "Object",
+    "Single",
+    "String",
+    "Task",
+    "TimeSpan",
+    "Type",
+    "Uri",
+    "ValueType",
+}
 
 
 def main() -> None:
@@ -55,7 +81,7 @@ def main() -> None:
     for shape_file in args.shapes:
         graph.parse(shape_file, format=guess_format(shape_file))
 
-    declarations = build_declarations(graph, args.resource_kind)
+    declarations = build_declarations(graph, args.resource_kind, domain_prefix(args.namespace))
     source = render_source(
         namespace=args.namespace,
         vocabulary_class=args.vocabulary_class,
@@ -69,7 +95,7 @@ def main() -> None:
         args.output.write_text(source, encoding="utf-8")
 
 
-def build_declarations(graph: Graph, resource_kind: str) -> list[tuple[str, str]]:
+def build_declarations(graph: Graph, resource_kind: str, domain_prefix: str) -> list[tuple[str, str]]:
     shape_type = URIRef(OSLC + "ResourceShape")
     describes = URIRef(OSLC + "describes")
 
@@ -85,8 +111,13 @@ def build_declarations(graph: Graph, resource_kind: str) -> list[tuple[str, str]
         if not described_resources:
             continue
 
-        name = unique_identifier(to_identifier(local_name(str(described_resources[0]))), used_names)
-        declarations.append((str(shape), f"public partial {resource_kind} {name}{class_suffix(resource_kind)}"))
+        for described_resource in described_resources:
+            name = escape_bcl_type_name(
+                to_identifier(local_name(str(described_resource))),
+                domain_prefix,
+            )
+            name = unique_identifier(name, used_names)
+            declarations.append((str(shape), f"public partial {resource_kind} {name}{class_suffix(resource_kind)}"))
 
     return declarations
 
@@ -148,6 +179,15 @@ def guess_format(path: Path) -> str:
 def local_name(uri: str) -> str:
     index = max(uri.rfind("#"), uri.rfind("/"))
     return uri[index + 1 :] if index >= 0 else uri
+
+
+def domain_prefix(namespace: str) -> str:
+    domain_name = namespace.rsplit(".", maxsplit=1)[-1]
+    return domain_name[:1].upper()
+
+
+def escape_bcl_type_name(identifier: str, prefix: str) -> str:
+    return prefix + identifier if identifier in BCL_TYPE_NAMES else identifier
 
 
 def to_identifier(value: str) -> str:

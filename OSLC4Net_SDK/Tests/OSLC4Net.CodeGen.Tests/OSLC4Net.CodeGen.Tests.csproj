@@ -1,3 +1,12 @@
+<!--
+ Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
+
+ All rights reserved. This program and the accompanying materials
+ are made available under the terms of the Eclipse Public License v1.0
+ which accompanies this distribution.
+
+ The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
+-->
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
@@ -14,12 +23,15 @@
   <ItemGroup>
     <ProjectReference Include="..\..\OSLC4Net.Core\OSLC4Net.Core.csproj" />
     <ProjectReference Include="..\..\OSLC4Net.CodeGen\OSLC4Net.CodeGen.csproj"
-                      OutputItemType="Analyzer"
-                      ReferenceOutputAssembly="false" />
-    <ProjectReference Include="..\..\OSLC4Net.Domains.ChangeManagement\OSLC4Net.Domains.ChangeManagement.csproj" />
+      OutputItemType="Analyzer"
+      ReferenceOutputAssembly="false" />
+    <ProjectReference
+      Include="..\..\OSLC4Net.Domains.ChangeManagement\OSLC4Net.Domains.ChangeManagement.csproj" />
     <ProjectReference Include="..\..\OSLC4Net.Domains.KerML\OSLC4Net.Domains.KerML.csproj" />
-    <ProjectReference Include="..\..\OSLC4Net.Domains.QualityManagement\OSLC4Net.Domains.QualityManagement.csproj" />
-    <ProjectReference Include="..\..\OSLC4Net.Domains.RequirementsManagement\OSLC4Net.Domains.RequirementsManagement.csproj" />
+    <ProjectReference
+      Include="..\..\OSLC4Net.Domains.QualityManagement\OSLC4Net.Domains.QualityManagement.csproj" />
+    <ProjectReference
+      Include="..\..\OSLC4Net.Domains.RequirementsManagement\OSLC4Net.Domains.RequirementsManagement.csproj" />
     <ProjectReference Include="..\..\OSLC4Net.Domains.SysMLV2\OSLC4Net.Domains.SysMLV2.csproj" />
   </ItemGroup>
 

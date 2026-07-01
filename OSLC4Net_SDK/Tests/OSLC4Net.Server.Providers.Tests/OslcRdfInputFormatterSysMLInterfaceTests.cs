@@ -24,8 +24,7 @@ namespace OSLC4Net.Server.Providers.Tests;
 
 public sealed class OslcRdfInputFormatterSysMLInterfaceTests
 {
-    private const string Turtle =
-        """
+    private const string Turtle = """
         @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
         @prefix sysml: <https://www.omg.org/spec/sysml/vocabulary#> .
 
@@ -33,20 +32,25 @@ public sealed class OslcRdfInputFormatterSysMLInterfaceTests
         <http://example.org/relationship> rdf:type sysml:Relationship .
         """;
 
-    private const string MultipleTypesTurtle =
-        """
+    private const string MultipleTypesTurtle = """
         @prefix ex: <http://example.org/vocab#> .
         @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
         <http://example.org/derived> rdf:type ex:Base, ex:Derived .
         """;
 
-    private const string AmbiguousTypesTurtle =
-        """
+    private const string AmbiguousTypesTurtle = """
         @prefix ex: <http://example.org/vocab#> .
         @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
         <http://example.org/ambiguous> rdf:type ex:Alpha, ex:Beta .
+        """;
+
+    private const string SharedTypeTurtle = """
+        @prefix ex: <http://example.org/vocab#> .
+        @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+        <http://example.org/shared> rdf:type ex:Shared .
         """;
 
     [Test]
@@ -54,10 +58,9 @@ public sealed class OslcRdfInputFormatterSysMLInterfaceTests
     {
         using TestServer server = CreateServer();
         using HttpClient client = server.CreateClient();
+        using StringContent content = new(Turtle, Encoding.UTF8, OslcMediaType.TEXT_TURTLE);
 
-        using HttpResponseMessage response = await client.PostAsync(
-            "/sysml-input/single",
-            new StringContent(Turtle, Encoding.UTF8, OslcMediaType.TEXT_TURTLE));
+        using HttpResponseMessage response = await client.PostAsync("/sysml-input/single", content);
 
         await Assert.That(response.IsSuccessStatusCode).IsTrue();
         ResourceResult result = await ReadResourceResult(response);
@@ -71,10 +74,13 @@ public sealed class OslcRdfInputFormatterSysMLInterfaceTests
     {
         using TestServer server = CreateServer();
         using HttpClient client = server.CreateClient();
+        using StringContent content = new(
+            MultipleTypesTurtle,
+            Encoding.UTF8,
+            OslcMediaType.TEXT_TURTLE
+        );
 
-        using HttpResponseMessage response = await client.PostAsync(
-            "/sysml-input/single",
-            new StringContent(MultipleTypesTurtle, Encoding.UTF8, OslcMediaType.TEXT_TURTLE));
+        using HttpResponseMessage response = await client.PostAsync("/sysml-input/single", content);
 
         await Assert.That(response.IsSuccessStatusCode).IsTrue();
         ResourceResult result = await ReadResourceResult(response);
@@ -87,12 +93,54 @@ public sealed class OslcRdfInputFormatterSysMLInterfaceTests
         using TestServer server = CreateServer();
         using HttpClient client = server.CreateClient();
 
-        var action = () => client.PostAsync(
-            "/sysml-input/single",
-            new StringContent(AmbiguousTypesTurtle, Encoding.UTF8, OslcMediaType.TEXT_TURTLE));
+        var action = async () =>
+        {
+            using StringContent content = new(
+                AmbiguousTypesTurtle,
+                Encoding.UTF8,
+                OslcMediaType.TEXT_TURTLE
+            );
+            using HttpResponseMessage response = await client.PostAsync(
+                "/sysml-input/single",
+                content
+            );
+            return response;
+        };
 
-        InvalidOperationException exception = await Assert.That(action).Throws<InvalidOperationException>();
-        await Assert.That(exception.Message).Contains("Multiple unrelated CLR resource types match RDF resource");
+        InvalidOperationException exception = await Assert
+            .That(action)
+            .Throws<InvalidOperationException>();
+        await Assert
+            .That(exception.Message)
+            .Contains("Multiple unrelated CLR resource types match RDF resource");
+    }
+
+    [Test]
+    public async Task ControllerRejectsAmbiguousCandidatesForSingleRdfType()
+    {
+        using TestServer server = CreateServer();
+        using HttpClient client = server.CreateClient();
+
+        var action = async () =>
+        {
+            using StringContent content = new(
+                SharedTypeTurtle,
+                Encoding.UTF8,
+                OslcMediaType.TEXT_TURTLE
+            );
+            using HttpResponseMessage response = await client.PostAsync(
+                "/sysml-input/single",
+                content
+            );
+            return response;
+        };
+
+        InvalidOperationException exception = await Assert
+            .That(action)
+            .Throws<InvalidOperationException>();
+        await Assert
+            .That(exception.Message)
+            .Contains("Multiple unrelated CLR resource types match RDF resource");
     }
 
     [Test]
@@ -100,10 +148,26 @@ public sealed class OslcRdfInputFormatterSysMLInterfaceTests
     {
         using TestServer server = CreateServer();
         using HttpClient client = server.CreateClient();
+        using StringContent content = new(Turtle, Encoding.UTF8, OslcMediaType.TEXT_TURTLE);
 
         using HttpResponseMessage response = await client.PostAsync(
             "/sysml-input/multiple",
-            new StringContent(Turtle, Encoding.UTF8, OslcMediaType.TEXT_TURTLE));
+            content
+        );
+
+        await Assert.That(response.IsSuccessStatusCode).IsTrue();
+        ResourcesResult result = await ReadResourcesResult(response);
+        await Assert.That(result.TypeNames).IsEquivalentTo([nameof(Element), nameof(Relationship)]);
+    }
+
+    [Test]
+    public async Task ControllerCanAcceptSysMLInterfaceArray()
+    {
+        using TestServer server = CreateServer();
+        using HttpClient client = server.CreateClient();
+        using StringContent content = new(Turtle, Encoding.UTF8, OslcMediaType.TEXT_TURTLE);
+
+        using HttpResponseMessage response = await client.PostAsync("/sysml-input/array", content);
 
         await Assert.That(response.IsSuccessStatusCode).IsTrue();
         ResourcesResult result = await ReadResourcesResult(response);
@@ -116,9 +180,10 @@ public sealed class OslcRdfInputFormatterSysMLInterfaceTests
         using TestServer server = CreateServer();
         using HttpClient client = server.CreateClient();
 
+        using StringContent content = new(Turtle, Encoding.UTF8, OslcMediaType.TEXT_TURTLE);
         using var request = new HttpRequestMessage(HttpMethod.Post, "/sysml-input/request")
         {
-            Content = new StringContent(Turtle, Encoding.UTF8, OslcMediaType.TEXT_TURTLE),
+            Content = content,
         };
         request.Headers.Add("OSLC-Core-Version", "2.0");
         request.Headers.Add("Configuration-Context", "http://example.org/configuration");
@@ -132,9 +197,31 @@ public sealed class OslcRdfInputFormatterSysMLInterfaceTests
         await Assert.That(result.TypeNames).IsEquivalentTo([nameof(Element), nameof(Relationship)]);
         await Assert.That(result.TripleCount).IsEqualTo(2);
         await Assert.That(result.OslcCoreVersion).IsEqualTo("2.0");
-        await Assert.That(result.ConfigurationContext).IsEqualTo("http://example.org/configuration");
+        await Assert
+            .That(result.ConfigurationContext)
+            .IsEqualTo("http://example.org/configuration");
         await Assert.That(result.Prefer).IsEquivalentTo(["return=representation"]);
         await Assert.That(result.Slug).IsEqualTo("accepted-action");
+    }
+
+    [Test]
+    public async Task ControllerCanAcceptTypedOslcRequestForSysMLInterfaceResources()
+    {
+        using TestServer server = CreateServer();
+        using HttpClient client = server.CreateClient();
+
+        using StringContent content = new(Turtle, Encoding.UTF8, OslcMediaType.TEXT_TURTLE);
+        using var request = new HttpRequestMessage(HttpMethod.Post, "/sysml-input/typed-request")
+        {
+            Content = content,
+        };
+
+        using HttpResponseMessage response = await client.SendAsync(request);
+
+        await Assert.That(response.IsSuccessStatusCode).IsTrue();
+        RequestResult result = await ReadRequestResult(response);
+        await Assert.That(result.TypeNames).IsEquivalentTo([nameof(Element), nameof(Relationship)]);
+        await Assert.That(result.TripleCount).IsEqualTo(2);
     }
 
     private static TestServer CreateServer()
@@ -142,7 +229,8 @@ public sealed class OslcRdfInputFormatterSysMLInterfaceTests
         var builder = new WebHostBuilder()
             .ConfigureServices(static services =>
             {
-                services.AddControllers(options =>
+                services
+                    .AddControllers(options =>
                     {
                         options.InputFormatters.Insert(0, new OslcRdfInputFormatter());
                     })
@@ -154,28 +242,31 @@ public sealed class OslcRdfInputFormatterSysMLInterfaceTests
                 app.UseEndpoints(static endpoints => endpoints.MapControllers());
             });
 
-        return new TestServer(builder)
-        {
-            AllowSynchronousIO = true,
-        };
+        return new TestServer(builder) { AllowSynchronousIO = true };
     }
 
     private static async Task<ResourceResult> ReadResourceResult(HttpResponseMessage response)
     {
-        return await response.Content.ReadFromJsonAsync<ResourceResult>() ??
-            throw new InvalidOperationException("The response did not contain a resource result.");
+        return await response.Content.ReadFromJsonAsync<ResourceResult>()
+            ?? throw new InvalidOperationException(
+                "The response did not contain a resource result."
+            );
     }
 
     private static async Task<ResourcesResult> ReadResourcesResult(HttpResponseMessage response)
     {
-        return await response.Content.ReadFromJsonAsync<ResourcesResult>() ??
-            throw new InvalidOperationException("The response did not contain a resources result.");
+        return await response.Content.ReadFromJsonAsync<ResourcesResult>()
+            ?? throw new InvalidOperationException(
+                "The response did not contain a resources result."
+            );
     }
 
     private static async Task<RequestResult> ReadRequestResult(HttpResponseMessage response)
     {
-        return await response.Content.ReadFromJsonAsync<RequestResult>() ??
-            throw new InvalidOperationException("The response did not contain a request result.");
+        return await response.Content.ReadFromJsonAsync<RequestResult>()
+            ?? throw new InvalidOperationException(
+                "The response did not contain a request result."
+            );
     }
 }
 
@@ -195,6 +286,14 @@ public partial record BaseElement : AbstractResourceRecord, IElement;
 [OslcResourceShape(title = "Derived Shape", describes = ["http://example.org/vocab#Derived"])]
 public partial record DerivedElement : BaseElement;
 
+[OslcNamespace("http://example.org/vocab#")]
+[OslcResourceShape(title = "Shared A Shape", describes = ["http://example.org/vocab#Shared"])]
+public partial record SharedAlphaElement : AbstractResourceRecord, IElement;
+
+[OslcNamespace("http://example.org/vocab#")]
+[OslcResourceShape(title = "Shared B Shape", describes = ["http://example.org/vocab#Shared"])]
+public partial record SharedBetaElement : AbstractResourceRecord, IElement;
+
 [ApiController]
 [Route("sysml-input")]
 public sealed class SysMLInterfaceInputController : ControllerBase
@@ -210,7 +309,18 @@ public sealed class SysMLInterfaceInputController : ControllerBase
     [Consumes(OslcMediaType.TEXT_TURTLE)]
     public IActionResult Multiple([FromBody] List<IElement> elements)
     {
-        return Ok(new ResourcesResult(elements.Select(static element => element.GetType().Name).ToArray()));
+        return Ok(
+            new ResourcesResult(elements.Select(static element => element.GetType().Name).ToArray())
+        );
+    }
+
+    [HttpPost("array")]
+    [Consumes(OslcMediaType.TEXT_TURTLE)]
+    public IActionResult Array([FromBody] IElement[] elements)
+    {
+        return Ok(
+            new ResourcesResult(elements.Select(static element => element.GetType().Name).ToArray())
+        );
     }
 
     [HttpPost("request")]
@@ -218,27 +328,44 @@ public sealed class SysMLInterfaceInputController : ControllerBase
     public IActionResult Request([FromBody] OslcRequest request)
     {
         IReadOnlyList<IElement> resources = request.ResourcesOfType<IElement>();
-        return Ok(new RequestResult(
-            resources.Select(static resource => resource.GetType().Name).ToArray(),
-            request.Graph.Triples.Count,
-            request.OslcCoreVersion,
-            request.ConfigurationContext?.AbsoluteUri,
-            request.Prefer.ToArray(),
-            request.Slug));
+        return Ok(
+            new RequestResult(
+                resources.Select(static resource => resource.GetType().Name).ToArray(),
+                request.Graph.Triples.Count,
+                request.OslcCoreVersion,
+                request.ConfigurationContext?.AbsoluteUri,
+                request.Prefer.ToArray(),
+                request.Slug
+            )
+        );
+    }
+
+    [HttpPost("typed-request")]
+    [Consumes(OslcMediaType.TEXT_TURTLE)]
+    public IActionResult TypedRequest([FromBody] OslcRequest<IElement> request)
+    {
+        return Ok(
+            new RequestResult(
+                request.Resources.Select(static resource => resource.GetType().Name).ToArray(),
+                request.Graph.Triples.Count,
+                request.OslcCoreVersion,
+                request.ConfigurationContext?.AbsoluteUri,
+                request.Prefer.ToArray(),
+                request.Slug
+            )
+        );
     }
 }
 
-public sealed record ResourceResult(
-    string TypeName,
-    string? About,
-    bool IsExtendedResource)
+public sealed record ResourceResult(string TypeName, string? About, bool IsExtendedResource)
 {
     public static ResourceResult From(IElement element)
     {
         return new ResourceResult(
             element.GetType().Name,
             element.About?.AbsoluteUri,
-            element is IExtendedResource);
+            element is IExtendedResource
+        );
     }
 }
 
@@ -250,4 +377,5 @@ public sealed record RequestResult(
     string? OslcCoreVersion,
     string? ConfigurationContext,
     string[] Prefer,
-    string? Slug);
+    string? Slug
+);

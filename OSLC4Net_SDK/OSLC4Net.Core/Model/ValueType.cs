@@ -22,6 +22,9 @@ namespace OSLC4Net.Core.Model;
 /// <remarks>see https://docs.oasis-open-projects.org/oslc-op/core/v3.0/os/core-vocab.html</remarks>
 public enum ValueType
 {
+    [URI("")]
+    Unknown = 0,
+
     [URI(OslcConstants.XML_NAMESPACE + "anyURI")]
     AnyUri,
 
@@ -162,6 +165,4 @@ public enum ValueType
 
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "LocalResource")]
     LocalResource,
-
-    [URI("")] Unknown
 }

@@ -38,12 +38,15 @@ internal static class OslcResourceMaterializer
     private static object GraphToPolymorphicResources(
         IGraph graph,
         Type requestedType,
-        DotNetRdfHelper rdfHelper)
+        DotNetRdfHelper rdfHelper
+    )
     {
         var listType = typeof(List<>).MakeGenericType(requestedType);
         var resources = (IList)Activator.CreateInstance(listType)!;
         var add = listType.GetMethod("Add", [requestedType])!;
-        foreach ((IUriNode subject, Type concreteType) in ResolveResourceTypes(graph, requestedType))
+        foreach (
+            (IUriNode subject, Type concreteType) in ResolveResourceTypes(graph, requestedType)
+        )
         {
             object resource = rdfHelper.FromDotNetRdfNode(subject, graph, concreteType);
             add.Invoke(resources, [resource]);
@@ -59,10 +62,11 @@ internal static class OslcResourceMaterializer
 
     private static IEnumerable<(IUriNode Subject, Type ConcreteType)> ResolveResourceTypes(
         IGraph graph,
-        Type requestedType)
+        Type requestedType
+    )
     {
         IUriNode rdfType = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
-        Dictionary<string, Type> candidateTypes = GetCandidateResourceTypes(requestedType);
+        Dictionary<string, List<Type>> candidateTypes = GetCandidateResourceTypes(requestedType);
         var candidatesBySubject = new Dictionary<IUriNode, List<Type>>();
         foreach (Triple triple in graph.GetTriplesWithPredicate(rdfType))
         {
@@ -71,7 +75,12 @@ internal static class OslcResourceMaterializer
                 continue;
             }
 
-            if (!candidateTypes.TryGetValue(objectNode.Uri.AbsoluteUri, out Type? candidateType))
+            if (
+                !candidateTypes.TryGetValue(
+                    objectNode.Uri.AbsoluteUri,
+                    out List<Type>? candidateResourceTypes
+                )
+            )
             {
                 continue;
             }
@@ -82,9 +91,12 @@ internal static class OslcResourceMaterializer
                 candidatesBySubject.Add(subject, subjectCandidates);
             }
 
-            if (!subjectCandidates.Contains(candidateType))
+            foreach (Type candidateType in candidateResourceTypes)
             {
-                subjectCandidates.Add(candidateType);
+                if (!subjectCandidates.Contains(candidateType))
+                {
+                    subjectCandidates.Add(candidateType);
+                }
             }
         }
 
@@ -93,21 +105,43 @@ internal static class OslcResourceMaterializer
             .Select(entry => (entry.Key, GetMostConcreteType(entry.Key, entry.Value)));
     }
 
-    private static Dictionary<string, Type> GetCandidateResourceTypes(Type requestedType)
+    private static Dictionary<string, List<Type>> GetCandidateResourceTypes(Type requestedType)
     {
-        var candidates = new Dictionary<string, Type>(StringComparer.Ordinal);
-        foreach (Type type in AppDomain.CurrentDomain.GetAssemblies()
-            .Where(static assembly => !assembly.IsDynamic)
-            .SelectMany(GetLoadableTypes)
-            .Where(type => !type.IsAbstract &&
-                !type.IsInterface &&
-                requestedType.IsAssignableFrom(type)))
+        var candidates = new Dictionary<string, List<Type>>(StringComparer.Ordinal);
+        foreach (
+            Type type in AppDomain
+                .CurrentDomain.GetAssemblies()
+                .Where(static assembly => !assembly.IsDynamic)
+                .SelectMany(GetLoadableTypes)
+                .Where(type =>
+                    !type.IsAbstract && !type.IsInterface && requestedType.IsAssignableFrom(type)
+                )
+        )
         {
-            foreach (OslcResourceShape resourceShape in type.GetCustomAttributes(typeof(OslcResourceShape), false))
+            foreach (
+                OslcResourceShape resourceShape in type.GetCustomAttributes(
+                    typeof(OslcResourceShape),
+                    false
+                )
+            )
             {
                 foreach (string describedType in resourceShape.describes)
                 {
-                    candidates[describedType] = type;
+                    if (
+                        !candidates.TryGetValue(
+                            describedType,
+                            out List<Type>? describedTypeCandidates
+                        )
+                    )
+                    {
+                        describedTypeCandidates = new List<Type>();
+                        candidates.Add(describedType, describedTypeCandidates);
+                    }
+
+                    if (!describedTypeCandidates.Contains(type))
+                    {
+                        describedTypeCandidates.Add(type);
+                    }
                 }
             }
         }
@@ -132,7 +166,11 @@ internal static class OslcResourceMaterializer
         for (int i = candidates.Count - 1; i >= 0; i--)
         {
             Type current = candidates[i];
-            if (candidates.Any(candidate => current != candidate && current.IsAssignableFrom(candidate)))
+            if (
+                candidates.Any(candidate =>
+                    current != candidate && current.IsAssignableFrom(candidate)
+                )
+            )
             {
                 candidates.RemoveAt(i);
             }
@@ -144,6 +182,7 @@ internal static class OslcResourceMaterializer
         }
 
         throw new InvalidOperationException(
-            $"Multiple unrelated CLR resource types match RDF resource '{subject.Uri}': {string.Join(", ", candidates.Select(static type => type.FullName))}.");
+            $"Multiple unrelated CLR resource types match RDF resource '{subject.Uri}': {string.Join(", ", candidates.Select(static type => type.FullName))}."
+        );
     }
 }

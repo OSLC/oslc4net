@@ -17,6 +17,13 @@ namespace OSLC4Net.Core.Tests;
 public sealed class ValueTypeMappingTests
 {
     [Test]
+    public async Task UnknownValueTypeIsTheDefaultEnumValue()
+    {
+        await Assert.That((int)ValueType.Unknown).IsEqualTo(0);
+        await Assert.That(default(ValueType)).IsEqualTo(ValueType.Unknown);
+    }
+
+    [Test]
     public async Task ValueTypeUrisRoundTripForOslcAndRdfCompatibleDatatypes()
     {
         foreach (

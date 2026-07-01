@@ -497,7 +497,7 @@ public partial record TransitionUsage;
 public partial record TriggerInvocationExpression;
 
 [OslcShape("https://www.omg.org/spec/SysML/20250201/shapes/TypeShape")]
-public partial record Type;
+public partial record SType;
 
 [OslcShape("https://www.omg.org/spec/SysML/20250201/shapes/TypeFeaturingShape")]
 public partial record TypeFeaturing;

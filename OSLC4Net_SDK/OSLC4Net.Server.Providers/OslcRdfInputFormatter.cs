@@ -1,3 +1,13 @@
+/*
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution.
+ *
+ * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
+ */
+
 using System.Collections;
 using System.Text;
 using CommunityToolkit.Diagnostics;
@@ -34,7 +44,8 @@ public class OslcRdfInputFormatter : TextInputFormatter
 
     public override async Task<InputFormatterResult> ReadRequestBodyAsync(
         InputFormatterContext context,
-        Encoding encoding)
+        Encoding encoding
+    )
     {
         Guard.IsNotNull(context, nameof(context));
         Guard.IsNotNull(context.HttpContext.Request.ContentType);
@@ -54,25 +65,29 @@ public class OslcRdfInputFormatter : TextInputFormatter
         using var reader = new StreamReader(context.HttpContext.Request.Body, encoding);
 
         // REVISIT: we need a more robust way to obtain request URI
-        context.HttpContext.Request.Headers.TryGetValue(OSLC4NetConstants.INNER_URI_HEADER,
-            out var shuttleRequestUri);
-        var baseUri = shuttleRequestUri.SingleOrDefault()?.ToSafeUri() ??
-                      context.HttpContext.Request.GetEncodedUrl().ToSafeUri();
+        context.HttpContext.Request.Headers.TryGetValue(
+            OSLC4NetConstants.INNER_URI_HEADER,
+            out var shuttleRequestUri
+        );
+        var baseUri =
+            shuttleRequestUri.SingleOrDefault()?.ToSafeUri()
+            ?? context.HttpContext.Request.GetEncodedUrl().ToSafeUri();
 
         IGraph graph;
         if (format == RdfFormat.JsonLd)
         {
-            graph = await DeserializeRdfQuadsAsync(reader, format, baseUri)
-                .ConfigureAwait(false);
+            graph = await DeserializeRdfQuadsAsync(reader, format, baseUri).ConfigureAwait(false);
         }
         else
         {
-            graph =
-                await DeserializeRdfTriplesAsync(reader, format, baseUri)
-                    .ConfigureAwait(false);
+            graph = await DeserializeRdfTriplesAsync(reader, format, baseUri).ConfigureAwait(false);
         }
 
-        var obj = GraphToObjects(graph, context.ModelType, SnapshotHeaders(context.HttpContext.Request.Headers));
+        var obj = GraphToObjects(
+            graph,
+            context.ModelType,
+            SnapshotHeaders(context.HttpContext.Request.Headers)
+        );
 
         return await InputFormatterResult.SuccessAsync(obj).ConfigureAwait(false);
     }
@@ -80,7 +95,8 @@ public class OslcRdfInputFormatter : TextInputFormatter
     private object? GraphToObjects(
         IGraph? graph,
         Type type,
-        IReadOnlyDictionary<string, string[]> headers)
+        IReadOnlyDictionary<string, string[]> headers
+    )
     {
         if (type == typeof(Graph) || type == typeof(BaseGraph) || type == typeof(IGraph))
         {
@@ -102,44 +118,56 @@ public class OslcRdfInputFormatter : TextInputFormatter
             return Activator.CreateInstance(type, graph, headers, _rdfHelper);
         }
 
+        var isSingleton = type.IsOslcSingleton();
+        Type? polymorphicMemberType = GetEnumerableMemberType(type);
+        if (
+            !isSingleton
+            && polymorphicMemberType is not null
+            && OslcResourceMaterializer.RequiresPolymorphicResolution(polymorphicMemberType)
+        )
+        {
+            var resources = OslcResourceMaterializer.Materialize(
+                graph,
+                polymorphicMemberType,
+                _rdfHelper
+            );
+            if (type.IsArray)
+            {
+                return resources
+                    .GetType()
+                    .GetMethod("ToArray", Type.EmptyTypes)
+                    ?.Invoke(resources, null);
+            }
+
+            return resources;
+        }
+
         if (OslcResourceMaterializer.RequiresPolymorphicResolution(type))
         {
             var resources = OslcResourceMaterializer.Materialize(graph, type, _rdfHelper);
             return resources is IList { Count: > 0 } list ? list[0] : null;
         }
 
-        var isSingleton = type.IsOslcSingleton();
-        Type? polymorphicMemberType = GetEnumerableMemberType(type);
-        if (!isSingleton && polymorphicMemberType is not null &&
-            OslcResourceMaterializer.RequiresPolymorphicResolution(polymorphicMemberType))
-        {
-            var resources = OslcResourceMaterializer.Materialize(graph, polymorphicMemberType, _rdfHelper);
-            if (type.IsArray)
-            {
-                return resources.GetType().GetMethod("ToArray", Type.EmptyTypes)?
-                    .Invoke(resources, null);
-            }
-
-            return resources;
-        }
-
         var memberType = type.GetMemberType();
-        if (!isSingleton && memberType is not null &&
-            OslcResourceMaterializer.RequiresPolymorphicResolution(memberType))
+        if (
+            !isSingleton
+            && memberType is not null
+            && OslcResourceMaterializer.RequiresPolymorphicResolution(memberType)
+        )
         {
             var resources = OslcResourceMaterializer.Materialize(graph, memberType, _rdfHelper);
             if (type.IsArray)
             {
-                return resources.GetType().GetMethod("ToArray", Type.EmptyTypes)?
-                    .Invoke(resources, null);
+                return resources
+                    .GetType()
+                    .GetMethod("ToArray", Type.EmptyTypes)
+                    ?.Invoke(resources, null);
             }
 
             return resources;
         }
 
-        var output =
-            _rdfHelper.FromDotNetRdfGraph(graph,
-                isSingleton ? type : memberType);
+        var output = _rdfHelper.FromDotNetRdfGraph(graph, isSingleton ? type : memberType);
 
         if (isSingleton)
         {
@@ -151,8 +179,7 @@ public class OslcRdfInputFormatter : TextInputFormatter
         }
         else if (type.IsArray)
         {
-            return output.GetType().GetMethod("ToArray", Type.EmptyTypes)?
-                .Invoke(output, null);
+            return output.GetType().GetMethod("ToArray", Type.EmptyTypes)?.Invoke(output, null);
         }
         else
         {
@@ -173,8 +200,10 @@ public class OslcRdfInputFormatter : TextInputFormatter
         }
 
         return type.GetInterfaces()
-            .Where(static interfaceType => interfaceType.IsGenericType &&
-                interfaceType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+            .Where(static interfaceType =>
+                interfaceType.IsGenericType
+                && interfaceType.GetGenericTypeDefinition() == typeof(IEnumerable<>)
+            )
             .Select(static interfaceType => interfaceType.GetGenericArguments()[0])
             .FirstOrDefault();
     }
@@ -184,11 +213,15 @@ public class OslcRdfInputFormatter : TextInputFormatter
         return headers.ToDictionary(
             static header => header.Key,
             static header => header.Value.ToArray(),
-            StringComparer.OrdinalIgnoreCase);
+            StringComparer.OrdinalIgnoreCase
+        );
     }
 
-    private static async Task<IGraph> DeserializeRdfTriplesAsync(StreamReader streamReader,
-        RdfFormat format, Uri baseUri)
+    private static async Task<IGraph> DeserializeRdfTriplesAsync(
+        StreamReader streamReader,
+        RdfFormat format,
+        Uri baseUri
+    )
     {
         IRdfReader? tripleReader = format switch
         {
@@ -196,7 +229,8 @@ public class OslcRdfInputFormatter : TextInputFormatter
             RdfFormat.Turtle => new TurtleParser(TurtleSyntax.Rdf11Star, false),
             RdfFormat.NTriples => new NTriplesParser(),
             RdfFormat.JsonLd => throw new NotSupportedException(
-                "This method supports only triple-based formats, use quad-based method"),
+                "This method supports only triple-based formats, use quad-based method"
+            ),
             _ => throw new ArgumentOutOfRangeException(nameof(format), "Unknown RDF format"),
         };
 
@@ -217,18 +251,21 @@ public class OslcRdfInputFormatter : TextInputFormatter
         }
     }
 
-    private static async Task<IGraph> DeserializeRdfQuadsAsync(StreamReader streamReader,
-        RdfFormat format, Uri baseUri)
+    private static async Task<IGraph> DeserializeRdfQuadsAsync(
+        StreamReader streamReader,
+        RdfFormat format,
+        Uri baseUri
+    )
     {
         IStoreReader? quadReader = format switch
         {
-            RdfFormat.JsonLd => new JsonLdParser(new JsonLdProcessorOptions
-            {
-                ProcessingMode = JsonLdProcessingMode.JsonLd11
-            }),
-            RdfFormat.RdfXml or
-                RdfFormat.Turtle or RdfFormat.NTriples => throw new NotSupportedException(
-                    "This method supports only quad-based formats, use triple-based method"),
+            RdfFormat.JsonLd => new JsonLdParser(
+                new JsonLdProcessorOptions { ProcessingMode = JsonLdProcessingMode.JsonLd11 }
+            ),
+            RdfFormat.RdfXml or RdfFormat.Turtle or RdfFormat.NTriples =>
+                throw new NotSupportedException(
+                    "This method supports only quad-based formats, use triple-based method"
+                ),
             _ => throw new ArgumentOutOfRangeException(nameof(format), "Unknown RDF format"),
         };
 

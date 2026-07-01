@@ -25,7 +25,9 @@ public sealed class SysMLV2DomainTests
     public async Task GeneratedRecordsImplementInterfacesForAllDirectSysMLSuperclasses()
     {
         await Assert.That(typeof(IExtendedResource).IsAssignableFrom(typeof(IElement))).IsTrue();
-        await Assert.That(typeof(IExtendedResource).IsAssignableFrom(typeof(IActionUsage))).IsTrue();
+        await Assert
+            .That(typeof(IExtendedResource).IsAssignableFrom(typeof(IActionUsage)))
+            .IsTrue();
         await Assert.That(typeof(IActionUsage).IsAssignableFrom(typeof(ActionUsage))).IsTrue();
         await Assert.That(typeof(IOccurrenceUsage).IsAssignableFrom(typeof(ActionUsage))).IsTrue();
         await Assert.That(typeof(IStep).IsAssignableFrom(typeof(ActionUsage))).IsTrue();
@@ -35,8 +37,21 @@ public sealed class SysMLV2DomainTests
         await Assert.That(typeof(IConnectorAsUsage).IsAssignableFrom(typeof(FlowUsage))).IsTrue();
         await Assert.That(typeof(IFlow).IsAssignableFrom(typeof(FlowUsage))).IsTrue();
 
-        await Assert.That(typeof(IPerformActionUsage).IsAssignableFrom(typeof(PerformActionUsage))).IsTrue();
-        await Assert.That(typeof(IActionUsage).IsAssignableFrom(typeof(PerformActionUsage))).IsTrue();
-        await Assert.That(typeof(IEventOccurrenceUsage).IsAssignableFrom(typeof(PerformActionUsage))).IsTrue();
+        await Assert
+            .That(typeof(IPerformActionUsage).IsAssignableFrom(typeof(PerformActionUsage)))
+            .IsTrue();
+        await Assert
+            .That(typeof(IActionUsage).IsAssignableFrom(typeof(PerformActionUsage)))
+            .IsTrue();
+        await Assert
+            .That(typeof(IEventOccurrenceUsage).IsAssignableFrom(typeof(PerformActionUsage)))
+            .IsTrue();
+    }
+
+    [Test]
+    public async Task BclTypeNameCollisionIsEscaped()
+    {
+        await Assert.That(typeof(SType).Assembly.GetType("OSLC4Net.Domains.SysMLV2.Type")).IsNull();
+        await Assert.That(typeof(ISType).IsAssignableFrom(typeof(SType))).IsTrue();
     }
 }

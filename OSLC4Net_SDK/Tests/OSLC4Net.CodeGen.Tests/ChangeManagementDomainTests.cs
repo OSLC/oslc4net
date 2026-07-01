@@ -8,6 +8,7 @@
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
+using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Model;
 using OSLC4Net.Domains.ChangeManagement;
 using ChangeManagementTask = OSLC4Net.Domains.ChangeManagement.Task;
@@ -25,5 +26,51 @@ public sealed class ChangeManagementDomainTests
         await Assert.That(typeof(Enhancement).BaseType).IsEqualTo(typeof(ChangeRequest));
         await Assert.That(typeof(ChangeManagementTask).BaseType).IsEqualTo(typeof(ChangeRequest));
         await Assert.That(typeof(ReviewTask).BaseType).IsEqualTo(typeof(ChangeManagementTask));
+    }
+
+    [Test]
+    [Arguments(
+        nameof(ChangeRequest.AffectsTestResult),
+        "http://open-services.net/ns/qm#TestResult"
+    )]
+    [Arguments(
+        nameof(ChangeRequest.BlocksTestExecutionRecord),
+        "http://open-services.net/ns/qm#TestExecutionRecord"
+    )]
+    [Arguments(nameof(ChangeRequest.RelatedTestCase), "http://open-services.net/ns/qm#TestCase")]
+    [Arguments(
+        nameof(ChangeRequest.RelatedTestExecutionRecord),
+        "http://open-services.net/ns/qm#TestExecutionRecord"
+    )]
+    [Arguments(nameof(ChangeRequest.RelatedTestPlan), "http://open-services.net/ns/qm#TestPlan")]
+    [Arguments(
+        nameof(ChangeRequest.RelatedTestScript),
+        "http://open-services.net/ns/qm#TestScript"
+    )]
+    [Arguments(nameof(ChangeRequest.TestedByTestCase), "http://open-services.net/ns/qm#TestCase")]
+    public async System.Threading.Tasks.Task ChangeRequestUsesLocalErrataOverrideRanges(
+        string propertyName,
+        string expectedRange
+    )
+    {
+        OslcRange? range = typeof(ChangeRequest)
+            .GetProperty(propertyName)
+            ?.GetCustomAttributes(typeof(OslcRange), inherit: false)
+            .OfType<OslcRange>()
+            .SingleOrDefault();
+
+        await Assert.That(range?.value).IsEquivalentTo([expectedRange]);
+    }
+
+    [Test]
+    public async System.Threading.Tasks.Task SubclassesUseInheritedErrataOverrideProperties()
+    {
+        await Assert
+            .That(
+                typeof(Enhancement)
+                    .GetProperty(nameof(ChangeRequest.TestedByTestCase))
+                    ?.DeclaringType
+            )
+            .IsEqualTo(typeof(ChangeRequest));
     }
 }

@@ -15,6 +15,7 @@ namespace OSLC4Net.Domains.RequirementsManagement;
 
 public static partial class RM
 {
+    // Legacy OSLC4Net extension: rm:managedBy is not part of the OSLC RM 2.1 vocabulary.
     public static partial class P
     {
         public const string ManagedBy = NS + "managedBy";
@@ -28,7 +29,9 @@ public static partial class RM
 
 public partial record RequirementCollection
 {
-    [OslcDescription("Resource, such as a change request, which manages this requirement collection.")]
+    [OslcDescription(
+        "Resource, such as a change request, which manages this requirement collection."
+    )]
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition(RM.P.ManagedBy)]
     [OslcName("managedBy")]

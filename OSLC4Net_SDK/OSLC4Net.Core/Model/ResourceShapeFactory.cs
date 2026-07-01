@@ -68,9 +68,7 @@ public sealed class ResourceShapeFactory
         TYPE_TO_VALUE_TYPE[typeof(ISet<Uri>)] = ValueType.Resource;
     }
 
-    private ResourceShapeFactory()
-    {
-    }
+    private ResourceShapeFactory() { }
 
     /// <summary>
     ///     Create an OSLC ResourceShape resource
@@ -80,26 +78,35 @@ public sealed class ResourceShapeFactory
     /// <param name="resourceShapePath"></param>
     /// <param name="resourceType"></param>
     /// <returns></returns>
-    public static ResourceShape CreateResourceShape(string baseURI,
+    public static ResourceShape CreateResourceShape(
+        string baseURI,
         string resourceShapesPath,
         string resourceShapePath,
-        Type resourceType)
+        Type resourceType
+    )
     {
         var verifiedTypes = new HashSet<Type>();
         verifiedTypes.Add(resourceType);
 
-        return CreateResourceShape(baseURI, resourceShapesPath, resourceShapePath, resourceType,
-            verifiedTypes);
+        return CreateResourceShape(
+            baseURI,
+            resourceShapesPath,
+            resourceShapePath,
+            resourceType,
+            verifiedTypes
+        );
     }
 
-    private static ResourceShape CreateResourceShape(string baseURI,
+    private static ResourceShape CreateResourceShape(
+        string baseURI,
         string resourceShapesPath,
         string resourceShapePath,
         Type resourceType,
-        ISet<Type> verifiedTypes)
+        ISet<Type> verifiedTypes
+    )
     {
-        var resourceShapeAttribute =
-            (OslcResourceShape[])resourceType.GetCustomAttributes(typeof(OslcResourceShape), false);
+        var resourceShapeAttribute = (OslcResourceShape[])
+            resourceType.GetCustomAttributes(typeof(OslcResourceShape), false);
         if (resourceShapeAttribute == null || resourceShapeAttribute.Length == 0)
         {
             throw new OslcCoreMissingAttributeException(resourceType, typeof(OslcResourceShape));
@@ -127,10 +134,16 @@ public sealed class ResourceShapeFactory
             {
                 var methodName = method.Name;
                 var methodNameLength = methodName.Length;
-                if ((methodName.StartsWith(METHOD_NAME_START_GET, StringComparison.Ordinal) &&
-                     methodNameLength > METHOD_NAME_START_GET_LENGTH) ||
-                    (methodName.StartsWith(METHOD_NAME_START_IS, StringComparison.Ordinal) &&
-                     methodNameLength > METHOD_NAME_START_IS_LENGTH))
+                if (
+                    (
+                        methodName.StartsWith(METHOD_NAME_START_GET, StringComparison.Ordinal)
+                        && methodNameLength > METHOD_NAME_START_GET_LENGTH
+                    )
+                    || (
+                        methodName.StartsWith(METHOD_NAME_START_IS, StringComparison.Ordinal)
+                        && methodNameLength > METHOD_NAME_START_IS_LENGTH
+                    )
+                )
                 {
                     var propertyDefinitionAttribute =
                         InheritedMethodAttributeHelper.GetAttribute<OslcPropertyDefinition>(method);
@@ -139,14 +152,21 @@ public sealed class ResourceShapeFactory
                         var propertyDefinition = propertyDefinitionAttribute.value;
                         if (propertyDefinitions.Contains(propertyDefinition))
                         {
-                            throw new OslcCoreDuplicatePropertyDefinitionException(resourceType,
-                                propertyDefinitionAttribute);
+                            throw new OslcCoreDuplicatePropertyDefinitionException(
+                                resourceType,
+                                propertyDefinitionAttribute
+                            );
                         }
 
                         propertyDefinitions.Add(propertyDefinition);
 
-                        var property = CreateProperty(baseURI, resourceType, method,
-                            propertyDefinitionAttribute, verifiedTypes);
+                        var property = CreateProperty(
+                            baseURI,
+                            resourceType,
+                            method,
+                            propertyDefinitionAttribute,
+                            verifiedTypes
+                        );
                         resourceShape.AddProperty(property);
 
                         ValidateSetMethodExists(resourceType, method);
@@ -164,14 +184,21 @@ public sealed class ResourceShapeFactory
                 var propertyDefinition = propertyDefinitionAttribute.value;
                 if (propertyDefinitions.Contains(propertyDefinition))
                 {
-                    throw new OslcCoreDuplicatePropertyDefinitionException(resourceType,
-                        propertyDefinitionAttribute);
+                    throw new OslcCoreDuplicatePropertyDefinitionException(
+                        resourceType,
+                        propertyDefinitionAttribute
+                    );
                 }
 
                 propertyDefinitions.Add(propertyDefinition);
 
-                var property = CreateProperty(baseURI, resourceType, prop,
-                    propertyDefinitionAttribute, verifiedTypes);
+                var property = CreateProperty(
+                    baseURI,
+                    resourceType,
+                    prop,
+                    propertyDefinitionAttribute,
+                    verifiedTypes
+                );
                 resourceShape.AddProperty(property);
             }
         }
@@ -179,8 +206,13 @@ public sealed class ResourceShapeFactory
         return resourceShape;
     }
 
-    private static Property CreateProperty(string baseURI, Type resourceType, MemberInfo method,
-        OslcPropertyDefinition propertyDefinitionAttribute, ISet<Type> verifiedTypes)
+    private static Property CreateProperty(
+        string baseURI,
+        Type resourceType,
+        MemberInfo method,
+        OslcPropertyDefinition propertyDefinitionAttribute,
+        ISet<Type> verifiedTypes
+    )
     {
         string name;
         var nameAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcName>(method);
@@ -194,7 +226,7 @@ public sealed class ResourceShapeFactory
             {
                 MethodInfo methodInfo => GetDefaultPropertyName(methodInfo),
                 PropertyInfo propertyInfo => GetDefaultPropertyName(propertyInfo),
-                _ => throw new ArgumentException("Unsupported member type", nameof(method))
+                _ => throw new ArgumentException("Unsupported member type", nameof(method)),
             };
         }
 
@@ -202,15 +234,18 @@ public sealed class ResourceShapeFactory
 
         if (!propertyDefinition.EndsWith(name, StringComparison.Ordinal))
         {
-            throw new OslcCoreInvalidPropertyDefinitionException(resourceType, method,
-                propertyDefinitionAttribute);
+            throw new OslcCoreInvalidPropertyDefinitionException(
+                resourceType,
+                method,
+                propertyDefinitionAttribute
+            );
         }
 
         var returnType = method switch
         {
             MethodInfo methodInfo => methodInfo.ReturnType,
             PropertyInfo propertyInfo => propertyInfo.PropertyType,
-            _ => throw new ArgumentException("Unsupported member type", nameof(method))
+            _ => throw new ArgumentException("Unsupported member type", nameof(method)),
         };
 
         Occurs occurs;
@@ -228,8 +263,12 @@ public sealed class ResourceShapeFactory
         var componentType = GetComponentType(resourceType, method, returnType);
 
         // Reified resources are a special case.
-        if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IReifiedResource<>),
-                componentType))
+        if (
+            InheritedGenericInterfacesHelper.ImplementsGenericInterface(
+                typeof(IReifiedResource<>),
+                componentType
+            )
+        )
         {
             var genericType = typeof(IReifiedResource<object>).GetGenericTypeDefinition();
 
@@ -266,8 +305,9 @@ public sealed class ResourceShapeFactory
             property.SetTitle(titleAttribute.value);
         }
 
-        var descriptionAttribute =
-            InheritedMethodAttributeHelper.GetAttribute<OslcDescription>(method);
+        var descriptionAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcDescription>(
+            method
+        );
         if (descriptionAttribute != null)
         {
             property.SetDescription(descriptionAttribute.value);
@@ -287,8 +327,12 @@ public sealed class ResourceShapeFactory
         if (representationAttribute != null)
         {
             var representation = representationAttribute.value;
-            ValidateUserSpecifiedRepresentation(resourceType, method, representation,
-                componentType);
+            ValidateUserSpecifiedRepresentation(
+                resourceType,
+                method,
+                representation,
+                componentType
+            );
             property.SetRepresentation(new Uri(RepresentationExtension.ToString(representation)));
         }
         else
@@ -297,12 +341,14 @@ public sealed class ResourceShapeFactory
             if (defaultRepresentation != Representation.Unknown)
             {
                 property.SetRepresentation(
-                    new Uri(RepresentationExtension.ToString(defaultRepresentation)));
+                    new Uri(RepresentationExtension.ToString(defaultRepresentation))
+                );
             }
         }
 
-        var allowedValueAttribute =
-            InheritedMethodAttributeHelper.GetAttribute<OslcAllowedValue>(method);
+        var allowedValueAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcAllowedValue>(
+            method
+        );
         if (allowedValueAttribute != null)
         {
             foreach (var allowedValue in allowedValueAttribute.value)
@@ -311,15 +357,17 @@ public sealed class ResourceShapeFactory
             }
         }
 
-        var allowedValuesAttribute =
-            InheritedMethodAttributeHelper.GetAttribute<OslcAllowedValues>(method);
+        var allowedValuesAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcAllowedValues>(
+            method
+        );
         if (allowedValuesAttribute != null)
         {
             property.SetAllowedValuesRef(new Uri(allowedValuesAttribute.value));
         }
 
-        var defaultValueAttribute =
-            InheritedMethodAttributeHelper.GetAttribute<OslcDefaultValue>(method);
+        var defaultValueAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcDefaultValue>(
+            method
+        );
         if (defaultValueAttribute != null)
         {
             property.SetDefaultValue(defaultValueAttribute.value);
@@ -350,8 +398,9 @@ public sealed class ResourceShapeFactory
             property.SetMaxSize(maxSizeAttribute.value);
         }
 
-        var valueShapeAttribute =
-            InheritedMethodAttributeHelper.GetAttribute<OslcValueShape>(method);
+        var valueShapeAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcValueShape>(
+            method
+        );
         if (valueShapeAttribute != null)
         {
             property.SetValueShape(new Uri(baseURI + "/" + valueShapeAttribute.value));
@@ -363,8 +412,13 @@ public sealed class ResourceShapeFactory
             if (verifiedTypes.Add(componentType))
             {
                 // Validate nested resource ignoring return value, but throwing any exceptions
-                CreateResourceShape(baseURI, OslcConstants.PATH_RESOURCE_SHAPES, "unused",
-                    componentType, verifiedTypes);
+                CreateResourceShape(
+                    baseURI,
+                    OslcConstants.PATH_RESOURCE_SHAPES,
+                    "unused",
+                    componentType,
+                    verifiedTypes
+                );
             }
         }
 
@@ -391,7 +445,9 @@ public sealed class ResourceShapeFactory
             : METHOD_NAME_START_IS_LENGTH;
 
         // We want the name to start with a lower-case letter
-        var lowercasedFirstCharacter = methodName.Substring(startingIndex, 1).ToLower(CultureInfo.InvariantCulture);
+        var lowercasedFirstCharacter = methodName
+            .Substring(startingIndex, 1)
+            .ToLower(CultureInfo.InvariantCulture);
         if (methodName.Length == 1)
         {
             return lowercasedFirstCharacter;
@@ -400,8 +456,11 @@ public sealed class ResourceShapeFactory
         return string.Concat(lowercasedFirstCharacter, methodName.AsSpan(startingIndex + 1));
     }
 
-    private static ValueType GetDefaultValueType(Type resourceType, MemberInfo method,
-        Type componentType)
+    private static ValueType GetDefaultValueType(
+        Type resourceType,
+        MemberInfo method,
+        Type componentType
+    )
     {
         var valueType = TYPE_TO_VALUE_TYPE[componentType];
         if (valueType == ValueType.Unknown)
@@ -424,10 +483,16 @@ public sealed class ResourceShapeFactory
 
     private static Occurs GetDefaultOccurs(Type type)
     {
-        if (!IsBinaryArray(type) &&
-            (type.IsArray ||
-             InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(ICollection<>),
-                 type)))
+        if (
+            !IsBinaryArray(type)
+            && (
+                type.IsArray
+                || InheritedGenericInterfacesHelper.ImplementsGenericInterface(
+                    typeof(ICollection<>),
+                    type
+                )
+            )
+        )
         {
             return Occurs.ZeroOrMany;
         }
@@ -447,9 +512,13 @@ public sealed class ResourceShapeFactory
             return type.GetElementType()!;
         }
 
-        if (!IsBinaryArray(type) &&
-            InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(ICollection<>),
-                type))
+        if (
+            !IsBinaryArray(type)
+            && InheritedGenericInterfacesHelper.ImplementsGenericInterface(
+                typeof(ICollection<>),
+                type
+            )
+        )
         {
             var actualTypeArguments = type.GetGenericArguments();
             if (actualTypeArguments.Length == 1)
@@ -476,11 +545,17 @@ public sealed class ResourceShapeFactory
         string setMethodName;
         if (getMethodName.StartsWith(METHOD_NAME_START_GET, StringComparison.Ordinal))
         {
-            setMethodName = string.Concat(METHOD_NAME_START_SET, getMethodName.AsSpan(METHOD_NAME_START_GET_LENGTH));
+            setMethodName = string.Concat(
+                METHOD_NAME_START_SET,
+                getMethodName.AsSpan(METHOD_NAME_START_GET_LENGTH)
+            );
         }
         else
         {
-            setMethodName = string.Concat(METHOD_NAME_START_SET, getMethodName.AsSpan(METHOD_NAME_START_IS_LENGTH));
+            setMethodName = string.Concat(
+                METHOD_NAME_START_SET,
+                getMethodName.AsSpan(METHOD_NAME_START_IS_LENGTH)
+            );
         }
 
         if (resourceType.GetMethod(setMethodName, new[] { getMethod.ReturnType }) == null)
@@ -489,40 +564,51 @@ public sealed class ResourceShapeFactory
         }
     }
 
-    private static void ValidateUserSpecifiedOccurs(Type resourceType, MemberInfo method,
-        OslcOccurs occursAttribute)
+    private static void ValidateUserSpecifiedOccurs(
+        Type resourceType,
+        MemberInfo method,
+        OslcOccurs occursAttribute
+    )
     {
         var returnType = method switch
         {
             MethodInfo methodInfo => methodInfo.ReturnType,
             PropertyInfo propertyInfo => propertyInfo.PropertyType,
-            _ => throw new ArgumentException("Unsupported member type", nameof(method))
+            _ => throw new ArgumentException("Unsupported member type", nameof(method)),
         };
         var occurs = occursAttribute.value;
 
-        if (!IsBinaryArray(returnType) &&
-            (returnType.IsArray ||
-             InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(ICollection<>),
-                 returnType)))
+        if (
+            !IsBinaryArray(returnType)
+            && (
+                returnType.IsArray
+                || InheritedGenericInterfacesHelper.ImplementsGenericInterface(
+                    typeof(ICollection<>),
+                    returnType
+                )
+            )
+        )
         {
-            if (!Occurs.ZeroOrMany.Equals(occurs) &&
-                !Occurs.OneOrMany.Equals(occurs))
+            if (!Occurs.ZeroOrMany.Equals(occurs) && !Occurs.OneOrMany.Equals(occurs))
             {
                 throw new OslcCoreInvalidOccursException(resourceType, method, occursAttribute);
             }
         }
         else
         {
-            if (!Occurs.ZeroOrOne.Equals(occurs) &&
-                !Occurs.ExactlyOne.Equals(occurs))
+            if (!Occurs.ZeroOrOne.Equals(occurs) && !Occurs.ExactlyOne.Equals(occurs))
             {
                 throw new OslcCoreInvalidOccursException(resourceType, method, occursAttribute);
             }
         }
     }
 
-    private static void ValidateUserSpecifiedValueType(Type resourceType, MemberInfo method,
-        ValueType userSpecifiedValueType, Type componentType)
+    private static void ValidateUserSpecifiedValueType(
+        Type resourceType,
+        MemberInfo method,
+        ValueType userSpecifiedValueType,
+        Type componentType
+    )
     {
         var calculatedValueType = TYPE_TO_VALUE_TYPE[componentType];
 
@@ -533,37 +619,33 @@ public sealed class ResourceShapeFactory
         // user-specified value type is xml literal and calculated value type is string
         // or
         // user-specified value type is decimal and calculated value type is numeric
-        if (userSpecifiedValueType.Equals(calculatedValueType)
+        if (
+            userSpecifiedValueType.Equals(calculatedValueType)
+            || ValueType.LocalResource.Equals(userSpecifiedValueType)
             ||
-            ValueType.LocalResource.Equals(userSpecifiedValueType)
-            ||
+            // REVISIT: restrict AnyResource to resource-backed CLR types after existing domain annotations are audited.
             ValueType.AnyResource.Equals(userSpecifiedValueType)
-            ||
-            (ValueType.XMLLiteral.Equals(userSpecifiedValueType)
-             &&
-             ValueType.String.Equals(calculatedValueType)
+            || (
+                ValueType.XMLLiteral.Equals(userSpecifiedValueType)
+                && ValueType.String.Equals(calculatedValueType)
             )
-            ||
-            (IsStringLikeValueType(userSpecifiedValueType)
-             &&
-             ValueType.String.Equals(calculatedValueType)
+            || (
+                IsStringLikeValueType(userSpecifiedValueType)
+                && ValueType.String.Equals(calculatedValueType)
             )
-            ||
-            (IsIntegerLikeValueType(userSpecifiedValueType)
-             &&
-             IsClrIntegerValueType(calculatedValueType)
+            || (
+                IsIntegerLikeValueType(userSpecifiedValueType)
+                && IsClrIntegerValueType(calculatedValueType)
             )
-            ||
-            (IsBinaryValueType(userSpecifiedValueType)
-             &&
-             ValueType.HexBinary.Equals(calculatedValueType)
+            || (
+                IsBinaryValueType(userSpecifiedValueType)
+                && ValueType.HexBinary.Equals(calculatedValueType)
             )
-            ||
-            (ValueType.Decimal.Equals(userSpecifiedValueType)
-             &&
-             IsClrNumericValueType(calculatedValueType)
+            || (
+                ValueType.Decimal.Equals(userSpecifiedValueType)
+                && IsClrNumericValueType(calculatedValueType)
             )
-           )
+        )
         {
             // We have a valid user-specified value type for our Java type
             return;
@@ -584,53 +666,88 @@ public sealed class ResourceShapeFactory
 
     private static bool IsIntegerLikeValueType(ValueType valueType)
     {
-        return valueType is ValueType.Integer or ValueType.NegativeInteger or ValueType.NonNegativeInteger or
-            ValueType.NonPositiveInteger or ValueType.PositiveInteger;
+        return valueType
+            is ValueType.Integer
+                or ValueType.NegativeInteger
+                or ValueType.NonNegativeInteger
+                or ValueType.NonPositiveInteger
+                or ValueType.PositiveInteger;
     }
 
     private static bool IsClrIntegerValueType(ValueType valueType)
     {
-        return valueType is ValueType.Byte or ValueType.Int or ValueType.Integer or ValueType.Long or
-            ValueType.NegativeInteger or ValueType.NonNegativeInteger or ValueType.NonPositiveInteger or
-            ValueType.PositiveInteger or ValueType.Short or ValueType.UnsignedByte or ValueType.UnsignedInt or
-            ValueType.UnsignedLong or ValueType.UnsignedShort;
+        return valueType
+            is ValueType.Byte
+                or ValueType.Int
+                or ValueType.Integer
+                or ValueType.Long
+                or ValueType.NegativeInteger
+                or ValueType.NonNegativeInteger
+                or ValueType.NonPositiveInteger
+                or ValueType.PositiveInteger
+                or ValueType.Short
+                or ValueType.UnsignedByte
+                or ValueType.UnsignedInt
+                or ValueType.UnsignedLong
+                or ValueType.UnsignedShort;
     }
 
     private static bool IsClrNumericValueType(ValueType valueType)
     {
-        return IsClrIntegerValueType(valueType) ||
-            valueType is ValueType.Decimal or ValueType.Double or ValueType.Float;
+        return IsClrIntegerValueType(valueType)
+            || valueType is ValueType.Decimal or ValueType.Double or ValueType.Float;
     }
 
     private static bool IsStringLikeValueType(ValueType valueType)
     {
-        return valueType is ValueType.DayTimeDuration or ValueType.DirLangString or ValueType.Duration or
-            ValueType.GDay or ValueType.GMonth or ValueType.GMonthDay or ValueType.GYear or
-            ValueType.GYearMonth or ValueType.Html or ValueType.Json or ValueType.LangString or
-            ValueType.Language or ValueType.Name or ValueType.NCName or ValueType.Nmtoken or
-            ValueType.NormalizedString or ValueType.Token or ValueType.XMLLiteral or
-            ValueType.YearMonthDuration;
+        return valueType
+            is ValueType.DayTimeDuration
+                or ValueType.DirLangString
+                or ValueType.Duration
+                or ValueType.GDay
+                or ValueType.GMonth
+                or ValueType.GMonthDay
+                or ValueType.GYear
+                or ValueType.GYearMonth
+                or ValueType.Html
+                or ValueType.Json
+                or ValueType.LangString
+                or ValueType.Language
+                or ValueType.Name
+                or ValueType.NCName
+                or ValueType.Nmtoken
+                or ValueType.NormalizedString
+                or ValueType.Token
+                or ValueType.XMLLiteral
+                or ValueType.YearMonthDuration;
     }
 
-    private static void ValidateUserSpecifiedRepresentation(Type resourceType, MemberInfo method,
-        Representation userSpecifiedRepresentation, Type componentType)
+    private static void ValidateUserSpecifiedRepresentation(
+        Type resourceType,
+        MemberInfo method,
+        Representation userSpecifiedRepresentation,
+        Type componentType
+    )
     {
         // If user-specified representation is reference and component is not Uri
         // or
         // user-specified representation is inline and component is a standard class
-        if ((Representation.Reference.Equals(userSpecifiedRepresentation)
-             &&
-             !typeof(Uri).Equals(componentType)
+        if (
+            (
+                Representation.Reference.Equals(userSpecifiedRepresentation)
+                && !typeof(Uri).Equals(componentType)
             )
-            ||
-            (Representation.Inline.Equals(userSpecifiedRepresentation)
-             &&
-             TYPE_TO_VALUE_TYPE.ContainsKey(componentType)
+            || (
+                Representation.Inline.Equals(userSpecifiedRepresentation)
+                && TYPE_TO_VALUE_TYPE.ContainsKey(componentType)
             )
-           )
+        )
         {
-            throw new OslcCoreInvalidRepresentationException(resourceType, method,
-                userSpecifiedRepresentation);
+            throw new OslcCoreInvalidRepresentationException(
+                resourceType,
+                method,
+                userSpecifiedRepresentation
+            );
         }
     }
 }

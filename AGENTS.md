@@ -32,6 +32,10 @@ dotnet reportgenerator -reports:"**/coverage.cobertura.xml" -targetdir:"./Covera
 
 Overall, follow `misc/instructions/gov-uk-technical-content.md` and `misc/instructions/iso-house-guide.md` to guide the language style.
 
+## RDF resources
+
+Domain `Resources/*.nt` files copied from OSLC, OMG, or W3C specifications are canonical upstream files. Do not patch spelling, labels, ranges, or other vocabulary data locally unless the change is generated from an upstream update. For temporary SDK behavior, prefer code-side overrides or extensions with a `REVISIT` comment and report the source defect upstream.
+
 ## Running the code and tests
 
 When running builds or tests in this project, set the `AGENT_BUILD` environment variable to minimize build output from warnings and analyzer messages:
@@ -129,7 +133,7 @@ where `<YYYY>` is the current year **at the time you add the line**.
 Rules:
 - **New files**: include this full header:
 
-  ```
+  ```text
   /*
    * Copyright (c) <YYYY> Andrii Berezovskyi and OSLC4Net contributors.
    *
