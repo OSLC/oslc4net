@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -41,19 +42,26 @@ public sealed class ResourceShapeFactory
         // Primitive types, which are actually just aliases for objects in the
         // System namespace
         TYPE_TO_VALUE_TYPE[typeof(bool)] = ValueType.Boolean;
-        TYPE_TO_VALUE_TYPE[typeof(byte)] = ValueType.Integer;
-        TYPE_TO_VALUE_TYPE[typeof(short)] = ValueType.Integer;
-        TYPE_TO_VALUE_TYPE[typeof(int)] = ValueType.Integer;
-        TYPE_TO_VALUE_TYPE[typeof(long)] = ValueType.Integer;
+        TYPE_TO_VALUE_TYPE[typeof(byte)] = ValueType.UnsignedByte;
+        TYPE_TO_VALUE_TYPE[typeof(sbyte)] = ValueType.Byte;
+        TYPE_TO_VALUE_TYPE[typeof(short)] = ValueType.Short;
+        TYPE_TO_VALUE_TYPE[typeof(ushort)] = ValueType.UnsignedShort;
+        TYPE_TO_VALUE_TYPE[typeof(int)] = ValueType.Int;
+        TYPE_TO_VALUE_TYPE[typeof(uint)] = ValueType.UnsignedInt;
+        TYPE_TO_VALUE_TYPE[typeof(long)] = ValueType.Long;
+        TYPE_TO_VALUE_TYPE[typeof(ulong)] = ValueType.UnsignedLong;
         TYPE_TO_VALUE_TYPE[typeof(float)] = ValueType.Float;
-        TYPE_TO_VALUE_TYPE[typeof(decimal)] = ValueType.Float;
+        TYPE_TO_VALUE_TYPE[typeof(decimal)] = ValueType.Decimal;
         TYPE_TO_VALUE_TYPE[typeof(double)] = ValueType.Double;
         TYPE_TO_VALUE_TYPE[typeof(string)] = ValueType.String;
 
         // Object types
         TYPE_TO_VALUE_TYPE[typeof(BigInteger)] = ValueType.Integer;
+        TYPE_TO_VALUE_TYPE[typeof(byte[])] = ValueType.HexBinary;
+        TYPE_TO_VALUE_TYPE[typeof(DateOnly)] = ValueType.Date;
         TYPE_TO_VALUE_TYPE[typeof(DateTime)] = ValueType.DateTime;
         TYPE_TO_VALUE_TYPE[typeof(DateTimeOffset)] = ValueType.DateTime;
+        TYPE_TO_VALUE_TYPE[typeof(TimeOnly)] = ValueType.Time;
         TYPE_TO_VALUE_TYPE[typeof(Uri)] = ValueType.Resource;
         TYPE_TO_VALUE_TYPE[typeof(ICollection<Uri>)] = ValueType.Resource;
         TYPE_TO_VALUE_TYPE[typeof(IEnumerable<Uri>)] = ValueType.Resource;
@@ -416,9 +424,10 @@ public sealed class ResourceShapeFactory
 
     private static Occurs GetDefaultOccurs(Type type)
     {
-        if (type.IsArray ||
-            InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(ICollection<>),
-                type))
+        if (!IsBinaryArray(type) &&
+            (type.IsArray ||
+             InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(ICollection<>),
+                 type)))
         {
             return Occurs.ZeroOrMany;
         }
@@ -428,12 +437,18 @@ public sealed class ResourceShapeFactory
 
     private static Type GetComponentType(Type resourceType, MemberInfo method, Type type)
     {
+        if (IsBinaryArray(type))
+        {
+            return type;
+        }
+
         if (type.IsArray)
         {
             return type.GetElementType()!;
         }
 
-        if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(ICollection<>),
+        if (!IsBinaryArray(type) &&
+            InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(ICollection<>),
                 type))
         {
             var actualTypeArguments = type.GetGenericArguments();
@@ -485,9 +500,10 @@ public sealed class ResourceShapeFactory
         };
         var occurs = occursAttribute.value;
 
-        if (returnType.IsArray ||
-            InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(ICollection<>),
-                returnType))
+        if (!IsBinaryArray(returnType) &&
+            (returnType.IsArray ||
+             InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(ICollection<>),
+                 returnType)))
         {
             if (!Occurs.ZeroOrMany.Equals(occurs) &&
                 !Occurs.OneOrMany.Equals(occurs))
@@ -521,19 +537,31 @@ public sealed class ResourceShapeFactory
             ||
             ValueType.LocalResource.Equals(userSpecifiedValueType)
             ||
+            ValueType.AnyResource.Equals(userSpecifiedValueType)
+            ||
             (ValueType.XMLLiteral.Equals(userSpecifiedValueType)
              &&
              ValueType.String.Equals(calculatedValueType)
             )
             ||
+            (IsStringLikeValueType(userSpecifiedValueType)
+             &&
+             ValueType.String.Equals(calculatedValueType)
+            )
+            ||
+            (IsIntegerLikeValueType(userSpecifiedValueType)
+             &&
+             IsClrIntegerValueType(calculatedValueType)
+            )
+            ||
+            (IsBinaryValueType(userSpecifiedValueType)
+             &&
+             ValueType.HexBinary.Equals(calculatedValueType)
+            )
+            ||
             (ValueType.Decimal.Equals(userSpecifiedValueType)
              &&
-             (ValueType.Double.Equals(calculatedValueType)
-              ||
-              ValueType.Float.Equals(calculatedValueType)
-              ||
-              ValueType.Integer.Equals(calculatedValueType)
-             )
+             IsClrNumericValueType(calculatedValueType)
             )
            )
         {
@@ -542,6 +570,46 @@ public sealed class ResourceShapeFactory
         }
 
         throw new OslcCoreInvalidValueTypeException(resourceType, method, userSpecifiedValueType);
+    }
+
+    private static bool IsBinaryArray(Type type)
+    {
+        return type.Equals(typeof(byte[]));
+    }
+
+    private static bool IsBinaryValueType(ValueType valueType)
+    {
+        return valueType is ValueType.Base64Binary or ValueType.HexBinary;
+    }
+
+    private static bool IsIntegerLikeValueType(ValueType valueType)
+    {
+        return valueType is ValueType.Integer or ValueType.NegativeInteger or ValueType.NonNegativeInteger or
+            ValueType.NonPositiveInteger or ValueType.PositiveInteger;
+    }
+
+    private static bool IsClrIntegerValueType(ValueType valueType)
+    {
+        return valueType is ValueType.Byte or ValueType.Int or ValueType.Integer or ValueType.Long or
+            ValueType.NegativeInteger or ValueType.NonNegativeInteger or ValueType.NonPositiveInteger or
+            ValueType.PositiveInteger or ValueType.Short or ValueType.UnsignedByte or ValueType.UnsignedInt or
+            ValueType.UnsignedLong or ValueType.UnsignedShort;
+    }
+
+    private static bool IsClrNumericValueType(ValueType valueType)
+    {
+        return IsClrIntegerValueType(valueType) ||
+            valueType is ValueType.Decimal or ValueType.Double or ValueType.Float;
+    }
+
+    private static bool IsStringLikeValueType(ValueType valueType)
+    {
+        return valueType is ValueType.DayTimeDuration or ValueType.DirLangString or ValueType.Duration or
+            ValueType.GDay or ValueType.GMonth or ValueType.GMonthDay or ValueType.GYear or
+            ValueType.GYearMonth or ValueType.Html or ValueType.Json or ValueType.LangString or
+            ValueType.Language or ValueType.Name or ValueType.NCName or ValueType.Nmtoken or
+            ValueType.NormalizedString or ValueType.Token or ValueType.XMLLiteral or
+            ValueType.YearMonthDuration;
     }
 
     private static void ValidateUserSpecifiedRepresentation(Type resourceType, MemberInfo method,

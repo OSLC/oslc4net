@@ -7,6 +7,8 @@
   <ItemGroup>
     <AdditionalFiles Include="..\..\OSLC4Net.Domains.RequirementsManagement\Resources\vocab.nt" />
     <AdditionalFiles Include="..\..\OSLC4Net.Domains.RequirementsManagement\Resources\shapes.nt" />
+    <AdditionalFiles Include="Resources\multiplicity-vocab.nt" />
+    <AdditionalFiles Include="Resources\multiplicity-shapes.nt" />
   </ItemGroup>
 
   <ItemGroup>
