@@ -5,17 +5,16 @@ using ValueType = OSLC4Net.Core.Model.ValueType;
 namespace OSLC4Net.Domains.RequirementsManagement;
 
 [OslcNamespace(Constants.Domains.RM.NS)]
-[OslcResourceShape(title = "Requirement Resource Shape",
-    describes = [Constants.Domains.RM.Requirement])]
+[OslcResourceShape(
+    title = "Requirement Resource Shape",
+    describes = [Constants.Domains.RM.Requirement]
+)]
 public record Requirement : AbstractResourceRecord
 {
-    public Requirement(Uri about) : base(about)
-    {
-    }
+    public Requirement(Uri about)
+        : base(about) { }
 
-    public Requirement()
-    {
-    }
+    public Requirement() { }
 
     //
     // [OslcDescription("The resource type URIs.")] // Escape quotes in description
@@ -25,10 +24,12 @@ public record Requirement : AbstractResourceRecord
     // [OslcRepresentation(Representation.Reference)]
     // [OslcReadOnly(false)] // Assuming read_only property exists
     // [OslcTitle("type")] // Use prop name as fallback title
-    [Obsolete] public HashSet<Uri> Type => new(Types);
+    [Obsolete]
+    public HashSet<Uri> Type => new(Types);
 
     [OslcDescription(
-        "An identifier for a resource. This identifier may be unique with a scope that is defined by the RM provider. Assigned by the service provider when a resource is created. Not intended for end-user display.")] // Escape quotes in description
+        "An identifier for a resource. This identifier may be unique with a scope that is defined by the RM provider. Assigned by the service provider when a resource is created. Not intended for end-user display."
+    )] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrOne)]
     [OslcPropertyDefinition("http://purl.org/dc/terms/identifier")]
     [OslcName("identifier")]
@@ -38,7 +39,8 @@ public record Requirement : AbstractResourceRecord
     public string Identifier { get; set; }
 
     [OslcDescription(
-        "Title (reference: Dublin Core) of the resource represented as rich text in XHTML content. It SHOULD include only content that is valid inside an XHTML <span> element.")] // Escape quotes in description
+        "Title (reference: Dublin Core) of the resource represented as rich text in XHTML content. It SHOULD include only content that is valid inside an XHTML <span> element."
+    )] // Escape quotes in description
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition("http://purl.org/dc/terms/title")]
     [OslcName("title")]
@@ -48,7 +50,8 @@ public record Requirement : AbstractResourceRecord
     public string Title { get; set; }
 
     [OslcDescription(
-        "Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users. It SHOULD include only content that is valid inside an XHTML <span> element.")] // Escape quotes in description
+        "Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users. It SHOULD include only content that is valid inside an XHTML <span> element."
+    )] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrOne)]
     [OslcPropertyDefinition("http://open-services.net/ns/core#shortTitle")]
     [OslcName("shortTitle")]
@@ -58,7 +61,8 @@ public record Requirement : AbstractResourceRecord
     public string ShortTitle { get; set; }
 
     [OslcDescription(
-        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content. It SHOULD include only content that is valid and suitable inside an XHTML <div> element.")] // Escape quotes in description
+        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content. It SHOULD include only content that is valid and suitable inside an XHTML <div> element."
+    )] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrOne)]
     [OslcPropertyDefinition("http://purl.org/dc/terms/description")]
     [OslcName("description")]
@@ -68,7 +72,8 @@ public record Requirement : AbstractResourceRecord
     public string Description { get; set; }
 
     [OslcDescription(
-        "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")] // Escape quotes in description
+        "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource."
+    )] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://purl.org/dc/terms/subject")]
     [OslcName("subject")]
@@ -78,11 +83,11 @@ public record Requirement : AbstractResourceRecord
     public HashSet<string> Subject { get; set; }
 
     [OslcDescription(
-        "Creator(s) of resource (reference: Dublin Core). It is likely that the target resource will be an <code>foaf:Person</code> but that is not necessarily the case.")] // Escape quotes in description
+        "Creator(s) of resource (reference: Dublin Core). It is likely that the target resource will be an <code>foaf:Person</code> but that is not necessarily the case."
+    )] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://purl.org/dc/terms/creator")]
     [OslcName("creator")]
-
     // Range specified: http://open-services.net/ns/core#AnyResource - Consider adding OslcRange attribute if needed
     [OslcRepresentation(Representation.Either)]
     [OslcReadOnly(false)] // Assuming read_only property exists
@@ -90,19 +95,18 @@ public record Requirement : AbstractResourceRecord
     public HashSet<Uri> Creator { get; set; }
 
     [OslcDescription(
-        "Contributor(s) to resource (reference: Dublin Core). It is likely that the target resource will be a <code>foaf:Person</code> but that is not necessarily the case.")] // Escape quotes in description
+        "Contributor(s) to resource (reference: Dublin Core). It is likely that the target resource will be a <code>foaf:Person</code> but that is not necessarily the case."
+    )] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://purl.org/dc/terms/contributor")]
     [OslcName("contributor")]
-
     // Range specified: http://open-services.net/ns/core#AnyResource - Consider adding OslcRange attribute if needed
     [OslcRepresentation(Representation.Either)]
     [OslcReadOnly(false)] // Assuming read_only property exists
     [OslcTitle("contributor")] // Use prop name as fallback title
     public HashSet<Uri> Contributor { get; set; }
 
-    [OslcDescription(
-        "Timestamp of resource creation (reference: Dublin Core).")] // Escape quotes in description
+    [OslcDescription("Timestamp of resource creation (reference: Dublin Core).")] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrOne)]
     [OslcPropertyDefinition("http://purl.org/dc/terms/created")]
     [OslcName("created")]
@@ -111,8 +115,7 @@ public record Requirement : AbstractResourceRecord
     [OslcTitle("created")] // Use prop name as fallback title
     public DateTimeOffset? Created { get; set; }
 
-    [OslcDescription(
-        "Timestamp of last resource modification (reference: Dublin Core).")] // Escape quotes in description
+    [OslcDescription("Timestamp of last resource modification (reference: Dublin Core).")] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrOne)]
     [OslcPropertyDefinition("http://purl.org/dc/terms/modified")]
     [OslcName("modified")]
@@ -121,12 +124,10 @@ public record Requirement : AbstractResourceRecord
     [OslcTitle("modified")] // Use prop name as fallback title
     public DateTimeOffset? Modified { get; set; }
 
-    [OslcDescription(
-        "The scope of a resource is a URI for the resource's OSLC Service Provider.")] // Escape quotes in description
+    [OslcDescription("The scope of a resource is a URI for the resource's OSLC Service Provider.")] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/core#serviceProvider")]
     [OslcName("serviceProvider")]
-
     // Range specified: http://open-services.net/ns/core#ServiceProvider - Consider adding OslcRange attribute if needed
     [OslcRepresentation(Representation.Reference)]
     [OslcReadOnly(false)] // Assuming read_only property exists
@@ -134,11 +135,11 @@ public record Requirement : AbstractResourceRecord
     public HashSet<Uri> ServiceProvider { get; set; }
 
     [OslcDescription(
-        "Resource Shape that provides hints as to resource property value-types and allowed values.")] // Escape quotes in description
+        "Resource Shape that provides hints as to resource property value-types and allowed values."
+    )] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrOne)]
     [OslcPropertyDefinition("http://open-services.net/ns/core#instanceShape")]
     [OslcName("instanceShape")]
-
     // Range specified: http://open-services.net/ns/core#ResourceShape - Consider adding OslcRange attribute if needed
     [OslcRepresentation(Representation.Reference)]
     [OslcReadOnly(false)] // Assuming read_only property exists
@@ -146,11 +147,11 @@ public record Requirement : AbstractResourceRecord
     public Uri InstanceShape { get; set; }
 
     [OslcDescription(
-        "The subject is elaborated by the object. For example, a user requirement is elaborated by use case.")] // Escape quotes in description
+        "The subject is elaborated by the object. For example, a user requirement is elaborated by use case."
+    )] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#elaboratedBy")]
     [OslcName("elaboratedBy")]
-
     // Range specified: http://open-services.net/ns/core#AnyResource - Consider adding OslcRange attribute if needed
     [OslcRepresentation(Representation.Reference)]
     [OslcReadOnly(false)] // Assuming read_only property exists
@@ -161,7 +162,6 @@ public record Requirement : AbstractResourceRecord
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#elaborates")]
     [OslcName("elaborates")]
-
     // Range specified: http://open-services.net/ns/core#AnyResource - Consider adding OslcRange attribute if needed
     [OslcRepresentation(Representation.Reference)]
     [OslcReadOnly(false)] // Assuming read_only property exists
@@ -169,11 +169,11 @@ public record Requirement : AbstractResourceRecord
     public HashSet<Uri> Elaborates { get; set; }
 
     [OslcDescription(
-        "The subject is specified by the object. For example, a requirement is elaborated by a model element.")] // Escape quotes in description
+        "The subject is specified by the object. For example, a requirement is elaborated by a model element."
+    )] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#specifiedBy")]
     [OslcName("specifiedBy")]
-
     // Range specified: http://open-services.net/ns/core#AnyResource - Consider adding OslcRange attribute if needed
     [OslcRepresentation(Representation.Reference)]
     [OslcReadOnly(false)] // Assuming read_only property exists
@@ -184,55 +184,46 @@ public record Requirement : AbstractResourceRecord
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#specifies")]
     [OslcName("specifies")]
-
     // Range specified: http://open-services.net/ns/core#AnyResource - Consider adding OslcRange attribute if needed
     [OslcRepresentation(Representation.Reference)]
     [OslcReadOnly(false)] // Assuming read_only property exists
     [OslcTitle("specifies")] // Use prop name as fallback title
     public HashSet<Uri> Specifies { get; set; }
 
-    [OslcDescription(
-        "The subject is affected by the object, such as a defect or issue.")] // Escape quotes in description
+    [OslcDescription("The subject is affected by the object, such as a defect or issue.")] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#affectedBy")]
     [OslcName("affectedBy")]
-
     // Range specified: http://open-services.net/ns/core#AnyResource - Consider adding OslcRange attribute if needed
     [OslcRepresentation(Representation.Reference)]
     [OslcReadOnly(false)] // Assuming read_only property exists
     [OslcTitle("affectedBy")] // Use prop name as fallback title
     public HashSet<Uri> AffectedBy { get; set; }
 
-    [OslcDescription(
-        "Resource, such as a change request, which tracks this requirement.")] // Escape quotes in description
+    [OslcDescription("Resource, such as a change request, which tracks this requirement.")] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#trackedBy")]
     [OslcName("trackedBy")]
-
     // Range specified: http://open-services.net/ns/core#AnyResource - Consider adding OslcRange attribute if needed
     [OslcRepresentation(Representation.Reference)]
     [OslcReadOnly(false)] // Assuming read_only property exists
     [OslcTitle("trackedBy")] // Use prop name as fallback title
     public HashSet<Uri> TrackedBy { get; set; }
 
-    [OslcDescription(
-        "Resource, such as a change request, which implements this requirement.")] // Escape quotes in description
+    [OslcDescription("Resource, such as a change request, which implements this requirement.")] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#implementedBy")]
     [OslcName("implementedBy")]
-
     // Range specified: http://open-services.net/ns/core#AnyResource - Consider adding OslcRange attribute if needed
     [OslcRepresentation(Representation.Reference)]
     [OslcReadOnly(false)] // Assuming read_only property exists
     [OslcTitle("implementedBy")] // Use prop name as fallback title
     public HashSet<Uri> ImplementedBy { get; set; }
 
-    [OslcDescription(
-        "Resource, such as a test case, which validates this requirement.")] // Escape quotes in description
+    [OslcDescription("Resource, such as a test case, which validates this requirement.")] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#validatedBy")]
     [OslcName("validatedBy")]
-
     // Range specified: http://open-services.net/ns/core#AnyResource - Consider adding OslcRange attribute if needed
     [OslcRepresentation(Representation.Reference)]
     [OslcReadOnly(false)] // Assuming read_only property exists
@@ -240,11 +231,11 @@ public record Requirement : AbstractResourceRecord
     public HashSet<Uri> ValidatedBy { get; set; }
 
     [OslcDescription(
-        "The subject is satisfied by the object. For example, a user requirement is satisfied by a system requirement.")] // Escape quotes in description
+        "The subject is satisfied by the object. For example, a user requirement is satisfied by a system requirement."
+    )] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#satisfiedBy")]
     [OslcName("satisfiedBy")]
-
     // Range specified: http://open-services.net/ns/core#AnyResource - Consider adding OslcRange attribute if needed
     [OslcRepresentation(Representation.Reference)]
     [OslcReadOnly(false)] // Assuming read_only property exists
@@ -255,7 +246,6 @@ public record Requirement : AbstractResourceRecord
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#satisfies")]
     [OslcName("satisfies")]
-
     // Range specified: http://open-services.net/ns/core#AnyResource - Consider adding OslcRange attribute if needed
     [OslcRepresentation(Representation.Reference)]
     [OslcReadOnly(false)] // Assuming read_only property exists
@@ -263,11 +253,11 @@ public record Requirement : AbstractResourceRecord
     public HashSet<Uri> Satisfies { get; set; }
 
     [OslcDescription(
-        "The subject is decomposed by the object. For example, a system requirement is decomposed into a collection of system requirements.")] // Escape quotes in description
+        "The subject is decomposed by the object. For example, a system requirement is decomposed into a collection of system requirements."
+    )] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#decomposedBy")]
     [OslcName("decomposedBy")]
-
     // Range specified: http://open-services.net/ns/core#AnyResource - Consider adding OslcRange attribute if needed
     [OslcRepresentation(Representation.Reference)]
     [OslcReadOnly(false)] // Assuming read_only property exists
@@ -278,7 +268,6 @@ public record Requirement : AbstractResourceRecord
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#decomposes")]
     [OslcName("decomposes")]
-
     // Range specified: http://open-services.net/ns/core#AnyResource - Consider adding OslcRange attribute if needed
     [OslcRepresentation(Representation.Reference)]
     [OslcReadOnly(false)] // Assuming read_only property exists
@@ -286,11 +275,11 @@ public record Requirement : AbstractResourceRecord
     public HashSet<Uri> Decomposes { get; set; }
 
     [OslcDescription(
-        "The subject is constrained by the object. For example, a functional requirement is constrained by a safety requirement.")] // Escape quotes in description
+        "The subject is constrained by the object. For example, a functional requirement is constrained by a safety requirement."
+    )] // Escape quotes in description
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#constrainedBy")]
     [OslcName("constrainedBy")]
-
     // Range specified: http://open-services.net/ns/core#AnyResource - Consider adding OslcRange attribute if needed
     [OslcRepresentation(Representation.Reference)]
     [OslcReadOnly(false)] // Assuming read_only property exists
@@ -301,7 +290,6 @@ public record Requirement : AbstractResourceRecord
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("http://open-services.net/ns/rm#constrains")]
     [OslcName("constrains")]
-
     // Range specified: http://open-services.net/ns/core#AnyResource - Consider adding OslcRange attribute if needed
     [OslcRepresentation(Representation.Reference)]
     [OslcReadOnly(false)] // Assuming read_only property exists

@@ -16,6 +16,7 @@
     <File Path="TraceAndTestImpact.testsettings" />
   </Folder>
   <Folder Name="/Tests/">
+    <Project Path="Tests/OSLC4Net.CodeGen.Tests/OSLC4Net.CodeGen.Tests.csproj" />
     <Project Path="Tests/OSLC4Net.Client.Tests/OSLC4Net.Client.Tests.csproj" />
     <Project Path="Tests/OSLC4Net.Core.DotNetRdfProviderTests/OSLC4Net.Core.DotNetRdfProviderTests.csproj" />
     <Project Path="Tests/OSLC4Net.Core.QueryTests/OSLC4Net.Core.QueryTests.csproj" />
@@ -26,9 +27,11 @@
   </Folder>
   <Project Path="OSLC4Net.ChangeManagement/OSLC4Net.ChangeManagementCommon.csproj" />
   <Project Path="OSLC4Net.Client/OSLC4Net.Client.csproj" />
+  <Project Path="OSLC4Net.CodeGen/OSLC4Net.CodeGen.csproj" />
   <Project Path="OSLC4Net.Core.DotNetRdfProvider/OSLC4Net.Core.DotNetRdfProvider.csproj" />
   <Project Path="OSLC4Net.Core.Query/OSLC4Net.Core.Query.csproj" />
   <Project Path="OSLC4Net.Core/OSLC4Net.Core.csproj" />
+  <Project Path="OSLC4Net.Domains.QualityManagement/OSLC4Net.Domains.QualityManagement.csproj" />
   <Project Path="OSLC4Net.Domains.RequirementsManagement/OSLC4Net.Domains.RequirementsManagement.csproj" />
   <Project Path="OSLC4Net.Server.Providers/OSLC4Net.Server.Providers.csproj" />
 </Solution>
