@@ -25,7 +25,7 @@
 
   <ItemGroup>
     <SourceRoot Include="$(MSBuildThisFileDirectory)/" />
-    <None Include="$(SolutionDir)\..\README.md" Pack="true" PackagePath="README.md" />
+    <None Include="$(MSBuildThisFileDirectory)..\README.md" Pack="true" PackagePath="README.md" />
   </ItemGroup>
 
   <PropertyGroup>
