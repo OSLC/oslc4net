@@ -462,7 +462,10 @@ public sealed class ResourceShapeFactory
         Type componentType
     )
     {
-        var valueType = TYPE_TO_VALUE_TYPE[componentType];
+        if (!TYPE_TO_VALUE_TYPE.TryGetValue(componentType, out var valueType))
+        {
+            valueType = ValueType.Resource;
+        }
         if (valueType == ValueType.Unknown)
         {
             throw new OslcCoreInvalidPropertyTypeException(resourceType, method, componentType);
@@ -610,7 +613,10 @@ public sealed class ResourceShapeFactory
         Type componentType
     )
     {
-        var calculatedValueType = TYPE_TO_VALUE_TYPE[componentType];
+        if (!TYPE_TO_VALUE_TYPE.TryGetValue(componentType, out var calculatedValueType))
+        {
+            calculatedValueType = ValueType.Resource;
+        }
 
         // If user-specified value type matches calculated value type
         // or
