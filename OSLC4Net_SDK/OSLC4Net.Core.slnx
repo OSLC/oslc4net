@@ -38,6 +38,7 @@
   <Project Path="OSLC4Net.Domains.KerML/OSLC4Net.Domains.KerML.csproj" />
   <Project Path="OSLC4Net.Domains.QualityManagement/OSLC4Net.Domains.QualityManagement.csproj" />
   <Project Path="OSLC4Net.Domains.RequirementsManagement/OSLC4Net.Domains.RequirementsManagement.csproj" />
+  <Project Path="OSLC4Net.Domains.SPDX/OSLC4Net.Domains.SPDX.csproj" />
   <Project Path="OSLC4Net.Domains.SysMLV2/OSLC4Net.Domains.SysMLV2.csproj" />
   <Project Path="OSLC4Net.Domains.TrackedResourceSet/OSLC4Net.Domains.TrackedResourceSet.csproj" />
   <Project Path="OSLC4Net.Server.Providers/OSLC4Net.Server.Providers.csproj" />

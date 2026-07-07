@@ -22,6 +22,7 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
 {
     private const string Core = "http://open-services.net/ns/core#";
     private const string DcTerms = "http://purl.org/dc/terms/";
+    private const string Owl = "http://www.w3.org/2002/07/owl#";
     private const string Rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
     private const string Rdfs = "http://www.w3.org/2000/01/rdf-schema#";
     private const string Vann = "http://purl.org/vocab/vann/";
@@ -119,6 +120,9 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
                 string? vocabularyUri = group
                     .Select(static target => target.VocabularyUri)
                     .FirstOrDefault(static value => value is not null);
+                string? vocabularyPrefix = group
+                    .Select(static target => target.VocabularyPrefix)
+                    .FirstOrDefault(static value => value is not null);
                 string? shapeUri = group
                     .Select(static target => target.ShapeUri)
                     .FirstOrDefault(static value => value is not null);
@@ -139,6 +143,7 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
                     first.TypeName,
                     group.Any(static target => target.IsRecord),
                     vocabularyUri,
+                    vocabularyPrefix,
                     shapeUri,
                     shapeTitle,
                     selectedPropertyUris,
@@ -184,6 +189,7 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
     {
         var typeDeclaration = (TypeDeclarationSyntax)context.Node;
         string? vocabularyUri = null;
+        string? vocabularyPrefix = null;
         string? shapeUri = null;
         string? shapeTitle = null;
         var selectedProperties = new List<string>();
@@ -207,6 +213,7 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
                 )
                 {
                     vocabularyUri = value;
+                    vocabularyPrefix = GetStringArgument(attribute, 1, context.SemanticModel);
                 }
                 else if (
                     name.EndsWith("OslcShape", StringComparison.Ordinal)
@@ -284,6 +291,7 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
             typeSymbol.Name,
             typeDeclaration is RecordDeclarationSyntax,
             vocabularyUri,
+            vocabularyPrefix,
             shapeUri,
             shapeTitle,
             selectedProperties.ToImmutableArray(),
@@ -296,8 +304,17 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         SemanticModel semanticModel
     )
     {
+        return GetStringArgument(attribute, 0, semanticModel);
+    }
+
+    private static string? GetStringArgument(
+        AttributeSyntax attribute,
+        int index,
+        SemanticModel semanticModel
+    )
+    {
         ExpressionSyntax? expression = attribute
-            .ArgumentList?.Arguments.FirstOrDefault()
+            .ArgumentList?.Arguments.Skip(index).FirstOrDefault()
             ?.Expression;
         if (expression is null)
         {
@@ -355,24 +372,24 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
     {
         string namespaceUri = target.VocabularyUri!;
         string prefix =
-            FirstValue(graph.Objects(namespaceUri, Vann + "preferredNamespacePrefix")) ?? "oslc";
+            target.VocabularyPrefix
+            ?? FirstValue(graph.Objects(namespaceUri, Vann + "preferredNamespacePrefix"))
+            ?? DefaultPrefix(target.TypeName);
         List<string> classes = graph
             .Subjects(Rdf + "type", Rdfs + "Class")
-            .Where(uri =>
-                graph
-                    .Objects(uri, Rdfs + "isDefinedBy")
-                    .Any(node => string.Equals(node.Value, namespaceUri, StringComparison.Ordinal))
-            )
-            .OrderBy(LocalName, StringComparer.Ordinal)
+            .Concat(graph.Subjects(Rdf + "type", Owl + "Class"))
+            .Where(uri => IsVocabularyTerm(uri, namespaceUri, graph))
+            .Distinct(StringComparer.Ordinal)
+            .OrderBy(uri => VocabularyTermName(uri, namespaceUri), StringComparer.Ordinal)
             .ToList();
         List<string> properties = graph
             .Subjects(Rdf + "type", Rdf + "Property")
-            .Where(uri =>
-                graph
-                    .Objects(uri, Rdfs + "isDefinedBy")
-                    .Any(node => string.Equals(node.Value, namespaceUri, StringComparison.Ordinal))
-            )
-            .OrderBy(LocalName, StringComparer.Ordinal)
+            .Concat(graph.Subjects(Rdf + "type", Owl + "ObjectProperty"))
+            .Concat(graph.Subjects(Rdf + "type", Owl + "DatatypeProperty"))
+            .Concat(graph.Subjects(Rdf + "type", Owl + "AnnotationProperty"))
+            .Where(uri => IsVocabularyTerm(uri, namespaceUri, graph))
+            .Distinct(StringComparer.Ordinal)
+            .OrderBy(uri => VocabularyTermName(uri, namespaceUri), StringComparer.Ordinal)
             .ToList();
 
         var builder = new StringBuilder();
@@ -394,12 +411,13 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
 
         foreach (string uri in classes)
         {
-            string name = ToIdentifier(LocalName(uri));
+            string termName = VocabularyTermName(uri, namespaceUri);
+            string name = ToIdentifier(termName);
             builder
                 .Append("    public const string ")
                 .Append(name)
                 .Append(" = NS + ")
-                .Append(ToLiteral(LocalName(uri)))
+                .Append(ToLiteral(termName))
                 .AppendLine(";");
         }
 
@@ -417,12 +435,13 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         builder.AppendLine("    {");
         foreach (string uri in properties)
         {
-            string name = ToIdentifier(LocalName(uri));
+            string termName = VocabularyTermName(uri, namespaceUri);
+            string name = ToIdentifier(termName);
             builder
                 .Append("        public const string ")
                 .Append(name)
                 .Append(" = NS + ")
-                .Append(ToLiteral(LocalName(uri)))
+                .Append(ToLiteral(termName))
                 .AppendLine(";");
         }
 
@@ -432,12 +451,13 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         builder.AppendLine("    {");
         foreach (string uri in properties)
         {
-            string name = ToIdentifier(LocalName(uri));
+            string termName = VocabularyTermName(uri, namespaceUri);
+            string name = ToIdentifier(termName);
             builder
                 .Append("        public static QName ")
                 .Append(name)
                 .Append(" => QNameFor(")
-                .Append(ToLiteral(LocalName(uri)))
+                .Append(ToLiteral(termName))
                 .AppendLine(");");
         }
 
@@ -445,6 +465,30 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         builder.AppendLine("}");
         AppendNamespaceEnd(builder, target.Namespace);
         return builder.ToString();
+    }
+
+    private static bool IsVocabularyTerm(string uri, string namespaceUri, Graph graph)
+    {
+        return graph
+                .Objects(uri, Rdfs + "isDefinedBy")
+                .Any(node => string.Equals(node.Value, namespaceUri, StringComparison.Ordinal))
+            || uri.StartsWith(namespaceUri, StringComparison.Ordinal);
+    }
+
+    private static string VocabularyTermName(string uri, string namespaceUri)
+    {
+        return uri.StartsWith(namespaceUri, StringComparison.Ordinal)
+            ? uri.Substring(namespaceUri.Length)
+            : LocalName(uri);
+    }
+
+    private static string DefaultPrefix(string typeName)
+    {
+        const string suffix = "Vocabulary";
+        string prefix = typeName.EndsWith(suffix, StringComparison.Ordinal) && typeName.Length > suffix.Length
+            ? typeName.Substring(0, typeName.Length - suffix.Length)
+            : typeName;
+        return prefix.ToLowerInvariant();
     }
 
     private static string? GenerateShape(
@@ -1134,6 +1178,7 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
             string typeName,
             bool isRecord,
             string? vocabularyUri,
+            string? vocabularyPrefix,
             string? shapeUri,
             string? shapeTitle,
             ImmutableArray<string> selectedPropertyUris,
@@ -1144,6 +1189,7 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
             TypeName = typeName;
             IsRecord = isRecord;
             VocabularyUri = vocabularyUri;
+            VocabularyPrefix = vocabularyPrefix;
             ShapeUri = shapeUri;
             ShapeTitle = shapeTitle;
             SelectedPropertyUris = selectedPropertyUris;
@@ -1154,6 +1200,7 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         public string TypeName { get; }
         public bool IsRecord { get; }
         public string? VocabularyUri { get; }
+        public string? VocabularyPrefix { get; }
         public string? ShapeUri { get; }
         public string? ShapeTitle { get; }
         public ImmutableArray<string> SelectedPropertyUris { get; }

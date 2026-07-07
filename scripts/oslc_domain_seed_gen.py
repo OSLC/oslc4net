@@ -7,10 +7,11 @@
 """Generate the seed C# file consumed by OSLC4Net.CodeGen.
 
 Example:
-    OSLC4Net_SDK/scripts/oslc_domain_seed_gen.py \
+    scripts/oslc_domain_seed_gen.py \
         --namespace OSLC4Net.Domains.SysMLV2 \
         --vocabulary-class SysMLVocabulary \
         --vocabulary-uri https://www.omg.org/spec/sysml/vocabulary# \
+        --vocabulary-prefix sysml \
         --shapes OSLC4Net_SDK/OSLC4Net.Domains.SysMLV2/Resources/shapes.nt \
         --output OSLC4Net_SDK/OSLC4Net.Domains.SysMLV2/SysMLDomain.cs
 """
@@ -61,12 +62,13 @@ def main() -> None:
     parser.add_argument("--namespace", required=True, help="Target C# namespace.")
     parser.add_argument("--vocabulary-class", required=True, help="Name of the generated vocabulary class.")
     parser.add_argument("--vocabulary-uri", required=True, help="Vocabulary namespace URI.")
+    parser.add_argument("--vocabulary-prefix", help="Optional preferred namespace prefix.")
     parser.add_argument(
         "--shapes",
-        required=True,
         nargs="+",
         type=Path,
-        help="RDF shape files. Format is inferred from the extension.",
+        default=[],
+        help="RDF shape files. Format is inferred from the extension. Omit for a vocabulary-only domain.",
     )
     parser.add_argument("--output", type=Path, help="Output C# file. Defaults to stdout.")
     parser.add_argument(
@@ -86,6 +88,7 @@ def main() -> None:
         namespace=args.namespace,
         vocabulary_class=args.vocabulary_class,
         vocabulary_uri=args.vocabulary_uri,
+        vocabulary_prefix=args.vocabulary_prefix,
         declarations=declarations,
     )
 
@@ -127,6 +130,7 @@ def render_source(
     namespace: str,
     vocabulary_class: str,
     vocabulary_uri: str,
+    vocabulary_prefix: str | None,
     declarations: list[tuple[str, str]],
 ) -> str:
     lines = [
@@ -144,7 +148,7 @@ def render_source(
         "",
         f"namespace {namespace};",
         "",
-        f'[OslcVocabulary("{escape_csharp_string(vocabulary_uri)}")]',
+        vocabulary_attribute(vocabulary_uri, vocabulary_prefix),
         f"public static partial class {vocabulary_class};",
     ]
 
@@ -159,6 +163,15 @@ def render_source(
 
     lines.append("")
     return "\n".join(lines)
+
+
+def vocabulary_attribute(vocabulary_uri: str, vocabulary_prefix: str | None) -> str:
+    uri = escape_csharp_string(vocabulary_uri)
+    if vocabulary_prefix is None:
+        return f'[OslcVocabulary("{uri}")]'
+
+    prefix = escape_csharp_string(vocabulary_prefix)
+    return f'[OslcVocabulary("{uri}", "{prefix}")]'
 
 
 def class_suffix(resource_kind: str) -> str:

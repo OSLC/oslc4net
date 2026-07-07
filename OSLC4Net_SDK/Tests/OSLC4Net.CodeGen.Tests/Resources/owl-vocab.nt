@@ -1,0 +1,4 @@
+<https://example.test/rdf/terms/> <http://purl.org/vocab/vann/preferredNamespacePrefix> "ex" .
+<https://example.test/rdf/terms/Core/ExampleClass> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://example.test/rdf/terms/Core/relatedElement> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://example.test/rdf/terms/Core/name> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
