@@ -36,7 +36,7 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
   # NuGetDirectory: ${{ github.workspace}}/nuget
-  NuGetDirectory: '${{ github.workspace}}/nupkg_out'
+  NuGetDirectory: "${{ github.workspace}}/nupkg_out"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -116,15 +116,14 @@ jobs:
   test:
     #needs: [format]
     permissions:
-      contents: read  # for actions/checkout to fetch code
-      packages: write  # for setup-dotnet to create package
-      code-quality: write  # for actions/upload-code-coverage
+      contents: read # for actions/checkout to fetch code
+      packages: write # for setup-dotnet to create package
+      code-quality: write # for actions/upload-code-coverage
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-24.04, ubuntu-24.04-arm, windows-latest]
-        version:
-          [
+        version: [
             # { setup: "8.x", target: "net8.0" },
             # { setup: "9.x", target: "net9.0" },
             { setup: "10.x", target: "net10.0" },
@@ -208,9 +207,9 @@ jobs:
       - name: ReportGenerator
         uses: danielpalme/ReportGenerator-GitHub-Action@5.5.10
         with:
-          reports: '${{ github.workspace }}/**/TestResults/**/*.cobertura.xml'
-          targetdir: '${{ github.workspace }}/coveragereports'
-          reporttypes: 'Cobertura;MarkdownSummaryGithub'
+          reports: "${{ github.workspace }}/**/TestResults/**/*.cobertura.xml"
+          targetdir: "${{ github.workspace }}/coveragereports"
+          reporttypes: "Cobertura;MarkdownSummaryGithub"
       - name: Upload coverage into summary
         # Only on non windows runners
         if: ${{ runner.os != 'Windows' }}
@@ -221,17 +220,16 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
-          exclude: .nuget,main/OSLC4Net_SDK/Examples
-          # files: "${{ github.workspace }}/main/OSLC4Net_SDK/Tests/*/TestResults/*.coverage,${{ github.workspace }}/main/OSLC4Net_SDK/Tests/*/TestResults/*.xml"
           files: ${{ github.workspace }}/coveragereports/Cobertura.xml
+          disable_search: true
       - name: Upload coverage report to GitHub
         # Upload from a single matrix leg to avoid duplicate reports for the same SHA.
         if: matrix.os == 'ubuntu-24.04'
         uses: actions/upload-code-coverage@abb5995db9e0199b0e2bb9dbd136fce4cb1ec4d3 # v1.3.0
         with:
           file: ${{ github.workspace }}/coveragereports/Cobertura.xml
-          language: 'C#'
-          label: 'dotnet/cobertura'
+          language: "C#"
+          label: "dotnet/cobertura"
           fail-on-error: false
       - name: Pack NuGet packages (snapshot)
         shell: pwsh
