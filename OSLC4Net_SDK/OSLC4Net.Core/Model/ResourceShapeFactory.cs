@@ -651,6 +651,10 @@ public sealed class ResourceShapeFactory
                 ValueType.Decimal.Equals(userSpecifiedValueType)
                 && IsClrNumericValueType(calculatedValueType)
             )
+            || (
+                ValueType.DateTimeStamp.Equals(userSpecifiedValueType)
+                && ValueType.DateTime.Equals(calculatedValueType)
+            )
         )
         {
             // We have a valid user-specified value type for our Java type

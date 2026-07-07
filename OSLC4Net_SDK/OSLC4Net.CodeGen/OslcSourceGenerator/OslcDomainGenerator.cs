@@ -25,6 +25,7 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
     private const string Owl = "http://www.w3.org/2002/07/owl#";
     private const string Rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
     private const string Rdfs = "http://www.w3.org/2000/01/rdf-schema#";
+    private const string Sh = "http://www.w3.org/ns/shacl#";
     private const string Vann = "http://purl.org/vocab/vann/";
     private const string Xsd = "http://www.w3.org/2001/XMLSchema#";
 
@@ -680,9 +681,16 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
                     continue;
                 }
 
+                Shape baseShape = Shape.FromGraph(baseTarget.ShapeUri, graph);
                 propertyDefinitions.UnionWith(baseTarget.OverriddenPropertyUris);
+                if (shape.IsShaclNodeShape || baseShape.IsShaclNodeShape)
+                {
+                    propertyDefinitions.UnionWith(
+                        baseShape.Properties.Select(static property => property.PropertyDefinition)
+                    );
+                }
                 CollectInheritedOverriddenPropertyDefinitions(
-                    Shape.FromGraph(baseTarget.ShapeUri, graph),
+                    baseShape,
                     graph,
                     resourceTypesByUri,
                     propertyDefinitions,
@@ -1323,19 +1331,29 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
     private sealed class Shape
     {
         public string? Title { get; private set; }
+        public bool IsShaclNodeShape { get; private set; }
         public List<string> Describes { get; } = new();
         public List<ShapeProperty> Properties { get; } = new();
 
         public static Shape FromGraph(string shapeUri, Graph graph)
         {
+            bool isShaclNodeShape = graph
+                .Objects(shapeUri, Rdf + "type")
+                .Any(static node =>
+                    node.Kind == NodeKind.Uri
+                    && string.Equals(node.Value, Sh + "NodeShape", StringComparison.Ordinal)
+            );
             var shape = new Shape
             {
+                IsShaclNodeShape = isShaclNodeShape,
                 Title =
                     FirstValue(
                         graph
                             .Objects(shapeUri, DcTerms + "title")
                             .Where(static node => node.Language is null)
-                    ) ?? FirstValue(graph.Objects(shapeUri, DcTerms + "title")),
+                    )
+                    ?? FirstValue(graph.Objects(shapeUri, DcTerms + "title"))
+                    ?? FirstPlainValue(graph.Objects(shapeUri, Rdfs + "label")),
             };
 
             shape.Describes.AddRange(
@@ -1346,6 +1364,22 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
                     .Distinct(StringComparer.Ordinal)
                     .OrderBy(static value => value, StringComparer.Ordinal)
             );
+
+            if (shape.Describes.Count == 0 && isShaclNodeShape)
+            {
+                shape.Describes.AddRange(
+                    graph
+                        .Objects(shapeUri, Sh + "targetClass")
+                        .Where(static node => node.Kind == NodeKind.Uri)
+                        .Select(static node => node.Value)
+                        .Distinct(StringComparer.Ordinal)
+                        .OrderBy(static value => value, StringComparer.Ordinal)
+                );
+                if (shape.Describes.Count == 0)
+                {
+                    shape.Describes.Add(shapeUri);
+                }
+            }
 
             foreach (
                 Node propertyNode in graph
@@ -1361,10 +1395,44 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
                 }
             }
 
+            if (shape.Properties.Count == 0 && isShaclNodeShape)
+            {
+                foreach (
+                    Node propertyNode in graph
+                        .Objects(shapeUri, Sh + "property")
+                        .Distinct()
+                        .OrderBy(static node => node.Value, StringComparer.Ordinal)
+                )
+                {
+                    ShapeProperty? property = ShapeProperty.FromShaclGraph(propertyNode, graph);
+                    if (property is not null)
+                    {
+                        shape.Properties.Add(property);
+                    }
+                }
+            }
+
+            shape.DeduplicateProperties();
             shape.Properties.Sort(
                 static (left, right) => string.CompareOrdinal(left.Name, right.Name)
             );
             return shape;
+        }
+
+        private void DeduplicateProperties()
+        {
+            List<ShapeProperty> properties = Properties
+                .GroupBy(static property => property.PropertyDefinition, StringComparer.Ordinal)
+                .Select(static group =>
+                    group
+                        .OrderByDescending(static property => property.ConstraintScore)
+                        .ThenBy(static property => property.Name, StringComparer.Ordinal)
+                        .First()
+                )
+                .ToList();
+
+            Properties.Clear();
+            Properties.AddRange(properties);
         }
     }
 
@@ -1380,6 +1448,12 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         public string? Title { get; private set; }
         public string? ValueType { get; private set; }
         public List<string> Ranges { get; } = new();
+        public int ConstraintScore =>
+            (Occurs is null ? 0 : 1)
+            + (ReadOnlyText is null ? 0 : 1)
+            + (Representation is null ? 0 : 1)
+            + (ValueType is null ? 0 : 1)
+            + Ranges.Count;
 
         public static ShapeProperty? FromGraph(Node node, Graph graph)
         {
@@ -1419,6 +1493,119 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
             );
 
             return property;
+        }
+
+        public static ShapeProperty? FromShaclGraph(Node node, Graph graph)
+        {
+            string? pathUri = FirstValue(
+                graph
+                .Objects(node, Sh + "path")
+                    .Where(static node => node.Kind == NodeKind.Uri)
+            );
+            if (pathUri is null)
+            {
+                return null;
+            }
+
+            string name = FirstPlainValue(graph.Objects(node, Sh + "name")) ?? LocalName(pathUri);
+            var property = new ShapeProperty
+            {
+                Name = name,
+                PropertyDefinition = pathUri,
+                Description =
+                    FirstPlainValue(graph.Objects(node, Sh + "description"))
+                    ?? VocabularyDescription(pathUri, graph),
+                Occurs = ShaclOccurs(
+                    FirstValue(graph.Objects(node, Sh + "minCount")),
+                    FirstValue(graph.Objects(node, Sh + "maxCount"))
+                ),
+                Representation = ShaclRepresentation(
+                    FirstValue(graph.Objects(node, Sh + "nodeKind"))
+                ),
+                Title =
+                    FirstPlainValue(graph.Objects(node, Sh + "name"))
+                    ?? FirstPlainValue(graph.Objects(pathUri, Rdfs + "label"))
+                    ?? name,
+                ValueType = ShaclValueType(
+                    FirstValue(graph.Objects(node, Sh + "datatype")),
+                    FirstValue(graph.Objects(node, Sh + "nodeKind")),
+                    graph.Objects(node, Sh + "class").Any(static range => range.Kind == NodeKind.Uri)
+                ),
+            };
+
+            property.Ranges.AddRange(
+                graph
+                    .Objects(node, Sh + "class")
+                    .Where(static range => range.Kind == NodeKind.Uri)
+                    .Select(static range => range.Value)
+                    .Distinct(StringComparer.Ordinal)
+                    .OrderBy(static range => range, StringComparer.Ordinal)
+            );
+
+            return property;
+        }
+
+        private static string? ShaclOccurs(string? minCount, string? maxCount)
+        {
+            int? min = ParseShaclCount(minCount);
+            int? max = ParseShaclCount(maxCount);
+
+            if (min >= 1 && max == 1)
+            {
+                return Core + "Exactly-one";
+            }
+
+            if (min >= 1)
+            {
+                return Core + "One-or-many";
+            }
+
+            if (max == 1)
+            {
+                return Core + "Zero-or-one";
+            }
+
+            return null;
+        }
+
+        private static int? ParseShaclCount(string? value)
+        {
+            return int.TryParse(value, NumberStyles.None, CultureInfo.InvariantCulture, out int count)
+                ? count
+                : null;
+        }
+
+        private static string? ShaclValueType(
+            string? datatype,
+            string? nodeKind,
+            bool hasClassRange
+        )
+        {
+            if (!string.IsNullOrWhiteSpace(datatype))
+            {
+                return datatype;
+            }
+
+            return nodeKind switch
+            {
+                Sh + "BlankNode" => Core + "LocalResource",
+                Sh + "BlankNodeOrIRI" => Core + "AnyResource",
+                Sh + "IRI" => Core + "Resource",
+                Sh + "Literal" => Xsd + "string",
+                _ when hasClassRange => Core + "Resource",
+                _ => null,
+            };
+        }
+
+        private static string? ShaclRepresentation(string? nodeKind)
+        {
+            return nodeKind switch
+            {
+                Sh + "BlankNode" => Core + "Inline",
+                Sh + "BlankNodeOrIRI" => Core + "Either",
+                Sh + "IRI" => Core + "Reference",
+                _ => null,
+            };
         }
     }
 
