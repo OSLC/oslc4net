@@ -1,6 +1,6 @@
 ---
 name: add-oslc-domain
-description: Add or update an OSLC4Net generated domain project from RDF vocabulary and optional OSLC ResourceShape inputs. Use for OSLC4Net domain additions, generated domain seed files, vocab.nt/shapes.nt resources, converting Turtle/RDF/XML/JSON-LD RDF inputs to N-Triples, wiring the domain into OSLC4Net.Core.slnx and docfx, and validating generated vocabulary or shape code.
+description: Add or update an OSLC4Net generated domain project from RDF vocabulary and optional OSLC ResourceShape or SHACL node-shape inputs. Use for OSLC4Net domain additions, generated domain seed files, vocab.nt/shapes.nt resources, converting Turtle/RDF/XML/JSON-LD RDF inputs to N-Triples, wiring the domain into OSLC4Net.Core.slnx and docfx, and validating generated vocabulary or shape code.
 ---
 
 # Add OSLC Domain
@@ -26,7 +26,7 @@ riot --output=ntriples INPUT.ttl > OSLC4Net_SDK/OSLC4Net.Domains.NAME/Resources/
 
 Use `riot --formatted=turtle` only for human inspection. Commit the `.nt` file used by the analyzer, not an extra `.ttl` copy.
 
-4. If shapes are available, validate and convert them separately to `Resources/shapes.nt`. If the input has no `oslc:ResourceShape` triples or the user says to skip shapes, create a vocabulary-only domain and omit `shapes.nt`.
+4. If shapes are available, validate and convert them separately to `Resources/shapes.nt`. The generator supports OSLC ResourceShape triples and SHACL node shapes. If the input has neither `oslc:ResourceShape` nor `sh:NodeShape` triples, or if the user says to skip shapes, create a vocabulary-only domain and omit `shapes.nt`.
 
 5. Generate the seed declaration:
 
@@ -52,6 +52,15 @@ public static partial class SpdxSoftware;
 ```
 
 Keep the trailing slash when constants are generated as `NS + "localName"`.
+
+For SHACL-backed domains, add one `[OslcShape("SHAPE_URI")] public partial record TypeName;` declaration for each resource class to generate. Prefer the local RDF class name for the C# type, using framework-design-guideline casing for abbreviations. When SHACL does not provide `sh:targetClass`, the generator treats the node-shape IRI itself as the described RDF class. SHACL property conversion is intentionally conservative:
+
+- `sh:path` becomes `OslcPropertyDefinition` and `OslcName`
+- `sh:minCount` and `sh:maxCount` map to OSLC `Occurs` where possible
+- `sh:datatype` maps to OSLC `ValueType`
+- `sh:class` maps to `OslcRange`
+- `sh:nodeKind` maps resource-valued `ValueType` and `Representation`
+- duplicate `sh:path` constraints keep the richest constraint surface
 
 6. Add `OSLC4Net_SDK/OSLC4Net.Domains.NAME/OSLC4Net.Domains.NAME.csproj` with:
    - `TargetFramework` `net10.0`
@@ -94,7 +103,7 @@ Use Apache Jena CLI tools directly:
 - `riot --validate FILE` proves RDF syntax, not ontology consistency.
 - `riot --count FILE` confirms parseable triple count.
 - `riot --output=ntriples INPUT > output.nt` produces analyzer-ready N-Triples.
-- `arq --data=FILE --query=query.rq` inspects classes, properties, ontology URI, preferred prefix, and whether OSLC shapes exist.
+- `arq --data=FILE --query=query.rq` inspects classes, properties, ontology URI, preferred prefix, and whether OSLC or SHACL shapes exist.
 - `rdfcompare left.nt right.ttl` compares graphs structurally when checking a conversion.
 
 Useful discovery queries:
@@ -115,6 +124,15 @@ PREFIX oslc: <http://open-services.net/ns/core#>
 SELECT ?shape ?describes WHERE {
   ?shape a oslc:ResourceShape ;
          oslc:describes ?describes .
+}
+ORDER BY ?shape
+```
+
+```sparql
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+SELECT ?shape ?target WHERE {
+  ?shape a sh:NodeShape .
+  OPTIONAL { ?shape sh:targetClass ?target }
 }
 ORDER BY ?shape
 ```
