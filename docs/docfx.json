@@ -11,7 +11,6 @@
             "OSLC4Net.Core.Query/OSLC4Net.Core.Query.csproj",
             "OSLC4Net.Client/OSLC4Net.Client.csproj",
             "OSLC4Net.Server.Providers/OSLC4Net.Server.Providers.csproj",
-            "OSLC4Net.CodeGen/OSLC4Net.CodeGen.csproj",
             "OSLC4Net.Domains.ArchitectureManagement/OSLC4Net.Domains.ArchitectureManagement.csproj",
             "OSLC4Net.Domains.Automation/OSLC4Net.Domains.Automation.csproj",
             "OSLC4Net.Domains.ChangeManagement/OSLC4Net.Domains.ChangeManagement.csproj",
@@ -25,7 +24,11 @@
           ]
         }
       ],
-      "dest": "api"
+      "dest": "api",
+      "properties": {
+        "DisableOslcDomainGenerator": "true",
+        "UseCommittedGeneratedDomainSources": "true"
+      }
     }
   ],
   "build": {
