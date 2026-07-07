@@ -8,60 +8,229 @@ public static partial class SpdxCore
     public const string NS = "https://spdx.org/rdf/3/terms/Core/";
     public const string Prefix = "spdx";
 
+    /// <summary>
+    /// Class that describes an action that has occurred.
+    /// </summary>
     public const string Action = NS + "Action";
+    /// <summary>
+    /// Agent represents anything with the potential to act on a system.
+    /// </summary>
     public const string Agent = NS + "Agent";
+    /// <summary>
+    /// An assertion made in relation to one or more elements.
+    /// </summary>
     public const string Annotation = NS + "Annotation";
+    /// <summary>
+    /// Specifies the type of an annotation.
+    /// </summary>
     public const string AnnotationType = NS + "AnnotationType";
+    /// <summary>
+    /// A distinct article or unit within the domain.
+    /// </summary>
     public const string Artifact = NS + "Artifact";
+    /// <summary>
+    /// A container for a grouping of SPDX 3 content characterizing details
+    /// (provenance, composition, licensing, etc.) about a product.
+    /// </summary>
     public const string Bom = NS + "Bom";
+    /// <summary>
+    /// A collection of Elements that have a shared context.
+    /// </summary>
     public const string Bundle = NS + "Bundle";
+    /// <summary>
+    /// A contact point from an Artifact to an Agent.
+    /// </summary>
     public const string ContactPointRelationship = NS + "ContactPointRelationship";
+    /// <summary>
+    /// Information about the type of contact point for `ContactPointRelationship`s.
+    /// </summary>
     public const string ContactPointRelationshipType = NS + "ContactPointRelationshipType";
+    /// <summary>
+    /// Provides information about the creation of the Element.
+    /// </summary>
     public const string CreationInfo = NS + "CreationInfo";
+    /// <summary>
+    /// Class that describes a process.
+    /// </summary>
     public const string DefinedProcess = NS + "DefinedProcess";
+    /// <summary>
+    /// The DefinedType class associates a specific type with its defined source.
+    /// </summary>
     public const string DefinedType = NS + "DefinedType";
+    /// <summary>
+    /// A key with an associated value.
+    /// </summary>
     public const string DictionaryEntry = NS + "DictionaryEntry";
+    /// <summary>
+    /// Base domain class from which all other SPDX 3 domain classes derive.
+    /// </summary>
     public const string Element = NS + "Element";
+    /// <summary>
+    /// A collection of Elements, not necessarily with unifying context.
+    /// </summary>
     public const string ElementCollection = NS + "ElementCollection";
+    /// <summary>
+    /// A key with an Element.
+    /// </summary>
     public const string ElementMap = NS + "ElementMap";
+    /// <summary>
+    /// A reference to a resource identifier defined outside the scope of SPDX 3 content that uniquely identifies an Element.
+    /// </summary>
     public const string ExternalIdentifier = NS + "ExternalIdentifier";
+    /// <summary>
+    /// Specifies the type of an external identifier.
+    /// </summary>
     public const string ExternalIdentifierType = NS + "ExternalIdentifierType";
+    /// <summary>
+    /// A map of Element identifiers that are used within an SpdxDocument but defined
+    /// external to that SpdxDocument.
+    /// </summary>
     public const string ExternalMap = NS + "ExternalMap";
+    /// <summary>
+    /// A reference to a resource outside the scope of SPDX 3 content related to an Element.
+    /// </summary>
     public const string ExternalRef = NS + "ExternalRef";
+    /// <summary>
+    /// Specifies the type of an external reference.
+    /// </summary>
     public const string ExternalRefType = NS + "ExternalRefType";
+    /// <summary>
+    /// A mathematically calculated representation of a grouping of data.
+    /// </summary>
     public const string Hash = NS + "Hash";
+    /// <summary>
+    /// A mathematical algorithm that maps data of arbitrary size to a bit string.
+    /// </summary>
     public const string HashAlgorithm = NS + "HashAlgorithm";
+    /// <summary>
+    /// A concrete subclass of Element used by Individuals in the
+    /// Core profile.
+    /// </summary>
     public const string IndividualElement = NS + "IndividualElement";
+    /// <summary>
+    /// Provides an independently reproducible mechanism that permits verification of a specific Element.
+    /// </summary>
     public const string IntegrityMethod = NS + "IntegrityMethod";
+    /// <summary>
+    /// Defines the level of automation a system possesses.
+    /// </summary>
     public const string IsoAutomationLevel = NS + "IsoAutomationLevel";
+    /// <summary>
+    /// Provide an enumerated set of lifecycle phases that can provide context to relationships.
+    /// </summary>
     public const string LifecycleScopeType = NS + "LifecycleScopeType";
+    /// <summary>
+    /// Provide context for a relationship that occurs in the lifecycle.
+    /// </summary>
     public const string LifecycleScopedRelationship = NS + "LifecycleScopedRelationship";
+    /// <summary>
+    /// Location is used to define the location, address or coordinates of a place.
+    /// </summary>
     public const string Location = NS + "Location";
+    /// <summary>
+    /// The measure of length refers to the dimension of an object or space that describes how long it is, typically expressed in various units depending on the system of measurement being used.
+    /// </summary>
     public const string MeasureOfLength = NS + "MeasureOfLength";
+    /// <summary>
+    /// The measure of mass refers to the quantity of matter in an object or substance.
+    /// </summary>
     public const string MeasureOfMass = NS + "MeasureOfMass";
+    /// <summary>
+    /// A mapping between prefixes and namespace partial URIs.
+    /// </summary>
     public const string NamespaceMap = NS + "NamespaceMap";
+    /// <summary>
+    /// A group of people who work together in an organized way for a shared purpose.
+    /// </summary>
     public const string Organization = NS + "Organization";
+    /// <summary>
+    /// An SPDX version 2.X compatible verification method for software packages.
+    /// </summary>
     public const string PackageVerificationCode = NS + "PackageVerificationCode";
+    /// <summary>
+    /// An individual human being.
+    /// </summary>
     public const string Person = NS + "Person";
+    /// <summary>
+    /// A physical location is a tangible, geographically identifiable place where objects, people, or assets exist or operate.
+    /// </summary>
     public const string PhysicalLocation = NS + "PhysicalLocation";
+    /// <summary>
+    /// A tuple of two positive integers that define a range.
+    /// </summary>
     public const string PositiveIntegerRange = NS + "PositiveIntegerRange";
+    /// <summary>
+    /// Categories of presence or absence.
+    /// </summary>
     public const string PresenceType = NS + "PresenceType";
+    /// <summary>
+    /// The ProcessReadinessType is defined by the enumeration.
+    /// </summary>
     public const string ProcessReadinessType = NS + "ProcessReadinessType";
+    /// <summary>
+    /// Enumeration of the valid profiles.
+    /// </summary>
     public const string ProfileIdentifierType = NS + "ProfileIdentifierType";
+    /// <summary>
+    /// Regulation represents a rule or directive maintained by an authority.
+    /// </summary>
     public const string Regulation = NS + "Regulation";
+    /// <summary>
+    /// Describes a relationship between one or more elements.
+    /// </summary>
     public const string Relationship = NS + "Relationship";
+    /// <summary>
+    /// Indicates whether a relationship is known to be complete, incomplete, or if no assertion is made with respect to relationship completeness.
+    /// </summary>
     public const string RelationshipCompleteness = NS + "RelationshipCompleteness";
+    /// <summary>
+    /// Information about the relationship between two Elements.
+    /// </summary>
     public const string RelationshipType = NS + "RelationshipType";
+    /// <summary>
+    /// A distinct unit representing a requirement, as used in systems, software, and hardware engineering.
+    /// </summary>
     public const string Requirement = NS + "Requirement";
+    /// <summary>
+    /// A Role defines a specific position, function, or capacity that an entity may assume within any relevant context.
+    /// </summary>
     public const string Role = NS + "Role";
+    /// <summary>
+    /// RoleRelationship represents a relationship between an entity holding a role and the scope or context in which that role applies. The givenRole property specifies the role assigned.
+    /// </summary>
     public const string RoleRelationship = NS + "RoleRelationship";
+    /// <summary>
+    /// A software agent.
+    /// </summary>
     public const string SoftwareAgent = NS + "SoftwareAgent";
+    /// <summary>
+    /// A collection of SPDX Elements that could potentially be serialized.
+    /// </summary>
     public const string SpdxDocument = NS + "SpdxDocument";
+    /// <summary>
+    /// A specification is a detailed description of the design, requirements,
+    /// or features of a product, process, or system.
+    /// </summary>
     public const string Specification = NS + "Specification";
+    /// <summary>
+    /// A specification type defines the nature of a specification.
+    /// </summary>
     public const string SpecificationType = NS + "SpecificationType";
+    /// <summary>
+    /// Describes how an Agent provides support for an Artifact.
+    /// </summary>
     public const string SupportRelationship = NS + "SupportRelationship";
+    /// <summary>
+    /// Type of support that is associated with an artifact.
+    /// </summary>
     public const string SupportType = NS + "SupportType";
+    /// <summary>
+    /// An element of hardware and/or software utilized to carry out a particular function.
+    /// </summary>
     public const string Tool = NS + "Tool";
+    /// <summary>
+    /// UnitofMeasure specify information structures through industry standards for Units of Measure, Quantity Kinds, Dimensions and Data Types.
+    /// </summary>
     public const string UnitOfMeasure = NS + "UnitOfMeasure";
 
     public static QName QNameFor(string localResource)
@@ -71,191 +240,771 @@ public static partial class SpdxCore
 
     public static partial class P
     {
+        /// <summary>
+        /// Location of a specific action.
+        /// </summary>
         public const string ActionLocation = NS + "actionLocation";
+        /// <summary>
+        /// Additional relevance information.
+        /// </summary>
         public const string AdditionalInformation = NS + "additionalInformation";
+        /// <summary>
+        /// Specifies the algorithm used for calculating the hash value.
+        /// </summary>
         public const string Algorithm = NS + "algorithm";
+        /// <summary>
+        /// Describes the type of annotation.
+        /// </summary>
         public const string AnnotationType = NS + "annotationType";
+        /// <summary>
+        /// assignedBy identifies the agent that grants or assigns the role to the target element.
+        /// </summary>
         public const string AssignedBy = NS + "assignedBy";
+        /// <summary>
+        /// Authorization specifies the permissions, rights, privileges, or benefits granted to a Role, defining what the role is authorized to access, perform, or receive.
+        /// </summary>
         public const string Authorization = NS + "authorization";
+        /// <summary>
+        /// Defines the beginning of a range.
+        /// </summary>
         public const string BeginIntegerRange = NS + "beginIntegerRange";
+        /// <summary>
+        /// Specifies the time an artifact was built.
+        /// </summary>
         public const string BuiltTime = NS + "builtTime";
+        /// <summary>
+        /// City is a specific name used to define a locality.
+        /// </summary>
         public const string City = NS + "city";
+        /// <summary>
+        /// Provide consumers with comments by the creator of the Element about the
+        /// Element.
+        /// </summary>
         public const string Comment = NS + "comment";
+        /// <summary>
+        /// Provides information about the completeness of relationships.
+        /// </summary>
         public const string Completeness = NS + "completeness";
+        /// <summary>
+        /// Identifies the nature of the contactPointRelationship.
+        /// </summary>
         public const string ContactType = NS + "contactType";
+        /// <summary>
+        /// Provides information about the content type of an Element or a property.
+        /// </summary>
         public const string ContentType = NS + "contentType";
+        /// <summary>
+        /// Gives information about the circumstances or unifying properties
+        /// that Elements of the bundle have been assembled under.
+        /// </summary>
         public const string Context = NS + "context";
+        /// <summary>
+        /// Specifies a country code of the location.
+        /// </summary>
         public const string Country = NS + "country";
+        /// <summary>
+        /// A code that identifies a county.
+        /// </summary>
         public const string CountyCode = NS + "countyCode";
+        /// <summary>
+        /// Identifies when the Element was originally created.
+        /// </summary>
         public const string Created = NS + "created";
+        /// <summary>
+        /// Identifies who or what created the Element.
+        /// </summary>
         public const string CreatedBy = NS + "createdBy";
+        /// <summary>
+        /// Identifies the tooling that was used during the creation of the Element.
+        /// </summary>
         public const string CreatedUsing = NS + "createdUsing";
+        /// <summary>
+        /// Provides information about the creation of the Element.
+        /// </summary>
         public const string CreationInfo = NS + "creationInfo";
+        /// <summary>
+        /// Provides the license under which the SPDX documentation of the Element can be
+        /// used.
+        /// </summary>
         public const string DataLicense = NS + "dataLicense";
+        /// <summary>
+        /// Artifact representing a serialization instance of SPDX data containing the
+        /// definition of a particular Element.
+        /// </summary>
         public const string DefiningArtifact = NS + "definingArtifact";
+        /// <summary>
+        /// It is the authoritative or credible entity, document, or body of knowledge that provides the meaning of a type, ensuring accuracy, context, and standardization.
+        /// </summary>
         public const string DefinitionSource = NS + "definitionSource";
+        /// <summary>
+        /// Provides a detailed description of the Element.
+        /// </summary>
         public const string Description = NS + "description";
+        /// <summary>
+        /// The product lifecycle phase, the requirement is applicable for.
+        /// </summary>
         public const string DevLifecycleStage = NS + "devLifecycleStage";
+        /// <summary>
+        /// Refers to one or more Elements that are part of an ElementCollection.
+        /// </summary>
         public const string Element = NS + "element";
+        /// <summary>
+        /// A value used in a key-value pair with a generic key that refers to an Element
+        /// </summary>
         public const string ElementValue = NS + "elementValue";
+        /// <summary>
+        /// Defines the end of a range.
+        /// </summary>
         public const string EndIntegerRange = NS + "endIntegerRange";
+        /// <summary>
+        /// The point in time when an element or an action ends,
+        /// becomes no longer applicable, or becomes no longer valid.
+        /// </summary>
         public const string EndTime = NS + "endTime";
+        /// <summary>
+        /// Specifies an Extension characterization of some aspect of an Element.
+        /// </summary>
         public const string Extension = NS + "extension";
+        /// <summary>
+        /// Provides a reference to a resource outside the scope of SPDX 3 content
+        /// that uniquely identifies an Element.
+        /// </summary>
         public const string ExternalIdentifier = NS + "externalIdentifier";
+        /// <summary>
+        /// Specifies the type of the external identifier.
+        /// </summary>
         public const string ExternalIdentifierType = NS + "externalIdentifierType";
+        /// <summary>
+        /// Points to a resource outside the scope of the SPDX 3 content
+        /// that provides additional characteristics of an Element.
+        /// </summary>
         public const string ExternalRef = NS + "externalRef";
+        /// <summary>
+        /// Specifies the type of the external reference.
+        /// </summary>
         public const string ExternalRefType = NS + "externalRefType";
+        /// <summary>
+        /// Identifies an external Element used within an SpdxDocument but defined
+        /// external to that SpdxDocument.
+        /// </summary>
         public const string ExternalSpdxId = NS + "externalSpdxId";
+        /// <summary>
+        /// References the Element on the left-hand side of a relationship.
+        /// </summary>
         public const string From = NS + "from";
+        /// <summary>
+        /// This is a set of point coordinates as defined in by the GPS standard.
+        /// </summary>
         public const string GeographicPointLocation = NS + "geographicPointLocation";
+        /// <summary>
+        /// givenRole is a property that specifies the role being assigned in a RoleRelationship. It links the relationship to an instance of the Role class, defining the function, responsibility, or position that the source element confers upon the target element.
+        /// </summary>
         public const string GivenRole = NS + "givenRole";
+        /// <summary>
+        /// The result of applying a hash algorithm to an Element.
+        /// </summary>
         public const string HashValue = NS + "hashValue";
+        /// <summary>
+        /// The headquartersLocation defines the location of the organization's headquarters.
+        /// </summary>
         public const string HeadquartersLocation = NS + "headquartersLocation";
+        /// <summary>
+        /// Uniquely identifies an external element.
+        /// </summary>
         public const string Identifier = NS + "identifier";
+        /// <summary>
+        /// Provides the location for more information regarding an external identifier.
+        /// </summary>
         public const string IdentifierLocator = NS + "identifierLocator";
+        /// <summary>
+        /// Provides an ExternalMap of Element identifiers.
+        /// </summary>
         public const string Import = NS + "import";
+        /// <summary>
+        /// Specifies a human language used within the content of an Element or a property.
+        /// </summary>
         public const string InLanguage = NS + "inLanguage";
+        /// <summary>
+        /// The intendedUse property is designed to capture a summary of how or for what item or artifact is meant to be used for.
+        /// </summary>
         public const string IntendedUse = NS + "intendedUse";
+        /// <summary>
+        /// ISO level of automation.
+        /// </summary>
         public const string IsoAutomationLevel = NS + "isoAutomationLevel";
+        /// <summary>
+        /// An entity that is authorized to issue identification credentials.
+        /// </summary>
         public const string IssuingAuthority = NS + "issuingAuthority";
+        /// <summary>
+        /// A key used in a generic key-value pair.
+        /// </summary>
         public const string Key = NS + "key";
+        /// <summary>
+        /// Provides an indication of where to retrieve an external Element.
+        /// </summary>
         public const string LocationHint = NS + "locationHint";
+        /// <summary>
+        /// A known location is specified at this time.
+        /// </summary>
         public const string LocationTime = NS + "locationTime";
+        /// <summary>
+        /// Provides the location of an external reference.
+        /// </summary>
         public const string Locator = NS + "locator";
+        /// <summary>
+        /// Identifies the name of an Element as designated by the creator.
+        /// </summary>
         public const string Name = NS + "name";
+        /// <summary>
+        /// Provides an unambiguous mechanism for conveying a URI fragment portion of an
+        /// Element ID.
+        /// </summary>
         public const string Namespace = NS + "namespace";
+        /// <summary>
+        /// Provides a NamespaceMap of prefixes and associated namespace partial URIs applicable to an SpdxDocument and independent of any specific serialization format or instance.
+        /// </summary>
         public const string NamespaceMap = NS + "namespaceMap";
+        /// <summary>
+        /// Identifies from where or whom the Element originally came.
+        /// </summary>
         public const string OriginatedBy = NS + "originatedBy";
+        /// <summary>
+        /// The relative file name of a file to be excluded from the
+        /// `PackageVerificationCode`.
+        /// </summary>
         public const string PackageVerificationCodeExcludedFile = NS + "packageVerificationCodeExcludedFile";
+        /// <summary>
+        /// The number that identifies a PO box. A PO box is a box in a post office or other postal service location assigned to an organization where postal items may be kept.
+        /// </summary>
         public const string PostOfficeBoxNumber = NS + "postOfficeBoxNumber";
+        /// <summary>
+        /// Text specifying the postal code for an address.
+        /// </summary>
         public const string PostalCode = NS + "postalCode";
+        /// <summary>
+        /// The name of the recipient expressed in text.
+        /// </summary>
         public const string PostalName = NS + "postalName";
+        /// <summary>
+        /// A substitute for a URI.
+        /// </summary>
         public const string Prefix = NS + "prefix";
+        /// <summary>
+        /// processReadiness describes the readiness of a process.
+        /// </summary>
         public const string ProcessReadiness = NS + "processReadiness";
+        /// <summary>
+        /// Describes one a profile which the creator of this ElementCollection intends to
+        /// conform to.
+        /// </summary>
         public const string ProfileConformance = NS + "profileConformance";
+        /// <summary>
+        /// Text specifying a province or state.
+        /// </summary>
         public const string ProvinceStateCode = NS + "provinceStateCode";
+        /// <summary>
+        /// Quantity is the amount in the selected QUDT unit.
+        /// </summary>
         public const string Quantity = NS + "quantity";
+        /// <summary>
+        /// A rationale is supporting information that provides the underlying
+        /// justification or reasoning for an associated element, decision, or process.
+        /// </summary>
         public const string Rationale = NS + "rationale";
+        /// <summary>
+        /// referenceSpecification provides a reference to a DefinedType that defines the specific meaning, structure, and semantics of a Role. It connects the role to its authoritative source definition, ensuring consistent interpretation across different contexts.
+        /// </summary>
         public const string ReferenceSpecification = NS + "referenceSpecification";
+        /// <summary>
+        /// Information about the relationship between two Elements.
+        /// </summary>
         public const string RelationshipType = NS + "relationshipType";
+        /// <summary>
+        /// Specifies the time an artifact was released.
+        /// </summary>
         public const string ReleaseTime = NS + "releaseTime";
+        /// <summary>
+        /// A text describing the actual need defined by the requirement.
+        /// </summary>
         public const string RequirementStatement = NS + "requirementStatement";
+        /// <summary>
+        /// A requirementUID is a unique identifier assigned to a Requirement.
+        /// </summary>
         public const string RequirementUID = NS + "requirementUID";
+        /// <summary>
+        /// Describes the specific responsibility of a Role.
+        /// </summary>
         public const string Responsibility = NS + "responsibility";
+        /// <summary>
+        /// roleQualification specifies the requirements, criteria, or conditions that must be met for an entity to be considered qualified to fulfill a particular role.
+        /// </summary>
         public const string RoleQualification = NS + "roleQualification";
+        /// <summary>
+        /// This property is used to denote the root Element(s) of a tree of elements contained in a BOM.
+        /// </summary>
         public const string RootElement = NS + "rootElement";
+        /// <summary>
+        /// Capture the scope of information about a specific relationship between elements.
+        /// </summary>
         public const string Scope = NS + "scope";
+        /// <summary>
+        /// A specification type defines the nature of a specification.
+        /// </summary>
         public const string SpecType = NS + "specType";
+        /// <summary>
+        /// Provides a reference number that can be used to understand how to parse and
+        /// interpret an Element.
+        /// </summary>
         public const string SpecVersion = NS + "specVersion";
+        /// <summary>
+        /// The name of a relevant standard that may apply to an artifact.
+        /// </summary>
         public const string StandardName = NS + "standardName";
+        /// <summary>
+        /// The point in time when an element or an action starts,
+        /// becomes applicable, or becomes valid.
+        /// </summary>
         public const string StartTime = NS + "startTime";
+        /// <summary>
+        /// Commentary on an assertion that an annotator has made.
+        /// </summary>
         public const string Statement = NS + "statement";
+        /// <summary>
+        /// Street address includes a street number, name and unit ID to identify a specific street.
+        /// </summary>
         public const string StreetAddress = NS + "streetAddress";
+        /// <summary>
+        /// An Element an annotator has made an assertion about.
+        /// </summary>
         public const string Subject = NS + "subject";
+        /// <summary>
+        /// A short description of an Element.
+        /// </summary>
         public const string Summary = NS + "summary";
+        /// <summary>
+        /// Identifies who or what supplied the artifact or VulnAssessmentRelationship
+        /// referenced by the Element.
+        /// </summary>
         public const string SuppliedBy = NS + "suppliedBy";
+        /// <summary>
+        /// Specifies the level of support associated with an artifact.
+        /// </summary>
         public const string SupportLevel = NS + "supportLevel";
+        /// <summary>
+        /// References an Element on the right-hand side of a relationship.
+        /// </summary>
         public const string To = NS + "to";
+        /// <summary>
+        /// typeFromSource is a value used to define an item within the definitionSource.
+        /// </summary>
         public const string TypeFromSource = NS + "typeFromSource";
+        /// <summary>
+        /// QUDT unit is used for measurement criteria based on product type, region and use.
+        /// </summary>
         public const string UnitQUDT = NS + "unitQUDT";
+        /// <summary>
+        /// Specifies until when the artifact can be used before its usage needs to be
+        /// reassessed.
+        /// </summary>
         public const string ValidUntilTime = NS + "validUntilTime";
+        /// <summary>
+        /// A value used in a generic key-value pair.
+        /// </summary>
         public const string Value = NS + "value";
+        /// <summary>
+        /// Provides an IntegrityMethod with which the integrity of an Element can be
+        /// asserted.
+        /// </summary>
         public const string VerifiedUsing = NS + "verifiedUsing";
+        /// <summary>
+        /// Version string for an Element.
+        /// </summary>
         public const string Version = NS + "version";
     }
 
     public static partial class Q
     {
+        /// <summary>
+        /// Location of a specific action.
+        /// </summary>
         public static QName ActionLocation => QNameFor("actionLocation");
+        /// <summary>
+        /// Additional relevance information.
+        /// </summary>
         public static QName AdditionalInformation => QNameFor("additionalInformation");
+        /// <summary>
+        /// Specifies the algorithm used for calculating the hash value.
+        /// </summary>
         public static QName Algorithm => QNameFor("algorithm");
+        /// <summary>
+        /// Describes the type of annotation.
+        /// </summary>
         public static QName AnnotationType => QNameFor("annotationType");
+        /// <summary>
+        /// assignedBy identifies the agent that grants or assigns the role to the target element.
+        /// </summary>
         public static QName AssignedBy => QNameFor("assignedBy");
+        /// <summary>
+        /// Authorization specifies the permissions, rights, privileges, or benefits granted to a Role, defining what the role is authorized to access, perform, or receive.
+        /// </summary>
         public static QName Authorization => QNameFor("authorization");
+        /// <summary>
+        /// Defines the beginning of a range.
+        /// </summary>
         public static QName BeginIntegerRange => QNameFor("beginIntegerRange");
+        /// <summary>
+        /// Specifies the time an artifact was built.
+        /// </summary>
         public static QName BuiltTime => QNameFor("builtTime");
+        /// <summary>
+        /// City is a specific name used to define a locality.
+        /// </summary>
         public static QName City => QNameFor("city");
+        /// <summary>
+        /// Provide consumers with comments by the creator of the Element about the
+        /// Element.
+        /// </summary>
         public static QName Comment => QNameFor("comment");
+        /// <summary>
+        /// Provides information about the completeness of relationships.
+        /// </summary>
         public static QName Completeness => QNameFor("completeness");
+        /// <summary>
+        /// Identifies the nature of the contactPointRelationship.
+        /// </summary>
         public static QName ContactType => QNameFor("contactType");
+        /// <summary>
+        /// Provides information about the content type of an Element or a property.
+        /// </summary>
         public static QName ContentType => QNameFor("contentType");
+        /// <summary>
+        /// Gives information about the circumstances or unifying properties
+        /// that Elements of the bundle have been assembled under.
+        /// </summary>
         public static QName Context => QNameFor("context");
+        /// <summary>
+        /// Specifies a country code of the location.
+        /// </summary>
         public static QName Country => QNameFor("country");
+        /// <summary>
+        /// A code that identifies a county.
+        /// </summary>
         public static QName CountyCode => QNameFor("countyCode");
+        /// <summary>
+        /// Identifies when the Element was originally created.
+        /// </summary>
         public static QName Created => QNameFor("created");
+        /// <summary>
+        /// Identifies who or what created the Element.
+        /// </summary>
         public static QName CreatedBy => QNameFor("createdBy");
+        /// <summary>
+        /// Identifies the tooling that was used during the creation of the Element.
+        /// </summary>
         public static QName CreatedUsing => QNameFor("createdUsing");
+        /// <summary>
+        /// Provides information about the creation of the Element.
+        /// </summary>
         public static QName CreationInfo => QNameFor("creationInfo");
+        /// <summary>
+        /// Provides the license under which the SPDX documentation of the Element can be
+        /// used.
+        /// </summary>
         public static QName DataLicense => QNameFor("dataLicense");
+        /// <summary>
+        /// Artifact representing a serialization instance of SPDX data containing the
+        /// definition of a particular Element.
+        /// </summary>
         public static QName DefiningArtifact => QNameFor("definingArtifact");
+        /// <summary>
+        /// It is the authoritative or credible entity, document, or body of knowledge that provides the meaning of a type, ensuring accuracy, context, and standardization.
+        /// </summary>
         public static QName DefinitionSource => QNameFor("definitionSource");
+        /// <summary>
+        /// Provides a detailed description of the Element.
+        /// </summary>
         public static QName Description => QNameFor("description");
+        /// <summary>
+        /// The product lifecycle phase, the requirement is applicable for.
+        /// </summary>
         public static QName DevLifecycleStage => QNameFor("devLifecycleStage");
+        /// <summary>
+        /// Refers to one or more Elements that are part of an ElementCollection.
+        /// </summary>
         public static QName Element => QNameFor("element");
+        /// <summary>
+        /// A value used in a key-value pair with a generic key that refers to an Element
+        /// </summary>
         public static QName ElementValue => QNameFor("elementValue");
+        /// <summary>
+        /// Defines the end of a range.
+        /// </summary>
         public static QName EndIntegerRange => QNameFor("endIntegerRange");
+        /// <summary>
+        /// The point in time when an element or an action ends,
+        /// becomes no longer applicable, or becomes no longer valid.
+        /// </summary>
         public static QName EndTime => QNameFor("endTime");
+        /// <summary>
+        /// Specifies an Extension characterization of some aspect of an Element.
+        /// </summary>
         public static QName Extension => QNameFor("extension");
+        /// <summary>
+        /// Provides a reference to a resource outside the scope of SPDX 3 content
+        /// that uniquely identifies an Element.
+        /// </summary>
         public static QName ExternalIdentifier => QNameFor("externalIdentifier");
+        /// <summary>
+        /// Specifies the type of the external identifier.
+        /// </summary>
         public static QName ExternalIdentifierType => QNameFor("externalIdentifierType");
+        /// <summary>
+        /// Points to a resource outside the scope of the SPDX 3 content
+        /// that provides additional characteristics of an Element.
+        /// </summary>
         public static QName ExternalRef => QNameFor("externalRef");
+        /// <summary>
+        /// Specifies the type of the external reference.
+        /// </summary>
         public static QName ExternalRefType => QNameFor("externalRefType");
+        /// <summary>
+        /// Identifies an external Element used within an SpdxDocument but defined
+        /// external to that SpdxDocument.
+        /// </summary>
         public static QName ExternalSpdxId => QNameFor("externalSpdxId");
+        /// <summary>
+        /// References the Element on the left-hand side of a relationship.
+        /// </summary>
         public static QName From => QNameFor("from");
+        /// <summary>
+        /// This is a set of point coordinates as defined in by the GPS standard.
+        /// </summary>
         public static QName GeographicPointLocation => QNameFor("geographicPointLocation");
+        /// <summary>
+        /// givenRole is a property that specifies the role being assigned in a RoleRelationship. It links the relationship to an instance of the Role class, defining the function, responsibility, or position that the source element confers upon the target element.
+        /// </summary>
         public static QName GivenRole => QNameFor("givenRole");
+        /// <summary>
+        /// The result of applying a hash algorithm to an Element.
+        /// </summary>
         public static QName HashValue => QNameFor("hashValue");
+        /// <summary>
+        /// The headquartersLocation defines the location of the organization's headquarters.
+        /// </summary>
         public static QName HeadquartersLocation => QNameFor("headquartersLocation");
+        /// <summary>
+        /// Uniquely identifies an external element.
+        /// </summary>
         public static QName Identifier => QNameFor("identifier");
+        /// <summary>
+        /// Provides the location for more information regarding an external identifier.
+        /// </summary>
         public static QName IdentifierLocator => QNameFor("identifierLocator");
+        /// <summary>
+        /// Provides an ExternalMap of Element identifiers.
+        /// </summary>
         public static QName Import => QNameFor("import");
+        /// <summary>
+        /// Specifies a human language used within the content of an Element or a property.
+        /// </summary>
         public static QName InLanguage => QNameFor("inLanguage");
+        /// <summary>
+        /// The intendedUse property is designed to capture a summary of how or for what item or artifact is meant to be used for.
+        /// </summary>
         public static QName IntendedUse => QNameFor("intendedUse");
+        /// <summary>
+        /// ISO level of automation.
+        /// </summary>
         public static QName IsoAutomationLevel => QNameFor("isoAutomationLevel");
+        /// <summary>
+        /// An entity that is authorized to issue identification credentials.
+        /// </summary>
         public static QName IssuingAuthority => QNameFor("issuingAuthority");
+        /// <summary>
+        /// A key used in a generic key-value pair.
+        /// </summary>
         public static QName Key => QNameFor("key");
+        /// <summary>
+        /// Provides an indication of where to retrieve an external Element.
+        /// </summary>
         public static QName LocationHint => QNameFor("locationHint");
+        /// <summary>
+        /// A known location is specified at this time.
+        /// </summary>
         public static QName LocationTime => QNameFor("locationTime");
+        /// <summary>
+        /// Provides the location of an external reference.
+        /// </summary>
         public static QName Locator => QNameFor("locator");
+        /// <summary>
+        /// Identifies the name of an Element as designated by the creator.
+        /// </summary>
         public static QName Name => QNameFor("name");
+        /// <summary>
+        /// Provides an unambiguous mechanism for conveying a URI fragment portion of an
+        /// Element ID.
+        /// </summary>
         public static QName Namespace => QNameFor("namespace");
+        /// <summary>
+        /// Provides a NamespaceMap of prefixes and associated namespace partial URIs applicable to an SpdxDocument and independent of any specific serialization format or instance.
+        /// </summary>
         public static QName NamespaceMap => QNameFor("namespaceMap");
+        /// <summary>
+        /// Identifies from where or whom the Element originally came.
+        /// </summary>
         public static QName OriginatedBy => QNameFor("originatedBy");
+        /// <summary>
+        /// The relative file name of a file to be excluded from the
+        /// `PackageVerificationCode`.
+        /// </summary>
         public static QName PackageVerificationCodeExcludedFile => QNameFor("packageVerificationCodeExcludedFile");
+        /// <summary>
+        /// The number that identifies a PO box. A PO box is a box in a post office or other postal service location assigned to an organization where postal items may be kept.
+        /// </summary>
         public static QName PostOfficeBoxNumber => QNameFor("postOfficeBoxNumber");
+        /// <summary>
+        /// Text specifying the postal code for an address.
+        /// </summary>
         public static QName PostalCode => QNameFor("postalCode");
+        /// <summary>
+        /// The name of the recipient expressed in text.
+        /// </summary>
         public static QName PostalName => QNameFor("postalName");
+        /// <summary>
+        /// A substitute for a URI.
+        /// </summary>
         public static QName Prefix => QNameFor("prefix");
+        /// <summary>
+        /// processReadiness describes the readiness of a process.
+        /// </summary>
         public static QName ProcessReadiness => QNameFor("processReadiness");
+        /// <summary>
+        /// Describes one a profile which the creator of this ElementCollection intends to
+        /// conform to.
+        /// </summary>
         public static QName ProfileConformance => QNameFor("profileConformance");
+        /// <summary>
+        /// Text specifying a province or state.
+        /// </summary>
         public static QName ProvinceStateCode => QNameFor("provinceStateCode");
+        /// <summary>
+        /// Quantity is the amount in the selected QUDT unit.
+        /// </summary>
         public static QName Quantity => QNameFor("quantity");
+        /// <summary>
+        /// A rationale is supporting information that provides the underlying
+        /// justification or reasoning for an associated element, decision, or process.
+        /// </summary>
         public static QName Rationale => QNameFor("rationale");
+        /// <summary>
+        /// referenceSpecification provides a reference to a DefinedType that defines the specific meaning, structure, and semantics of a Role. It connects the role to its authoritative source definition, ensuring consistent interpretation across different contexts.
+        /// </summary>
         public static QName ReferenceSpecification => QNameFor("referenceSpecification");
+        /// <summary>
+        /// Information about the relationship between two Elements.
+        /// </summary>
         public static QName RelationshipType => QNameFor("relationshipType");
+        /// <summary>
+        /// Specifies the time an artifact was released.
+        /// </summary>
         public static QName ReleaseTime => QNameFor("releaseTime");
+        /// <summary>
+        /// A text describing the actual need defined by the requirement.
+        /// </summary>
         public static QName RequirementStatement => QNameFor("requirementStatement");
+        /// <summary>
+        /// A requirementUID is a unique identifier assigned to a Requirement.
+        /// </summary>
         public static QName RequirementUID => QNameFor("requirementUID");
+        /// <summary>
+        /// Describes the specific responsibility of a Role.
+        /// </summary>
         public static QName Responsibility => QNameFor("responsibility");
+        /// <summary>
+        /// roleQualification specifies the requirements, criteria, or conditions that must be met for an entity to be considered qualified to fulfill a particular role.
+        /// </summary>
         public static QName RoleQualification => QNameFor("roleQualification");
+        /// <summary>
+        /// This property is used to denote the root Element(s) of a tree of elements contained in a BOM.
+        /// </summary>
         public static QName RootElement => QNameFor("rootElement");
+        /// <summary>
+        /// Capture the scope of information about a specific relationship between elements.
+        /// </summary>
         public static QName Scope => QNameFor("scope");
+        /// <summary>
+        /// A specification type defines the nature of a specification.
+        /// </summary>
         public static QName SpecType => QNameFor("specType");
+        /// <summary>
+        /// Provides a reference number that can be used to understand how to parse and
+        /// interpret an Element.
+        /// </summary>
         public static QName SpecVersion => QNameFor("specVersion");
+        /// <summary>
+        /// The name of a relevant standard that may apply to an artifact.
+        /// </summary>
         public static QName StandardName => QNameFor("standardName");
+        /// <summary>
+        /// The point in time when an element or an action starts,
+        /// becomes applicable, or becomes valid.
+        /// </summary>
         public static QName StartTime => QNameFor("startTime");
+        /// <summary>
+        /// Commentary on an assertion that an annotator has made.
+        /// </summary>
         public static QName Statement => QNameFor("statement");
+        /// <summary>
+        /// Street address includes a street number, name and unit ID to identify a specific street.
+        /// </summary>
         public static QName StreetAddress => QNameFor("streetAddress");
+        /// <summary>
+        /// An Element an annotator has made an assertion about.
+        /// </summary>
         public static QName Subject => QNameFor("subject");
+        /// <summary>
+        /// A short description of an Element.
+        /// </summary>
         public static QName Summary => QNameFor("summary");
+        /// <summary>
+        /// Identifies who or what supplied the artifact or VulnAssessmentRelationship
+        /// referenced by the Element.
+        /// </summary>
         public static QName SuppliedBy => QNameFor("suppliedBy");
+        /// <summary>
+        /// Specifies the level of support associated with an artifact.
+        /// </summary>
         public static QName SupportLevel => QNameFor("supportLevel");
+        /// <summary>
+        /// References an Element on the right-hand side of a relationship.
+        /// </summary>
         public static QName To => QNameFor("to");
+        /// <summary>
+        /// typeFromSource is a value used to define an item within the definitionSource.
+        /// </summary>
         public static QName TypeFromSource => QNameFor("typeFromSource");
+        /// <summary>
+        /// QUDT unit is used for measurement criteria based on product type, region and use.
+        /// </summary>
         public static QName UnitQUDT => QNameFor("unitQUDT");
+        /// <summary>
+        /// Specifies until when the artifact can be used before its usage needs to be
+        /// reassessed.
+        /// </summary>
         public static QName ValidUntilTime => QNameFor("validUntilTime");
+        /// <summary>
+        /// A value used in a generic key-value pair.
+        /// </summary>
         public static QName Value => QNameFor("value");
+        /// <summary>
+        /// Provides an IntegrityMethod with which the integrity of an Element can be
+        /// asserted.
+        /// </summary>
         public static QName VerifiedUsing => QNameFor("verifiedUsing");
+        /// <summary>
+        /// Version string for an Element.
+        /// </summary>
         public static QName Version => QNameFor("version");
     }
 }

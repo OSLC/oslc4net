@@ -3,15 +3,33 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Domains.QualityManagement;
 
+/// <summary>
+/// All vocabulary URIs defined in the OSLC Quality Management (QM) namespace.
+/// </summary>
 public static partial class QM
 {
     public const string NS = "http://open-services.net/ns/qm#";
     public const string Prefix = "oslc_qm";
 
+    /// <summary>
+    /// The QM Test Case resource.
+    /// </summary>
     public const string TestCase = NS + "TestCase";
+    /// <summary>
+    /// The QM Test Execution Record resource.
+    /// </summary>
     public const string TestExecutionRecord = NS + "TestExecutionRecord";
+    /// <summary>
+    /// The QM Test Plan resource.
+    /// </summary>
     public const string TestPlan = NS + "TestPlan";
+    /// <summary>
+    /// The QM Test Result resource.
+    /// </summary>
     public const string TestResult = NS + "TestResult";
+    /// <summary>
+    /// The QM Test Script resource.
+    /// </summary>
     public const string TestScript = NS + "TestScript";
 
     public static QName QNameFor(string localResource)
@@ -21,41 +39,137 @@ public static partial class QM
 
     public static partial class P
     {
+        /// <summary>
+        /// Change request that affects the Test Result. It is likely that the target resource will be an oslc_cm:ChangeRequest but that is not necessarily the case.
+        /// </summary>
         public const string AffectedByChangeRequest = NS + "affectedByChangeRequest";
+        /// <summary>
+        /// Change Request that prevents execution of the Test Execution Record. It is likely that the target resource will be an oslc_cm:ChangeRequest but that is not necessarily the case.
+        /// </summary>
         public const string BlockedByChangeRequest = NS + "blockedByChangeRequest";
+        /// <summary>
+        /// Test Script executed to produce the Test Result. It is likely that the target resource will be an oslc_qm:TestScript but that is not necessarily the case.
+        /// </summary>
         public const string ExecutesTestScript = NS + "executesTestScript";
+        /// <summary>
+        /// Instructions for executing the test script. Note that the value of Occurs is undefined. The resource shape document provided by the QM service provider may be consulted for its value.
+        /// </summary>
         public const string ExecutionInstructions = NS + "executionInstructions";
+        /// <summary>
+        /// Test Execution Record that the Test Result was produced by. It is likely that the target resource will be an oslc_qm:TestExecutionRecord but that is not necessarily the case.
+        /// </summary>
         public const string ProducedByTestExecutionRecord = NS + "producedByTestExecutionRecord";
+        /// <summary>
+        /// A related change request. It is likely that the target resource will be an oslc_cm:ChangeRequest but that is not necessarily the case.
+        /// </summary>
         public const string RelatedChangeRequest = NS + "relatedChangeRequest";
+        /// <summary>
+        /// Test Case that the Test Result reports on. It is likely that the target resource will be an oslc_qm:TestCase but that is not necessarily the case.
+        /// </summary>
         public const string ReportsOnTestCase = NS + "reportsOnTestCase";
+        /// <summary>
+        /// Test Plan that a test or execution record reports on. It is likely that the target resource will be an oslc_qm:TestPlan but that is not necessarily the case.
+        /// </summary>
         public const string ReportsOnTestPlan = NS + "reportsOnTestPlan";
+        /// <summary>
+        /// Indicates the environment details of the test case for this execution record.
+        /// </summary>
         public const string RunsOnTestEnvironment = NS + "runsOnTestEnvironment";
+        /// <summary>
+        /// Test Case run by the Test Execution Record. It is likely that the target resource will be an oslc_qm:TestCase but that is not necessarily the case.
+        /// </summary>
         public const string RunsTestCase = NS + "runsTestCase";
+        /// <summary>
+        /// Used to indicate the state of the Test Result based on values defined by the service provider.
+        /// </summary>
         public const string Status = NS + "status";
+        /// <summary>
+        /// Change Request tested by the Test Case. It is likely that the target resource will be an oslc_cm:ChangeRequest but that is not necessarily the case.
+        /// </summary>
         public const string TestsChangeRequest = NS + "testsChangeRequest";
+        /// <summary>
+        /// Test Case used by the Test Plan. It is likely that the target resource will be an oslc_qm:TestCase but that is not necessarily the case.
+        /// </summary>
         public const string UsesTestCase = NS + "usesTestCase";
+        /// <summary>
+        /// Test Script used by the Test Case. It is likely that the target resource will be an oslc_qm:TestScript but that is not necessarily the case.
+        /// </summary>
         public const string UsesTestScript = NS + "usesTestScript";
+        /// <summary>
+        /// Requirement that is validated by the Test Case. It is likely that the target resource will be an oslc_rm:Requirement but that is not necessarily the case.
+        /// </summary>
         public const string ValidatesRequirement = NS + "validatesRequirement";
+        /// <summary>
+        /// Requirement Collection that is validated by the Test Plan. It is likely that the target resource will be an oslc_rm:RequirementCollection but that is not necessarily the case.
+        /// </summary>
         public const string ValidatesRequirementCollection = NS + "validatesRequirementCollection";
     }
 
     public static partial class Q
     {
+        /// <summary>
+        /// Change request that affects the Test Result. It is likely that the target resource will be an oslc_cm:ChangeRequest but that is not necessarily the case.
+        /// </summary>
         public static QName AffectedByChangeRequest => QNameFor("affectedByChangeRequest");
+        /// <summary>
+        /// Change Request that prevents execution of the Test Execution Record. It is likely that the target resource will be an oslc_cm:ChangeRequest but that is not necessarily the case.
+        /// </summary>
         public static QName BlockedByChangeRequest => QNameFor("blockedByChangeRequest");
+        /// <summary>
+        /// Test Script executed to produce the Test Result. It is likely that the target resource will be an oslc_qm:TestScript but that is not necessarily the case.
+        /// </summary>
         public static QName ExecutesTestScript => QNameFor("executesTestScript");
+        /// <summary>
+        /// Instructions for executing the test script. Note that the value of Occurs is undefined. The resource shape document provided by the QM service provider may be consulted for its value.
+        /// </summary>
         public static QName ExecutionInstructions => QNameFor("executionInstructions");
+        /// <summary>
+        /// Test Execution Record that the Test Result was produced by. It is likely that the target resource will be an oslc_qm:TestExecutionRecord but that is not necessarily the case.
+        /// </summary>
         public static QName ProducedByTestExecutionRecord => QNameFor("producedByTestExecutionRecord");
+        /// <summary>
+        /// A related change request. It is likely that the target resource will be an oslc_cm:ChangeRequest but that is not necessarily the case.
+        /// </summary>
         public static QName RelatedChangeRequest => QNameFor("relatedChangeRequest");
+        /// <summary>
+        /// Test Case that the Test Result reports on. It is likely that the target resource will be an oslc_qm:TestCase but that is not necessarily the case.
+        /// </summary>
         public static QName ReportsOnTestCase => QNameFor("reportsOnTestCase");
+        /// <summary>
+        /// Test Plan that a test or execution record reports on. It is likely that the target resource will be an oslc_qm:TestPlan but that is not necessarily the case.
+        /// </summary>
         public static QName ReportsOnTestPlan => QNameFor("reportsOnTestPlan");
+        /// <summary>
+        /// Indicates the environment details of the test case for this execution record.
+        /// </summary>
         public static QName RunsOnTestEnvironment => QNameFor("runsOnTestEnvironment");
+        /// <summary>
+        /// Test Case run by the Test Execution Record. It is likely that the target resource will be an oslc_qm:TestCase but that is not necessarily the case.
+        /// </summary>
         public static QName RunsTestCase => QNameFor("runsTestCase");
+        /// <summary>
+        /// Used to indicate the state of the Test Result based on values defined by the service provider.
+        /// </summary>
         public static QName Status => QNameFor("status");
+        /// <summary>
+        /// Change Request tested by the Test Case. It is likely that the target resource will be an oslc_cm:ChangeRequest but that is not necessarily the case.
+        /// </summary>
         public static QName TestsChangeRequest => QNameFor("testsChangeRequest");
+        /// <summary>
+        /// Test Case used by the Test Plan. It is likely that the target resource will be an oslc_qm:TestCase but that is not necessarily the case.
+        /// </summary>
         public static QName UsesTestCase => QNameFor("usesTestCase");
+        /// <summary>
+        /// Test Script used by the Test Case. It is likely that the target resource will be an oslc_qm:TestScript but that is not necessarily the case.
+        /// </summary>
         public static QName UsesTestScript => QNameFor("usesTestScript");
+        /// <summary>
+        /// Requirement that is validated by the Test Case. It is likely that the target resource will be an oslc_rm:Requirement but that is not necessarily the case.
+        /// </summary>
         public static QName ValidatesRequirement => QNameFor("validatesRequirement");
+        /// <summary>
+        /// Requirement Collection that is validated by the Test Plan. It is likely that the target resource will be an oslc_rm:RequirementCollection but that is not necessarily the case.
+        /// </summary>
         public static QName ValidatesRequirementCollection => QNameFor("validatesRequirementCollection");
     }
 }

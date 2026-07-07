@@ -8,7 +8,13 @@ public static partial class SpdxService
     public const string NS = "https://spdx.org/rdf/3/terms/Service/";
     public const string Prefix = "spdx_service";
 
+    /// <summary>
+    /// Protocols which support authentication.
+    /// </summary>
     public const string AuthenticationProtocolType = NS + "AuthenticationProtocolType";
+    /// <summary>
+    /// Software provided as a service over a network.
+    /// </summary>
     public const string SoftwareService = NS + "SoftwareService";
 
     public static QName QNameFor(string localResource)
@@ -18,15 +24,33 @@ public static partial class SpdxService
 
     public static partial class P
     {
+        /// <summary>
+        /// The provider of a SoftwareService.
+        /// </summary>
         public const string Provider = NS + "provider";
+        /// <summary>
+        /// Authentication protocol used by a server.
+        /// </summary>
         public const string ServerAuthenticationProtocol = NS + "serverAuthenticationProtocol";
+        /// <summary>
+        /// Specifies a country code where a software service is hosted.
+        /// </summary>
         public const string ServiceHostingCountry = NS + "serviceHostingCountry";
     }
 
     public static partial class Q
     {
+        /// <summary>
+        /// The provider of a SoftwareService.
+        /// </summary>
         public static QName Provider => QNameFor("provider");
+        /// <summary>
+        /// Authentication protocol used by a server.
+        /// </summary>
         public static QName ServerAuthenticationProtocol => QNameFor("serverAuthenticationProtocol");
+        /// <summary>
+        /// Specifies a country code where a software service is hosted.
+        /// </summary>
         public static QName ServiceHostingCountry => QNameFor("serviceHostingCountry");
     }
 }

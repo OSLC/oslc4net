@@ -3,12 +3,21 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Domains.RequirementsManagement;
 
+/// <summary>
+/// All vocabulary URIs defined in the OSLC Requirements Management (RM) namespace.
+/// </summary>
 public static partial class RM
 {
     public const string NS = "http://open-services.net/ns/rm#";
     public const string Prefix = "oslc_rm";
 
+    /// <summary>
+    /// Statement of need.
+    /// </summary>
     public const string Requirement = NS + "Requirement";
+    /// <summary>
+    /// Collection of requirements. A collection uses zero or more requirements.
+    /// </summary>
     public const string RequirementCollection = NS + "RequirementCollection";
 
     public static QName QNameFor(string localResource)
@@ -18,39 +27,129 @@ public static partial class RM
 
     public static partial class P
     {
+        /// <summary>
+        /// Expresses an affects relationship between entities, where the object entity in some way affects the subject entity. For example, a requirement is affected by a defect.
+        /// </summary>
         public const string AffectedBy = NS + "affectedBy";
+        /// <summary>
+        /// Expresses a constraining relationship between entities, where the object entity constrains the subject entity. For example, a functional requirement is constrained by a safety requirement.
+        /// </summary>
         public const string ConstrainedBy = NS + "constrainedBy";
+        /// <summary>
+        /// Expresses a constraining relationship between entities, where the subject entity constrains the object entity. For example, a safety requirement constrains a functional requirement.
+        /// </summary>
         public const string Constrains = NS + "constrains";
+        /// <summary>
+        /// Expresses a decomposition relationship between entities, where the object entity decomposes the subject entity. For example, a system requirement is decomposed into a collection of system requirements.
+        /// </summary>
         public const string DecomposedBy = NS + "decomposedBy";
+        /// <summary>
+        /// Expresses a decomposition relationship between entities, where the subject entity decomposes the object entity. For example, a collection of system requirements decompose a system requirement.
+        /// </summary>
         public const string Decomposes = NS + "decomposes";
+        /// <summary>
+        /// Expresses an elaboration relationship between entities, where the object entity elaborates the subject entity. For example, a requirement is elaborated by a model element.
+        /// </summary>
         public const string ElaboratedBy = NS + "elaboratedBy";
+        /// <summary>
+        /// Expresses an elaboration relationship between entities, where the subject entity elaborates the object entity. For example, a model element elaborates a requirement.
+        /// </summary>
         public const string Elaborates = NS + "elaborates";
+        /// <summary>
+        /// Expresses an implementation relationship between entities, where the object entity is a necessary or desirable aspect of an implementation of the subject entity.
+        /// </summary>
         public const string ImplementedBy = NS + "implementedBy";
+        /// <summary>
+        /// The subject is satisfied by the object. For example, a user requirement is satisfied by a system requirement.
+        /// </summary>
         public const string SatisfiedBy = NS + "satisfiedBy";
+        /// <summary>
+        /// Expresses a relationship between entities, where the subject entity satisfies the object entity. For example, a system requirement satisfies a user requirement.
+        /// </summary>
         public const string Satisfies = NS + "satisfies";
+        /// <summary>
+        /// Expresses a specification relationship between entities, where the object entity further clarifies or specifies the subject entity. For example, a requirement is specified by a model element.
+        /// </summary>
         public const string SpecifiedBy = NS + "specifiedBy";
+        /// <summary>
+        /// Expresses a specification relationship between entities, where the subject entity further clarifies or specifies the object entity. For example, a model element specifies a requirement.
+        /// </summary>
         public const string Specifies = NS + "specifies";
+        /// <summary>
+        /// Expresses a tracking relationship between entities, where the object entity in some way tracks or governs the evolution of the subject entity. For example, a requirement may be said to be tracked by a change request, in that it governs the changes to a requirement according to some process machinery.
+        /// </summary>
         public const string TrackedBy = NS + "trackedBy";
+        /// <summary>
+        /// Expresses a use relationship between entities, where the object entity is used by the subject entity. For example, a requirement collection may use a requirement.
+        /// </summary>
         public const string Uses = NS + "uses";
+        /// <summary>
+        /// Expresses a validation relationship between entities, where the object entity in some way validates the subject entity. For example, a requirement collection may be said to be validated by a test plan.
+        /// </summary>
         public const string ValidatedBy = NS + "validatedBy";
     }
 
     public static partial class Q
     {
+        /// <summary>
+        /// Expresses an affects relationship between entities, where the object entity in some way affects the subject entity. For example, a requirement is affected by a defect.
+        /// </summary>
         public static QName AffectedBy => QNameFor("affectedBy");
+        /// <summary>
+        /// Expresses a constraining relationship between entities, where the object entity constrains the subject entity. For example, a functional requirement is constrained by a safety requirement.
+        /// </summary>
         public static QName ConstrainedBy => QNameFor("constrainedBy");
+        /// <summary>
+        /// Expresses a constraining relationship between entities, where the subject entity constrains the object entity. For example, a safety requirement constrains a functional requirement.
+        /// </summary>
         public static QName Constrains => QNameFor("constrains");
+        /// <summary>
+        /// Expresses a decomposition relationship between entities, where the object entity decomposes the subject entity. For example, a system requirement is decomposed into a collection of system requirements.
+        /// </summary>
         public static QName DecomposedBy => QNameFor("decomposedBy");
+        /// <summary>
+        /// Expresses a decomposition relationship between entities, where the subject entity decomposes the object entity. For example, a collection of system requirements decompose a system requirement.
+        /// </summary>
         public static QName Decomposes => QNameFor("decomposes");
+        /// <summary>
+        /// Expresses an elaboration relationship between entities, where the object entity elaborates the subject entity. For example, a requirement is elaborated by a model element.
+        /// </summary>
         public static QName ElaboratedBy => QNameFor("elaboratedBy");
+        /// <summary>
+        /// Expresses an elaboration relationship between entities, where the subject entity elaborates the object entity. For example, a model element elaborates a requirement.
+        /// </summary>
         public static QName Elaborates => QNameFor("elaborates");
+        /// <summary>
+        /// Expresses an implementation relationship between entities, where the object entity is a necessary or desirable aspect of an implementation of the subject entity.
+        /// </summary>
         public static QName ImplementedBy => QNameFor("implementedBy");
+        /// <summary>
+        /// The subject is satisfied by the object. For example, a user requirement is satisfied by a system requirement.
+        /// </summary>
         public static QName SatisfiedBy => QNameFor("satisfiedBy");
+        /// <summary>
+        /// Expresses a relationship between entities, where the subject entity satisfies the object entity. For example, a system requirement satisfies a user requirement.
+        /// </summary>
         public static QName Satisfies => QNameFor("satisfies");
+        /// <summary>
+        /// Expresses a specification relationship between entities, where the object entity further clarifies or specifies the subject entity. For example, a requirement is specified by a model element.
+        /// </summary>
         public static QName SpecifiedBy => QNameFor("specifiedBy");
+        /// <summary>
+        /// Expresses a specification relationship between entities, where the subject entity further clarifies or specifies the object entity. For example, a model element specifies a requirement.
+        /// </summary>
         public static QName Specifies => QNameFor("specifies");
+        /// <summary>
+        /// Expresses a tracking relationship between entities, where the object entity in some way tracks or governs the evolution of the subject entity. For example, a requirement may be said to be tracked by a change request, in that it governs the changes to a requirement according to some process machinery.
+        /// </summary>
         public static QName TrackedBy => QNameFor("trackedBy");
+        /// <summary>
+        /// Expresses a use relationship between entities, where the object entity is used by the subject entity. For example, a requirement collection may use a requirement.
+        /// </summary>
         public static QName Uses => QNameFor("uses");
+        /// <summary>
+        /// Expresses a validation relationship between entities, where the object entity in some way validates the subject entity. For example, a requirement collection may be said to be validated by a test plan.
+        /// </summary>
         public static QName ValidatedBy => QNameFor("validatedBy");
     }
 }

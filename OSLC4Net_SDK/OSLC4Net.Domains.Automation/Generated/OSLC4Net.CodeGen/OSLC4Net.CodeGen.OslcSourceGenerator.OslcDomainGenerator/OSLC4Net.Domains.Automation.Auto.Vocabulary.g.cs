@@ -3,16 +3,37 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Domains.Automation;
 
+/// <summary>
+/// All vocabulary URIs defined in the OSLC Automation namespace.
+/// </summary>
 public static partial class Auto
 {
     public const string NS = "http://open-services.net/ns/auto#";
     public const string Prefix = "oslc_auto";
 
+    /// <summary>
+    /// The Automation Plan resource.
+    /// </summary>
     public const string AutomationPlan = NS + "AutomationPlan";
+    /// <summary>
+    /// The Automation Request resource.
+    /// </summary>
     public const string AutomationRequest = NS + "AutomationRequest";
+    /// <summary>
+    /// The Automation Result resource.
+    /// </summary>
     public const string AutomationResult = NS + "AutomationResult";
+    /// <summary>
+    /// The Automation Parameter Instance resource.
+    /// </summary>
     public const string ParameterInstance = NS + "ParameterInstance";
+    /// <summary>
+    /// Defines the possible oslc_auto:state property values.
+    /// </summary>
     public const string State = NS + "State";
+    /// <summary>
+    /// Defines the possible oslc_auto:verdict property values.
+    /// </summary>
     public const string Verdict = NS + "Verdict";
 
     public static QName QNameFor(string localResource)
@@ -22,37 +43,127 @@ public static partial class Auto
 
     public static partial class P
     {
+        /// <summary>
+        /// A resource providing instructions that a client can follow to immediately execute the action, when the client is ready to do so. In this context (a deferred execution creation dialog), each binding is likely to be an immediate-execution binding, used during the execution phase of the deferred execution dialog interaction pattern.
+        /// </summary>
         public const string Binding = NS + "binding";
+        /// <summary>
+        /// A result contribution associated with this automation result. It is recommended that the  contribution be an inline resource which can be retrieved with the automation result. The recommended  attributes beyond the contribution itself are dcterms:title, dcterms:description and dcterms:type to  provide a description of the contribution which would be appropriate for display in a simple UI for   an automation result.
+        /// </summary>
         public const string Contribution = NS + "contribution";
+        /// <summary>
+        /// Used to indicate the desired state of the automation request based on values defined  by the service provider.
+        /// </summary>
         public const string DesiredState = NS + "desiredState";
+        /// <summary>
+        /// Automation Plan run by the Automation Request. It is likely that the target resource will be an  oslc_auto:AutomationPlan but that is not necessarily the case.
+        /// </summary>
         public const string ExecutesAutomationPlan = NS + "executesAutomationPlan";
+        /// <summary>
+        /// A resource representing actions that will become available on Automation Results that result from execution of this Plan. The resource is likely to be of type oslc:Action,
+        /// but it can be of any type. Automation defines oslc_auto:TeardownAction as one kind of future action.
+        /// </summary>
         public const string FutureAction = NS + "futureAction";
+        /// <summary>
+        /// Parameters provided when Automation Requests are created. These include parameters provided  by the creator of the Automation Request (whether by delegated UI or HTTP POST) and MAY include  additional parameters added by the service provider during Automation Request creation. See the  definition of the oslc_auto:parameterDefinition attribute of the Automation Plan for additional guidance  on determining which parameters are required. Creators of Automation Requests MAY provide parameters beyond  those defined in the Automation Plan without guarantee the service provider will recognize or honor them.  It is expected that this attribute is write-able on Automation Request creation and read-only thereafter.
+        /// </summary>
         public const string InputParameter = NS + "inputParameter";
+        /// <summary>
+        /// Automation Result output parameters are parameters associated with the result other than the oslc_auto:inputParameter resources. These could be parameters added during automation execution by the service provider or external agents. They could also be copies of input parameters with values changed during execution.
+        /// </summary>
         public const string OutputParameter = NS + "outputParameter";
+        /// <summary>
+        /// The definition of a parameter for this Automation Plan. parameterDefinitions are either a local (inline) or referenced resource and use the attributes (the range) of the oslc:Property resource with one exception. When used in the context of an oslc_auto:parameterDefinition, the  cardinality of oslc:propertyDefinition becomes zero-or-one instead of exactly-one. Automation consumers  creating Automation Requests MUST use the oslc:occurs attribute of the parameterDefinition, if  present, to determine if a given parameter is required when creating the Automation Request.  If the oslc:occurs attribute indicates the parameter is required (exactly-one or one-or-more), the  service provider must guarantee the named parameter will be present in the Automation Result either  as an oslc_auto:inputParmeter when unmodified during execution, or as an oslc_auto:outputParameter  when modified during execution.
+        /// </summary>
         public const string ParameterDefinition = NS + "parameterDefinition";
+        /// <summary>
+        /// Automation Request which produced the Automation Result. It is likely that the target resource will be an oslc_auto:AutomationResult but that is not necessarily the case.
+        /// </summary>
         public const string ProducedByAutomationRequest = NS + "producedByAutomationRequest";
+        /// <summary>
+        /// A percentage (0-100) of completion.
+        /// </summary>
         public const string Progress = NS + "progress";
+        /// <summary>
+        /// Automation Plan which the Automation Result reports on. It is likely that the target resource
+        /// will be an oslc_auto:AutomationPlan but that is not necessarily the case.
+        /// </summary>
         public const string ReportsOnAutomationPlan = NS + "reportsOnAutomationPlan";
+        /// <summary>
+        /// Used to indicate the state of the automation request based on values defined  by the service provider. Most often a read-only property. It is expected that this will  be a resource reference to a definition of a valid automation request state on the service provider.
+        /// </summary>
         public const string State = NS + "state";
+        /// <summary>
+        /// A resource representing the environment(s) which this Automation Plan can be executed in. The execution environment resource could represent a grouping of
+        /// environmental details such as operating system, database, browser, compiler, etc. See also the execution environments section.
+        /// </summary>
         public const string UsesExecutionEnvironment = NS + "usesExecutionEnvironment";
+        /// <summary>
+        /// Used to indicate the verdict of the automation result based on values defined by the service provider. Most often a read-only property. It is expected that this will be a resource reference to a   definition of a valid automation result verdict on the service provider.
+        /// </summary>
         public const string Verdict = NS + "verdict";
     }
 
     public static partial class Q
     {
+        /// <summary>
+        /// A resource providing instructions that a client can follow to immediately execute the action, when the client is ready to do so. In this context (a deferred execution creation dialog), each binding is likely to be an immediate-execution binding, used during the execution phase of the deferred execution dialog interaction pattern.
+        /// </summary>
         public static QName Binding => QNameFor("binding");
+        /// <summary>
+        /// A result contribution associated with this automation result. It is recommended that the  contribution be an inline resource which can be retrieved with the automation result. The recommended  attributes beyond the contribution itself are dcterms:title, dcterms:description and dcterms:type to  provide a description of the contribution which would be appropriate for display in a simple UI for   an automation result.
+        /// </summary>
         public static QName Contribution => QNameFor("contribution");
+        /// <summary>
+        /// Used to indicate the desired state of the automation request based on values defined  by the service provider.
+        /// </summary>
         public static QName DesiredState => QNameFor("desiredState");
+        /// <summary>
+        /// Automation Plan run by the Automation Request. It is likely that the target resource will be an  oslc_auto:AutomationPlan but that is not necessarily the case.
+        /// </summary>
         public static QName ExecutesAutomationPlan => QNameFor("executesAutomationPlan");
+        /// <summary>
+        /// A resource representing actions that will become available on Automation Results that result from execution of this Plan. The resource is likely to be of type oslc:Action,
+        /// but it can be of any type. Automation defines oslc_auto:TeardownAction as one kind of future action.
+        /// </summary>
         public static QName FutureAction => QNameFor("futureAction");
+        /// <summary>
+        /// Parameters provided when Automation Requests are created. These include parameters provided  by the creator of the Automation Request (whether by delegated UI or HTTP POST) and MAY include  additional parameters added by the service provider during Automation Request creation. See the  definition of the oslc_auto:parameterDefinition attribute of the Automation Plan for additional guidance  on determining which parameters are required. Creators of Automation Requests MAY provide parameters beyond  those defined in the Automation Plan without guarantee the service provider will recognize or honor them.  It is expected that this attribute is write-able on Automation Request creation and read-only thereafter.
+        /// </summary>
         public static QName InputParameter => QNameFor("inputParameter");
+        /// <summary>
+        /// Automation Result output parameters are parameters associated with the result other than the oslc_auto:inputParameter resources. These could be parameters added during automation execution by the service provider or external agents. They could also be copies of input parameters with values changed during execution.
+        /// </summary>
         public static QName OutputParameter => QNameFor("outputParameter");
+        /// <summary>
+        /// The definition of a parameter for this Automation Plan. parameterDefinitions are either a local (inline) or referenced resource and use the attributes (the range) of the oslc:Property resource with one exception. When used in the context of an oslc_auto:parameterDefinition, the  cardinality of oslc:propertyDefinition becomes zero-or-one instead of exactly-one. Automation consumers  creating Automation Requests MUST use the oslc:occurs attribute of the parameterDefinition, if  present, to determine if a given parameter is required when creating the Automation Request.  If the oslc:occurs attribute indicates the parameter is required (exactly-one or one-or-more), the  service provider must guarantee the named parameter will be present in the Automation Result either  as an oslc_auto:inputParmeter when unmodified during execution, or as an oslc_auto:outputParameter  when modified during execution.
+        /// </summary>
         public static QName ParameterDefinition => QNameFor("parameterDefinition");
+        /// <summary>
+        /// Automation Request which produced the Automation Result. It is likely that the target resource will be an oslc_auto:AutomationResult but that is not necessarily the case.
+        /// </summary>
         public static QName ProducedByAutomationRequest => QNameFor("producedByAutomationRequest");
+        /// <summary>
+        /// A percentage (0-100) of completion.
+        /// </summary>
         public static QName Progress => QNameFor("progress");
+        /// <summary>
+        /// Automation Plan which the Automation Result reports on. It is likely that the target resource
+        /// will be an oslc_auto:AutomationPlan but that is not necessarily the case.
+        /// </summary>
         public static QName ReportsOnAutomationPlan => QNameFor("reportsOnAutomationPlan");
+        /// <summary>
+        /// Used to indicate the state of the automation request based on values defined  by the service provider. Most often a read-only property. It is expected that this will  be a resource reference to a definition of a valid automation request state on the service provider.
+        /// </summary>
         public static QName State => QNameFor("state");
+        /// <summary>
+        /// A resource representing the environment(s) which this Automation Plan can be executed in. The execution environment resource could represent a grouping of
+        /// environmental details such as operating system, database, browser, compiler, etc. See also the execution environments section.
+        /// </summary>
         public static QName UsesExecutionEnvironment => QNameFor("usesExecutionEnvironment");
+        /// <summary>
+        /// Used to indicate the verdict of the automation result based on values defined by the service provider. Most often a read-only property. It is expected that this will be a resource reference to a   definition of a valid automation result verdict on the service provider.
+        /// </summary>
         public static QName Verdict => QNameFor("verdict");
     }
 }
