@@ -3,192 +3,745 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Domains.SysMLV2;
 
+/// <summary>
+/// All vocabulary URIs defined in the OSLC SysML v2 namespace.
+/// </summary>
 public static partial class SysMLVocabulary
 {
     public const string NS = "https://www.omg.org/spec/sysml/vocabulary#";
     public const string Prefix = "oslc_sysml";
 
+    /// <summary>
+    /// An AcceptActionUsage is an ActionUsage that specifies the acceptance of an incomingTransfer from the Occurrence given by the result of its receiverArgument Expression. (If no receiverArgument is provided, the default is the this context of the AcceptActionUsage.) The payload of the accepted Transfer is output on its payloadParameter. Which Transfers may be accepted is determined by conformance to the typing and (potentially) binding of the payloadParameter.
+    /// </summary>
     public const string AcceptActionUsage = NS + "AcceptActionUsage";
+    /// <summary>
+    /// An ActionDefinition is a Definition that is also a Behavior that defines an Action performed by a system or part of a system.
+    /// </summary>
     public const string ActionDefinition = NS + "ActionDefinition";
+    /// <summary>
+    /// An ActionUsage is a Usage that is also a Step, and, so, is typed by a Behavior. Nominally, if the type is an ActionDefinition, an ActionUsage is a Usage of that ActionDefinition within a system. However, other kinds of kernel Behaviors are also allowed, to permit use of Behaviors from the Kernel Model Libraries.
+    /// </summary>
     public const string ActionUsage = NS + "ActionUsage";
+    /// <summary>
+    /// An ActorMembership is a ParameterMembership that identifies a PartUsage as an actor parameter, which specifies a role played by an external entity in interaction with the owningType of the ActorMembership.
+    /// </summary>
     public const string ActorMembership = NS + "ActorMembership";
+    /// <summary>
+    /// An AllocationDefinition is a ConnectionDefinition that specifies that some or all of the responsibility to realize the intent of the source is allocated to the target instances. Such allocations define mappings across the various structures and hierarchies of a system model, perhaps as a precursor to more rigorous specifications and implementations. An AllocationDefinition can itself be refined using nested allocations that give a finer-grained decomposition of the containing allocation mapping.
+    /// </summary>
     public const string AllocationDefinition = NS + "AllocationDefinition";
+    /// <summary>
+    /// An AllocationUsage is a usage of an AllocationDefinition asserting the allocation of the source feature to the target feature.
+    /// </summary>
     public const string AllocationUsage = NS + "AllocationUsage";
+    /// <summary>
+    /// An AnalysisCaseDefinition is a CaseDefinition for the case of carrying out an analysis.
+    /// </summary>
     public const string AnalysisCaseDefinition = NS + "AnalysisCaseDefinition";
+    /// <summary>
+    /// An AnalysisCaseUsage is a Usage of an AnalysisCaseDefinition.
+    /// </summary>
     public const string AnalysisCaseUsage = NS + "AnalysisCaseUsage";
+    /// <summary>
+    /// An AnnotatingElement is an Element that provides additional description of or metadata on some other Element. An AnnotatingElement is either attached to its annotatedElements by Annotation Relationships, or it implicitly annotates its owningNamespace.
+    /// </summary>
     public const string AnnotatingElement = NS + "AnnotatingElement";
+    /// <summary>
+    /// An Annotation is a Relationship between an AnnotatingElement and the Element that is annotated by that AnnotatingElement.
+    /// </summary>
     public const string Annotation = NS + "Annotation";
+    /// <summary>
+    /// An AssertConstraintUsage is a ConstraintUsage that is also an Invariant and, so, is asserted to be true (by default). Unless it is the AssertConstraintUsage itself, the asserted ConstraintUsage is related to the AssertConstraintUsage by a ReferenceSubsetting Relationship.
+    /// </summary>
     public const string AssertConstraintUsage = NS + "AssertConstraintUsage";
+    /// <summary>
+    /// An AssignmentActionUsage is an ActionUsage that is defined, directly or indirectly, by the ActionDefinition AssignmentAction from the Systems Model Library. It specifies that the value of the referent Feature, relative to the target given by the result of the targetArgument Expression, should be set to the result of the valueExpression.
+    /// </summary>
     public const string AssignmentActionUsage = NS + "AssignmentActionUsage";
+    /// <summary>
+    /// An Association is a Relationship and a Classifier to enable classification of links between things (in the universe). The co-domains (types) of the associationEnd Features are the relatedTypes, as co-domain and participants (linked things) of an Association identify each other.
+    /// </summary>
     public const string Association = NS + "Association";
+    /// <summary>
+    /// An AssociationStructure is an Association that is also a Structure, classifying link objects that are both links and objects. As objects, link objects can be created and destroyed, and their non-end Features can change over time. However, the values of the end Features of a link object are fixed and cannot change over its lifetime.
+    /// </summary>
     public const string AssociationStructure = NS + "AssociationStructure";
+    /// <summary>
+    /// An AttributeDefinition is a Definition and a DataType of information about a quality or characteristic of a system or part of a system that has no independent identity other than its value. All features of an AttributeDefinition must be referential (non-composite).
+    /// </summary>
     public const string AttributeDefinition = NS + "AttributeDefinition";
+    /// <summary>
+    /// An AttributeUsage is a Usage whose type is a DataType. Nominally, if the type is an AttributeDefinition, an AttributeUsage is a usage of a AttributeDefinition to represent the value of some system quality or characteristic. However, other kinds of kernel DataTypes are also allowed, to permit use of DataTypes from the Kernel Model Libraries. An AttributeUsage itself as well as all its nested features must be referential (non-composite).
+    /// </summary>
     public const string AttributeUsage = NS + "AttributeUsage";
+    /// <summary>
+    /// A Behavior coordinates occurrences of other Behaviors, as well as changes in objects. Behaviors can be decomposed into Steps and be characterized by parameters.
+    /// </summary>
     public const string Behavior = NS + "Behavior";
+    /// <summary>
+    /// A BindingConnector is a binary Connector that requires its relatedFeatures to identify the same things (have the same values).
+    /// </summary>
     public const string BindingConnector = NS + "BindingConnector";
+    /// <summary>
+    /// A BindingConnectorAsUsage is both a BindingConnector and a ConnectorAsUsage.
+    /// </summary>
     public const string BindingConnectorAsUsage = NS + "BindingConnectorAsUsage";
+    /// <summary>
+    /// A BooleanExpression is a Boolean-valued Expression whose type is a Predicate. It represents a logical condition resulting from the evaluation of the Predicate.
+    /// </summary>
     public const string BooleanExpression = NS + "BooleanExpression";
+    /// <summary>
+    /// A CalculationDefinition is an ActionDefinition that also defines a Function producing a result.
+    /// </summary>
     public const string CalculationDefinition = NS + "CalculationDefinition";
+    /// <summary>
+    /// A CalculationUsage is an ActionUsage that is also an Expression, and, so, is typed by a Function. Nominally, if the type is a CalculationDefinition, a CalculationUsage is a Usage of that CalculationDefinition within a system. However, other kinds of kernel Functions are also allowed, to permit use of Functions from the Kernel Model Libraries.
+    /// </summary>
     public const string CalculationUsage = NS + "CalculationUsage";
+    /// <summary>
+    /// A CaseDefinition is a CalculationDefinition for a process, often involving collecting evidence or data, relative to a subject, possibly involving the collaboration of one or more other actors, producing a result that meets an objective.
+    /// </summary>
     public const string CaseDefinition = NS + "CaseDefinition";
+    /// <summary>
+    /// A CaseUsage is a Usage of a CaseDefinition.
+    /// </summary>
     public const string CaseUsage = NS + "CaseUsage";
+    /// <summary>
+    /// A Class is a Classifier of things (in the universe) that can be distinguished without regard to how they are related to other things (via Features). This means multiple things classified by the same Class can be distinguished, even when they are related other things in exactly the same way.
+    /// </summary>
     public const string Class = NS + "Class";
+    /// <summary>
+    /// A Classifier is a Type that classifies:.
+    /// </summary>
     public const string Classifier = NS + "Classifier";
+    /// <summary>
+    /// A CollectExpression is an OperatorExpression whose operator is "collect", which resolves to the Function ControlFunctions::collect from the Kernel Functions Library.
+    /// </summary>
     public const string CollectExpression = NS + "CollectExpression";
+    /// <summary>
+    /// A Comment is an AnnotatingElement whose body in some way describes its annotatedElements.
+    /// </summary>
     public const string Comment = NS + "Comment";
+    /// <summary>
+    /// A ConcernDefinition is a RequirementDefinition that one or more stakeholders may be interested in having addressed. These stakeholders are identified by the ownedStakeholdersof the ConcernDefinition.
+    /// </summary>
     public const string ConcernDefinition = NS + "ConcernDefinition";
+    /// <summary>
+    /// A ConcernUsage is a Usage of a ConcernDefinition.
+    /// </summary>
     public const string ConcernUsage = NS + "ConcernUsage";
+    /// <summary>
+    /// A ConjugatedPortDefinition is a PortDefinition that is a PortDefinition of its original PortDefinition. That is, a ConjugatedPortDefinition inherits all the features of the original PortDefinition, but input flows of the original PortDefinition become outputs on the ConjugatedPortDefinition and output flows of the original PortDefinition become inputs on the ConjugatedPortDefinition. Every PortDefinition (that is not itself a ConjugatedPortDefinition) has exactly one corresponding ConjugatedPortDefinition, whose effective name is the name of the originalPortDefinition, with the character ~ prepended.
+    /// </summary>
     public const string ConjugatedPortDefinition = NS + "ConjugatedPortDefinition";
+    /// <summary>
+    /// A ConjugatedPortTyping is a FeatureTyping whose type is a ConjugatedPortDefinition. (This relationship is intended to be an abstract-syntax marker for a special surface notation for conjugated typing of ports.).
+    /// </summary>
     public const string ConjugatedPortTyping = NS + "ConjugatedPortTyping";
+    /// <summary>
+    /// Conjugation is a Relationship between two types in which the conjugatedType inherits all the Features of the originalType, but with all input and output Features reversed. That is, any Features with a direction in relative to the originalType are considered to have an effective direction of out relative to the conjugatedType and, similarly, Features with direction out in the originalType are considered to have an effective direction of in in the conjugatedType. Features with direction inout, or with no direction, in the originalType, are inherited without change.
+    /// </summary>
     public const string Conjugation = NS + "Conjugation";
+    /// <summary>
+    /// A ConnectionDefinition is a PartDefinition that is also an AssociationStructure. The end Features of a ConnectionDefinition must be Usages.
+    /// </summary>
     public const string ConnectionDefinition = NS + "ConnectionDefinition";
+    /// <summary>
+    /// A ConnectionUsage is a ConnectorAsUsage that is also a PartUsage. Nominally, if its type is a ConnectionDefinition, then a ConnectionUsage is a Usage of that ConnectionDefinition, representing a connection between parts of a system. However, other kinds of kernel AssociationStructures are also allowed, to permit use of AssociationStructures from the Kernel Model Libraries.
+    /// </summary>
     public const string ConnectionUsage = NS + "ConnectionUsage";
+    /// <summary>
+    /// A Connector is a usage of Associations, with links restricted according to instances of the Type in which they are used (domain of the Connector). The associations of the Connector restrict what kinds of things might be linked. The Connector further restricts these links to be between values of Features on instances of its domain.
+    /// </summary>
     public const string Connector = NS + "Connector";
+    /// <summary>
+    /// A ConnectorAsUsage is both a Connector and a Usage. ConnectorAsUsage cannot itself be instantiated in a SysML model, but it is a base class for the concrete classes BindingConnectorAsUsage, SuccessionAsUsage, ConnectionUsage and FlowConnectionUsage.
+    /// </summary>
     public const string ConnectorAsUsage = NS + "ConnectorAsUsage";
+    /// <summary>
+    /// A ConstraintDefinition is an OccurrenceDefinition that is also a Predicate that defines a constraint that may be asserted to hold on a system or part of a system.
+    /// </summary>
     public const string ConstraintDefinition = NS + "ConstraintDefinition";
+    /// <summary>
+    /// A ConstraintUsage is an OccurrenceUsage that is also a BooleanExpression, and, so, is typed by a Predicate. Nominally, if the type is a ConstraintDefinition, a ConstraintUsage is a Usage of that ConstraintDefinition. However, other kinds of kernel Predicates are also allowed, to permit use of Predicates from the Kernel Model Libraries.
+    /// </summary>
     public const string ConstraintUsage = NS + "ConstraintUsage";
+    /// <summary>
+    /// A ConstructorExpression is an InstantiationExpression whose result specializes its instantiatedType, binding some or all of the features of the instantiatedType to the results of its argument Expressions.
+    /// </summary>
     public const string ConstructorExpression = NS + "ConstructorExpression";
+    /// <summary>
+    /// A ControlNode is an ActionUsage that does not have any inherent behavior but provides constraints on incoming and outgoing Successions that are used to control other Actions. A ControlNode must be a composite owned usage of an ActionDefinition or ActionUsage.
+    /// </summary>
     public const string ControlNode = NS + "ControlNode";
+    /// <summary>
+    /// CrossSubsetting is a kind of Subsetting for end Features, as identified by crossingFeature, to subset a chained Feature, identified by crossedFeature. It navigates to instances of the end Feature’s type from instances of other end Feature types on the same owningType (at least two end Features are required for any of them to have a CrossSubsetting).
+    /// </summary>
     public const string CrossSubsetting = NS + "CrossSubsetting";
+    /// <summary>
+    /// A DataType is a Classifier of things (in the universe) that can only be distinguished by how they are related to other things (via Features). This means multiple things classified by the same DataType.
+    /// </summary>
     public const string DataType = NS + "DataType";
+    /// <summary>
+    /// A DecisionNode is a ControlNode that makes a selection from its outgoing Successions.
+    /// </summary>
     public const string DecisionNode = NS + "DecisionNode";
+    /// <summary>
+    /// A Definition is a Classifier of Usages. The actual kinds of Definition that may appear in a model are given by the subclasses of Definition (possibly as extended with user-defined SemanticMetadata).
+    /// </summary>
     public const string Definition = NS + "Definition";
+    /// <summary>
+    /// A Dependency is a Relationship that indicates that one or more client Elements require one more supplier Elements for their complete specification. In general, this means that a change to one of the supplier Elements may necessitate a change to, or re-specification of, the client Elements.
+    /// </summary>
     public const string Dependency = NS + "Dependency";
+    /// <summary>
+    /// Differencing is a Relationship that makes its differencingType one of the differencingTypes of its typeDifferenced.
+    /// </summary>
     public const string Differencing = NS + "Differencing";
+    /// <summary>
+    /// A Disjoining is a Relationship between Types asserted to have interpretations that are not shared (disjoint) between them, identified as typeDisjoined and disjoiningType. For example, a Classifier for mammals is disjoint from a Classifier for minerals, and a Feature for people's parents is disjoint from a Feature for their children.
+    /// </summary>
     public const string Disjoining = NS + "Disjoining";
+    /// <summary>
+    /// Documentation is a Comment that specifically documents a documentedElement, which must be its owner.
+    /// </summary>
     public const string Documentation = NS + "Documentation";
+    /// <summary>
+    /// An Element is a constituent of a model that is uniquely identified relative to all other Elements. It can have Relationships with other Elements. Some of these Relationships might imply ownership of other Elements, which means that if an Element is deleted from a model, then so are all the Elements that it owns.
+    /// </summary>
     public const string Element = NS + "Element";
+    /// <summary>
+    /// ElementFilterMembership is a Membership between a Namespace and a model-level evaluable Boolean-valued Expression, asserting that imported members of the Namespace should be filtered using the condition Expression. A general Namespace does not define any specific filtering behavior, but such behavior may be defined for various specialized kinds of Namespaces.
+    /// </summary>
     public const string ElementFilterMembership = NS + "ElementFilterMembership";
+    /// <summary>
+    /// EndFeatureMembership is a FeatureMembership that requires its memberFeature be owned and have isEnd = true.
+    /// </summary>
     public const string EndFeatureMembership = NS + "EndFeatureMembership";
+    /// <summary>
+    /// An EnumerationDefinition is an AttributeDefinition all of whose instances are given by an explicit list of enumeratedValues. This is realized by requiring that the EnumerationDefinition have isVariation = true, with the enumeratedValues being its variants.
+    /// </summary>
     public const string EnumerationDefinition = NS + "EnumerationDefinition";
+    /// <summary>
+    /// An EnumerationUsage is an AttributeUsage whose attributeDefinition is an EnumerationDefinition.
+    /// </summary>
     public const string EnumerationUsage = NS + "EnumerationUsage";
+    /// <summary>
+    /// An EventOccurrenceUsage is an OccurrenceUsage that represents another OccurrenceUsage occurring as a suboccurrence of the containing occurrence of the EventOccurrenceUsage. Unless it is the EventOccurrenceUsage itself, the referenced OccurrenceUsage is related to the EventOccurrenceUsage by a ReferenceSubsetting Relationship.
+    /// </summary>
     public const string EventOccurrenceUsage = NS + "EventOccurrenceUsage";
+    /// <summary>
+    /// An ExhibitStateUsage is a StateUsage that represents the exhibiting of a StateUsage. Unless it is the StateUsage itself, the StateUsage to be exhibited is related to the ExhibitStateUsage by a ReferenceSubsetting Relationship. An ExhibitStateUsage is also a PerformActionUsage, with its exhibitedState as the performedAction.
+    /// </summary>
     public const string ExhibitStateUsage = NS + "ExhibitStateUsage";
+    /// <summary>
+    /// An Expose is an Import of Memberships into a ViewUsage that provide the Elements to be included in a view. Visibility is always ignored for an Expose (i.e., isImportAll = true).
+    /// </summary>
     public const string Expose = NS + "Expose";
+    /// <summary>
+    /// An Expression is a Step that is typed by a Function. An Expression that also has a Function as its featuringType is a computational step within that Function. An Expression always has a single result parameter, which redefines the result parameter of its defining function. This allows Expressions to be interconnected in tree structures, in which inputs to each Expression in the tree are determined as the results of other Expression in the tree.
+    /// </summary>
     public const string Expression = NS + "Expression";
+    /// <summary>
+    /// A Feature is a Type that classifies relations between multiple things (in the universe). The domain of the relation is the intersection of the featuringTypes of the Feature. (The domain of a Feature with no featuringTyps is implicitly the most general Type Base::Anything from the Kernel Semantic Library.) The co-domain of the relation is the intersection of the types of the Feature.
+    ///
+    /// .
+    /// </summary>
     public const string Feature = NS + "Feature";
+    /// <summary>
+    /// A FeatureChainExpression is an OperatorExpression whose operator is ".", which resolves to the Function ControlFunctions::'.' from the Kernel Functions Library. It evaluates to the result of chaining the result Feature of its single argument Expression with its targetFeature.
+    /// </summary>
     public const string FeatureChainExpression = NS + "FeatureChainExpression";
+    /// <summary>
+    /// FeatureChaining is a Relationship that makes its target Feature one of the chainingFeatures of its owning Feature.
+    /// </summary>
     public const string FeatureChaining = NS + "FeatureChaining";
+    /// <summary>
+    /// FeatureDirectionKind enumerates the possible kinds of direction that a Feature may be given as a member of a Type.
+    /// </summary>
     public const string FeatureDirectionKind = NS + "FeatureDirectionKind";
+    /// <summary>
+    /// A FeatureInverting is a Relationship between Features asserting that their interpretations (sequences) are the reverse of each other, identified as featureInverted and invertingFeature. For example, a Feature identifying each person's parents is the inverse of a Feature identifying each person's children. A person identified as a parent of another will identify that other as one of their children.
+    /// </summary>
     public const string FeatureInverting = NS + "FeatureInverting";
+    /// <summary>
+    /// A FeatureMembership is an OwningMembership between an ownedMemberFeature and an owningType. If the ownedMemberFeature has isVariable = false, then the FeatureMembership implies that the owningType is also a featuringType of the ownedMemberFeature. If the ownedMemberFeature has isVariable = true, then the FeatureMembership implies that the ownedMemberFeature is featured by the snapshots of the owningType, which must specialize the Kernel Semantic Library base class Occurrence.
+    /// </summary>
     public const string FeatureMembership = NS + "FeatureMembership";
+    /// <summary>
+    /// A FeatureReferenceExpression is an Expression whose result is bound to a referent Feature.
+    /// </summary>
     public const string FeatureReferenceExpression = NS + "FeatureReferenceExpression";
+    /// <summary>
+    /// FeatureTyping is Specialization in which the specific Type is a Feature. This means the set of instances of the (specific) typedFeature is a subset of the set of instances of the (general) type. In the simplest case, the type is a Classifier, whereupon the typedFeature has values that are instances of the Classifier.
+    /// </summary>
     public const string FeatureTyping = NS + "FeatureTyping";
+    /// <summary>
+    /// A FeatureValue is a Membership that identifies a particular member Expression that provides the value of the Feature that owns the FeatureValue. The value is specified as either a bound value or an initial value, and as either a concrete or default value. A Feature can have at most one FeatureValue.
+    /// </summary>
     public const string FeatureValue = NS + "FeatureValue";
+    /// <summary>
+    /// An Flow is a Step that represents the transfer of values from one Feature to another. Flows can take non-zero time to complete.
+    /// </summary>
     public const string Flow = NS + "Flow";
+    /// <summary>
+    /// A FlowDefinition is an ActionDefinition that is also an Interaction (which is both a KerML Behavior and Association), representing flows between Usages.
+    /// </summary>
     public const string FlowDefinition = NS + "FlowDefinition";
+    /// <summary>
+    /// A FlowEnd is a Feature that is one of the connectorEnds giving the source or target of a Flow. For Flows typed by FlowTransfer or its specializations, FlowEnds must have exactly one ownedFeature, which redefines Transfer::source::sourceOutput or Transfer::target::targetInput and redefines the corresponding feature of the relatedElement for its end.
+    /// </summary>
     public const string FlowEnd = NS + "FlowEnd";
+    /// <summary>
+    /// A FlowUsage is an ActionUsage that is also a ConnectorAsUsage and a KerML Flow.
+    /// </summary>
     public const string FlowUsage = NS + "FlowUsage";
+    /// <summary>
+    /// A ForLoopActionUsage is a LoopActionUsage that specifies that its bodyAction ActionUsage should be performed once for each value, in order, from the sequence of values obtained as the result of the seqArgument Expression, with the loopVariable set to the value for each iteration.
+    /// </summary>
     public const string ForLoopActionUsage = NS + "ForLoopActionUsage";
+    /// <summary>
+    /// A ForkNode is a ControlNode that must be followed by successor Actions as given by all its outgoing Successions.
+    /// </summary>
     public const string ForkNode = NS + "ForkNode";
+    /// <summary>
+    /// A FramedConcernMembership is a RequirementConstraintMembership for a framed ConcernUsage of a RequirementDefinition or RequirementUsage.
+    /// </summary>
     public const string FramedConcernMembership = NS + "FramedConcernMembership";
+    /// <summary>
+    /// A Function is a Behavior that has an out parameter that is identified as its result. A Function represents the performance of a calculation that produces the values of its result parameter. This calculation may be decomposed into Expressions that are steps of the Function.
+    /// </summary>
     public const string Function = NS + "Function";
+    /// <summary>
+    /// An IfActionUsage is an ActionUsage that specifies that the thenAction ActionUsage should be performed if the result of the ifArgument Expression is true. It may also optionally specify an elseAction ActionUsage that is performed if the result of the ifArgument is false.
+    /// </summary>
     public const string IfActionUsage = NS + "IfActionUsage";
+    /// <summary>
+    /// An Import is an Relationship between its importOwningNamespace and either a Membership (for a MembershipImport) or another Namespace (for a NamespaceImport), which determines a set of Memberships that become importedMemberships of the importOwningNamespace. If isImportAll = false (the default), then only public Memberships are considered "visible". If isImportAll = true, then all Memberships are considered "visible", regardless of their declared visibility. If isRecursive = true, then visible Memberships are also recursively imported from owned sub-Namespaces.
+    /// </summary>
     public const string Import = NS + "Import";
+    /// <summary>
+    /// An IncludeUseCaseUsage is a UseCaseUsage that represents the inclusion of a UseCaseUsage by a UseCaseDefinition or UseCaseUsage. Unless it is the IncludeUseCaseUsage itself, the UseCaseUsage to be included is related to the includedUseCase by a ReferenceSubsetting Relationship. An IncludeUseCaseUsage is also a PerformActionUsage, with its useCaseIncluded as the performedAction.
+    /// </summary>
     public const string IncludeUseCaseUsage = NS + "IncludeUseCaseUsage";
+    /// <summary>
+    /// An IndexExpression is an OperatorExpression whose operator is "#", which resolves to the Function BasicFunctions::'#' from the Kernel Functions Library.
+    /// </summary>
     public const string IndexExpression = NS + "IndexExpression";
+    /// <summary>
+    /// An InstantiationExpression is an Expression that instantiates its instantiatedType, binding some or all of the features of that Type to the results of its arguments.
+    /// </summary>
     public const string InstantiationExpression = NS + "InstantiationExpression";
+    /// <summary>
+    /// An Interaction is a Behavior that is also an Association, providing a context for multiple objects that have behaviors that impact one another.
+    /// </summary>
     public const string Interaction = NS + "Interaction";
+    /// <summary>
+    /// An InterfaceDefinition is a ConnectionDefinition all of whose ends are PortUsages, defining an interface between elements that interact through such ports.
+    /// </summary>
     public const string InterfaceDefinition = NS + "InterfaceDefinition";
+    /// <summary>
+    /// An InterfaceUsage is a Usage of an InterfaceDefinition to represent an interface connecting parts of a system through specific ports.
+    /// </summary>
     public const string InterfaceUsage = NS + "InterfaceUsage";
+    /// <summary>
+    /// Intersecting is a Relationship that makes its intersectingType one of the intersectingTypes of its typeIntersected.
+    /// </summary>
     public const string Intersecting = NS + "Intersecting";
+    /// <summary>
+    /// An Invariant is a BooleanExpression that is asserted to have a specific Boolean result value. If isNegated = false, then the result is asserted to be true. If isNegated = true, then the result is asserted to be false.
+    /// </summary>
     public const string Invariant = NS + "Invariant";
+    /// <summary>
+    /// An InvocationExpression is an InstantiationExpression whose instantiatedType must be a Behavior or a Feature typed by a single Behavior (such as a Step). Each of the input parameters of the instantiatedType are bound to the result of an argument Expression. If the instantiatedType is a Function or a Feature typed by a Function, then the result of the InvocationExpression is the result of the invoked Function. Otherwise, the result is an instance of the instantiatedType (essentially like a behavioral ConstructorExpression).
+    /// </summary>
     public const string InvocationExpression = NS + "InvocationExpression";
+    /// <summary>
+    /// An ItemDefinition is an OccurrenceDefinition of the Structure of things that may themselves be systems or parts of systems, but may also be things that are acted on by a system or parts of a system, but which do not necessarily perform actions themselves. This includes items that can be exchanged between parts of a system, such as water or electrical signals.
+    /// </summary>
     public const string ItemDefinition = NS + "ItemDefinition";
+    /// <summary>
+    /// An ItemUsage is a ItemUsage whose definition is a Structure. Nominally, if the definition is an ItemDefinition, an ItemUsage is a ItemUsage of that ItemDefinition within a system. However, other kinds of Kernel Structures are also allowed, to permit use of Structures from the Kernel Model Libraries.
+    /// </summary>
     public const string ItemUsage = NS + "ItemUsage";
+    /// <summary>
+    /// A JoinNode is a ControlNode that waits for the completion of all the predecessor Actions given by incoming Successions.
+    /// </summary>
     public const string JoinNode = NS + "JoinNode";
+    /// <summary>
+    /// A LibraryPackage is a Package that is the container for a model library. A LibraryPackage is itself a library Element as are all Elements that are directly or indirectly contained in it.
+    /// </summary>
     public const string LibraryPackage = NS + "LibraryPackage";
+    /// <summary>
+    /// LiteralBoolean is a LiteralExpression that provides a Boolean value as a result. Its result parameter must have type Boolean.
+    /// </summary>
     public const string LiteralBoolean = NS + "LiteralBoolean";
+    /// <summary>
+    /// A LiteralExpression is an Expression that provides a basic DataValue as a result.
+    /// </summary>
     public const string LiteralExpression = NS + "LiteralExpression";
+    /// <summary>
+    /// A LiteralInfinity is a LiteralExpression that provides the positive infinity value (*). It's result must have the type Positive.
+    /// </summary>
     public const string LiteralInfinity = NS + "LiteralInfinity";
+    /// <summary>
+    /// A LiteralInteger is a LiteralExpression that provides an Integer value as a result. Its result parameter must have the type Integer.
+    /// </summary>
     public const string LiteralInteger = NS + "LiteralInteger";
+    /// <summary>
+    /// A LiteralRational is a LiteralExpression that provides a Rational value as a result. Its result parameter must have the type Rational.
+    /// </summary>
     public const string LiteralRational = NS + "LiteralRational";
+    /// <summary>
+    /// A LiteralString is a LiteralExpression that provides a String value as a result. Its result parameter must have the type String.
+    /// </summary>
     public const string LiteralString = NS + "LiteralString";
+    /// <summary>
+    /// A LoopActionUsage is an ActionUsage that specifies that its bodyAction should be performed repeatedly. Its subclasses WhileLoopActionUsage and ForLoopActionUsage provide different ways to determine how many times the bodyAction should be performed.
+    /// </summary>
     public const string LoopActionUsage = NS + "LoopActionUsage";
+    /// <summary>
+    /// A Membership is a Relationship between a Namespace and an Element that indicates the Element is a member of (i.e., is contained in) the Namespace. Any memberNames specify how the memberElement is identified in the Namespace and the visibility specifies whether or not the memberElement is publicly visible from outside the Namespace.
+    /// </summary>
     public const string Membership = NS + "Membership";
+    /// <summary>
+    /// A MembershipExpose is an Expose  that exposes a specific importedMembership and, if isRecursive = true, additional Memberships recursively.
+    /// </summary>
     public const string MembershipExpose = NS + "MembershipExpose";
+    /// <summary>
+    /// A MembershipImport is an Import that imports its importedMembership into the importOwningNamespace. If isRecursive = true and the memberElement of the importedMembership is a Namespace, then the equivalent of a recursive NamespaceImport is also performed on that Namespace.
+    /// </summary>
     public const string MembershipImport = NS + "MembershipImport";
+    /// <summary>
+    /// A MergeNode is a ControlNode that asserts the merging of its incoming Successions. A MergeNode may have at most one outgoing Successions.
+    /// </summary>
     public const string MergeNode = NS + "MergeNode";
+    /// <summary>
+    /// A Metaclass is a Structure used to type MetadataFeatures.
+    /// </summary>
     public const string Metaclass = NS + "Metaclass";
+    /// <summary>
+    /// A MetadataAccessExpression is an Expression whose result is a sequence of instances of Metaclasses representing all the MetadataFeature annotations of the referencedElement. In addition, the sequence includes an instance of the reflective Metaclass corresponding to the MOF class of the referencedElement, with values for all the abstract syntax properties of the referencedElement.
+    /// </summary>
     public const string MetadataAccessExpression = NS + "MetadataAccessExpression";
+    /// <summary>
+    /// A MetadataDefinition is an ItemDefinition that is also a Metaclass.
+    /// </summary>
     public const string MetadataDefinition = NS + "MetadataDefinition";
+    /// <summary>
+    /// A MetadataFeature is a Feature that is an AnnotatingElement used to annotate another Element with metadata. It is typed by a Metaclass. All its ownedFeatures must redefine features of its metaclass and any feature bindings must be model-level evaluable.
+    /// </summary>
     public const string MetadataFeature = NS + "MetadataFeature";
+    /// <summary>
+    /// A  MetadataUsage is a Usage and a MetadataFeature, used to annotate other Elements in a system model with metadata. As a MetadataFeature, its type must be a Metaclass, which will nominally be a MetadataDefinition. However, any kernel Metaclass is also allowed, to permit use of Metaclasses from the Kernel Model Libraries.
+    /// </summary>
     public const string MetadataUsage = NS + "MetadataUsage";
+    /// <summary>
+    /// A Multiplicity is a Feature whose co-domain is a set of natural numbers giving the allowed cardinalities of each typeWithMultiplicity. The cardinality of a Type is defined as follows, depending on whether the Type is a Classifier or Feature.
+    /// .
+    /// </summary>
     public const string Multiplicity = NS + "Multiplicity";
+    /// <summary>
+    /// A MultiplicityRange is a Multiplicity whose value is defined to be the (inclusive) range of natural numbers given by the result of a lowerBound Expression and the result of an upperBound Expression. The result of these Expressions shall be of type Natural. If the result of the upperBound Expression is the unbounded value *, then the specified range includes all natural numbers greater than or equal to the lowerBound value. If no lowerBound Expression, then the default is that the lower bound has the same value as the upper bound, except if the upperBound evaluates to *, in which case the default for the lower bound is 0.
+    /// </summary>
     public const string MultiplicityRange = NS + "MultiplicityRange";
+    /// <summary>
+    /// A Namespace is an Element that contains other Elements, known as its members, via Membership Relationships with those Elements. The members of a Namespace may be owned by the Namespace, aliased in the Namespace, or imported into the Namespace via Import Relationships.
+    /// </summary>
     public const string Namespace = NS + "Namespace";
+    /// <summary>
+    /// A NamespaceExpose is an Expose Relationship that exposes the Memberships of a specific importedNamespace and, if isRecursive = true, additional Memberships recursively.
+    /// </summary>
     public const string NamespaceExpose = NS + "NamespaceExpose";
+    /// <summary>
+    /// A NamespaceImport is an Import that imports Memberships from its importedNamespace into the importOwningNamespace. If  isRecursive = false, then only the visible Memberships of the importedNamespace are imported. If  isRecursive = true, then, in addition, Memberships are recursively imported from any ownedMembers of the importedNamespace that are Namespaces.
+    /// </summary>
     public const string NamespaceImport = NS + "NamespaceImport";
+    /// <summary>
+    /// A NullExpression is an Expression that results in a null value.
+    /// </summary>
     public const string NullExpression = NS + "NullExpression";
+    /// <summary>
+    /// An ObjectiveMembership is a FeatureMembership that indicates that its ownedObjectiveRequirement is the objective RequirementUsage for its owningType, which must be a CaseDefinition or CaseUsage.
+    /// </summary>
     public const string ObjectiveMembership = NS + "ObjectiveMembership";
+    /// <summary>
+    /// An OccurrenceDefinition is a Definition of a Class of individuals that have an independent life over time and potentially an extent over space. This includes both structural things and behaviors that act on such structures. If isIndividual is true, then the OccurrenceDefinition is constrained to have (at most) a single instance that is the entire life of a single individual.
+    /// </summary>
     public const string OccurrenceDefinition = NS + "OccurrenceDefinition";
+    /// <summary>
+    /// An OccurrenceUsage is a Usage whose types are all Classes. Nominally, if a type is an OccurrenceDefinition, an OccurrenceUsage is a Usage of that OccurrenceDefinition within a system. However, other types of Kernel Classes are also allowed, to permit use of Classes from the Kernel Model Libraries.
+    /// </summary>
     public const string OccurrenceUsage = NS + "OccurrenceUsage";
+    /// <summary>
+    /// An OperatorExpression is an InvocationExpression whose function is determined by resolving its operator in the context of one of the standard packages from the Kernel Function Library.
+    /// </summary>
     public const string OperatorExpression = NS + "OperatorExpression";
+    /// <summary>
+    /// An OwningMembership is a Membership that owns its memberElement as a ownedRelatedElement. The ownedMemberElement becomes an ownedMember of the membershipOwningNamespace.
+    /// </summary>
     public const string OwningMembership = NS + "OwningMembership";
+    /// <summary>
+    /// A Package is a Namespace used to group Elements, without any instance-level semantics. It may have one or more model-level evaluable filterCondition Expressions used to filter its importedMemberships. Any imported member must meet all of the filterConditions.
+    /// </summary>
     public const string Package = NS + "Package";
+    /// <summary>
+    /// A ParameterMembership is a FeatureMembership that identifies its memberFeature as a parameter, which is always owned, and must have a direction. A ParameterMembership must be owned by a Behavior, a Step, or the result parameter of a ConstructorExpression.
+    /// </summary>
     public const string ParameterMembership = NS + "ParameterMembership";
+    /// <summary>
+    /// A PartDefinition is an ItemDefinition of a Class of systems or parts of systems. Note that all parts may be considered items for certain purposes, but not all items are parts that can perform actions within a system.
+    /// </summary>
     public const string PartDefinition = NS + "PartDefinition";
+    /// <summary>
+    /// A PartUsage is a usage of a PartDefinition to represent a system or a part of a system. At least one of the itemDefinitions of the PartUsage must be a PartDefinition.
+    /// </summary>
     public const string PartUsage = NS + "PartUsage";
+    /// <summary>
+    /// A PayloadFeature is the ownedFeature of a Flow that identifies the things carried by the kinds of transfers that are instances of the Flow.
+    /// </summary>
     public const string PayloadFeature = NS + "PayloadFeature";
+    /// <summary>
+    /// A PerformActionUsage is an ActionUsage that represents the performance of an ActionUsage. Unless it is the PerformActionUsage itself, the ActionUsage to be performed is related to the PerformActionUsage by a ReferenceSubsetting relationship. A PerformActionUsage is also an EventOccurrenceUsage, with its performedAction as the eventOccurrence.
+    /// </summary>
     public const string PerformActionUsage = NS + "PerformActionUsage";
+    /// <summary>
+    /// A PortConjugation is a Conjugation Relationship between a PortDefinition and its corresponding ConjugatedPortDefinition. As a result of this Relationship, the ConjugatedPortDefinition inherits all the features of the original PortDefinition, but input flows of the original PortDefinition become outputs on the ConjugatedPortDefinition and output flows of the original PortDefinition become inputs on the ConjugatedPortDefinition.
+    /// </summary>
     public const string PortConjugation = NS + "PortConjugation";
+    /// <summary>
+    /// A PortDefinition defines a point at which external entities can connect to and interact with a system or part of a system. Any ownedUsages of a PortDefinition, other than PortUsages, must not be composite.
+    /// </summary>
     public const string PortDefinition = NS + "PortDefinition";
+    /// <summary>
+    /// A PortUsage is a usage of a PortDefinition. A PortUsage itself as well as all its nestedUsages must be referential (non-composite).
+    /// </summary>
     public const string PortUsage = NS + "PortUsage";
+    /// <summary>
+    /// PortionKind is an enumeration of the specific kinds of Occurrence portions that can be represented by an OccurrenceUsage.
+    /// </summary>
     public const string PortionKind = NS + "PortionKind";
+    /// <summary>
+    /// A Predicate is a Function whose result parameter has type Boolean and multiplicity 1..1.
+    /// </summary>
     public const string Predicate = NS + "Predicate";
+    /// <summary>
+    /// Redefinition is a kind of Subsetting that requires the redefinedFeature and the redefiningFeature to have the same values (on each instance of the domain of the redefiningFeature). This means any restrictions on the redefiningFeature, such as type or multiplicity, also apply to the redefinedFeature (on each instance of the domain of the redefiningFeature), and vice versa. The redefinedFeature might have values for instances of the domain of the redefiningFeature, but only as instances of the domain of the redefinedFeature that happen to also be instances of the domain of the redefiningFeature. This is supported by the constraints inherited from Subsetting on the domains of the redefiningFeature and redefinedFeature. However, these constraints are narrowed for Redefinition to require the owningTypes of the redefiningFeature and redefinedFeature to be different and the redefinedFeature to not be inherited into the owningNamespace of the redefiningFeature.This enables the redefiningFeature to have the same name as the redefinedFeature, if desired.
+    /// </summary>
     public const string Redefinition = NS + "Redefinition";
+    /// <summary>
+    /// ReferenceSubsetting is a kind of Subsetting in which the referencedFeature is syntactically distinguished from other Features subsetted by the referencingFeature. ReferenceSubsetting has the same semantics as Subsetting, but the referencedFeature may have a special purpose relative to the referencingFeature. For instance, ReferenceSubsetting is used to identify the relatedFeatures of a Connector.
+    /// </summary>
     public const string ReferenceSubsetting = NS + "ReferenceSubsetting";
+    /// <summary>
+    /// A ReferenceUsage is a Usage that specifies a non-compositional (isComposite = false) reference to something. The definition of a ReferenceUsage can be any kind of Classifier, with the default being the top-level Classifier Base::Anything from the Kernel Semantic Library. This allows the specification of a generic reference without distinguishing if the thing referenced is an attribute value, item, action, etc.
+    /// </summary>
     public const string ReferenceUsage = NS + "ReferenceUsage";
+    /// <summary>
+    /// A Relationship is an Element that relates other Element. Some of its relatedElements may be owned, in which case those ownedRelatedElements will be deleted from a model if their owningRelationship is. A Relationship may also be owned by another Element, in which case the ownedRelatedElements of the Relationship are also considered to be transitively owned by the owningRelatedElement of the Relationship.
+    /// </summary>
     public const string Relationship = NS + "Relationship";
+    /// <summary>
+    /// A RenderingDefinition is a PartDefinition that defines a specific rendering of the content of a model view (e.g., symbols, style, layout, etc.).
+    /// </summary>
     public const string RenderingDefinition = NS + "RenderingDefinition";
+    /// <summary>
+    /// A RenderingUsage is the usage of a RenderingDefinition to specify the rendering of a specific model view to produce a physical view artifact.
+    /// </summary>
     public const string RenderingUsage = NS + "RenderingUsage";
+    /// <summary>
+    /// A RequirementConstraintKind indicates whether a ConstraintUsage is an assumption or a requirement in a RequirementDefinition or RequirementUsage.
+    /// </summary>
     public const string RequirementConstraintKind = NS + "RequirementConstraintKind";
+    /// <summary>
+    /// A RequirementConstraintMembership is a FeatureMembership for an assumed or required ConstraintUsage of a RequirementDefinition or RequirementUsage.
+    /// </summary>
     public const string RequirementConstraintMembership = NS + "RequirementConstraintMembership";
+    /// <summary>
+    /// A RequirementDefinition is a ConstraintDefinition that defines a requirement used in the context of a specification as a constraint that a valid solution must satisfy. The specification is relative to a specified subject, possibly in collaboration with one or more external actors.
+    /// </summary>
     public const string RequirementDefinition = NS + "RequirementDefinition";
+    /// <summary>
+    /// A RequirementUsage is a Usage of a RequirementDefinition.
+    /// </summary>
     public const string RequirementUsage = NS + "RequirementUsage";
+    /// <summary>
+    /// A RequirementVerificationMembership is a RequirementConstraintMembership  used in the objective of a VerificationCase to identify a RequirementUsage that is verified by the VerificationCase.
+    /// </summary>
     public const string RequirementVerificationMembership = NS + "RequirementVerificationMembership";
+    /// <summary>
+    /// A ResultExpressionMembership is a FeatureMembership that indicates that the ownedResultExpression provides the result values for the Function or Expression that owns it. The owning Function or Expression must contain a BindingConnector between the result parameter of the ownedResultExpression and the result parameter of the owning Function or Expression.
+    /// </summary>
     public const string ResultExpressionMembership = NS + "ResultExpressionMembership";
+    /// <summary>
+    /// A ReturnParameterMembership is a ParameterMembership that indicates that the ownedMemberParameter is the result parameter of a Function or Expression. The direction of the ownedMemberParameter must be out.
+    /// </summary>
     public const string ReturnParameterMembership = NS + "ReturnParameterMembership";
+    /// <summary>
+    /// A SatisfyRequirementUsage is an AssertConstraintUsage that asserts, by default, that a satisfied RequirementUsage is true for a specific satisfyingFeature, or, if isNegated = true, that the RequirementUsage is false. The satisfied RequirementUsage is related to the SatisfyRequirementUsage by a ReferenceSubsetting Relationship.
+    /// </summary>
     public const string SatisfyRequirementUsage = NS + "SatisfyRequirementUsage";
+    /// <summary>
+    /// A SelectExpression is an OperatorExpression whose operator is "select", which resolves to the Function ControlFunctions::select from the Kernel Functions Library.
+    /// </summary>
     public const string SelectExpression = NS + "SelectExpression";
+    /// <summary>
+    /// A SendActionUsage is an ActionUsage that specifies the sending of a payload given by the result of its payloadArgument Expression via a MessageTransfer whose source is given by the result of the senderArgument Expression and whose target is given by the result of the receiverArgument Expression. If no senderArgument is provided, the default is the this context for the action. If no receiverArgument is given, then the receiver is to be determined by, e.g., outgoing Connections from the sender.
+    /// </summary>
     public const string SendActionUsage = NS + "SendActionUsage";
+    /// <summary>
+    /// Specialization is a Relationship between two Types that requires all instances of the specific type to also be instances of the general Type (i.e., the set of instances of the specific Type is a subset of those of the general Type, which might be the same set).
+    /// </summary>
     public const string Specialization = NS + "Specialization";
+    /// <summary>
+    /// A StakeholderMembership is a ParameterMembership that identifies a PartUsage as a stakeholderParameter of a RequirementDefinition or RequirementUsage, which specifies a role played by an entity with concerns framed by the owningType.
+    /// </summary>
     public const string StakeholderMembership = NS + "StakeholderMembership";
+    /// <summary>
+    /// A StateDefinition is the Definition of the Behavior of a system or part of a system in a certain state condition.
+    /// </summary>
     public const string StateDefinition = NS + "StateDefinition";
+    /// <summary>
+    /// A StateSubactionKind indicates whether the action of a StateSubactionMembership is an entry, do or exit action.
+    /// </summary>
     public const string StateSubactionKind = NS + "StateSubactionKind";
+    /// <summary>
+    /// A StateSubactionMembership is a FeatureMembership for an entry, do or exit ActionUsage of a StateDefinition or StateUsage.
+    /// </summary>
     public const string StateSubactionMembership = NS + "StateSubactionMembership";
+    /// <summary>
+    /// A StateUsage is an ActionUsage that is nominally the Usage of a StateDefinition. However, other kinds of kernel Behaviors are also allowed as types, to permit use of Behaviors
+    /// .
+    /// </summary>
     public const string StateUsage = NS + "StateUsage";
+    /// <summary>
+    /// A Step is a Feature that is typed by one or more Behaviors. Steps may be used by one Behavior to coordinate the performance of other Behaviors, supporting a steady refinement of behavioral descriptions. Steps can be ordered in time and can be connected using Flows to specify things flowing between their parameters.
+    /// </summary>
     public const string Step = NS + "Step";
+    /// <summary>
+    /// A Structure is a Class of objects in the modeled universe that are primarily structural in nature. While such an object is not itself behavioral, it may be involved in and acted on by Behaviors, and it may be the performer of some of them.
+    /// </summary>
     public const string Structure = NS + "Structure";
+    /// <summary>
+    /// Subclassification is Specialization in which both the specific and general Types are Classifier. This means all instances of the specific Classifier are also instances of the general Classifier.
+    /// </summary>
     public const string Subclassification = NS + "Subclassification";
+    /// <summary>
+    /// A SubjectMembership is a ParameterMembership that indicates that its ownedSubjectParameter is the subject of its owningType. The owningType of a SubjectMembership must be a RequirementDefinition, RequirementUsage, CaseDefinition, or CaseUsage.
+    /// </summary>
     public const string SubjectMembership = NS + "SubjectMembership";
+    /// <summary>
+    /// Subsetting is Specialization in which the specific and general Types are Features. This means all values of the subsettingFeature (on instances of its domain, i.e., the intersection of its featuringTypes) are values of the subsettedFeature on instances of its domain. To support this the domain of the subsettingFeature must be the same or specialize (at least indirectly) the domain of the subsettedFeature (via Specialization), and the co-domain (intersection of the types) of the subsettingFeature must specialize the co-domain of the subsettedFeature.
+    /// </summary>
     public const string Subsetting = NS + "Subsetting";
+    /// <summary>
+    /// A Succession is a binary Connector that requires its relatedFeatures to happen separately in time.
+    /// </summary>
     public const string Succession = NS + "Succession";
+    /// <summary>
+    /// A SuccessionAsUsage is both a ConnectorAsUsage and a Succession.
+    /// </summary>
     public const string SuccessionAsUsage = NS + "SuccessionAsUsage";
+    /// <summary>
+    /// A SuccessionFlow is a Flow that also provides temporal ordering. It classifies Transfers that cannot start until the source Occurrence has completed and that must complete before the target Occurrence can start.
+    /// </summary>
     public const string SuccessionFlow = NS + "SuccessionFlow";
+    /// <summary>
+    /// A SuccessionFlowUsage is a FlowUsage that is also a KerML SuccessionFlow.
+    /// </summary>
     public const string SuccessionFlowUsage = NS + "SuccessionFlowUsage";
+    /// <summary>
+    /// A TerminateActionUsage is an ActionUsage that directly or indirectly specializes the ActionDefinition TerminateAction from the Systems Model Library, which causes a given terminatedOccurrence to end during its performance. By default, the terminatedOccurrence is the featuring instance (that) of the performance of the TerminateActionUsage, generally the performance of its immediately containing ActionDefinition or ActionUsage.
+    /// </summary>
     public const string TerminateActionUsage = NS + "TerminateActionUsage";
+    /// <summary>
+    /// A TextualRepresentation is an AnnotatingElement whose body represents the representedElement in a given language. The representedElement must be the owner of the TextualRepresentation. The named language can be a natural language, in which case the body is an informal representation, or an artificial language, in which case the body is expected to be a formal, machine-parsable representation.
+    /// </summary>
     public const string TextualRepresentation = NS + "TextualRepresentation";
+    /// <summary>
+    /// A TransitionActionKind indicates whether the transitionFeature of a TransitionFeatureMembership is a trigger, guard or effect.
+    /// </summary>
     public const string TransitionFeatureKind = NS + "TransitionFeatureKind";
+    /// <summary>
+    /// A TransitionFeatureMembership is a FeatureMembership for a trigger, guard or effect of a TransitionUsage, whose transitionFeature is a AcceptActionUsage, Boolean-valued Expression or ActionUsage, depending on its kind. .
+    /// </summary>
     public const string TransitionFeatureMembership = NS + "TransitionFeatureMembership";
+    /// <summary>
+    /// A TransitionUsage is an ActionUsage representing a triggered transition between ActionUsages or StateUsages. When triggered by a triggerAction, when its guardExpression is true, the TransitionUsage asserts that its source is exited, then its effectAction (if any) is performed, and then its target is entered.
+    /// </summary>
     public const string TransitionUsage = NS + "TransitionUsage";
+    /// <summary>
+    /// A TriggerInvocationExpression is an InvocationExpression that invokes one of the trigger Functions from the Kernel Semantic Library Triggers package, as indicated by its kind.
+    /// </summary>
     public const string TriggerInvocationExpression = NS + "TriggerInvocationExpression";
+    /// <summary>
+    /// TriggerKind enumerates the kinds of triggers that can be represented by a TriggerInvocationExpression.
+    /// </summary>
     public const string TriggerKind = NS + "TriggerKind";
+    /// <summary>
+    /// A Type is a Namespace that is the most general kind of Element supporting the semantics of classification. A Type may be a Classifier or a Feature, defining conditions on what is classified by the Type (see also the description of isSufficient).
+    /// </summary>
     public const string Type = NS + "Type";
+    /// <summary>
+    /// A TypeFeaturing is a Featuring Relationship in which the featureOfType is the source and the featuringType is the target.
+    /// </summary>
     public const string TypeFeaturing = NS + "TypeFeaturing";
+    /// <summary>
+    /// Unioning is a Relationship that makes its unioningType one of the unioningTypes of its typeUnioned.
+    /// </summary>
     public const string Unioning = NS + "Unioning";
+    /// <summary>
+    /// A Usage is a usage of a Definition.
+    /// </summary>
     public const string Usage = NS + "Usage";
+    /// <summary>
+    /// A UseCaseDefinition is a CaseDefinition that specifies a set of actions performed by its subject, in interaction with one or more actors external to the subject. The objective is to yield an observable result that is of value to one or more of the actors.
+    /// </summary>
     public const string UseCaseDefinition = NS + "UseCaseDefinition";
+    /// <summary>
+    /// A UseCaseUsage is a Usage of a UseCaseDefinition.
+    /// </summary>
     public const string UseCaseUsage = NS + "UseCaseUsage";
+    /// <summary>
+    /// A VariantMembership is a Membership between a variation point Definition or Usage and a Usage that represents a variant in the context of that variation. The membershipOwningNamespace for the VariantMembership must be either a Definition or a Usage with isVariation = true.
+    /// </summary>
     public const string VariantMembership = NS + "VariantMembership";
+    /// <summary>
+    /// A VerificationCaseDefinition is a CaseDefinition for the purpose of verification of the subject of the case against its requirements.
+    /// </summary>
     public const string VerificationCaseDefinition = NS + "VerificationCaseDefinition";
+    /// <summary>
+    /// A VerificationCaseUsage is a Usage of a VerificationCaseDefinition.
+    /// </summary>
     public const string VerificationCaseUsage = NS + "VerificationCaseUsage";
+    /// <summary>
+    /// A ViewDefinition is a PartDefinition that specifies how a view artifact is constructed to satisfy a viewpoint. It specifies a viewConditions to define the model content to be presented and a viewRendering to define how the model content is presented.
+    /// </summary>
     public const string ViewDefinition = NS + "ViewDefinition";
+    /// <summary>
+    /// A ViewRenderingMembership is a FeatureMembership that identifies the viewRendering of a ViewDefinition or ViewUsage.
+    /// </summary>
     public const string ViewRenderingMembership = NS + "ViewRenderingMembership";
+    /// <summary>
+    /// A ViewUsage is a usage of a ViewDefinition to specify the generation of a view of the members of a collection of exposedNamespaces. The ViewUsage can satisfy more viewpoints than its definition, and it can specialize the viewRendering specified by its definition.
+    /// </summary>
     public const string ViewUsage = NS + "ViewUsage";
+    /// <summary>
+    /// A ViewpointDefinition is a RequirementDefinition that specifies one or more stakeholder concerns that are to be satisfied by creating a view of a model.
+    /// </summary>
     public const string ViewpointDefinition = NS + "ViewpointDefinition";
+    /// <summary>
+    /// A ViewpointUsage is a Usage of a ViewpointDefinition.
+    /// </summary>
     public const string ViewpointUsage = NS + "ViewpointUsage";
+    /// <summary>
+    /// VisibilityKind is an enumeration whose literals specify the visibility of a Membership of an Element in a Namespace outside of that Namespace. Note that "visibility" specifically restricts whether an Element in a Namespace may be referenced by name from outside the Namespace and only otherwise restricts access to an Element as provided by specific constraints in the abstract syntax (e.g., preventing the import or inheritance of private Elements).
+    /// </summary>
     public const string VisibilityKind = NS + "VisibilityKind";
+    /// <summary>
+    /// A WhileLoopActionUsage is a LoopActionUsage that specifies that the bodyAction ActionUsage should be performed repeatedly while the result of the whileArgument Expression is true or until the result of the untilArgument Expression (if provided) is true. The whileArgument Expression is evaluated before each (possible) performance of the bodyAction, and the untilArgument Expression is evaluated after each performance of the bodyAction.
+    /// </summary>
     public const string WhileLoopActionUsage = NS + "WhileLoopActionUsage";
 
     public static QName QNameFor(string localResource)
@@ -198,691 +751,2889 @@ public static partial class SysMLVocabulary
 
     public static partial class P
     {
+        /// <summary>
+        /// ActionDefinition: The ActionUsages that are steps in this ActionDefinition, which define the actions that specify the behavior of the ActionDefinition.
+        /// StateSubactionMembership: The ActionUsage that is the ownedMemberFeature of this StateSubactionMembership.
+        /// </summary>
         public const string Action = NS + "action";
+        /// <summary>
+        /// ActionUsage: The Behaviors that are the types of this ActionUsage. Nominally, these would be ActionDefinitions, but other kinds of Kernel Behaviors are also allowed, to permit use of Behaviors from the Kernel Model Libraries.
+        /// </summary>
         public const string ActionDefinition = NS + "actionDefinition";
+        /// <summary>
+        /// RequirementUsage: The parameters of this RequirementUsage that represent actors involved in the requirement.
+        /// RequirementDefinition: The parameters of this RequirementDefinition that represent actors involved in the requirement.
+        /// CaseUsage: The parameters of this CaseUsage that represent actors involved in the case.
+        /// CaseDefinition: The parameters of this CaseDefinition that represent actors involved in the case.
+        /// </summary>
         public const string ActorParameter = NS + "actorParameter";
+        /// <summary>
+        /// Element: Various alternative identifiers for this Element. Generally, these will be set by tools.
+        /// </summary>
         public const string AliasIds = NS + "aliasIds";
+        /// <summary>
+        /// AllocationDefinition: The AllocationUsages that refine the allocation mapping defined by this AllocationDefinition.
+        /// </summary>
         public const string Allocation = NS + "allocation";
+        /// <summary>
+        /// AllocationUsage: The AllocationDefinitions that are the types of this AllocationUsage.
+        /// </summary>
         public const string AllocationDefinition = NS + "allocationDefinition";
+        /// <summary>
+        /// AnalysisCaseUsage: The AnalysisCaseDefinition that is the definition of this AnalysisCaseUsage.
+        /// </summary>
         public const string AnalysisCaseDefinition = NS + "analysisCaseDefinition";
+        /// <summary>
+        /// AnnotatingElement: The Elements that are annotated by this AnnotatingElement. If annotation is not empty, these are the annotatedElements of the annotations. If annotation is empty, then it is the owningNamespace of the AnnotatingElement.
+        /// Annotation: The Element that is annotated by the annotatingElement of this Annotation.
+        /// </summary>
         public const string AnnotatedElement = NS + "annotatedElement";
+        /// <summary>
+        /// Annotation: The AnnotatingElement that annotates the annotatedElement of this Annotation. This is always either the ownedAnnotatingElement or the owningAnnotatingElement.
+        /// </summary>
         public const string AnnotatingElement = NS + "annotatingElement";
+        /// <summary>
+        /// AnnotatingElement: The Annotations that relate this AnnotatingElement to its annotatedElements. This includes the owningAnnotatingRelationship (if any) followed by all the ownedAnnotatingRelationshps.
+        /// </summary>
         public const string Annotation = NS + "annotation";
+        /// <summary>
+        /// InstantiationExpression: The Expressions whose results are bound to features of the instantiatedType. The arguments are ordered consistent with the order of the features, though they may not be one-to-one with all the features.
+        /// </summary>
         public const string Argument = NS + "argument";
+        /// <summary>
+        /// AssertConstraintUsage: The ConstraintUsage to be performed by the AssertConstraintUsage. It is the referenceFeature of the ownedReferenceSubsetting for the AssertConstraintUsage, if there is one, and, otherwise, the AssertConstraintUsage itself.
+        /// </summary>
         public const string AssertedConstraint = NS + "assertedConstraint";
+        /// <summary>
+        /// Connector: The Associations that type the Connector.
+        /// </summary>
         public const string Association = NS + "association";
+        /// <summary>
+        /// Association: The features of the Association that identify the things that can be related by it. A concrete Association must have at least two associationEnds. When it has exactly two, the Association is called a binary Association.
+        /// </summary>
         public const string AssociationEnd = NS + "associationEnd";
+        /// <summary>
+        /// RequirementUsage: The owned ConstraintUsages that represent assumptions of this RequirementUsage, derived as the ownedConstraints of the RequirementConstraintMemberships of the RequirementUsage with kind = assumption.
+        /// RequirementDefinition: The owned ConstraintUsages that represent assumptions of this RequirementDefinition, which are the ownedConstraints of the RequirementConstraintMemberships of the RequirementDefinition with kind = assumption.
+        /// </summary>
         public const string AssumedConstraint = NS + "assumedConstraint";
+        /// <summary>
+        /// AttributeUsage: The DataTypes that are the types of this AttributeUsage. Nominally, these are AttributeDefinitions, but other kinds of kernel DataTypes are also allowed, to permit use of DataTypes from the Kernel Model Libraries.
+        /// </summary>
         public const string AttributeDefinition = NS + "attributeDefinition";
+        /// <summary>
+        /// Step: The Behaviors that type this Step.
+        /// </summary>
         public const string Behavior = NS + "behavior";
+        /// <summary>
+        /// Comment: The annotation text for the Comment.
+        /// TextualRepresentation: The textual representation of the representedElement in the given language.
+        /// </summary>
         public const string Body = NS + "body";
+        /// <summary>
+        /// LoopActionUsage: The ActionUsage to be performed repeatedly by the LoopActionUsage. It is the second parameter of the LoopActionUsage.
+        /// </summary>
         public const string BodyAction = NS + "bodyAction";
+        /// <summary>
+        /// MultiplicityRange: The owned Expressions of the MultiplicityRange whose results provide its bounds. These must be the first ownedMembers of the MultiplicityRange.
+        /// </summary>
         public const string Bound = NS + "bound";
+        /// <summary>
+        /// CalculationDefinition: The actions of this CalculationDefinition that are CalculationUsages.
+        /// </summary>
         public const string Calculation = NS + "calculation";
+        /// <summary>
+        /// CalculationUsage: The Function that is the type of this CalculationUsage. Nominally, this would be a CalculationDefinition, but a kernel Function is also allowed, to permit use of Functions from the Kernel Model Libraries.
+        /// </summary>
         public const string CalculationDefinition = NS + "calculationDefinition";
+        /// <summary>
+        /// CaseUsage: The CaseDefinition that is the type of this CaseUsage.
+        /// </summary>
         public const string CaseDefinition = NS + "caseDefinition";
+        /// <summary>
+        /// Feature: The Feature that are chained together to determine the values of this Feature, derived from the chainingFeatures of the ownedFeatureChainings of this Feature, in the same order. The values of a Feature with chainingFeatures are the same as values of the last Feature in the chain, which can be found by starting with the values of the first Feature (for each instance of the domain of the original Feature), then using each of those as domain instances to find the values of the second Feature in chainingFeatures, and so on, to values of the last Feature.
+        /// FeatureChaining: The Feature whose values partly determine values of featureChained, as described in Feature::chainingFeature.
+        /// </summary>
         public const string ChainingFeature = NS + "chainingFeature";
+        /// <summary>
+        /// Dependency: The Element or Elements dependent on the supplier Elements.
+        /// </summary>
         public const string Client = NS + "client";
+        /// <summary>
+        /// ConcernUsage: The ConcernDefinition that is the single type of this ConcernUsage.
+        /// </summary>
         public const string ConcernDefinition = NS + "concernDefinition";
+        /// <summary>
+        /// ElementFilterMembership: The model-level evaluable Boolean-valued Expression used to filter the imported members of the membershipOwningNamespace of this ElementFilterMembership.
+        /// </summary>
         public const string Condition = NS + "condition";
+        /// <summary>
+        /// PortDefinition: The  that is conjugate to this PortDefinition.
+        /// PortConjugation: The ConjugatedPortDefinition that is conjugate to the originalPortDefinition.
+        /// ConjugatedPortTyping: The type of this ConjugatedPortTyping considered as a FeatureTyping, which must be a ConjugatedPortDefinition.
+        /// </summary>
         public const string ConjugatedPortDefinition = NS + "conjugatedPortDefinition";
+        /// <summary>
+        /// Conjugation: The Type that is the result of applying Conjugation to the originalType.
+        /// </summary>
         public const string ConjugatedType = NS + "conjugatedType";
+        /// <summary>
+        /// ConnectionUsage: The AssociationStructures that are the types of this ConnectionUsage. Nominally, these are , but other kinds of Kernel AssociationStructures are also allowed, to permit use of AssociationStructures from the Kernel Model Libraries.
+        /// </summary>
         public const string ConnectionDefinition = NS + "connectionDefinition";
+        /// <summary>
+        /// ConnectionDefinition: The Usages that define the things related by the ConnectionDefinition.
+        /// </summary>
         public const string ConnectionEnd = NS + "connectionEnd";
+        /// <summary>
+        /// Connector: The endFeatures of a Connector, which redefine the endFeatures of the associations of the Connector. The connectorEnds determine via ReferenceSubsetting Relationships which Features are related by the Connector.
+        /// </summary>
         public const string ConnectorEnd = NS + "connectorEnd";
+        /// <summary>
+        /// ConstraintUsage: The (single) Predicate that is the type of this ConstraintUsage. Nominally, this will be a ConstraintDefinition, but other kinds of Predicates are also allowed, to permit use of Predicates from the Kernel Model Libraries.
+        /// </summary>
         public const string ConstraintDefinition = NS + "constraintDefinition";
+        /// <summary>
+        /// Feature: The second chainingFeature of the crossedFeature of the ownedCrossSubsetting of this Feature, if it has one. Semantically, the values of the crossFeature of an end Feature must include all values of the end Feature obtained when navigating from values of the other end Features of the same owningType.
+        /// .
+        /// </summary>
         public const string CrossFeature = NS + "crossFeature";
+        /// <summary>
+        /// CrossSubsetting: The chained Feature that is cross subset by the crossingFeature of this CrossSubsetting.
+        /// </summary>
         public const string CrossedFeature = NS + "crossedFeature";
+        /// <summary>
+        /// CrossSubsetting: The end Feature that owns this CrossSubsetting relationship and is also its subsettingFeature.
+        /// </summary>
         public const string CrossingFeature = NS + "crossingFeature";
+        /// <summary>
+        /// Element: The declared name of this Element.
+        /// </summary>
         public const string DeclaredName = NS + "declaredName";
+        /// <summary>
+        /// Element: An optional alternative name for the Element that is intended to be shorter or in some way more succinct than its primary name. It may act as a modeler-specified identifier for the Element, though it is then the responsibility of the modeler to maintain the uniqueness of this identifier within a model or relative to some other context.
+        /// </summary>
         public const string DeclaredShortName = NS + "declaredShortName";
+        /// <summary>
+        /// Connector: The innermost Type that is a common direct or indirect featuringType of the relatedFeatures, such that, if it exists and was the featuringType of this Connector, the Connector would satisfy the checkConnectorTypeFeaturing constraint.
+        /// </summary>
         public const string DefaultFeaturingType = NS + "defaultFeaturingType";
+        /// <summary>
+        /// Usage: The Classifiers that are the types of this Usage. Nominally, these are Definitions, but other kinds of Kernel Classifiers are also allowed, to permit use of Classifiers from the Kernel Model Libraries.
+        /// </summary>
         public const string Definition = NS + "definition";
+        /// <summary>
+        /// Type: The interpretations of a Type with differencingTypes are asserted to be those of the first of those Types, but not including those of the remaining Types. For example, a Classifier might be the difference of a Classifier for people and another for people of a particular nationality, leaving people who are not of that nationality. Similarly, a feature of people might be the difference between a feature for their children and a Classifier for people of a particular sex, identifying their children not of that sex (because the interpretations of the children Feature that identify those of that sex are also interpretations of the Classifier for that sex).
+        /// Differencing: Type that partly determines interpretations of typeDifferenced, as described in Type::differencingType.
+        /// </summary>
         public const string DifferencingType = NS + "differencingType";
+        /// <summary>
+        /// Type: The features of this Type that have a non-null direction.
+        /// </summary>
         public const string DirectedFeature = NS + "directedFeature";
+        /// <summary>
+        /// Definition: The usages of this Definition that are directedFeatures.
+        /// Usage: The usages of this Usage that are directedFeatures.
+        /// </summary>
         public const string DirectedUsage = NS + "directedUsage";
+        /// <summary>
+        /// Feature: Indicates how values of this Feature are determined or used (as specified for the FeatureDirectionKind).
+        /// </summary>
         public const string Direction = NS + "direction";
+        /// <summary>
+        /// Disjoining: Type asserted to be disjoint with the typeDisjoined.
+        /// </summary>
         public const string DisjoiningType = NS + "disjoiningType";
+        /// <summary>
+        /// StateUsage: The ActionUsage of this StateUsage to be performed while in the state defined by the StateDefinition. It is the owned ActionUsage related to the StateUsage by a StateSubactionMembership  with kind = do.
+        /// StateDefinition: The ActionUsage of this StateDefinition to be performed while in the state defined by the StateDefinition. It is the owned ActionUsage related to the StateDefinition by a StateSubactionMembership  with kind = do.
+        /// </summary>
         public const string DoAction = NS + "doAction";
+        /// <summary>
+        /// Element: The Documentation owned by this Element.
+        /// </summary>
         public const string Documentation = NS + "documentation";
+        /// <summary>
+        /// Documentation: The Element that is documented by this Documentation.
+        /// </summary>
         public const string DocumentedElement = NS + "documentedElement";
+        /// <summary>
+        /// TransitionUsage: The ActionUsages that define the effects of this TransitionUsage, which are the ownedFeatures of the TransitionUsage related to it by TransitionFeatureMemberships with kind = effect, which must all be ActionUsages.
+        /// </summary>
         public const string EffectAction = NS + "effectAction";
+        /// <summary>
+        /// Element: The globally unique identifier for this Element. This is intended to be set by tooling, and it must not change during the lifetime of the Element.
+        /// </summary>
         public const string ElementId = NS + "elementId";
+        /// <summary>
+        /// IfActionUsage: The ActionUsage that is to be performed if the result of the ifArgument is false. It is the (optional) third parameter of the IfActionUsage.
+        /// </summary>
         public const string ElseAction = NS + "elseAction";
+        /// <summary>
+        /// Type: All features of this Type with isEnd = true.
+        /// </summary>
         public const string EndFeature = NS + "endFeature";
+        /// <summary>
+        /// Feature: The Type that is related to this Feature by an EndFeatureMembership in which the Feature is an ownedMemberFeature.
+        /// </summary>
         public const string EndOwningType = NS + "endOwningType";
+        /// <summary>
+        /// StateUsage: The ActionUsage of this StateUsage to be performed on entry to the state defined by the StateDefinition. It is the owned ActionUsage related to the StateUsage by a StateSubactionMembership  with kind = entry.
+        /// StateDefinition: The ActionUsage of this StateDefinition to be performed on entry to the state defined by the StateDefinition. It is the owned ActionUsage related to the StateDefinition by a StateSubactionMembership  with kind = entry.
+        /// </summary>
         public const string EntryAction = NS + "entryAction";
+        /// <summary>
+        /// EnumerationDefinition: EnumerationUsages of this EnumerationDefinitionthat have distinct, fixed values. Each enumeratedValue specifies one of the allowed instances of the EnumerationDefinition.
+        /// </summary>
         public const string EnumeratedValue = NS + "enumeratedValue";
+        /// <summary>
+        /// EnumerationUsage: The single EnumerationDefinition that is the type of this EnumerationUsage.
+        /// </summary>
         public const string EnumerationDefinition = NS + "enumerationDefinition";
+        /// <summary>
+        /// EventOccurrenceUsage: The OccurrenceUsage referenced as an event by this EventOccurrenceUsage. It is the referenceFeature of the ownedReferenceSubsetting for the EventOccurrenceUsage, if there is one, and, otherwise, the EventOccurrenceUsage itself.
+        /// </summary>
         public const string EventOccurrence = NS + "eventOccurrence";
+        /// <summary>
+        /// ExhibitStateUsage: The StateUsage to be exhibited by the ExhibitStateUsage. It is the performedAction of the ExhibitStateUsage considered as a PerformActionUsage, which must be a StateUsage.
+        /// </summary>
         public const string ExhibitedState = NS + "exhibitedState";
+        /// <summary>
+        /// StateUsage: The ActionUsage of this StateUsage to be performed on exit to the state defined by the StateDefinition. It is the owned ActionUsage related to the StateUsage by a StateSubactionMembership  with kind = exit.
+        /// StateDefinition: The ActionUsage of this StateDefinition to be performed on exit to the state defined by the StateDefinition. It is the owned ActionUsage related to the StateDefinition by a StateSubactionMembership  with kind = exit.
+        /// </summary>
         public const string ExitAction = NS + "exitAction";
+        /// <summary>
+        /// ViewUsage: The Elements that are exposed by this ViewUsage, which are those memberElements of the imported Memberships from all the Expose Relationships that meet all the owned and inherited viewConditions.
+        /// </summary>
         public const string ExposedElement = NS + "exposedElement";
+        /// <summary>
+        /// Function: The Expressions that are steps in the calculation of the result of this Function.
+        /// </summary>
         public const string Expression = NS + "expression";
+        /// <summary>
+        /// Type: The ownedMemberFeatures of the featureMemberships of this Type.
+        /// </summary>
         public const string Feature = NS + "feature";
+        /// <summary>
+        /// FeatureChaining: The Feature whose values are partly determined by values of the chainingFeature, as described in Feature::chainingFeature.
+        /// </summary>
         public const string FeatureChained = NS + "featureChained";
+        /// <summary>
+        /// FeatureInverting: The Feature that is an inverse of the invertingFeature.
+        /// </summary>
         public const string FeatureInverted = NS + "featureInverted";
+        /// <summary>
+        /// Type: The FeatureMemberships for features of this Type, which include all ownedFeatureMemberships and those inheritedMemberships that are FeatureMemberships (but does not include any importedMemberships).
+        /// </summary>
         public const string FeatureMembership = NS + "featureMembership";
+        /// <summary>
+        /// TypeFeaturing: The Feature that is featured by the featuringType. It is the source of the TypeFeaturing.
+        /// </summary>
         public const string FeatureOfType = NS + "featureOfType";
+        /// <summary>
+        /// Feature: The last of the chainingFeatures of this Feature, if it has any. Otherwise, this Feature itself.
+        /// </summary>
         public const string FeatureTarget = NS + "featureTarget";
+        /// <summary>
+        /// FeatureValue: The Feature to be provided a value.
+        /// </summary>
         public const string FeatureWithValue = NS + "featureWithValue";
+        /// <summary>
+        /// Feature: Types that feature this Feature, such that any instance in the domain of the Feature must be classified by all of these Types, including at least all the featuringTypes of its typeFeaturings.  If the Feature is chained, then the featuringTypes of the first Feature in the chain are also featuringTypes of the chained Feature.
+        /// TypeFeaturing: The Type that features the featureOfType. It is the target of the TypeFeaturing.
+        /// </summary>
         public const string FeaturingType = NS + "featuringType";
+        /// <summary>
+        /// Package: The model-level evaluable Boolean-valued Expression used to filter the members of this Package, which are owned by the Package are via ElementFilterMemberships.
+        /// </summary>
         public const string FilterCondition = NS + "filterCondition";
+        /// <summary>
+        /// FlowUsage: The Interactions that are the types of this FlowUsage. Nominally, these are FlowDefinitions, but other kinds of Kernel Interactions are also allowed, to permit use of Interactions from the Kernel Model Libraries.
+        /// </summary>
         public const string FlowDefinition = NS + "flowDefinition";
+        /// <summary>
+        /// Flow: The connectorEnds of this Flow that are FlowEnds.
+        /// FlowDefinition: The Usages that define the things related by the FlowDefinition.
+        /// </summary>
         public const string FlowEnd = NS + "flowEnd";
+        /// <summary>
+        /// RequirementUsage: The ConcernUsages framed by this RequirementUsage, which are the ownedConcerns of all FramedConcernMemberships of the RequirementUsage.
+        /// RequirementDefinition: The ConcernUsages framed by this RequirementDefinition, which are the ownedConcerns of all FramedConcernMemberships of the RequirementDefinition.
+        /// </summary>
         public const string FramedConcern = NS + "framedConcern";
+        /// <summary>
+        /// Expression: The Function that types this Expression.
+        /// </summary>
         public const string Function = NS + "function";
+        /// <summary>
+        /// Specialization: A Type with a superset of all instances of the specific Type, which might be the same set.
+        /// </summary>
         public const string General = NS + "general";
+        /// <summary>
+        /// TransitionUsage: The Expressions that define the guards of this TransitionUsage, which are the ownedFeatures of the TransitionUsage related to it by TransitionFeatureMemberships with kind = guard, which must all be Expressions.
+        /// </summary>
         public const string GuardExpression = NS + "guardExpression";
+        /// <summary>
+        /// IfActionUsage: The Expression whose result determines whether the thenAction or (optionally) the elseAction is performed. It is the first parameter of the IfActionUsage.
+        /// </summary>
         public const string IfArgument = NS + "ifArgument";
+        /// <summary>
+        /// Import: The Namespace into which Memberships are imported by this Import, which must be the owningRelatedElement of the Import.
+        /// </summary>
         public const string ImportOwningNamespace = NS + "importOwningNamespace";
+        /// <summary>
+        /// Import: The effectively imported Element for this Import. For a MembershipImport, this is the memberElement of the importedMembership. For a NamespaceImport, it is the importedNamespace.
+        /// </summary>
         public const string ImportedElement = NS + "importedElement";
+        /// <summary>
+        /// Namespace: The Memberships in this Namespace that result from the ownedImports of this Namespace.
+        /// MembershipImport: The Membership to be imported.
+        /// </summary>
         public const string ImportedMembership = NS + "importedMembership";
+        /// <summary>
+        /// NamespaceImport: The Namespace whose visible Memberships are imported by this NamespaceImport.
+        /// </summary>
         public const string ImportedNamespace = NS + "importedNamespace";
+        /// <summary>
+        /// UseCaseUsage: The UseCaseUsages that are included by this UseCaseUse, which are the useCaseIncludeds of the IncludeUseCaseUsages owned by this UseCaseUsage.
+        /// UseCaseDefinition: The UseCaseUsages that are included by this UseCaseDefinition, which are the useCaseIncludeds of the IncludeUseCaseUsages owned by this UseCaseDefinition.
+        /// </summary>
         public const string IncludedUseCase = NS + "includedUseCase";
+        /// <summary>
+        /// OccurrenceUsage: The at most one occurrenceDefinition that has isIndividual = true.
+        /// </summary>
         public const string IndividualDefinition = NS + "individualDefinition";
+        /// <summary>
+        /// Type: All the memberFeatures of the inheritedMemberships of this Type that are FeatureMemberships.
+        /// </summary>
         public const string InheritedFeature = NS + "inheritedFeature";
+        /// <summary>
+        /// Type: All Memberships inherited by this Type via Specialization or Conjugation. These are included in the derived union for the memberships of the Type.
+        /// </summary>
         public const string InheritedMembership = NS + "inheritedMembership";
+        /// <summary>
+        /// Type: All features related to this Type by FeatureMemberships that have direction in or inout.
+        /// </summary>
         public const string Input = NS + "input";
+        /// <summary>
+        /// InstantiationExpression: The Type that is being instantiated.
+        /// </summary>
         public const string InstantiatedType = NS + "instantiatedType";
+        /// <summary>
+        /// Flow: The Interactions that type this Flow. Interactions are both Associations and Behaviors, which can type Connectors and Steps, respectively.
+        /// </summary>
         public const string Interaction = NS + "interaction";
+        /// <summary>
+        /// InterfaceUsage: The InterfaceDefinitions that type this InterfaceUsage.
+        /// </summary>
         public const string InterfaceDefinition = NS + "interfaceDefinition";
+        /// <summary>
+        /// InterfaceDefinition: The PortUsages that are the connectionEnds of this InterfaceDefinition.
+        ///
+        /// .
+        /// </summary>
         public const string InterfaceEnd = NS + "interfaceEnd";
+        /// <summary>
+        /// Type: The interpretations of a Type with intersectingTypes are asserted to be those in common among the intersectingTypes, which are the Types derived from the intersectingType of the ownedIntersectings of this Type. For example, a Classifier might be an intersection of Classifiers for people of a particular sex and of a particular nationality. Similarly, a feature for people's children of a particular sex might be the intersection of a Feature for their children and a Classifier for people of that sex (because the interpretations of the children Feature that identify those of that sex are also interpretations of the Classifier for that sex).
+        /// Intersecting: Type that partly determines interpretations of typeIntersected, as described in Type::intersectingType.
+        /// </summary>
         public const string IntersectingType = NS + "intersectingType";
+        /// <summary>
+        /// FeatureInverting: The Feature that is an inverse of the invertedFeature.
+        /// </summary>
         public const string InvertingFeature = NS + "invertingFeature";
+        /// <summary>
+        /// Type: Indicates whether instances of this Type must also be instances of at least one of its specialized Types.
+        /// </summary>
         public const string IsAbstract = NS + "isAbstract";
+        /// <summary>
+        /// Feature: Whether the Feature is a composite feature of its featuringType. If so, the values of the Feature cannot exist after its featuring instance no longer does and cannot be values of another composite feature that is not on the same featuring instance.
+        /// </summary>
         public const string IsComposite = NS + "isComposite";
+        /// <summary>
+        /// Type: Indicates whether this Type has an ownedConjugator.
+        /// </summary>
         public const string IsConjugated = NS + "isConjugated";
+        /// <summary>
+        /// Feature: If isVariable is true, then whether the value of this Feature nevertheless does not change over all snapshots of its owningType.
+        /// </summary>
         public const string IsConstant = NS + "isConstant";
+        /// <summary>
+        /// FeatureValue: Whether this FeatureValue is a concrete specification of the bound or initial value of the featureWithValue, or just a default value that may be overridden.
+        /// </summary>
         public const string IsDefault = NS + "isDefault";
+        /// <summary>
+        /// Feature: Whether the values of this Feature can always be computed from the values of other Features.
+        /// </summary>
         public const string IsDerived = NS + "isDerived";
+        /// <summary>
+        /// Feature: Whether or not this Feature is an end Feature. An end Feature always has multiplicity 1, mapping each of its domain instances to a single co-domain instance. However, it may have a crossFeature, in which case values of the crossFeature must be the same as those found by navigation across instances of the owningType from values of other end Features to values of this Feature. If the owningType has n end Features, then the multiplicity, ordering, and uniqueness declared for the crossFeature of any one of these end Features constrains the cardinality, ordering, and uniqueness of the collection of values of that Feature reached by navigation when the values of the other n-1 end Features are held fixed.
+        /// </summary>
         public const string IsEnd = NS + "isEnd";
+        /// <summary>
+        /// Relationship: Whether this Relationship was generated by tooling to meet semantic rules, rather than being directly created by a modeler.
+        /// </summary>
         public const string IsImplied = NS + "isImplied";
+        /// <summary>
+        /// Element: Whether all necessary implied Relationships have been included in the ownedRelationships of this Element. This property may be true, even if there are not actually any ownedRelationships with isImplied = true, meaning that no such Relationships are actually implied for this Element. However, if it is false, then ownedRelationships may not contain any implied Relationships. That is, either all required implied Relationships must be included, or none of them.
+        /// </summary>
         public const string IsImpliedIncluded = NS + "isImpliedIncluded";
+        /// <summary>
+        /// Import: Whether to import memberships without regard to declared visibility.
+        /// </summary>
         public const string IsImportAll = NS + "isImportAll";
+        /// <summary>
+        /// OccurrenceUsage: Whether this OccurrenceUsage represents the usage of the specific individual represented by its individualDefinition.
+        /// OccurrenceDefinition: Whether this OccurrenceDefinition is constrained to represent at most one thing.
+        /// </summary>
         public const string IsIndividual = NS + "isIndividual";
+        /// <summary>
+        /// FeatureValue: Whether this FeatureValue specifies a bound value or an initial value for the featureWithValue.
+        /// </summary>
         public const string IsInitial = NS + "isInitial";
+        /// <summary>
+        /// Element: Whether this Element is contained in the ownership tree of a library model.
+        /// </summary>
         public const string IsLibraryElement = NS + "isLibraryElement";
+        /// <summary>
+        /// Expression: Whether this Expression meets the constraints necessary to be evaluated at model level, that is, using metadata within the model.
+        /// Function: Whether this Function can be used as the function of a model-level evaluable InvocationExpression. Certain Functions from the Kernel Functions Library are considered to have isModelLevelEvaluable = true. For all other Functions it is false.
+        /// </summary>
         public const string IsModelLevelEvaluable = NS + "isModelLevelEvaluable";
+        /// <summary>
+        /// Invariant: Whether this Invariant is asserted to be false rather than true.
+        /// </summary>
         public const string IsNegated = NS + "isNegated";
+        /// <summary>
+        /// Feature: Whether an order exists for the values of this Feature or not.
+        /// </summary>
         public const string IsOrdered = NS + "isOrdered";
+        /// <summary>
+        /// StateUsage: Whether the nestedStates of this StateUsage are to all be performed in parallel. If true, none of the nestedActions (which include nestedStates) may have any incoming or outgoing Transitions. If false, only one nestedState may be performed at a time.
+        /// StateDefinition: Whether the ownedStates of this StateDefinition are to all be performed in parallel. If true, none of the ownedActions (which includes ownedStates) may have any incoming or outgoing Transitions. If false, only one ownedState may be performed at a time.
+        /// </summary>
         public const string IsParallel = NS + "isParallel";
+        /// <summary>
+        /// Feature: Whether the values of this Feature are contained in the space and time of instances of the domain of the Feature and represent the same thing as those instances.
+        /// </summary>
         public const string IsPortion = NS + "isPortion";
+        /// <summary>
+        /// Import: Whether to recursively import Memberships from visible, owned sub-Namespaces.
+        /// </summary>
         public const string IsRecursive = NS + "isRecursive";
+        /// <summary>
+        /// Usage: Whether this Usage is a referential Usage, that is, it has isComposite = false.
+        /// </summary>
         public const string IsReference = NS + "isReference";
+        /// <summary>
+        /// LibraryPackage: Whether this LibraryPackage contains a standard library model. This should only be set to true for LibraryPackages in the standard Kernel Model Libraries or in normative model libraries for a language built on KerML.
+        /// </summary>
         public const string IsStandard = NS + "isStandard";
+        /// <summary>
+        /// Type: Whether all things that meet the classification conditions of this Type must be classified by the Type.
+        /// </summary>
         public const string IsSufficient = NS + "isSufficient";
+        /// <summary>
+        /// Feature: Whether or not values for this Feature must have no duplicates or not.
+        /// </summary>
         public const string IsUnique = NS + "isUnique";
+        /// <summary>
+        /// Feature: Whether the value of this Feature might vary over time. That is, whether the Feature may have a different value for each snapshot of an owningType that is an Occurrence.
+        /// </summary>
         public const string IsVariable = NS + "isVariable";
+        /// <summary>
+        /// Definition: Whether this Definition is for a variation point or not. If true, then all the memberships of the Definition must be VariantMemberships.
+        /// Usage: Whether this Usage is for a variation point or not. If true, then all the memberships of the Usage must be VariantMemberships.
+        /// </summary>
         public const string IsVariation = NS + "isVariation";
+        /// <summary>
+        /// ItemUsage: The Structures that are the definitions of this ItemUsage. Nominally, these are ItemDefinitions, but other kinds of Kernel Structures are also allowed, to permit use of Structures from the Kernel Library.
+        /// </summary>
         public const string ItemDefinition = NS + "itemDefinition";
+        /// <summary>
+        /// StateSubactionMembership: Whether this StateSubactionMembership is for an entry, do or exit ActionUsage.
+        /// TransitionFeatureMembership: Whether this TransitionFeatureMembership  is for a trigger, guard or effect.
+        /// RequirementConstraintMembership: Whether the RequirementConstraintMembership is for an assumed or required ConstraintUsage.
+        /// TriggerInvocationExpression: Indicates which of the Functions from the Triggers model in the Kernel Semantic Library is to be invoked by this TriggerInvocationExpression.
+        /// </summary>
         public const string Kind = NS + "kind";
+        /// <summary>
+        /// TextualRepresentation: The natural or artifical language in which the body text is written.
+        /// </summary>
         public const string Language = NS + "language";
+        /// <summary>
+        /// Comment: Identification of the language of the body text and, optionally, the region and/or encoding. The format shall be a POSIX locale conformant to ISO/IEC 15897, with the format [language[_territory][.codeset][@modifier]].
+        /// </summary>
         public const string Locale = NS + "locale";
+        /// <summary>
+        /// ForLoopActionUsage: The ownedFeature of this ForLoopActionUsage that acts as the loop variable, which is assigned the successive values of the input sequence on each iteration. It is the ownedFeature that redefines ForLoopAction::var.
+        /// </summary>
         public const string LoopVariable = NS + "loopVariable";
+        /// <summary>
+        /// MultiplicityRange: The Expression whose result provides the lower bound of the MultiplicityRange. If no lowerBound Expression is given, then the lower bound shall have the same value as the upper bound, unless the upper bound is unbounded (*), in which case the lower bound shall be 0.
+        /// </summary>
         public const string LowerBound = NS + "lowerBound";
+        /// <summary>
+        /// Usage: Whether this Usage may be time varying (that is, whether it is featured by the snapshots of its owningType, rather than being featured by the owningType itself). However, if isConstant is also true, then the value of the Usage is nevertheless constant over the entire duration of an instance of its owningType (that is, it has the same value on all snapshots).
+        /// </summary>
         public const string MayTimeVary = NS + "mayTimeVary";
+        /// <summary>
+        /// Namespace: The set of all member Elements of this Namespace, which are the memberElements of all memberships of the Namespace.
+        /// </summary>
         public const string Member = NS + "member";
+        /// <summary>
+        /// Membership: The Element that becomes a member of the membershipOwningNamespace due to this Membership.
+        /// </summary>
         public const string MemberElement = NS + "memberElement";
+        /// <summary>
+        /// Membership: The elementId of the memberElement.
+        /// </summary>
         public const string MemberElementId = NS + "memberElementId";
+        /// <summary>
+        /// Membership: The name of the memberElement relative to the membershipOwningNamespace.
+        /// </summary>
         public const string MemberName = NS + "memberName";
+        /// <summary>
+        /// Membership: The short name of the memberElement relative to the membershipOwningNamespace.
+        /// </summary>
         public const string MemberShortName = NS + "memberShortName";
+        /// <summary>
+        /// Namespace: All Memberships in this Namespace, including (at least) the union of ownedMemberships and importedMemberships.
+        /// </summary>
         public const string Membership = NS + "membership";
+        /// <summary>
+        /// Membership: The Namespace of which the memberElement becomes a member due to this Membership.
+        /// </summary>
         public const string MembershipOwningNamespace = NS + "membershipOwningNamespace";
+        /// <summary>
+        /// MetadataFeature: The type of this MetadataFeature, which must be a Metaclass.
+        /// </summary>
         public const string Metaclass = NS + "metaclass";
+        /// <summary>
+        /// MetadataUsage: The MetadataDefinition that is the definition of this MetadataUsage.
+        /// </summary>
         public const string MetadataDefinition = NS + "metadataDefinition";
+        /// <summary>
+        /// Type: An ownedMember of this Type that is a Multiplicity, which constraints the cardinality of the Type. If there is no such ownedMember, then the cardinality of this Type is constrained by all the Multiplicity constraints applicable to any direct supertypes.
+        /// </summary>
         public const string Multiplicity = NS + "multiplicity";
+        /// <summary>
+        /// Element: The name to be used for this Element during name resolution within its owningNamespace. This is derived using the effectiveName() operation. By default, it is the same as the declaredName, but this is overridden for certain kinds of Elements to compute a name even when the declaredName is null.
+        /// </summary>
         public const string Name = NS + "name";
+        /// <summary>
+        /// Usage: The ActionUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedAction = NS + "nestedAction";
+        /// <summary>
+        /// Usage: The AllocationUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedAllocation = NS + "nestedAllocation";
+        /// <summary>
+        /// Usage: The AnalysisCaseUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedAnalysisCase = NS + "nestedAnalysisCase";
+        /// <summary>
+        /// Usage: The code&gt;AttributeUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedAttribute = NS + "nestedAttribute";
+        /// <summary>
+        /// Usage: The CalculationUsage that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedCalculation = NS + "nestedCalculation";
+        /// <summary>
+        /// Usage: The CaseUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedCase = NS + "nestedCase";
+        /// <summary>
+        /// Usage: The ConcernUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedConcern = NS + "nestedConcern";
+        /// <summary>
+        /// Usage: The ConnectorAsUsages that are nestedUsages of this Usage. Note that this list includes BindingConnectorAsUsages, SuccessionAsUsages, and FlowConnectionUsages because these are ConnectorAsUsages even though they are not ConnectionUsages.
+        /// </summary>
         public const string NestedConnection = NS + "nestedConnection";
+        /// <summary>
+        /// Usage: The ConstraintUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedConstraint = NS + "nestedConstraint";
+        /// <summary>
+        /// Usage: The code&gt;EnumerationUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedEnumeration = NS + "nestedEnumeration";
+        /// <summary>
+        /// Usage: The code&gt;FlowUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedFlow = NS + "nestedFlow";
+        /// <summary>
+        /// Usage: The InterfaceUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedInterface = NS + "nestedInterface";
+        /// <summary>
+        /// Usage: The ItemUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedItem = NS + "nestedItem";
+        /// <summary>
+        /// Usage: The MetadataUsages that are nestedUsages of this of this Usage.
+        /// </summary>
         public const string NestedMetadata = NS + "nestedMetadata";
+        /// <summary>
+        /// Usage: The OccurrenceUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedOccurrence = NS + "nestedOccurrence";
+        /// <summary>
+        /// Usage: The PartUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedPart = NS + "nestedPart";
+        /// <summary>
+        /// Usage: The PortUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedPort = NS + "nestedPort";
+        /// <summary>
+        /// Usage: The ReferenceUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedReference = NS + "nestedReference";
+        /// <summary>
+        /// Usage: The RenderingUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedRendering = NS + "nestedRendering";
+        /// <summary>
+        /// Usage: The RequirementUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedRequirement = NS + "nestedRequirement";
+        /// <summary>
+        /// Usage: The StateUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedState = NS + "nestedState";
+        /// <summary>
+        /// Usage: The TransitionUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedTransition = NS + "nestedTransition";
+        /// <summary>
+        /// Usage: The Usages that are ownedFeatures of this Usage.
+        /// </summary>
         public const string NestedUsage = NS + "nestedUsage";
+        /// <summary>
+        /// Usage: The UseCaseUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedUseCase = NS + "nestedUseCase";
+        /// <summary>
+        /// Usage: The VerificationCaseUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedVerificationCase = NS + "nestedVerificationCase";
+        /// <summary>
+        /// Usage: The ViewUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedView = NS + "nestedView";
+        /// <summary>
+        /// Usage: The ViewpointUsages that are nestedUsages of this Usage.
+        /// </summary>
         public const string NestedViewpoint = NS + "nestedViewpoint";
+        /// <summary>
+        /// CaseUsage: The RequirementUsage representing the objective of this CaseUsage.
+        /// CaseDefinition: The RequirementUsage representing the objective of this CaseDefinition.
+        /// </summary>
         public const string ObjectiveRequirement = NS + "objectiveRequirement";
+        /// <summary>
+        /// OccurrenceUsage: The Classes that are the types of this OccurrenceUsage. Nominally, these are OccurrenceDefinitions, but other kinds of kernel Classes are also allowed, to permit use of Classes from the Kernel Model Libraries.
+        /// </summary>
         public const string OccurrenceDefinition = NS + "occurrenceDefinition";
+        /// <summary>
+        /// OperatorExpression: An operator symbol that names a corresponding Function from one of the standard packages from the Kernel Function Library .
+        /// </summary>
         public const string Operator = NS + "operator";
+        /// <summary>
+        /// ConjugatedPortDefinition: The original PortDefinition for this ConjugatedPortDefinition, which is the owningNamespace of the ConjugatedPortDefinition.
+        /// PortConjugation: The PortDefinition being conjugated.
+        /// </summary>
         public const string OriginalPortDefinition = NS + "originalPortDefinition";
+        /// <summary>
+        /// Conjugation: The Type to be conjugated.
+        /// </summary>
         public const string OriginalType = NS + "originalType";
+        /// <summary>
+        /// Type: All features related to this Type by FeatureMemberships that have direction out or inout.
+        /// </summary>
         public const string Output = NS + "output";
+        /// <summary>
+        /// Definition: The ActionUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedAction = NS + "ownedAction";
+        /// <summary>
+        /// ActorMembership: The PartUsage specifying the actor.
+        /// </summary>
         public const string OwnedActorParameter = NS + "ownedActorParameter";
+        /// <summary>
+        /// Definition: The AllocationUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedAllocation = NS + "ownedAllocation";
+        /// <summary>
+        /// Definition: The AnalysisCaseUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedAnalysisCase = NS + "ownedAnalysisCase";
+        /// <summary>
+        /// Annotation: The annotatingElement of this Annotation, when it is an ownedRelatedElement.
+        /// </summary>
         public const string OwnedAnnotatingElement = NS + "ownedAnnotatingElement";
+        /// <summary>
+        /// AnnotatingElement: The ownedRelationships of this AnnotatingElement that are Annotations, for which this AnnotatingElement is the annotatingElement.
+        /// </summary>
         public const string OwnedAnnotatingRelationship = NS + "ownedAnnotatingRelationship";
+        /// <summary>
+        /// Element: The ownedRelationships of this Element that are Annotations, for which this Element is the annotatedElement.
+        /// </summary>
         public const string OwnedAnnotation = NS + "ownedAnnotation";
+        /// <summary>
+        /// Definition: The AttributeUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedAttribute = NS + "ownedAttribute";
+        /// <summary>
+        /// Definition: The CalculationUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedCalculation = NS + "ownedCalculation";
+        /// <summary>
+        /// Definition: The code&gt;CaseUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedCase = NS + "ownedCase";
+        /// <summary>
+        /// Definition: The ConcernUsages that are ownedUsages of this Definition.
+        /// FramedConcernMembership: The ConcernUsage that is the ownedConstraint of this FramedConcernMembership.
+        /// </summary>
         public const string OwnedConcern = NS + "ownedConcern";
+        /// <summary>
+        /// Type: A Conjugation owned by this Type for which the Type is the originalType.
+        /// </summary>
         public const string OwnedConjugator = NS + "ownedConjugator";
+        /// <summary>
+        /// Definition: The ConnectorAsUsages that are ownedUsages of this Definition. Note that this list includes BindingConnectorAsUsages, SuccessionAsUsages, and FlowUsages because these are ConnectorAsUsages even though they are not ConnectionUsages.
+        /// </summary>
         public const string OwnedConnection = NS + "ownedConnection";
+        /// <summary>
+        /// Definition: The ConstraintUsages that are ownedUsages of this Definition.
+        /// RequirementConstraintMembership: The ConstraintUsage that is the ownedMemberFeature of this RequirementConstraintMembership.
+        /// </summary>
         public const string OwnedConstraint = NS + "ownedConstraint";
+        /// <summary>
+        /// Feature: The one ownedSubsetting of this Feature, if any, that is a CrossSubsetting}, for which the Feature is the crossingFeature.
+        /// </summary>
         public const string OwnedCrossSubsetting = NS + "ownedCrossSubsetting";
+        /// <summary>
+        /// Type: The ownedRelationships of this Type that are Differencings, having this Type as their typeDifferenced.
+        /// </summary>
         public const string OwnedDifferencing = NS + "ownedDifferencing";
+        /// <summary>
+        /// Type: The ownedRelationships of this Type that are Disjoinings, for which the Type is the typeDisjoined Type.
+        /// </summary>
         public const string OwnedDisjoining = NS + "ownedDisjoining";
+        /// <summary>
+        /// Element: The Elements owned by this Element, derived as the ownedRelatedElements of the ownedRelationships of this Element.
+        /// </summary>
         public const string OwnedElement = NS + "ownedElement";
+        /// <summary>
+        /// Type: All endFeatures of this Type that are ownedFeatures.
+        /// </summary>
         public const string OwnedEndFeature = NS + "ownedEndFeature";
+        /// <summary>
+        /// Definition: The EnumerationUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedEnumeration = NS + "ownedEnumeration";
+        /// <summary>
+        /// Type: The ownedMemberFeatures of the ownedFeatureMemberships of this Type.
+        /// </summary>
         public const string OwnedFeature = NS + "ownedFeature";
+        /// <summary>
+        /// Feature: The ownedRelationships of this Feature that are FeatureChainings, for which the Feature will be the featureChained.
+        /// </summary>
         public const string OwnedFeatureChaining = NS + "ownedFeatureChaining";
+        /// <summary>
+        /// Feature: The ownedRelationships of this Feature that are FeatureInvertings and for which the Feature is the featureInverted.
+        /// </summary>
         public const string OwnedFeatureInverting = NS + "ownedFeatureInverting";
+        /// <summary>
+        /// Type: The ownedMemberships of this Type that are FeatureMemberships, for which the Type is the owningType. Each such FeatureMembership identifies an ownedFeature of the Type.
+        /// </summary>
         public const string OwnedFeatureMembership = NS + "ownedFeatureMembership";
+        /// <summary>
+        /// Definition: The FlowUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedFlow = NS + "ownedFlow";
+        /// <summary>
+        /// Namespace: The ownedRelationships of this Namespace that are Imports, for which the Namespace is the importOwningNamespace.
+        /// </summary>
         public const string OwnedImport = NS + "ownedImport";
+        /// <summary>
+        /// Definition: The InterfaceUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedInterface = NS + "ownedInterface";
+        /// <summary>
+        /// Type: The ownedRelationships of this Type that are Intersectings, have the Type as their typeIntersected.
+        /// </summary>
         public const string OwnedIntersecting = NS + "ownedIntersecting";
+        /// <summary>
+        /// Definition: The ItemUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedItem = NS + "ownedItem";
+        /// <summary>
+        /// Namespace: The owned members of this Namespace, which are the ownedMemberElements of the ownedMemberships of the Namespace.
+        /// </summary>
         public const string OwnedMember = NS + "ownedMember";
+        /// <summary>
+        /// OwningMembership: The Element that becomes an ownedMember of the membershipOwningNamespace due to this OwningMembership.
+        /// </summary>
         public const string OwnedMemberElement = NS + "ownedMemberElement";
+        /// <summary>
+        /// OwningMembership: The elementId of the ownedMemberElement.
+        /// </summary>
         public const string OwnedMemberElementId = NS + "ownedMemberElementId";
+        /// <summary>
+        /// FeatureMembership: The Feature that this FeatureMembership relates to its owningType, making it an ownedFeature of the owningType.
+        /// </summary>
         public const string OwnedMemberFeature = NS + "ownedMemberFeature";
+        /// <summary>
+        /// OwningMembership: The name of the ownedMemberElement.
+        /// </summary>
         public const string OwnedMemberName = NS + "ownedMemberName";
+        /// <summary>
+        /// ParameterMembership: The Feature that is identified as a parameter by this ParameterMembership.
+        /// </summary>
         public const string OwnedMemberParameter = NS + "ownedMemberParameter";
+        /// <summary>
+        /// OwningMembership: The shortName of the ownedMemberElement.
+        /// </summary>
         public const string OwnedMemberShortName = NS + "ownedMemberShortName";
+        /// <summary>
+        /// Namespace: The ownedRelationships of this Namespace that are Memberships, for which the Namespace is the membershipOwningNamespace.
+        /// </summary>
         public const string OwnedMembership = NS + "ownedMembership";
+        /// <summary>
+        /// Definition: The MetadataUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedMetadata = NS + "ownedMetadata";
+        /// <summary>
+        /// ObjectiveMembership: The RequirementUsage that is the ownedMemberFeature of this RequirementUsage.
+        /// </summary>
         public const string OwnedObjectiveRequirement = NS + "ownedObjectiveRequirement";
+        /// <summary>
+        /// Definition: The OccurrenceUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedOccurrence = NS + "ownedOccurrence";
+        /// <summary>
+        /// Definition: The PartUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedPart = NS + "ownedPart";
+        /// <summary>
+        /// Definition: The PortUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedPort = NS + "ownedPort";
+        /// <summary>
+        /// ConjugatedPortDefinition: The PortConjugation that is the ownedConjugator of this ConjugatedPortDefinition, linking it to its originalPortDefinition.
+        /// </summary>
         public const string OwnedPortConjugator = NS + "ownedPortConjugator";
+        /// <summary>
+        /// Feature: The ownedSubsettings of this Feature that are Redefinitions, for which the Feature is the redefiningFeature.
+        /// </summary>
         public const string OwnedRedefinition = NS + "ownedRedefinition";
+        /// <summary>
+        /// Definition: The ReferenceUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedReference = NS + "ownedReference";
+        /// <summary>
+        /// Feature: The one ownedSubsetting of this Feature, if any, that is a ReferenceSubsetting, for which the Feature is the referencingFeature.
+        /// </summary>
         public const string OwnedReferenceSubsetting = NS + "ownedReferenceSubsetting";
+        /// <summary>
+        /// Relationship: The relatedElements of this Relationship that are owned by the Relationship.
+        /// </summary>
         public const string OwnedRelatedElement = NS + "ownedRelatedElement";
+        /// <summary>
+        /// Element: The Relationships for which this Element is the owningRelatedElement.
+        /// </summary>
         public const string OwnedRelationship = NS + "ownedRelationship";
+        /// <summary>
+        /// Definition: The RenderingUsages that are ownedUsages of this Definition.
+        /// ViewRenderingMembership: The owned RenderingUsage that is either itself the referencedRendering or subsets the referencedRendering.
+        /// </summary>
         public const string OwnedRendering = NS + "ownedRendering";
+        /// <summary>
+        /// Definition: The RequirementUsages that are ownedUsages of this Definition.
+        /// RequirementVerificationMembership: The owned RequirementUsage that acts as the ownedConstraint for this RequirementVerificationMembership. This will either be the verifiedRequirement, or it will subset the verifiedRequirement.
+        /// </summary>
         public const string OwnedRequirement = NS + "ownedRequirement";
+        /// <summary>
+        /// ResultExpressionMembership: The Expression that provides the result for the owner of the ResultExpressionMembership.
+        /// </summary>
         public const string OwnedResultExpression = NS + "ownedResultExpression";
+        /// <summary>
+        /// Type: The ownedRelationships of this Type that are Specializations, for which the Type is the specific Type.
+        /// </summary>
         public const string OwnedSpecialization = NS + "ownedSpecialization";
+        /// <summary>
+        /// StakeholderMembership: The PartUsage specifying the stakeholder.
+        /// </summary>
         public const string OwnedStakeholderParameter = NS + "ownedStakeholderParameter";
+        /// <summary>
+        /// Definition: The StateUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedState = NS + "ownedState";
+        /// <summary>
+        /// Classifier: The ownedSpecializations of this Classifier that are Subclassifications, for which this Classifier is the subclassifier.
+        /// </summary>
         public const string OwnedSubclassification = NS + "ownedSubclassification";
+        /// <summary>
+        /// SubjectMembership: The UsageownedMemberParameter of this SubjectMembership.
+        /// </summary>
         public const string OwnedSubjectParameter = NS + "ownedSubjectParameter";
+        /// <summary>
+        /// Feature: The ownedSpecializations of this Feature that are Subsettings, for which the Feature is the subsettingFeature.
+        /// </summary>
         public const string OwnedSubsetting = NS + "ownedSubsetting";
+        /// <summary>
+        /// Definition: The TransitionUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedTransition = NS + "ownedTransition";
+        /// <summary>
+        /// Feature: The ownedRelationships of this Feature that are TypeFeaturings and for which the Feature is the featureOfType.
+        /// </summary>
         public const string OwnedTypeFeaturing = NS + "ownedTypeFeaturing";
+        /// <summary>
+        /// Feature: The ownedSpecializations of this Feature that are FeatureTypings, for which the Feature is the typedFeature.
+        /// </summary>
         public const string OwnedTyping = NS + "ownedTyping";
+        /// <summary>
+        /// Type: The ownedRelationships of this Type that are Unionings, having the Type as their typeUnioned.
+        /// </summary>
         public const string OwnedUnioning = NS + "ownedUnioning";
+        /// <summary>
+        /// Definition: The Usages that are ownedFeatures of this Definition.
+        /// </summary>
         public const string OwnedUsage = NS + "ownedUsage";
+        /// <summary>
+        /// Definition: The UseCaseUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedUseCase = NS + "ownedUseCase";
+        /// <summary>
+        /// VariantMembership: The Usage that represents a variant in the context of the owningVariationDefinition or owningVariationUsage.
+        /// </summary>
         public const string OwnedVariantUsage = NS + "ownedVariantUsage";
+        /// <summary>
+        /// Definition: The VerificationCaseUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedVerificationCase = NS + "ownedVerificationCase";
+        /// <summary>
+        /// Definition: The ViewUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedView = NS + "ownedView";
+        /// <summary>
+        /// Definition: The ViewpointUsages that are ownedUsages of this Definition.
+        /// </summary>
         public const string OwnedViewpoint = NS + "ownedViewpoint";
+        /// <summary>
+        /// Element: The owner of this Element, derived as the owningRelatedElement of the owningRelationship of this Element, if any.
+        /// </summary>
         public const string Owner = NS + "owner";
+        /// <summary>
+        /// Annotation: The annotatedElement of this Annotation, when it is also the owningRelatedElement.
+        /// </summary>
         public const string OwningAnnotatedElement = NS + "owningAnnotatedElement";
+        /// <summary>
+        /// Annotation: The annotatingElement of this Annotation, when it is the owningRelatedElement.
+        /// </summary>
         public const string OwningAnnotatingElement = NS + "owningAnnotatingElement";
+        /// <summary>
+        /// AnnotatingElement: The owningRelationship of this AnnotatingRelationship, if it is an Annotation.
+        /// </summary>
         public const string OwningAnnotatingRelationship = NS + "owningAnnotatingRelationship";
+        /// <summary>
+        /// Subclassification: The Classifier that owns this Subclassification relationship, which must also be its subclassifier.
+        /// </summary>
         public const string OwningClassifier = NS + "owningClassifier";
+        /// <summary>
+        /// Usage: The Definition that owns this Usage (if any).
+        /// </summary>
         public const string OwningDefinition = NS + "owningDefinition";
+        /// <summary>
+        /// Subsetting: A subsettingFeature that is also the owningRelatedElement of this Subsetting.
+        /// FeatureTyping: A typedFeature that is also the owningRelatedElement of this FeatureTyping.
+        /// FeatureInverting: A featureInverted that is also the owningRelatedElement of this FeatureInverting.
+        /// </summary>
         public const string OwningFeature = NS + "owningFeature";
+        /// <summary>
+        /// Feature: The FeatureMembership that owns this Feature as an ownedMemberFeature, determining its owningType.
+        /// </summary>
         public const string OwningFeatureMembership = NS + "owningFeatureMembership";
+        /// <summary>
+        /// TypeFeaturing: A featureOfType that is also the owningRelatedElement of this TypeFeaturing.
+        /// </summary>
         public const string OwningFeatureOfType = NS + "owningFeatureOfType";
+        /// <summary>
+        /// Element: The owningRelationship of this Element, if that Relationship is a Membership.
+        /// </summary>
         public const string OwningMembership = NS + "owningMembership";
+        /// <summary>
+        /// Element: The Namespace that owns this Element, which is the membershipOwningNamespace of the owningMembership of this Element, if any.
+        /// </summary>
         public const string OwningNamespace = NS + "owningNamespace";
+        /// <summary>
+        /// Relationship: The relatedElement of this Relationship that owns the Relationship, if any.
+        /// </summary>
         public const string OwningRelatedElement = NS + "owningRelatedElement";
+        /// <summary>
+        /// Element: The Relationship for which this Element is an ownedRelatedElement, if any.
+        /// </summary>
         public const string OwningRelationship = NS + "owningRelationship";
+        /// <summary>
+        /// Specialization: The Type that is the specific Type of this Specialization and owns it as its owningRelatedElement.
+        /// FeatureMembership: The Type that owns this FeatureMembership.
+        /// Feature: The Type that is the owningType of the owningFeatureMembership of this Feature.
+        /// Conjugation: The conjugatedType of this Conjugation that is also its owningRelatedElement.
+        /// Disjoining: A typeDisjoined that is also an owningRelatedElement.
+        /// </summary>
         public const string OwningType = NS + "owningType";
+        /// <summary>
+        /// Usage: The Usage in which this Usage is nested (if any).
+        /// </summary>
         public const string OwningUsage = NS + "owningUsage";
+        /// <summary>
+        /// Behavior: The parameters of this Behavior, which are defined as its directedFeatures, whose values are passed into and/or out of a performance of the Behavior.
+        /// Step: The parameters of this Step, which are defined as its directedFeatures, whose values are passed into and/or out of a performance of the Step.
+        /// </summary>
         public const string Parameter = NS + "parameter";
+        /// <summary>
+        /// PartUsage: The itemDefinitions of this PartUsage that are PartDefinitions.
+        /// </summary>
         public const string PartDefinition = NS + "partDefinition";
+        /// <summary>
+        /// AcceptActionUsage: An Expression whose result is bound to the payload parameter of this AcceptActionUsage. If provided, the AcceptActionUsage will only accept a Transfer with exactly this payload.
+        /// SendActionUsage: An Expression whose result is bound to the payload input parameter of this SendActionUsage.
+        /// </summary>
         public const string PayloadArgument = NS + "payloadArgument";
+        /// <summary>
+        /// Flow: The ownedFeature of the Flow that is a PayloadFeature (if any).
+        /// </summary>
         public const string PayloadFeature = NS + "payloadFeature";
+        /// <summary>
+        /// AcceptActionUsage: The nestedReference of this AcceptActionUsage that redefines the payload output parameter of the base AcceptActionUsage AcceptAction from the Systems Model Library.
+        /// </summary>
         public const string PayloadParameter = NS + "payloadParameter";
+        /// <summary>
+        /// Flow: The type of values transferred, which is the type of the payloadFeature of the Flow.
+        /// </summary>
         public const string PayloadType = NS + "payloadType";
+        /// <summary>
+        /// PerformActionUsage: The ActionUsage to be performed by this PerformedActionUsage. It is the eventOccurrence of the PerformActionUsage considered as an EventOccurrenceUsage, which must be an ActionUsage.
+        /// </summary>
         public const string PerformedAction = NS + "performedAction";
+        /// <summary>
+        /// PortUsage: The occurrenceDefinitions of this PortUsage, which must all be PortDefinitions.
+        /// ConjugatedPortTyping: The originalPortDefinition of the conjugatedPortDefinition of this ConjugatedPortTyping.
+        /// </summary>
         public const string PortDefinition = NS + "portDefinition";
+        /// <summary>
+        /// OccurrenceUsage: The kind of temporal portion (time slice or snapshot) is represented by this OccurrenceUsage. If portionKind is not null, then the owningType of the OccurrenceUsage must be non-null, and the OccurrenceUsage represents portions of the featuring instance of the owningType.
+        /// </summary>
         public const string PortionKind = NS + "portionKind";
+        /// <summary>
+        /// BooleanExpression: The Predicate that types the Expression.
+        /// </summary>
         public const string Predicate = NS + "predicate";
+        /// <summary>
+        /// Element: The full ownership-qualified name of this Element, represented in a form that is valid according to the KerML textual concrete syntax for qualified names (including use of unrestricted name notation and escaped characters, as necessary). The qualifiedName is null if this Element has no owningNamespace or if there is not a complete ownership chain of named Namespaces from a root Namespace to this Element. If the owningNamespace has other Elements with the same name as this one, then the qualifiedName is null for all such Elements other than the first.
+        /// </summary>
         public const string QualifiedName = NS + "qualifiedName";
+        /// <summary>
+        /// AcceptActionUsage: An Expression whose result is bound to the receiver input parameter of this AcceptActionUsage.
+        /// SendActionUsage: An Expression whose result is bound to the receiver input parameter of this SendActionUsage.
+        /// </summary>
         public const string ReceiverArgument = NS + "receiverArgument";
+        /// <summary>
+        /// Redefinition: The Feature that is redefined by the redefiningFeature of this Redefinition.
+        /// </summary>
         public const string RedefinedFeature = NS + "redefinedFeature";
+        /// <summary>
+        /// Redefinition: The Feature that is redefining the redefinedFeature of this Redefinition.
+        /// </summary>
         public const string RedefiningFeature = NS + "redefiningFeature";
+        /// <summary>
+        /// FramedConcernMembership:  The ConcernUsage that is referenced through this FramedConcernMembership. It is the referencedConstraint of the FramedConcernMembership considered as a RequirementConstraintMembership, which must be a ConcernUsage.
+        /// </summary>
         public const string ReferencedConcern = NS + "referencedConcern";
+        /// <summary>
+        /// RequirementConstraintMembership:  The ConstraintUsage that is referenced through this RequirementConstraintMembership. It is the referencedFeature of the ownedReferenceSubsetting of the ownedConstraint, if there is one, and, otherwise, the ownedConstraint itself.
+        /// </summary>
         public const string ReferencedConstraint = NS + "referencedConstraint";
+        /// <summary>
+        /// MetadataAccessExpression: The Element whose metadata is being accessed.
+        /// </summary>
         public const string ReferencedElement = NS + "referencedElement";
+        /// <summary>
+        /// ReferenceSubsetting: The Feature that is referenced by the referencingFeature of this ReferenceSubsetting.
+        /// </summary>
         public const string ReferencedFeature = NS + "referencedFeature";
+        /// <summary>
+        /// ViewRenderingMembership:  The RenderingUsage that is referenced through this ViewRenderingMembership. It is the referencedFeature of the ownedReferenceSubsetting for the ownedRendering, if there is one, and, otherwise, the ownedRendering itself.
+        /// </summary>
         public const string ReferencedRendering = NS + "referencedRendering";
+        /// <summary>
+        /// ReferenceSubsetting: The Feature that owns this ReferenceSubsetting relationship, which is also its subsettingFeature.
+        /// </summary>
         public const string ReferencingFeature = NS + "referencingFeature";
+        /// <summary>
+        /// FeatureReferenceExpression: The Feature that is referenced by this FeatureReferenceExpression, which is its first non-parameter member.
+        /// AssignmentActionUsage: The Feature whose value is to be set.
+        /// </summary>
         public const string Referent = NS + "referent";
+        /// <summary>
+        /// Relationship: The Elements that are related by this Relationship, derived as the union of the source and target Elements of the Relationship.
+        /// </summary>
         public const string RelatedElement = NS + "relatedElement";
+        /// <summary>
+        /// Connector: The Features that are related by this Connector considered as a Relationship and that restrict the links it identifies, given by the referenced Features of the connectorEnds of the Connector.
+        /// </summary>
         public const string RelatedFeature = NS + "relatedFeature";
+        /// <summary>
+        /// Association: The types of the associationEnds of the Association, which are the relatedElements of the Association considered as a Relationship.
+        /// </summary>
         public const string RelatedType = NS + "relatedType";
+        /// <summary>
+        /// RenderingDefinition: The usages of a RenderingDefinition that are RenderingUsages.
+        /// </summary>
         public const string Rendering = NS + "rendering";
+        /// <summary>
+        /// RenderingUsage: The RenderingDefinition that is the definition of this RenderingUsage.
+        /// </summary>
         public const string RenderingDefinition = NS + "renderingDefinition";
+        /// <summary>
+        /// TextualRepresentation: The Element that is represented by this TextualRepresentation.
+        /// </summary>
         public const string RepresentedElement = NS + "representedElement";
+        /// <summary>
+        /// RequirementUsage: An optional modeler-specified identifier for this RequirementUsage (used, e.g., to link it to an original requirement text in some source document), which is the declaredShortName for the RequirementUsage.
+        /// RequirementDefinition: An optional modeler-specified identifier for this RequirementDefinition (used, e.g., to link it to an original requirement text in some source document), which is the declaredShortName for the RequirementDefinition.
+        /// </summary>
         public const string ReqId = NS + "reqId";
+        /// <summary>
+        /// RequirementUsage: The owned ConstraintUsages that represent requirements of this RequirementUsage, which are the ownedConstraints of the RequirementConstraintMemberships of the RequirementUsage with kind = requirement.
+        /// RequirementDefinition: The owned ConstraintUsages that represent requirements of this RequirementDefinition, derived as the ownedConstraints of the RequirementConstraintMemberships of the RequirementDefinition with kind = requirement.
+        /// </summary>
         public const string RequiredConstraint = NS + "requiredConstraint";
+        /// <summary>
+        /// RequirementUsage: The RequirementDefinition that is the single definition of this RequirementUsage.
+        /// </summary>
         public const string RequirementDefinition = NS + "requirementDefinition";
+        /// <summary>
+        /// Expression: result.
+        /// Function: The object or value that is the result of evaluating the Function.
+        /// </summary>
         public const string Result = NS + "result";
+        /// <summary>
+        /// AnalysisCaseUsage: An Expression used to compute the result of the AnalysisCaseUsage, owned via a ResultExpressionMembership.
+        /// AnalysisCaseDefinition: An Expression used to compute the result of the AnalysisCaseDefinition, owned via a ResultExpressionMembership.
+        /// </summary>
         public const string ResultExpression = NS + "resultExpression";
+        /// <summary>
+        /// SatisfyRequirementUsage: The RequirementUsage that is satisfied by the satisfyingSubject of this SatisfyRequirementUsage. It is the assertedConstraint of the SatisfyRequirementUsage considered as an AssertConstraintUsage, which must be a RequirementUsage.
+        /// </summary>
         public const string SatisfiedRequirement = NS + "satisfiedRequirement";
+        /// <summary>
+        /// ViewUsage: The nestedRequirements of this ViewUsage that are ViewpointUsages for (additional) viewpoints satisfied by the ViewUsage.
+        /// ViewDefinition: The composite ownedRequirements of this ViewDefinition that are ViewpointUsages for viewpoints satisfied by the ViewDefinition.
+        /// </summary>
         public const string SatisfiedViewpoint = NS + "satisfiedViewpoint";
+        /// <summary>
+        /// SatisfyRequirementUsage: The Feature that represents the actual subject that is asserted to satisfy the satisfiedRequirement. The satisfyingFeature is bound to the subjectParameter of the SatisfyRequirementUsage.
+        /// </summary>
         public const string SatisfyingFeature = NS + "satisfyingFeature";
+        /// <summary>
+        /// SendActionUsage: An Expression whose result is bound to the sender input parameter of this SendActionUsage.
+        /// </summary>
         public const string SenderArgument = NS + "senderArgument";
+        /// <summary>
+        /// ForLoopActionUsage: The Expression whose result provides the sequence of values to which the loopVariable is set for each iterative performance of the bodyAction. It is the Expression whose result is bound to the seq input parameter of this ForLoopActionUsage.
+        /// </summary>
         public const string SeqArgument = NS + "seqArgument";
+        /// <summary>
+        /// Element: The short name to be used for this Element during name resolution within its owningNamespace. This is derived using the effectiveShortName() operation. By default, it is the same as the declaredShortName, but this is overridden for certain kinds of Elements to compute a shortName even when the declaredName is null.
+        /// </summary>
         public const string ShortName = NS + "shortName";
+        /// <summary>
+        /// Relationship: The relatedElements from which this Relationship is considered to be directed.
+        /// TransitionUsage: The source ActionUsage of this TransitionUsage, which becomes the source of the succession for the TransitionUsage.
+        /// </summary>
         public const string Source = NS + "source";
+        /// <summary>
+        /// Connector: The source relatedFeature for this Connector. It is the first relatedFeature.
+        /// </summary>
         public const string SourceFeature = NS + "sourceFeature";
+        /// <summary>
+        /// Flow: The Feature that provides the items carried by the Flow. It must be a feature of the source of the Flow.
+        /// </summary>
         public const string SourceOutputFeature = NS + "sourceOutputFeature";
+        /// <summary>
+        /// Association: The source relatedType for this Association. It is the first relatedType of the Association.
+        /// </summary>
         public const string SourceType = NS + "sourceType";
+        /// <summary>
+        /// Specialization: A Type with a subset of all instances of the general Type, which might be the same set.
+        /// </summary>
         public const string Specific = NS + "specific";
+        /// <summary>
+        /// RequirementUsage: The parameters of this RequirementUsage that represent stakeholders for the requirement.
+        /// RequirementDefinition: The parameters of this RequirementDefinition that represent stakeholders for th requirement.
+        /// </summary>
         public const string StakeholderParameter = NS + "stakeholderParameter";
+        /// <summary>
+        /// StateDefinition: The StateUsages, which are actions in the StateDefinition, that specify the discrete states in the behavior defined by the StateDefinition.
+        /// </summary>
         public const string State = NS + "state";
+        /// <summary>
+        /// StateUsage: The Behaviors that are the types of this StateUsage. Nominally, these would be StateDefinitions, but kernel Behaviors are also allowed, to permit use of Behaviors from the Kernel Model Libraries.
+        /// </summary>
         public const string StateDefinition = NS + "stateDefinition";
+        /// <summary>
+        /// Behavior: The Steps that make up this Behavior.
+        /// </summary>
         public const string Step = NS + "step";
+        /// <summary>
+        /// Subclassification: The more specific Classifier in this Subclassification.
+        /// </summary>
         public const string Subclassifier = NS + "subclassifier";
+        /// <summary>
+        /// RequirementUsage: The parameter of this RequirementUsage that represents its subject.
+        /// RequirementDefinition: The parameter of this RequirementDefinition that represents its subject.
+        /// CaseUsage: The parameter of this CaseUsage that represents its subject.
+        /// CaseDefinition: The parameter of this CaseDefinition that represents its subject.
+        /// </summary>
         public const string SubjectParameter = NS + "subjectParameter";
+        /// <summary>
+        /// Subsetting: The Feature that is subsetted by the subsettingFeature of this Subsetting.
+        /// </summary>
         public const string SubsettedFeature = NS + "subsettedFeature";
+        /// <summary>
+        /// Subsetting: The Feature that is a subset of the subsettedFeature of this Subsetting.
+        /// </summary>
         public const string SubsettingFeature = NS + "subsettingFeature";
+        /// <summary>
+        /// TransitionUsage: The Succession that is the ownedFeature of this TransitionUsage, which, if the TransitionUsage is triggered, asserts the temporal ordering of the source and target.
+        /// </summary>
         public const string Succession = NS + "succession";
+        /// <summary>
+        /// Subclassification: The more general Classifier in this Subclassification.
+        /// </summary>
         public const string Superclassifier = NS + "superclassifier";
+        /// <summary>
+        /// Dependency: The Element or Elements on which the client Elements depend in some respect.
+        /// </summary>
         public const string Supplier = NS + "supplier";
+        /// <summary>
+        /// Relationship: The relatedElements to which this Relationship is considered to be directed.
+        /// TransitionUsage: The target ActionUsage of this TransitionUsage, which is the targetFeature of the succession for the TransitionUsage.
+        /// </summary>
         public const string Target = NS + "target";
+        /// <summary>
+        /// AssignmentActionUsage: The Expression whose value is an occurrence in the domain of the referent Feature, for which the value of the referent will be set to the result of the valueExpression by this AssignmentActionUsage.
+        /// </summary>
         public const string TargetArgument = NS + "targetArgument";
+        /// <summary>
+        /// Connector: The target relatedFeatures for this Connector. This includes all the relatedFeatures other than the sourceFeature.
+        /// FeatureChainExpression: The Feature that is accessed by this FeatureChainExpression, which is its first non-parameter member.
+        /// </summary>
         public const string TargetFeature = NS + "targetFeature";
+        /// <summary>
+        /// Flow: The Feature that receives the values carried by the Flow. It must be a feature of the target of the Flow.
+        /// </summary>
         public const string TargetInputFeature = NS + "targetInputFeature";
+        /// <summary>
+        /// Association: The target relatedTypes for this Association. This includes all the relatedTypes other than the sourceType.
+        /// </summary>
         public const string TargetType = NS + "targetType";
+        /// <summary>
+        /// TerminateActionUsage: The Expression that is the featureValue of the terminateOccurrence parameter of this TerminateActionUsage.
+        /// </summary>
         public const string TerminatedOccurrenceArgument = NS + "terminatedOccurrenceArgument";
+        /// <summary>
+        /// RequirementUsage: An optional textual statement of the requirement represented by this RequirementUsage, derived from the bodies of the documentation of the RequirementUsage.
+        /// RequirementDefinition: An optional textual statement of the requirement represented by this RequirementDefinition, derived from the bodies of the documentation of the RequirementDefinition.
+        /// </summary>
         public const string Text = NS + "text";
+        /// <summary>
+        /// Element: The TextualRepresentations that annotate this Element.
+        /// </summary>
         public const string TextualRepresentation = NS + "textualRepresentation";
+        /// <summary>
+        /// IfActionUsage: The ActionUsage that is to be performed if the result of the ifArgument is true. It is the second parameter of the IfActionUsage.
+        /// </summary>
         public const string ThenAction = NS + "thenAction";
+        /// <summary>
+        /// TransitionFeatureMembership: The Step that is the ownedMemberFeature of this TransitionFeatureMembership.
+        /// </summary>
         public const string TransitionFeature = NS + "transitionFeature";
+        /// <summary>
+        /// TransitionUsage: The AcceptActionUsages that define the triggers of this TransitionUsage, which are the ownedFeatures of the TransitionUsage related to it by TransitionFeatureMemberships with kind = trigger, which must all be AcceptActionUsages.
+        /// </summary>
         public const string TriggerAction = NS + "triggerAction";
+        /// <summary>
+        /// Feature: Types that restrict the values of this Feature, such that the values must be instances of all the types. The types of a Feature are derived from its typings and the types of its subsettings. If the Feature is chained, then the types of the last Feature in the chain are also types of the chained Feature.
+        /// FeatureTyping: The Type that is being applied by this FeatureTyping.
+        /// </summary>
         public const string Type = NS + "type";
+        /// <summary>
+        /// Differencing: Type with interpretations partly determined by differencingType, as described in Type::differencingType.
+        /// </summary>
         public const string TypeDifferenced = NS + "typeDifferenced";
+        /// <summary>
+        /// Disjoining: Type asserted to be disjoint with the disjoiningType.
+        /// </summary>
         public const string TypeDisjoined = NS + "typeDisjoined";
+        /// <summary>
+        /// Intersecting: Type with interpretations partly determined by intersectingType, as described in Type::intersectingType.
+        /// </summary>
         public const string TypeIntersected = NS + "typeIntersected";
+        /// <summary>
+        /// Unioning: Type with interpretations partly determined by unioningType, as described in Type::unioningType.
+        /// </summary>
         public const string TypeUnioned = NS + "typeUnioned";
+        /// <summary>
+        /// FeatureTyping: The Feature that has a type determined by this FeatureTyping.
+        /// </summary>
         public const string TypedFeature = NS + "typedFeature";
+        /// <summary>
+        /// Type: The interpretations of a Type with unioningTypes are asserted to be the same as those of all the unioningTypes together, which are the Types derived from the unioningType of the ownedUnionings of this Type. For example, a Classifier for people might be the union of Classifiers for all the sexes. Similarly, a feature for people's children might be the union of features dividing them in the same ways as people in general.
+        /// Unioning: Type that partly determines interpretations of typeUnioned, as described in Type::unioningType.
+        /// </summary>
         public const string UnioningType = NS + "unioningType";
+        /// <summary>
+        /// WhileLoopActionUsage: The Expression whose result, if false, determines that the bodyAction should continue to be performed. It is the (optional) third owned parameter of the WhileLoopActionUsage.
+        /// </summary>
         public const string UntilArgument = NS + "untilArgument";
+        /// <summary>
+        /// MultiplicityRange: The Expression whose result is the upper bound of the MultiplicityRange.
+        /// </summary>
         public const string UpperBound = NS + "upperBound";
+        /// <summary>
+        /// Definition: The Usages that are features of this Definition (not necessarily owned).
+        /// Usage: The Usages that are features of this Usage (not necessarily owned).
+        /// </summary>
         public const string Usage = NS + "usage";
+        /// <summary>
+        /// UseCaseUsage: The UseCaseDefinition that is the definition of this UseCaseUsage.
+        /// </summary>
         public const string UseCaseDefinition = NS + "useCaseDefinition";
+        /// <summary>
+        /// IncludeUseCaseUsage: The UseCaseUsage to be included by this IncludeUseCaseUsage. It is the performedAction of the IncludeUseCaseUsage considered as a PerformActionUsage, which must be a UseCaseUsage.
+        /// </summary>
         public const string UseCaseIncluded = NS + "useCaseIncluded";
+        /// <summary>
+        /// FeatureValue: The Expression that provides the value as a result.
+        /// LiteralInteger: The Integer value that is the result of evaluating this LiteralInteger.
+        /// LiteralString: The String value that is the result of evaluating this Expression.
+        /// LiteralRational: The value whose rational approximation is the result of evaluating this LiteralRational.
+        /// LiteralBoolean: The Boolean value that is the result of evaluating this LiteralBoolean.
+        /// </summary>
         public const string Value = NS + "value";
+        /// <summary>
+        /// AssignmentActionUsage: The Expression whose result is to be assigned to the referent Feature.
+        /// </summary>
         public const string ValueExpression = NS + "valueExpression";
+        /// <summary>
+        /// Definition: The Usages which represent the variants of this Definition as a variation point Definition, if isVariation = true. If isVariation = false, the there must be no variants.
+        /// Usage: The Usages which represent the variants of this Usage as a variation point Usage, if isVariation = true. If isVariation = false, then there must be no variants.
+        /// </summary>
         public const string Variant = NS + "variant";
+        /// <summary>
+        /// Definition: The ownedMemberships of this Definition that are VariantMemberships. If isVariation = true, then this must be all ownedMemberships of the Definition. If isVariation = false, then variantMembershipmust be empty.
+        /// Usage: The ownedMemberships of this Usage that are VariantMemberships. If isVariation = true, then this must be all memberships of the Usage. If isVariation = false, then variantMembershipmust be empty.
+        /// </summary>
         public const string VariantMembership = NS + "variantMembership";
+        /// <summary>
+        /// VerificationCaseUsage: The VerificationCase that is the definition of this VerificationCaseUsage.
+        /// </summary>
         public const string VerificationCaseDefinition = NS + "verificationCaseDefinition";
+        /// <summary>
+        /// VerificationCaseUsage: The RequirementUsages verified by this VerificationCaseUsage, which are the verifiedRequirements of all RequirementVerificationMemberships of the objectiveRequirement.
+        /// VerificationCaseDefinition: The RequirementUsages verified by this VerificationCaseDefinition, which are the verifiedRequirements of all RequirementVerificationMemberships of the objectiveRequirement.
+        /// RequirementVerificationMembership:  The RequirementUsage that is identified as being verified. It is the referencedConstraint of the RequirementVerificationMembership considered as a RequirementConstraintMembership, which must be a RequirementUsage.
+        /// </summary>
         public const string VerifiedRequirement = NS + "verifiedRequirement";
+        /// <summary>
+        /// ViewDefinition: The usages of this ViewDefinition that are ViewUsages.
+        /// </summary>
         public const string View = NS + "view";
+        /// <summary>
+        /// ViewUsage: The Expressions related to this ViewUsage by ElementFilterMemberships, which specify conditions on Elements to be rendered in a view.
+        /// ViewDefinition: The Expressions related to this ViewDefinition by ElementFilterMemberships, which specify conditions on Elements to be rendered in a view.
+        /// </summary>
         public const string ViewCondition = NS + "viewCondition";
+        /// <summary>
+        /// ViewUsage: The ViewDefinition that is the definition of this ViewUsage.
+        /// </summary>
         public const string ViewDefinition = NS + "viewDefinition";
+        /// <summary>
+        /// ViewUsage: The RenderingUsage to be used to render views defined by this ViewUsage, which is the referencedRendering of the ViewRenderingMembership of the ViewUsage.
+        /// ViewDefinition: The RenderingUsage to be used to render views defined by this ViewDefinition, which is the referencedRendering of the ViewRenderingMembership of the ViewDefinition.
+        /// </summary>
         public const string ViewRendering = NS + "viewRendering";
+        /// <summary>
+        /// ViewpointUsage: The ViewpointDefinition that is the definition of this ViewpointUsage.
+        /// </summary>
         public const string ViewpointDefinition = NS + "viewpointDefinition";
+        /// <summary>
+        /// ViewpointUsage: The PartUsages that identify the stakeholders with concerns framed by this ViewpointUsage, which are the owned and inherited stakeholderParameters of the framedConcerns of this ViewpointUsage.
+        /// ViewpointDefinition: The PartUsages that identify the stakeholders with concerns framed by this ViewpointDefinition, which are the owned and inherited stakeholderParameters of the framedConcerns of this ViewpointDefinition.
+        /// </summary>
         public const string ViewpointStakeholder = NS + "viewpointStakeholder";
+        /// <summary>
+        /// Membership: Whether or not the Membership of the memberElement in the membershipOwningNamespace is publicly visible outside that Namespace.
+        /// Import: The visibility level of the imported members from this Import relative to the importOwningNamespace. The default is private.
+        /// </summary>
         public const string Visibility = NS + "visibility";
+        /// <summary>
+        /// WhileLoopActionUsage: The Expression whose result, if true, determines that the bodyAction should continue to be performed. It is the first owned parameter of the WhileLoopActionUsage.
+        /// </summary>
         public const string WhileArgument = NS + "whileArgument";
     }
 
     public static partial class Q
     {
+        /// <summary>
+        /// ActionDefinition: The ActionUsages that are steps in this ActionDefinition, which define the actions that specify the behavior of the ActionDefinition.
+        /// StateSubactionMembership: The ActionUsage that is the ownedMemberFeature of this StateSubactionMembership.
+        /// </summary>
         public static QName Action => QNameFor("action");
+        /// <summary>
+        /// ActionUsage: The Behaviors that are the types of this ActionUsage. Nominally, these would be ActionDefinitions, but other kinds of Kernel Behaviors are also allowed, to permit use of Behaviors from the Kernel Model Libraries.
+        /// </summary>
         public static QName ActionDefinition => QNameFor("actionDefinition");
+        /// <summary>
+        /// RequirementUsage: The parameters of this RequirementUsage that represent actors involved in the requirement.
+        /// RequirementDefinition: The parameters of this RequirementDefinition that represent actors involved in the requirement.
+        /// CaseUsage: The parameters of this CaseUsage that represent actors involved in the case.
+        /// CaseDefinition: The parameters of this CaseDefinition that represent actors involved in the case.
+        /// </summary>
         public static QName ActorParameter => QNameFor("actorParameter");
+        /// <summary>
+        /// Element: Various alternative identifiers for this Element. Generally, these will be set by tools.
+        /// </summary>
         public static QName AliasIds => QNameFor("aliasIds");
+        /// <summary>
+        /// AllocationDefinition: The AllocationUsages that refine the allocation mapping defined by this AllocationDefinition.
+        /// </summary>
         public static QName Allocation => QNameFor("allocation");
+        /// <summary>
+        /// AllocationUsage: The AllocationDefinitions that are the types of this AllocationUsage.
+        /// </summary>
         public static QName AllocationDefinition => QNameFor("allocationDefinition");
+        /// <summary>
+        /// AnalysisCaseUsage: The AnalysisCaseDefinition that is the definition of this AnalysisCaseUsage.
+        /// </summary>
         public static QName AnalysisCaseDefinition => QNameFor("analysisCaseDefinition");
+        /// <summary>
+        /// AnnotatingElement: The Elements that are annotated by this AnnotatingElement. If annotation is not empty, these are the annotatedElements of the annotations. If annotation is empty, then it is the owningNamespace of the AnnotatingElement.
+        /// Annotation: The Element that is annotated by the annotatingElement of this Annotation.
+        /// </summary>
         public static QName AnnotatedElement => QNameFor("annotatedElement");
+        /// <summary>
+        /// Annotation: The AnnotatingElement that annotates the annotatedElement of this Annotation. This is always either the ownedAnnotatingElement or the owningAnnotatingElement.
+        /// </summary>
         public static QName AnnotatingElement => QNameFor("annotatingElement");
+        /// <summary>
+        /// AnnotatingElement: The Annotations that relate this AnnotatingElement to its annotatedElements. This includes the owningAnnotatingRelationship (if any) followed by all the ownedAnnotatingRelationshps.
+        /// </summary>
         public static QName Annotation => QNameFor("annotation");
+        /// <summary>
+        /// InstantiationExpression: The Expressions whose results are bound to features of the instantiatedType. The arguments are ordered consistent with the order of the features, though they may not be one-to-one with all the features.
+        /// </summary>
         public static QName Argument => QNameFor("argument");
+        /// <summary>
+        /// AssertConstraintUsage: The ConstraintUsage to be performed by the AssertConstraintUsage. It is the referenceFeature of the ownedReferenceSubsetting for the AssertConstraintUsage, if there is one, and, otherwise, the AssertConstraintUsage itself.
+        /// </summary>
         public static QName AssertedConstraint => QNameFor("assertedConstraint");
+        /// <summary>
+        /// Connector: The Associations that type the Connector.
+        /// </summary>
         public static QName Association => QNameFor("association");
+        /// <summary>
+        /// Association: The features of the Association that identify the things that can be related by it. A concrete Association must have at least two associationEnds. When it has exactly two, the Association is called a binary Association.
+        /// </summary>
         public static QName AssociationEnd => QNameFor("associationEnd");
+        /// <summary>
+        /// RequirementUsage: The owned ConstraintUsages that represent assumptions of this RequirementUsage, derived as the ownedConstraints of the RequirementConstraintMemberships of the RequirementUsage with kind = assumption.
+        /// RequirementDefinition: The owned ConstraintUsages that represent assumptions of this RequirementDefinition, which are the ownedConstraints of the RequirementConstraintMemberships of the RequirementDefinition with kind = assumption.
+        /// </summary>
         public static QName AssumedConstraint => QNameFor("assumedConstraint");
+        /// <summary>
+        /// AttributeUsage: The DataTypes that are the types of this AttributeUsage. Nominally, these are AttributeDefinitions, but other kinds of kernel DataTypes are also allowed, to permit use of DataTypes from the Kernel Model Libraries.
+        /// </summary>
         public static QName AttributeDefinition => QNameFor("attributeDefinition");
+        /// <summary>
+        /// Step: The Behaviors that type this Step.
+        /// </summary>
         public static QName Behavior => QNameFor("behavior");
+        /// <summary>
+        /// Comment: The annotation text for the Comment.
+        /// TextualRepresentation: The textual representation of the representedElement in the given language.
+        /// </summary>
         public static QName Body => QNameFor("body");
+        /// <summary>
+        /// LoopActionUsage: The ActionUsage to be performed repeatedly by the LoopActionUsage. It is the second parameter of the LoopActionUsage.
+        /// </summary>
         public static QName BodyAction => QNameFor("bodyAction");
+        /// <summary>
+        /// MultiplicityRange: The owned Expressions of the MultiplicityRange whose results provide its bounds. These must be the first ownedMembers of the MultiplicityRange.
+        /// </summary>
         public static QName Bound => QNameFor("bound");
+        /// <summary>
+        /// CalculationDefinition: The actions of this CalculationDefinition that are CalculationUsages.
+        /// </summary>
         public static QName Calculation => QNameFor("calculation");
+        /// <summary>
+        /// CalculationUsage: The Function that is the type of this CalculationUsage. Nominally, this would be a CalculationDefinition, but a kernel Function is also allowed, to permit use of Functions from the Kernel Model Libraries.
+        /// </summary>
         public static QName CalculationDefinition => QNameFor("calculationDefinition");
+        /// <summary>
+        /// CaseUsage: The CaseDefinition that is the type of this CaseUsage.
+        /// </summary>
         public static QName CaseDefinition => QNameFor("caseDefinition");
+        /// <summary>
+        /// Feature: The Feature that are chained together to determine the values of this Feature, derived from the chainingFeatures of the ownedFeatureChainings of this Feature, in the same order. The values of a Feature with chainingFeatures are the same as values of the last Feature in the chain, which can be found by starting with the values of the first Feature (for each instance of the domain of the original Feature), then using each of those as domain instances to find the values of the second Feature in chainingFeatures, and so on, to values of the last Feature.
+        /// FeatureChaining: The Feature whose values partly determine values of featureChained, as described in Feature::chainingFeature.
+        /// </summary>
         public static QName ChainingFeature => QNameFor("chainingFeature");
+        /// <summary>
+        /// Dependency: The Element or Elements dependent on the supplier Elements.
+        /// </summary>
         public static QName Client => QNameFor("client");
+        /// <summary>
+        /// ConcernUsage: The ConcernDefinition that is the single type of this ConcernUsage.
+        /// </summary>
         public static QName ConcernDefinition => QNameFor("concernDefinition");
+        /// <summary>
+        /// ElementFilterMembership: The model-level evaluable Boolean-valued Expression used to filter the imported members of the membershipOwningNamespace of this ElementFilterMembership.
+        /// </summary>
         public static QName Condition => QNameFor("condition");
+        /// <summary>
+        /// PortDefinition: The  that is conjugate to this PortDefinition.
+        /// PortConjugation: The ConjugatedPortDefinition that is conjugate to the originalPortDefinition.
+        /// ConjugatedPortTyping: The type of this ConjugatedPortTyping considered as a FeatureTyping, which must be a ConjugatedPortDefinition.
+        /// </summary>
         public static QName ConjugatedPortDefinition => QNameFor("conjugatedPortDefinition");
+        /// <summary>
+        /// Conjugation: The Type that is the result of applying Conjugation to the originalType.
+        /// </summary>
         public static QName ConjugatedType => QNameFor("conjugatedType");
+        /// <summary>
+        /// ConnectionUsage: The AssociationStructures that are the types of this ConnectionUsage. Nominally, these are , but other kinds of Kernel AssociationStructures are also allowed, to permit use of AssociationStructures from the Kernel Model Libraries.
+        /// </summary>
         public static QName ConnectionDefinition => QNameFor("connectionDefinition");
+        /// <summary>
+        /// ConnectionDefinition: The Usages that define the things related by the ConnectionDefinition.
+        /// </summary>
         public static QName ConnectionEnd => QNameFor("connectionEnd");
+        /// <summary>
+        /// Connector: The endFeatures of a Connector, which redefine the endFeatures of the associations of the Connector. The connectorEnds determine via ReferenceSubsetting Relationships which Features are related by the Connector.
+        /// </summary>
         public static QName ConnectorEnd => QNameFor("connectorEnd");
+        /// <summary>
+        /// ConstraintUsage: The (single) Predicate that is the type of this ConstraintUsage. Nominally, this will be a ConstraintDefinition, but other kinds of Predicates are also allowed, to permit use of Predicates from the Kernel Model Libraries.
+        /// </summary>
         public static QName ConstraintDefinition => QNameFor("constraintDefinition");
+        /// <summary>
+        /// Feature: The second chainingFeature of the crossedFeature of the ownedCrossSubsetting of this Feature, if it has one. Semantically, the values of the crossFeature of an end Feature must include all values of the end Feature obtained when navigating from values of the other end Features of the same owningType.
+        /// .
+        /// </summary>
         public static QName CrossFeature => QNameFor("crossFeature");
+        /// <summary>
+        /// CrossSubsetting: The chained Feature that is cross subset by the crossingFeature of this CrossSubsetting.
+        /// </summary>
         public static QName CrossedFeature => QNameFor("crossedFeature");
+        /// <summary>
+        /// CrossSubsetting: The end Feature that owns this CrossSubsetting relationship and is also its subsettingFeature.
+        /// </summary>
         public static QName CrossingFeature => QNameFor("crossingFeature");
+        /// <summary>
+        /// Element: The declared name of this Element.
+        /// </summary>
         public static QName DeclaredName => QNameFor("declaredName");
+        /// <summary>
+        /// Element: An optional alternative name for the Element that is intended to be shorter or in some way more succinct than its primary name. It may act as a modeler-specified identifier for the Element, though it is then the responsibility of the modeler to maintain the uniqueness of this identifier within a model or relative to some other context.
+        /// </summary>
         public static QName DeclaredShortName => QNameFor("declaredShortName");
+        /// <summary>
+        /// Connector: The innermost Type that is a common direct or indirect featuringType of the relatedFeatures, such that, if it exists and was the featuringType of this Connector, the Connector would satisfy the checkConnectorTypeFeaturing constraint.
+        /// </summary>
         public static QName DefaultFeaturingType => QNameFor("defaultFeaturingType");
+        /// <summary>
+        /// Usage: The Classifiers that are the types of this Usage. Nominally, these are Definitions, but other kinds of Kernel Classifiers are also allowed, to permit use of Classifiers from the Kernel Model Libraries.
+        /// </summary>
         public static QName Definition => QNameFor("definition");
+        /// <summary>
+        /// Type: The interpretations of a Type with differencingTypes are asserted to be those of the first of those Types, but not including those of the remaining Types. For example, a Classifier might be the difference of a Classifier for people and another for people of a particular nationality, leaving people who are not of that nationality. Similarly, a feature of people might be the difference between a feature for their children and a Classifier for people of a particular sex, identifying their children not of that sex (because the interpretations of the children Feature that identify those of that sex are also interpretations of the Classifier for that sex).
+        /// Differencing: Type that partly determines interpretations of typeDifferenced, as described in Type::differencingType.
+        /// </summary>
         public static QName DifferencingType => QNameFor("differencingType");
+        /// <summary>
+        /// Type: The features of this Type that have a non-null direction.
+        /// </summary>
         public static QName DirectedFeature => QNameFor("directedFeature");
+        /// <summary>
+        /// Definition: The usages of this Definition that are directedFeatures.
+        /// Usage: The usages of this Usage that are directedFeatures.
+        /// </summary>
         public static QName DirectedUsage => QNameFor("directedUsage");
+        /// <summary>
+        /// Feature: Indicates how values of this Feature are determined or used (as specified for the FeatureDirectionKind).
+        /// </summary>
         public static QName Direction => QNameFor("direction");
+        /// <summary>
+        /// Disjoining: Type asserted to be disjoint with the typeDisjoined.
+        /// </summary>
         public static QName DisjoiningType => QNameFor("disjoiningType");
+        /// <summary>
+        /// StateUsage: The ActionUsage of this StateUsage to be performed while in the state defined by the StateDefinition. It is the owned ActionUsage related to the StateUsage by a StateSubactionMembership  with kind = do.
+        /// StateDefinition: The ActionUsage of this StateDefinition to be performed while in the state defined by the StateDefinition. It is the owned ActionUsage related to the StateDefinition by a StateSubactionMembership  with kind = do.
+        /// </summary>
         public static QName DoAction => QNameFor("doAction");
+        /// <summary>
+        /// Element: The Documentation owned by this Element.
+        /// </summary>
         public static QName Documentation => QNameFor("documentation");
+        /// <summary>
+        /// Documentation: The Element that is documented by this Documentation.
+        /// </summary>
         public static QName DocumentedElement => QNameFor("documentedElement");
+        /// <summary>
+        /// TransitionUsage: The ActionUsages that define the effects of this TransitionUsage, which are the ownedFeatures of the TransitionUsage related to it by TransitionFeatureMemberships with kind = effect, which must all be ActionUsages.
+        /// </summary>
         public static QName EffectAction => QNameFor("effectAction");
+        /// <summary>
+        /// Element: The globally unique identifier for this Element. This is intended to be set by tooling, and it must not change during the lifetime of the Element.
+        /// </summary>
         public static QName ElementId => QNameFor("elementId");
+        /// <summary>
+        /// IfActionUsage: The ActionUsage that is to be performed if the result of the ifArgument is false. It is the (optional) third parameter of the IfActionUsage.
+        /// </summary>
         public static QName ElseAction => QNameFor("elseAction");
+        /// <summary>
+        /// Type: All features of this Type with isEnd = true.
+        /// </summary>
         public static QName EndFeature => QNameFor("endFeature");
+        /// <summary>
+        /// Feature: The Type that is related to this Feature by an EndFeatureMembership in which the Feature is an ownedMemberFeature.
+        /// </summary>
         public static QName EndOwningType => QNameFor("endOwningType");
+        /// <summary>
+        /// StateUsage: The ActionUsage of this StateUsage to be performed on entry to the state defined by the StateDefinition. It is the owned ActionUsage related to the StateUsage by a StateSubactionMembership  with kind = entry.
+        /// StateDefinition: The ActionUsage of this StateDefinition to be performed on entry to the state defined by the StateDefinition. It is the owned ActionUsage related to the StateDefinition by a StateSubactionMembership  with kind = entry.
+        /// </summary>
         public static QName EntryAction => QNameFor("entryAction");
+        /// <summary>
+        /// EnumerationDefinition: EnumerationUsages of this EnumerationDefinitionthat have distinct, fixed values. Each enumeratedValue specifies one of the allowed instances of the EnumerationDefinition.
+        /// </summary>
         public static QName EnumeratedValue => QNameFor("enumeratedValue");
+        /// <summary>
+        /// EnumerationUsage: The single EnumerationDefinition that is the type of this EnumerationUsage.
+        /// </summary>
         public static QName EnumerationDefinition => QNameFor("enumerationDefinition");
+        /// <summary>
+        /// EventOccurrenceUsage: The OccurrenceUsage referenced as an event by this EventOccurrenceUsage. It is the referenceFeature of the ownedReferenceSubsetting for the EventOccurrenceUsage, if there is one, and, otherwise, the EventOccurrenceUsage itself.
+        /// </summary>
         public static QName EventOccurrence => QNameFor("eventOccurrence");
+        /// <summary>
+        /// ExhibitStateUsage: The StateUsage to be exhibited by the ExhibitStateUsage. It is the performedAction of the ExhibitStateUsage considered as a PerformActionUsage, which must be a StateUsage.
+        /// </summary>
         public static QName ExhibitedState => QNameFor("exhibitedState");
+        /// <summary>
+        /// StateUsage: The ActionUsage of this StateUsage to be performed on exit to the state defined by the StateDefinition. It is the owned ActionUsage related to the StateUsage by a StateSubactionMembership  with kind = exit.
+        /// StateDefinition: The ActionUsage of this StateDefinition to be performed on exit to the state defined by the StateDefinition. It is the owned ActionUsage related to the StateDefinition by a StateSubactionMembership  with kind = exit.
+        /// </summary>
         public static QName ExitAction => QNameFor("exitAction");
+        /// <summary>
+        /// ViewUsage: The Elements that are exposed by this ViewUsage, which are those memberElements of the imported Memberships from all the Expose Relationships that meet all the owned and inherited viewConditions.
+        /// </summary>
         public static QName ExposedElement => QNameFor("exposedElement");
+        /// <summary>
+        /// Function: The Expressions that are steps in the calculation of the result of this Function.
+        /// </summary>
         public static QName Expression => QNameFor("expression");
+        /// <summary>
+        /// Type: The ownedMemberFeatures of the featureMemberships of this Type.
+        /// </summary>
         public static QName Feature => QNameFor("feature");
+        /// <summary>
+        /// FeatureChaining: The Feature whose values are partly determined by values of the chainingFeature, as described in Feature::chainingFeature.
+        /// </summary>
         public static QName FeatureChained => QNameFor("featureChained");
+        /// <summary>
+        /// FeatureInverting: The Feature that is an inverse of the invertingFeature.
+        /// </summary>
         public static QName FeatureInverted => QNameFor("featureInverted");
+        /// <summary>
+        /// Type: The FeatureMemberships for features of this Type, which include all ownedFeatureMemberships and those inheritedMemberships that are FeatureMemberships (but does not include any importedMemberships).
+        /// </summary>
         public static QName FeatureMembership => QNameFor("featureMembership");
+        /// <summary>
+        /// TypeFeaturing: The Feature that is featured by the featuringType. It is the source of the TypeFeaturing.
+        /// </summary>
         public static QName FeatureOfType => QNameFor("featureOfType");
+        /// <summary>
+        /// Feature: The last of the chainingFeatures of this Feature, if it has any. Otherwise, this Feature itself.
+        /// </summary>
         public static QName FeatureTarget => QNameFor("featureTarget");
+        /// <summary>
+        /// FeatureValue: The Feature to be provided a value.
+        /// </summary>
         public static QName FeatureWithValue => QNameFor("featureWithValue");
+        /// <summary>
+        /// Feature: Types that feature this Feature, such that any instance in the domain of the Feature must be classified by all of these Types, including at least all the featuringTypes of its typeFeaturings.  If the Feature is chained, then the featuringTypes of the first Feature in the chain are also featuringTypes of the chained Feature.
+        /// TypeFeaturing: The Type that features the featureOfType. It is the target of the TypeFeaturing.
+        /// </summary>
         public static QName FeaturingType => QNameFor("featuringType");
+        /// <summary>
+        /// Package: The model-level evaluable Boolean-valued Expression used to filter the members of this Package, which are owned by the Package are via ElementFilterMemberships.
+        /// </summary>
         public static QName FilterCondition => QNameFor("filterCondition");
+        /// <summary>
+        /// FlowUsage: The Interactions that are the types of this FlowUsage. Nominally, these are FlowDefinitions, but other kinds of Kernel Interactions are also allowed, to permit use of Interactions from the Kernel Model Libraries.
+        /// </summary>
         public static QName FlowDefinition => QNameFor("flowDefinition");
+        /// <summary>
+        /// Flow: The connectorEnds of this Flow that are FlowEnds.
+        /// FlowDefinition: The Usages that define the things related by the FlowDefinition.
+        /// </summary>
         public static QName FlowEnd => QNameFor("flowEnd");
+        /// <summary>
+        /// RequirementUsage: The ConcernUsages framed by this RequirementUsage, which are the ownedConcerns of all FramedConcernMemberships of the RequirementUsage.
+        /// RequirementDefinition: The ConcernUsages framed by this RequirementDefinition, which are the ownedConcerns of all FramedConcernMemberships of the RequirementDefinition.
+        /// </summary>
         public static QName FramedConcern => QNameFor("framedConcern");
+        /// <summary>
+        /// Expression: The Function that types this Expression.
+        /// </summary>
         public static QName Function => QNameFor("function");
+        /// <summary>
+        /// Specialization: A Type with a superset of all instances of the specific Type, which might be the same set.
+        /// </summary>
         public static QName General => QNameFor("general");
+        /// <summary>
+        /// TransitionUsage: The Expressions that define the guards of this TransitionUsage, which are the ownedFeatures of the TransitionUsage related to it by TransitionFeatureMemberships with kind = guard, which must all be Expressions.
+        /// </summary>
         public static QName GuardExpression => QNameFor("guardExpression");
+        /// <summary>
+        /// IfActionUsage: The Expression whose result determines whether the thenAction or (optionally) the elseAction is performed. It is the first parameter of the IfActionUsage.
+        /// </summary>
         public static QName IfArgument => QNameFor("ifArgument");
+        /// <summary>
+        /// Import: The Namespace into which Memberships are imported by this Import, which must be the owningRelatedElement of the Import.
+        /// </summary>
         public static QName ImportOwningNamespace => QNameFor("importOwningNamespace");
+        /// <summary>
+        /// Import: The effectively imported Element for this Import. For a MembershipImport, this is the memberElement of the importedMembership. For a NamespaceImport, it is the importedNamespace.
+        /// </summary>
         public static QName ImportedElement => QNameFor("importedElement");
+        /// <summary>
+        /// Namespace: The Memberships in this Namespace that result from the ownedImports of this Namespace.
+        /// MembershipImport: The Membership to be imported.
+        /// </summary>
         public static QName ImportedMembership => QNameFor("importedMembership");
+        /// <summary>
+        /// NamespaceImport: The Namespace whose visible Memberships are imported by this NamespaceImport.
+        /// </summary>
         public static QName ImportedNamespace => QNameFor("importedNamespace");
+        /// <summary>
+        /// UseCaseUsage: The UseCaseUsages that are included by this UseCaseUse, which are the useCaseIncludeds of the IncludeUseCaseUsages owned by this UseCaseUsage.
+        /// UseCaseDefinition: The UseCaseUsages that are included by this UseCaseDefinition, which are the useCaseIncludeds of the IncludeUseCaseUsages owned by this UseCaseDefinition.
+        /// </summary>
         public static QName IncludedUseCase => QNameFor("includedUseCase");
+        /// <summary>
+        /// OccurrenceUsage: The at most one occurrenceDefinition that has isIndividual = true.
+        /// </summary>
         public static QName IndividualDefinition => QNameFor("individualDefinition");
+        /// <summary>
+        /// Type: All the memberFeatures of the inheritedMemberships of this Type that are FeatureMemberships.
+        /// </summary>
         public static QName InheritedFeature => QNameFor("inheritedFeature");
+        /// <summary>
+        /// Type: All Memberships inherited by this Type via Specialization or Conjugation. These are included in the derived union for the memberships of the Type.
+        /// </summary>
         public static QName InheritedMembership => QNameFor("inheritedMembership");
+        /// <summary>
+        /// Type: All features related to this Type by FeatureMemberships that have direction in or inout.
+        /// </summary>
         public static QName Input => QNameFor("input");
+        /// <summary>
+        /// InstantiationExpression: The Type that is being instantiated.
+        /// </summary>
         public static QName InstantiatedType => QNameFor("instantiatedType");
+        /// <summary>
+        /// Flow: The Interactions that type this Flow. Interactions are both Associations and Behaviors, which can type Connectors and Steps, respectively.
+        /// </summary>
         public static QName Interaction => QNameFor("interaction");
+        /// <summary>
+        /// InterfaceUsage: The InterfaceDefinitions that type this InterfaceUsage.
+        /// </summary>
         public static QName InterfaceDefinition => QNameFor("interfaceDefinition");
+        /// <summary>
+        /// InterfaceDefinition: The PortUsages that are the connectionEnds of this InterfaceDefinition.
+        ///
+        /// .
+        /// </summary>
         public static QName InterfaceEnd => QNameFor("interfaceEnd");
+        /// <summary>
+        /// Type: The interpretations of a Type with intersectingTypes are asserted to be those in common among the intersectingTypes, which are the Types derived from the intersectingType of the ownedIntersectings of this Type. For example, a Classifier might be an intersection of Classifiers for people of a particular sex and of a particular nationality. Similarly, a feature for people's children of a particular sex might be the intersection of a Feature for their children and a Classifier for people of that sex (because the interpretations of the children Feature that identify those of that sex are also interpretations of the Classifier for that sex).
+        /// Intersecting: Type that partly determines interpretations of typeIntersected, as described in Type::intersectingType.
+        /// </summary>
         public static QName IntersectingType => QNameFor("intersectingType");
+        /// <summary>
+        /// FeatureInverting: The Feature that is an inverse of the invertedFeature.
+        /// </summary>
         public static QName InvertingFeature => QNameFor("invertingFeature");
+        /// <summary>
+        /// Type: Indicates whether instances of this Type must also be instances of at least one of its specialized Types.
+        /// </summary>
         public static QName IsAbstract => QNameFor("isAbstract");
+        /// <summary>
+        /// Feature: Whether the Feature is a composite feature of its featuringType. If so, the values of the Feature cannot exist after its featuring instance no longer does and cannot be values of another composite feature that is not on the same featuring instance.
+        /// </summary>
         public static QName IsComposite => QNameFor("isComposite");
+        /// <summary>
+        /// Type: Indicates whether this Type has an ownedConjugator.
+        /// </summary>
         public static QName IsConjugated => QNameFor("isConjugated");
+        /// <summary>
+        /// Feature: If isVariable is true, then whether the value of this Feature nevertheless does not change over all snapshots of its owningType.
+        /// </summary>
         public static QName IsConstant => QNameFor("isConstant");
+        /// <summary>
+        /// FeatureValue: Whether this FeatureValue is a concrete specification of the bound or initial value of the featureWithValue, or just a default value that may be overridden.
+        /// </summary>
         public static QName IsDefault => QNameFor("isDefault");
+        /// <summary>
+        /// Feature: Whether the values of this Feature can always be computed from the values of other Features.
+        /// </summary>
         public static QName IsDerived => QNameFor("isDerived");
+        /// <summary>
+        /// Feature: Whether or not this Feature is an end Feature. An end Feature always has multiplicity 1, mapping each of its domain instances to a single co-domain instance. However, it may have a crossFeature, in which case values of the crossFeature must be the same as those found by navigation across instances of the owningType from values of other end Features to values of this Feature. If the owningType has n end Features, then the multiplicity, ordering, and uniqueness declared for the crossFeature of any one of these end Features constrains the cardinality, ordering, and uniqueness of the collection of values of that Feature reached by navigation when the values of the other n-1 end Features are held fixed.
+        /// </summary>
         public static QName IsEnd => QNameFor("isEnd");
+        /// <summary>
+        /// Relationship: Whether this Relationship was generated by tooling to meet semantic rules, rather than being directly created by a modeler.
+        /// </summary>
         public static QName IsImplied => QNameFor("isImplied");
+        /// <summary>
+        /// Element: Whether all necessary implied Relationships have been included in the ownedRelationships of this Element. This property may be true, even if there are not actually any ownedRelationships with isImplied = true, meaning that no such Relationships are actually implied for this Element. However, if it is false, then ownedRelationships may not contain any implied Relationships. That is, either all required implied Relationships must be included, or none of them.
+        /// </summary>
         public static QName IsImpliedIncluded => QNameFor("isImpliedIncluded");
+        /// <summary>
+        /// Import: Whether to import memberships without regard to declared visibility.
+        /// </summary>
         public static QName IsImportAll => QNameFor("isImportAll");
+        /// <summary>
+        /// OccurrenceUsage: Whether this OccurrenceUsage represents the usage of the specific individual represented by its individualDefinition.
+        /// OccurrenceDefinition: Whether this OccurrenceDefinition is constrained to represent at most one thing.
+        /// </summary>
         public static QName IsIndividual => QNameFor("isIndividual");
+        /// <summary>
+        /// FeatureValue: Whether this FeatureValue specifies a bound value or an initial value for the featureWithValue.
+        /// </summary>
         public static QName IsInitial => QNameFor("isInitial");
+        /// <summary>
+        /// Element: Whether this Element is contained in the ownership tree of a library model.
+        /// </summary>
         public static QName IsLibraryElement => QNameFor("isLibraryElement");
+        /// <summary>
+        /// Expression: Whether this Expression meets the constraints necessary to be evaluated at model level, that is, using metadata within the model.
+        /// Function: Whether this Function can be used as the function of a model-level evaluable InvocationExpression. Certain Functions from the Kernel Functions Library are considered to have isModelLevelEvaluable = true. For all other Functions it is false.
+        /// </summary>
         public static QName IsModelLevelEvaluable => QNameFor("isModelLevelEvaluable");
+        /// <summary>
+        /// Invariant: Whether this Invariant is asserted to be false rather than true.
+        /// </summary>
         public static QName IsNegated => QNameFor("isNegated");
+        /// <summary>
+        /// Feature: Whether an order exists for the values of this Feature or not.
+        /// </summary>
         public static QName IsOrdered => QNameFor("isOrdered");
+        /// <summary>
+        /// StateUsage: Whether the nestedStates of this StateUsage are to all be performed in parallel. If true, none of the nestedActions (which include nestedStates) may have any incoming or outgoing Transitions. If false, only one nestedState may be performed at a time.
+        /// StateDefinition: Whether the ownedStates of this StateDefinition are to all be performed in parallel. If true, none of the ownedActions (which includes ownedStates) may have any incoming or outgoing Transitions. If false, only one ownedState may be performed at a time.
+        /// </summary>
         public static QName IsParallel => QNameFor("isParallel");
+        /// <summary>
+        /// Feature: Whether the values of this Feature are contained in the space and time of instances of the domain of the Feature and represent the same thing as those instances.
+        /// </summary>
         public static QName IsPortion => QNameFor("isPortion");
+        /// <summary>
+        /// Import: Whether to recursively import Memberships from visible, owned sub-Namespaces.
+        /// </summary>
         public static QName IsRecursive => QNameFor("isRecursive");
+        /// <summary>
+        /// Usage: Whether this Usage is a referential Usage, that is, it has isComposite = false.
+        /// </summary>
         public static QName IsReference => QNameFor("isReference");
+        /// <summary>
+        /// LibraryPackage: Whether this LibraryPackage contains a standard library model. This should only be set to true for LibraryPackages in the standard Kernel Model Libraries or in normative model libraries for a language built on KerML.
+        /// </summary>
         public static QName IsStandard => QNameFor("isStandard");
+        /// <summary>
+        /// Type: Whether all things that meet the classification conditions of this Type must be classified by the Type.
+        /// </summary>
         public static QName IsSufficient => QNameFor("isSufficient");
+        /// <summary>
+        /// Feature: Whether or not values for this Feature must have no duplicates or not.
+        /// </summary>
         public static QName IsUnique => QNameFor("isUnique");
+        /// <summary>
+        /// Feature: Whether the value of this Feature might vary over time. That is, whether the Feature may have a different value for each snapshot of an owningType that is an Occurrence.
+        /// </summary>
         public static QName IsVariable => QNameFor("isVariable");
+        /// <summary>
+        /// Definition: Whether this Definition is for a variation point or not. If true, then all the memberships of the Definition must be VariantMemberships.
+        /// Usage: Whether this Usage is for a variation point or not. If true, then all the memberships of the Usage must be VariantMemberships.
+        /// </summary>
         public static QName IsVariation => QNameFor("isVariation");
+        /// <summary>
+        /// ItemUsage: The Structures that are the definitions of this ItemUsage. Nominally, these are ItemDefinitions, but other kinds of Kernel Structures are also allowed, to permit use of Structures from the Kernel Library.
+        /// </summary>
         public static QName ItemDefinition => QNameFor("itemDefinition");
+        /// <summary>
+        /// StateSubactionMembership: Whether this StateSubactionMembership is for an entry, do or exit ActionUsage.
+        /// TransitionFeatureMembership: Whether this TransitionFeatureMembership  is for a trigger, guard or effect.
+        /// RequirementConstraintMembership: Whether the RequirementConstraintMembership is for an assumed or required ConstraintUsage.
+        /// TriggerInvocationExpression: Indicates which of the Functions from the Triggers model in the Kernel Semantic Library is to be invoked by this TriggerInvocationExpression.
+        /// </summary>
         public static QName Kind => QNameFor("kind");
+        /// <summary>
+        /// TextualRepresentation: The natural or artifical language in which the body text is written.
+        /// </summary>
         public static QName Language => QNameFor("language");
+        /// <summary>
+        /// Comment: Identification of the language of the body text and, optionally, the region and/or encoding. The format shall be a POSIX locale conformant to ISO/IEC 15897, with the format [language[_territory][.codeset][@modifier]].
+        /// </summary>
         public static QName Locale => QNameFor("locale");
+        /// <summary>
+        /// ForLoopActionUsage: The ownedFeature of this ForLoopActionUsage that acts as the loop variable, which is assigned the successive values of the input sequence on each iteration. It is the ownedFeature that redefines ForLoopAction::var.
+        /// </summary>
         public static QName LoopVariable => QNameFor("loopVariable");
+        /// <summary>
+        /// MultiplicityRange: The Expression whose result provides the lower bound of the MultiplicityRange. If no lowerBound Expression is given, then the lower bound shall have the same value as the upper bound, unless the upper bound is unbounded (*), in which case the lower bound shall be 0.
+        /// </summary>
         public static QName LowerBound => QNameFor("lowerBound");
+        /// <summary>
+        /// Usage: Whether this Usage may be time varying (that is, whether it is featured by the snapshots of its owningType, rather than being featured by the owningType itself). However, if isConstant is also true, then the value of the Usage is nevertheless constant over the entire duration of an instance of its owningType (that is, it has the same value on all snapshots).
+        /// </summary>
         public static QName MayTimeVary => QNameFor("mayTimeVary");
+        /// <summary>
+        /// Namespace: The set of all member Elements of this Namespace, which are the memberElements of all memberships of the Namespace.
+        /// </summary>
         public static QName Member => QNameFor("member");
+        /// <summary>
+        /// Membership: The Element that becomes a member of the membershipOwningNamespace due to this Membership.
+        /// </summary>
         public static QName MemberElement => QNameFor("memberElement");
+        /// <summary>
+        /// Membership: The elementId of the memberElement.
+        /// </summary>
         public static QName MemberElementId => QNameFor("memberElementId");
+        /// <summary>
+        /// Membership: The name of the memberElement relative to the membershipOwningNamespace.
+        /// </summary>
         public static QName MemberName => QNameFor("memberName");
+        /// <summary>
+        /// Membership: The short name of the memberElement relative to the membershipOwningNamespace.
+        /// </summary>
         public static QName MemberShortName => QNameFor("memberShortName");
+        /// <summary>
+        /// Namespace: All Memberships in this Namespace, including (at least) the union of ownedMemberships and importedMemberships.
+        /// </summary>
         public static QName Membership => QNameFor("membership");
+        /// <summary>
+        /// Membership: The Namespace of which the memberElement becomes a member due to this Membership.
+        /// </summary>
         public static QName MembershipOwningNamespace => QNameFor("membershipOwningNamespace");
+        /// <summary>
+        /// MetadataFeature: The type of this MetadataFeature, which must be a Metaclass.
+        /// </summary>
         public static QName Metaclass => QNameFor("metaclass");
+        /// <summary>
+        /// MetadataUsage: The MetadataDefinition that is the definition of this MetadataUsage.
+        /// </summary>
         public static QName MetadataDefinition => QNameFor("metadataDefinition");
+        /// <summary>
+        /// Type: An ownedMember of this Type that is a Multiplicity, which constraints the cardinality of the Type. If there is no such ownedMember, then the cardinality of this Type is constrained by all the Multiplicity constraints applicable to any direct supertypes.
+        /// </summary>
         public static QName Multiplicity => QNameFor("multiplicity");
+        /// <summary>
+        /// Element: The name to be used for this Element during name resolution within its owningNamespace. This is derived using the effectiveName() operation. By default, it is the same as the declaredName, but this is overridden for certain kinds of Elements to compute a name even when the declaredName is null.
+        /// </summary>
         public static QName Name => QNameFor("name");
+        /// <summary>
+        /// Usage: The ActionUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedAction => QNameFor("nestedAction");
+        /// <summary>
+        /// Usage: The AllocationUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedAllocation => QNameFor("nestedAllocation");
+        /// <summary>
+        /// Usage: The AnalysisCaseUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedAnalysisCase => QNameFor("nestedAnalysisCase");
+        /// <summary>
+        /// Usage: The code&gt;AttributeUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedAttribute => QNameFor("nestedAttribute");
+        /// <summary>
+        /// Usage: The CalculationUsage that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedCalculation => QNameFor("nestedCalculation");
+        /// <summary>
+        /// Usage: The CaseUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedCase => QNameFor("nestedCase");
+        /// <summary>
+        /// Usage: The ConcernUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedConcern => QNameFor("nestedConcern");
+        /// <summary>
+        /// Usage: The ConnectorAsUsages that are nestedUsages of this Usage. Note that this list includes BindingConnectorAsUsages, SuccessionAsUsages, and FlowConnectionUsages because these are ConnectorAsUsages even though they are not ConnectionUsages.
+        /// </summary>
         public static QName NestedConnection => QNameFor("nestedConnection");
+        /// <summary>
+        /// Usage: The ConstraintUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedConstraint => QNameFor("nestedConstraint");
+        /// <summary>
+        /// Usage: The code&gt;EnumerationUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedEnumeration => QNameFor("nestedEnumeration");
+        /// <summary>
+        /// Usage: The code&gt;FlowUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedFlow => QNameFor("nestedFlow");
+        /// <summary>
+        /// Usage: The InterfaceUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedInterface => QNameFor("nestedInterface");
+        /// <summary>
+        /// Usage: The ItemUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedItem => QNameFor("nestedItem");
+        /// <summary>
+        /// Usage: The MetadataUsages that are nestedUsages of this of this Usage.
+        /// </summary>
         public static QName NestedMetadata => QNameFor("nestedMetadata");
+        /// <summary>
+        /// Usage: The OccurrenceUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedOccurrence => QNameFor("nestedOccurrence");
+        /// <summary>
+        /// Usage: The PartUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedPart => QNameFor("nestedPart");
+        /// <summary>
+        /// Usage: The PortUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedPort => QNameFor("nestedPort");
+        /// <summary>
+        /// Usage: The ReferenceUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedReference => QNameFor("nestedReference");
+        /// <summary>
+        /// Usage: The RenderingUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedRendering => QNameFor("nestedRendering");
+        /// <summary>
+        /// Usage: The RequirementUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedRequirement => QNameFor("nestedRequirement");
+        /// <summary>
+        /// Usage: The StateUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedState => QNameFor("nestedState");
+        /// <summary>
+        /// Usage: The TransitionUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedTransition => QNameFor("nestedTransition");
+        /// <summary>
+        /// Usage: The Usages that are ownedFeatures of this Usage.
+        /// </summary>
         public static QName NestedUsage => QNameFor("nestedUsage");
+        /// <summary>
+        /// Usage: The UseCaseUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedUseCase => QNameFor("nestedUseCase");
+        /// <summary>
+        /// Usage: The VerificationCaseUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedVerificationCase => QNameFor("nestedVerificationCase");
+        /// <summary>
+        /// Usage: The ViewUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedView => QNameFor("nestedView");
+        /// <summary>
+        /// Usage: The ViewpointUsages that are nestedUsages of this Usage.
+        /// </summary>
         public static QName NestedViewpoint => QNameFor("nestedViewpoint");
+        /// <summary>
+        /// CaseUsage: The RequirementUsage representing the objective of this CaseUsage.
+        /// CaseDefinition: The RequirementUsage representing the objective of this CaseDefinition.
+        /// </summary>
         public static QName ObjectiveRequirement => QNameFor("objectiveRequirement");
+        /// <summary>
+        /// OccurrenceUsage: The Classes that are the types of this OccurrenceUsage. Nominally, these are OccurrenceDefinitions, but other kinds of kernel Classes are also allowed, to permit use of Classes from the Kernel Model Libraries.
+        /// </summary>
         public static QName OccurrenceDefinition => QNameFor("occurrenceDefinition");
+        /// <summary>
+        /// OperatorExpression: An operator symbol that names a corresponding Function from one of the standard packages from the Kernel Function Library .
+        /// </summary>
         public static QName Operator => QNameFor("operator");
+        /// <summary>
+        /// ConjugatedPortDefinition: The original PortDefinition for this ConjugatedPortDefinition, which is the owningNamespace of the ConjugatedPortDefinition.
+        /// PortConjugation: The PortDefinition being conjugated.
+        /// </summary>
         public static QName OriginalPortDefinition => QNameFor("originalPortDefinition");
+        /// <summary>
+        /// Conjugation: The Type to be conjugated.
+        /// </summary>
         public static QName OriginalType => QNameFor("originalType");
+        /// <summary>
+        /// Type: All features related to this Type by FeatureMemberships that have direction out or inout.
+        /// </summary>
         public static QName Output => QNameFor("output");
+        /// <summary>
+        /// Definition: The ActionUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedAction => QNameFor("ownedAction");
+        /// <summary>
+        /// ActorMembership: The PartUsage specifying the actor.
+        /// </summary>
         public static QName OwnedActorParameter => QNameFor("ownedActorParameter");
+        /// <summary>
+        /// Definition: The AllocationUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedAllocation => QNameFor("ownedAllocation");
+        /// <summary>
+        /// Definition: The AnalysisCaseUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedAnalysisCase => QNameFor("ownedAnalysisCase");
+        /// <summary>
+        /// Annotation: The annotatingElement of this Annotation, when it is an ownedRelatedElement.
+        /// </summary>
         public static QName OwnedAnnotatingElement => QNameFor("ownedAnnotatingElement");
+        /// <summary>
+        /// AnnotatingElement: The ownedRelationships of this AnnotatingElement that are Annotations, for which this AnnotatingElement is the annotatingElement.
+        /// </summary>
         public static QName OwnedAnnotatingRelationship => QNameFor("ownedAnnotatingRelationship");
+        /// <summary>
+        /// Element: The ownedRelationships of this Element that are Annotations, for which this Element is the annotatedElement.
+        /// </summary>
         public static QName OwnedAnnotation => QNameFor("ownedAnnotation");
+        /// <summary>
+        /// Definition: The AttributeUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedAttribute => QNameFor("ownedAttribute");
+        /// <summary>
+        /// Definition: The CalculationUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedCalculation => QNameFor("ownedCalculation");
+        /// <summary>
+        /// Definition: The code&gt;CaseUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedCase => QNameFor("ownedCase");
+        /// <summary>
+        /// Definition: The ConcernUsages that are ownedUsages of this Definition.
+        /// FramedConcernMembership: The ConcernUsage that is the ownedConstraint of this FramedConcernMembership.
+        /// </summary>
         public static QName OwnedConcern => QNameFor("ownedConcern");
+        /// <summary>
+        /// Type: A Conjugation owned by this Type for which the Type is the originalType.
+        /// </summary>
         public static QName OwnedConjugator => QNameFor("ownedConjugator");
+        /// <summary>
+        /// Definition: The ConnectorAsUsages that are ownedUsages of this Definition. Note that this list includes BindingConnectorAsUsages, SuccessionAsUsages, and FlowUsages because these are ConnectorAsUsages even though they are not ConnectionUsages.
+        /// </summary>
         public static QName OwnedConnection => QNameFor("ownedConnection");
+        /// <summary>
+        /// Definition: The ConstraintUsages that are ownedUsages of this Definition.
+        /// RequirementConstraintMembership: The ConstraintUsage that is the ownedMemberFeature of this RequirementConstraintMembership.
+        /// </summary>
         public static QName OwnedConstraint => QNameFor("ownedConstraint");
+        /// <summary>
+        /// Feature: The one ownedSubsetting of this Feature, if any, that is a CrossSubsetting}, for which the Feature is the crossingFeature.
+        /// </summary>
         public static QName OwnedCrossSubsetting => QNameFor("ownedCrossSubsetting");
+        /// <summary>
+        /// Type: The ownedRelationships of this Type that are Differencings, having this Type as their typeDifferenced.
+        /// </summary>
         public static QName OwnedDifferencing => QNameFor("ownedDifferencing");
+        /// <summary>
+        /// Type: The ownedRelationships of this Type that are Disjoinings, for which the Type is the typeDisjoined Type.
+        /// </summary>
         public static QName OwnedDisjoining => QNameFor("ownedDisjoining");
+        /// <summary>
+        /// Element: The Elements owned by this Element, derived as the ownedRelatedElements of the ownedRelationships of this Element.
+        /// </summary>
         public static QName OwnedElement => QNameFor("ownedElement");
+        /// <summary>
+        /// Type: All endFeatures of this Type that are ownedFeatures.
+        /// </summary>
         public static QName OwnedEndFeature => QNameFor("ownedEndFeature");
+        /// <summary>
+        /// Definition: The EnumerationUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedEnumeration => QNameFor("ownedEnumeration");
+        /// <summary>
+        /// Type: The ownedMemberFeatures of the ownedFeatureMemberships of this Type.
+        /// </summary>
         public static QName OwnedFeature => QNameFor("ownedFeature");
+        /// <summary>
+        /// Feature: The ownedRelationships of this Feature that are FeatureChainings, for which the Feature will be the featureChained.
+        /// </summary>
         public static QName OwnedFeatureChaining => QNameFor("ownedFeatureChaining");
+        /// <summary>
+        /// Feature: The ownedRelationships of this Feature that are FeatureInvertings and for which the Feature is the featureInverted.
+        /// </summary>
         public static QName OwnedFeatureInverting => QNameFor("ownedFeatureInverting");
+        /// <summary>
+        /// Type: The ownedMemberships of this Type that are FeatureMemberships, for which the Type is the owningType. Each such FeatureMembership identifies an ownedFeature of the Type.
+        /// </summary>
         public static QName OwnedFeatureMembership => QNameFor("ownedFeatureMembership");
+        /// <summary>
+        /// Definition: The FlowUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedFlow => QNameFor("ownedFlow");
+        /// <summary>
+        /// Namespace: The ownedRelationships of this Namespace that are Imports, for which the Namespace is the importOwningNamespace.
+        /// </summary>
         public static QName OwnedImport => QNameFor("ownedImport");
+        /// <summary>
+        /// Definition: The InterfaceUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedInterface => QNameFor("ownedInterface");
+        /// <summary>
+        /// Type: The ownedRelationships of this Type that are Intersectings, have the Type as their typeIntersected.
+        /// </summary>
         public static QName OwnedIntersecting => QNameFor("ownedIntersecting");
+        /// <summary>
+        /// Definition: The ItemUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedItem => QNameFor("ownedItem");
+        /// <summary>
+        /// Namespace: The owned members of this Namespace, which are the ownedMemberElements of the ownedMemberships of the Namespace.
+        /// </summary>
         public static QName OwnedMember => QNameFor("ownedMember");
+        /// <summary>
+        /// OwningMembership: The Element that becomes an ownedMember of the membershipOwningNamespace due to this OwningMembership.
+        /// </summary>
         public static QName OwnedMemberElement => QNameFor("ownedMemberElement");
+        /// <summary>
+        /// OwningMembership: The elementId of the ownedMemberElement.
+        /// </summary>
         public static QName OwnedMemberElementId => QNameFor("ownedMemberElementId");
+        /// <summary>
+        /// FeatureMembership: The Feature that this FeatureMembership relates to its owningType, making it an ownedFeature of the owningType.
+        /// </summary>
         public static QName OwnedMemberFeature => QNameFor("ownedMemberFeature");
+        /// <summary>
+        /// OwningMembership: The name of the ownedMemberElement.
+        /// </summary>
         public static QName OwnedMemberName => QNameFor("ownedMemberName");
+        /// <summary>
+        /// ParameterMembership: The Feature that is identified as a parameter by this ParameterMembership.
+        /// </summary>
         public static QName OwnedMemberParameter => QNameFor("ownedMemberParameter");
+        /// <summary>
+        /// OwningMembership: The shortName of the ownedMemberElement.
+        /// </summary>
         public static QName OwnedMemberShortName => QNameFor("ownedMemberShortName");
+        /// <summary>
+        /// Namespace: The ownedRelationships of this Namespace that are Memberships, for which the Namespace is the membershipOwningNamespace.
+        /// </summary>
         public static QName OwnedMembership => QNameFor("ownedMembership");
+        /// <summary>
+        /// Definition: The MetadataUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedMetadata => QNameFor("ownedMetadata");
+        /// <summary>
+        /// ObjectiveMembership: The RequirementUsage that is the ownedMemberFeature of this RequirementUsage.
+        /// </summary>
         public static QName OwnedObjectiveRequirement => QNameFor("ownedObjectiveRequirement");
+        /// <summary>
+        /// Definition: The OccurrenceUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedOccurrence => QNameFor("ownedOccurrence");
+        /// <summary>
+        /// Definition: The PartUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedPart => QNameFor("ownedPart");
+        /// <summary>
+        /// Definition: The PortUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedPort => QNameFor("ownedPort");
+        /// <summary>
+        /// ConjugatedPortDefinition: The PortConjugation that is the ownedConjugator of this ConjugatedPortDefinition, linking it to its originalPortDefinition.
+        /// </summary>
         public static QName OwnedPortConjugator => QNameFor("ownedPortConjugator");
+        /// <summary>
+        /// Feature: The ownedSubsettings of this Feature that are Redefinitions, for which the Feature is the redefiningFeature.
+        /// </summary>
         public static QName OwnedRedefinition => QNameFor("ownedRedefinition");
+        /// <summary>
+        /// Definition: The ReferenceUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedReference => QNameFor("ownedReference");
+        /// <summary>
+        /// Feature: The one ownedSubsetting of this Feature, if any, that is a ReferenceSubsetting, for which the Feature is the referencingFeature.
+        /// </summary>
         public static QName OwnedReferenceSubsetting => QNameFor("ownedReferenceSubsetting");
+        /// <summary>
+        /// Relationship: The relatedElements of this Relationship that are owned by the Relationship.
+        /// </summary>
         public static QName OwnedRelatedElement => QNameFor("ownedRelatedElement");
+        /// <summary>
+        /// Element: The Relationships for which this Element is the owningRelatedElement.
+        /// </summary>
         public static QName OwnedRelationship => QNameFor("ownedRelationship");
+        /// <summary>
+        /// Definition: The RenderingUsages that are ownedUsages of this Definition.
+        /// ViewRenderingMembership: The owned RenderingUsage that is either itself the referencedRendering or subsets the referencedRendering.
+        /// </summary>
         public static QName OwnedRendering => QNameFor("ownedRendering");
+        /// <summary>
+        /// Definition: The RequirementUsages that are ownedUsages of this Definition.
+        /// RequirementVerificationMembership: The owned RequirementUsage that acts as the ownedConstraint for this RequirementVerificationMembership. This will either be the verifiedRequirement, or it will subset the verifiedRequirement.
+        /// </summary>
         public static QName OwnedRequirement => QNameFor("ownedRequirement");
+        /// <summary>
+        /// ResultExpressionMembership: The Expression that provides the result for the owner of the ResultExpressionMembership.
+        /// </summary>
         public static QName OwnedResultExpression => QNameFor("ownedResultExpression");
+        /// <summary>
+        /// Type: The ownedRelationships of this Type that are Specializations, for which the Type is the specific Type.
+        /// </summary>
         public static QName OwnedSpecialization => QNameFor("ownedSpecialization");
+        /// <summary>
+        /// StakeholderMembership: The PartUsage specifying the stakeholder.
+        /// </summary>
         public static QName OwnedStakeholderParameter => QNameFor("ownedStakeholderParameter");
+        /// <summary>
+        /// Definition: The StateUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedState => QNameFor("ownedState");
+        /// <summary>
+        /// Classifier: The ownedSpecializations of this Classifier that are Subclassifications, for which this Classifier is the subclassifier.
+        /// </summary>
         public static QName OwnedSubclassification => QNameFor("ownedSubclassification");
+        /// <summary>
+        /// SubjectMembership: The UsageownedMemberParameter of this SubjectMembership.
+        /// </summary>
         public static QName OwnedSubjectParameter => QNameFor("ownedSubjectParameter");
+        /// <summary>
+        /// Feature: The ownedSpecializations of this Feature that are Subsettings, for which the Feature is the subsettingFeature.
+        /// </summary>
         public static QName OwnedSubsetting => QNameFor("ownedSubsetting");
+        /// <summary>
+        /// Definition: The TransitionUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedTransition => QNameFor("ownedTransition");
+        /// <summary>
+        /// Feature: The ownedRelationships of this Feature that are TypeFeaturings and for which the Feature is the featureOfType.
+        /// </summary>
         public static QName OwnedTypeFeaturing => QNameFor("ownedTypeFeaturing");
+        /// <summary>
+        /// Feature: The ownedSpecializations of this Feature that are FeatureTypings, for which the Feature is the typedFeature.
+        /// </summary>
         public static QName OwnedTyping => QNameFor("ownedTyping");
+        /// <summary>
+        /// Type: The ownedRelationships of this Type that are Unionings, having the Type as their typeUnioned.
+        /// </summary>
         public static QName OwnedUnioning => QNameFor("ownedUnioning");
+        /// <summary>
+        /// Definition: The Usages that are ownedFeatures of this Definition.
+        /// </summary>
         public static QName OwnedUsage => QNameFor("ownedUsage");
+        /// <summary>
+        /// Definition: The UseCaseUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedUseCase => QNameFor("ownedUseCase");
+        /// <summary>
+        /// VariantMembership: The Usage that represents a variant in the context of the owningVariationDefinition or owningVariationUsage.
+        /// </summary>
         public static QName OwnedVariantUsage => QNameFor("ownedVariantUsage");
+        /// <summary>
+        /// Definition: The VerificationCaseUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedVerificationCase => QNameFor("ownedVerificationCase");
+        /// <summary>
+        /// Definition: The ViewUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedView => QNameFor("ownedView");
+        /// <summary>
+        /// Definition: The ViewpointUsages that are ownedUsages of this Definition.
+        /// </summary>
         public static QName OwnedViewpoint => QNameFor("ownedViewpoint");
+        /// <summary>
+        /// Element: The owner of this Element, derived as the owningRelatedElement of the owningRelationship of this Element, if any.
+        /// </summary>
         public static QName Owner => QNameFor("owner");
+        /// <summary>
+        /// Annotation: The annotatedElement of this Annotation, when it is also the owningRelatedElement.
+        /// </summary>
         public static QName OwningAnnotatedElement => QNameFor("owningAnnotatedElement");
+        /// <summary>
+        /// Annotation: The annotatingElement of this Annotation, when it is the owningRelatedElement.
+        /// </summary>
         public static QName OwningAnnotatingElement => QNameFor("owningAnnotatingElement");
+        /// <summary>
+        /// AnnotatingElement: The owningRelationship of this AnnotatingRelationship, if it is an Annotation.
+        /// </summary>
         public static QName OwningAnnotatingRelationship => QNameFor("owningAnnotatingRelationship");
+        /// <summary>
+        /// Subclassification: The Classifier that owns this Subclassification relationship, which must also be its subclassifier.
+        /// </summary>
         public static QName OwningClassifier => QNameFor("owningClassifier");
+        /// <summary>
+        /// Usage: The Definition that owns this Usage (if any).
+        /// </summary>
         public static QName OwningDefinition => QNameFor("owningDefinition");
+        /// <summary>
+        /// Subsetting: A subsettingFeature that is also the owningRelatedElement of this Subsetting.
+        /// FeatureTyping: A typedFeature that is also the owningRelatedElement of this FeatureTyping.
+        /// FeatureInverting: A featureInverted that is also the owningRelatedElement of this FeatureInverting.
+        /// </summary>
         public static QName OwningFeature => QNameFor("owningFeature");
+        /// <summary>
+        /// Feature: The FeatureMembership that owns this Feature as an ownedMemberFeature, determining its owningType.
+        /// </summary>
         public static QName OwningFeatureMembership => QNameFor("owningFeatureMembership");
+        /// <summary>
+        /// TypeFeaturing: A featureOfType that is also the owningRelatedElement of this TypeFeaturing.
+        /// </summary>
         public static QName OwningFeatureOfType => QNameFor("owningFeatureOfType");
+        /// <summary>
+        /// Element: The owningRelationship of this Element, if that Relationship is a Membership.
+        /// </summary>
         public static QName OwningMembership => QNameFor("owningMembership");
+        /// <summary>
+        /// Element: The Namespace that owns this Element, which is the membershipOwningNamespace of the owningMembership of this Element, if any.
+        /// </summary>
         public static QName OwningNamespace => QNameFor("owningNamespace");
+        /// <summary>
+        /// Relationship: The relatedElement of this Relationship that owns the Relationship, if any.
+        /// </summary>
         public static QName OwningRelatedElement => QNameFor("owningRelatedElement");
+        /// <summary>
+        /// Element: The Relationship for which this Element is an ownedRelatedElement, if any.
+        /// </summary>
         public static QName OwningRelationship => QNameFor("owningRelationship");
+        /// <summary>
+        /// Specialization: The Type that is the specific Type of this Specialization and owns it as its owningRelatedElement.
+        /// FeatureMembership: The Type that owns this FeatureMembership.
+        /// Feature: The Type that is the owningType of the owningFeatureMembership of this Feature.
+        /// Conjugation: The conjugatedType of this Conjugation that is also its owningRelatedElement.
+        /// Disjoining: A typeDisjoined that is also an owningRelatedElement.
+        /// </summary>
         public static QName OwningType => QNameFor("owningType");
+        /// <summary>
+        /// Usage: The Usage in which this Usage is nested (if any).
+        /// </summary>
         public static QName OwningUsage => QNameFor("owningUsage");
+        /// <summary>
+        /// Behavior: The parameters of this Behavior, which are defined as its directedFeatures, whose values are passed into and/or out of a performance of the Behavior.
+        /// Step: The parameters of this Step, which are defined as its directedFeatures, whose values are passed into and/or out of a performance of the Step.
+        /// </summary>
         public static QName Parameter => QNameFor("parameter");
+        /// <summary>
+        /// PartUsage: The itemDefinitions of this PartUsage that are PartDefinitions.
+        /// </summary>
         public static QName PartDefinition => QNameFor("partDefinition");
+        /// <summary>
+        /// AcceptActionUsage: An Expression whose result is bound to the payload parameter of this AcceptActionUsage. If provided, the AcceptActionUsage will only accept a Transfer with exactly this payload.
+        /// SendActionUsage: An Expression whose result is bound to the payload input parameter of this SendActionUsage.
+        /// </summary>
         public static QName PayloadArgument => QNameFor("payloadArgument");
+        /// <summary>
+        /// Flow: The ownedFeature of the Flow that is a PayloadFeature (if any).
+        /// </summary>
         public static QName PayloadFeature => QNameFor("payloadFeature");
+        /// <summary>
+        /// AcceptActionUsage: The nestedReference of this AcceptActionUsage that redefines the payload output parameter of the base AcceptActionUsage AcceptAction from the Systems Model Library.
+        /// </summary>
         public static QName PayloadParameter => QNameFor("payloadParameter");
+        /// <summary>
+        /// Flow: The type of values transferred, which is the type of the payloadFeature of the Flow.
+        /// </summary>
         public static QName PayloadType => QNameFor("payloadType");
+        /// <summary>
+        /// PerformActionUsage: The ActionUsage to be performed by this PerformedActionUsage. It is the eventOccurrence of the PerformActionUsage considered as an EventOccurrenceUsage, which must be an ActionUsage.
+        /// </summary>
         public static QName PerformedAction => QNameFor("performedAction");
+        /// <summary>
+        /// PortUsage: The occurrenceDefinitions of this PortUsage, which must all be PortDefinitions.
+        /// ConjugatedPortTyping: The originalPortDefinition of the conjugatedPortDefinition of this ConjugatedPortTyping.
+        /// </summary>
         public static QName PortDefinition => QNameFor("portDefinition");
+        /// <summary>
+        /// OccurrenceUsage: The kind of temporal portion (time slice or snapshot) is represented by this OccurrenceUsage. If portionKind is not null, then the owningType of the OccurrenceUsage must be non-null, and the OccurrenceUsage represents portions of the featuring instance of the owningType.
+        /// </summary>
         public static QName PortionKind => QNameFor("portionKind");
+        /// <summary>
+        /// BooleanExpression: The Predicate that types the Expression.
+        /// </summary>
         public static QName Predicate => QNameFor("predicate");
+        /// <summary>
+        /// Element: The full ownership-qualified name of this Element, represented in a form that is valid according to the KerML textual concrete syntax for qualified names (including use of unrestricted name notation and escaped characters, as necessary). The qualifiedName is null if this Element has no owningNamespace or if there is not a complete ownership chain of named Namespaces from a root Namespace to this Element. If the owningNamespace has other Elements with the same name as this one, then the qualifiedName is null for all such Elements other than the first.
+        /// </summary>
         public static QName QualifiedName => QNameFor("qualifiedName");
+        /// <summary>
+        /// AcceptActionUsage: An Expression whose result is bound to the receiver input parameter of this AcceptActionUsage.
+        /// SendActionUsage: An Expression whose result is bound to the receiver input parameter of this SendActionUsage.
+        /// </summary>
         public static QName ReceiverArgument => QNameFor("receiverArgument");
+        /// <summary>
+        /// Redefinition: The Feature that is redefined by the redefiningFeature of this Redefinition.
+        /// </summary>
         public static QName RedefinedFeature => QNameFor("redefinedFeature");
+        /// <summary>
+        /// Redefinition: The Feature that is redefining the redefinedFeature of this Redefinition.
+        /// </summary>
         public static QName RedefiningFeature => QNameFor("redefiningFeature");
+        /// <summary>
+        /// FramedConcernMembership:  The ConcernUsage that is referenced through this FramedConcernMembership. It is the referencedConstraint of the FramedConcernMembership considered as a RequirementConstraintMembership, which must be a ConcernUsage.
+        /// </summary>
         public static QName ReferencedConcern => QNameFor("referencedConcern");
+        /// <summary>
+        /// RequirementConstraintMembership:  The ConstraintUsage that is referenced through this RequirementConstraintMembership. It is the referencedFeature of the ownedReferenceSubsetting of the ownedConstraint, if there is one, and, otherwise, the ownedConstraint itself.
+        /// </summary>
         public static QName ReferencedConstraint => QNameFor("referencedConstraint");
+        /// <summary>
+        /// MetadataAccessExpression: The Element whose metadata is being accessed.
+        /// </summary>
         public static QName ReferencedElement => QNameFor("referencedElement");
+        /// <summary>
+        /// ReferenceSubsetting: The Feature that is referenced by the referencingFeature of this ReferenceSubsetting.
+        /// </summary>
         public static QName ReferencedFeature => QNameFor("referencedFeature");
+        /// <summary>
+        /// ViewRenderingMembership:  The RenderingUsage that is referenced through this ViewRenderingMembership. It is the referencedFeature of the ownedReferenceSubsetting for the ownedRendering, if there is one, and, otherwise, the ownedRendering itself.
+        /// </summary>
         public static QName ReferencedRendering => QNameFor("referencedRendering");
+        /// <summary>
+        /// ReferenceSubsetting: The Feature that owns this ReferenceSubsetting relationship, which is also its subsettingFeature.
+        /// </summary>
         public static QName ReferencingFeature => QNameFor("referencingFeature");
+        /// <summary>
+        /// FeatureReferenceExpression: The Feature that is referenced by this FeatureReferenceExpression, which is its first non-parameter member.
+        /// AssignmentActionUsage: The Feature whose value is to be set.
+        /// </summary>
         public static QName Referent => QNameFor("referent");
+        /// <summary>
+        /// Relationship: The Elements that are related by this Relationship, derived as the union of the source and target Elements of the Relationship.
+        /// </summary>
         public static QName RelatedElement => QNameFor("relatedElement");
+        /// <summary>
+        /// Connector: The Features that are related by this Connector considered as a Relationship and that restrict the links it identifies, given by the referenced Features of the connectorEnds of the Connector.
+        /// </summary>
         public static QName RelatedFeature => QNameFor("relatedFeature");
+        /// <summary>
+        /// Association: The types of the associationEnds of the Association, which are the relatedElements of the Association considered as a Relationship.
+        /// </summary>
         public static QName RelatedType => QNameFor("relatedType");
+        /// <summary>
+        /// RenderingDefinition: The usages of a RenderingDefinition that are RenderingUsages.
+        /// </summary>
         public static QName Rendering => QNameFor("rendering");
+        /// <summary>
+        /// RenderingUsage: The RenderingDefinition that is the definition of this RenderingUsage.
+        /// </summary>
         public static QName RenderingDefinition => QNameFor("renderingDefinition");
+        /// <summary>
+        /// TextualRepresentation: The Element that is represented by this TextualRepresentation.
+        /// </summary>
         public static QName RepresentedElement => QNameFor("representedElement");
+        /// <summary>
+        /// RequirementUsage: An optional modeler-specified identifier for this RequirementUsage (used, e.g., to link it to an original requirement text in some source document), which is the declaredShortName for the RequirementUsage.
+        /// RequirementDefinition: An optional modeler-specified identifier for this RequirementDefinition (used, e.g., to link it to an original requirement text in some source document), which is the declaredShortName for the RequirementDefinition.
+        /// </summary>
         public static QName ReqId => QNameFor("reqId");
+        /// <summary>
+        /// RequirementUsage: The owned ConstraintUsages that represent requirements of this RequirementUsage, which are the ownedConstraints of the RequirementConstraintMemberships of the RequirementUsage with kind = requirement.
+        /// RequirementDefinition: The owned ConstraintUsages that represent requirements of this RequirementDefinition, derived as the ownedConstraints of the RequirementConstraintMemberships of the RequirementDefinition with kind = requirement.
+        /// </summary>
         public static QName RequiredConstraint => QNameFor("requiredConstraint");
+        /// <summary>
+        /// RequirementUsage: The RequirementDefinition that is the single definition of this RequirementUsage.
+        /// </summary>
         public static QName RequirementDefinition => QNameFor("requirementDefinition");
+        /// <summary>
+        /// Expression: result.
+        /// Function: The object or value that is the result of evaluating the Function.
+        /// </summary>
         public static QName Result => QNameFor("result");
+        /// <summary>
+        /// AnalysisCaseUsage: An Expression used to compute the result of the AnalysisCaseUsage, owned via a ResultExpressionMembership.
+        /// AnalysisCaseDefinition: An Expression used to compute the result of the AnalysisCaseDefinition, owned via a ResultExpressionMembership.
+        /// </summary>
         public static QName ResultExpression => QNameFor("resultExpression");
+        /// <summary>
+        /// SatisfyRequirementUsage: The RequirementUsage that is satisfied by the satisfyingSubject of this SatisfyRequirementUsage. It is the assertedConstraint of the SatisfyRequirementUsage considered as an AssertConstraintUsage, which must be a RequirementUsage.
+        /// </summary>
         public static QName SatisfiedRequirement => QNameFor("satisfiedRequirement");
+        /// <summary>
+        /// ViewUsage: The nestedRequirements of this ViewUsage that are ViewpointUsages for (additional) viewpoints satisfied by the ViewUsage.
+        /// ViewDefinition: The composite ownedRequirements of this ViewDefinition that are ViewpointUsages for viewpoints satisfied by the ViewDefinition.
+        /// </summary>
         public static QName SatisfiedViewpoint => QNameFor("satisfiedViewpoint");
+        /// <summary>
+        /// SatisfyRequirementUsage: The Feature that represents the actual subject that is asserted to satisfy the satisfiedRequirement. The satisfyingFeature is bound to the subjectParameter of the SatisfyRequirementUsage.
+        /// </summary>
         public static QName SatisfyingFeature => QNameFor("satisfyingFeature");
+        /// <summary>
+        /// SendActionUsage: An Expression whose result is bound to the sender input parameter of this SendActionUsage.
+        /// </summary>
         public static QName SenderArgument => QNameFor("senderArgument");
+        /// <summary>
+        /// ForLoopActionUsage: The Expression whose result provides the sequence of values to which the loopVariable is set for each iterative performance of the bodyAction. It is the Expression whose result is bound to the seq input parameter of this ForLoopActionUsage.
+        /// </summary>
         public static QName SeqArgument => QNameFor("seqArgument");
+        /// <summary>
+        /// Element: The short name to be used for this Element during name resolution within its owningNamespace. This is derived using the effectiveShortName() operation. By default, it is the same as the declaredShortName, but this is overridden for certain kinds of Elements to compute a shortName even when the declaredName is null.
+        /// </summary>
         public static QName ShortName => QNameFor("shortName");
+        /// <summary>
+        /// Relationship: The relatedElements from which this Relationship is considered to be directed.
+        /// TransitionUsage: The source ActionUsage of this TransitionUsage, which becomes the source of the succession for the TransitionUsage.
+        /// </summary>
         public static QName Source => QNameFor("source");
+        /// <summary>
+        /// Connector: The source relatedFeature for this Connector. It is the first relatedFeature.
+        /// </summary>
         public static QName SourceFeature => QNameFor("sourceFeature");
+        /// <summary>
+        /// Flow: The Feature that provides the items carried by the Flow. It must be a feature of the source of the Flow.
+        /// </summary>
         public static QName SourceOutputFeature => QNameFor("sourceOutputFeature");
+        /// <summary>
+        /// Association: The source relatedType for this Association. It is the first relatedType of the Association.
+        /// </summary>
         public static QName SourceType => QNameFor("sourceType");
+        /// <summary>
+        /// Specialization: A Type with a subset of all instances of the general Type, which might be the same set.
+        /// </summary>
         public static QName Specific => QNameFor("specific");
+        /// <summary>
+        /// RequirementUsage: The parameters of this RequirementUsage that represent stakeholders for the requirement.
+        /// RequirementDefinition: The parameters of this RequirementDefinition that represent stakeholders for th requirement.
+        /// </summary>
         public static QName StakeholderParameter => QNameFor("stakeholderParameter");
+        /// <summary>
+        /// StateDefinition: The StateUsages, which are actions in the StateDefinition, that specify the discrete states in the behavior defined by the StateDefinition.
+        /// </summary>
         public static QName State => QNameFor("state");
+        /// <summary>
+        /// StateUsage: The Behaviors that are the types of this StateUsage. Nominally, these would be StateDefinitions, but kernel Behaviors are also allowed, to permit use of Behaviors from the Kernel Model Libraries.
+        /// </summary>
         public static QName StateDefinition => QNameFor("stateDefinition");
+        /// <summary>
+        /// Behavior: The Steps that make up this Behavior.
+        /// </summary>
         public static QName Step => QNameFor("step");
+        /// <summary>
+        /// Subclassification: The more specific Classifier in this Subclassification.
+        /// </summary>
         public static QName Subclassifier => QNameFor("subclassifier");
+        /// <summary>
+        /// RequirementUsage: The parameter of this RequirementUsage that represents its subject.
+        /// RequirementDefinition: The parameter of this RequirementDefinition that represents its subject.
+        /// CaseUsage: The parameter of this CaseUsage that represents its subject.
+        /// CaseDefinition: The parameter of this CaseDefinition that represents its subject.
+        /// </summary>
         public static QName SubjectParameter => QNameFor("subjectParameter");
+        /// <summary>
+        /// Subsetting: The Feature that is subsetted by the subsettingFeature of this Subsetting.
+        /// </summary>
         public static QName SubsettedFeature => QNameFor("subsettedFeature");
+        /// <summary>
+        /// Subsetting: The Feature that is a subset of the subsettedFeature of this Subsetting.
+        /// </summary>
         public static QName SubsettingFeature => QNameFor("subsettingFeature");
+        /// <summary>
+        /// TransitionUsage: The Succession that is the ownedFeature of this TransitionUsage, which, if the TransitionUsage is triggered, asserts the temporal ordering of the source and target.
+        /// </summary>
         public static QName Succession => QNameFor("succession");
+        /// <summary>
+        /// Subclassification: The more general Classifier in this Subclassification.
+        /// </summary>
         public static QName Superclassifier => QNameFor("superclassifier");
+        /// <summary>
+        /// Dependency: The Element or Elements on which the client Elements depend in some respect.
+        /// </summary>
         public static QName Supplier => QNameFor("supplier");
+        /// <summary>
+        /// Relationship: The relatedElements to which this Relationship is considered to be directed.
+        /// TransitionUsage: The target ActionUsage of this TransitionUsage, which is the targetFeature of the succession for the TransitionUsage.
+        /// </summary>
         public static QName Target => QNameFor("target");
+        /// <summary>
+        /// AssignmentActionUsage: The Expression whose value is an occurrence in the domain of the referent Feature, for which the value of the referent will be set to the result of the valueExpression by this AssignmentActionUsage.
+        /// </summary>
         public static QName TargetArgument => QNameFor("targetArgument");
+        /// <summary>
+        /// Connector: The target relatedFeatures for this Connector. This includes all the relatedFeatures other than the sourceFeature.
+        /// FeatureChainExpression: The Feature that is accessed by this FeatureChainExpression, which is its first non-parameter member.
+        /// </summary>
         public static QName TargetFeature => QNameFor("targetFeature");
+        /// <summary>
+        /// Flow: The Feature that receives the values carried by the Flow. It must be a feature of the target of the Flow.
+        /// </summary>
         public static QName TargetInputFeature => QNameFor("targetInputFeature");
+        /// <summary>
+        /// Association: The target relatedTypes for this Association. This includes all the relatedTypes other than the sourceType.
+        /// </summary>
         public static QName TargetType => QNameFor("targetType");
+        /// <summary>
+        /// TerminateActionUsage: The Expression that is the featureValue of the terminateOccurrence parameter of this TerminateActionUsage.
+        /// </summary>
         public static QName TerminatedOccurrenceArgument => QNameFor("terminatedOccurrenceArgument");
+        /// <summary>
+        /// RequirementUsage: An optional textual statement of the requirement represented by this RequirementUsage, derived from the bodies of the documentation of the RequirementUsage.
+        /// RequirementDefinition: An optional textual statement of the requirement represented by this RequirementDefinition, derived from the bodies of the documentation of the RequirementDefinition.
+        /// </summary>
         public static QName Text => QNameFor("text");
+        /// <summary>
+        /// Element: The TextualRepresentations that annotate this Element.
+        /// </summary>
         public static QName TextualRepresentation => QNameFor("textualRepresentation");
+        /// <summary>
+        /// IfActionUsage: The ActionUsage that is to be performed if the result of the ifArgument is true. It is the second parameter of the IfActionUsage.
+        /// </summary>
         public static QName ThenAction => QNameFor("thenAction");
+        /// <summary>
+        /// TransitionFeatureMembership: The Step that is the ownedMemberFeature of this TransitionFeatureMembership.
+        /// </summary>
         public static QName TransitionFeature => QNameFor("transitionFeature");
+        /// <summary>
+        /// TransitionUsage: The AcceptActionUsages that define the triggers of this TransitionUsage, which are the ownedFeatures of the TransitionUsage related to it by TransitionFeatureMemberships with kind = trigger, which must all be AcceptActionUsages.
+        /// </summary>
         public static QName TriggerAction => QNameFor("triggerAction");
+        /// <summary>
+        /// Feature: Types that restrict the values of this Feature, such that the values must be instances of all the types. The types of a Feature are derived from its typings and the types of its subsettings. If the Feature is chained, then the types of the last Feature in the chain are also types of the chained Feature.
+        /// FeatureTyping: The Type that is being applied by this FeatureTyping.
+        /// </summary>
         public static QName Type => QNameFor("type");
+        /// <summary>
+        /// Differencing: Type with interpretations partly determined by differencingType, as described in Type::differencingType.
+        /// </summary>
         public static QName TypeDifferenced => QNameFor("typeDifferenced");
+        /// <summary>
+        /// Disjoining: Type asserted to be disjoint with the disjoiningType.
+        /// </summary>
         public static QName TypeDisjoined => QNameFor("typeDisjoined");
+        /// <summary>
+        /// Intersecting: Type with interpretations partly determined by intersectingType, as described in Type::intersectingType.
+        /// </summary>
         public static QName TypeIntersected => QNameFor("typeIntersected");
+        /// <summary>
+        /// Unioning: Type with interpretations partly determined by unioningType, as described in Type::unioningType.
+        /// </summary>
         public static QName TypeUnioned => QNameFor("typeUnioned");
+        /// <summary>
+        /// FeatureTyping: The Feature that has a type determined by this FeatureTyping.
+        /// </summary>
         public static QName TypedFeature => QNameFor("typedFeature");
+        /// <summary>
+        /// Type: The interpretations of a Type with unioningTypes are asserted to be the same as those of all the unioningTypes together, which are the Types derived from the unioningType of the ownedUnionings of this Type. For example, a Classifier for people might be the union of Classifiers for all the sexes. Similarly, a feature for people's children might be the union of features dividing them in the same ways as people in general.
+        /// Unioning: Type that partly determines interpretations of typeUnioned, as described in Type::unioningType.
+        /// </summary>
         public static QName UnioningType => QNameFor("unioningType");
+        /// <summary>
+        /// WhileLoopActionUsage: The Expression whose result, if false, determines that the bodyAction should continue to be performed. It is the (optional) third owned parameter of the WhileLoopActionUsage.
+        /// </summary>
         public static QName UntilArgument => QNameFor("untilArgument");
+        /// <summary>
+        /// MultiplicityRange: The Expression whose result is the upper bound of the MultiplicityRange.
+        /// </summary>
         public static QName UpperBound => QNameFor("upperBound");
+        /// <summary>
+        /// Definition: The Usages that are features of this Definition (not necessarily owned).
+        /// Usage: The Usages that are features of this Usage (not necessarily owned).
+        /// </summary>
         public static QName Usage => QNameFor("usage");
+        /// <summary>
+        /// UseCaseUsage: The UseCaseDefinition that is the definition of this UseCaseUsage.
+        /// </summary>
         public static QName UseCaseDefinition => QNameFor("useCaseDefinition");
+        /// <summary>
+        /// IncludeUseCaseUsage: The UseCaseUsage to be included by this IncludeUseCaseUsage. It is the performedAction of the IncludeUseCaseUsage considered as a PerformActionUsage, which must be a UseCaseUsage.
+        /// </summary>
         public static QName UseCaseIncluded => QNameFor("useCaseIncluded");
+        /// <summary>
+        /// FeatureValue: The Expression that provides the value as a result.
+        /// LiteralInteger: The Integer value that is the result of evaluating this LiteralInteger.
+        /// LiteralString: The String value that is the result of evaluating this Expression.
+        /// LiteralRational: The value whose rational approximation is the result of evaluating this LiteralRational.
+        /// LiteralBoolean: The Boolean value that is the result of evaluating this LiteralBoolean.
+        /// </summary>
         public static QName Value => QNameFor("value");
+        /// <summary>
+        /// AssignmentActionUsage: The Expression whose result is to be assigned to the referent Feature.
+        /// </summary>
         public static QName ValueExpression => QNameFor("valueExpression");
+        /// <summary>
+        /// Definition: The Usages which represent the variants of this Definition as a variation point Definition, if isVariation = true. If isVariation = false, the there must be no variants.
+        /// Usage: The Usages which represent the variants of this Usage as a variation point Usage, if isVariation = true. If isVariation = false, then there must be no variants.
+        /// </summary>
         public static QName Variant => QNameFor("variant");
+        /// <summary>
+        /// Definition: The ownedMemberships of this Definition that are VariantMemberships. If isVariation = true, then this must be all ownedMemberships of the Definition. If isVariation = false, then variantMembershipmust be empty.
+        /// Usage: The ownedMemberships of this Usage that are VariantMemberships. If isVariation = true, then this must be all memberships of the Usage. If isVariation = false, then variantMembershipmust be empty.
+        /// </summary>
         public static QName VariantMembership => QNameFor("variantMembership");
+        /// <summary>
+        /// VerificationCaseUsage: The VerificationCase that is the definition of this VerificationCaseUsage.
+        /// </summary>
         public static QName VerificationCaseDefinition => QNameFor("verificationCaseDefinition");
+        /// <summary>
+        /// VerificationCaseUsage: The RequirementUsages verified by this VerificationCaseUsage, which are the verifiedRequirements of all RequirementVerificationMemberships of the objectiveRequirement.
+        /// VerificationCaseDefinition: The RequirementUsages verified by this VerificationCaseDefinition, which are the verifiedRequirements of all RequirementVerificationMemberships of the objectiveRequirement.
+        /// RequirementVerificationMembership:  The RequirementUsage that is identified as being verified. It is the referencedConstraint of the RequirementVerificationMembership considered as a RequirementConstraintMembership, which must be a RequirementUsage.
+        /// </summary>
         public static QName VerifiedRequirement => QNameFor("verifiedRequirement");
+        /// <summary>
+        /// ViewDefinition: The usages of this ViewDefinition that are ViewUsages.
+        /// </summary>
         public static QName View => QNameFor("view");
+        /// <summary>
+        /// ViewUsage: The Expressions related to this ViewUsage by ElementFilterMemberships, which specify conditions on Elements to be rendered in a view.
+        /// ViewDefinition: The Expressions related to this ViewDefinition by ElementFilterMemberships, which specify conditions on Elements to be rendered in a view.
+        /// </summary>
         public static QName ViewCondition => QNameFor("viewCondition");
+        /// <summary>
+        /// ViewUsage: The ViewDefinition that is the definition of this ViewUsage.
+        /// </summary>
         public static QName ViewDefinition => QNameFor("viewDefinition");
+        /// <summary>
+        /// ViewUsage: The RenderingUsage to be used to render views defined by this ViewUsage, which is the referencedRendering of the ViewRenderingMembership of the ViewUsage.
+        /// ViewDefinition: The RenderingUsage to be used to render views defined by this ViewDefinition, which is the referencedRendering of the ViewRenderingMembership of the ViewDefinition.
+        /// </summary>
         public static QName ViewRendering => QNameFor("viewRendering");
+        /// <summary>
+        /// ViewpointUsage: The ViewpointDefinition that is the definition of this ViewpointUsage.
+        /// </summary>
         public static QName ViewpointDefinition => QNameFor("viewpointDefinition");
+        /// <summary>
+        /// ViewpointUsage: The PartUsages that identify the stakeholders with concerns framed by this ViewpointUsage, which are the owned and inherited stakeholderParameters of the framedConcerns of this ViewpointUsage.
+        /// ViewpointDefinition: The PartUsages that identify the stakeholders with concerns framed by this ViewpointDefinition, which are the owned and inherited stakeholderParameters of the framedConcerns of this ViewpointDefinition.
+        /// </summary>
         public static QName ViewpointStakeholder => QNameFor("viewpointStakeholder");
+        /// <summary>
+        /// Membership: Whether or not the Membership of the memberElement in the membershipOwningNamespace is publicly visible outside that Namespace.
+        /// Import: The visibility level of the imported members from this Import relative to the importOwningNamespace. The default is private.
+        /// </summary>
         public static QName Visibility => QNameFor("visibility");
+        /// <summary>
+        /// WhileLoopActionUsage: The Expression whose result, if true, determines that the bodyAction should continue to be performed. It is the first owned parameter of the WhileLoopActionUsage.
+        /// </summary>
         public static QName WhileArgument => QNameFor("whileArgument");
     }
 }

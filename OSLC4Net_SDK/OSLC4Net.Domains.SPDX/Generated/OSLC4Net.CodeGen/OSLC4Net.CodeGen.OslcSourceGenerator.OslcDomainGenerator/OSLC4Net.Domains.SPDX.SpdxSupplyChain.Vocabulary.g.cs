@@ -8,45 +8,165 @@ public static partial class SpdxSupplyChain
     public const string NS = "https://spdx.org/rdf/3/terms/SupplyChain/";
     public const string Prefix = "spdx_supply_chain";
 
+    /// <summary>
+    /// AssemblyAction represents the event of creating a product by assembling individual components.
+    /// </summary>
     public const string AssemblyAction = NS + "AssemblyAction";
+    /// <summary>
+    /// The AssemblyProcess represents the process of creating a product by assembling a set of components, potentially in a way that allows for at disassembly (at least partially).
+    /// </summary>
     public const string AssemblyProcess = NS + "AssemblyProcess";
+    /// <summary>
+    /// An action of crossing a boundary is defined in this class.
+    /// </summary>
     public const string BoundaryCrossingAction = NS + "BoundaryCrossingAction";
+    /// <summary>
+    /// The boundary definition is used to define boundaries.
+    /// </summary>
     public const string BoundaryDefinitionAction = NS + "BoundaryDefinitionAction";
+    /// <summary>
+    /// The Boundary Definition Process refers to the process class used to produce boundaries.
+    /// </summary>
     public const string BoundaryDefinitionProcess = NS + "BoundaryDefinitionProcess";
+    /// <summary>
+    /// An actual change to a product.
+    /// </summary>
     public const string ChangeAction = NS + "ChangeAction";
+    /// <summary>
+    /// A prescribed change to a product.
+    /// </summary>
     public const string ChangeProcess = NS + "ChangeProcess";
+    /// <summary>
+    /// CreationAction represents an event of product creation.
+    /// </summary>
     public const string CreateAction = NS + "CreateAction";
+    /// <summary>
+    /// The CreateProcess refers to the abstract process class that can be used to represent the process of creation of a product.
+    /// </summary>
     public const string CreateProcess = NS + "CreateProcess";
+    /// <summary>
+    /// This process is used to determine the state of an affected Element.
+    /// </summary>
     public const string DefinedStateProcess = NS + "DefinedStateProcess";
+    /// <summary>
+    /// The record of destruction is entered in this action.
+    /// </summary>
     public const string DestroyAction = NS + "DestroyAction";
+    /// <summary>
+    /// The destruction process is defined in this process.
+    /// </summary>
     public const string DestroyProcess = NS + "DestroyProcess";
+    /// <summary>
+    /// HarvestAction represents the act of creating a product by directly extracting goods or materials from nature.
+    /// </summary>
     public const string HarvestAction = NS + "HarvestAction";
+    /// <summary>
+    /// Harvest is the process of extracting goods or products from nature.
+    /// </summary>
     public const string HarvestProcess = NS + "HarvestProcess";
+    /// <summary>
+    /// An inspection action refers to a specific activity or set of activities performed during an inspection to examine, verify, or evaluate an item, process, or system.
+    /// </summary>
     public const string InspectionAction = NS + "InspectionAction";
+    /// <summary>
+    /// Inspection Process defines specific various processes needed to satisfy the inspection requirements for a specific product or service.
+    /// </summary>
     public const string InspectionProcess = NS + "InspectionProcess";
+    /// <summary>
+    /// Class that describes an InstantiateVirtualHardwareProcess that is used to define VirtualHardware and its source.
+    /// </summary>
     public const string InstantiateVirtualHardwareProcess = NS + "InstantiateVirtualHardwareProcess";
+    /// <summary>
+    /// ManufactureAction represents the act of creating a product by a manufacturing process.
+    /// </summary>
     public const string ManufactureAction = NS + "ManufactureAction";
+    /// <summary>
+    /// This class represents the process involved in manufacturing products.
+    /// </summary>
     public const string ManufactureProcess = NS + "ManufactureProcess";
+    /// <summary>
+    /// An actual alteration of a product.
+    /// </summary>
     public const string ModifyAction = NS + "ModifyAction";
+    /// <summary>
+    /// A prescribed alteration of a product.
+    /// </summary>
     public const string ModifyProcess = NS + "ModifyProcess";
+    /// <summary>
+    /// An out of specification action is defined in this class.
+    /// </summary>
     public const string OutOfSpecAction = NS + "OutOfSpecAction";
+    /// <summary>
+    /// A PlanAction involves the execution of a plan in relation to a PlanProcess.
+    /// </summary>
     public const string PlanAction = NS + "PlanAction";
+    /// <summary>
+    /// Process plans outline the stages of implementation or use related to a process.
+    /// </summary>
     public const string PlanProcess = NS + "PlanProcess";
+    /// <summary>
+    /// Reproduction is the biological process by which organisms generate new individuals of the same species.
+    /// </summary>
     public const string ReproduceAction = NS + "ReproduceAction";
+    /// <summary>
+    /// Reproduction is the biological process by which living organisms produce offspring.
+    /// </summary>
     public const string ReproduceProcess = NS + "ReproduceProcess";
+    /// <summary>
+    /// Products out of specification require a resolution action. This is the action of resolution.
+    /// </summary>
     public const string ResolutionAction = NS + "ResolutionAction";
+    /// <summary>
+    /// ResponsibilityChangeAction refers to the transfer of responsibility from one party to another.
+    /// </summary>
     public const string ResponsibilityChangeAction = NS + "ResponsibilityChangeAction";
+    /// <summary>
+    /// ResponsibilityChangeProcess refers to the process of transferring responsibility from one party to another.
+    /// </summary>
     public const string ResponsibilityChangeProcess = NS + "ResponsibilityChangeProcess";
+    /// <summary>
+    /// These categories help define sets Responsibility Type.
+    /// </summary>
     public const string ResponsibilityType = NS + "ResponsibilityType";
+    /// <summary>
+    /// A state is an instance that describes what a system, component, subsystem, process, or project has achieved at any given time.
+    /// </summary>
     public const string State = NS + "State";
+    /// <summary>
+    /// This is the state of an affected Element at a specific moment in time.
+    /// </summary>
     public const string StateAction = NS + "StateAction";
+    /// <summary>
+    /// Records the storage of a product.
+    /// </summary>
     public const string StorageAction = NS + "StorageAction";
+    /// <summary>
+    /// Prescribes the storage of a product.
+    /// </summary>
     public const string StorageProcess = NS + "StorageProcess";
+    /// <summary>
+    /// A test action is a specific action associated with a test.
+    /// </summary>
     public const string TestAction = NS + "TestAction";
+    /// <summary>
+    /// Test Process defines the testing process for an element.
+    /// </summary>
     public const string TestProcess = NS + "TestProcess";
+    /// <summary>
+    /// An actual change to a product's location.
+    /// </summary>
     public const string TransportAction = NS + "TransportAction";
+    /// <summary>
+    /// A prescribed change to a product's location.
+    /// </summary>
     public const string TransportProcess = NS + "TransportProcess";
+    /// <summary>
+    /// The action of product use.
+    /// </summary>
     public const string UseAction = NS + "UseAction";
+    /// <summary>
+    /// Use Process defines actions used by elements.
+    /// </summary>
     public const string UseProcess = NS + "UseProcess";
 
     public static QName QNameFor(string localResource)
@@ -56,49 +176,169 @@ public static partial class SpdxSupplyChain
 
     public static partial class P
     {
+        /// <summary>
+        /// The boundary parameters define the area or region needed to describe a boundary.
+        /// </summary>
         public const string BoundaryParameter = NS + "boundaryParameter";
+        /// <summary>
+        /// This is the individual, business, or organization who currently manages goods, services, or assets.
+        /// </summary>
         public const string Current = NS + "current";
+        /// <summary>
+        /// This is the state of an affected Element.
+        /// </summary>
         public const string CurrentState = NS + "currentState";
+        /// <summary>
+        /// This is how the currentState of an affected Element is found.
+        /// </summary>
         public const string DecisionProcess = NS + "decisionProcess";
+        /// <summary>
+        /// This is the agent that performed the act of destroying the item.
+        /// </summary>
         public const string DestructionPerformedBy = NS + "destructionPerformedBy";
+        /// <summary>
+        /// The location for dropping off or delivering a package or item.
+        /// </summary>
         public const string DropoffLocation = NS + "dropoffLocation";
+        /// <summary>
+        /// The location that an item will be dropping off or delivered.
+        /// </summary>
         public const string ForDropoffLocation = NS + "forDropoffLocation";
+        /// <summary>
+        /// The location for picking up a package or item.
+        /// </summary>
         public const string ForPickupLocation = NS + "forPickupLocation";
+        /// <summary>
+        /// The location for picking up a package or item.
+        /// </summary>
         public const string PickupLocation = NS + "pickupLocation";
+        /// <summary>
+        /// This is the planned individual, business, or organization who currently manages goods, services, or assets.
+        /// </summary>
         public const string PlannedCurrent = NS + "plannedCurrent";
+        /// <summary>
+        /// The planned location that a good, product or material is inspected.
+        /// </summary>
         public const string PlannedInspectionLocation = NS + "plannedInspectionLocation";
+        /// <summary>
+        /// This is the planned individual, business, or organization who was previously managing goods, services, or assets.
+        /// </summary>
         public const string PlannedPrevious = NS + "plannedPrevious";
+        /// <summary>
+        /// This is the planned product associated with the change of responsibility.
+        /// </summary>
         public const string PlannedProductOfResponsibilityChange = NS + "plannedProductOfResponsibilityChange";
+        /// <summary>
+        /// The planned location that a good, product or material is stored.
+        /// </summary>
         public const string PlannedStorageLocation = NS + "plannedStorageLocation";
+        /// <summary>
+        /// A transport route refers to the planned path or network used to move people, goods, data, or resources from one location to another.
+        /// </summary>
         public const string PlannedTransportRoutes = NS + "plannedTransportRoutes";
+        /// <summary>
+        /// This is the individual, business, or organization who was previously managing goods, services, or assets.
+        /// </summary>
         public const string Previous = NS + "previous";
+        /// <summary>
+        /// Requirements can be categorized into various types based on their focus, purpose, and scope.
+        /// </summary>
         public const string ResponsibilityCategory = NS + "responsibilityCategory";
+        /// <summary>
+        /// The element that has it's responsibility changed.
+        /// </summary>
         public const string ResponsibilityChangedOn = NS + "responsibilityChangedOn";
+        /// <summary>
+        /// A transport route refers to the specific path or network used to move people, goods, data, or resources from one location to another.
+        /// </summary>
         public const string TransportRoute = NS + "transportRoute";
+        /// <summary>
+        /// The valid state for DefinedStateProcess.
+        /// </summary>
         public const string ValidState = NS + "validState";
     }
 
     public static partial class Q
     {
+        /// <summary>
+        /// The boundary parameters define the area or region needed to describe a boundary.
+        /// </summary>
         public static QName BoundaryParameter => QNameFor("boundaryParameter");
+        /// <summary>
+        /// This is the individual, business, or organization who currently manages goods, services, or assets.
+        /// </summary>
         public static QName Current => QNameFor("current");
+        /// <summary>
+        /// This is the state of an affected Element.
+        /// </summary>
         public static QName CurrentState => QNameFor("currentState");
+        /// <summary>
+        /// This is how the currentState of an affected Element is found.
+        /// </summary>
         public static QName DecisionProcess => QNameFor("decisionProcess");
+        /// <summary>
+        /// This is the agent that performed the act of destroying the item.
+        /// </summary>
         public static QName DestructionPerformedBy => QNameFor("destructionPerformedBy");
+        /// <summary>
+        /// The location for dropping off or delivering a package or item.
+        /// </summary>
         public static QName DropoffLocation => QNameFor("dropoffLocation");
+        /// <summary>
+        /// The location that an item will be dropping off or delivered.
+        /// </summary>
         public static QName ForDropoffLocation => QNameFor("forDropoffLocation");
+        /// <summary>
+        /// The location for picking up a package or item.
+        /// </summary>
         public static QName ForPickupLocation => QNameFor("forPickupLocation");
+        /// <summary>
+        /// The location for picking up a package or item.
+        /// </summary>
         public static QName PickupLocation => QNameFor("pickupLocation");
+        /// <summary>
+        /// This is the planned individual, business, or organization who currently manages goods, services, or assets.
+        /// </summary>
         public static QName PlannedCurrent => QNameFor("plannedCurrent");
+        /// <summary>
+        /// The planned location that a good, product or material is inspected.
+        /// </summary>
         public static QName PlannedInspectionLocation => QNameFor("plannedInspectionLocation");
+        /// <summary>
+        /// This is the planned individual, business, or organization who was previously managing goods, services, or assets.
+        /// </summary>
         public static QName PlannedPrevious => QNameFor("plannedPrevious");
+        /// <summary>
+        /// This is the planned product associated with the change of responsibility.
+        /// </summary>
         public static QName PlannedProductOfResponsibilityChange => QNameFor("plannedProductOfResponsibilityChange");
+        /// <summary>
+        /// The planned location that a good, product or material is stored.
+        /// </summary>
         public static QName PlannedStorageLocation => QNameFor("plannedStorageLocation");
+        /// <summary>
+        /// A transport route refers to the planned path or network used to move people, goods, data, or resources from one location to another.
+        /// </summary>
         public static QName PlannedTransportRoutes => QNameFor("plannedTransportRoutes");
+        /// <summary>
+        /// This is the individual, business, or organization who was previously managing goods, services, or assets.
+        /// </summary>
         public static QName Previous => QNameFor("previous");
+        /// <summary>
+        /// Requirements can be categorized into various types based on their focus, purpose, and scope.
+        /// </summary>
         public static QName ResponsibilityCategory => QNameFor("responsibilityCategory");
+        /// <summary>
+        /// The element that has it's responsibility changed.
+        /// </summary>
         public static QName ResponsibilityChangedOn => QNameFor("responsibilityChangedOn");
+        /// <summary>
+        /// A transport route refers to the specific path or network used to move people, goods, data, or resources from one location to another.
+        /// </summary>
         public static QName TransportRoute => QNameFor("transportRoute");
+        /// <summary>
+        /// The valid state for DefinedStateProcess.
+        /// </summary>
         public static QName ValidState => QNameFor("validState");
     }
 }

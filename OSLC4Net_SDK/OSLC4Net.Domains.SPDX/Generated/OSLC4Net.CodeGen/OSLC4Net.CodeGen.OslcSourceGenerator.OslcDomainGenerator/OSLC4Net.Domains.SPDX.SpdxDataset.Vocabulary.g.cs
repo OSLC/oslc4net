@@ -8,9 +8,21 @@ public static partial class SpdxDataset
     public const string NS = "https://spdx.org/rdf/3/terms/Dataset/";
     public const string Prefix = "spdx_dataset";
 
+    /// <summary>
+    /// Confidentiality level.
+    /// </summary>
     public const string ConfidentialityLevelType = NS + "ConfidentialityLevelType";
+    /// <summary>
+    /// Availability of dataset.
+    /// </summary>
     public const string DatasetAvailabilityType = NS + "DatasetAvailabilityType";
+    /// <summary>
+    /// A Package that contains a dataset.
+    /// </summary>
     public const string DatasetPackage = NS + "DatasetPackage";
+    /// <summary>
+    /// Enumeration of dataset types.
+    /// </summary>
     public const string DatasetType = NS + "DatasetType";
 
     public static QName QNameFor(string localResource)
@@ -20,35 +32,127 @@ public static partial class SpdxDataset
 
     public static partial class P
     {
+        /// <summary>
+        /// Anonymization methods used.
+        /// </summary>
         public const string AnonymizationMethodUsed = NS + "anonymizationMethodUsed";
+        /// <summary>
+        /// Confidentiality level of the data points contained in the dataset.
+        /// </summary>
         public const string ConfidentialityLevel = NS + "confidentialityLevel";
+        /// <summary>
+        /// How the dataset was collected.
+        /// </summary>
         public const string DataCollectionProcess = NS + "dataCollectionProcess";
+        /// <summary>
+        /// Preprocessing steps that were applied to the raw data to create the given dataset.
+        /// </summary>
         public const string DataPreprocessing = NS + "dataPreprocessing";
+        /// <summary>
+        /// Availability of a dataset.
+        /// </summary>
         public const string DatasetAvailability = NS + "datasetAvailability";
+        /// <summary>
+        /// Potentially noisy elements of the dataset.
+        /// </summary>
         public const string DatasetNoise = NS + "datasetNoise";
+        /// <summary>
+        /// **DEPRECATED in SPDX 3.1.**
+        /// Use /Software/artifactSize (../../Software/Properties/artifactSize.md)
+        /// instead.
+        ///
+        /// Size of the dataset.
+        /// </summary>
         public const string DatasetSize = NS + "datasetSize";
+        /// <summary>
+        /// Type of data in a dataset.
+        /// </summary>
         public const string DatasetType = NS + "datasetType";
+        /// <summary>
+        /// Mechanism to update the dataset.
+        /// </summary>
         public const string DatasetUpdateMechanism = NS + "datasetUpdateMechanism";
+        /// <summary>
+        /// Describes if any sensitive personal information is present in the dataset.
+        /// </summary>
         public const string HasSensitivePersonalInformation = NS + "hasSensitivePersonalInformation";
+        /// <summary>
+        /// **DEPRECATED in SPDX 3.1.**
+        /// Use /Core/intendedUse (../../Core/Properties/intendedUse.md) instead.
+        ///
+        /// The intended use of a given dataset.
+        /// </summary>
         public const string IntendedUse = NS + "intendedUse";
+        /// <summary>
+        /// Records the biases that the dataset is known to encompass.
+        /// </summary>
         public const string KnownBias = NS + "knownBias";
+        /// <summary>
+        /// Describes a sensor used for collecting the data.
+        /// </summary>
         public const string Sensor = NS + "sensor";
     }
 
     public static partial class Q
     {
+        /// <summary>
+        /// Anonymization methods used.
+        /// </summary>
         public static QName AnonymizationMethodUsed => QNameFor("anonymizationMethodUsed");
+        /// <summary>
+        /// Confidentiality level of the data points contained in the dataset.
+        /// </summary>
         public static QName ConfidentialityLevel => QNameFor("confidentialityLevel");
+        /// <summary>
+        /// How the dataset was collected.
+        /// </summary>
         public static QName DataCollectionProcess => QNameFor("dataCollectionProcess");
+        /// <summary>
+        /// Preprocessing steps that were applied to the raw data to create the given dataset.
+        /// </summary>
         public static QName DataPreprocessing => QNameFor("dataPreprocessing");
+        /// <summary>
+        /// Availability of a dataset.
+        /// </summary>
         public static QName DatasetAvailability => QNameFor("datasetAvailability");
+        /// <summary>
+        /// Potentially noisy elements of the dataset.
+        /// </summary>
         public static QName DatasetNoise => QNameFor("datasetNoise");
+        /// <summary>
+        /// **DEPRECATED in SPDX 3.1.**
+        /// Use /Software/artifactSize (../../Software/Properties/artifactSize.md)
+        /// instead.
+        ///
+        /// Size of the dataset.
+        /// </summary>
         public static QName DatasetSize => QNameFor("datasetSize");
+        /// <summary>
+        /// Type of data in a dataset.
+        /// </summary>
         public static QName DatasetType => QNameFor("datasetType");
+        /// <summary>
+        /// Mechanism to update the dataset.
+        /// </summary>
         public static QName DatasetUpdateMechanism => QNameFor("datasetUpdateMechanism");
+        /// <summary>
+        /// Describes if any sensitive personal information is present in the dataset.
+        /// </summary>
         public static QName HasSensitivePersonalInformation => QNameFor("hasSensitivePersonalInformation");
+        /// <summary>
+        /// **DEPRECATED in SPDX 3.1.**
+        /// Use /Core/intendedUse (../../Core/Properties/intendedUse.md) instead.
+        ///
+        /// The intended use of a given dataset.
+        /// </summary>
         public static QName IntendedUse => QNameFor("intendedUse");
+        /// <summary>
+        /// Records the biases that the dataset is known to encompass.
+        /// </summary>
         public static QName KnownBias => QNameFor("knownBias");
+        /// <summary>
+        /// Describes a sensor used for collecting the data.
+        /// </summary>
         public static QName Sensor => QNameFor("sensor");
     }
 }

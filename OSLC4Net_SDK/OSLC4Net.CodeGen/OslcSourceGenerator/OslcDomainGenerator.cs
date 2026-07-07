@@ -397,6 +397,7 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         builder.AppendLine("using OSLC4Net.Core.Model;");
         builder.AppendLine();
         AppendNamespaceStart(builder, target.Namespace);
+        AppendXmlSummary(builder, "", VocabularyDescription(namespaceUri, graph));
         builder.Append("public static partial class ").Append(target.TypeName).AppendLine();
         builder.AppendLine("{");
         builder
@@ -413,6 +414,7 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         {
             string termName = VocabularyTermName(uri, namespaceUri);
             string name = ToIdentifier(termName);
+            AppendXmlSummary(builder, "    ", VocabularyDescription(uri, graph));
             builder
                 .Append("    public const string ")
                 .Append(name)
@@ -437,6 +439,7 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         {
             string termName = VocabularyTermName(uri, namespaceUri);
             string name = ToIdentifier(termName);
+            AppendXmlSummary(builder, "        ", VocabularyDescription(uri, graph));
             builder
                 .Append("        public const string ")
                 .Append(name)
@@ -453,6 +456,7 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         {
             string termName = VocabularyTermName(uri, namespaceUri);
             string name = ToIdentifier(termName);
+            AppendXmlSummary(builder, "        ", VocabularyDescription(uri, graph));
             builder
                 .Append("        public static QName ")
                 .Append(name)
@@ -465,6 +469,12 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         builder.AppendLine("}");
         AppendNamespaceEnd(builder, target.Namespace);
         return builder.ToString();
+    }
+
+    private static string? VocabularyDescription(string uri, Graph graph)
+    {
+        return FirstPlainValue(graph.Objects(uri, DcTerms + "description"))
+            ?? FirstPlainValue(graph.Objects(uri, Rdfs + "comment"));
     }
 
     private static bool IsVocabularyTerm(string uri, string namespaceUri, Graph graph)
@@ -1150,6 +1160,97 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         }
 
         return null;
+    }
+
+    private static string? FirstPlainValue(IEnumerable<Node> nodes)
+    {
+        List<Node> values = nodes.ToList();
+        return FirstValue(values.Where(static node => node.Language is null)) ?? FirstValue(values);
+    }
+
+    private static void AppendXmlSummary(
+        StringBuilder builder,
+        string indentation,
+        string? description
+    )
+    {
+        if (string.IsNullOrWhiteSpace(description))
+        {
+            return;
+        }
+
+        builder.Append(indentation).AppendLine("/// <summary>");
+        foreach (string line in NormalizeXmlDocLines(description))
+        {
+            builder.Append(indentation).Append("///");
+            if (line.Length > 0)
+            {
+                builder.Append(' ').Append(EscapeXmlDoc(line));
+            }
+
+            builder.AppendLine();
+        }
+
+        builder.Append(indentation).AppendLine("/// </summary>");
+    }
+
+    private static IEnumerable<string> NormalizeXmlDocLines(string description)
+    {
+        using var reader = new StringReader(description.Replace("\r\n", "\n").Replace('\r', '\n'));
+        string? line;
+        while ((line = reader.ReadLine()) is not null)
+        {
+            yield return NeutralizeMarkdownLinks(line.Trim());
+        }
+    }
+
+    private static string NeutralizeMarkdownLinks(string value)
+    {
+        var builder = new StringBuilder(value.Length);
+        int position = 0;
+        while (position < value.Length)
+        {
+            int labelStart = value.IndexOf('[', position);
+            if (labelStart < 0)
+            {
+                builder.Append(value, position, value.Length - position);
+                break;
+            }
+
+            int labelEnd = value.IndexOf(']', labelStart + 1);
+            if (
+                labelEnd < 0
+                || labelEnd + 1 >= value.Length
+                || value[labelEnd + 1] != '('
+            )
+            {
+                builder.Append(value, position, labelStart - position + 1);
+                position = labelStart + 1;
+                continue;
+            }
+
+            int linkEnd = value.IndexOf(')', labelEnd + 2);
+            if (linkEnd < 0)
+            {
+                builder.Append(value, position, labelStart - position + 1);
+                position = labelStart + 1;
+                continue;
+            }
+
+            builder.Append(value, position, labelStart - position);
+            builder.Append(value, labelStart + 1, labelEnd - labelStart - 1);
+            builder.Append(" (");
+            builder.Append(value, labelEnd + 2, linkEnd - labelEnd - 2);
+            builder.Append(')');
+            position = linkEnd + 1;
+        }
+
+        return builder.ToString();
+    }
+
+    private static string EscapeXmlDoc(string value)
+    {
+        return value.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;");
     }
 
     private static void AppendAutoGeneratedHeader(StringBuilder builder)

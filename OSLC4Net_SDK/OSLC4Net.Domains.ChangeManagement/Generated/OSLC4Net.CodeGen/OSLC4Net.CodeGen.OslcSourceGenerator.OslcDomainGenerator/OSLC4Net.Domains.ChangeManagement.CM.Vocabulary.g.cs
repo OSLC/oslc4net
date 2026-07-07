@@ -3,19 +3,49 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Domains.ChangeManagement;
 
+/// <summary>
+/// All vocabulary URIs defined in the OSLC Change Management (CM) namespace.
+/// </summary>
 public static partial class CM
 {
     public const string NS = "http://open-services.net/ns/cm#";
     public const string Prefix = "oslc_cm";
 
+    /// <summary>
+    /// Represents an assignment notification of a change request. May be used also to bestow authority onto the assigned user to effect the changes.
+    /// </summary>
     public const string ChangeNotice = NS + "ChangeNotice";
+    /// <summary>
+    /// The CM Change Request resource.
+    /// </summary>
     public const string ChangeRequest = NS + "ChangeRequest";
+    /// <summary>
+    /// A software or product defect.
+    /// </summary>
     public const string Defect = NS + "Defect";
+    /// <summary>
+    /// A request for new functionality.
+    /// </summary>
     public const string Enhancement = NS + "Enhancement";
+    /// <summary>
+    /// Defines the possible oslc_cm:priority property values.
+    /// </summary>
     public const string Priority = NS + "Priority";
+    /// <summary>
+    /// A request to make a change and review the change.
+    /// </summary>
     public const string ReviewTask = NS + "ReviewTask";
+    /// <summary>
+    /// Defines the possible oslc_cm:severity property values.
+    /// </summary>
     public const string Severity = NS + "Severity";
+    /// <summary>
+    /// Defines the possible oslc_cm:state property values.
+    /// </summary>
     public const string State = NS + "State";
+    /// <summary>
+    /// An executable and trackable activity.
+    /// </summary>
     public const string Task = NS + "Task";
 
     public static QName QNameFor(string localResource)
@@ -25,63 +55,273 @@ public static partial class CM
 
     public static partial class P
     {
+        /// <summary>
+        /// Change request is affected by a reported defect. It is
+        /// likely that the target resource will be an oslc_cm:Defect.
+        /// </summary>
         public const string AffectedByDefect = NS + "affectedByDefect";
+        /// <summary>
+        /// Change request affects a plan item. It is likely that
+        /// the target resource will be an oslc_cm:ChangeRequest.
+        /// </summary>
         public const string AffectsPlanItem = NS + "affectsPlanItem";
+        /// <summary>
+        /// The ChangeRequest affects a Requirement. It is likely
+        /// that the target resource will be an oslc_rm:Requirement.
+        /// </summary>
         public const string AffectsRequirement = NS + "affectsRequirement";
+        /// <summary>
+        /// Associated resource that is affected by this Change
+        /// Request. It is likely that the target resource will be an
+        /// oslc_qm:TestResult.
+        /// </summary>
         public const string AffectsTestResult = NS + "affectsTestResult";
+        /// <summary>
+        /// Whether or not the Change Request has been approved.
+        /// </summary>
         public const string Approved = NS + "approved";
+        /// <summary>
+        /// The URI of a resource describing an agent who is responsible authorizing for and/or has authorized effort to be expended to address a set of change requests.
+        /// </summary>
         public const string Authorizer = NS + "authorizer";
+        /// <summary>
+        /// Associated resource that is blocked by this Change
+        /// Request. It is likely that the target resource will be an
+        /// oslc_qm:TestExecutionRecord.
+        /// </summary>
         public const string BlocksTestExecutionRecord = NS + "blocksTestExecutionRecord";
+        /// <summary>
+        /// The date at which no further activity or work is intended to be conducted.
+        /// </summary>
         public const string CloseDate = NS + "closeDate";
+        /// <summary>
+        /// Whether or not the Change Request is completely done, no further fixes or fix verification is needed.
+        /// </summary>
         public const string Closed = NS + "closed";
+        /// <summary>
+        /// Whether or not the Change Request has been fixed.
+        /// </summary>
         public const string Fixed = NS + "fixed";
+        /// <summary>
+        /// The ChangeRequest implements the associated Requirement. It is likely that the
+        /// target resource will be an oslc_rm:Requirement.
+        /// </summary>
         public const string ImplementsRequirement = NS + "implementsRequirement";
+        /// <summary>
+        /// Whether or not the Change Request in a state indicating that active work is occurring.
+        /// </summary>
         public const string InProgress = NS + "inProgress";
+        /// <summary>
+        /// The related parent change requests of the subject change request.
+        /// </summary>
         public const string Parent = NS + "parent";
+        /// <summary>
+        /// Used to indicate the relative importance of ChangeRequests.
+        /// It is likely that the target resource will be an
+        /// oslc_cm:Priority.
+        /// </summary>
         public const string Priority = NS + "priority";
+        /// <summary>
+        /// This relationship is loosely coupled, has no specific
+        /// meaning, and can be used to link related change requests. It is likely
+        /// that the target resource will be an oslc_cm:ChangeRequest.
+        /// </summary>
         public const string RelatedChangeRequest = NS + "relatedChangeRequest";
+        /// <summary>
+        /// Related test case resource. It is likely that the
+        /// target resource will be an oslc_qm:TestCase.
+        /// </summary>
         public const string RelatedTestCase = NS + "relatedTestCase";
+        /// <summary>
+        /// Related to a test execution resource. It is likely
+        /// that the target resource will be an oslc_qm:TestExecutionRecord.
+        /// </summary>
         public const string RelatedTestExecutionRecord = NS + "relatedTestExecutionRecord";
+        /// <summary>
+        /// Related test plan resource. It is likely that the
+        /// target resource will be an oslc_qm:TestPlan.
+        /// </summary>
         public const string RelatedTestPlan = NS + "relatedTestPlan";
+        /// <summary>
+        /// Related test script resource. It is likely that the
+        /// target resource will be an oslc_qm:TestScript.
+        /// </summary>
         public const string RelatedTestScript = NS + "relatedTestScript";
+        /// <summary>
+        /// Whether or not the Change Request has been reviewed.
+        /// </summary>
         public const string Reviewed = NS + "reviewed";
+        /// <summary>
+        /// Used to indicate the severity or potential impact of a defect.
+        /// It is likely that the target resource will be an oslc_cm:Severity.
+        /// </summary>
         public const string Severity = NS + "severity";
+        /// <summary>
+        /// Used to indicate the status of the change request.
+        /// </summary>
         public const string State = NS + "state";
+        /// <summary>
+        /// Used to indicate the status of the change request based
+        /// on values defined by the service provider. Most often a read-only
+        /// property. It is likely that the target resource will be a string corresponding to an
+        /// oslc_cm:State value.
+        /// </summary>
         public const string Status = NS + "status";
+        /// <summary>
+        /// Test case by which this change request is tested. It is
+        /// likely that the target resource will be an oslc_qm:TestCase.
+        /// </summary>
         public const string TestedByTestCase = NS + "testedByTestCase";
+        /// <summary>
+        /// Tracks a change set resource. It is likely that the
+        /// target resource will be an oslc_config:ChangeSet.
+        /// </summary>
         public const string TracksChangeSet = NS + "tracksChangeSet";
+        /// <summary>
+        /// Tracks the associated Requirement or Requirement
+        /// ChangeSet resources. It is likely that the target resource will be an
+        /// oslc_rm:Requirement.
+        /// </summary>
         public const string TracksRequirement = NS + "tracksRequirement";
+        /// <summary>
+        /// Whether or not the resolution or fix of the Change Request has been verified.
+        /// </summary>
         public const string Verified = NS + "verified";
     }
 
     public static partial class Q
     {
+        /// <summary>
+        /// Change request is affected by a reported defect. It is
+        /// likely that the target resource will be an oslc_cm:Defect.
+        /// </summary>
         public static QName AffectedByDefect => QNameFor("affectedByDefect");
+        /// <summary>
+        /// Change request affects a plan item. It is likely that
+        /// the target resource will be an oslc_cm:ChangeRequest.
+        /// </summary>
         public static QName AffectsPlanItem => QNameFor("affectsPlanItem");
+        /// <summary>
+        /// The ChangeRequest affects a Requirement. It is likely
+        /// that the target resource will be an oslc_rm:Requirement.
+        /// </summary>
         public static QName AffectsRequirement => QNameFor("affectsRequirement");
+        /// <summary>
+        /// Associated resource that is affected by this Change
+        /// Request. It is likely that the target resource will be an
+        /// oslc_qm:TestResult.
+        /// </summary>
         public static QName AffectsTestResult => QNameFor("affectsTestResult");
+        /// <summary>
+        /// Whether or not the Change Request has been approved.
+        /// </summary>
         public static QName Approved => QNameFor("approved");
+        /// <summary>
+        /// The URI of a resource describing an agent who is responsible authorizing for and/or has authorized effort to be expended to address a set of change requests.
+        /// </summary>
         public static QName Authorizer => QNameFor("authorizer");
+        /// <summary>
+        /// Associated resource that is blocked by this Change
+        /// Request. It is likely that the target resource will be an
+        /// oslc_qm:TestExecutionRecord.
+        /// </summary>
         public static QName BlocksTestExecutionRecord => QNameFor("blocksTestExecutionRecord");
+        /// <summary>
+        /// The date at which no further activity or work is intended to be conducted.
+        /// </summary>
         public static QName CloseDate => QNameFor("closeDate");
+        /// <summary>
+        /// Whether or not the Change Request is completely done, no further fixes or fix verification is needed.
+        /// </summary>
         public static QName Closed => QNameFor("closed");
+        /// <summary>
+        /// Whether or not the Change Request has been fixed.
+        /// </summary>
         public static QName Fixed => QNameFor("fixed");
+        /// <summary>
+        /// The ChangeRequest implements the associated Requirement. It is likely that the
+        /// target resource will be an oslc_rm:Requirement.
+        /// </summary>
         public static QName ImplementsRequirement => QNameFor("implementsRequirement");
+        /// <summary>
+        /// Whether or not the Change Request in a state indicating that active work is occurring.
+        /// </summary>
         public static QName InProgress => QNameFor("inProgress");
+        /// <summary>
+        /// The related parent change requests of the subject change request.
+        /// </summary>
         public static QName Parent => QNameFor("parent");
+        /// <summary>
+        /// Used to indicate the relative importance of ChangeRequests.
+        /// It is likely that the target resource will be an
+        /// oslc_cm:Priority.
+        /// </summary>
         public static QName Priority => QNameFor("priority");
+        /// <summary>
+        /// This relationship is loosely coupled, has no specific
+        /// meaning, and can be used to link related change requests. It is likely
+        /// that the target resource will be an oslc_cm:ChangeRequest.
+        /// </summary>
         public static QName RelatedChangeRequest => QNameFor("relatedChangeRequest");
+        /// <summary>
+        /// Related test case resource. It is likely that the
+        /// target resource will be an oslc_qm:TestCase.
+        /// </summary>
         public static QName RelatedTestCase => QNameFor("relatedTestCase");
+        /// <summary>
+        /// Related to a test execution resource. It is likely
+        /// that the target resource will be an oslc_qm:TestExecutionRecord.
+        /// </summary>
         public static QName RelatedTestExecutionRecord => QNameFor("relatedTestExecutionRecord");
+        /// <summary>
+        /// Related test plan resource. It is likely that the
+        /// target resource will be an oslc_qm:TestPlan.
+        /// </summary>
         public static QName RelatedTestPlan => QNameFor("relatedTestPlan");
+        /// <summary>
+        /// Related test script resource. It is likely that the
+        /// target resource will be an oslc_qm:TestScript.
+        /// </summary>
         public static QName RelatedTestScript => QNameFor("relatedTestScript");
+        /// <summary>
+        /// Whether or not the Change Request has been reviewed.
+        /// </summary>
         public static QName Reviewed => QNameFor("reviewed");
+        /// <summary>
+        /// Used to indicate the severity or potential impact of a defect.
+        /// It is likely that the target resource will be an oslc_cm:Severity.
+        /// </summary>
         public static QName Severity => QNameFor("severity");
+        /// <summary>
+        /// Used to indicate the status of the change request.
+        /// </summary>
         public static QName State => QNameFor("state");
+        /// <summary>
+        /// Used to indicate the status of the change request based
+        /// on values defined by the service provider. Most often a read-only
+        /// property. It is likely that the target resource will be a string corresponding to an
+        /// oslc_cm:State value.
+        /// </summary>
         public static QName Status => QNameFor("status");
+        /// <summary>
+        /// Test case by which this change request is tested. It is
+        /// likely that the target resource will be an oslc_qm:TestCase.
+        /// </summary>
         public static QName TestedByTestCase => QNameFor("testedByTestCase");
+        /// <summary>
+        /// Tracks a change set resource. It is likely that the
+        /// target resource will be an oslc_config:ChangeSet.
+        /// </summary>
         public static QName TracksChangeSet => QNameFor("tracksChangeSet");
+        /// <summary>
+        /// Tracks the associated Requirement or Requirement
+        /// ChangeSet resources. It is likely that the target resource will be an
+        /// oslc_rm:Requirement.
+        /// </summary>
         public static QName TracksRequirement => QNameFor("tracksRequirement");
+        /// <summary>
+        /// Whether or not the resolution or fix of the Change Request has been verified.
+        /// </summary>
         public static QName Verified => QNameFor("verified");
     }
 }

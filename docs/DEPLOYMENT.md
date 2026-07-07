@@ -108,8 +108,12 @@ cd /tmp
 git clone https://github.com/OSLC/oslc4net.git
 git clone https://github.com/oslc4net/oslc4net.github.io.git
 
+# Build SDK first so generated domain sources and API metadata are current
+cd oslc4net/OSLC4Net_SDK
+dotnet build -c Release OSLC4Net.Core.slnx
+
 # Build docs
-cd oslc4net/docs
+cd ../docs
 docfx docfx.json
 
 # Copy to github.io repo

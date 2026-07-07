@@ -8,10 +8,27 @@ public static partial class SpdxAI
     public const string NS = "https://spdx.org/rdf/3/terms/AI/";
     public const string Prefix = "spdx_ai";
 
+    /// <summary>
+    /// A Package that contains AI software or an AI model.
+    /// </summary>
     public const string AIPackage = NS + "AIPackage";
+    /// <summary>
+    /// A class for describing the energy consumption incurred by an AI model in
+    /// different stages of its lifecycle.
+    /// </summary>
     public const string EnergyConsumption = NS + "EnergyConsumption";
+    /// <summary>
+    /// The class that helps note down the quantity of energy consumption and the unit
+    /// used for measurement.
+    /// </summary>
     public const string EnergyConsumptionDescription = NS + "EnergyConsumptionDescription";
+    /// <summary>
+    /// Unit of energy consumption.
+    /// </summary>
     public const string EnergyUnitType = NS + "EnergyUnitType";
+    /// <summary>
+    /// Safety risk level.
+    /// </summary>
     public const string SafetyRiskAssessmentType = NS + "SafetyRiskAssessmentType";
 
     public static QName QNameFor(string localResource)
@@ -21,49 +38,189 @@ public static partial class SpdxAI
 
     public static partial class P
     {
+        /// <summary>
+        /// **DEPRECATED in SPDX 3.1.**
+        /// Use /Core/isoAutomationLevel (../../Core/Properties/isoAutomationLevel.md)
+        /// instead.
+        ///
+        /// Indicates whether the system can perform a decision or action without human
+        /// involvement or guidance.
+        /// </summary>
         public const string AutonomyType = NS + "autonomyType";
+        /// <summary>
+        /// Domain in which the AI package can be used.
+        /// </summary>
         public const string Domain = NS + "domain";
+        /// <summary>
+        /// Energy consumption incurred by an AI model.
+        /// </summary>
         public const string EnergyConsumption = NS + "energyConsumption";
+        /// <summary>
+        /// Energy quantity.
+        /// </summary>
         public const string EnergyQuantity = NS + "energyQuantity";
+        /// <summary>
+        /// Unit in which energy is measured.
+        /// </summary>
         public const string EnergyUnit = NS + "energyUnit";
+        /// <summary>
+        /// Energy consumed when finetuning the AI model that is
+        /// being used in the AI system.
+        /// </summary>
         public const string FinetuningEnergyConsumption = NS + "finetuningEnergyConsumption";
+        /// <summary>
+        /// Hyperparameter used to build the AI model contained in the AI package.
+        /// </summary>
         public const string Hyperparameter = NS + "hyperparameter";
+        /// <summary>
+        /// Energy consumed during inference time by an AI model
+        /// that is being used in the AI system.
+        /// </summary>
         public const string InferenceEnergyConsumption = NS + "inferenceEnergyConsumption";
+        /// <summary>
+        /// Information about the AI software, not including the model description.
+        /// </summary>
         public const string InformationAboutApplication = NS + "informationAboutApplication";
+        /// <summary>
+        /// Information about different steps of the training process.
+        /// </summary>
         public const string InformationAboutTraining = NS + "informationAboutTraining";
+        /// <summary>
+        /// Limitation of the AI software.
+        /// </summary>
         public const string Limitation = NS + "limitation";
+        /// <summary>
+        /// Metric used to evaluate the AI model.
+        /// </summary>
         public const string Metric = NS + "metric";
+        /// <summary>
+        /// Threshold that was used for computation of a metric described in
+        /// the metric field.
+        /// </summary>
         public const string MetricDecisionThreshold = NS + "metricDecisionThreshold";
+        /// <summary>
+        /// Preprocessing steps applied to the training data before the model training.
+        /// </summary>
         public const string ModelDataPreprocessing = NS + "modelDataPreprocessing";
+        /// <summary>
+        /// Methods that can be used to explain the results from the AI model.
+        /// </summary>
         public const string ModelExplainability = NS + "modelExplainability";
+        /// <summary>
+        /// Results of general safety risk assessment of the AI system.
+        /// </summary>
         public const string SafetyRiskAssessment = NS + "safetyRiskAssessment";
+        /// <summary>
+        /// Standard that an artifact is being complied with.
+        /// </summary>
         public const string StandardCompliance = NS + "standardCompliance";
+        /// <summary>
+        /// Energy consumed when training the AI model that is
+        /// being used in the AI system.
+        /// </summary>
         public const string TrainingEnergyConsumption = NS + "trainingEnergyConsumption";
+        /// <summary>
+        /// Type of the model used in the AI software.
+        /// </summary>
         public const string TypeOfModel = NS + "typeOfModel";
+        /// <summary>
+        /// Records if sensitive personal information is used during model training or
+        /// could be used during the inference.
+        /// </summary>
         public const string UseSensitivePersonalInformation = NS + "useSensitivePersonalInformation";
     }
 
     public static partial class Q
     {
+        /// <summary>
+        /// **DEPRECATED in SPDX 3.1.**
+        /// Use /Core/isoAutomationLevel (../../Core/Properties/isoAutomationLevel.md)
+        /// instead.
+        ///
+        /// Indicates whether the system can perform a decision or action without human
+        /// involvement or guidance.
+        /// </summary>
         public static QName AutonomyType => QNameFor("autonomyType");
+        /// <summary>
+        /// Domain in which the AI package can be used.
+        /// </summary>
         public static QName Domain => QNameFor("domain");
+        /// <summary>
+        /// Energy consumption incurred by an AI model.
+        /// </summary>
         public static QName EnergyConsumption => QNameFor("energyConsumption");
+        /// <summary>
+        /// Energy quantity.
+        /// </summary>
         public static QName EnergyQuantity => QNameFor("energyQuantity");
+        /// <summary>
+        /// Unit in which energy is measured.
+        /// </summary>
         public static QName EnergyUnit => QNameFor("energyUnit");
+        /// <summary>
+        /// Energy consumed when finetuning the AI model that is
+        /// being used in the AI system.
+        /// </summary>
         public static QName FinetuningEnergyConsumption => QNameFor("finetuningEnergyConsumption");
+        /// <summary>
+        /// Hyperparameter used to build the AI model contained in the AI package.
+        /// </summary>
         public static QName Hyperparameter => QNameFor("hyperparameter");
+        /// <summary>
+        /// Energy consumed during inference time by an AI model
+        /// that is being used in the AI system.
+        /// </summary>
         public static QName InferenceEnergyConsumption => QNameFor("inferenceEnergyConsumption");
+        /// <summary>
+        /// Information about the AI software, not including the model description.
+        /// </summary>
         public static QName InformationAboutApplication => QNameFor("informationAboutApplication");
+        /// <summary>
+        /// Information about different steps of the training process.
+        /// </summary>
         public static QName InformationAboutTraining => QNameFor("informationAboutTraining");
+        /// <summary>
+        /// Limitation of the AI software.
+        /// </summary>
         public static QName Limitation => QNameFor("limitation");
+        /// <summary>
+        /// Metric used to evaluate the AI model.
+        /// </summary>
         public static QName Metric => QNameFor("metric");
+        /// <summary>
+        /// Threshold that was used for computation of a metric described in
+        /// the metric field.
+        /// </summary>
         public static QName MetricDecisionThreshold => QNameFor("metricDecisionThreshold");
+        /// <summary>
+        /// Preprocessing steps applied to the training data before the model training.
+        /// </summary>
         public static QName ModelDataPreprocessing => QNameFor("modelDataPreprocessing");
+        /// <summary>
+        /// Methods that can be used to explain the results from the AI model.
+        /// </summary>
         public static QName ModelExplainability => QNameFor("modelExplainability");
+        /// <summary>
+        /// Results of general safety risk assessment of the AI system.
+        /// </summary>
         public static QName SafetyRiskAssessment => QNameFor("safetyRiskAssessment");
+        /// <summary>
+        /// Standard that an artifact is being complied with.
+        /// </summary>
         public static QName StandardCompliance => QNameFor("standardCompliance");
+        /// <summary>
+        /// Energy consumed when training the AI model that is
+        /// being used in the AI system.
+        /// </summary>
         public static QName TrainingEnergyConsumption => QNameFor("trainingEnergyConsumption");
+        /// <summary>
+        /// Type of the model used in the AI software.
+        /// </summary>
         public static QName TypeOfModel => QNameFor("typeOfModel");
+        /// <summary>
+        /// Records if sensitive personal information is used during model training or
+        /// could be used during the inference.
+        /// </summary>
         public static QName UseSensitivePersonalInformation => QNameFor("useSensitivePersonalInformation");
     }
 }

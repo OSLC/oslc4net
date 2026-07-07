@@ -3,94 +3,352 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Domains.KerML;
 
+/// <summary>
+/// All vocabulary URIs defined in the OSLC KerML namespace.
+/// </summary>
 public static partial class KerMLVocabulary
 {
     public const string NS = "https://www.omg.org/spec/kerml/vocabulary#";
     public const string Prefix = "oslc_kerml";
 
+    /// <summary>
+    /// An AnnotatingElement is an Element that provides additional description of or metadata on some other Element. An AnnotatingElement is either attached to its annotatedElements by Annotation Relationships, or it implicitly annotates its owningNamespace.
+    /// </summary>
     public const string AnnotatingElement = NS + "AnnotatingElement";
+    /// <summary>
+    /// An Annotation is a Relationship between an AnnotatingElement and the Element that is annotated by that AnnotatingElement.
+    /// </summary>
     public const string Annotation = NS + "Annotation";
+    /// <summary>
+    /// An Association is a Relationship and a Classifier to enable classification of links between things (in the universe). The co-domains (types) of the associationEnd Features are the relatedTypes, as co-domain and participants (linked things) of an Association identify each other.
+    /// </summary>
     public const string Association = NS + "Association";
+    /// <summary>
+    /// An AssociationStructure is an Association that is also a Structure, classifying link objects that are both links and objects. As objects, link objects can be created and destroyed, and their non-end Features can change over time. However, the values of the end Features of a link object are fixed and cannot change over its lifetime.
+    /// </summary>
     public const string AssociationStructure = NS + "AssociationStructure";
+    /// <summary>
+    /// A Behavior coordinates occurrences of other Behaviors, as well as changes in objects. Behaviors can be decomposed into Steps and be characterized by parameters.
+    /// </summary>
     public const string Behavior = NS + "Behavior";
+    /// <summary>
+    /// A BindingConnector is a binary Connector that requires its relatedFeatures to identify the same things (have the same values).
+    /// </summary>
     public const string BindingConnector = NS + "BindingConnector";
+    /// <summary>
+    /// A BooleanExpression is a Boolean-valued Expression whose type is a Predicate. It represents a logical condition resulting from the evaluation of the Predicate.
+    /// </summary>
     public const string BooleanExpression = NS + "BooleanExpression";
+    /// <summary>
+    /// A Class is a Classifier of things (in the universe) that can be distinguished without regard to how they are related to other things (via Features). This means multiple things classified by the same Class can be distinguished, even when they are related other things in exactly the same way.
+    /// </summary>
     public const string Class = NS + "Class";
+    /// <summary>
+    /// A Classifier is a Type that classifies:.
+    /// </summary>
     public const string Classifier = NS + "Classifier";
+    /// <summary>
+    /// A CollectExpression is an OperatorExpression whose operator is "collect", which resolves to the Function ControlFunctions::collect from the Kernel Functions Library.
+    /// </summary>
     public const string CollectExpression = NS + "CollectExpression";
+    /// <summary>
+    /// A Comment is an AnnotatingElement whose body in some way describes its annotatedElements.
+    /// </summary>
     public const string Comment = NS + "Comment";
+    /// <summary>
+    /// Conjugation is a Relationship between two types in which the conjugatedType inherits all the Features of the originalType, but with all input and output Features reversed. That is, any Features with a direction in relative to the originalType are considered to have an effective direction of out relative to the conjugatedType and, similarly, Features with direction out in the originalType are considered to have an effective direction of in in the conjugatedType. Features with direction inout, or with no direction, in the originalType, are inherited without change.
+    /// </summary>
     public const string Conjugation = NS + "Conjugation";
+    /// <summary>
+    /// A Connector is a usage of Associations, with links restricted according to instances of the Type in which they are used (domain of the Connector). The associations of the Connector restrict what kinds of things might be linked. The Connector further restricts these links to be between values of Features on instances of its domain.
+    /// </summary>
     public const string Connector = NS + "Connector";
+    /// <summary>
+    /// A ConstructorExpression is an InstantiationExpression whose result specializes its instantiatedType, binding some or all of the features of the instantiatedType to the results of its argument Expressions.
+    /// </summary>
     public const string ConstructorExpression = NS + "ConstructorExpression";
+    /// <summary>
+    /// CrossSubsetting is a kind of Subsetting for end Features, as identified by crossingFeature, to subset a chained Feature, identified by crossedFeature. It navigates to instances of the end Feature’s type from instances of other end Feature types on the same owningType (at least two end Features are required for any of them to have a CrossSubsetting).
+    /// </summary>
     public const string CrossSubsetting = NS + "CrossSubsetting";
+    /// <summary>
+    /// A DataType is a Classifier of things (in the universe) that can only be distinguished by how they are related to other things (via Features). This means multiple things classified by the same DataType.
+    /// </summary>
     public const string DataType = NS + "DataType";
+    /// <summary>
+    /// A Dependency is a Relationship that indicates that one or more client Elements require one more supplier Elements for their complete specification. In general, this means that a change to one of the supplier Elements may necessitate a change to, or re-specification of, the client Elements.
+    /// </summary>
     public const string Dependency = NS + "Dependency";
+    /// <summary>
+    /// Differencing is a Relationship that makes its differencingType one of the differencingTypes of its typeDifferenced.
+    /// </summary>
     public const string Differencing = NS + "Differencing";
+    /// <summary>
+    /// A Disjoining is a Relationship between Types asserted to have interpretations that are not shared (disjoint) between them, identified as typeDisjoined and disjoiningType. For example, a Classifier for mammals is disjoint from a Classifier for minerals, and a Feature for people's parents is disjoint from a Feature for their children.
+    /// </summary>
     public const string Disjoining = NS + "Disjoining";
+    /// <summary>
+    /// Documentation is a Comment that specifically documents a documentedElement, which must be its owner.
+    /// </summary>
     public const string Documentation = NS + "Documentation";
+    /// <summary>
+    /// An Element is a constituent of a model that is uniquely identified relative to all other Elements. It can have Relationships with other Elements. Some of these Relationships might imply ownership of other Elements, which means that if an Element is deleted from a model, then so are all the Elements that it owns.
+    /// </summary>
     public const string Element = NS + "Element";
+    /// <summary>
+    /// ElementFilterMembership is a Membership between a Namespace and a model-level evaluable Boolean-valued Expression, asserting that imported members of the Namespace should be filtered using the condition Expression. A general Namespace does not define any specific filtering behavior, but such behavior may be defined for various specialized kinds of Namespaces.
+    /// </summary>
     public const string ElementFilterMembership = NS + "ElementFilterMembership";
+    /// <summary>
+    /// EndFeatureMembership is a FeatureMembership that requires its memberFeature be owned and have isEnd = true.
+    /// </summary>
     public const string EndFeatureMembership = NS + "EndFeatureMembership";
+    /// <summary>
+    /// An Expression is a Step that is typed by a Function. An Expression that also has a Function as its featuringType is a computational step within that Function. An Expression always has a single result parameter, which redefines the result parameter of its defining function. This allows Expressions to be interconnected in tree structures, in which inputs to each Expression in the tree are determined as the results of other Expression in the tree.
+    /// </summary>
     public const string Expression = NS + "Expression";
+    /// <summary>
+    /// A Feature is a Type that classifies relations between multiple things (in the universe). The domain of the relation is the intersection of the featuringTypes of the Feature. (The domain of a Feature with no featuringTyps is implicitly the most general Type Base::Anything from the Kernel Semantic Library.) The co-domain of the relation is the intersection of the types of the Feature.
+    ///
+    /// .
+    /// </summary>
     public const string Feature = NS + "Feature";
+    /// <summary>
+    /// A FeatureChainExpression is an OperatorExpression whose operator is ".", which resolves to the Function ControlFunctions::'.' from the Kernel Functions Library. It evaluates to the result of chaining the result Feature of its single argument Expression with its targetFeature.
+    /// </summary>
     public const string FeatureChainExpression = NS + "FeatureChainExpression";
+    /// <summary>
+    /// FeatureChaining is a Relationship that makes its target Feature one of the chainingFeatures of its owning Feature.
+    /// </summary>
     public const string FeatureChaining = NS + "FeatureChaining";
+    /// <summary>
+    /// FeatureDirectionKind enumerates the possible kinds of direction that a Feature may be given as a member of a Type.
+    /// </summary>
     public const string FeatureDirectionKind = NS + "FeatureDirectionKind";
+    /// <summary>
+    /// A FeatureInverting is a Relationship between Features asserting that their interpretations (sequences) are the reverse of each other, identified as featureInverted and invertingFeature. For example, a Feature identifying each person's parents is the inverse of a Feature identifying each person's children. A person identified as a parent of another will identify that other as one of their children.
+    /// </summary>
     public const string FeatureInverting = NS + "FeatureInverting";
+    /// <summary>
+    /// A FeatureMembership is an OwningMembership between an ownedMemberFeature and an owningType. If the ownedMemberFeature has isVariable = false, then the FeatureMembership implies that the owningType is also a featuringType of the ownedMemberFeature. If the ownedMemberFeature has isVariable = true, then the FeatureMembership implies that the ownedMemberFeature is featured by the snapshots of the owningType, which must specialize the Kernel Semantic Library base class Occurrence.
+    /// </summary>
     public const string FeatureMembership = NS + "FeatureMembership";
+    /// <summary>
+    /// A FeatureReferenceExpression is an Expression whose result is bound to a referent Feature.
+    /// </summary>
     public const string FeatureReferenceExpression = NS + "FeatureReferenceExpression";
+    /// <summary>
+    /// FeatureTyping is Specialization in which the specific Type is a Feature. This means the set of instances of the (specific) typedFeature is a subset of the set of instances of the (general) type. In the simplest case, the type is a Classifier, whereupon the typedFeature has values that are instances of the Classifier.
+    /// </summary>
     public const string FeatureTyping = NS + "FeatureTyping";
+    /// <summary>
+    /// A FeatureValue is a Membership that identifies a particular member Expression that provides the value of the Feature that owns the FeatureValue. The value is specified as either a bound value or an initial value, and as either a concrete or default value. A Feature can have at most one FeatureValue.
+    /// </summary>
     public const string FeatureValue = NS + "FeatureValue";
+    /// <summary>
+    /// An Flow is a Step that represents the transfer of values from one Feature to another. Flows can take non-zero time to complete.
+    /// </summary>
     public const string Flow = NS + "Flow";
+    /// <summary>
+    /// A FlowEnd is a Feature that is one of the connectorEnds giving the source or target of a Flow. For Flows typed by FlowTransfer or its specializations, FlowEnds must have exactly one ownedFeature, which redefines Transfer::source::sourceOutput or Transfer::target::targetInput and redefines the corresponding feature of the relatedElement for its end.
+    /// </summary>
     public const string FlowEnd = NS + "FlowEnd";
+    /// <summary>
+    /// A Function is a Behavior that has an out parameter that is identified as its result. A Function represents the performance of a calculation that produces the values of its result parameter. This calculation may be decomposed into Expressions that are steps of the Function.
+    /// </summary>
     public const string Function = NS + "Function";
+    /// <summary>
+    /// An Import is an Relationship between its importOwningNamespace and either a Membership (for a MembershipImport) or another Namespace (for a NamespaceImport), which determines a set of Memberships that become importedMemberships of the importOwningNamespace. If isImportAll = false (the default), then only public Memberships are considered "visible". If isImportAll = true, then all Memberships are considered "visible", regardless of their declared visibility. If isRecursive = true, then visible Memberships are also recursively imported from owned sub-Namespaces.
+    /// </summary>
     public const string Import = NS + "Import";
+    /// <summary>
+    /// An IndexExpression is an OperatorExpression whose operator is "#", which resolves to the Function BasicFunctions::'#' from the Kernel Functions Library.
+    /// </summary>
     public const string IndexExpression = NS + "IndexExpression";
+    /// <summary>
+    /// An InstantiationExpression is an Expression that instantiates its instantiatedType, binding some or all of the features of that Type to the results of its arguments.
+    /// </summary>
     public const string InstantiationExpression = NS + "InstantiationExpression";
+    /// <summary>
+    /// An Interaction is a Behavior that is also an Association, providing a context for multiple objects that have behaviors that impact one another.
+    /// </summary>
     public const string Interaction = NS + "Interaction";
+    /// <summary>
+    /// Intersecting is a Relationship that makes its intersectingType one of the intersectingTypes of its typeIntersected.
+    /// </summary>
     public const string Intersecting = NS + "Intersecting";
+    /// <summary>
+    /// An Invariant is a BooleanExpression that is asserted to have a specific Boolean result value. If isNegated = false, then the result is asserted to be true. If isNegated = true, then the result is asserted to be false.
+    /// </summary>
     public const string Invariant = NS + "Invariant";
+    /// <summary>
+    /// An InvocationExpression is an InstantiationExpression whose instantiatedType must be a Behavior or a Feature typed by a single Behavior (such as a Step). Each of the input parameters of the instantiatedType are bound to the result of an argument Expression. If the instantiatedType is a Function or a Feature typed by a Function, then the result of the InvocationExpression is the result of the invoked Function. Otherwise, the result is an instance of the instantiatedType (essentially like a behavioral ConstructorExpression).
+    /// </summary>
     public const string InvocationExpression = NS + "InvocationExpression";
+    /// <summary>
+    /// A LibraryPackage is a Package that is the container for a model library. A LibraryPackage is itself a library Element as are all Elements that are directly or indirectly contained in it.
+    /// </summary>
     public const string LibraryPackage = NS + "LibraryPackage";
+    /// <summary>
+    /// LiteralBoolean is a LiteralExpression that provides a Boolean value as a result. Its result parameter must have type Boolean.
+    /// </summary>
     public const string LiteralBoolean = NS + "LiteralBoolean";
+    /// <summary>
+    /// A LiteralExpression is an Expression that provides a basic DataValue as a result.
+    /// </summary>
     public const string LiteralExpression = NS + "LiteralExpression";
+    /// <summary>
+    /// A LiteralInfinity is a LiteralExpression that provides the positive infinity value (*). It's result must have the type Positive.
+    /// </summary>
     public const string LiteralInfinity = NS + "LiteralInfinity";
+    /// <summary>
+    /// A LiteralInteger is a LiteralExpression that provides an Integer value as a result. Its result parameter must have the type Integer.
+    /// </summary>
     public const string LiteralInteger = NS + "LiteralInteger";
+    /// <summary>
+    /// A LiteralRational is a LiteralExpression that provides a Rational value as a result. Its result parameter must have the type Rational.
+    /// </summary>
     public const string LiteralRational = NS + "LiteralRational";
+    /// <summary>
+    /// A LiteralString is a LiteralExpression that provides a String value as a result. Its result parameter must have the type String.
+    /// </summary>
     public const string LiteralString = NS + "LiteralString";
+    /// <summary>
+    /// A Membership is a Relationship between a Namespace and an Element that indicates the Element is a member of (i.e., is contained in) the Namespace. Any memberNames specify how the memberElement is identified in the Namespace and the visibility specifies whether or not the memberElement is publicly visible from outside the Namespace.
+    /// </summary>
     public const string Membership = NS + "Membership";
+    /// <summary>
+    /// A MembershipImport is an Import that imports its importedMembership into the importOwningNamespace. If isRecursive = true and the memberElement of the importedMembership is a Namespace, then the equivalent of a recursive NamespaceImport is also performed on that Namespace.
+    /// </summary>
     public const string MembershipImport = NS + "MembershipImport";
+    /// <summary>
+    /// A Metaclass is a Structure used to type MetadataFeatures.
+    /// </summary>
     public const string Metaclass = NS + "Metaclass";
+    /// <summary>
+    /// A MetadataAccessExpression is an Expression whose result is a sequence of instances of Metaclasses representing all the MetadataFeature annotations of the referencedElement. In addition, the sequence includes an instance of the reflective Metaclass corresponding to the MOF class of the referencedElement, with values for all the abstract syntax properties of the referencedElement.
+    /// </summary>
     public const string MetadataAccessExpression = NS + "MetadataAccessExpression";
+    /// <summary>
+    /// A MetadataFeature is a Feature that is an AnnotatingElement used to annotate another Element with metadata. It is typed by a Metaclass. All its ownedFeatures must redefine features of its metaclass and any feature bindings must be model-level evaluable.
+    /// </summary>
     public const string MetadataFeature = NS + "MetadataFeature";
+    /// <summary>
+    /// A Multiplicity is a Feature whose co-domain is a set of natural numbers giving the allowed cardinalities of each typeWithMultiplicity. The cardinality of a Type is defined as follows, depending on whether the Type is a Classifier or Feature.
+    /// .
+    /// </summary>
     public const string Multiplicity = NS + "Multiplicity";
+    /// <summary>
+    /// A MultiplicityRange is a Multiplicity whose value is defined to be the (inclusive) range of natural numbers given by the result of a lowerBound Expression and the result of an upperBound Expression. The result of these Expressions shall be of type Natural. If the result of the upperBound Expression is the unbounded value *, then the specified range includes all natural numbers greater than or equal to the lowerBound value. If no lowerBound Expression, then the default is that the lower bound has the same value as the upper bound, except if the upperBound evaluates to *, in which case the default for the lower bound is 0.
+    /// </summary>
     public const string MultiplicityRange = NS + "MultiplicityRange";
+    /// <summary>
+    /// A Namespace is an Element that contains other Elements, known as its members, via Membership Relationships with those Elements. The members of a Namespace may be owned by the Namespace, aliased in the Namespace, or imported into the Namespace via Import Relationships.
+    /// </summary>
     public const string Namespace = NS + "Namespace";
+    /// <summary>
+    /// A NamespaceImport is an Import that imports Memberships from its importedNamespace into the importOwningNamespace. If  isRecursive = false, then only the visible Memberships of the importedNamespace are imported. If  isRecursive = true, then, in addition, Memberships are recursively imported from any ownedMembers of the importedNamespace that are Namespaces.
+    /// </summary>
     public const string NamespaceImport = NS + "NamespaceImport";
+    /// <summary>
+    /// A NullExpression is an Expression that results in a null value.
+    /// </summary>
     public const string NullExpression = NS + "NullExpression";
+    /// <summary>
+    /// An OperatorExpression is an InvocationExpression whose function is determined by resolving its operator in the context of one of the standard packages from the Kernel Function Library.
+    /// </summary>
     public const string OperatorExpression = NS + "OperatorExpression";
+    /// <summary>
+    /// An OwningMembership is a Membership that owns its memberElement as a ownedRelatedElement. The ownedMemberElement becomes an ownedMember of the membershipOwningNamespace.
+    /// </summary>
     public const string OwningMembership = NS + "OwningMembership";
+    /// <summary>
+    /// A Package is a Namespace used to group Elements, without any instance-level semantics. It may have one or more model-level evaluable filterCondition Expressions used to filter its importedMemberships. Any imported member must meet all of the filterConditions.
+    /// </summary>
     public const string Package = NS + "Package";
+    /// <summary>
+    /// A ParameterMembership is a FeatureMembership that identifies its memberFeature as a parameter, which is always owned, and must have a direction. A ParameterMembership must be owned by a Behavior, a Step, or the result parameter of a ConstructorExpression.
+    /// </summary>
     public const string ParameterMembership = NS + "ParameterMembership";
+    /// <summary>
+    /// A PayloadFeature is the ownedFeature of a Flow that identifies the things carried by the kinds of transfers that are instances of the Flow.
+    /// </summary>
     public const string PayloadFeature = NS + "PayloadFeature";
+    /// <summary>
+    /// A Predicate is a Function whose result parameter has type Boolean and multiplicity 1..1.
+    /// </summary>
     public const string Predicate = NS + "Predicate";
+    /// <summary>
+    /// Redefinition is a kind of Subsetting that requires the redefinedFeature and the redefiningFeature to have the same values (on each instance of the domain of the redefiningFeature). This means any restrictions on the redefiningFeature, such as type or multiplicity, also apply to the redefinedFeature (on each instance of the domain of the redefiningFeature), and vice versa. The redefinedFeature might have values for instances of the domain of the redefiningFeature, but only as instances of the domain of the redefinedFeature that happen to also be instances of the domain of the redefiningFeature. This is supported by the constraints inherited from Subsetting on the domains of the redefiningFeature and redefinedFeature. However, these constraints are narrowed for Redefinition to require the owningTypes of the redefiningFeature and redefinedFeature to be different and the redefinedFeature to not be inherited into the owningNamespace of the redefiningFeature.This enables the redefiningFeature to have the same name as the redefinedFeature, if desired.
+    /// </summary>
     public const string Redefinition = NS + "Redefinition";
+    /// <summary>
+    /// ReferenceSubsetting is a kind of Subsetting in which the referencedFeature is syntactically distinguished from other Features subsetted by the referencingFeature. ReferenceSubsetting has the same semantics as Subsetting, but the referencedFeature may have a special purpose relative to the referencingFeature. For instance, ReferenceSubsetting is used to identify the relatedFeatures of a Connector.
+    /// </summary>
     public const string ReferenceSubsetting = NS + "ReferenceSubsetting";
+    /// <summary>
+    /// A Relationship is an Element that relates other Element. Some of its relatedElements may be owned, in which case those ownedRelatedElements will be deleted from a model if their owningRelationship is. A Relationship may also be owned by another Element, in which case the ownedRelatedElements of the Relationship are also considered to be transitively owned by the owningRelatedElement of the Relationship.
+    /// </summary>
     public const string Relationship = NS + "Relationship";
+    /// <summary>
+    /// A ResultExpressionMembership is a FeatureMembership that indicates that the ownedResultExpression provides the result values for the Function or Expression that owns it. The owning Function or Expression must contain a BindingConnector between the result parameter of the ownedResultExpression and the result parameter of the owning Function or Expression.
+    /// </summary>
     public const string ResultExpressionMembership = NS + "ResultExpressionMembership";
+    /// <summary>
+    /// A ReturnParameterMembership is a ParameterMembership that indicates that the ownedMemberParameter is the result parameter of a Function or Expression. The direction of the ownedMemberParameter must be out.
+    /// </summary>
     public const string ReturnParameterMembership = NS + "ReturnParameterMembership";
+    /// <summary>
+    /// A SelectExpression is an OperatorExpression whose operator is "select", which resolves to the Function ControlFunctions::select from the Kernel Functions Library.
+    /// </summary>
     public const string SelectExpression = NS + "SelectExpression";
+    /// <summary>
+    /// Specialization is a Relationship between two Types that requires all instances of the specific type to also be instances of the general Type (i.e., the set of instances of the specific Type is a subset of those of the general Type, which might be the same set).
+    /// </summary>
     public const string Specialization = NS + "Specialization";
+    /// <summary>
+    /// A Step is a Feature that is typed by one or more Behaviors. Steps may be used by one Behavior to coordinate the performance of other Behaviors, supporting a steady refinement of behavioral descriptions. Steps can be ordered in time and can be connected using Flows to specify things flowing between their parameters.
+    /// </summary>
     public const string Step = NS + "Step";
+    /// <summary>
+    /// A Structure is a Class of objects in the modeled universe that are primarily structural in nature. While such an object is not itself behavioral, it may be involved in and acted on by Behaviors, and it may be the performer of some of them.
+    /// </summary>
     public const string Structure = NS + "Structure";
+    /// <summary>
+    /// Subclassification is Specialization in which both the specific and general Types are Classifier. This means all instances of the specific Classifier are also instances of the general Classifier.
+    /// </summary>
     public const string Subclassification = NS + "Subclassification";
+    /// <summary>
+    /// Subsetting is Specialization in which the specific and general Types are Features. This means all values of the subsettingFeature (on instances of its domain, i.e., the intersection of its featuringTypes) are values of the subsettedFeature on instances of its domain. To support this the domain of the subsettingFeature must be the same or specialize (at least indirectly) the domain of the subsettedFeature (via Specialization), and the co-domain (intersection of the types) of the subsettingFeature must specialize the co-domain of the subsettedFeature.
+    /// </summary>
     public const string Subsetting = NS + "Subsetting";
+    /// <summary>
+    /// A Succession is a binary Connector that requires its relatedFeatures to happen separately in time.
+    /// </summary>
     public const string Succession = NS + "Succession";
+    /// <summary>
+    /// A SuccessionFlow is a Flow that also provides temporal ordering. It classifies Transfers that cannot start until the source Occurrence has completed and that must complete before the target Occurrence can start.
+    /// </summary>
     public const string SuccessionFlow = NS + "SuccessionFlow";
+    /// <summary>
+    /// A TextualRepresentation is an AnnotatingElement whose body represents the representedElement in a given language. The representedElement must be the owner of the TextualRepresentation. The named language can be a natural language, in which case the body is an informal representation, or an artificial language, in which case the body is expected to be a formal, machine-parsable representation.
+    /// </summary>
     public const string TextualRepresentation = NS + "TextualRepresentation";
+    /// <summary>
+    /// A Type is a Namespace that is the most general kind of Element supporting the semantics of classification. A Type may be a Classifier or a Feature, defining conditions on what is classified by the Type (see also the description of isSufficient).
+    /// </summary>
     public const string Type = NS + "Type";
+    /// <summary>
+    /// A TypeFeaturing is a Featuring Relationship in which the featureOfType is the source and the featuringType is the target.
+    /// </summary>
     public const string TypeFeaturing = NS + "TypeFeaturing";
+    /// <summary>
+    /// Unioning is a Relationship that makes its unioningType one of the unioningTypes of its typeUnioned.
+    /// </summary>
     public const string Unioning = NS + "Unioning";
+    /// <summary>
+    /// VisibilityKind is an enumeration whose literals specify the visibility of a Membership of an Element in a Namespace outside of that Namespace. Note that "visibility" specifically restricts whether an Element in a Namespace may be referenced by name from outside the Namespace and only otherwise restricts access to an Element as provided by specific constraints in the abstract syntax (e.g., preventing the import or inheritance of private Elements).
+    /// </summary>
     public const string VisibilityKind = NS + "VisibilityKind";
 
     public static QName QNameFor(string localResource)
@@ -100,371 +358,1507 @@ public static partial class KerMLVocabulary
 
     public static partial class P
     {
+        /// <summary>
+        /// Element: Various alternative identifiers for this Element. Generally, these will be set by tools.
+        /// </summary>
         public const string AliasIds = NS + "aliasIds";
+        /// <summary>
+        /// AnnotatingElement: The Elements that are annotated by this AnnotatingElement. If annotation is not empty, these are the annotatedElements of the annotations. If annotation is empty, then it is the owningNamespace of the AnnotatingElement.
+        /// Annotation: The Element that is annotated by the annotatingElement of this Annotation.
+        /// </summary>
         public const string AnnotatedElement = NS + "annotatedElement";
+        /// <summary>
+        /// Annotation: The AnnotatingElement that annotates the annotatedElement of this Annotation. This is always either the ownedAnnotatingElement or the owningAnnotatingElement.
+        /// </summary>
         public const string AnnotatingElement = NS + "annotatingElement";
+        /// <summary>
+        /// AnnotatingElement: The Annotations that relate this AnnotatingElement to its annotatedElements. This includes the owningAnnotatingRelationship (if any) followed by all the ownedAnnotatingRelationshps.
+        /// </summary>
         public const string Annotation = NS + "annotation";
+        /// <summary>
+        /// InstantiationExpression: The Expressions whose results are bound to features of the instantiatedType. The arguments are ordered consistent with the order of the features, though they may not be one-to-one with all the features.
+        /// </summary>
         public const string Argument = NS + "argument";
+        /// <summary>
+        /// Connector: The Associations that type the Connector.
+        /// </summary>
         public const string Association = NS + "association";
+        /// <summary>
+        /// Association: The features of the Association that identify the things that can be related by it. A concrete Association must have at least two associationEnds. When it has exactly two, the Association is called a binary Association.
+        /// </summary>
         public const string AssociationEnd = NS + "associationEnd";
+        /// <summary>
+        /// Step: The Behaviors that type this Step.
+        /// </summary>
         public const string Behavior = NS + "behavior";
+        /// <summary>
+        /// Comment: The annotation text for the Comment.
+        /// TextualRepresentation: The textual representation of the representedElement in the given language.
+        /// </summary>
         public const string Body = NS + "body";
+        /// <summary>
+        /// MultiplicityRange: The owned Expressions of the MultiplicityRange whose results provide its bounds. These must be the first ownedMembers of the MultiplicityRange.
+        /// </summary>
         public const string Bound = NS + "bound";
+        /// <summary>
+        /// Feature: The Feature that are chained together to determine the values of this Feature, derived from the chainingFeatures of the ownedFeatureChainings of this Feature, in the same order. The values of a Feature with chainingFeatures are the same as values of the last Feature in the chain, which can be found by starting with the values of the first Feature (for each instance of the domain of the original Feature), then using each of those as domain instances to find the values of the second Feature in chainingFeatures, and so on, to values of the last Feature.
+        /// FeatureChaining: The Feature whose values partly determine values of featureChained, as described in Feature::chainingFeature.
+        /// </summary>
         public const string ChainingFeature = NS + "chainingFeature";
+        /// <summary>
+        /// Dependency: The Element or Elements dependent on the supplier Elements.
+        /// </summary>
         public const string Client = NS + "client";
+        /// <summary>
+        /// ElementFilterMembership: The model-level evaluable Boolean-valued Expression used to filter the imported members of the membershipOwningNamespace of this ElementFilterMembership.
+        /// </summary>
         public const string Condition = NS + "condition";
+        /// <summary>
+        /// Conjugation: The Type that is the result of applying Conjugation to the originalType.
+        /// </summary>
         public const string ConjugatedType = NS + "conjugatedType";
+        /// <summary>
+        /// Connector: The endFeatures of a Connector, which redefine the endFeatures of the associations of the Connector. The connectorEnds determine via ReferenceSubsetting Relationships which Features are related by the Connector.
+        /// </summary>
         public const string ConnectorEnd = NS + "connectorEnd";
+        /// <summary>
+        /// Feature: The second chainingFeature of the crossedFeature of the ownedCrossSubsetting of this Feature, if it has one. Semantically, the values of the crossFeature of an end Feature must include all values of the end Feature obtained when navigating from values of the other end Features of the same owningType.
+        /// .
+        /// </summary>
         public const string CrossFeature = NS + "crossFeature";
+        /// <summary>
+        /// CrossSubsetting: The chained Feature that is cross subset by the crossingFeature of this CrossSubsetting.
+        /// </summary>
         public const string CrossedFeature = NS + "crossedFeature";
+        /// <summary>
+        /// CrossSubsetting: The end Feature that owns this CrossSubsetting relationship and is also its subsettingFeature.
+        /// </summary>
         public const string CrossingFeature = NS + "crossingFeature";
+        /// <summary>
+        /// Element: The declared name of this Element.
+        /// </summary>
         public const string DeclaredName = NS + "declaredName";
+        /// <summary>
+        /// Element: An optional alternative name for the Element that is intended to be shorter or in some way more succinct than its primary name. It may act as a modeler-specified identifier for the Element, though it is then the responsibility of the modeler to maintain the uniqueness of this identifier within a model or relative to some other context.
+        /// </summary>
         public const string DeclaredShortName = NS + "declaredShortName";
+        /// <summary>
+        /// Connector: The innermost Type that is a common direct or indirect featuringType of the relatedFeatures, such that, if it exists and was the featuringType of this Connector, the Connector would satisfy the checkConnectorTypeFeaturing constraint.
+        /// </summary>
         public const string DefaultFeaturingType = NS + "defaultFeaturingType";
+        /// <summary>
+        /// Type: The interpretations of a Type with differencingTypes are asserted to be those of the first of those Types, but not including those of the remaining Types. For example, a Classifier might be the difference of a Classifier for people and another for people of a particular nationality, leaving people who are not of that nationality. Similarly, a feature of people might be the difference between a feature for their children and a Classifier for people of a particular sex, identifying their children not of that sex (because the interpretations of the children Feature that identify those of that sex are also interpretations of the Classifier for that sex).
+        /// Differencing: Type that partly determines interpretations of typeDifferenced, as described in Type::differencingType.
+        /// </summary>
         public const string DifferencingType = NS + "differencingType";
+        /// <summary>
+        /// Type: The features of this Type that have a non-null direction.
+        /// </summary>
         public const string DirectedFeature = NS + "directedFeature";
+        /// <summary>
+        /// Feature: Indicates how values of this Feature are determined or used (as specified for the FeatureDirectionKind).
+        /// </summary>
         public const string Direction = NS + "direction";
+        /// <summary>
+        /// Disjoining: Type asserted to be disjoint with the typeDisjoined.
+        /// </summary>
         public const string DisjoiningType = NS + "disjoiningType";
+        /// <summary>
+        /// Element: The Documentation owned by this Element.
+        /// </summary>
         public const string Documentation = NS + "documentation";
+        /// <summary>
+        /// Documentation: The Element that is documented by this Documentation.
+        /// </summary>
         public const string DocumentedElement = NS + "documentedElement";
+        /// <summary>
+        /// Element: The globally unique identifier for this Element. This is intended to be set by tooling, and it must not change during the lifetime of the Element.
+        /// </summary>
         public const string ElementId = NS + "elementId";
+        /// <summary>
+        /// Type: All features of this Type with isEnd = true.
+        /// </summary>
         public const string EndFeature = NS + "endFeature";
+        /// <summary>
+        /// Feature: The Type that is related to this Feature by an EndFeatureMembership in which the Feature is an ownedMemberFeature.
+        /// </summary>
         public const string EndOwningType = NS + "endOwningType";
+        /// <summary>
+        /// Function: The Expressions that are steps in the calculation of the result of this Function.
+        /// </summary>
         public const string Expression = NS + "expression";
+        /// <summary>
+        /// Type: The ownedMemberFeatures of the featureMemberships of this Type.
+        /// </summary>
         public const string Feature = NS + "feature";
+        /// <summary>
+        /// FeatureChaining: The Feature whose values are partly determined by values of the chainingFeature, as described in Feature::chainingFeature.
+        /// </summary>
         public const string FeatureChained = NS + "featureChained";
+        /// <summary>
+        /// FeatureInverting: The Feature that is an inverse of the invertingFeature.
+        /// </summary>
         public const string FeatureInverted = NS + "featureInverted";
+        /// <summary>
+        /// Type: The FeatureMemberships for features of this Type, which include all ownedFeatureMemberships and those inheritedMemberships that are FeatureMemberships (but does not include any importedMemberships).
+        /// </summary>
         public const string FeatureMembership = NS + "featureMembership";
+        /// <summary>
+        /// TypeFeaturing: The Feature that is featured by the featuringType. It is the source of the TypeFeaturing.
+        /// </summary>
         public const string FeatureOfType = NS + "featureOfType";
+        /// <summary>
+        /// Feature: The last of the chainingFeatures of this Feature, if it has any. Otherwise, this Feature itself.
+        /// </summary>
         public const string FeatureTarget = NS + "featureTarget";
+        /// <summary>
+        /// FeatureValue: The Feature to be provided a value.
+        /// </summary>
         public const string FeatureWithValue = NS + "featureWithValue";
+        /// <summary>
+        /// Feature: Types that feature this Feature, such that any instance in the domain of the Feature must be classified by all of these Types, including at least all the featuringTypes of its typeFeaturings.  If the Feature is chained, then the featuringTypes of the first Feature in the chain are also featuringTypes of the chained Feature.
+        /// TypeFeaturing: The Type that features the featureOfType. It is the target of the TypeFeaturing.
+        /// </summary>
         public const string FeaturingType = NS + "featuringType";
+        /// <summary>
+        /// Package: The model-level evaluable Boolean-valued Expression used to filter the members of this Package, which are owned by the Package are via ElementFilterMemberships.
+        /// </summary>
         public const string FilterCondition = NS + "filterCondition";
+        /// <summary>
+        /// Flow: The connectorEnds of this Flow that are FlowEnds.
+        /// </summary>
         public const string FlowEnd = NS + "flowEnd";
+        /// <summary>
+        /// Expression: The Function that types this Expression.
+        /// </summary>
         public const string Function = NS + "function";
+        /// <summary>
+        /// Specialization: A Type with a superset of all instances of the specific Type, which might be the same set.
+        /// </summary>
         public const string General = NS + "general";
+        /// <summary>
+        /// Import: The Namespace into which Memberships are imported by this Import, which must be the owningRelatedElement of the Import.
+        /// </summary>
         public const string ImportOwningNamespace = NS + "importOwningNamespace";
+        /// <summary>
+        /// Import: The effectively imported Element for this Import. For a MembershipImport, this is the memberElement of the importedMembership. For a NamespaceImport, it is the importedNamespace.
+        /// </summary>
         public const string ImportedElement = NS + "importedElement";
+        /// <summary>
+        /// Namespace: The Memberships in this Namespace that result from the ownedImports of this Namespace.
+        /// MembershipImport: The Membership to be imported.
+        /// </summary>
         public const string ImportedMembership = NS + "importedMembership";
+        /// <summary>
+        /// NamespaceImport: The Namespace whose visible Memberships are imported by this NamespaceImport.
+        /// </summary>
         public const string ImportedNamespace = NS + "importedNamespace";
+        /// <summary>
+        /// Type: All the memberFeatures of the inheritedMemberships of this Type that are FeatureMemberships.
+        /// </summary>
         public const string InheritedFeature = NS + "inheritedFeature";
+        /// <summary>
+        /// Type: All Memberships inherited by this Type via Specialization or Conjugation. These are included in the derived union for the memberships of the Type.
+        /// </summary>
         public const string InheritedMembership = NS + "inheritedMembership";
+        /// <summary>
+        /// Type: All features related to this Type by FeatureMemberships that have direction in or inout.
+        /// </summary>
         public const string Input = NS + "input";
+        /// <summary>
+        /// InstantiationExpression: The Type that is being instantiated.
+        /// </summary>
         public const string InstantiatedType = NS + "instantiatedType";
+        /// <summary>
+        /// Flow: The Interactions that type this Flow. Interactions are both Associations and Behaviors, which can type Connectors and Steps, respectively.
+        /// </summary>
         public const string Interaction = NS + "interaction";
+        /// <summary>
+        /// Type: The interpretations of a Type with intersectingTypes are asserted to be those in common among the intersectingTypes, which are the Types derived from the intersectingType of the ownedIntersectings of this Type. For example, a Classifier might be an intersection of Classifiers for people of a particular sex and of a particular nationality. Similarly, a feature for people's children of a particular sex might be the intersection of a Feature for their children and a Classifier for people of that sex (because the interpretations of the children Feature that identify those of that sex are also interpretations of the Classifier for that sex).
+        /// Intersecting: Type that partly determines interpretations of typeIntersected, as described in Type::intersectingType.
+        /// </summary>
         public const string IntersectingType = NS + "intersectingType";
+        /// <summary>
+        /// FeatureInverting: The Feature that is an inverse of the invertedFeature.
+        /// </summary>
         public const string InvertingFeature = NS + "invertingFeature";
+        /// <summary>
+        /// Type: Indicates whether instances of this Type must also be instances of at least one of its specialized Types.
+        /// </summary>
         public const string IsAbstract = NS + "isAbstract";
+        /// <summary>
+        /// Feature: Whether the Feature is a composite feature of its featuringType. If so, the values of the Feature cannot exist after its featuring instance no longer does and cannot be values of another composite feature that is not on the same featuring instance.
+        /// </summary>
         public const string IsComposite = NS + "isComposite";
+        /// <summary>
+        /// Type: Indicates whether this Type has an ownedConjugator.
+        /// </summary>
         public const string IsConjugated = NS + "isConjugated";
+        /// <summary>
+        /// Feature: If isVariable is true, then whether the value of this Feature nevertheless does not change over all snapshots of its owningType.
+        /// </summary>
         public const string IsConstant = NS + "isConstant";
+        /// <summary>
+        /// FeatureValue: Whether this FeatureValue is a concrete specification of the bound or initial value of the featureWithValue, or just a default value that may be overridden.
+        /// </summary>
         public const string IsDefault = NS + "isDefault";
+        /// <summary>
+        /// Feature: Whether the values of this Feature can always be computed from the values of other Features.
+        /// </summary>
         public const string IsDerived = NS + "isDerived";
+        /// <summary>
+        /// Feature: Whether or not this Feature is an end Feature. An end Feature always has multiplicity 1, mapping each of its domain instances to a single co-domain instance. However, it may have a crossFeature, in which case values of the crossFeature must be the same as those found by navigation across instances of the owningType from values of other end Features to values of this Feature. If the owningType has n end Features, then the multiplicity, ordering, and uniqueness declared for the crossFeature of any one of these end Features constrains the cardinality, ordering, and uniqueness of the collection of values of that Feature reached by navigation when the values of the other n-1 end Features are held fixed.
+        /// </summary>
         public const string IsEnd = NS + "isEnd";
+        /// <summary>
+        /// Relationship: Whether this Relationship was generated by tooling to meet semantic rules, rather than being directly created by a modeler.
+        /// </summary>
         public const string IsImplied = NS + "isImplied";
+        /// <summary>
+        /// Element: Whether all necessary implied Relationships have been included in the ownedRelationships of this Element. This property may be true, even if there are not actually any ownedRelationships with isImplied = true, meaning that no such Relationships are actually implied for this Element. However, if it is false, then ownedRelationships may not contain any implied Relationships. That is, either all required implied Relationships must be included, or none of them.
+        /// </summary>
         public const string IsImpliedIncluded = NS + "isImpliedIncluded";
+        /// <summary>
+        /// Import: Whether to import memberships without regard to declared visibility.
+        /// </summary>
         public const string IsImportAll = NS + "isImportAll";
+        /// <summary>
+        /// FeatureValue: Whether this FeatureValue specifies a bound value or an initial value for the featureWithValue.
+        /// </summary>
         public const string IsInitial = NS + "isInitial";
+        /// <summary>
+        /// Element: Whether this Element is contained in the ownership tree of a library model.
+        /// </summary>
         public const string IsLibraryElement = NS + "isLibraryElement";
+        /// <summary>
+        /// Expression: Whether this Expression meets the constraints necessary to be evaluated at model level, that is, using metadata within the model.
+        /// Function: Whether this Function can be used as the function of a model-level evaluable InvocationExpression. Certain Functions from the Kernel Functions Library are considered to have isModelLevelEvaluable = true. For all other Functions it is false.
+        /// </summary>
         public const string IsModelLevelEvaluable = NS + "isModelLevelEvaluable";
+        /// <summary>
+        /// Invariant: Whether this Invariant is asserted to be false rather than true.
+        /// </summary>
         public const string IsNegated = NS + "isNegated";
+        /// <summary>
+        /// Feature: Whether an order exists for the values of this Feature or not.
+        /// </summary>
         public const string IsOrdered = NS + "isOrdered";
+        /// <summary>
+        /// Feature: Whether the values of this Feature are contained in the space and time of instances of the domain of the Feature and represent the same thing as those instances.
+        /// </summary>
         public const string IsPortion = NS + "isPortion";
+        /// <summary>
+        /// Import: Whether to recursively import Memberships from visible, owned sub-Namespaces.
+        /// </summary>
         public const string IsRecursive = NS + "isRecursive";
+        /// <summary>
+        /// LibraryPackage: Whether this LibraryPackage contains a standard library model. This should only be set to true for LibraryPackages in the standard Kernel Model Libraries or in normative model libraries for a language built on KerML.
+        /// </summary>
         public const string IsStandard = NS + "isStandard";
+        /// <summary>
+        /// Type: Whether all things that meet the classification conditions of this Type must be classified by the Type.
+        /// </summary>
         public const string IsSufficient = NS + "isSufficient";
+        /// <summary>
+        /// Feature: Whether or not values for this Feature must have no duplicates or not.
+        /// </summary>
         public const string IsUnique = NS + "isUnique";
+        /// <summary>
+        /// Feature: Whether the value of this Feature might vary over time. That is, whether the Feature may have a different value for each snapshot of an owningType that is an Occurrence.
+        /// </summary>
         public const string IsVariable = NS + "isVariable";
+        /// <summary>
+        /// TextualRepresentation: The natural or artifical language in which the body text is written.
+        /// </summary>
         public const string Language = NS + "language";
+        /// <summary>
+        /// Comment: Identification of the language of the body text and, optionally, the region and/or encoding. The format shall be a POSIX locale conformant to ISO/IEC 15897, with the format [language[_territory][.codeset][@modifier]].
+        /// </summary>
         public const string Locale = NS + "locale";
+        /// <summary>
+        /// MultiplicityRange: The Expression whose result provides the lower bound of the MultiplicityRange. If no lowerBound Expression is given, then the lower bound shall have the same value as the upper bound, unless the upper bound is unbounded (*), in which case the lower bound shall be 0.
+        /// </summary>
         public const string LowerBound = NS + "lowerBound";
+        /// <summary>
+        /// Namespace: The set of all member Elements of this Namespace, which are the memberElements of all memberships of the Namespace.
+        /// </summary>
         public const string Member = NS + "member";
+        /// <summary>
+        /// Membership: The Element that becomes a member of the membershipOwningNamespace due to this Membership.
+        /// </summary>
         public const string MemberElement = NS + "memberElement";
+        /// <summary>
+        /// Membership: The elementId of the memberElement.
+        /// </summary>
         public const string MemberElementId = NS + "memberElementId";
+        /// <summary>
+        /// Membership: The name of the memberElement relative to the membershipOwningNamespace.
+        /// </summary>
         public const string MemberName = NS + "memberName";
+        /// <summary>
+        /// Membership: The short name of the memberElement relative to the membershipOwningNamespace.
+        /// </summary>
         public const string MemberShortName = NS + "memberShortName";
+        /// <summary>
+        /// Namespace: All Memberships in this Namespace, including (at least) the union of ownedMemberships and importedMemberships.
+        /// </summary>
         public const string Membership = NS + "membership";
+        /// <summary>
+        /// Membership: The Namespace of which the memberElement becomes a member due to this Membership.
+        /// </summary>
         public const string MembershipOwningNamespace = NS + "membershipOwningNamespace";
+        /// <summary>
+        /// MetadataFeature: The type of this MetadataFeature, which must be a Metaclass.
+        /// </summary>
         public const string Metaclass = NS + "metaclass";
+        /// <summary>
+        /// Type: An ownedMember of this Type that is a Multiplicity, which constraints the cardinality of the Type. If there is no such ownedMember, then the cardinality of this Type is constrained by all the Multiplicity constraints applicable to any direct supertypes.
+        /// </summary>
         public const string Multiplicity = NS + "multiplicity";
+        /// <summary>
+        /// Element: The name to be used for this Element during name resolution within its owningNamespace. This is derived using the effectiveName() operation. By default, it is the same as the declaredName, but this is overridden for certain kinds of Elements to compute a name even when the declaredName is null.
+        /// </summary>
         public const string Name = NS + "name";
+        /// <summary>
+        /// OperatorExpression: An operator symbol that names a corresponding Function from one of the standard packages from the Kernel Function Library .
+        /// </summary>
         public const string Operator = NS + "operator";
+        /// <summary>
+        /// Conjugation: The Type to be conjugated.
+        /// </summary>
         public const string OriginalType = NS + "originalType";
+        /// <summary>
+        /// Type: All features related to this Type by FeatureMemberships that have direction out or inout.
+        /// </summary>
         public const string Output = NS + "output";
+        /// <summary>
+        /// Annotation: The annotatingElement of this Annotation, when it is an ownedRelatedElement.
+        /// </summary>
         public const string OwnedAnnotatingElement = NS + "ownedAnnotatingElement";
+        /// <summary>
+        /// AnnotatingElement: The ownedRelationships of this AnnotatingElement that are Annotations, for which this AnnotatingElement is the annotatingElement.
+        /// </summary>
         public const string OwnedAnnotatingRelationship = NS + "ownedAnnotatingRelationship";
+        /// <summary>
+        /// Element: The ownedRelationships of this Element that are Annotations, for which this Element is the annotatedElement.
+        /// </summary>
         public const string OwnedAnnotation = NS + "ownedAnnotation";
+        /// <summary>
+        /// Type: A Conjugation owned by this Type for which the Type is the originalType.
+        /// </summary>
         public const string OwnedConjugator = NS + "ownedConjugator";
+        /// <summary>
+        /// Feature: The one ownedSubsetting of this Feature, if any, that is a CrossSubsetting}, for which the Feature is the crossingFeature.
+        /// </summary>
         public const string OwnedCrossSubsetting = NS + "ownedCrossSubsetting";
+        /// <summary>
+        /// Type: The ownedRelationships of this Type that are Differencings, having this Type as their typeDifferenced.
+        /// </summary>
         public const string OwnedDifferencing = NS + "ownedDifferencing";
+        /// <summary>
+        /// Type: The ownedRelationships of this Type that are Disjoinings, for which the Type is the typeDisjoined Type.
+        /// </summary>
         public const string OwnedDisjoining = NS + "ownedDisjoining";
+        /// <summary>
+        /// Element: The Elements owned by this Element, derived as the ownedRelatedElements of the ownedRelationships of this Element.
+        /// </summary>
         public const string OwnedElement = NS + "ownedElement";
+        /// <summary>
+        /// Type: All endFeatures of this Type that are ownedFeatures.
+        /// </summary>
         public const string OwnedEndFeature = NS + "ownedEndFeature";
+        /// <summary>
+        /// Type: The ownedMemberFeatures of the ownedFeatureMemberships of this Type.
+        /// </summary>
         public const string OwnedFeature = NS + "ownedFeature";
+        /// <summary>
+        /// Feature: The ownedRelationships of this Feature that are FeatureChainings, for which the Feature will be the featureChained.
+        /// </summary>
         public const string OwnedFeatureChaining = NS + "ownedFeatureChaining";
+        /// <summary>
+        /// Feature: The ownedRelationships of this Feature that are FeatureInvertings and for which the Feature is the featureInverted.
+        /// </summary>
         public const string OwnedFeatureInverting = NS + "ownedFeatureInverting";
+        /// <summary>
+        /// Type: The ownedMemberships of this Type that are FeatureMemberships, for which the Type is the owningType. Each such FeatureMembership identifies an ownedFeature of the Type.
+        /// </summary>
         public const string OwnedFeatureMembership = NS + "ownedFeatureMembership";
+        /// <summary>
+        /// Namespace: The ownedRelationships of this Namespace that are Imports, for which the Namespace is the importOwningNamespace.
+        /// </summary>
         public const string OwnedImport = NS + "ownedImport";
+        /// <summary>
+        /// Type: The ownedRelationships of this Type that are Intersectings, have the Type as their typeIntersected.
+        /// </summary>
         public const string OwnedIntersecting = NS + "ownedIntersecting";
+        /// <summary>
+        /// Namespace: The owned members of this Namespace, which are the ownedMemberElements of the ownedMemberships of the Namespace.
+        /// </summary>
         public const string OwnedMember = NS + "ownedMember";
+        /// <summary>
+        /// OwningMembership: The Element that becomes an ownedMember of the membershipOwningNamespace due to this OwningMembership.
+        /// </summary>
         public const string OwnedMemberElement = NS + "ownedMemberElement";
+        /// <summary>
+        /// OwningMembership: The elementId of the ownedMemberElement.
+        /// </summary>
         public const string OwnedMemberElementId = NS + "ownedMemberElementId";
+        /// <summary>
+        /// FeatureMembership: The Feature that this FeatureMembership relates to its owningType, making it an ownedFeature of the owningType.
+        /// </summary>
         public const string OwnedMemberFeature = NS + "ownedMemberFeature";
+        /// <summary>
+        /// OwningMembership: The name of the ownedMemberElement.
+        /// </summary>
         public const string OwnedMemberName = NS + "ownedMemberName";
+        /// <summary>
+        /// ParameterMembership: The Feature that is identified as a parameter by this ParameterMembership.
+        /// </summary>
         public const string OwnedMemberParameter = NS + "ownedMemberParameter";
+        /// <summary>
+        /// OwningMembership: The shortName of the ownedMemberElement.
+        /// </summary>
         public const string OwnedMemberShortName = NS + "ownedMemberShortName";
+        /// <summary>
+        /// Namespace: The ownedRelationships of this Namespace that are Memberships, for which the Namespace is the membershipOwningNamespace.
+        /// </summary>
         public const string OwnedMembership = NS + "ownedMembership";
+        /// <summary>
+        /// Feature: The ownedSubsettings of this Feature that are Redefinitions, for which the Feature is the redefiningFeature.
+        /// </summary>
         public const string OwnedRedefinition = NS + "ownedRedefinition";
+        /// <summary>
+        /// Feature: The one ownedSubsetting of this Feature, if any, that is a ReferenceSubsetting, for which the Feature is the referencingFeature.
+        /// </summary>
         public const string OwnedReferenceSubsetting = NS + "ownedReferenceSubsetting";
+        /// <summary>
+        /// Relationship: The relatedElements of this Relationship that are owned by the Relationship.
+        /// </summary>
         public const string OwnedRelatedElement = NS + "ownedRelatedElement";
+        /// <summary>
+        /// Element: The Relationships for which this Element is the owningRelatedElement.
+        /// </summary>
         public const string OwnedRelationship = NS + "ownedRelationship";
+        /// <summary>
+        /// ResultExpressionMembership: The Expression that provides the result for the owner of the ResultExpressionMembership.
+        /// </summary>
         public const string OwnedResultExpression = NS + "ownedResultExpression";
+        /// <summary>
+        /// Type: The ownedRelationships of this Type that are Specializations, for which the Type is the specific Type.
+        /// </summary>
         public const string OwnedSpecialization = NS + "ownedSpecialization";
+        /// <summary>
+        /// Classifier: The ownedSpecializations of this Classifier that are Subclassifications, for which this Classifier is the subclassifier.
+        /// </summary>
         public const string OwnedSubclassification = NS + "ownedSubclassification";
+        /// <summary>
+        /// Feature: The ownedSpecializations of this Feature that are Subsettings, for which the Feature is the subsettingFeature.
+        /// </summary>
         public const string OwnedSubsetting = NS + "ownedSubsetting";
+        /// <summary>
+        /// Feature: The ownedRelationships of this Feature that are TypeFeaturings and for which the Feature is the featureOfType.
+        /// </summary>
         public const string OwnedTypeFeaturing = NS + "ownedTypeFeaturing";
+        /// <summary>
+        /// Feature: The ownedSpecializations of this Feature that are FeatureTypings, for which the Feature is the typedFeature.
+        /// </summary>
         public const string OwnedTyping = NS + "ownedTyping";
+        /// <summary>
+        /// Type: The ownedRelationships of this Type that are Unionings, having the Type as their typeUnioned.
+        /// </summary>
         public const string OwnedUnioning = NS + "ownedUnioning";
+        /// <summary>
+        /// Element: The owner of this Element, derived as the owningRelatedElement of the owningRelationship of this Element, if any.
+        /// </summary>
         public const string Owner = NS + "owner";
+        /// <summary>
+        /// Annotation: The annotatedElement of this Annotation, when it is also the owningRelatedElement.
+        /// </summary>
         public const string OwningAnnotatedElement = NS + "owningAnnotatedElement";
+        /// <summary>
+        /// Annotation: The annotatingElement of this Annotation, when it is the owningRelatedElement.
+        /// </summary>
         public const string OwningAnnotatingElement = NS + "owningAnnotatingElement";
+        /// <summary>
+        /// AnnotatingElement: The owningRelationship of this AnnotatingRelationship, if it is an Annotation.
+        /// </summary>
         public const string OwningAnnotatingRelationship = NS + "owningAnnotatingRelationship";
+        /// <summary>
+        /// Subclassification: The Classifier that owns this Subclassification relationship, which must also be its subclassifier.
+        /// </summary>
         public const string OwningClassifier = NS + "owningClassifier";
+        /// <summary>
+        /// Subsetting: A subsettingFeature that is also the owningRelatedElement of this Subsetting.
+        /// FeatureTyping: A typedFeature that is also the owningRelatedElement of this FeatureTyping.
+        /// FeatureInverting: A featureInverted that is also the owningRelatedElement of this FeatureInverting.
+        /// </summary>
         public const string OwningFeature = NS + "owningFeature";
+        /// <summary>
+        /// Feature: The FeatureMembership that owns this Feature as an ownedMemberFeature, determining its owningType.
+        /// </summary>
         public const string OwningFeatureMembership = NS + "owningFeatureMembership";
+        /// <summary>
+        /// TypeFeaturing: A featureOfType that is also the owningRelatedElement of this TypeFeaturing.
+        /// </summary>
         public const string OwningFeatureOfType = NS + "owningFeatureOfType";
+        /// <summary>
+        /// Element: The owningRelationship of this Element, if that Relationship is a Membership.
+        /// </summary>
         public const string OwningMembership = NS + "owningMembership";
+        /// <summary>
+        /// Element: The Namespace that owns this Element, which is the membershipOwningNamespace of the owningMembership of this Element, if any.
+        /// </summary>
         public const string OwningNamespace = NS + "owningNamespace";
+        /// <summary>
+        /// Relationship: The relatedElement of this Relationship that owns the Relationship, if any.
+        /// </summary>
         public const string OwningRelatedElement = NS + "owningRelatedElement";
+        /// <summary>
+        /// Element: The Relationship for which this Element is an ownedRelatedElement, if any.
+        /// </summary>
         public const string OwningRelationship = NS + "owningRelationship";
+        /// <summary>
+        /// Specialization: The Type that is the specific Type of this Specialization and owns it as its owningRelatedElement.
+        /// FeatureMembership: The Type that owns this FeatureMembership.
+        /// Feature: The Type that is the owningType of the owningFeatureMembership of this Feature.
+        /// Conjugation: The conjugatedType of this Conjugation that is also its owningRelatedElement.
+        /// Disjoining: A typeDisjoined that is also an owningRelatedElement.
+        /// </summary>
         public const string OwningType = NS + "owningType";
+        /// <summary>
+        /// Behavior: The parameters of this Behavior, which are defined as its directedFeatures, whose values are passed into and/or out of a performance of the Behavior.
+        /// Step: The parameters of this Step, which are defined as its directedFeatures, whose values are passed into and/or out of a performance of the Step.
+        /// </summary>
         public const string Parameter = NS + "parameter";
+        /// <summary>
+        /// Flow: The ownedFeature of the Flow that is a PayloadFeature (if any).
+        /// </summary>
         public const string PayloadFeature = NS + "payloadFeature";
+        /// <summary>
+        /// Flow: The type of values transferred, which is the type of the payloadFeature of the Flow.
+        /// </summary>
         public const string PayloadType = NS + "payloadType";
+        /// <summary>
+        /// BooleanExpression: The Predicate that types the Expression.
+        /// </summary>
         public const string Predicate = NS + "predicate";
+        /// <summary>
+        /// Element: The full ownership-qualified name of this Element, represented in a form that is valid according to the KerML textual concrete syntax for qualified names (including use of unrestricted name notation and escaped characters, as necessary). The qualifiedName is null if this Element has no owningNamespace or if there is not a complete ownership chain of named Namespaces from a root Namespace to this Element. If the owningNamespace has other Elements with the same name as this one, then the qualifiedName is null for all such Elements other than the first.
+        /// </summary>
         public const string QualifiedName = NS + "qualifiedName";
+        /// <summary>
+        /// Redefinition: The Feature that is redefined by the redefiningFeature of this Redefinition.
+        /// </summary>
         public const string RedefinedFeature = NS + "redefinedFeature";
+        /// <summary>
+        /// Redefinition: The Feature that is redefining the redefinedFeature of this Redefinition.
+        /// </summary>
         public const string RedefiningFeature = NS + "redefiningFeature";
+        /// <summary>
+        /// MetadataAccessExpression: The Element whose metadata is being accessed.
+        /// </summary>
         public const string ReferencedElement = NS + "referencedElement";
+        /// <summary>
+        /// ReferenceSubsetting: The Feature that is referenced by the referencingFeature of this ReferenceSubsetting.
+        /// </summary>
         public const string ReferencedFeature = NS + "referencedFeature";
+        /// <summary>
+        /// ReferenceSubsetting: The Feature that owns this ReferenceSubsetting relationship, which is also its subsettingFeature.
+        /// </summary>
         public const string ReferencingFeature = NS + "referencingFeature";
+        /// <summary>
+        /// FeatureReferenceExpression: The Feature that is referenced by this FeatureReferenceExpression, which is its first non-parameter member.
+        /// </summary>
         public const string Referent = NS + "referent";
+        /// <summary>
+        /// Relationship: The Elements that are related by this Relationship, derived as the union of the source and target Elements of the Relationship.
+        /// </summary>
         public const string RelatedElement = NS + "relatedElement";
+        /// <summary>
+        /// Connector: The Features that are related by this Connector considered as a Relationship and that restrict the links it identifies, given by the referenced Features of the connectorEnds of the Connector.
+        /// </summary>
         public const string RelatedFeature = NS + "relatedFeature";
+        /// <summary>
+        /// Association: The types of the associationEnds of the Association, which are the relatedElements of the Association considered as a Relationship.
+        /// </summary>
         public const string RelatedType = NS + "relatedType";
+        /// <summary>
+        /// TextualRepresentation: The Element that is represented by this TextualRepresentation.
+        /// </summary>
         public const string RepresentedElement = NS + "representedElement";
+        /// <summary>
+        /// Expression: result.
+        /// Function: The object or value that is the result of evaluating the Function.
+        /// </summary>
         public const string Result = NS + "result";
+        /// <summary>
+        /// Element: The short name to be used for this Element during name resolution within its owningNamespace. This is derived using the effectiveShortName() operation. By default, it is the same as the declaredShortName, but this is overridden for certain kinds of Elements to compute a shortName even when the declaredName is null.
+        /// </summary>
         public const string ShortName = NS + "shortName";
+        /// <summary>
+        /// Relationship: The relatedElements from which this Relationship is considered to be directed.
+        /// </summary>
         public const string Source = NS + "source";
+        /// <summary>
+        /// Connector: The source relatedFeature for this Connector. It is the first relatedFeature.
+        /// </summary>
         public const string SourceFeature = NS + "sourceFeature";
+        /// <summary>
+        /// Flow: The Feature that provides the items carried by the Flow. It must be a feature of the source of the Flow.
+        /// </summary>
         public const string SourceOutputFeature = NS + "sourceOutputFeature";
+        /// <summary>
+        /// Association: The source relatedType for this Association. It is the first relatedType of the Association.
+        /// </summary>
         public const string SourceType = NS + "sourceType";
+        /// <summary>
+        /// Specialization: A Type with a subset of all instances of the general Type, which might be the same set.
+        /// </summary>
         public const string Specific = NS + "specific";
+        /// <summary>
+        /// Behavior: The Steps that make up this Behavior.
+        /// </summary>
         public const string Step = NS + "step";
+        /// <summary>
+        /// Subclassification: The more specific Classifier in this Subclassification.
+        /// </summary>
         public const string Subclassifier = NS + "subclassifier";
+        /// <summary>
+        /// Subsetting: The Feature that is subsetted by the subsettingFeature of this Subsetting.
+        /// </summary>
         public const string SubsettedFeature = NS + "subsettedFeature";
+        /// <summary>
+        /// Subsetting: The Feature that is a subset of the subsettedFeature of this Subsetting.
+        /// </summary>
         public const string SubsettingFeature = NS + "subsettingFeature";
+        /// <summary>
+        /// Subclassification: The more general Classifier in this Subclassification.
+        /// </summary>
         public const string Superclassifier = NS + "superclassifier";
+        /// <summary>
+        /// Dependency: The Element or Elements on which the client Elements depend in some respect.
+        /// </summary>
         public const string Supplier = NS + "supplier";
+        /// <summary>
+        /// Relationship: The relatedElements to which this Relationship is considered to be directed.
+        /// </summary>
         public const string Target = NS + "target";
+        /// <summary>
+        /// Connector: The target relatedFeatures for this Connector. This includes all the relatedFeatures other than the sourceFeature.
+        /// FeatureChainExpression: The Feature that is accessed by this FeatureChainExpression, which is its first non-parameter member.
+        /// </summary>
         public const string TargetFeature = NS + "targetFeature";
+        /// <summary>
+        /// Flow: The Feature that receives the values carried by the Flow. It must be a feature of the target of the Flow.
+        /// </summary>
         public const string TargetInputFeature = NS + "targetInputFeature";
+        /// <summary>
+        /// Association: The target relatedTypes for this Association. This includes all the relatedTypes other than the sourceType.
+        /// </summary>
         public const string TargetType = NS + "targetType";
+        /// <summary>
+        /// Element: The TextualRepresentations that annotate this Element.
+        /// </summary>
         public const string TextualRepresentation = NS + "textualRepresentation";
+        /// <summary>
+        /// Feature: Types that restrict the values of this Feature, such that the values must be instances of all the types. The types of a Feature are derived from its typings and the types of its subsettings. If the Feature is chained, then the types of the last Feature in the chain are also types of the chained Feature.
+        /// FeatureTyping: The Type that is being applied by this FeatureTyping.
+        /// </summary>
         public const string Type = NS + "type";
+        /// <summary>
+        /// Differencing: Type with interpretations partly determined by differencingType, as described in Type::differencingType.
+        /// </summary>
         public const string TypeDifferenced = NS + "typeDifferenced";
+        /// <summary>
+        /// Disjoining: Type asserted to be disjoint with the disjoiningType.
+        /// </summary>
         public const string TypeDisjoined = NS + "typeDisjoined";
+        /// <summary>
+        /// Intersecting: Type with interpretations partly determined by intersectingType, as described in Type::intersectingType.
+        /// </summary>
         public const string TypeIntersected = NS + "typeIntersected";
+        /// <summary>
+        /// Unioning: Type with interpretations partly determined by unioningType, as described in Type::unioningType.
+        /// </summary>
         public const string TypeUnioned = NS + "typeUnioned";
+        /// <summary>
+        /// FeatureTyping: The Feature that has a type determined by this FeatureTyping.
+        /// </summary>
         public const string TypedFeature = NS + "typedFeature";
+        /// <summary>
+        /// Type: The interpretations of a Type with unioningTypes are asserted to be the same as those of all the unioningTypes together, which are the Types derived from the unioningType of the ownedUnionings of this Type. For example, a Classifier for people might be the union of Classifiers for all the sexes. Similarly, a feature for people's children might be the union of features dividing them in the same ways as people in general.
+        /// Unioning: Type that partly determines interpretations of typeUnioned, as described in Type::unioningType.
+        /// </summary>
         public const string UnioningType = NS + "unioningType";
+        /// <summary>
+        /// MultiplicityRange: The Expression whose result is the upper bound of the MultiplicityRange.
+        /// </summary>
         public const string UpperBound = NS + "upperBound";
+        /// <summary>
+        /// FeatureValue: The Expression that provides the value as a result.
+        /// LiteralBoolean: The Boolean value that is the result of evaluating this LiteralBoolean.
+        /// LiteralInteger: The Integer value that is the result of evaluating this LiteralInteger.
+        /// LiteralString: The String value that is the result of evaluating this Expression.
+        /// LiteralRational: The value whose rational approximation is the result of evaluating this LiteralRational.
+        /// </summary>
         public const string Value = NS + "value";
+        /// <summary>
+        /// Membership: Whether or not the Membership of the memberElement in the membershipOwningNamespace is publicly visible outside that Namespace.
+        /// Import: The visibility level of the imported members from this Import relative to the importOwningNamespace. The default is private.
+        /// </summary>
         public const string Visibility = NS + "visibility";
     }
 
     public static partial class Q
     {
+        /// <summary>
+        /// Element: Various alternative identifiers for this Element. Generally, these will be set by tools.
+        /// </summary>
         public static QName AliasIds => QNameFor("aliasIds");
+        /// <summary>
+        /// AnnotatingElement: The Elements that are annotated by this AnnotatingElement. If annotation is not empty, these are the annotatedElements of the annotations. If annotation is empty, then it is the owningNamespace of the AnnotatingElement.
+        /// Annotation: The Element that is annotated by the annotatingElement of this Annotation.
+        /// </summary>
         public static QName AnnotatedElement => QNameFor("annotatedElement");
+        /// <summary>
+        /// Annotation: The AnnotatingElement that annotates the annotatedElement of this Annotation. This is always either the ownedAnnotatingElement or the owningAnnotatingElement.
+        /// </summary>
         public static QName AnnotatingElement => QNameFor("annotatingElement");
+        /// <summary>
+        /// AnnotatingElement: The Annotations that relate this AnnotatingElement to its annotatedElements. This includes the owningAnnotatingRelationship (if any) followed by all the ownedAnnotatingRelationshps.
+        /// </summary>
         public static QName Annotation => QNameFor("annotation");
+        /// <summary>
+        /// InstantiationExpression: The Expressions whose results are bound to features of the instantiatedType. The arguments are ordered consistent with the order of the features, though they may not be one-to-one with all the features.
+        /// </summary>
         public static QName Argument => QNameFor("argument");
+        /// <summary>
+        /// Connector: The Associations that type the Connector.
+        /// </summary>
         public static QName Association => QNameFor("association");
+        /// <summary>
+        /// Association: The features of the Association that identify the things that can be related by it. A concrete Association must have at least two associationEnds. When it has exactly two, the Association is called a binary Association.
+        /// </summary>
         public static QName AssociationEnd => QNameFor("associationEnd");
+        /// <summary>
+        /// Step: The Behaviors that type this Step.
+        /// </summary>
         public static QName Behavior => QNameFor("behavior");
+        /// <summary>
+        /// Comment: The annotation text for the Comment.
+        /// TextualRepresentation: The textual representation of the representedElement in the given language.
+        /// </summary>
         public static QName Body => QNameFor("body");
+        /// <summary>
+        /// MultiplicityRange: The owned Expressions of the MultiplicityRange whose results provide its bounds. These must be the first ownedMembers of the MultiplicityRange.
+        /// </summary>
         public static QName Bound => QNameFor("bound");
+        /// <summary>
+        /// Feature: The Feature that are chained together to determine the values of this Feature, derived from the chainingFeatures of the ownedFeatureChainings of this Feature, in the same order. The values of a Feature with chainingFeatures are the same as values of the last Feature in the chain, which can be found by starting with the values of the first Feature (for each instance of the domain of the original Feature), then using each of those as domain instances to find the values of the second Feature in chainingFeatures, and so on, to values of the last Feature.
+        /// FeatureChaining: The Feature whose values partly determine values of featureChained, as described in Feature::chainingFeature.
+        /// </summary>
         public static QName ChainingFeature => QNameFor("chainingFeature");
+        /// <summary>
+        /// Dependency: The Element or Elements dependent on the supplier Elements.
+        /// </summary>
         public static QName Client => QNameFor("client");
+        /// <summary>
+        /// ElementFilterMembership: The model-level evaluable Boolean-valued Expression used to filter the imported members of the membershipOwningNamespace of this ElementFilterMembership.
+        /// </summary>
         public static QName Condition => QNameFor("condition");
+        /// <summary>
+        /// Conjugation: The Type that is the result of applying Conjugation to the originalType.
+        /// </summary>
         public static QName ConjugatedType => QNameFor("conjugatedType");
+        /// <summary>
+        /// Connector: The endFeatures of a Connector, which redefine the endFeatures of the associations of the Connector. The connectorEnds determine via ReferenceSubsetting Relationships which Features are related by the Connector.
+        /// </summary>
         public static QName ConnectorEnd => QNameFor("connectorEnd");
+        /// <summary>
+        /// Feature: The second chainingFeature of the crossedFeature of the ownedCrossSubsetting of this Feature, if it has one. Semantically, the values of the crossFeature of an end Feature must include all values of the end Feature obtained when navigating from values of the other end Features of the same owningType.
+        /// .
+        /// </summary>
         public static QName CrossFeature => QNameFor("crossFeature");
+        /// <summary>
+        /// CrossSubsetting: The chained Feature that is cross subset by the crossingFeature of this CrossSubsetting.
+        /// </summary>
         public static QName CrossedFeature => QNameFor("crossedFeature");
+        /// <summary>
+        /// CrossSubsetting: The end Feature that owns this CrossSubsetting relationship and is also its subsettingFeature.
+        /// </summary>
         public static QName CrossingFeature => QNameFor("crossingFeature");
+        /// <summary>
+        /// Element: The declared name of this Element.
+        /// </summary>
         public static QName DeclaredName => QNameFor("declaredName");
+        /// <summary>
+        /// Element: An optional alternative name for the Element that is intended to be shorter or in some way more succinct than its primary name. It may act as a modeler-specified identifier for the Element, though it is then the responsibility of the modeler to maintain the uniqueness of this identifier within a model or relative to some other context.
+        /// </summary>
         public static QName DeclaredShortName => QNameFor("declaredShortName");
+        /// <summary>
+        /// Connector: The innermost Type that is a common direct or indirect featuringType of the relatedFeatures, such that, if it exists and was the featuringType of this Connector, the Connector would satisfy the checkConnectorTypeFeaturing constraint.
+        /// </summary>
         public static QName DefaultFeaturingType => QNameFor("defaultFeaturingType");
+        /// <summary>
+        /// Type: The interpretations of a Type with differencingTypes are asserted to be those of the first of those Types, but not including those of the remaining Types. For example, a Classifier might be the difference of a Classifier for people and another for people of a particular nationality, leaving people who are not of that nationality. Similarly, a feature of people might be the difference between a feature for their children and a Classifier for people of a particular sex, identifying their children not of that sex (because the interpretations of the children Feature that identify those of that sex are also interpretations of the Classifier for that sex).
+        /// Differencing: Type that partly determines interpretations of typeDifferenced, as described in Type::differencingType.
+        /// </summary>
         public static QName DifferencingType => QNameFor("differencingType");
+        /// <summary>
+        /// Type: The features of this Type that have a non-null direction.
+        /// </summary>
         public static QName DirectedFeature => QNameFor("directedFeature");
+        /// <summary>
+        /// Feature: Indicates how values of this Feature are determined or used (as specified for the FeatureDirectionKind).
+        /// </summary>
         public static QName Direction => QNameFor("direction");
+        /// <summary>
+        /// Disjoining: Type asserted to be disjoint with the typeDisjoined.
+        /// </summary>
         public static QName DisjoiningType => QNameFor("disjoiningType");
+        /// <summary>
+        /// Element: The Documentation owned by this Element.
+        /// </summary>
         public static QName Documentation => QNameFor("documentation");
+        /// <summary>
+        /// Documentation: The Element that is documented by this Documentation.
+        /// </summary>
         public static QName DocumentedElement => QNameFor("documentedElement");
+        /// <summary>
+        /// Element: The globally unique identifier for this Element. This is intended to be set by tooling, and it must not change during the lifetime of the Element.
+        /// </summary>
         public static QName ElementId => QNameFor("elementId");
+        /// <summary>
+        /// Type: All features of this Type with isEnd = true.
+        /// </summary>
         public static QName EndFeature => QNameFor("endFeature");
+        /// <summary>
+        /// Feature: The Type that is related to this Feature by an EndFeatureMembership in which the Feature is an ownedMemberFeature.
+        /// </summary>
         public static QName EndOwningType => QNameFor("endOwningType");
+        /// <summary>
+        /// Function: The Expressions that are steps in the calculation of the result of this Function.
+        /// </summary>
         public static QName Expression => QNameFor("expression");
+        /// <summary>
+        /// Type: The ownedMemberFeatures of the featureMemberships of this Type.
+        /// </summary>
         public static QName Feature => QNameFor("feature");
+        /// <summary>
+        /// FeatureChaining: The Feature whose values are partly determined by values of the chainingFeature, as described in Feature::chainingFeature.
+        /// </summary>
         public static QName FeatureChained => QNameFor("featureChained");
+        /// <summary>
+        /// FeatureInverting: The Feature that is an inverse of the invertingFeature.
+        /// </summary>
         public static QName FeatureInverted => QNameFor("featureInverted");
+        /// <summary>
+        /// Type: The FeatureMemberships for features of this Type, which include all ownedFeatureMemberships and those inheritedMemberships that are FeatureMemberships (but does not include any importedMemberships).
+        /// </summary>
         public static QName FeatureMembership => QNameFor("featureMembership");
+        /// <summary>
+        /// TypeFeaturing: The Feature that is featured by the featuringType. It is the source of the TypeFeaturing.
+        /// </summary>
         public static QName FeatureOfType => QNameFor("featureOfType");
+        /// <summary>
+        /// Feature: The last of the chainingFeatures of this Feature, if it has any. Otherwise, this Feature itself.
+        /// </summary>
         public static QName FeatureTarget => QNameFor("featureTarget");
+        /// <summary>
+        /// FeatureValue: The Feature to be provided a value.
+        /// </summary>
         public static QName FeatureWithValue => QNameFor("featureWithValue");
+        /// <summary>
+        /// Feature: Types that feature this Feature, such that any instance in the domain of the Feature must be classified by all of these Types, including at least all the featuringTypes of its typeFeaturings.  If the Feature is chained, then the featuringTypes of the first Feature in the chain are also featuringTypes of the chained Feature.
+        /// TypeFeaturing: The Type that features the featureOfType. It is the target of the TypeFeaturing.
+        /// </summary>
         public static QName FeaturingType => QNameFor("featuringType");
+        /// <summary>
+        /// Package: The model-level evaluable Boolean-valued Expression used to filter the members of this Package, which are owned by the Package are via ElementFilterMemberships.
+        /// </summary>
         public static QName FilterCondition => QNameFor("filterCondition");
+        /// <summary>
+        /// Flow: The connectorEnds of this Flow that are FlowEnds.
+        /// </summary>
         public static QName FlowEnd => QNameFor("flowEnd");
+        /// <summary>
+        /// Expression: The Function that types this Expression.
+        /// </summary>
         public static QName Function => QNameFor("function");
+        /// <summary>
+        /// Specialization: A Type with a superset of all instances of the specific Type, which might be the same set.
+        /// </summary>
         public static QName General => QNameFor("general");
+        /// <summary>
+        /// Import: The Namespace into which Memberships are imported by this Import, which must be the owningRelatedElement of the Import.
+        /// </summary>
         public static QName ImportOwningNamespace => QNameFor("importOwningNamespace");
+        /// <summary>
+        /// Import: The effectively imported Element for this Import. For a MembershipImport, this is the memberElement of the importedMembership. For a NamespaceImport, it is the importedNamespace.
+        /// </summary>
         public static QName ImportedElement => QNameFor("importedElement");
+        /// <summary>
+        /// Namespace: The Memberships in this Namespace that result from the ownedImports of this Namespace.
+        /// MembershipImport: The Membership to be imported.
+        /// </summary>
         public static QName ImportedMembership => QNameFor("importedMembership");
+        /// <summary>
+        /// NamespaceImport: The Namespace whose visible Memberships are imported by this NamespaceImport.
+        /// </summary>
         public static QName ImportedNamespace => QNameFor("importedNamespace");
+        /// <summary>
+        /// Type: All the memberFeatures of the inheritedMemberships of this Type that are FeatureMemberships.
+        /// </summary>
         public static QName InheritedFeature => QNameFor("inheritedFeature");
+        /// <summary>
+        /// Type: All Memberships inherited by this Type via Specialization or Conjugation. These are included in the derived union for the memberships of the Type.
+        /// </summary>
         public static QName InheritedMembership => QNameFor("inheritedMembership");
+        /// <summary>
+        /// Type: All features related to this Type by FeatureMemberships that have direction in or inout.
+        /// </summary>
         public static QName Input => QNameFor("input");
+        /// <summary>
+        /// InstantiationExpression: The Type that is being instantiated.
+        /// </summary>
         public static QName InstantiatedType => QNameFor("instantiatedType");
+        /// <summary>
+        /// Flow: The Interactions that type this Flow. Interactions are both Associations and Behaviors, which can type Connectors and Steps, respectively.
+        /// </summary>
         public static QName Interaction => QNameFor("interaction");
+        /// <summary>
+        /// Type: The interpretations of a Type with intersectingTypes are asserted to be those in common among the intersectingTypes, which are the Types derived from the intersectingType of the ownedIntersectings of this Type. For example, a Classifier might be an intersection of Classifiers for people of a particular sex and of a particular nationality. Similarly, a feature for people's children of a particular sex might be the intersection of a Feature for their children and a Classifier for people of that sex (because the interpretations of the children Feature that identify those of that sex are also interpretations of the Classifier for that sex).
+        /// Intersecting: Type that partly determines interpretations of typeIntersected, as described in Type::intersectingType.
+        /// </summary>
         public static QName IntersectingType => QNameFor("intersectingType");
+        /// <summary>
+        /// FeatureInverting: The Feature that is an inverse of the invertedFeature.
+        /// </summary>
         public static QName InvertingFeature => QNameFor("invertingFeature");
+        /// <summary>
+        /// Type: Indicates whether instances of this Type must also be instances of at least one of its specialized Types.
+        /// </summary>
         public static QName IsAbstract => QNameFor("isAbstract");
+        /// <summary>
+        /// Feature: Whether the Feature is a composite feature of its featuringType. If so, the values of the Feature cannot exist after its featuring instance no longer does and cannot be values of another composite feature that is not on the same featuring instance.
+        /// </summary>
         public static QName IsComposite => QNameFor("isComposite");
+        /// <summary>
+        /// Type: Indicates whether this Type has an ownedConjugator.
+        /// </summary>
         public static QName IsConjugated => QNameFor("isConjugated");
+        /// <summary>
+        /// Feature: If isVariable is true, then whether the value of this Feature nevertheless does not change over all snapshots of its owningType.
+        /// </summary>
         public static QName IsConstant => QNameFor("isConstant");
+        /// <summary>
+        /// FeatureValue: Whether this FeatureValue is a concrete specification of the bound or initial value of the featureWithValue, or just a default value that may be overridden.
+        /// </summary>
         public static QName IsDefault => QNameFor("isDefault");
+        /// <summary>
+        /// Feature: Whether the values of this Feature can always be computed from the values of other Features.
+        /// </summary>
         public static QName IsDerived => QNameFor("isDerived");
+        /// <summary>
+        /// Feature: Whether or not this Feature is an end Feature. An end Feature always has multiplicity 1, mapping each of its domain instances to a single co-domain instance. However, it may have a crossFeature, in which case values of the crossFeature must be the same as those found by navigation across instances of the owningType from values of other end Features to values of this Feature. If the owningType has n end Features, then the multiplicity, ordering, and uniqueness declared for the crossFeature of any one of these end Features constrains the cardinality, ordering, and uniqueness of the collection of values of that Feature reached by navigation when the values of the other n-1 end Features are held fixed.
+        /// </summary>
         public static QName IsEnd => QNameFor("isEnd");
+        /// <summary>
+        /// Relationship: Whether this Relationship was generated by tooling to meet semantic rules, rather than being directly created by a modeler.
+        /// </summary>
         public static QName IsImplied => QNameFor("isImplied");
+        /// <summary>
+        /// Element: Whether all necessary implied Relationships have been included in the ownedRelationships of this Element. This property may be true, even if there are not actually any ownedRelationships with isImplied = true, meaning that no such Relationships are actually implied for this Element. However, if it is false, then ownedRelationships may not contain any implied Relationships. That is, either all required implied Relationships must be included, or none of them.
+        /// </summary>
         public static QName IsImpliedIncluded => QNameFor("isImpliedIncluded");
+        /// <summary>
+        /// Import: Whether to import memberships without regard to declared visibility.
+        /// </summary>
         public static QName IsImportAll => QNameFor("isImportAll");
+        /// <summary>
+        /// FeatureValue: Whether this FeatureValue specifies a bound value or an initial value for the featureWithValue.
+        /// </summary>
         public static QName IsInitial => QNameFor("isInitial");
+        /// <summary>
+        /// Element: Whether this Element is contained in the ownership tree of a library model.
+        /// </summary>
         public static QName IsLibraryElement => QNameFor("isLibraryElement");
+        /// <summary>
+        /// Expression: Whether this Expression meets the constraints necessary to be evaluated at model level, that is, using metadata within the model.
+        /// Function: Whether this Function can be used as the function of a model-level evaluable InvocationExpression. Certain Functions from the Kernel Functions Library are considered to have isModelLevelEvaluable = true. For all other Functions it is false.
+        /// </summary>
         public static QName IsModelLevelEvaluable => QNameFor("isModelLevelEvaluable");
+        /// <summary>
+        /// Invariant: Whether this Invariant is asserted to be false rather than true.
+        /// </summary>
         public static QName IsNegated => QNameFor("isNegated");
+        /// <summary>
+        /// Feature: Whether an order exists for the values of this Feature or not.
+        /// </summary>
         public static QName IsOrdered => QNameFor("isOrdered");
+        /// <summary>
+        /// Feature: Whether the values of this Feature are contained in the space and time of instances of the domain of the Feature and represent the same thing as those instances.
+        /// </summary>
         public static QName IsPortion => QNameFor("isPortion");
+        /// <summary>
+        /// Import: Whether to recursively import Memberships from visible, owned sub-Namespaces.
+        /// </summary>
         public static QName IsRecursive => QNameFor("isRecursive");
+        /// <summary>
+        /// LibraryPackage: Whether this LibraryPackage contains a standard library model. This should only be set to true for LibraryPackages in the standard Kernel Model Libraries or in normative model libraries for a language built on KerML.
+        /// </summary>
         public static QName IsStandard => QNameFor("isStandard");
+        /// <summary>
+        /// Type: Whether all things that meet the classification conditions of this Type must be classified by the Type.
+        /// </summary>
         public static QName IsSufficient => QNameFor("isSufficient");
+        /// <summary>
+        /// Feature: Whether or not values for this Feature must have no duplicates or not.
+        /// </summary>
         public static QName IsUnique => QNameFor("isUnique");
+        /// <summary>
+        /// Feature: Whether the value of this Feature might vary over time. That is, whether the Feature may have a different value for each snapshot of an owningType that is an Occurrence.
+        /// </summary>
         public static QName IsVariable => QNameFor("isVariable");
+        /// <summary>
+        /// TextualRepresentation: The natural or artifical language in which the body text is written.
+        /// </summary>
         public static QName Language => QNameFor("language");
+        /// <summary>
+        /// Comment: Identification of the language of the body text and, optionally, the region and/or encoding. The format shall be a POSIX locale conformant to ISO/IEC 15897, with the format [language[_territory][.codeset][@modifier]].
+        /// </summary>
         public static QName Locale => QNameFor("locale");
+        /// <summary>
+        /// MultiplicityRange: The Expression whose result provides the lower bound of the MultiplicityRange. If no lowerBound Expression is given, then the lower bound shall have the same value as the upper bound, unless the upper bound is unbounded (*), in which case the lower bound shall be 0.
+        /// </summary>
         public static QName LowerBound => QNameFor("lowerBound");
+        /// <summary>
+        /// Namespace: The set of all member Elements of this Namespace, which are the memberElements of all memberships of the Namespace.
+        /// </summary>
         public static QName Member => QNameFor("member");
+        /// <summary>
+        /// Membership: The Element that becomes a member of the membershipOwningNamespace due to this Membership.
+        /// </summary>
         public static QName MemberElement => QNameFor("memberElement");
+        /// <summary>
+        /// Membership: The elementId of the memberElement.
+        /// </summary>
         public static QName MemberElementId => QNameFor("memberElementId");
+        /// <summary>
+        /// Membership: The name of the memberElement relative to the membershipOwningNamespace.
+        /// </summary>
         public static QName MemberName => QNameFor("memberName");
+        /// <summary>
+        /// Membership: The short name of the memberElement relative to the membershipOwningNamespace.
+        /// </summary>
         public static QName MemberShortName => QNameFor("memberShortName");
+        /// <summary>
+        /// Namespace: All Memberships in this Namespace, including (at least) the union of ownedMemberships and importedMemberships.
+        /// </summary>
         public static QName Membership => QNameFor("membership");
+        /// <summary>
+        /// Membership: The Namespace of which the memberElement becomes a member due to this Membership.
+        /// </summary>
         public static QName MembershipOwningNamespace => QNameFor("membershipOwningNamespace");
+        /// <summary>
+        /// MetadataFeature: The type of this MetadataFeature, which must be a Metaclass.
+        /// </summary>
         public static QName Metaclass => QNameFor("metaclass");
+        /// <summary>
+        /// Type: An ownedMember of this Type that is a Multiplicity, which constraints the cardinality of the Type. If there is no such ownedMember, then the cardinality of this Type is constrained by all the Multiplicity constraints applicable to any direct supertypes.
+        /// </summary>
         public static QName Multiplicity => QNameFor("multiplicity");
+        /// <summary>
+        /// Element: The name to be used for this Element during name resolution within its owningNamespace. This is derived using the effectiveName() operation. By default, it is the same as the declaredName, but this is overridden for certain kinds of Elements to compute a name even when the declaredName is null.
+        /// </summary>
         public static QName Name => QNameFor("name");
+        /// <summary>
+        /// OperatorExpression: An operator symbol that names a corresponding Function from one of the standard packages from the Kernel Function Library .
+        /// </summary>
         public static QName Operator => QNameFor("operator");
+        /// <summary>
+        /// Conjugation: The Type to be conjugated.
+        /// </summary>
         public static QName OriginalType => QNameFor("originalType");
+        /// <summary>
+        /// Type: All features related to this Type by FeatureMemberships that have direction out or inout.
+        /// </summary>
         public static QName Output => QNameFor("output");
+        /// <summary>
+        /// Annotation: The annotatingElement of this Annotation, when it is an ownedRelatedElement.
+        /// </summary>
         public static QName OwnedAnnotatingElement => QNameFor("ownedAnnotatingElement");
+        /// <summary>
+        /// AnnotatingElement: The ownedRelationships of this AnnotatingElement that are Annotations, for which this AnnotatingElement is the annotatingElement.
+        /// </summary>
         public static QName OwnedAnnotatingRelationship => QNameFor("ownedAnnotatingRelationship");
+        /// <summary>
+        /// Element: The ownedRelationships of this Element that are Annotations, for which this Element is the annotatedElement.
+        /// </summary>
         public static QName OwnedAnnotation => QNameFor("ownedAnnotation");
+        /// <summary>
+        /// Type: A Conjugation owned by this Type for which the Type is the originalType.
+        /// </summary>
         public static QName OwnedConjugator => QNameFor("ownedConjugator");
+        /// <summary>
+        /// Feature: The one ownedSubsetting of this Feature, if any, that is a CrossSubsetting}, for which the Feature is the crossingFeature.
+        /// </summary>
         public static QName OwnedCrossSubsetting => QNameFor("ownedCrossSubsetting");
+        /// <summary>
+        /// Type: The ownedRelationships of this Type that are Differencings, having this Type as their typeDifferenced.
+        /// </summary>
         public static QName OwnedDifferencing => QNameFor("ownedDifferencing");
+        /// <summary>
+        /// Type: The ownedRelationships of this Type that are Disjoinings, for which the Type is the typeDisjoined Type.
+        /// </summary>
         public static QName OwnedDisjoining => QNameFor("ownedDisjoining");
+        /// <summary>
+        /// Element: The Elements owned by this Element, derived as the ownedRelatedElements of the ownedRelationships of this Element.
+        /// </summary>
         public static QName OwnedElement => QNameFor("ownedElement");
+        /// <summary>
+        /// Type: All endFeatures of this Type that are ownedFeatures.
+        /// </summary>
         public static QName OwnedEndFeature => QNameFor("ownedEndFeature");
+        /// <summary>
+        /// Type: The ownedMemberFeatures of the ownedFeatureMemberships of this Type.
+        /// </summary>
         public static QName OwnedFeature => QNameFor("ownedFeature");
+        /// <summary>
+        /// Feature: The ownedRelationships of this Feature that are FeatureChainings, for which the Feature will be the featureChained.
+        /// </summary>
         public static QName OwnedFeatureChaining => QNameFor("ownedFeatureChaining");
+        /// <summary>
+        /// Feature: The ownedRelationships of this Feature that are FeatureInvertings and for which the Feature is the featureInverted.
+        /// </summary>
         public static QName OwnedFeatureInverting => QNameFor("ownedFeatureInverting");
+        /// <summary>
+        /// Type: The ownedMemberships of this Type that are FeatureMemberships, for which the Type is the owningType. Each such FeatureMembership identifies an ownedFeature of the Type.
+        /// </summary>
         public static QName OwnedFeatureMembership => QNameFor("ownedFeatureMembership");
+        /// <summary>
+        /// Namespace: The ownedRelationships of this Namespace that are Imports, for which the Namespace is the importOwningNamespace.
+        /// </summary>
         public static QName OwnedImport => QNameFor("ownedImport");
+        /// <summary>
+        /// Type: The ownedRelationships of this Type that are Intersectings, have the Type as their typeIntersected.
+        /// </summary>
         public static QName OwnedIntersecting => QNameFor("ownedIntersecting");
+        /// <summary>
+        /// Namespace: The owned members of this Namespace, which are the ownedMemberElements of the ownedMemberships of the Namespace.
+        /// </summary>
         public static QName OwnedMember => QNameFor("ownedMember");
+        /// <summary>
+        /// OwningMembership: The Element that becomes an ownedMember of the membershipOwningNamespace due to this OwningMembership.
+        /// </summary>
         public static QName OwnedMemberElement => QNameFor("ownedMemberElement");
+        /// <summary>
+        /// OwningMembership: The elementId of the ownedMemberElement.
+        /// </summary>
         public static QName OwnedMemberElementId => QNameFor("ownedMemberElementId");
+        /// <summary>
+        /// FeatureMembership: The Feature that this FeatureMembership relates to its owningType, making it an ownedFeature of the owningType.
+        /// </summary>
         public static QName OwnedMemberFeature => QNameFor("ownedMemberFeature");
+        /// <summary>
+        /// OwningMembership: The name of the ownedMemberElement.
+        /// </summary>
         public static QName OwnedMemberName => QNameFor("ownedMemberName");
+        /// <summary>
+        /// ParameterMembership: The Feature that is identified as a parameter by this ParameterMembership.
+        /// </summary>
         public static QName OwnedMemberParameter => QNameFor("ownedMemberParameter");
+        /// <summary>
+        /// OwningMembership: The shortName of the ownedMemberElement.
+        /// </summary>
         public static QName OwnedMemberShortName => QNameFor("ownedMemberShortName");
+        /// <summary>
+        /// Namespace: The ownedRelationships of this Namespace that are Memberships, for which the Namespace is the membershipOwningNamespace.
+        /// </summary>
         public static QName OwnedMembership => QNameFor("ownedMembership");
+        /// <summary>
+        /// Feature: The ownedSubsettings of this Feature that are Redefinitions, for which the Feature is the redefiningFeature.
+        /// </summary>
         public static QName OwnedRedefinition => QNameFor("ownedRedefinition");
+        /// <summary>
+        /// Feature: The one ownedSubsetting of this Feature, if any, that is a ReferenceSubsetting, for which the Feature is the referencingFeature.
+        /// </summary>
         public static QName OwnedReferenceSubsetting => QNameFor("ownedReferenceSubsetting");
+        /// <summary>
+        /// Relationship: The relatedElements of this Relationship that are owned by the Relationship.
+        /// </summary>
         public static QName OwnedRelatedElement => QNameFor("ownedRelatedElement");
+        /// <summary>
+        /// Element: The Relationships for which this Element is the owningRelatedElement.
+        /// </summary>
         public static QName OwnedRelationship => QNameFor("ownedRelationship");
+        /// <summary>
+        /// ResultExpressionMembership: The Expression that provides the result for the owner of the ResultExpressionMembership.
+        /// </summary>
         public static QName OwnedResultExpression => QNameFor("ownedResultExpression");
+        /// <summary>
+        /// Type: The ownedRelationships of this Type that are Specializations, for which the Type is the specific Type.
+        /// </summary>
         public static QName OwnedSpecialization => QNameFor("ownedSpecialization");
+        /// <summary>
+        /// Classifier: The ownedSpecializations of this Classifier that are Subclassifications, for which this Classifier is the subclassifier.
+        /// </summary>
         public static QName OwnedSubclassification => QNameFor("ownedSubclassification");
+        /// <summary>
+        /// Feature: The ownedSpecializations of this Feature that are Subsettings, for which the Feature is the subsettingFeature.
+        /// </summary>
         public static QName OwnedSubsetting => QNameFor("ownedSubsetting");
+        /// <summary>
+        /// Feature: The ownedRelationships of this Feature that are TypeFeaturings and for which the Feature is the featureOfType.
+        /// </summary>
         public static QName OwnedTypeFeaturing => QNameFor("ownedTypeFeaturing");
+        /// <summary>
+        /// Feature: The ownedSpecializations of this Feature that are FeatureTypings, for which the Feature is the typedFeature.
+        /// </summary>
         public static QName OwnedTyping => QNameFor("ownedTyping");
+        /// <summary>
+        /// Type: The ownedRelationships of this Type that are Unionings, having the Type as their typeUnioned.
+        /// </summary>
         public static QName OwnedUnioning => QNameFor("ownedUnioning");
+        /// <summary>
+        /// Element: The owner of this Element, derived as the owningRelatedElement of the owningRelationship of this Element, if any.
+        /// </summary>
         public static QName Owner => QNameFor("owner");
+        /// <summary>
+        /// Annotation: The annotatedElement of this Annotation, when it is also the owningRelatedElement.
+        /// </summary>
         public static QName OwningAnnotatedElement => QNameFor("owningAnnotatedElement");
+        /// <summary>
+        /// Annotation: The annotatingElement of this Annotation, when it is the owningRelatedElement.
+        /// </summary>
         public static QName OwningAnnotatingElement => QNameFor("owningAnnotatingElement");
+        /// <summary>
+        /// AnnotatingElement: The owningRelationship of this AnnotatingRelationship, if it is an Annotation.
+        /// </summary>
         public static QName OwningAnnotatingRelationship => QNameFor("owningAnnotatingRelationship");
+        /// <summary>
+        /// Subclassification: The Classifier that owns this Subclassification relationship, which must also be its subclassifier.
+        /// </summary>
         public static QName OwningClassifier => QNameFor("owningClassifier");
+        /// <summary>
+        /// Subsetting: A subsettingFeature that is also the owningRelatedElement of this Subsetting.
+        /// FeatureTyping: A typedFeature that is also the owningRelatedElement of this FeatureTyping.
+        /// FeatureInverting: A featureInverted that is also the owningRelatedElement of this FeatureInverting.
+        /// </summary>
         public static QName OwningFeature => QNameFor("owningFeature");
+        /// <summary>
+        /// Feature: The FeatureMembership that owns this Feature as an ownedMemberFeature, determining its owningType.
+        /// </summary>
         public static QName OwningFeatureMembership => QNameFor("owningFeatureMembership");
+        /// <summary>
+        /// TypeFeaturing: A featureOfType that is also the owningRelatedElement of this TypeFeaturing.
+        /// </summary>
         public static QName OwningFeatureOfType => QNameFor("owningFeatureOfType");
+        /// <summary>
+        /// Element: The owningRelationship of this Element, if that Relationship is a Membership.
+        /// </summary>
         public static QName OwningMembership => QNameFor("owningMembership");
+        /// <summary>
+        /// Element: The Namespace that owns this Element, which is the membershipOwningNamespace of the owningMembership of this Element, if any.
+        /// </summary>
         public static QName OwningNamespace => QNameFor("owningNamespace");
+        /// <summary>
+        /// Relationship: The relatedElement of this Relationship that owns the Relationship, if any.
+        /// </summary>
         public static QName OwningRelatedElement => QNameFor("owningRelatedElement");
+        /// <summary>
+        /// Element: The Relationship for which this Element is an ownedRelatedElement, if any.
+        /// </summary>
         public static QName OwningRelationship => QNameFor("owningRelationship");
+        /// <summary>
+        /// Specialization: The Type that is the specific Type of this Specialization and owns it as its owningRelatedElement.
+        /// FeatureMembership: The Type that owns this FeatureMembership.
+        /// Feature: The Type that is the owningType of the owningFeatureMembership of this Feature.
+        /// Conjugation: The conjugatedType of this Conjugation that is also its owningRelatedElement.
+        /// Disjoining: A typeDisjoined that is also an owningRelatedElement.
+        /// </summary>
         public static QName OwningType => QNameFor("owningType");
+        /// <summary>
+        /// Behavior: The parameters of this Behavior, which are defined as its directedFeatures, whose values are passed into and/or out of a performance of the Behavior.
+        /// Step: The parameters of this Step, which are defined as its directedFeatures, whose values are passed into and/or out of a performance of the Step.
+        /// </summary>
         public static QName Parameter => QNameFor("parameter");
+        /// <summary>
+        /// Flow: The ownedFeature of the Flow that is a PayloadFeature (if any).
+        /// </summary>
         public static QName PayloadFeature => QNameFor("payloadFeature");
+        /// <summary>
+        /// Flow: The type of values transferred, which is the type of the payloadFeature of the Flow.
+        /// </summary>
         public static QName PayloadType => QNameFor("payloadType");
+        /// <summary>
+        /// BooleanExpression: The Predicate that types the Expression.
+        /// </summary>
         public static QName Predicate => QNameFor("predicate");
+        /// <summary>
+        /// Element: The full ownership-qualified name of this Element, represented in a form that is valid according to the KerML textual concrete syntax for qualified names (including use of unrestricted name notation and escaped characters, as necessary). The qualifiedName is null if this Element has no owningNamespace or if there is not a complete ownership chain of named Namespaces from a root Namespace to this Element. If the owningNamespace has other Elements with the same name as this one, then the qualifiedName is null for all such Elements other than the first.
+        /// </summary>
         public static QName QualifiedName => QNameFor("qualifiedName");
+        /// <summary>
+        /// Redefinition: The Feature that is redefined by the redefiningFeature of this Redefinition.
+        /// </summary>
         public static QName RedefinedFeature => QNameFor("redefinedFeature");
+        /// <summary>
+        /// Redefinition: The Feature that is redefining the redefinedFeature of this Redefinition.
+        /// </summary>
         public static QName RedefiningFeature => QNameFor("redefiningFeature");
+        /// <summary>
+        /// MetadataAccessExpression: The Element whose metadata is being accessed.
+        /// </summary>
         public static QName ReferencedElement => QNameFor("referencedElement");
+        /// <summary>
+        /// ReferenceSubsetting: The Feature that is referenced by the referencingFeature of this ReferenceSubsetting.
+        /// </summary>
         public static QName ReferencedFeature => QNameFor("referencedFeature");
+        /// <summary>
+        /// ReferenceSubsetting: The Feature that owns this ReferenceSubsetting relationship, which is also its subsettingFeature.
+        /// </summary>
         public static QName ReferencingFeature => QNameFor("referencingFeature");
+        /// <summary>
+        /// FeatureReferenceExpression: The Feature that is referenced by this FeatureReferenceExpression, which is its first non-parameter member.
+        /// </summary>
         public static QName Referent => QNameFor("referent");
+        /// <summary>
+        /// Relationship: The Elements that are related by this Relationship, derived as the union of the source and target Elements of the Relationship.
+        /// </summary>
         public static QName RelatedElement => QNameFor("relatedElement");
+        /// <summary>
+        /// Connector: The Features that are related by this Connector considered as a Relationship and that restrict the links it identifies, given by the referenced Features of the connectorEnds of the Connector.
+        /// </summary>
         public static QName RelatedFeature => QNameFor("relatedFeature");
+        /// <summary>
+        /// Association: The types of the associationEnds of the Association, which are the relatedElements of the Association considered as a Relationship.
+        /// </summary>
         public static QName RelatedType => QNameFor("relatedType");
+        /// <summary>
+        /// TextualRepresentation: The Element that is represented by this TextualRepresentation.
+        /// </summary>
         public static QName RepresentedElement => QNameFor("representedElement");
+        /// <summary>
+        /// Expression: result.
+        /// Function: The object or value that is the result of evaluating the Function.
+        /// </summary>
         public static QName Result => QNameFor("result");
+        /// <summary>
+        /// Element: The short name to be used for this Element during name resolution within its owningNamespace. This is derived using the effectiveShortName() operation. By default, it is the same as the declaredShortName, but this is overridden for certain kinds of Elements to compute a shortName even when the declaredName is null.
+        /// </summary>
         public static QName ShortName => QNameFor("shortName");
+        /// <summary>
+        /// Relationship: The relatedElements from which this Relationship is considered to be directed.
+        /// </summary>
         public static QName Source => QNameFor("source");
+        /// <summary>
+        /// Connector: The source relatedFeature for this Connector. It is the first relatedFeature.
+        /// </summary>
         public static QName SourceFeature => QNameFor("sourceFeature");
+        /// <summary>
+        /// Flow: The Feature that provides the items carried by the Flow. It must be a feature of the source of the Flow.
+        /// </summary>
         public static QName SourceOutputFeature => QNameFor("sourceOutputFeature");
+        /// <summary>
+        /// Association: The source relatedType for this Association. It is the first relatedType of the Association.
+        /// </summary>
         public static QName SourceType => QNameFor("sourceType");
+        /// <summary>
+        /// Specialization: A Type with a subset of all instances of the general Type, which might be the same set.
+        /// </summary>
         public static QName Specific => QNameFor("specific");
+        /// <summary>
+        /// Behavior: The Steps that make up this Behavior.
+        /// </summary>
         public static QName Step => QNameFor("step");
+        /// <summary>
+        /// Subclassification: The more specific Classifier in this Subclassification.
+        /// </summary>
         public static QName Subclassifier => QNameFor("subclassifier");
+        /// <summary>
+        /// Subsetting: The Feature that is subsetted by the subsettingFeature of this Subsetting.
+        /// </summary>
         public static QName SubsettedFeature => QNameFor("subsettedFeature");
+        /// <summary>
+        /// Subsetting: The Feature that is a subset of the subsettedFeature of this Subsetting.
+        /// </summary>
         public static QName SubsettingFeature => QNameFor("subsettingFeature");
+        /// <summary>
+        /// Subclassification: The more general Classifier in this Subclassification.
+        /// </summary>
         public static QName Superclassifier => QNameFor("superclassifier");
+        /// <summary>
+        /// Dependency: The Element or Elements on which the client Elements depend in some respect.
+        /// </summary>
         public static QName Supplier => QNameFor("supplier");
+        /// <summary>
+        /// Relationship: The relatedElements to which this Relationship is considered to be directed.
+        /// </summary>
         public static QName Target => QNameFor("target");
+        /// <summary>
+        /// Connector: The target relatedFeatures for this Connector. This includes all the relatedFeatures other than the sourceFeature.
+        /// FeatureChainExpression: The Feature that is accessed by this FeatureChainExpression, which is its first non-parameter member.
+        /// </summary>
         public static QName TargetFeature => QNameFor("targetFeature");
+        /// <summary>
+        /// Flow: The Feature that receives the values carried by the Flow. It must be a feature of the target of the Flow.
+        /// </summary>
         public static QName TargetInputFeature => QNameFor("targetInputFeature");
+        /// <summary>
+        /// Association: The target relatedTypes for this Association. This includes all the relatedTypes other than the sourceType.
+        /// </summary>
         public static QName TargetType => QNameFor("targetType");
+        /// <summary>
+        /// Element: The TextualRepresentations that annotate this Element.
+        /// </summary>
         public static QName TextualRepresentation => QNameFor("textualRepresentation");
+        /// <summary>
+        /// Feature: Types that restrict the values of this Feature, such that the values must be instances of all the types. The types of a Feature are derived from its typings and the types of its subsettings. If the Feature is chained, then the types of the last Feature in the chain are also types of the chained Feature.
+        /// FeatureTyping: The Type that is being applied by this FeatureTyping.
+        /// </summary>
         public static QName Type => QNameFor("type");
+        /// <summary>
+        /// Differencing: Type with interpretations partly determined by differencingType, as described in Type::differencingType.
+        /// </summary>
         public static QName TypeDifferenced => QNameFor("typeDifferenced");
+        /// <summary>
+        /// Disjoining: Type asserted to be disjoint with the disjoiningType.
+        /// </summary>
         public static QName TypeDisjoined => QNameFor("typeDisjoined");
+        /// <summary>
+        /// Intersecting: Type with interpretations partly determined by intersectingType, as described in Type::intersectingType.
+        /// </summary>
         public static QName TypeIntersected => QNameFor("typeIntersected");
+        /// <summary>
+        /// Unioning: Type with interpretations partly determined by unioningType, as described in Type::unioningType.
+        /// </summary>
         public static QName TypeUnioned => QNameFor("typeUnioned");
+        /// <summary>
+        /// FeatureTyping: The Feature that has a type determined by this FeatureTyping.
+        /// </summary>
         public static QName TypedFeature => QNameFor("typedFeature");
+        /// <summary>
+        /// Type: The interpretations of a Type with unioningTypes are asserted to be the same as those of all the unioningTypes together, which are the Types derived from the unioningType of the ownedUnionings of this Type. For example, a Classifier for people might be the union of Classifiers for all the sexes. Similarly, a feature for people's children might be the union of features dividing them in the same ways as people in general.
+        /// Unioning: Type that partly determines interpretations of typeUnioned, as described in Type::unioningType.
+        /// </summary>
         public static QName UnioningType => QNameFor("unioningType");
+        /// <summary>
+        /// MultiplicityRange: The Expression whose result is the upper bound of the MultiplicityRange.
+        /// </summary>
         public static QName UpperBound => QNameFor("upperBound");
+        /// <summary>
+        /// FeatureValue: The Expression that provides the value as a result.
+        /// LiteralBoolean: The Boolean value that is the result of evaluating this LiteralBoolean.
+        /// LiteralInteger: The Integer value that is the result of evaluating this LiteralInteger.
+        /// LiteralString: The String value that is the result of evaluating this Expression.
+        /// LiteralRational: The value whose rational approximation is the result of evaluating this LiteralRational.
+        /// </summary>
         public static QName Value => QNameFor("value");
+        /// <summary>
+        /// Membership: Whether or not the Membership of the memberElement in the membershipOwningNamespace is publicly visible outside that Namespace.
+        /// Import: The visibility level of the imported members from this Import relative to the importOwningNamespace. The default is private.
+        /// </summary>
         public static QName Visibility => QNameFor("visibility");
     }
 }

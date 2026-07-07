@@ -24,11 +24,7 @@
           ]
         }
       ],
-      "dest": "api",
-      "properties": {
-        "DisableOslcDomainGenerator": "true",
-        "UseCommittedGeneratedDomainSources": "true"
-      }
+      "dest": "api"
     }
   ],
   "build": {

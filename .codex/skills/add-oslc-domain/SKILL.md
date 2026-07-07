@@ -55,9 +55,17 @@ Keep the trailing slash when constants are generated as `NS + "localName"`.
 
 6. Add `OSLC4Net_SDK/OSLC4Net.Domains.NAME/OSLC4Net.Domains.NAME.csproj` with:
    - `TargetFramework` `net10.0`
+   - committed generated-source settings:
+     ```xml
+     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+     <CompilerGeneratedFilesOutputPath>$(MSBuildProjectDirectory)\Generated</CompilerGeneratedFilesOutputPath>
+     <DefaultItemExcludes>$(DefaultItemExcludes);Generated\**</DefaultItemExcludes>
+     ```
    - `AdditionalFiles` for `Resources\vocab.nt`
    - `AdditionalFiles` for `Resources\shapes.nt` only when shapes exist
-   - project references to `OSLC4Net.Core` and `OSLC4Net.CodeGen` as an analyzer.
+   - project references to `OSLC4Net.Core` and `OSLC4Net.CodeGen` as an analyzer with no conditional generator-disable property.
+
+The `Generated` directory is committed for domain projects only. The domain project excludes it from compilation with `DefaultItemExcludes`; the compiler uses the analyzer output in memory, while DocFX and CI can read the committed generated source snapshot.
 
 7. Wire the project into `OSLC4Net_SDK/OSLC4Net.Core.slnx` and `docs/docfx.json`.
 8. Add focused TUnit coverage in `Tests/OSLC4Net.CodeGen.Tests` when generator behavior or a real vocabulary constant needs protection. Prefer assertions on generated constants, `QName`s, shape metadata, or round-tripping behavior.
@@ -69,11 +77,15 @@ dotnet format style ./OSLC4Net_SDK --no-restore
 cd OSLC4Net_SDK
 export AGENT_BUILD=true
 dotnet test --solution OSLC4Net.Core.slnx --configuration Release --treenode-filter '/*/OSLC4Net.CodeGen.Tests/*/*'
-dotnet build OSLC4Net.Core.slnx
+dotnet build --configuration Release OSLC4Net.Core.slnx
 cd ../docs
-docfx metadata docfx.json
-docfx build docfx.json
+dotnet tool update -g docfx
+docfx docfx.json
 ```
+
+Build the SDK before DocFX whenever RDF resources or domain annotations change. The build refreshes `OSLC4Net.Domains.*/Generated`. DocFX reads project metadata and should load the domain generator; generated documentation is derived from `dcterms:description` or `rdfs:comment`.
+
+When DocFX reports .NET or analyzer compatibility errors, upgrade the DocFX global tool first. If DocFX still reports `FailedToLoadAnalyzer` for `OSLC4Net.CodeGen`, check that `Microsoft.CodeAnalysis.CSharp` in `OSLC4Net_SDK/Directory.Packages.props` remains on a DocFX-compatible Roslyn version.
 
 ## RDF Handling
 

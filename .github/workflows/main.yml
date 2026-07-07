@@ -111,7 +111,7 @@ jobs:
           dotnet build OSLC4Net.Core.slnx --no-restore --configuration Release --no-incremental
       - name: Verify generated sources are current
         run: |
-          git diff --exit-code -- OSLC4Net_SDK/OSLC4Net.Domains.*/Generated
+          git diff --exit-code -- OSLC4Net.Domains.*/Generated
 
   test:
     #needs: [format]

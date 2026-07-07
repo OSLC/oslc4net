@@ -22,7 +22,6 @@
     <DeterministicSourcePaths>true</DeterministicSourcePaths>
   </PropertyGroup>
 
-
   <ItemGroup>
     <SourceRoot Include="$(MSBuildThisFileDirectory)/" />
     <None Include="$(MSBuildThisFileDirectory)..\README.md" Pack="true" PackagePath="README.md" />
@@ -32,7 +31,6 @@
     <LangVersion>14</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <IsOslcGeneratedDomain Condition="'$(IsOslcGeneratedDomain)' == '' and $([System.Text.RegularExpressions.Regex]::IsMatch('$(MSBuildProjectName)', '^OSLC4Net\.Domains\.'))">true</IsOslcGeneratedDomain>
 
     <!-- not needed for NET5+ but needed for netstandard -->
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
@@ -45,10 +43,6 @@
     <WarningsAsErrors>$(NugetWarnings);$(NullabilityWarnings)</WarningsAsErrors>
     <!-- Suppress localization warnings for this SDK project -->
     <NoWarn>$(NoWarn);CA1303</NoWarn>
-
-    <EmitCompilerGeneratedFiles Condition="'$(IsOslcGeneratedDomain)' == 'true' and '$(DisableOslcDomainGenerator)' != 'true'">true</EmitCompilerGeneratedFiles>
-    <CompilerGeneratedFilesOutputPath Condition="'$(IsOslcGeneratedDomain)' == 'true' and '$(DisableOslcDomainGenerator)' != 'true'">$(MSBuildProjectDirectory)\Generated</CompilerGeneratedFilesOutputPath>
-    <DefaultItemExcludes Condition="'$(IsOslcGeneratedDomain)' == 'true' and '$(UseCommittedGeneratedDomainSources)' != 'true'">$(DefaultItemExcludes);Generated\**</DefaultItemExcludes>
   </PropertyGroup>
 
   <!-- Minimal output mode for LLM agents - set AGENT_BUILD=true to enable -->
