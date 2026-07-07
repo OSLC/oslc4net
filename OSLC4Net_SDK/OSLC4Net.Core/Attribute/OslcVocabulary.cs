@@ -16,10 +16,13 @@ namespace OSLC4Net.Core.Attribute;
 [AttributeUsage(AttributeTargets.Class)]
 public sealed class OslcVocabulary : System.Attribute
 {
-    public OslcVocabulary(string uri)
+    public OslcVocabulary(string uri, string? prefix = null)
     {
         Uri = uri;
+        Prefix = prefix;
     }
 
     public string Uri { get; }
+
+    public string? Prefix { get; }
 }

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Add OSLC Domain"
+  short_description: "Add generated OSLC4Net domain projects"
+  default_prompt: "Use $add-oslc-domain to add a generated OSLC4Net domain from RDF input."
