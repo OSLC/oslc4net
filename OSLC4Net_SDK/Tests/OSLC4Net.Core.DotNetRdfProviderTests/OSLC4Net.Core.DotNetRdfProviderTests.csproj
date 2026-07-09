@@ -7,6 +7,7 @@
     <ProjectReference Include="..\..\OSLC4Net.ChangeManagement\OSLC4Net.ChangeManagementCommon.csproj" />
     <ProjectReference Include="..\..\OSLC4Net.Core.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj" />
     <ProjectReference Include="..\..\OSLC4Net.Core\OSLC4Net.Core.csproj" />
+    <ProjectReference Include="..\..\OSLC4Net.Domains.ChangeManagement\OSLC4Net.Domains.ChangeManagement.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Diagnostics" />
