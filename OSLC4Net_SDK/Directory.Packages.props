@@ -30,7 +30,7 @@
     <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="10.0.9" />
     <!-- As of 2026-07, DocFX 2.78.5 cannot load source generators built against Microsoft.CodeAnalysis.CSharp 5.x. -->
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.14.0" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.7.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.8.0" />
     <PackageVersion Include="Verify.TUnit" Version="31.19.1" />
     <PackageVersion Include="NSubstitute" Version="6.0.0" />
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
