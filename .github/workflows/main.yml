@@ -68,7 +68,7 @@ jobs:
           persist-credentials: false
           path: main
       - name: Setup .NET
-        uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5.4.0
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
         with:
           dotnet-version: 10.x
       - name: Restore dependencies
@@ -100,7 +100,7 @@ jobs:
           persist-credentials: false
           path: main
       - name: Setup .NET
-        uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5.4.0
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
         with:
           dotnet-version: 10.x
       - name: Restore dependencies
@@ -156,7 +156,7 @@ jobs:
           repository: oslc-op/refimpl
           path: refimpl
       - name: Setup .NET
-        uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5.4.0
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
         with:
           dotnet-version: ${{ matrix.version.setup }}
           source-url: https://nuget.pkg.github.com/oslc/index.json
