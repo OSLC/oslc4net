@@ -6,6 +6,7 @@
   <PropertyGroup>
     <AspireVersion>13.4.6</AspireVersion>
     <DotNetRdfVersion>3.5.2</DotNetRdfVersion>
+    <DotnetRuntimeVersion>10.0.10</DotnetRuntimeVersion>
   </PropertyGroup>
   <ItemGroup>
     <!-- For removal -->
@@ -27,8 +28,10 @@
     <PackageVersion Include="Meziantou.Analyzer" Version="3.0.122" />
     <!-- Test deps -->
     <PackageVersion Include="Aspire.Hosting.Testing" Version="$(AspireVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="10.0.9" />
-    <!-- As of 2026-07, DocFX 2.78.5 cannot load source generators built against Microsoft.CodeAnalysis.CSharp 5.x. -->
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json"
+      Version="$(DotnetRuntimeVersion)" />
+    <!-- As of 2026-07, DocFX 2.78.5 cannot load source generators built against
+    Microsoft.CodeAnalysis.CSharp 5.x. -->
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.14.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.8.1" />
     <PackageVersion Include="Verify.TUnit" Version="31.19.1" />
@@ -43,16 +46,20 @@
     <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="10.7.0" />
     <!-- Examples only -->
     <PackageVersion Include="dotNetRdf" Version="$(DotNetRdfVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.9" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.9" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.9" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.9" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.9" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="10.0.9" />
-    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection"
+      Version="$(DotnetRuntimeVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="$(DotnetRuntimeVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions"
+      Version="$(DotnetRuntimeVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="$(DotnetRuntimeVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions"
+      Version="$(DotnetRuntimeVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="$(DotnetRuntimeVersion)" />
+    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="$(DotnetRuntimeVersion)" />
     <PackageVersion Include="System.CommandLine" Version="2.0.10" />
-    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="$(DotnetRuntimeVersion)" />
     <PackageVersion Include="Microsoft.OpenApi" Version="2.7.5" />
-    <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0" PrivateAssets="all" ExcludeAssets="runtime" />
+    <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0"
+      PrivateAssets="all" ExcludeAssets="runtime" />
   </ItemGroup>
 </Project>
