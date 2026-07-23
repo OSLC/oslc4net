@@ -41,7 +41,7 @@
     <PackageVersion Include="FluentAssertions" Version="8.3.0" />
     <PackageVersion Include="TUnit" Version="1.61.38" />
     <!-- Optional TUnit extensions for CI diagnostics -->
-    <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.2.3" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.3.2" />
     <PackageVersion Include="Microsoft.Testing.Extensions.HangDump" Version="2.2.3" />
     <!-- Resilience for tests -->
     <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="10.7.0" />
