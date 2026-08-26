@@ -57,7 +57,7 @@ jobs:
         working-directory: main/OSLC4Net_SDK/
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
         with:
           disable-sudo: true
           egress-policy: audit
@@ -89,7 +89,7 @@ jobs:
         working-directory: main/OSLC4Net_SDK/
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
         with:
           disable-sudo: true
           egress-policy: audit
@@ -138,7 +138,7 @@ jobs:
       # TAG_VALUE: ${{ github.ref_name || inputs.version }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
         with:
           disable-sudo: true
           egress-policy: audit
@@ -205,7 +205,7 @@ jobs:
         if: |
           matrix.os == 'windows-latest'
       - name: ReportGenerator
-        uses: danielpalme/ReportGenerator-GitHub-Action@5.5.10
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.5.11
         with:
           reports: "${{ github.workspace }}/**/TestResults/**/*.cobertura.xml"
           targetdir: "${{ github.workspace }}/coveragereports"
@@ -225,7 +225,7 @@ jobs:
       - name: Upload coverage report to GitHub
         # Upload from a single matrix leg to avoid duplicate reports for the same SHA.
         if: matrix.os == 'ubuntu-24.04'
-        uses: actions/upload-code-coverage@abb5995db9e0199b0e2bb9dbd136fce4cb1ec4d3 # v1.3.0
+        uses: actions/upload-code-coverage@1c15be36fc3733ba839b1dd643bd9556e4426dc1 # v1.4.1
         with:
           file: ${{ github.workspace }}/coveragereports/Cobertura.xml
           language: "C#"
@@ -295,7 +295,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
         with:
           disable-sudo: true
           egress-policy: audit
