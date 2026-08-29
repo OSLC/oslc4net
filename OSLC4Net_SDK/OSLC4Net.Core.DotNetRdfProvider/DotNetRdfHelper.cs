@@ -132,7 +132,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                     new Uri(OslcConstants.OSLC_CORE_NAMESPACE + PROPERTY_TOTAL_COUNT)),
                 graph.CreateLiteralNode(countValue.ToString(CultureInfo.InvariantCulture))));
 
-            if (nextPageAbout != null)
+            if (!string.IsNullOrEmpty(nextPageAbout))
             {
                 graph.Assert(new Triple(responseInfoResource,
                     graph.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE +
@@ -651,6 +651,14 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                                      typeof(DateTime?) == setMethodComponentParameterType)
                             {
                                 parameter = DateTime.Parse(stringValue, CultureInfo.InvariantCulture);
+                            }
+                            else if (typeof(DateTimeOffset) == setMethodComponentParameterType ||
+                                     typeof(DateTimeOffset?) == setMethodComponentParameterType)
+                            {
+                                parameter = DateTimeOffset.Parse(
+                                    stringValue,
+                                    CultureInfo.InvariantCulture,
+                                    DateTimeStyles.RoundtripKind);
                             }
                         }
                     }
@@ -1522,6 +1530,10 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             {
                 literal = ((DateTime)value).ToUniversalTime().ToLiteral(graph);
             }
+            else if (typeof(DateTimeOffset) == valueType)
+            {
+                literal = ((DateTimeOffset)value).ToLiteral(graph);
+            }
             else if (typeof(XElement) == valueType)
             {
                 literal = graph.CreateLiteralNode(((XElement)value).ToString(SaveOptions.None),
@@ -1863,6 +1875,16 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 
             nestedNode = time.ToUniversalTime().ToLiteral(graph);
         }
+        else if (value is DateTimeOffset dateTimeOffset)
+        {
+            // DateTimeOffset is scalar, so omit it when only nested properties are requested.
+            if (onlyNested)
+            {
+                return;
+            }
+
+            nestedNode = dateTimeOffset.ToLiteral(graph);
+        }
         else if (objType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
         {
             var ns = TypeFactory.GetNamespace(objType);
@@ -2027,7 +2049,10 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
     {
         var uri = new Uri(ns);
 
-        if (namespaceMappings.GetPrefix(uri) == null)
+        // INamespaceMapper.GetPrefix throws RdfException when the URI is not mapped, so it
+        // cannot be used as a presence check: a ResponseInfo container with no members (a
+        // valid empty query result) would never register the oslc prefix and would throw.
+        if (!namespaceMappings.TryGetPrefix(uri, out _))
         {
             if (!namespaceMappings.HasNamespace(prefix))
             {

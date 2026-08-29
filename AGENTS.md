@@ -26,11 +26,15 @@ dotnet reportgenerator -reports:"**/coverage.cobertura.xml" -targetdir:"./Covera
 
 ## Docs
 
-- If a change is significant, add a line to CHANGELOG.md
+- Every breaking change must have at least a one-liner in the CHANGELOG.md. If a change is significant, add a line as well.
 - If a change breaks anything or requires a non-trivial migration step, add a section to MIGRATION.md
 - If a change is noteworthy, add docs to the `docs/articles`. Use snippets where possible. Strive to apply https://diataxis.fr/. Prefer spelling out type names over 'var' except for literals and obvious types. Skip ceremony like setting up loggers or ConfigureAwait. Refrain from numbering sections/subsections to make it easier to restructure content.
 
 Overall, follow `misc/instructions/gov-uk-technical-content.md` and `misc/instructions/iso-house-guide.md` to guide the language style.
+
+## RDF resources
+
+Domain `Resources/*.nt` files copied from OSLC, OMG, or W3C specifications are canonical upstream files. Do not patch spelling, labels, ranges, or other vocabulary data locally unless the change is generated from an upstream update. For temporary SDK behavior, prefer code-side overrides or extensions with a `REVISIT` comment and report the source defect upstream.
 
 ## Running the code and tests
 
@@ -97,6 +101,10 @@ TUnit also supports filtering by your own [properties](https://thomhurst.github.
 
 And if your test had a property with the name "MyFilterName" and its value contained "SomeValue", then your test would be executed.
 
+## Commit messages
+
+Use the scoped-commit convention defined in [CONTRIBUTING.md](CONTRIBUTING.md#commit-messages): `scope: imperative summary in lowercase`, no `feat:` / `fix:` / `chore:` / `refactor:` type prefixes. Top-level scopes are `core` / `query` / `client` / `server` / `domains` / `trs` / `tests` / `docs` / `build`. Apply the same convention to PR titles — the squash-merge subject becomes the commit subject.
+
 ## Formatting (required before every commit)
 
 Run from the repo root:
@@ -114,7 +122,7 @@ dotnet format whitespace ./OSLC4Net_SDK && dotnet format style ./OSLC4Net_SDK --
 
 Any file you've **significantly** touched (substantive code, docs, or
 non-trivial test changes — not just whitespace, renames, or a one-line
-tweak) should carry the line:
+tweak) should carry the copyright attribution:
 
 ```
 Copyright (c) <YYYY> Andrii Berezovskyi and OSLC4Net contributors.
@@ -123,8 +131,22 @@ Copyright (c) <YYYY> Andrii Berezovskyi and OSLC4Net contributors.
 where `<YYYY>` is the current year **at the time you add the line**.
 
 Rules:
-- **New files**: include this line as the sole copyright attribution (no
-  inherited IBM/contributor headers).
+- **New files**: include this full header:
+
+  ```text
+  /*
+   * Copyright (c) <YYYY> Andrii Berezovskyi and OSLC4Net contributors.
+   *
+   * All rights reserved. This program and the accompanying materials
+   * are made available under the terms of the Eclipse Public License v1.0
+   * which accompanies this distribution.
+   *
+   * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
+   */
+  ```
+
+  Do not add inherited IBM/contributor headers to new files unless the file
+  actually derives from that source.
 - **Existing files** that already have other copyright attributions
   (e.g. `Copyright (c) 2012 IBM Corporation.`): add the
   `Andrii Berezovskyi and OSLC4Net contributors.` line immediately after

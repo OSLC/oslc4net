@@ -137,9 +137,4 @@ public class ParameterInstance : AbstractResource
     {
         this.serviceProvider = serviceProvider;
     }
-
-    public int CompareTo(ParameterInstance o)
-    {
-        return o.GetName().CompareTo(name);
-    }
 }
