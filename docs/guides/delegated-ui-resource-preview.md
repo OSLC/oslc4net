@@ -25,35 +25,114 @@ Hints guide iframe sizing; keep dimensions moderate.
 
 ## Compact Resource Construction
 
-Two paths based on Accept:
-- JSON compact shape (Appendix A OSLC 3.0).
-- RDF-compatible `Compact` object.
+When a consumer requests the Compact representation of a resource, you should
+serve it based on the client's preferred content format (Content Negotiation).
+OSLC Core 3.0 Resource Preview Spec defines two main formats: RDF-native (e.g.,
+Turtle, JSON-LD, RDF/XML) and plain JSON.
 
-JSON example:
+### OSLC Compact resource (RDF-native)
+
+If the client requests an RDF-friendly representation (like `text/turtle`,
+`application/ld+json`, or `application/rdf+xml`), initialize the SDK's
+`Compact` model directly via its constructor and assign properties directly:
+
 ```csharp
-var compactDto = new {
-  title = requirement.Title,
-  icon = iconUri,
-  smallPreview = new { document = smallDoc, hintWidth = "320px", hintHeight = "200px" },
-  largePreview = new { document = largeDoc, hintWidth = "600px", hintHeight = "400px" }
+using OSLC4Net.Core.Model;
+
+var compactResource = new Compact(new Uri($"{requirementUri}&compact"))
+{
+    Title = requirement.Title ?? requirement.Identifier ?? "",
+    ShortTitle = requirement.Identifier ?? "",
+    Icon = new Uri(iconUri),
+    IconTitle = "Requirement",
+    IconAltLabel = "Requirement",
+    SmallPreview = new Preview
+    {
+        Document = new Uri(smallDocUri),
+        HintWidth = "320px",
+        HintHeight = "200px"
+    },
+    LargePreview = new Preview
+    {
+        Document = new Uri(largeDocUri),
+        HintWidth = "600px",
+        HintHeight = "400px"
+    }
 };
+
+return Ok(compactResource);
+```
+
+### Plain JSON
+If the client requests `application/json`, return the modern camelCase-mapped `CompactDto` which matches the OSLC 3.0 plain JSON schema shape:
+
+```csharp
+using OSLC4Net.Core.Model;
+
+var compactDto = new CompactDto
+{
+    Title = requirement.Title ?? requirement.Identifier ?? "",
+    ShortTitle = requirement.Identifier ?? "",
+    Icon = new Uri(iconUri),
+    IconTitle = "Requirement",
+    IconAltLabel = "Requirement",
+    SmallPreview = new PreviewDto
+    {
+        Document = new Uri(smallDocUri),
+        HintWidth = "320px",
+        HintHeight = "200px"
+    },
+    LargePreview = new PreviewDto
+    {
+        Document = new Uri(largeDocUri),
+        HintWidth = "600px",
+        HintHeight = "400px"
+    }
+};
+
 return new JsonResult(compactDto);
 ```
 
-RDF object example:
+## Content Negotiation & Link Header
+
+When serving the main resource representation, you must advertise the
+availability of the Compact representation by appending a `Link` header. You
+should also return a `Vary` header containing `Accept` to allow proper HTTP
+caching across different formats.
 
 ```csharp
-var compact = new Compact();
-// set the URI as per your controller layout
-compact.SetAbout(new Uri($"{requirementUri}&compact"));
-compact.Title = requirement.Title;
-compact.SmallPreview = new Preview { Document = new Uri(smallDoc), HintWidth = "320px", HintHeight = "200px" };
-```
+[HttpGet]
+[Route("/requirements/{id}")]
+public async Task<IActionResult> GetRequirement(string id)
+{
+    var requirement = await _service.GetRequirementAsync(id);
 
-## Link Header
+    if (Request.Query.ContainsKey("compact"))
+    {
+        // Handle Compact representation request based on Accept headers:
+        var accept = Request.Headers.Accept.ToString();
+        Response.Headers.Vary = "Accept";
 
-Add a `Link` header referencing the Compact representation from the full resource response:
+        // poor man's content negotiation
+        var wantsJson = string.IsNullOrWhiteSpace(accept) || accept.Contains("application/json");
+        var prefersRdf = accept.Contains("text/turtle") || accept.Contains("application/rdf+xml");
 
-```csharp
-Response.Headers.Append("Link", $"<{requirementUri}&compact>; rel=\"{OslcConstants.OSLC_CORE_NAMESPACE}Compact\"");
+        if (wantsJson && !prefersRdf)
+        {
+            // Serve JSON CompactDto
+            return new JsonResult(CreateCompactDto(requirement));
+        }
+        else
+        {
+            // Serve RDF Compact model
+            return Ok(CreateCompactRdfModel(requirement));
+        }
+    }
+
+    // Serve full resource and attach the Link header for the compact resource
+    var requirementUri = $"{Request.Scheme}://{Request.Host}{Request.Path}";
+    Response.Headers.Append("Link", $"<{requirementUri}?compact>; rel=\"{OslcConstants.OSLC_CORE_NAMESPACE}Compact\"");
+
+    return Ok(requirement);
+}
 ```

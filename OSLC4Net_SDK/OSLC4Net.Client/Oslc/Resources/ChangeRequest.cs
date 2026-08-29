@@ -120,7 +120,7 @@ public class ChangeRequest : AbstractResource
         this.implementsRequirements.Add(implementsRequirement);
     }
 
-    [Obsolete]
+    [Obsolete("Use GetTypes() or .Types instead")]
     public void AddRdfType(Uri rdfType)
     {
         AddType(rdfType);
@@ -338,7 +338,7 @@ public class ChangeRequest : AbstractResource
         return modified;
     }
 
-    [Obsolete("User GetTypes() or .Types instead")]
+    [Obsolete("Use GetTypes() or .Types instead")]
     public Uri[] GetRdfTypes()
     {
         return Types.ToArray();
@@ -693,7 +693,7 @@ public class ChangeRequest : AbstractResource
         this.modified = modified;
     }
 
-    [Obsolete("User SetTypes() or .Types instead")]
+    [Obsolete("Use SetTypes() or .Types instead")]
     public void SetRdfTypes(Uri[] rdfTypes)
     {
         Types = rdfTypes;
