@@ -1,0 +1,20 @@
+<http://open-services.net/ns/am#Resource> <http://www.w3.org/2000/01/rdf-schema#label> "ArchitectureResource" .
+<http://open-services.net/ns/am#Resource> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/am#> .
+<http://open-services.net/ns/am#Resource> <http://www.w3.org/2000/01/rdf-schema#comment> "A generic architecture resource.  A resource of this type is likely to be a model or design artifact." .
+<http://open-services.net/ns/am#Resource> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/am#LinkType> <http://www.w3.org/2000/01/rdf-schema#label> "LinkType" .
+<http://open-services.net/ns/am#LinkType> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/am#> .
+<http://open-services.net/ns/am#LinkType> <http://www.w3.org/2000/01/rdf-schema#comment> "A locally managed resource that describes a link type predicate that might otherwise not be directly resolvable." .
+<http://open-services.net/ns/am#LinkType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/am#> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<http://open-services.net/ns/am#> <http://purl.org/vocab/vann/preferredNamespacePrefix> "oslc_am" .
+<http://open-services.net/ns/am#> <http://purl.org/dc/terms/publisher> <https://open-services.net/about/> .
+<http://open-services.net/ns/am#> <http://www.w3.org/2000/01/rdf-schema#label> "OSLC Architecture Management (AM) Vocabulary" .
+<http://open-services.net/ns/am#> <http://purl.org/dc/terms/hasVersion> "OS" .
+<http://open-services.net/ns/am#> <http://purl.org/dc/terms/description> "All vocabulary URIs defined in the OSLC Architecture Management (AM) namespace."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/am#> <http://purl.org/dc/terms/issued> "2022-07-11"^^<http://www.w3.org/2001/XMLSchema#date> .
+<http://open-services.net/ns/am#> <http://purl.org/dc/terms/title> "OSLC Architecture Management (AM) Vocabulary" .
+<http://open-services.net/ns/am#> <http://purl.org/dc/terms/source> <https://docs.oasis-open-projects.org/oslc-op/am/v3.0/os/architecture-management-vocab.ttl> .
+<http://open-services.net/ns/am#> <http://purl.org/dc/terms/dateCopyrighted> "2012-2022" .
+<http://open-services.net/ns/am#> <http://purl.org/dc/terms/license> <http://www.apache.org/licenses/LICENSE-2.0> .
+<http://open-services.net/ns/am#> <http://purl.org/dc/terms/isPartOf> <https://docs.oasis-open-projects.org/oslc-op/am/v3.0/os/architecture-management-spec.html> .

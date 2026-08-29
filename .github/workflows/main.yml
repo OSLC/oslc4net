@@ -36,7 +36,7 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
   # NuGetDirectory: ${{ github.workspace}}/nuget
-  NuGetDirectory: '${{ github.workspace}}/nupkg_out'
+  NuGetDirectory: "${{ github.workspace}}/nupkg_out"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -57,7 +57,7 @@ jobs:
         working-directory: main/OSLC4Net_SDK/
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
         with:
           disable-sudo: true
           egress-policy: audit
@@ -68,7 +68,7 @@ jobs:
           persist-credentials: false
           path: main
       - name: Setup .NET
-        uses: actions/setup-dotnet@9a946fdbd5fb07b82b2f5a4466058b876ab72bb2 # v5.3.0
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
         with:
           dotnet-version: 10.x
       - name: Restore dependencies
@@ -78,18 +78,52 @@ jobs:
           dotnet format OSLC4Net.Core.slnx style --verify-no-changes
           dotnet format OSLC4Net.Core.slnx whitespace --verify-no-changes
 
+  generated-domains:
+    name: Generated domain sources
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: main/OSLC4Net_SDK/
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        with:
+          disable-sudo: true
+          egress-policy: audit
+      - name: Checkout Code
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          show-progress: false
+          persist-credentials: false
+          path: main
+      - name: Setup .NET
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: 10.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Regenerate domain sources
+        run: |
+          find OSLC4Net.Domains.* -path '*/Generated' -type d -prune -exec rm -rf {} +
+          dotnet build OSLC4Net.Core.slnx --no-restore --configuration Release --no-incremental
+      - name: Verify generated sources are current
+        run: |
+          git diff --exit-code -- OSLC4Net.Domains.*/Generated
+
   test:
     #needs: [format]
     permissions:
-      contents: read  # for actions/checkout to fetch code
-      packages: write  # for setup-dotnet to create package
-      code-quality: write  # for actions/upload-code-coverage
+      contents: read # for actions/checkout to fetch code
+      packages: write # for setup-dotnet to create package
+      code-quality: write # for actions/upload-code-coverage
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-24.04, ubuntu-24.04-arm, windows-latest]
-        version:
-          [
+        version: [
             # { setup: "8.x", target: "net8.0" },
             # { setup: "9.x", target: "net9.0" },
             { setup: "10.x", target: "net10.0" },
@@ -104,7 +138,7 @@ jobs:
       # TAG_VALUE: ${{ github.ref_name || inputs.version }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
         with:
           disable-sudo: true
           egress-policy: audit
@@ -122,7 +156,7 @@ jobs:
           repository: oslc-op/refimpl
           path: refimpl
       - name: Setup .NET
-        uses: actions/setup-dotnet@9a946fdbd5fb07b82b2f5a4466058b876ab72bb2 # v5.3.0
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
         with:
           dotnet-version: ${{ matrix.version.setup }}
           source-url: https://nuget.pkg.github.com/oslc/index.json
@@ -151,7 +185,7 @@ jobs:
       #       Set-Content Tests/OSLC4NetExamples.Server.Tests/OSLC4NetExamples.Server.Tests.csproj
       - name: Cache NuGet
         # id: cache-nuget
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         # env:
         #   cache-name: cache-node-modules
         with:
@@ -171,11 +205,11 @@ jobs:
         if: |
           matrix.os == 'windows-latest'
       - name: ReportGenerator
-        uses: danielpalme/ReportGenerator-GitHub-Action@5.5.10
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.5.11
         with:
-          reports: '${{ github.workspace }}/**/TestResults/**/*.cobertura.xml'
-          targetdir: '${{ github.workspace }}/coveragereports'
-          reporttypes: 'Cobertura;MarkdownSummaryGithub'
+          reports: "${{ github.workspace }}/**/TestResults/**/*.cobertura.xml"
+          targetdir: "${{ github.workspace }}/coveragereports"
+          reporttypes: "Cobertura;MarkdownSummaryGithub"
       - name: Upload coverage into summary
         # Only on non windows runners
         if: ${{ runner.os != 'Windows' }}
@@ -186,17 +220,16 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
-          exclude: .nuget,main/OSLC4Net_SDK/Examples
-          # files: "${{ github.workspace }}/main/OSLC4Net_SDK/Tests/*/TestResults/*.coverage,${{ github.workspace }}/main/OSLC4Net_SDK/Tests/*/TestResults/*.xml"
           files: ${{ github.workspace }}/coveragereports/Cobertura.xml
+          disable_search: true
       - name: Upload coverage report to GitHub
         # Upload from a single matrix leg to avoid duplicate reports for the same SHA.
         if: matrix.os == 'ubuntu-24.04'
-        uses: actions/upload-code-coverage@abb5995db9e0199b0e2bb9dbd136fce4cb1ec4d3 # v1.3.0
+        uses: actions/upload-code-coverage@1c15be36fc3733ba839b1dd643bd9556e4426dc1 # v1.4.1
         with:
           file: ${{ github.workspace }}/coveragereports/Cobertura.xml
-          language: 'C#'
-          label: 'dotnet/cobertura'
+          language: "C#"
+          label: "dotnet/cobertura"
           fail-on-error: false
       - name: Pack NuGet packages (snapshot)
         shell: pwsh
@@ -262,7 +295,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
         with:
           disable-sudo: true
           egress-policy: audit

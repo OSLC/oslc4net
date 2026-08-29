@@ -1,0 +1,386 @@
+<http://open-services.net/ns/rm/shapes/2.1#serviceProvider> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#serviceProvider> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#serviceProvider> <http://purl.org/dc/terms/description> "The scope of a resource is a URI for the resource's OSLC Service Provider."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#serviceProvider> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#serviceProvider> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#ServiceProvider> .
+<http://open-services.net/ns/rm/shapes/2.1#serviceProvider> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#serviceProvider> .
+<http://open-services.net/ns/rm/shapes/2.1#serviceProvider> <http://open-services.net/ns/core#name> "serviceProvider" .
+<http://open-services.net/ns/rm/shapes/2.1#serviceProvider> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-constrainedBy> <http://open-services.net/ns/core#name> "constrainedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#rc-constrainedBy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-constrainedBy> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-constrainedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-constrainedBy> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-constrainedBy> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#constrainedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-constrainedBy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-constrainedBy> <http://purl.org/dc/terms/title> "constrainedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#rc-constrainedBy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-constrainedBy> <http://purl.org/dc/terms/description> "The subject is constrained by the object. For example, a requirement collection is constrained by a requirement collection."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#contributor> <http://purl.org/dc/terms/description> "Contributor(s) to resource (reference: Dublin Core). It is likely that the target resource will be a &lt;code&gt;foaf:Person&lt;/code&gt; but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#contributor> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/rm/shapes/2.1#contributor> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#contributor> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/contributor> .
+<http://open-services.net/ns/rm/shapes/2.1#contributor> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#contributor> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#contributor> <http://open-services.net/ns/core#name> "contributor" .
+<http://open-services.net/ns/rm/shapes/2.1#contributor> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#instanceShape> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#instanceShape> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#instanceShape> <http://purl.org/dc/terms/description> "Resource Shape that provides hints as to resource property value-types and allowed values."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#instanceShape> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/rm/shapes/2.1#instanceShape> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/rm/shapes/2.1#instanceShape> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#instanceShape> .
+<http://open-services.net/ns/rm/shapes/2.1#instanceShape> <http://open-services.net/ns/core#name> "instanceShape" .
+<http://open-services.net/ns/rm/shapes/2.1#instanceShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-satisfiedBy> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-satisfiedBy> <http://open-services.net/ns/core#name> "satisfiedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#rc-satisfiedBy> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-satisfiedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-satisfiedBy> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#satisfiedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-satisfiedBy> <http://purl.org/dc/terms/title> "satisfiedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#rc-satisfiedBy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-satisfiedBy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-satisfiedBy> <http://purl.org/dc/terms/description> "The subject is satisfied by the object. For example, a collection of user requirements is satisfied by a requirement collection of system requirements."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-satisfiedBy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#elaboratedBy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#elaboratedBy> <http://open-services.net/ns/core#name> "elaboratedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#elaboratedBy> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#elaboratedBy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#elaboratedBy> <http://purl.org/dc/terms/description> "The subject is elaborated by the object. For example, a user requirement is elaborated by use case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#elaboratedBy> <http://purl.org/dc/terms/title> "" .
+<http://open-services.net/ns/rm/shapes/2.1#elaboratedBy> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#elaboratedBy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#elaboratedBy> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#elaboratedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#elaboratedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#specifiedBy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#specifiedBy> <http://open-services.net/ns/core#name> "specifiedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#specifiedBy> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#specifiedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#specifiedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#specifiedBy> <http://purl.org/dc/terms/description> "The subject is specified by the object. For example, a requirement is elaborated by a model element."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#specifiedBy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#specifiedBy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#specifiedBy> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#specifiedBy> <http://purl.org/dc/terms/title> "" .
+<http://open-services.net/ns/rm/shapes/2.1#specifiedBy> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#creator> <http://purl.org/dc/terms/description> "Creator(s) of resource (reference: Dublin Core). It is likely that the target resource will be an &lt;code&gt;foaf:Person&lt;/code&gt; but that is not necessarily the case."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#creator> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/rm/shapes/2.1#creator> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#creator> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/creator> .
+<http://open-services.net/ns/rm/shapes/2.1#creator> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#creator> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#creator> <http://open-services.net/ns/core#name> "creator" .
+<http://open-services.net/ns/rm/shapes/2.1#creator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#subject> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+<http://open-services.net/ns/rm/shapes/2.1#subject> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#subject> <http://purl.org/dc/terms/description> "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#subject> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#subject> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/subject> .
+<http://open-services.net/ns/rm/shapes/2.1#subject> <http://open-services.net/ns/core#name> "subject" .
+<http://open-services.net/ns/rm/shapes/2.1#subject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-decomposedBy> <http://open-services.net/ns/core#name> "decomposedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#rc-decomposedBy> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#decomposedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-decomposedBy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-decomposedBy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-decomposedBy> <http://purl.org/dc/terms/description> "The subject is decomposed by the object. For example, a collection of business requirements is decomposed by a collection of user requirements."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-decomposedBy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-decomposedBy> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-decomposedBy> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-decomposedBy> <http://purl.org/dc/terms/title> "decomposedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#rc-decomposedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#implementedBy> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#implementedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#implementedBy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#implementedBy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#implementedBy> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#implementedBy> <http://open-services.net/ns/core#name> "implementedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#implementedBy> <http://purl.org/dc/terms/title> "implementedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#implementedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#implementedBy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#implementedBy> <http://purl.org/dc/terms/description> "Resource, such as a change request, which implements this requirement."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#implementedBy> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#identifier> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+<http://open-services.net/ns/rm/shapes/2.1#identifier> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#identifier> <http://purl.org/dc/terms/description> "An identifier for a resource. This identifier may be unique with a scope that is defined by the RM provider. Assigned by the service provider when a resource is created. Not intended for end-user display."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#identifier> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/rm/shapes/2.1#identifier> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/identifier> .
+<http://open-services.net/ns/rm/shapes/2.1#identifier> <http://open-services.net/ns/core#name> "identifier" .
+<http://open-services.net/ns/rm/shapes/2.1#identifier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#decomposes> <http://purl.org/dc/terms/description> "The object is decomposed by the subject."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#decomposes> <http://purl.org/dc/terms/title> "decomposes" .
+<http://open-services.net/ns/rm/shapes/2.1#decomposes> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#decomposes> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#decomposes> .
+<http://open-services.net/ns/rm/shapes/2.1#decomposes> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#decomposes> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#decomposes> <http://open-services.net/ns/core#name> "decomposes" .
+<http://open-services.net/ns/rm/shapes/2.1#decomposes> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#decomposes> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#decomposes> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#specifies> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#specifies> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#specifies> .
+<http://open-services.net/ns/rm/shapes/2.1#specifies> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#specifies> <http://open-services.net/ns/core#name> "specifies" .
+<http://open-services.net/ns/rm/shapes/2.1#specifies> <http://purl.org/dc/terms/title> "specifies" .
+<http://open-services.net/ns/rm/shapes/2.1#specifies> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#specifies> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#specifies> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#specifies> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#specifies> <http://purl.org/dc/terms/description> "The object is specified by the subject."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#satisfiedBy> <http://purl.org/dc/terms/title> "satisfiedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#satisfiedBy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#satisfiedBy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#satisfiedBy> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#satisfiedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#satisfiedBy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#satisfiedBy> <http://purl.org/dc/terms/description> "The subject is satisfied by the object. For example, a user requirement is satisfied by a system requirement."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#satisfiedBy> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#satisfiedBy> <http://open-services.net/ns/core#name> "satisfiedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#satisfiedBy> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#satisfiedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#elaborates> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#elaborates> <http://open-services.net/ns/core#name> "elaborates" .
+<http://open-services.net/ns/rm/shapes/2.1#elaborates> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#elaborates> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#elaborates> <http://purl.org/dc/terms/title> "" .
+<http://open-services.net/ns/rm/shapes/2.1#elaborates> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#elaborates> .
+<http://open-services.net/ns/rm/shapes/2.1#elaborates> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#elaborates> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#elaborates> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#elaborates> <http://purl.org/dc/terms/description> "The object is elaborated by the subject."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#title> <http://open-services.net/ns/core#valueType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#title> <http://purl.org/dc/terms/description> "Title (reference: Dublin Core) of the resource represented as rich text in XHTML content. <span class=\"conformance\">It SHOULD include only content that is valid inside an XHTML &lt;span&gt; element.</span>"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#title> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+<http://open-services.net/ns/rm/shapes/2.1#title> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/title> .
+<http://open-services.net/ns/rm/shapes/2.1#title> <http://open-services.net/ns/core#name> "title" .
+<http://open-services.net/ns/rm/shapes/2.1#title> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#type> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#type> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#type> <http://purl.org/dc/terms/description> "The resource type URIs."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#type> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#type> <http://open-services.net/ns/core#propertyDefinition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> .
+<http://open-services.net/ns/rm/shapes/2.1#type> <http://open-services.net/ns/core#name> "type" .
+<http://open-services.net/ns/rm/shapes/2.1#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#validatedBy> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#validatedBy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#validatedBy> <http://purl.org/dc/terms/description> "Resource, such as a test case, which validates this requirement."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#validatedBy> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#validatedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#validatedBy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#validatedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#validatedBy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#validatedBy> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#validatedBy> <http://open-services.net/ns/core#name> "validatedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#validatedBy> <http://purl.org/dc/terms/title> "validatedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#trackedBy> <http://open-services.net/ns/core#name> "trackedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#trackedBy> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#trackedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#trackedBy> <http://purl.org/dc/terms/description> "Resource, such as a change request, which tracks this requirement."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#trackedBy> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#trackedBy> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#trackedBy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#trackedBy> <http://purl.org/dc/terms/title> "trackedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#trackedBy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#trackedBy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#trackedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#modified> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://open-services.net/ns/rm/shapes/2.1#modified> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#modified> <http://purl.org/dc/terms/description> "Timestamp of last resource modification (reference: Dublin Core)."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#modified> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/rm/shapes/2.1#modified> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/modified> .
+<http://open-services.net/ns/rm/shapes/2.1#modified> <http://open-services.net/ns/core#name> "modified" .
+<http://open-services.net/ns/rm/shapes/2.1#modified> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#decomposes> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/rm#RequirementCollection> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#creator> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#constrains> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#rc-satisfiedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#rc-elaboratedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#rc-trackedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#description> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://purl.org/dc/terms/title> "A collection of Requirements." .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#instanceShape> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#serviceProvider> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#shortTitle> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#elaborates> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#rc-implementedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#identifier> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#uses> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#modified> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#affectedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#rc-constrainedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#contributor> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#specifies> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#rc-decomposedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#rc-validatedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#satisfies> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://purl.org/dc/terms/description> "A grouping or collection of related requirements for any purpose."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#rc-specifiedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#type> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#title> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#subject> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementCollectionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#created> .
+<http://open-services.net/ns/rm/shapes/2.1#decomposedBy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#decomposedBy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#decomposedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#decomposedBy> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#decomposedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#decomposedBy> <http://purl.org/dc/terms/description> "The subject is decomposed by the object. For example, a system requirement is decomposed into a collection of system requirements."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#decomposedBy> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#decomposedBy> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#decomposedBy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#decomposedBy> <http://purl.org/dc/terms/title> "decomposedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#decomposedBy> <http://open-services.net/ns/core#name> "decomposedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#shortTitle> <http://open-services.net/ns/core#valueType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#shortTitle> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#shortTitle> .
+<http://open-services.net/ns/rm/shapes/2.1#shortTitle> <http://purl.org/dc/terms/description> "Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users. <span class=\"conformance\">It SHOULD include only content that is valid inside an XHTML &lt;span&gt; element.</span>"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#shortTitle> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/rm/shapes/2.1#shortTitle> <http://open-services.net/ns/core#name> "shortTitle" .
+<http://open-services.net/ns/rm/shapes/2.1#shortTitle> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#created> <http://purl.org/dc/terms/description> "Timestamp of resource creation (reference: Dublin Core)."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#created> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#created> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://open-services.net/ns/rm/shapes/2.1#created> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/created> .
+<http://open-services.net/ns/rm/shapes/2.1#created> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/rm/shapes/2.1#created> <http://open-services.net/ns/core#name> "created" .
+<http://open-services.net/ns/rm/shapes/2.1#created> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-implementedBy> <http://open-services.net/ns/core#name> "implementedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#rc-implementedBy> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-implementedBy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-implementedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-implementedBy> <http://purl.org/dc/terms/title> "implementedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#rc-implementedBy> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#implementedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-implementedBy> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-implementedBy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-implementedBy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-implementedBy> <http://purl.org/dc/terms/description> "Resource, such as a change request, which implements this requirement collection."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#constrainedBy> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#constrainedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#constrainedBy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#constrainedBy> <http://purl.org/dc/terms/description> "The subject is constrained by the object. For example, a functional requirement is constrained by a safety requirement."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#constrainedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#constrainedBy> <http://purl.org/dc/terms/title> "constrainedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#constrainedBy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#constrainedBy> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#constrainedBy> <http://open-services.net/ns/core#name> "constrainedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#constrainedBy> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#constrainedBy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#satisfies> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#satisfies> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#satisfies> .
+<http://open-services.net/ns/rm/shapes/2.1#satisfies> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#satisfies> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#satisfies> <http://open-services.net/ns/core#name> "satisfies" .
+<http://open-services.net/ns/rm/shapes/2.1#satisfies> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#satisfies> <http://purl.org/dc/terms/description> "The object is satisfied by the subject."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#satisfies> <http://purl.org/dc/terms/title> "satisfies" .
+<http://open-services.net/ns/rm/shapes/2.1#satisfies> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#satisfies> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-validatedBy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-validatedBy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-validatedBy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-validatedBy> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-validatedBy> <http://purl.org/dc/terms/title> "validatedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#rc-validatedBy> <http://purl.org/dc/terms/description> "Resource, such as a test plan, which validates this requirement collection."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-validatedBy> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#validatedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-validatedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-validatedBy> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-validatedBy> <http://open-services.net/ns/core#name> "validatedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#affectedBy> <http://purl.org/dc/terms/description> "The subject is affected by the object, such as a defect or issue."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#affectedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#affectedBy> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#affectedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#affectedBy> <http://purl.org/dc/terms/title> "affectedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#affectedBy> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#affectedBy> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#affectedBy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#affectedBy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#affectedBy> <http://open-services.net/ns/core#name> "affectedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#affectedBy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShapeConstraints> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShapeConstraints> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShapeConstraints> <http://purl.org/dc/terms/source> <https://docs.oasis-open-projects.org/oslc-op/rm/v2.1/os/requirements-management-shapes.ttl> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShapeConstraints> <http://purl.org/dc/terms/issued> "2021-06-21"^^<http://www.w3.org/2001/XMLSchema#date> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShapeConstraints> <http://purl.org/dc/terms/description> "Resource Shape Constraints defined in the OSLC RM 2.1 specification."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShapeConstraints> <http://purl.org/dc/terms/hasVersion> "OS" .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShapeConstraints> <http://purl.org/dc/terms/isPartOf> <https://docs.oasis-open-projects.org/oslc-op/rm/v2.1/os/requirements-management-spec.html> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShapeConstraints> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <https://github.com/oslc-op/oslc-specs/blob/master/specs/rm/requirements-management-shapes.ttl> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShapeConstraints> <http://purl.org/dc/terms/title> "OSLC Requirements Management (RM) Resource Shape Constraints" .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShapeConstraints> <http://purl.org/dc/terms/publisher> <https://open-services.net/about/> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShapeConstraints> <http://purl.org/dc/terms/license> <http://www.apache.org/licenses/LICENSE-2.0> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShapeConstraints> <http://www.w3.org/2000/01/rdf-schema#label> "OSLC Requirements Management (RM) Resource Shape Constraints" .
+<http://open-services.net/ns/rm/shapes/2.1#rc-specifiedBy> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-specifiedBy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-specifiedBy> <http://purl.org/dc/terms/title> "" .
+<http://open-services.net/ns/rm/shapes/2.1#rc-specifiedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-specifiedBy> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-specifiedBy> <http://open-services.net/ns/core#name> "specifiedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#rc-specifiedBy> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#specifiedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-specifiedBy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-specifiedBy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-specifiedBy> <http://purl.org/dc/terms/description> "The subject is specified by the object. For example, a model element might make a requirement collection more precise."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#uses> <http://purl.org/dc/terms/title> "" .
+<http://open-services.net/ns/rm/shapes/2.1#uses> <http://purl.org/dc/terms/description> "A collection uses a resource - the resource is in the requirement collection."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#uses> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#uses> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#uses> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#uses> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#uses> .
+<http://open-services.net/ns/rm/shapes/2.1#uses> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#uses> <http://open-services.net/ns/core#name> "uses" .
+<http://open-services.net/ns/rm/shapes/2.1#uses> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-trackedBy> <http://purl.org/dc/terms/title> "trackedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#rc-trackedBy> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-trackedBy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-trackedBy> <http://open-services.net/ns/core#name> "trackedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#rc-trackedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-trackedBy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-trackedBy> <http://purl.org/dc/terms/description> "Resource, such as a change request, which manages this requirement collection."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-trackedBy> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-trackedBy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-trackedBy> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#trackedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#constrains> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#constrains> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#constrains> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#constrains> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#constrains> <http://purl.org/dc/terms/title> "constrains" .
+<http://open-services.net/ns/rm/shapes/2.1#constrains> <http://open-services.net/ns/core#name> "constrains" .
+<http://open-services.net/ns/rm/shapes/2.1#constrains> <http://purl.org/dc/terms/description> "The object is constrained by the subject."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#constrains> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#constrains> .
+<http://open-services.net/ns/rm/shapes/2.1#constrains> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#constrains> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#type> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#satisfies> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#title> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#trackedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#instanceShape> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#modified> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#constrainedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#identifier> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#constrains> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#elaborates> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#subject> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#created> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://purl.org/dc/terms/description> "A condition or capability needed by a stakeholder, or imposed by a solution component,\nto address a need, solve a problem, achieve an objective,\nor to satisfy a contract, standard, specification, or other formally imposed documents."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#specifiedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#satisfiedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#affectedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#shortTitle> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#decomposedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#validatedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#elaboratedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#creator> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#specifies> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#description> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#implementedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#serviceProvider> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#decomposes> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/rm/shapes/2.1#contributor> .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://purl.org/dc/terms/title> "Statement of need." .
+<http://open-services.net/ns/rm/shapes/2.1#RequirementShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/rm#Requirement> .
+<http://open-services.net/ns/rm/shapes/2.1#description> <http://open-services.net/ns/core#valueType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#description> <http://purl.org/dc/terms/description> "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content. <span class=\"conformance\">It SHOULD include only content that is valid and suitable inside an XHTML &lt;div&gt; element.</span>"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#description> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/rm/shapes/2.1#description> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/description> .
+<http://open-services.net/ns/rm/shapes/2.1#description> <http://open-services.net/ns/core#name> "description" .
+<http://open-services.net/ns/rm/shapes/2.1#description> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-elaboratedBy> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/rm#elaboratedBy> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-elaboratedBy> <http://purl.org/dc/terms/title> "" .
+<http://open-services.net/ns/rm/shapes/2.1#rc-elaboratedBy> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-elaboratedBy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-elaboratedBy> <http://purl.org/dc/terms/description> "The subject is elaborated by the object. For example, a collection of user requirements elaborates a business need, or a model elaborates a collection of system requirements."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-elaboratedBy> <http://open-services.net/ns/core#name> "elaboratedBy" .
+<http://open-services.net/ns/rm/shapes/2.1#rc-elaboratedBy> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-elaboratedBy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-elaboratedBy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/rm/shapes/2.1#rc-elaboratedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .

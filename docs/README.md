@@ -24,11 +24,15 @@ docs/
 To build the documentation locally:
 
 ```bash
-# Install DocFX (if not already installed)
-dotnet tool install -g docfx
+# Install or update DocFX
+dotnet tool update -g docfx
 
-# Build the documentation
-cd docs
+# Build the SDK first so domain source generators refresh OSLC4Net.Domains.*/Generated
+cd OSLC4Net_SDK
+dotnet build -c Release OSLC4Net.Core.slnx
+
+# Build the documentation from project metadata
+cd ../docs
 docfx docfx.json
 
 # Serve locally (with live reload)
@@ -56,10 +60,11 @@ The documentation is automatically built and deployed when changes are pushed to
 
 ### API Documentation
 
-API documentation is automatically generated from XML documentation comments in the source code. To improve API docs:
+API documentation is generated from project metadata. Domain projects also commit their source-generator output under `OSLC4Net.Domains.*/Generated`, so build the SDK before running DocFX when vocabulary or shape RDF changes. To improve API docs:
 
 1. Add XML documentation comments to public APIs in `OSLC4Net_SDK/`
-2. Build will automatically include updated API reference
+2. For generated domain vocabulary members, update the RDF `dcterms:description` or `rdfs:comment`
+3. Build the SDK before running DocFX so the generated source snapshot is current
 
 ## Troubleshooting
 

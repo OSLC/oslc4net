@@ -1,0 +1,88 @@
+<http://open-services.net/ns/core/trs#Deletion> <http://www.w3.org/2000/01/rdf-schema#comment> "Represents a resource deletion change event." .
+<http://open-services.net/ns/core/trs#Deletion> <http://www.w3.org/2000/01/rdf-schema#label> "Deletion" .
+<http://open-services.net/ns/core/trs#Deletion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/core/trs#> .
+<http://open-services.net/ns/core/trs#Deletion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/core/trs#base> <http://www.w3.org/2000/01/rdf-schema#comment> "An enumeration of the Resources in the Resource Set." .
+<http://open-services.net/ns/core/trs#base> <http://www.w3.org/2000/01/rdf-schema#range> <http://open-services.net/ns/core/trs#Base> .
+<http://open-services.net/ns/core/trs#base> <http://www.w3.org/2000/01/rdf-schema#label> "base" .
+<http://open-services.net/ns/core/trs#base> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/core/trs#> .
+<http://open-services.net/ns/core/trs#base> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/core/trs#trackedResourceSet> <http://www.w3.org/2000/01/rdf-schema#comment> "A Tracked Resource Set." .
+<http://open-services.net/ns/core/trs#trackedResourceSet> <http://www.w3.org/2000/01/rdf-schema#range> <http://open-services.net/ns/core/trs#TrackedResourceSet> .
+<http://open-services.net/ns/core/trs#trackedResourceSet> <http://www.w3.org/2000/01/rdf-schema#label> "trackedResourceSet" .
+<http://open-services.net/ns/core/trs#trackedResourceSet> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/core/trs#> .
+<http://open-services.net/ns/core/trs#trackedResourceSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/core/trs#changed> <http://www.w3.org/2000/01/rdf-schema#comment> "The Resource that has changed." .
+<http://open-services.net/ns/core/trs#changed> <http://www.w3.org/2000/01/rdf-schema#label> "changed" .
+<http://open-services.net/ns/core/trs#changed> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/core/trs#> .
+<http://open-services.net/ns/core/trs#changed> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/core/trspatch#rdfPatch> <http://www.w3.org/2000/01/rdf-schema#comment> "Patch directives describing a modification to the resource's RDF representation." .
+<http://open-services.net/ns/core/trspatch#rdfPatch> <http://www.w3.org/2000/01/rdf-schema#label> "rdfPatch" .
+<http://open-services.net/ns/core/trspatch#rdfPatch> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/core/trs#> .
+<http://open-services.net/ns/core/trspatch#rdfPatch> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/core/trs#> <http://purl.org/vocab/vann/preferredNamespacePrefix> "trs" .
+<http://open-services.net/ns/core/trs#> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<http://open-services.net/ns/core/trs#> <http://purl.org/dc/terms/hasVersion> "OS" .
+<http://open-services.net/ns/core/trs#> <http://purl.org/dc/terms/isPartOf> <https://docs.oasis-open-projects.org/oslc-op/trs/v3.0/os/tracked-resource-set.html> .
+<http://open-services.net/ns/core/trs#> <http://purl.org/dc/terms/license> <http://www.apache.org/licenses/LICENSE-2.0> .
+<http://open-services.net/ns/core/trs#> <http://www.w3.org/2000/01/rdf-schema#label> "OSLC Core Tracked Resource Set vocabulary" .
+<http://open-services.net/ns/core/trs#> <http://purl.org/dc/terms/issued> "2023-07-23"^^<http://www.w3.org/2001/XMLSchema#date> .
+<http://open-services.net/ns/core/trs#> <http://purl.org/dc/terms/source> <https://docs.oasis-open-projects.org/oslc-op/trs/v3.0/os/trs-vocab.ttl> .
+<http://open-services.net/ns/core/trs#> <http://purl.org/dc/terms/description> "The OSLC Core Tracked Resource Set vocabulary defines terms used in describing Tracked Resource Sets." .
+<http://open-services.net/ns/core/trs#> <http://purl.org/dc/terms/title> "OSLC Core Tracked Resource Set vocabulary" .
+<http://open-services.net/ns/core/trs#> <http://purl.org/dc/terms/dateCopyrighted> "2012-2023" .
+<http://open-services.net/ns/core/trs#Base> <http://www.w3.org/2000/01/rdf-schema#comment> "A Base identifies the initial set of resources in a Tracked Resource Set." .
+<http://open-services.net/ns/core/trs#Base> <http://www.w3.org/2000/01/rdf-schema#label> "Base" .
+<http://open-services.net/ns/core/trs#Base> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/ldp#DirectContainer> .
+<http://open-services.net/ns/core/trs#Base> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/core/trs#> .
+<http://open-services.net/ns/core/trs#Base> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/core/trs#cutoffEvent> <http://www.w3.org/2000/01/rdf-schema#comment> "The most recent Change Log entry that is accounted for in this Base. When rdf:nil, the Base is an enumeration at the start of time." .
+<http://open-services.net/ns/core/trs#cutoffEvent> <http://www.w3.org/2000/01/rdf-schema#label> "cutoffEvent" .
+<http://open-services.net/ns/core/trs#cutoffEvent> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/core/trs#> .
+<http://open-services.net/ns/core/trs#cutoffEvent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/core/trs#changeLog> <http://www.w3.org/2000/01/rdf-schema#comment> "A Change Log providing an order series of incremental adjustments to the Resource Set." .
+<http://open-services.net/ns/core/trs#changeLog> <http://www.w3.org/2000/01/rdf-schema#range> <http://open-services.net/ns/core/trs#ChangeLog> .
+<http://open-services.net/ns/core/trs#changeLog> <http://www.w3.org/2000/01/rdf-schema#label> "changeLog" .
+<http://open-services.net/ns/core/trs#changeLog> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/core/trs#> .
+<http://open-services.net/ns/core/trs#changeLog> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/core/trspatch#beforeETag> <http://www.w3.org/2000/01/rdf-schema#comment> "HTTP entity tag of resource immediately before this change." .
+<http://open-services.net/ns/core/trspatch#beforeETag> <http://www.w3.org/2000/01/rdf-schema#label> "beforeETag" .
+<http://open-services.net/ns/core/trspatch#beforeETag> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/core/trs#> .
+<http://open-services.net/ns/core/trspatch#beforeETag> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/core/trs#TrackedResourceSet> <http://www.w3.org/2000/01/rdf-schema#comment> "A Tracked Resource Set provides a representation of the current state of a Resource Set." .
+<http://open-services.net/ns/core/trs#TrackedResourceSet> <http://www.w3.org/2000/01/rdf-schema#label> "Tracked Resource Set" .
+<http://open-services.net/ns/core/trs#TrackedResourceSet> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/core/trs#> .
+<http://open-services.net/ns/core/trs#TrackedResourceSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/core/trs#change> <http://www.w3.org/2000/01/rdf-schema#comment> "The Change Event entries." .
+<http://open-services.net/ns/core/trs#change> <http://www.w3.org/2000/01/rdf-schema#label> "change" .
+<http://open-services.net/ns/core/trs#change> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/core/trs#> .
+<http://open-services.net/ns/core/trs#change> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/core/trs#previous> <http://www.w3.org/2000/01/rdf-schema#comment> "The continuation of the Change Log, containing the next group of chronologically earlier Change Events." .
+<http://open-services.net/ns/core/trs#previous> <http://www.w3.org/2000/01/rdf-schema#range> <http://open-services.net/ns/core/trs#ChangeLog> .
+<http://open-services.net/ns/core/trs#previous> <http://www.w3.org/2000/01/rdf-schema#label> "previous" .
+<http://open-services.net/ns/core/trs#previous> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/core/trs#> .
+<http://open-services.net/ns/core/trs#previous> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/core/trs#Modification> <http://www.w3.org/2000/01/rdf-schema#comment> "Represents a resource creation or modification change event." .
+<http://open-services.net/ns/core/trs#Modification> <http://www.w3.org/2000/01/rdf-schema#label> "Modification" .
+<http://open-services.net/ns/core/trs#Modification> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/core/trs#> .
+<http://open-services.net/ns/core/trs#Modification> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/core/trs#ChangeLog> <http://www.w3.org/2000/01/rdf-schema#comment> "A Change Log describes what resources have been created, modified or deleted, and when." .
+<http://open-services.net/ns/core/trs#ChangeLog> <http://www.w3.org/2000/01/rdf-schema#label> "Change Log" .
+<http://open-services.net/ns/core/trs#ChangeLog> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/core/trs#> .
+<http://open-services.net/ns/core/trs#ChangeLog> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/core/trspatch#createdFrom> <http://www.w3.org/2000/01/rdf-schema#comment> "URI of antecedent resource for trs:Creation Change Events." .
+<http://open-services.net/ns/core/trspatch#createdFrom> <http://www.w3.org/2000/01/rdf-schema#label> "createdFrom" .
+<http://open-services.net/ns/core/trspatch#createdFrom> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/core/trs#> .
+<http://open-services.net/ns/core/trspatch#createdFrom> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/core/trspatch#afterETag> <http://www.w3.org/2000/01/rdf-schema#comment> "HTTP entity tag of resource immediately after this change." .
+<http://open-services.net/ns/core/trspatch#afterETag> <http://www.w3.org/2000/01/rdf-schema#label> "afterETag" .
+<http://open-services.net/ns/core/trspatch#afterETag> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/core/trs#> .
+<http://open-services.net/ns/core/trspatch#afterETag> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/core/trs#order> <http://www.w3.org/2000/01/rdf-schema#comment> "The sequence in time of the Change Event." .
+<http://open-services.net/ns/core/trs#order> <http://www.w3.org/2000/01/rdf-schema#label> "order" .
+<http://open-services.net/ns/core/trs#order> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/core/trs#> .
+<http://open-services.net/ns/core/trs#order> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/core/trs#Creation> <http://www.w3.org/2000/01/rdf-schema#comment> "Represents a resource creation or modification change event." .
+<http://open-services.net/ns/core/trs#Creation> <http://www.w3.org/2000/01/rdf-schema#label> "Creation" .
+<http://open-services.net/ns/core/trs#Creation> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/core/trs#> .
+<http://open-services.net/ns/core/trs#Creation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .

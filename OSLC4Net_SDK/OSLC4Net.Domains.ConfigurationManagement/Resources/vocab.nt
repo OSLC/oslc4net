@@ -1,0 +1,181 @@
+<http://open-services.net/ns/config#ChangeSetSelections> <http://www.w3.org/2000/01/rdf-schema#comment> "A resource listing the version resources selected by a change set configuration." .
+<http://open-services.net/ns/config#ChangeSetSelections> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://open-services.net/ns/config#Selections> .
+<http://open-services.net/ns/config#ChangeSetSelections> <http://www.w3.org/2000/01/rdf-schema#label> "ChangeSetSelections" .
+<http://open-services.net/ns/config#ChangeSetSelections> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#ChangeSetSelections> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/config#Activity> <http://www.w3.org/2000/01/rdf-schema#comment> "An activity is a read-only resource representing a long-running operation, such as recursive baseline or stream creation." .
+<http://open-services.net/ns/config#Activity> <http://www.w3.org/2000/01/rdf-schema#label> "Activity" .
+<http://open-services.net/ns/config#Activity> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#Activity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/config#Configuration> <http://www.w3.org/2000/01/rdf-schema#comment> "A configuration identifies a set of versions of resources in a component. Configurations commonly identify exactly one version of each resource in a component. Configurations can also assemble other configurations into a shared context across multiple components." .
+<http://open-services.net/ns/config#Configuration> <http://www.w3.org/2000/01/rdf-schema#label> "Configuration" .
+<http://open-services.net/ns/config#Configuration> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#Configuration> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/config#RemoveAll> <http://www.w3.org/2000/01/rdf-schema#comment> "For a change set, an indicator that all selections in the overriden configuration are to be ignored; all selections are defined by the change set." .
+<http://open-services.net/ns/config#RemoveAll> <http://www.w3.org/2000/01/rdf-schema#label> "RemovalAll" .
+<http://open-services.net/ns/config#RemoveAll> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#RemoveAll> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/config#Selections> <http://www.w3.org/2000/01/rdf-schema#comment> "A resource listing the version resources selected by a configuration." .
+<http://open-services.net/ns/config#Selections> <http://www.w3.org/2000/01/rdf-schema#label> "Selections" .
+<http://open-services.net/ns/config#Selections> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#Selections> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/config#ChangeSet> <http://www.w3.org/2000/01/rdf-schema#comment> "A change set configuration represents a set of changes (including additions and removals) to some other configuration." .
+<http://open-services.net/ns/config#ChangeSet> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://open-services.net/ns/config#Configuration> .
+<http://open-services.net/ns/config#ChangeSet> <http://www.w3.org/2000/01/rdf-schema#label> "ChangeSet" .
+<http://open-services.net/ns/config#ChangeSet> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#ChangeSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/config#configuration> <http://www.w3.org/2000/01/rdf-schema#comment> "A reference to a Configuration resource." .
+<http://open-services.net/ns/config#configuration> <http://www.w3.org/2000/01/rdf-schema#label> "configuration" .
+<http://open-services.net/ns/config#configuration> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#configuration> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#baselineOfStream> <http://www.w3.org/2000/01/rdf-schema#comment> "The stream from which a baseline was made." .
+<http://open-services.net/ns/config#baselineOfStream> <http://www.w3.org/2000/01/rdf-schema#range> <http://open-services.net/ns/config#Stream> .
+<http://open-services.net/ns/config#baselineOfStream> <http://www.w3.org/2000/01/rdf-schema#label> "baselineOfStream" .
+<http://open-services.net/ns/config#baselineOfStream> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#baselineOfStream> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#committer> <http://www.w3.org/2000/01/rdf-schema#comment> "The entity that committed or checked in this resource." .
+<http://open-services.net/ns/config#committer> <http://www.w3.org/2000/01/rdf-schema#label> "committer" .
+<http://open-services.net/ns/config#committer> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#committer> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#Stream> <http://www.w3.org/2000/01/rdf-schema#comment> "A mutable configuration. Contributions to this configuration can be streams or baselines." .
+<http://open-services.net/ns/config#Stream> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://open-services.net/ns/config#Configuration> .
+<http://open-services.net/ns/config#Stream> <http://www.w3.org/2000/01/rdf-schema#label> "Stream" .
+<http://open-services.net/ns/config#Stream> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#Stream> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/config#previousBaseline> <http://www.w3.org/2000/01/rdf-schema#comment> "For a stream or a baseline, a link to the most recent baseline of the same stream." .
+<http://open-services.net/ns/config#previousBaseline> <http://www.w3.org/2000/01/rdf-schema#range> <http://open-services.net/ns/config#Baseline> .
+<http://open-services.net/ns/config#previousBaseline> <http://www.w3.org/2000/01/rdf-schema#label> "previousBaseline" .
+<http://open-services.net/ns/config#previousBaseline> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#previousBaseline> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#progressMessage> <http://www.w3.org/2000/01/rdf-schema#comment> "Text describing the progress of an operation." .
+<http://open-services.net/ns/config#progressMessage> <http://www.w3.org/2000/01/rdf-schema#label> "progressMessage" .
+<http://open-services.net/ns/config#progressMessage> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#progressMessage> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#configurations> <http://www.w3.org/2000/01/rdf-schema#comment> "A Linked Data Platform Container for configurations of a component." .
+<http://open-services.net/ns/config#configurations> <http://www.w3.org/2000/01/rdf-schema#label> "configurations" .
+<http://open-services.net/ns/config#configurations> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#configurations> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#> <http://purl.org/dc/terms/dateCopyrighted> "2012-2023" .
+<http://open-services.net/ns/config#> <http://purl.org/dc/terms/title> "OSLC Configuration Management vocabulary" .
+<http://open-services.net/ns/config#> <http://purl.org/dc/terms/issued> "2023-07-23"^^<http://www.w3.org/2001/XMLSchema#date> .
+<http://open-services.net/ns/config#> <http://purl.org/dc/terms/isPartOf> <https://docs.oasis-open-projects.org/oslc-op/config/v1.0/os/oslc-config-mgt.html> .
+<http://open-services.net/ns/config#> <http://purl.org/dc/terms/hasVersion> "PS" .
+<http://open-services.net/ns/config#> <http://purl.org/vocab/vann/preferredNamespacePrefix> "oslc_config" .
+<http://open-services.net/ns/config#> <http://www.w3.org/2000/01/rdf-schema#label> "OSLC Configuration Management vocabulary" .
+<http://open-services.net/ns/config#> <http://purl.org/dc/terms/publisher> <https://open-services.net/about/> .
+<http://open-services.net/ns/config#> <http://purl.org/dc/terms/source> <https://docs.oasis-open-projects.org/oslc-op/config/v1.0/os/config-vocab.ttl> .
+<http://open-services.net/ns/config#> <http://purl.org/dc/terms/description> "The OSLC Configuration Management vocabulary defines terms for versioned resources and configurations of those versioned resources." .
+<http://open-services.net/ns/config#> <http://purl.org/dc/terms/license> <http://www.apache.org/licenses/LICENSE-2.0> .
+<http://open-services.net/ns/config#> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<http://open-services.net/ns/config#component> <http://www.w3.org/2000/01/rdf-schema#comment> "A reference to a Component resource." .
+<http://open-services.net/ns/config#component> <http://www.w3.org/2000/01/rdf-schema#label> "component" .
+<http://open-services.net/ns/config#component> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#component> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#contribution> <http://www.w3.org/2000/01/rdf-schema#comment> "A reference to a Contribution resource." .
+<http://open-services.net/ns/config#contribution> <http://www.w3.org/2000/01/rdf-schema#range> <http://open-services.net/ns/config#Contribution> .
+<http://open-services.net/ns/config#contribution> <http://www.w3.org/2000/01/rdf-schema#label> "contribution" .
+<http://open-services.net/ns/config#contribution> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#contribution> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#Baseline> <http://www.w3.org/2000/01/rdf-schema#comment> "An immutable configuration with immutable selections of immutable resources, with immutable contributions that are themselves baselines." .
+<http://open-services.net/ns/config#Baseline> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://open-services.net/ns/config#Configuration> .
+<http://open-services.net/ns/config#Baseline> <http://www.w3.org/2000/01/rdf-schema#label> "Baseline" .
+<http://open-services.net/ns/config#Baseline> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#Baseline> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/config#ConfigurationSettings> <http://www.w3.org/2000/01/rdf-schema#comment> "Information about settings and preferences for a Configuration Management service." .
+<http://open-services.net/ns/config#ConfigurationSettings> <http://www.w3.org/2000/01/rdf-schema#label> "ConfigurationSettings" .
+<http://open-services.net/ns/config#ConfigurationSettings> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#ConfigurationSettings> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/config#selections> <http://www.w3.org/2000/01/rdf-schema#comment> "A reference to a Selections resource." .
+<http://open-services.net/ns/config#selections> <http://www.w3.org/2000/01/rdf-schema#range> <http://open-services.net/ns/config#Selections> .
+<http://open-services.net/ns/config#selections> <http://www.w3.org/2000/01/rdf-schema#label> "selections" .
+<http://open-services.net/ns/config#selections> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#selections> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#selects> <http://www.w3.org/2000/01/rdf-schema#comment> "A reference to a selected version resource." .
+<http://open-services.net/ns/config#selects> <http://www.w3.org/2000/01/rdf-schema#label> "selects" .
+<http://open-services.net/ns/config#selects> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#selects> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#versionId> <http://www.w3.org/2000/01/rdf-schema#comment> "A human-readable version identifier." .
+<http://open-services.net/ns/config#versionId> <http://www.w3.org/2000/01/rdf-schema#label> "versionId" .
+<http://open-services.net/ns/config#versionId> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#versionId> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#VersionResource> <http://www.w3.org/2000/01/rdf-schema#comment> "This type is used as a marker for any version resource." .
+<http://open-services.net/ns/config#VersionResource> <http://www.w3.org/2000/01/rdf-schema#label> "VersionResource" .
+<http://open-services.net/ns/config#VersionResource> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#VersionResource> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/config#accepts> <http://www.w3.org/2000/01/rdf-schema#comment> "A type of configuration acceptable as a contribution to the subject configuration." .
+<http://open-services.net/ns/config#accepts> <http://www.w3.org/2000/01/rdf-schema#range> <http://open-services.net/ns/config#Configuration> .
+<http://open-services.net/ns/config#accepts> <http://www.w3.org/2000/01/rdf-schema#label> "accepts" .
+<http://open-services.net/ns/config#accepts> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#accepts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#Removals> <http://www.w3.org/2000/01/rdf-schema#comment> "For a change set, the selections to be removed from an overridden configuration." .
+<http://open-services.net/ns/config#Removals> <http://www.w3.org/2000/01/rdf-schema#label> "Removals" .
+<http://open-services.net/ns/config#Removals> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#Removals> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/config#contributionOrder> <http://www.w3.org/2000/01/rdf-schema#comment> "The ordering value for a contribution." .
+<http://open-services.net/ns/config#contributionOrder> <http://www.w3.org/2000/01/rdf-schema#label> "contributionOrder" .
+<http://open-services.net/ns/config#contributionOrder> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#contributionOrder> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#acceptedBy> <http://www.w3.org/2000/01/rdf-schema#comment> "A type of configuration accepted as a contribution by the subject configuration." .
+<http://open-services.net/ns/config#acceptedBy> <http://www.w3.org/2000/01/rdf-schema#range> <http://open-services.net/ns/config#Configuration> .
+<http://open-services.net/ns/config#acceptedBy> <http://www.w3.org/2000/01/rdf-schema#label> "acceptedBy" .
+<http://open-services.net/ns/config#acceptedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#acceptedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#UnboundSelections> <http://www.w3.org/2000/01/rdf-schema#comment> "An indicator that a set of selections are as-yet unbound concept resources as opposed to bound version resources." .
+<http://open-services.net/ns/config#UnboundSelections> <http://www.w3.org/2000/01/rdf-schema#label> "UnboundSelections" .
+<http://open-services.net/ns/config#UnboundSelections> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#UnboundSelections> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/config#PersonalConfiguration> <http://www.w3.org/2000/01/rdf-schema#comment> "A configuration intended for use by a single agent, rather than shared." .
+<http://open-services.net/ns/config#PersonalConfiguration> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://open-services.net/ns/config#Configuration> .
+<http://open-services.net/ns/config#PersonalConfiguration> <http://www.w3.org/2000/01/rdf-schema#label> "PersonalConfiguration" .
+<http://open-services.net/ns/config#PersonalConfiguration> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#PersonalConfiguration> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/config#Component> <http://www.w3.org/2000/01/rdf-schema#comment> "A unit of organization consisting of a set of versioned resources. Components are the units of configurability, and form reusable assets or building blocks." .
+<http://open-services.net/ns/config#Component> <http://www.w3.org/2000/01/rdf-schema#label> "Component" .
+<http://open-services.net/ns/config#Component> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#Component> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/config#baselines> <http://www.w3.org/2000/01/rdf-schema#comment> "A Linked Data Platform Container for baselines of a stream." .
+<http://open-services.net/ns/config#baselines> <http://www.w3.org/2000/01/rdf-schema#label> "baselines" .
+<http://open-services.net/ns/config#baselines> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#baselines> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#committed> <http://www.w3.org/2000/01/rdf-schema#comment> "Date and time a resource was committed, or checked in." .
+<http://open-services.net/ns/config#committed> <http://www.w3.org/2000/01/rdf-schema#label> "committed" .
+<http://open-services.net/ns/config#committed> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#committed> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#Contribution> <http://www.w3.org/2000/01/rdf-schema#comment> "A contribution represents the contribution of one configuration to another." .
+<http://open-services.net/ns/config#Contribution> <http://www.w3.org/2000/01/rdf-schema#label> "Contribution" .
+<http://open-services.net/ns/config#Contribution> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#Contribution> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/config#branch> <http://www.w3.org/2000/01/rdf-schema#comment> "Identifies a resource as one for a specific branch or variant of the component." .
+<http://open-services.net/ns/config#branch> <http://www.w3.org/2000/01/rdf-schema#label> "branch" .
+<http://open-services.net/ns/config#branch> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#branch> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#configurationSettings> <http://www.w3.org/2000/01/rdf-schema#comment> "A reference to information about settings and preferences for a Configuration Management service." .
+<http://open-services.net/ns/config#configurationSettings> <http://www.w3.org/2000/01/rdf-schema#label> "configurationSettings" .
+<http://open-services.net/ns/config#configurationSettings> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#configurationSettings> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#mutable> <http://www.w3.org/2000/01/rdf-schema#comment> "A boolean property indicating whether or not a resource is modifiable; replaced by use of Baseline and Stream types." .
+<http://open-services.net/ns/config#mutable> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "archaic" .
+<http://open-services.net/ns/config#mutable> <http://www.w3.org/2000/01/rdf-schema#label> "mutable" .
+<http://open-services.net/ns/config#mutable> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#mutable> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#release> <http://www.w3.org/2000/01/rdf-schema#comment> "A reference to a resource representing a release." .
+<http://open-services.net/ns/config#release> <http://www.w3.org/2000/01/rdf-schema#label> "release" .
+<http://open-services.net/ns/config#release> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#release> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#globalConfigurationService> <http://www.w3.org/2000/01/rdf-schema#comment> "An oslc:usage value marking a global configuration service." .
+<http://open-services.net/ns/config#globalConfigurationService> <http://www.w3.org/2000/01/rdf-schema#label> "globalConfigurationService" .
+<http://open-services.net/ns/config#globalConfigurationService> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#globalConfigurationService> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Resource> .
+<http://open-services.net/ns/config#overrides> <http://www.w3.org/2000/01/rdf-schema#comment> "A reference to a configuration modified by a change set configuration." .
+<http://open-services.net/ns/config#overrides> <http://www.w3.org/2000/01/rdf-schema#label> "overrides" .
+<http://open-services.net/ns/config#overrides> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#overrides> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#streams> <http://www.w3.org/2000/01/rdf-schema#comment> "A Linked Data Platform Container for streams created from a baseline." .
+<http://open-services.net/ns/config#streams> <http://www.w3.org/2000/01/rdf-schema#label> "streams" .
+<http://open-services.net/ns/config#streams> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#streams> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<http://open-services.net/ns/config#derivedFrom> <http://www.w3.org/2000/01/rdf-schema#comment> "A resource from which this resource was derived; the use of prov:wasDerivedFrom is preferred." .
+<http://open-services.net/ns/config#derivedFrom> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "archaic" .
+<http://open-services.net/ns/config#derivedFrom> <http://www.w3.org/2000/01/rdf-schema#label> "derivedFrom" .
+<http://open-services.net/ns/config#derivedFrom> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://open-services.net/ns/config#> .
+<http://open-services.net/ns/config#derivedFrom> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .

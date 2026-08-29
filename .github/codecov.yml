@@ -1,0 +1,3 @@
+# Exclude generated C# source files from Codecov processing.
+ignore:
+  - "**/*.g.cs"

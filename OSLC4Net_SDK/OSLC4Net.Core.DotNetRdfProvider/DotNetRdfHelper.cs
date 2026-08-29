@@ -652,6 +652,14 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                             {
                                 parameter = DateTime.Parse(stringValue, CultureInfo.InvariantCulture);
                             }
+                            else if (typeof(DateTimeOffset) == setMethodComponentParameterType ||
+                                     typeof(DateTimeOffset?) == setMethodComponentParameterType)
+                            {
+                                parameter = DateTimeOffset.Parse(
+                                    stringValue,
+                                    CultureInfo.InvariantCulture,
+                                    DateTimeStyles.RoundtripKind);
+                            }
                         }
                     }
                     else if (o is IUriNode)
@@ -1522,6 +1530,10 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             {
                 literal = ((DateTime)value).ToUniversalTime().ToLiteral(graph);
             }
+            else if (typeof(DateTimeOffset) == valueType)
+            {
+                literal = ((DateTimeOffset)value).ToLiteral(graph);
+            }
             else if (typeof(XElement) == valueType)
             {
                 literal = graph.CreateLiteralNode(((XElement)value).ToString(SaveOptions.None),
@@ -1862,6 +1874,16 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
             }
 
             nestedNode = time.ToUniversalTime().ToLiteral(graph);
+        }
+        else if (value is DateTimeOffset dateTimeOffset)
+        {
+            // DateTimeOffset is scalar, so omit it when only nested properties are requested.
+            if (onlyNested)
+            {
+                return;
+            }
+
+            nestedNode = dateTimeOffset.ToLiteral(graph);
         }
         else if (objType.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
         {
