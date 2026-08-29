@@ -1103,7 +1103,7 @@ public class ChangeRequest : AbstractResource
         Modified = modified;
     }
 
-    [Obsolete("Use GetTypes() or .Types instead")]
+    [Obsolete("Use SetTypes() or .Types instead")]
     public void SetRdfTypes(Uri[] rdfTypes)
     {
         Types = rdfTypes;
