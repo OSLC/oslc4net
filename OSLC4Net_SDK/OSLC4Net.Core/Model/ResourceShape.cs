@@ -26,7 +26,7 @@ namespace OSLC4Net.Core.Model;
 public class ResourceShape : AbstractResource
 {
     private readonly SortedSet<Uri> describes = new SortedUriSet();
-    private readonly SortedSet<Property> properties = new();
+    private readonly SortedSet<Property> properties = new(new PropertyNameComparer());
 
     private string title;
 

@@ -1,0 +1,744 @@
+<http://open-services.net/ns/config/shapes/1.0/#serviceProvider> <http://purl.org/dc/terms/description> "A link to the resource's OSLC Service Provider.\nIf the subject resource is available from an application that implements multiple domain specifications, there can be multiple values for this property."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#serviceProvider> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/config/shapes/1.0/#serviceProvider> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#ServiceProvider> .
+<http://open-services.net/ns/config/shapes/1.0/#serviceProvider> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/config/shapes/1.0/#serviceProvider> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/config/shapes/1.0/#serviceProvider> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/config/shapes/1.0/#serviceProvider> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#serviceProvider> .
+<http://open-services.net/ns/config/shapes/1.0/#serviceProvider> <http://open-services.net/ns/core#name> "serviceProvider" .
+<http://open-services.net/ns/config/shapes/1.0/#serviceProvider> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:Ba582c8c9c10d89d3c362c192cb3e32e2 <http://purl.org/dc/terms/description> "A resource type URI.\n{{A change set configuration MUST have at least the resource type `oslc_config:ChangeSet`}}.\nClients may infer a resource type of `oslc_config:Configuration`,\nbut there is no requirement for servers to materialize this triple in the RDF representation.\nOther types may be added, including types that are used in `oslc_config:accepts` properties\nto define which <a href=\"config-resources.html#matching_contribs\">matching configurations</a> to which this configuration may be added as a contribution.\n{{Servers MAY treat this property as read-only}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Ba582c8c9c10d89d3c362c192cb3e32e2 <http://open-services.net/ns/core#range> <http://www.w3.org/2000/01/rdf-schema#Class> .
+_:Ba582c8c9c10d89d3c362c192cb3e32e2 <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:Ba582c8c9c10d89d3c362c192cb3e32e2 <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:Ba582c8c9c10d89d3c362c192cb3e32e2 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#One-or-many> .
+_:Ba582c8c9c10d89d3c362c192cb3e32e2 <http://open-services.net/ns/core#propertyDefinition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> .
+_:Ba582c8c9c10d89d3c362c192cb3e32e2 <http://open-services.net/ns/core#name> "type" .
+_:Ba582c8c9c10d89d3c362c192cb3e32e2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#acceptedBy> <http://purl.org/dc/terms/description> "A type of configuration that <a href=\"config-resources.html#matching_contribs\">accepts</a> this configuration as a contribution.\n{{A configuration with no value for `oslc_config:acceptedBy` MUST NOT be used as a contribution to any other configuration}} -\nthat is, it can only be a root of a configuration hierarchy\n(or a stand-alone configuration if there is also no value for `oslc_config:accepts`). Such configurations should be rare."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#acceptedBy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/config/shapes/1.0/#acceptedBy> <http://open-services.net/ns/core#range> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/config/shapes/1.0/#acceptedBy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/config/shapes/1.0/#acceptedBy> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/config/shapes/1.0/#acceptedBy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/config/shapes/1.0/#acceptedBy> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#acceptedBy> .
+<http://open-services.net/ns/config/shapes/1.0/#acceptedBy> <http://open-services.net/ns/core#name> "acceptedBy" .
+<http://open-services.net/ns/config/shapes/1.0/#acceptedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B0dc7b1116ce422de5d8dc427b7d5a328 <http://purl.org/dc/terms/description> "A reference to a configuration overridden by the configuration of this contribution."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B0dc7b1116ce422de5d8dc427b7d5a328 <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#Configuration> .
+_:B0dc7b1116ce422de5d8dc427b7d5a328 <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:B0dc7b1116ce422de5d8dc427b7d5a328 <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:B0dc7b1116ce422de5d8dc427b7d5a328 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+_:B0dc7b1116ce422de5d8dc427b7d5a328 <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#overrides> .
+_:B0dc7b1116ce422de5d8dc427b7d5a328 <http://open-services.net/ns/core#name> "overrides" .
+_:B0dc7b1116ce422de5d8dc427b7d5a328 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B357b04b1d1705803fbf49c725fdb05d1 <http://purl.org/dc/terms/description> "The <a href=\"http://www.w3.org/TR/ldp/#ldpc\">Linked Data Platform Container</a>\nthat contains all the baselines of this stream.\nA new baseline of this stream is created by a POST to this container.\nNote that the `baselines` property itself is immutable,\nbut the container referenced by the property is not.\n{{The container MAY have an `oslc:resourceShape` property referencing a resource shape that describes the container}}.\n{{If a container resource shape is specified, it SHOULD have a property describing the membership of the container with a\n`oslc:valueShape` referencing a resource shape that describes the additional properties that may be specified for baselines}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B357b04b1d1705803fbf49c725fdb05d1 <http://open-services.net/ns/core#range> <http://www.w3.org/ns/ldp#Container> .
+_:B357b04b1d1705803fbf49c725fdb05d1 <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:B357b04b1d1705803fbf49c725fdb05d1 <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:B357b04b1d1705803fbf49c725fdb05d1 <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:B357b04b1d1705803fbf49c725fdb05d1 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+_:B357b04b1d1705803fbf49c725fdb05d1 <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#baselines> .
+_:B357b04b1d1705803fbf49c725fdb05d1 <http://open-services.net/ns/core#name> "baselines" .
+_:B357b04b1d1705803fbf49c725fdb05d1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#branch> <http://purl.org/dc/terms/description> "An indicator of the intended purpose of the configuration."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#branch> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/config/shapes/1.0/#branch> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/config/shapes/1.0/#branch> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/config/shapes/1.0/#branch> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/config/shapes/1.0/#branch> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#branch> .
+<http://open-services.net/ns/config/shapes/1.0/#branch> <http://open-services.net/ns/core#name> "branch" .
+<http://open-services.net/ns/config/shapes/1.0/#branch> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#ContributionShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#modified> .
+<http://open-services.net/ns/config/shapes/1.0/#ContributionShape> <http://open-services.net/ns/core#property> _:B0dc7b1116ce422de5d8dc427b7d5a328 .
+<http://open-services.net/ns/config/shapes/1.0/#ContributionShape> <http://open-services.net/ns/core#property> _:Bad6799af04ce089c9c29731ca08e6792 .
+<http://open-services.net/ns/config/shapes/1.0/#ContributionShape> <http://open-services.net/ns/core#property> _:Bccfeb81267ca741f1525fa2d12af511c .
+<http://open-services.net/ns/config/shapes/1.0/#ContributionShape> <http://open-services.net/ns/core#property> _:B8c1b1e4af39c018273114d65933fc93c .
+<http://open-services.net/ns/config/shapes/1.0/#ContributionShape> <http://purl.org/dc/terms/title> "A contribution to a configuration." .
+<http://open-services.net/ns/config/shapes/1.0/#ContributionShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/config#Contribution> .
+<http://open-services.net/ns/config/shapes/1.0/#ContributionShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/config/shapes/1.0/#> <http://purl.org/dc/terms/issued> "2023-07-23"^^<http://www.w3.org/2001/XMLSchema#date> .
+<http://open-services.net/ns/config/shapes/1.0/#> <http://purl.org/dc/terms/license> <http://www.apache.org/licenses/LICENSE-2.0> .
+<http://open-services.net/ns/config/shapes/1.0/#> <http://www.w3.org/2000/01/rdf-schema#label> "Resource Shapes for OSLC Configuration Management" .
+<http://open-services.net/ns/config/shapes/1.0/#> <http://purl.org/dc/terms/title> "Resource Shapes for OSLC Configuration Management" .
+<http://open-services.net/ns/config/shapes/1.0/#> <http://purl.org/dc/terms/description> "Shapes for resources defined by OSLC Configuration Management."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#> <http://purl.org/dc/terms/hasVersion> "PS" .
+<http://open-services.net/ns/config/shapes/1.0/#> <http://purl.org/dc/terms/dateCopyrighted> "2012-2023" .
+<http://open-services.net/ns/config/shapes/1.0/#> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShapeConstraints> .
+<http://open-services.net/ns/config/shapes/1.0/#> <http://purl.org/dc/terms/source> <https://docs.oasis-open-projects.org/oslc-op/config/v1.0/os/config-shapes.ttl> .
+<http://open-services.net/ns/config/shapes/1.0/#> <http://purl.org/dc/terms/isPartOf> <https://docs.oasis-open-projects.org/oslc-op/config/v1.0/os/oslc-config-mgt.html> .
+<http://open-services.net/ns/config/shapes/1.0/#> <http://purl.org/dc/terms/publisher> <https://open-services.net/about/> .
+_:B4e4c901091feba011442f9f483f941e5 <http://purl.org/dc/terms/description> "A name for the activity, or current phase of the activity."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B4e4c901091feba011442f9f483f941e5 <http://open-services.net/ns/core#valueType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B4e4c901091feba011442f9f483f941e5 <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:B4e4c901091feba011442f9f483f941e5 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+_:B4e4c901091feba011442f9f483f941e5 <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/title> .
+_:B4e4c901091feba011442f9f483f941e5 <http://open-services.net/ns/core#name> "title" .
+_:B4e4c901091feba011442f9f483f941e5 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#accepts> <http://purl.org/dc/terms/description> "A type of configuration that is <a href=\"config-resources.html#matching_contribs\">acceptable as a contribution</a> to this stream.\nA configuration with no value for this predicate accepts no contributions -\nthat is, it can only be a leaf in a configuration hierarchy."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#accepts> <http://open-services.net/ns/core#range> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://open-services.net/ns/config/shapes/1.0/#accepts> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/config/shapes/1.0/#accepts> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/config/shapes/1.0/#accepts> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/config/shapes/1.0/#accepts> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/config/shapes/1.0/#accepts> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#accepts> .
+<http://open-services.net/ns/config/shapes/1.0/#accepts> <http://open-services.net/ns/core#name> "accepts" .
+<http://open-services.net/ns/config/shapes/1.0/#accepts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:Bfa25a37f58ef7d18aa636af4877a48ee <http://purl.org/dc/terms/description> "A reference to the immediately preceding baseline of this stream.\nMultiple instances of this property imply the stream was merged from one or more baselines,\nand no baseline of the merged result has yet been taken.\nIf the property is absent, no baseline of this stream has been taken."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Bfa25a37f58ef7d18aa636af4877a48ee <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#Baseline> .
+_:Bfa25a37f58ef7d18aa636af4877a48ee <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:Bfa25a37f58ef7d18aa636af4877a48ee <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:Bfa25a37f58ef7d18aa636af4877a48ee <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Bfa25a37f58ef7d18aa636af4877a48ee <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+_:Bfa25a37f58ef7d18aa636af4877a48ee <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#previousBaseline> .
+_:Bfa25a37f58ef7d18aa636af4877a48ee <http://open-services.net/ns/core#name> "previousBaseline" .
+_:Bfa25a37f58ef7d18aa636af4877a48ee <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:Bfba4b383c467dc006bcd762da1ca9bcb <http://purl.org/dc/terms/description> "{{If the selection type is not `oslc_config:UnboundSelections`,\nthe target resource MUST be a version resource}}.\nIf the selection type is `oslc_config:UnboundSelections`,\nthe target is a concept URI for a concept resource that should be in the configuration,\nbut for which no version is determined by this selection.\nUnbound selections can be bound to specific versions by mechanisms not defined by this specification\n(such as effectivity parameters, variability parameters, etc.), or may be left unbound,\nin which case the configuration may represent an incomplete or abstract view of a system.\n{{Selected resources MUST NOT be of type `oslc_config:Configuration`}};\nsub-configurations are given in the `oslc_config:contributions` property.\nNo meaning is assigned to a selected resource of type `oslc_config:Component`.\n{{This property is read-only for selections of a baseline, but MAY be modifiable for selections of a stream}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Bfba4b383c467dc006bcd762da1ca9bcb <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:Bfba4b383c467dc006bcd762da1ca9bcb <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:Bfba4b383c467dc006bcd762da1ca9bcb <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+_:Bfba4b383c467dc006bcd762da1ca9bcb <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#selects> .
+_:Bfba4b383c467dc006bcd762da1ca9bcb <http://open-services.net/ns/core#name> "selects" .
+_:Bfba4b383c467dc006bcd762da1ca9bcb <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:Be370bbb47bd73ee2b2d4e66f38146c71 <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Be370bbb47bd73ee2b2d4e66f38146c71 <http://open-services.net/ns/core#range> <http://xmlns.com/foaf/0.1/Agent> .
+_:Be370bbb47bd73ee2b2d4e66f38146c71 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:Be370bbb47bd73ee2b2d4e66f38146c71 <http://open-services.net/ns/core#range> <http://xmlns.com/foaf/0.1/Person> .
+_:Be370bbb47bd73ee2b2d4e66f38146c71 <http://purl.org/dc/terms/description> "The entity that committed this configuration as a baseline.\nThe link target is usually a `foaf:Person` or `foaf:Agent`, but could be any type."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Be370bbb47bd73ee2b2d4e66f38146c71 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+_:Be370bbb47bd73ee2b2d4e66f38146c71 <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+_:Be370bbb47bd73ee2b2d4e66f38146c71 <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+_:Be370bbb47bd73ee2b2d4e66f38146c71 <http://open-services.net/ns/core#name> "committer" .
+_:Be370bbb47bd73ee2b2d4e66f38146c71 <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#committer> .
+_:Bccfeb81267ca741f1525fa2d12af511c <http://purl.org/dc/terms/description> "The contributed configuration.\nThis property is read-only for contributions to a baseline, and modifiable for contributions to a stream.\n{{On a PUT or POST of a Stream resource and its Contributions, this contributed configuration SHOULD be unique amongst the set of configurations contributed to a given parent configuration}}.\n{{a server MAY collapse multiple contributions for the same configuration to a single contribution}}.\nDuring such a reduction of multiple Contribution resources to a single Contribution resource, this specification does not define the contributionOrder value in the merged result."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Bccfeb81267ca741f1525fa2d12af511c <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#Configuration> .
+_:Bccfeb81267ca741f1525fa2d12af511c <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:Bccfeb81267ca741f1525fa2d12af511c <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:Bccfeb81267ca741f1525fa2d12af511c <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+_:Bccfeb81267ca741f1525fa2d12af511c <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#configuration> .
+_:Bccfeb81267ca741f1525fa2d12af511c <http://open-services.net/ns/core#name> "configuration" .
+_:Bccfeb81267ca741f1525fa2d12af511c <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B3b81015fa63166475dafe4b40af60a57 <http://purl.org/dc/terms/description> "An indicator of the intended purpose of the baseline."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B3b81015fa63166475dafe4b40af60a57 <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:B3b81015fa63166475dafe4b40af60a57 <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+_:B3b81015fa63166475dafe4b40af60a57 <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:B3b81015fa63166475dafe4b40af60a57 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+_:B3b81015fa63166475dafe4b40af60a57 <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#branch> .
+_:B3b81015fa63166475dafe4b40af60a57 <http://open-services.net/ns/core#name> "branch" .
+_:B3b81015fa63166475dafe4b40af60a57 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B9036682570f2a52ff436241e043db16e <http://purl.org/dc/terms/description> "A resource type URI.\n{{A Selections resource MUST have at least the resource type `oslc_config:Selections`}}.\n{{Selections resources MAY also have the type `oslc_config:UnboundSelections`}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B9036682570f2a52ff436241e043db16e <http://open-services.net/ns/core#range> <http://www.w3.org/2000/01/rdf-schema#Class> .
+_:B9036682570f2a52ff436241e043db16e <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:B9036682570f2a52ff436241e043db16e <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:B9036682570f2a52ff436241e043db16e <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#One-or-many> .
+_:B9036682570f2a52ff436241e043db16e <http://open-services.net/ns/core#propertyDefinition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> .
+_:B9036682570f2a52ff436241e043db16e <http://open-services.net/ns/core#name> "type" .
+_:B9036682570f2a52ff436241e043db16e <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#ActivityShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#created> .
+<http://open-services.net/ns/config/shapes/1.0/#ActivityShape> <http://open-services.net/ns/core#property> _:B4194829d537cc6c5b03552f384c09840 .
+<http://open-services.net/ns/config/shapes/1.0/#ActivityShape> <http://open-services.net/ns/core#property> _:Bad9f6fae97b9ec569ad788071744dfad .
+<http://open-services.net/ns/config/shapes/1.0/#ActivityShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#creator> .
+<http://open-services.net/ns/config/shapes/1.0/#ActivityShape> <http://open-services.net/ns/core#property> _:B4e4c901091feba011442f9f483f941e5 .
+<http://open-services.net/ns/config/shapes/1.0/#ActivityShape> <http://open-services.net/ns/core#property> _:B82548a52470734d9402c5bb77c103568 .
+<http://open-services.net/ns/config/shapes/1.0/#ActivityShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/config#Activity> .
+<http://open-services.net/ns/config/shapes/1.0/#ActivityShape> <http://open-services.net/ns/core#property> _:Bb91bf61404bcae09f48f5b546814c340 .
+<http://open-services.net/ns/config/shapes/1.0/#ActivityShape> <http://open-services.net/ns/core#property> _:B4520a2bb5ebbf80dafe9f79a406c0b3c .
+<http://open-services.net/ns/config/shapes/1.0/#ActivityShape> <http://open-services.net/ns/core#property> _:B893d3f81bba28db0fe195d13232dc9f6 .
+<http://open-services.net/ns/config/shapes/1.0/#ActivityShape> <http://purl.org/dc/terms/title> "The shape of an activity." .
+<http://open-services.net/ns/config/shapes/1.0/#ActivityShape> <http://open-services.net/ns/core#property> _:B1c20eb46dba4bb59ef51e768d0634cbf .
+<http://open-services.net/ns/config/shapes/1.0/#ActivityShape> <http://open-services.net/ns/core#property> _:Bb916b65fd2c0aab6f5dfaa4bd3adb67d .
+<http://open-services.net/ns/config/shapes/1.0/#ActivityShape> <http://purl.org/dc/terms/description> "An activity is a read-only resource representing a long-running operation, such as recursive baseline or stream creation."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#ActivityShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/config/shapes/1.0/#contributor> <http://purl.org/dc/terms/description> "Contributor or contributors to the resource.\nThe link target is usually a `foaf:Person` or `foaf:Agent`, but could be any type."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#contributor> <http://open-services.net/ns/core#range> <http://xmlns.com/foaf/0.1/Agent> .
+<http://open-services.net/ns/config/shapes/1.0/#contributor> <http://open-services.net/ns/core#range> <http://xmlns.com/foaf/0.1/Person> .
+<http://open-services.net/ns/config/shapes/1.0/#contributor> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/config/shapes/1.0/#contributor> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/config/shapes/1.0/#contributor> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/config/shapes/1.0/#contributor> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/contributor> .
+<http://open-services.net/ns/config/shapes/1.0/#contributor> <http://open-services.net/ns/core#name> "contributor" .
+<http://open-services.net/ns/config/shapes/1.0/#contributor> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:Bb91bf61404bcae09f48f5b546814c340 <http://purl.org/dc/terms/description> "A resource type URI. {{An Activity MUST have a resource type of `oslc_config:Activity`, and MAY have other types}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Bb91bf61404bcae09f48f5b546814c340 <http://open-services.net/ns/core#range> <http://www.w3.org/2000/01/rdf-schema#Class> .
+_:Bb91bf61404bcae09f48f5b546814c340 <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:Bb91bf61404bcae09f48f5b546814c340 <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:Bb91bf61404bcae09f48f5b546814c340 <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Bb91bf61404bcae09f48f5b546814c340 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#One-or-many> .
+_:Bb91bf61404bcae09f48f5b546814c340 <http://open-services.net/ns/core#propertyDefinition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> .
+_:Bb91bf61404bcae09f48f5b546814c340 <http://open-services.net/ns/core#name> "type" .
+_:Bb91bf61404bcae09f48f5b546814c340 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://purl.org/dc/terms/title> "The shape of a stream." .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#instanceShape> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#shortId> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> _:Ba8f7e731e57c3953ddcdaffb7452b10e .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#component> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#release> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#shortTitle> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#wasDerivedFrom> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#creator> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#identifier> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#contributor> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#serviceProvider> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#subject> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#created> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#modifiedBy> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#acceptedBy> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> _:B48ccb1a0f6d16fd89c2dedb59cbfca22 .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/config#Stream> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#archived> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#branch> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> _:B357b04b1d1705803fbf49c725fdb05d1 .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#modified> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#accepts> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> _:B217fc485c37aa28efb5da1b090ad9fe0 .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#description> .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> _:Bfa25a37f58ef7d18aa636af4877a48ee .
+<http://open-services.net/ns/config/shapes/1.0/#StreamShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#title> .
+<http://open-services.net/ns/config/shapes/1.0/#shortTitle> <http://purl.org/dc/terms/description> "A short title for the resource, represented as rich text in XHTML content."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#shortTitle> <http://open-services.net/ns/core#valueType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#shortTitle> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/config/shapes/1.0/#shortTitle> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#shortTitle> .
+<http://open-services.net/ns/config/shapes/1.0/#shortTitle> <http://open-services.net/ns/core#name> "shortTitle" .
+<http://open-services.net/ns/config/shapes/1.0/#shortTitle> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B45f764b535f092b3d81114849171fe5f <http://purl.org/dc/terms/description> "A reference to a resource identifying immutable versions of the resources (configuration items) in the configuration.\nThe set of version resources identified is the union of the sets in all the selections resources.\nSince selections properties are not ordered, there is no defined meaning to a selection that appears in two or more different selections properties;\n{{servers MAY treat such multiple occurrences of selections as an error}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B45f764b535f092b3d81114849171fe5f <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#Selections> .
+_:B45f764b535f092b3d81114849171fe5f <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:B45f764b535f092b3d81114849171fe5f <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:B45f764b535f092b3d81114849171fe5f <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:B45f764b535f092b3d81114849171fe5f <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+_:B45f764b535f092b3d81114849171fe5f <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#selections> .
+_:B45f764b535f092b3d81114849171fe5f <http://open-services.net/ns/core#name> "selections" .
+_:B45f764b535f092b3d81114849171fe5f <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#title> <http://purl.org/dc/terms/description> "Title of the resource, represented as rich text in XHTML content."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#title> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/config/shapes/1.0/#title> <http://open-services.net/ns/core#valueType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#title> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/config/shapes/1.0/#title> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/title> .
+<http://open-services.net/ns/config/shapes/1.0/#title> <http://open-services.net/ns/core#name> "title" .
+<http://open-services.net/ns/config/shapes/1.0/#title> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B704088c216c5ef31e18ee1f53ce61379 <http://purl.org/dc/terms/description> "A reference to a resource identifying versions of the resources (configuration items) in the configuration;\nthese selections override, reduce, or extend the selections in the configuration identified by the `oslc_config:overrides` property.\n{{Servers MAY treat this property as read-only}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B704088c216c5ef31e18ee1f53ce61379 <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#ChangeSetSelections> .
+_:B704088c216c5ef31e18ee1f53ce61379 <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:B704088c216c5ef31e18ee1f53ce61379 <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:B704088c216c5ef31e18ee1f53ce61379 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+_:B704088c216c5ef31e18ee1f53ce61379 <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#selections> .
+_:B704088c216c5ef31e18ee1f53ce61379 <http://open-services.net/ns/core#name> "selections" .
+_:B704088c216c5ef31e18ee1f53ce61379 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:Ba8f7e731e57c3953ddcdaffb7452b10e <http://purl.org/dc/terms/description> "A reference to a resource identifying versions of the resources (configuration items) in the configuration.\nThe set of version resources identified is the union of the sets in all the selections resources.\nSince selections properties are not ordered, there is no defined meaning to a selection that appears in two or more different selections properties;\n{{servers MAY treat such multiple occurrences of selections as an error}}.\n{{Servers MAY treat this property as read-only}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Ba8f7e731e57c3953ddcdaffb7452b10e <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#Selections> .
+_:Ba8f7e731e57c3953ddcdaffb7452b10e <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:Ba8f7e731e57c3953ddcdaffb7452b10e <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:Ba8f7e731e57c3953ddcdaffb7452b10e <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+_:Ba8f7e731e57c3953ddcdaffb7452b10e <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#selections> .
+_:Ba8f7e731e57c3953ddcdaffb7452b10e <http://open-services.net/ns/core#name> "selections" .
+_:Ba8f7e731e57c3953ddcdaffb7452b10e <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:Bb916b65fd2c0aab6f5dfaa4bd3adb67d <http://purl.org/dc/terms/description> "A warning or error issued by the activity.\n{{Instances of this property MAY appear at any time during the execution of the activity, or MAY be returned only after the activity is complete}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Bb916b65fd2c0aab6f5dfaa4bd3adb67d <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+_:Bb916b65fd2c0aab6f5dfaa4bd3adb67d <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#Error> .
+_:Bb916b65fd2c0aab6f5dfaa4bd3adb67d <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+_:Bb916b65fd2c0aab6f5dfaa4bd3adb67d <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Bb916b65fd2c0aab6f5dfaa4bd3adb67d <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+_:Bb916b65fd2c0aab6f5dfaa4bd3adb67d <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#error> .
+_:Bb916b65fd2c0aab6f5dfaa4bd3adb67d <http://open-services.net/ns/core#name> "error" .
+_:Bb916b65fd2c0aab6f5dfaa4bd3adb67d <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B1f0d57080637696bbcf6bbceaba263c6 <http://purl.org/dc/terms/description> "Title of the resource, represented as rich text in XHTML content.\n{{The title of a baseline SHOULD be modifiable}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B1f0d57080637696bbcf6bbceaba263c6 <http://open-services.net/ns/core#valueType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B1f0d57080637696bbcf6bbceaba263c6 <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:B1f0d57080637696bbcf6bbceaba263c6 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+_:B1f0d57080637696bbcf6bbceaba263c6 <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/title> .
+_:B1f0d57080637696bbcf6bbceaba263c6 <http://open-services.net/ns/core#name> "title" .
+_:B1f0d57080637696bbcf6bbceaba263c6 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:Bf0bf6873c53c67ac593da0c32db4368a <http://purl.org/dc/terms/description> "A reference to the immediately preceding baseline of the same stream.\nMultiple instances of this property imply the stream was merged from one or more baselines before this baseline was taken.\n{{This property MAY be updated by the server to refer to earlier baselines when intermediate baselines are deleted}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Bf0bf6873c53c67ac593da0c32db4368a <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#Baseline> .
+_:Bf0bf6873c53c67ac593da0c32db4368a <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:Bf0bf6873c53c67ac593da0c32db4368a <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:Bf0bf6873c53c67ac593da0c32db4368a <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Bf0bf6873c53c67ac593da0c32db4368a <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+_:Bf0bf6873c53c67ac593da0c32db4368a <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#previousBaseline> .
+_:Bf0bf6873c53c67ac593da0c32db4368a <http://open-services.net/ns/core#name> "previousBaseline" .
+_:Bf0bf6873c53c67ac593da0c32db4368a <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B893d3f81bba28db0fe195d13232dc9f6 <http://purl.org/dc/terms/description> "The percentage (0-100) of completion, if known."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B893d3f81bba28db0fe195d13232dc9f6 <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#integer> .
+_:B893d3f81bba28db0fe195d13232dc9f6 <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:B893d3f81bba28db0fe195d13232dc9f6 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+_:B893d3f81bba28db0fe195d13232dc9f6 <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/auto#progress> .
+_:B893d3f81bba28db0fe195d13232dc9f6 <http://open-services.net/ns/core#name> "progress" .
+_:B893d3f81bba28db0fe195d13232dc9f6 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:Ba0fc89e53400320fa6785739c0fe067a <http://purl.org/dc/terms/description> "A resource from which this version was derived.\nThis is likely to reference an earlier version of the same concept resource;\nuse of `prov:wasDerivedFrom` is recommended to indicate an earlier version of a different concept resource.\n{{The subject of each instance of this property MUST be the concept resource URI; the object is likely to be a version resource URI}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Ba0fc89e53400320fa6785739c0fe067a <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:Ba0fc89e53400320fa6785739c0fe067a <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:Ba0fc89e53400320fa6785739c0fe067a <http://open-services.net/ns/core#propertyDefinition> <http://www.w3.org/ns/prov#wasRevisionOf> .
+_:Ba0fc89e53400320fa6785739c0fe067a <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+_:Ba0fc89e53400320fa6785739c0fe067a <http://open-services.net/ns/core#name> "wasRevisionOf" .
+_:Ba0fc89e53400320fa6785739c0fe067a <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#release> <http://purl.org/dc/terms/description> "A link to a resource indicating a target release for the artifacts selected by this configuration."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#release> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/config/shapes/1.0/#release> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/config/shapes/1.0/#release> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/config/shapes/1.0/#release> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/config/shapes/1.0/#release> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#release> .
+<http://open-services.net/ns/config/shapes/1.0/#release> <http://open-services.net/ns/core#name> "release" .
+<http://open-services.net/ns/config/shapes/1.0/#release> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:Bad9f6fae97b9ec569ad788071744dfad <http://purl.org/dc/terms/description> "A reference to a resource providing more details about the progress or result of the activity.\nFor successful or partially successful operations, {{the `dcterms:references` property MUST be present, providing a link to the primary resource created or affected by the operation}}.\nFor completely unsuccessful activities, this property may be missing.\n{{For activities still in progress, this MAY be a reference to a resource providing further information; which MAY be provided inline}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Bad9f6fae97b9ec569ad788071744dfad <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+_:Bad9f6fae97b9ec569ad788071744dfad <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+_:Bad9f6fae97b9ec569ad788071744dfad <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Bad9f6fae97b9ec569ad788071744dfad <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+_:Bad9f6fae97b9ec569ad788071744dfad <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/references> .
+_:Bad9f6fae97b9ec569ad788071744dfad <http://open-services.net/ns/core#name> "references" .
+_:Bad9f6fae97b9ec569ad788071744dfad <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#modifiedBy> <http://open-services.net/ns/core#name> "modifiedBy" .
+<http://open-services.net/ns/config/shapes/1.0/#modifiedBy> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/config/shapes/1.0/#modifiedBy> <http://purl.org/dc/terms/description> "The entity that most recently modified the subject resource.\nThe link target is usually a `foaf:Person` or `foaf:Agent`, but could be any type."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#modifiedBy> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#modifiedBy> .
+<http://open-services.net/ns/config/shapes/1.0/#modifiedBy> <http://open-services.net/ns/core#range> <http://xmlns.com/foaf/0.1/Agent> .
+<http://open-services.net/ns/config/shapes/1.0/#modifiedBy> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/config/shapes/1.0/#modifiedBy> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/config/shapes/1.0/#modifiedBy> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/config/shapes/1.0/#modifiedBy> <http://open-services.net/ns/core#range> <http://xmlns.com/foaf/0.1/Person> .
+<http://open-services.net/ns/config/shapes/1.0/#modifiedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:Bb51bcfcadbb1cf2326a6bdff35eec97a <http://purl.org/dc/terms/description> "A resource type URI.\n{{A change set Selections resource MUST have at least the resource type `oslc_config:Selections`}}.\n{{Change set selections resources MAY also have the types `oslc_config:ChangeSetSelections`,\n`oslc_config:UnboundSelections`, `oslc_config:Removals`,\nor `oslc_config:RemoveAll`}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Bb51bcfcadbb1cf2326a6bdff35eec97a <http://open-services.net/ns/core#range> <http://www.w3.org/2000/01/rdf-schema#Class> .
+_:Bb51bcfcadbb1cf2326a6bdff35eec97a <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:Bb51bcfcadbb1cf2326a6bdff35eec97a <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:Bb51bcfcadbb1cf2326a6bdff35eec97a <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#One-or-many> .
+_:Bb51bcfcadbb1cf2326a6bdff35eec97a <http://open-services.net/ns/core#propertyDefinition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> .
+_:Bb51bcfcadbb1cf2326a6bdff35eec97a <http://open-services.net/ns/core#name> "type" .
+_:Bb51bcfcadbb1cf2326a6bdff35eec97a <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#description> .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> _:Bd8f15dd1a23d7ec202b9ec13a931b2bb .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> _:Ba0fc89e53400320fa6785739c0fe067a .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> _:B48e19481d12d0a3697077c641b80ed94 .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> _:B1bcc1c36d9e2235641a277fcfae3f878 .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#created> .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#creator> .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#archived> .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#title> .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#contributor> .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#identifier> .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> _:Bab153cef6cea0c713302d4744291278e .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> _:B47eb9cad6a833d3fcd0791c823dd7804 .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#shortTitle> .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/config#VersionResource> .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#shortId> .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#serviceProvider> .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> _:Bb84e80fbc37022b97298262dbd5d8535 .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#modified> .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> _:Bd7172409f8a2e697f692bd8813c36086 .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#modifiedBy> .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#instanceShape> .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://purl.org/dc/terms/title> "{{The shape of a versioned resource: all versioned resources MUST match this shape}}.\n{{Versioned resources SHOULD match other shapes appropriate for their types - that is, they MAY have additional\nproperties and property constraints beyond those defined here}}." .
+<http://open-services.net/ns/config/shapes/1.0/#VersionResourceShape> <http://open-services.net/ns/core#property> _:Beaac6a0f6e20be17449ea3983a358b90 .
+_:Bb84e80fbc37022b97298262dbd5d8535 <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#committer> .
+_:Bb84e80fbc37022b97298262dbd5d8535 <http://purl.org/dc/terms/description> "The entity that checked in this version."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Bb84e80fbc37022b97298262dbd5d8535 <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+_:Bb84e80fbc37022b97298262dbd5d8535 <http://open-services.net/ns/core#name> "committer" .
+_:Bb84e80fbc37022b97298262dbd5d8535 <http://open-services.net/ns/core#range> <http://xmlns.com/foaf/0.1/Person> .
+_:Bb84e80fbc37022b97298262dbd5d8535 <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+_:Bb84e80fbc37022b97298262dbd5d8535 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+_:Bb84e80fbc37022b97298262dbd5d8535 <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Bb84e80fbc37022b97298262dbd5d8535 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:Bb84e80fbc37022b97298262dbd5d8535 <http://open-services.net/ns/core#range> <http://xmlns.com/foaf/0.1/Agent> .
+_:B4b91cc8a1bfd9a559e926ce7856648b8 <http://purl.org/dc/terms/description> "Indicates the stream of which this is a baseline.\nNote that the referenced resource might no longer exist (streams are mutable so can be deleted),\nbut this property remains valuable to relate all baselines of the same stream."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B4b91cc8a1bfd9a559e926ce7856648b8 <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#Configuration> .
+_:B4b91cc8a1bfd9a559e926ce7856648b8 <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:B4b91cc8a1bfd9a559e926ce7856648b8 <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:B4b91cc8a1bfd9a559e926ce7856648b8 <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:B4b91cc8a1bfd9a559e926ce7856648b8 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+_:B4b91cc8a1bfd9a559e926ce7856648b8 <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#baselineOfStream> .
+_:B4b91cc8a1bfd9a559e926ce7856648b8 <http://open-services.net/ns/core#name> "baselineOfStream" .
+_:B4b91cc8a1bfd9a559e926ce7856648b8 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#creator> .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#shortTitle> .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/config#Baseline> .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#acceptedBy> .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> _:Bf0bf6873c53c67ac593da0c32db4368a .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> _:B4b91cc8a1bfd9a559e926ce7856648b8 .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> _:B266ab51dfbd6a6cadfdd7bec98da3a43 .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#created> .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#modifiedBy> .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> _:Bafd0b2c566104a4dfdbe6ae949b1d005 .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#identifier> .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://purl.org/dc/terms/title> "The shape of a baseline. {{Properties of a baseline defined in this specification MUST be read-only unless stated otherwise}}." .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#archived> .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#instanceShape> .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#wasDerivedFrom> .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> _:B2e1176ae512dd72e8dc3b4798556538a .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#component> .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> _:B5eaac805b2a0ba6dfb687a3cbdb48417 .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#release> .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> _:B0afcb05421afbfa88213c1eb875b48ab .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> _:Bce5f594fbf2bfef148990eed8c4d4f88 .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#serviceProvider> .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> _:B45f764b535f092b3d81114849171fe5f .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> _:B1f0d57080637696bbcf6bbceaba263c6 .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> _:Be370bbb47bd73ee2b2d4e66f38146c71 .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> _:B3b81015fa63166475dafe4b40af60a57 .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#modified> .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> _:B3f38dc7b9ba9df7e4ad125d833a9e793 .
+<http://open-services.net/ns/config/shapes/1.0/#BaselineShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#shortId> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#contributor> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#component> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#release> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#shortId> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#branch> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/config#ChangeSet> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#created> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#archived> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#instanceShape> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#modifiedBy> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#subject> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#accepts> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#acceptedBy> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#description> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#identifier> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> _:B259ab7c1ddcc81ee758591b75ecd54b6 .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> _:Bef742a77721d136971704fb1f9ffbe1e .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://purl.org/dc/terms/title> "The shape of a ChangeSet." .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#serviceProvider> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> _:B704088c216c5ef31e18ee1f53ce61379 .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> _:Ba582c8c9c10d89d3c362c192cb3e32e2 .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#title> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://purl.org/dc/terms/description> "A ChangeSet is a mutable configuration (a type of stream) that replaces, or identifies a set of changes from, the configuration identified by the `oslc_config:overrides` property.\nThat overridden configuration may be either a stream or a baseline, but a change set itself may not be a baseline.\n{{Servers MAY refuse to construct a baseline of a change set configuration}}.\nThis specification does not define the meaning of one change set overriding another change set; {{servers MAY treat this as an error}}.\nIf this change set has any contributions, those contributions completely replace the contributions to the overridden configuration\nwhen using this change set configuration as a context for resolving versions, or any configuration that contains this change set as a contribution;\nif this change set has no contributions, any contributions to the overridden configuration are handled normally.\nSelections in the change set may add to, replace, or remove from, the selections in the overridden configuration,\nas defined in <a href=\"#h3_shape-cselections\">ChangeSet Selections</a>."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#modified> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#creator> .
+<http://open-services.net/ns/config/shapes/1.0/#ChangeSetShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#shortTitle> .
+<http://open-services.net/ns/config/shapes/1.0/#instanceShape> <http://purl.org/dc/terms/description> "The URI of a Resource Shape that describes the possible properties, occurrence, value types, allowed values and labels.\nThis shape information is useful in displaying the subject resource as well as guiding clients in performing modifications.\nInstance shapes may be specific to the authenticated user associated with the request that retrieved the resource,\nthe current state of the resource, and other factors, so {{instance shapes SHOULD NOT be cached}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#instanceShape> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/config/shapes/1.0/#instanceShape> <http://open-services.net/ns/core#range> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/config/shapes/1.0/#instanceShape> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+<http://open-services.net/ns/config/shapes/1.0/#instanceShape> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/config/shapes/1.0/#instanceShape> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/config/shapes/1.0/#instanceShape> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#instanceShape> .
+<http://open-services.net/ns/config/shapes/1.0/#instanceShape> <http://open-services.net/ns/core#name> "instanceShape" .
+<http://open-services.net/ns/config/shapes/1.0/#instanceShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:Bab153cef6cea0c713302d4744291278e <http://purl.org/dc/terms/description> "A resource from which this version was derived.\nThis is likely to reference a different concept resource;\nuse of `prov:wasRevisionOf` is recommended to indicate an earlier version of the same concept resource.\n{{The subject of each instance of this property MUST be the concept resource URI;\nthe object can be a version resource URI, or a concept resource URI (possibly for a non-versioned resource)}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Bab153cef6cea0c713302d4744291278e <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:Bab153cef6cea0c713302d4744291278e <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:Bab153cef6cea0c713302d4744291278e <http://open-services.net/ns/core#propertyDefinition> <http://www.w3.org/ns/prov#wasDerivedFrom> .
+_:Bab153cef6cea0c713302d4744291278e <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+_:Bab153cef6cea0c713302d4744291278e <http://open-services.net/ns/core#name> "wasDerivedFrom" .
+_:Bab153cef6cea0c713302d4744291278e <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#SelectionsShape> <http://open-services.net/ns/core#property> _:Bfba4b383c467dc006bcd762da1ca9bcb .
+<http://open-services.net/ns/config/shapes/1.0/#SelectionsShape> <http://open-services.net/ns/core#property> _:B9036682570f2a52ff436241e043db16e .
+<http://open-services.net/ns/config/shapes/1.0/#SelectionsShape> <http://purl.org/dc/terms/title> "The resources selected by a configuration." .
+<http://open-services.net/ns/config/shapes/1.0/#SelectionsShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/config#Selections> .
+<http://open-services.net/ns/config/shapes/1.0/#SelectionsShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+_:Bce5f594fbf2bfef148990eed8c4d4f88 <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Bce5f594fbf2bfef148990eed8c4d4f88 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:Bce5f594fbf2bfef148990eed8c4d4f88 <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/contributor> .
+_:Bce5f594fbf2bfef148990eed8c4d4f88 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+_:Bce5f594fbf2bfef148990eed8c4d4f88 <http://open-services.net/ns/core#name> "contributor" .
+_:Bce5f594fbf2bfef148990eed8c4d4f88 <http://purl.org/dc/terms/description> "Contributor or contributors to the resource.\nThe link target is usually a `foaf:Person` or `foaf:Agent`, but could be any type."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Bce5f594fbf2bfef148990eed8c4d4f88 <http://open-services.net/ns/core#range> <http://xmlns.com/foaf/0.1/Person> .
+_:Bce5f594fbf2bfef148990eed8c4d4f88 <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+_:Bce5f594fbf2bfef148990eed8c4d4f88 <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+_:Bce5f594fbf2bfef148990eed8c4d4f88 <http://open-services.net/ns/core#range> <http://xmlns.com/foaf/0.1/Agent> .
+_:B0afcb05421afbfa88213c1eb875b48ab <http://purl.org/dc/terms/description> "The <a href=\"http://www.w3.org/TR/ldp/#ldpc\">Linked Data Platform Container</a>\nthat contains all the streams derived from this baseline.\nA new stream derived from this baseline is created by a POST to this container;\n{{a `previousBaseline` property of the new stream MUST be set to refer to this baseline}}.\nNote that the `streams` property itself is immutable,\nbut the container referenced by the property is not.\n{{The container MAY have an `oslc:resourceShape` property referencing a resource shape that describes the container}}.\n{{If a container resource shape is specified, it should have a property describing the membership of the container with a\n``oslc:valueShape`` referencing a resource shape that describes the shapes of streams that may be created}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B0afcb05421afbfa88213c1eb875b48ab <http://open-services.net/ns/core#range> <http://www.w3.org/ns/ldp#Container> .
+_:B0afcb05421afbfa88213c1eb875b48ab <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:B0afcb05421afbfa88213c1eb875b48ab <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:B0afcb05421afbfa88213c1eb875b48ab <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:B0afcb05421afbfa88213c1eb875b48ab <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+_:B0afcb05421afbfa88213c1eb875b48ab <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#streams> .
+_:B0afcb05421afbfa88213c1eb875b48ab <http://open-services.net/ns/core#name> "streams" .
+_:B0afcb05421afbfa88213c1eb875b48ab <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B82ef9c0fd4bd85fe9ab98beab40b3553 <http://purl.org/dc/terms/description> "A selected version resource.\n{{Selected resources MUST NOT be of type `oslc_config:Configuration`}};\nsub-configurations are given in the `oslc_config:contributions` property.\nNo meaning is assigned to a selected resource of type `oslc_config:Component`.\n{{This property MAY be modifiable for selections of a change set}}.\nIf the subject has the type `oslc_config:RemoveAll`, all selections in the overriden configuration are to be ignored;\nall selections are in this and other `oslc_selects` properties of the change set.\nAny target concept or version resources (depending on the presence or absence of the type `oslc_config:UnboundSelections`)\nindicated in this selection resource are selected in this configuration.\nOtherwise, if the subject has the type `oslc_config:Removals`,\nthe indicated target concepts or versions are explicitly removed from the set of versions selected by the configuration overridden by this configuration.\nOtherwise, if the subject has only the type `oslc_config:Selections`,\nthe indicated target concept or version resources are selected by this configuration;\na change set selection overrides (replaces) the concepts or versions selected by a matching concept resource in the overridden configuration's selection,\nand adds additional selections for concept resources that are not mentioned in the overridden configuration's selection.\nSince selections properties are not ordered, there is no defined meaning to a selection that appears in two or more different selections properties of any types,\nor to a change set that include both a `oslc_config:RemoveAll` and a `oslc_config:Removals` selection;\n{{servers MAY treat occurrences of potentially conflicting selections as an error}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B82ef9c0fd4bd85fe9ab98beab40b3553 <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:B82ef9c0fd4bd85fe9ab98beab40b3553 <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:B82ef9c0fd4bd85fe9ab98beab40b3553 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+_:B82ef9c0fd4bd85fe9ab98beab40b3553 <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#selects> .
+_:B82ef9c0fd4bd85fe9ab98beab40b3553 <http://open-services.net/ns/core#name> "selects" .
+_:B82ef9c0fd4bd85fe9ab98beab40b3553 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B217fc485c37aa28efb5da1b090ad9fe0 <http://purl.org/dc/terms/description> "A resource type URI.\n{{A stream MUST have at least the resource type `oslc_config:Stream`}}.\nClients can infer a resource type of `oslc_config:Configuration`,\nbut there is no requirement for servers to materialize this triple in the RDF representation.\n{{Other types MAY be added, including types that are used in `oslc_config:accepts` and `oslc_config:acceptedBy` properties\nto define which <a href=\"config-resources.html#matching_contribs\">matching configurations</a> may be added as contributions to this configuration,\nor to which this configuration may be added as a contribution}}.\n{{Servers MAY treat this property as read-only}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B217fc485c37aa28efb5da1b090ad9fe0 <http://open-services.net/ns/core#range> <http://www.w3.org/2000/01/rdf-schema#Class> .
+_:B217fc485c37aa28efb5da1b090ad9fe0 <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:B217fc485c37aa28efb5da1b090ad9fe0 <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:B217fc485c37aa28efb5da1b090ad9fe0 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#One-or-many> .
+_:B217fc485c37aa28efb5da1b090ad9fe0 <http://open-services.net/ns/core#propertyDefinition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> .
+_:B217fc485c37aa28efb5da1b090ad9fe0 <http://open-services.net/ns/core#name> "type" .
+_:B217fc485c37aa28efb5da1b090ad9fe0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:Bd7172409f8a2e697f692bd8813c36086 <http://purl.org/dc/terms/description> "Tag or keyword for a resource.\nEach occurrence of a `dcterms:subject` property denotes an additional tag for the resource.\n{{Tags on versioned resources SHOULD be modifiable even if the resource is otherwise immutable (checked in)}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Bd7172409f8a2e697f692bd8813c36086 <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+_:Bd7172409f8a2e697f692bd8813c36086 <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/subject> .
+_:Bd7172409f8a2e697f692bd8813c36086 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+_:Bd7172409f8a2e697f692bd8813c36086 <http://open-services.net/ns/core#name> "subject" .
+_:Bd7172409f8a2e697f692bd8813c36086 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:Bafd0b2c566104a4dfdbe6ae949b1d005 <http://purl.org/dc/terms/description> "A resource type URI.\n{{A baseline MUST have at least the resource type `oslc_config:Baseline`}}.\nClients can infer a resource type of `oslc_config:Configuration`,\nbut there is no requirement for servers to materialize this triple in the RDF representation.\n{{Other types MAY be added, including types that are used in `oslc_config:accepts` and `oslc_config:acceptedBy` properties}}\nto define which <a href=\"config-resources.html#matching_contribs\">matching configurations</a> may be added as contributions to this configuration,\nor to which this configuration may be added as a contribution.\n{{Servers MAY treat the `rdf:type` property of a baseline as read-only}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Bafd0b2c566104a4dfdbe6ae949b1d005 <http://open-services.net/ns/core#range> <http://www.w3.org/2000/01/rdf-schema#Class> .
+_:Bafd0b2c566104a4dfdbe6ae949b1d005 <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:Bafd0b2c566104a4dfdbe6ae949b1d005 <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:Bafd0b2c566104a4dfdbe6ae949b1d005 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#One-or-many> .
+_:Bafd0b2c566104a4dfdbe6ae949b1d005 <http://open-services.net/ns/core#propertyDefinition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> .
+_:Bafd0b2c566104a4dfdbe6ae949b1d005 <http://open-services.net/ns/core#name> "type" .
+_:Bafd0b2c566104a4dfdbe6ae949b1d005 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:Bad6799af04ce089c9c29731ca08e6792 <http://purl.org/dc/terms/description> "An indication of the order of the contribution, relative to other contributions.\nContributions are sorted lexicographically on the Unicode code points of this value to resolve component skew.\nTo ensure predictable sorting regardless of implementation and locale, {{the `oslc_config:contributionOrder` string SHOULD be restricted to ASCII characters}}.\n{{Servers MUST support at least 64 characters in this string}}.\nThis property is read-only for contributions to a baseline, and modifiable for contributions to a stream."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Bad6799af04ce089c9c29731ca08e6792 <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+_:Bad6799af04ce089c9c29731ca08e6792 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+_:Bad6799af04ce089c9c29731ca08e6792 <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#contributionOrder> .
+_:Bad6799af04ce089c9c29731ca08e6792 <http://open-services.net/ns/core#name> "contributionOrder" .
+_:Bad6799af04ce089c9c29731ca08e6792 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:Bd8f15dd1a23d7ec202b9ec13a931b2bb <http://purl.org/dc/terms/description> "The concept resource of which this resource is a version. {{The subject of this property MUST be the version resource URI}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Bd8f15dd1a23d7ec202b9ec13a931b2bb <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:Bd8f15dd1a23d7ec202b9ec13a931b2bb <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:Bd8f15dd1a23d7ec202b9ec13a931b2bb <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/isVersionOf> .
+_:Bd8f15dd1a23d7ec202b9ec13a931b2bb <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+_:Bd8f15dd1a23d7ec202b9ec13a931b2bb <http://open-services.net/ns/core#name> "isVersionOf" .
+_:Bd8f15dd1a23d7ec202b9ec13a931b2bb <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B1c20eb46dba4bb59ef51e768d0634cbf <http://purl.org/dc/terms/description> "Timestamp of the last change of status.\nIf this property is missing, the time of creation can be taken to be the same as the last change of status."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B1c20eb46dba4bb59ef51e768d0634cbf <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#dateTime> .
+_:B1c20eb46dba4bb59ef51e768d0634cbf <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:B1c20eb46dba4bb59ef51e768d0634cbf <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+_:B1c20eb46dba4bb59ef51e768d0634cbf <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/modified> .
+_:B1c20eb46dba4bb59ef51e768d0634cbf <http://open-services.net/ns/core#name> "modified" .
+_:B1c20eb46dba4bb59ef51e768d0634cbf <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#archived> <http://purl.org/dc/terms/description> "Indicates whether the subject has been marked as archived, no longer an active resource."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#archived> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/config/shapes/1.0/#archived> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#archived> .
+<http://open-services.net/ns/config/shapes/1.0/#archived> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/config/shapes/1.0/#archived> <http://open-services.net/ns/core#name> "archived" .
+<http://open-services.net/ns/config/shapes/1.0/#archived> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B266ab51dfbd6a6cadfdd7bec98da3a43 <http://purl.org/dc/terms/description> "Descriptive text about the resource, represented as rich text in XHTML content.\n{{The description of a baseline MAY be modifiable}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B266ab51dfbd6a6cadfdd7bec98da3a43 <http://open-services.net/ns/core#valueType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B266ab51dfbd6a6cadfdd7bec98da3a43 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+_:B266ab51dfbd6a6cadfdd7bec98da3a43 <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/description> .
+_:B266ab51dfbd6a6cadfdd7bec98da3a43 <http://open-services.net/ns/core#name> "description" .
+_:B266ab51dfbd6a6cadfdd7bec98da3a43 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#shortId> <http://purl.org/dc/terms/description> "A short and human-readable identifier for the resource, such as a number."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#shortId> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+<http://open-services.net/ns/config/shapes/1.0/#shortId> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/config/shapes/1.0/#shortId> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/core#shortId> .
+<http://open-services.net/ns/config/shapes/1.0/#shortId> <http://open-services.net/ns/core#name> "shortId" .
+<http://open-services.net/ns/config/shapes/1.0/#shortId> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#wasDerivedFrom> <http://purl.org/dc/terms/description> "A stream or baseline from which this stream was first copied.\nThis property can be absent for streams created as new empty streams.\nMultiple instances of this property imply the stream was initially formed from a merge from one or more baselines.\n{{The `prov:wasDerivedFrom` property is undefined for baselines; it MAY be absent, or it MAY have the same value as `oslc_config:baselineOfStream`}}.\nIf this property is present on multiple change sets overriding the same base configuration, it implies a partial ordering of those change sets,\nidentifying change sets derived from earlier change sets on the same base.\n{{Servers SHOULD treat this property as read-only after initial creation}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#wasDerivedFrom> <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#Configuration> .
+<http://open-services.net/ns/config/shapes/1.0/#wasDerivedFrom> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/config/shapes/1.0/#wasDerivedFrom> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/config/shapes/1.0/#wasDerivedFrom> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/config/shapes/1.0/#wasDerivedFrom> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/config/shapes/1.0/#wasDerivedFrom> <http://open-services.net/ns/core#propertyDefinition> <http://www.w3.org/ns/prov#wasDerivedFrom> .
+<http://open-services.net/ns/config/shapes/1.0/#wasDerivedFrom> <http://open-services.net/ns/core#name> "wasDerivedFrom" .
+<http://open-services.net/ns/config/shapes/1.0/#wasDerivedFrom> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#identifier> <http://purl.org/dc/terms/description> "A unique identifier for this resource."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#identifier> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/config/shapes/1.0/#identifier> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+<http://open-services.net/ns/config/shapes/1.0/#identifier> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/config/shapes/1.0/#identifier> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/identifier> .
+<http://open-services.net/ns/config/shapes/1.0/#identifier> <http://open-services.net/ns/core#name> "identifier" .
+<http://open-services.net/ns/config/shapes/1.0/#identifier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#creator> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/config/shapes/1.0/#creator> <http://open-services.net/ns/core#range> <http://xmlns.com/foaf/0.1/Agent> .
+<http://open-services.net/ns/config/shapes/1.0/#creator> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+<http://open-services.net/ns/config/shapes/1.0/#creator> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/config/shapes/1.0/#creator> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/creator> .
+<http://open-services.net/ns/config/shapes/1.0/#creator> <http://open-services.net/ns/core#range> <http://xmlns.com/foaf/0.1/Person> .
+<http://open-services.net/ns/config/shapes/1.0/#creator> <http://open-services.net/ns/core#name> "creator" .
+<http://open-services.net/ns/config/shapes/1.0/#creator> <http://purl.org/dc/terms/description> "Creator or creators of the resource.\nThe link target is usually a `foaf:Person` or `foaf:Agent`, but could be any type."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#creator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#creator> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Either> .
+_:B48e19481d12d0a3697077c641b80ed94 <http://purl.org/dc/terms/description> "Date and time this version resource was checked in. Absent for mutable (checked out) versions."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B48e19481d12d0a3697077c641b80ed94 <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:B48e19481d12d0a3697077c641b80ed94 <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#dateTime> .
+_:B48e19481d12d0a3697077c641b80ed94 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+_:B48e19481d12d0a3697077c641b80ed94 <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#committed> .
+_:B48e19481d12d0a3697077c641b80ed94 <http://open-services.net/ns/core#name> "committed" .
+_:B48e19481d12d0a3697077c641b80ed94 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#description> <http://purl.org/dc/terms/description> "Descriptive text about the resource, represented as rich text in XHTML content."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#description> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/config/shapes/1.0/#description> <http://open-services.net/ns/core#valueType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#description> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/config/shapes/1.0/#description> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/description> .
+<http://open-services.net/ns/config/shapes/1.0/#description> <http://open-services.net/ns/core#name> "description" .
+<http://open-services.net/ns/config/shapes/1.0/#description> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#created> <http://purl.org/dc/terms/description> "Timestamp of resource creation. {{Each resource SHOULD have one instance of the `dcterms:created` property}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#created> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/config/shapes/1.0/#created> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://open-services.net/ns/config/shapes/1.0/#created> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/config/shapes/1.0/#created> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/created> .
+<http://open-services.net/ns/config/shapes/1.0/#created> <http://open-services.net/ns/core#name> "created" .
+<http://open-services.net/ns/config/shapes/1.0/#created> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#component> <http://purl.org/dc/terms/description> "The component of which this is a configuration, and from which the configuration selects versions of resources in the component.\nThe component is an invariant relating the different configurations of the same 'thing'."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#component> <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#Component> .
+<http://open-services.net/ns/config/shapes/1.0/#component> <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+<http://open-services.net/ns/config/shapes/1.0/#component> <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+<http://open-services.net/ns/config/shapes/1.0/#component> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/config/shapes/1.0/#component> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+<http://open-services.net/ns/config/shapes/1.0/#component> <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#component> .
+<http://open-services.net/ns/config/shapes/1.0/#component> <http://open-services.net/ns/core#name> "component" .
+<http://open-services.net/ns/config/shapes/1.0/#component> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B5eaac805b2a0ba6dfb687a3cbdb48417 <http://purl.org/dc/terms/description> "Tag or keyword for a resource.\nEach occurrence of a `dcterms:subject` property denotes an additional tag for the resource.\n{{Tags on baselines MUST be modifiable}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B5eaac805b2a0ba6dfb687a3cbdb48417 <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+_:B5eaac805b2a0ba6dfb687a3cbdb48417 <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:B5eaac805b2a0ba6dfb687a3cbdb48417 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+_:B5eaac805b2a0ba6dfb687a3cbdb48417 <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/subject> .
+_:B5eaac805b2a0ba6dfb687a3cbdb48417 <http://open-services.net/ns/core#name> "subject" .
+_:B5eaac805b2a0ba6dfb687a3cbdb48417 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:Bef742a77721d136971704fb1f9ffbe1e <http://purl.org/dc/terms/description> "A reference to a configuration modified or overridden by this change set configuration."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Bef742a77721d136971704fb1f9ffbe1e <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#Configuration> .
+_:Bef742a77721d136971704fb1f9ffbe1e <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:Bef742a77721d136971704fb1f9ffbe1e <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:Bef742a77721d136971704fb1f9ffbe1e <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+_:Bef742a77721d136971704fb1f9ffbe1e <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#overrides> .
+_:Bef742a77721d136971704fb1f9ffbe1e <http://open-services.net/ns/core#name> "overrides" .
+_:Bef742a77721d136971704fb1f9ffbe1e <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B47eb9cad6a833d3fcd0791c823dd7804 <http://purl.org/dc/terms/description> "The component to which this version belongs.\n{{Configuration Management servers SHOULD indicate the owning component for each version resource using either this property,\nor using the membership relationship from the component LDPC}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B47eb9cad6a833d3fcd0791c823dd7804 <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#Component> .
+_:B47eb9cad6a833d3fcd0791c823dd7804 <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:B47eb9cad6a833d3fcd0791c823dd7804 <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:B47eb9cad6a833d3fcd0791c823dd7804 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+_:B47eb9cad6a833d3fcd0791c823dd7804 <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#component> .
+_:B47eb9cad6a833d3fcd0791c823dd7804 <http://open-services.net/ns/core#name> "component" .
+_:B47eb9cad6a833d3fcd0791c823dd7804 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B48ccb1a0f6d16fd89c2dedb59cbfca22 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B48ccb1a0f6d16fd89c2dedb59cbfca22 <http://open-services.net/ns/core#name> "contribution" .
+_:B48ccb1a0f6d16fd89c2dedb59cbfca22 <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#contribution> .
+_:B48ccb1a0f6d16fd89c2dedb59cbfca22 <http://purl.org/dc/terms/description> "A contribution to this configuration.\nThe set of resource versions identified by this configuration is the union of the set determined by the\n`oslc_config:selections` resources and each of the sets of resource versions identified by the contributed configurations.\nA user can request an update to a configuration to change the set of contributions;\n{{servers MAY deny such requests if any added contributions do not <a href=\"config-resources.html#matching_contribs\">match</a> this configuration}}.\n{{The target MUST be of type `oslc_config:Contribution`}}.\n{{Contribution resources MUST be returned inline with the configuration resource}}.\nIn the set of Contribution resources for a single parent configuration,\n{{there MUST be only one Contribution resource for a given contributed configuration}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B48ccb1a0f6d16fd89c2dedb59cbfca22 <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:B48ccb1a0f6d16fd89c2dedb59cbfca22 <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#Contribution> .
+_:B48ccb1a0f6d16fd89c2dedb59cbfca22 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+_:B48ccb1a0f6d16fd89c2dedb59cbfca22 <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Inline> .
+_:B48ccb1a0f6d16fd89c2dedb59cbfca22 <http://open-services.net/ns/core#valueShape> <http://open-services.net/ns/config/shapes/1.0/#ContributionShape> .
+_:B48ccb1a0f6d16fd89c2dedb59cbfca22 <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+_:B4194829d537cc6c5b03552f384c09840 <http://open-services.net/ns/core#allowedValue> <http://open-services.net/ns/auto#error> .
+_:B4194829d537cc6c5b03552f384c09840 <http://open-services.net/ns/core#allowedValue> <http://open-services.net/ns/auto#unavailable> .
+_:B4194829d537cc6c5b03552f384c09840 <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:B4194829d537cc6c5b03552f384c09840 <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/auto#verdict> .
+_:B4194829d537cc6c5b03552f384c09840 <http://open-services.net/ns/core#allowedValue> <http://open-services.net/ns/auto#fail> .
+_:B4194829d537cc6c5b03552f384c09840 <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:B4194829d537cc6c5b03552f384c09840 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+_:B4194829d537cc6c5b03552f384c09840 <http://open-services.net/ns/core#allowedValue> <http://open-services.net/ns/auto#passed> .
+_:B4194829d537cc6c5b03552f384c09840 <http://open-services.net/ns/core#name> "verdict" .
+_:B4194829d537cc6c5b03552f384c09840 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B4194829d537cc6c5b03552f384c09840 <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:B4194829d537cc6c5b03552f384c09840 <http://open-services.net/ns/core#allowedValue> <http://open-services.net/ns/auto#warning> .
+_:B4194829d537cc6c5b03552f384c09840 <http://purl.org/dc/terms/description> "The result of the activity, as defined by OSLC Automation verdicts."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B2e1176ae512dd72e8dc3b4798556538a <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+_:B2e1176ae512dd72e8dc3b4798556538a <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#contribution> .
+_:B2e1176ae512dd72e8dc3b4798556538a <http://purl.org/dc/terms/description> "A contribution to this baseline.\nThe set of resource versions identified by this baseline is the union of the set determined by the\n`oslc_config:selections` resources and each of the sets of resource versions identified by the contributed baselines.\n{{The target MUST be of type `oslc_config:Contribution`}}.\n{{Contribution resources MUST be returned inline with the baseline resource}}.\n{{In the set of Contribution resources for a single parent baseline,\nthere MUST be only one Contribution resource for a given contributed baseline}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B2e1176ae512dd72e8dc3b4798556538a <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:B2e1176ae512dd72e8dc3b4798556538a <http://open-services.net/ns/core#name> "contribution" .
+_:B2e1176ae512dd72e8dc3b4798556538a <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#Contribution> .
+_:B2e1176ae512dd72e8dc3b4798556538a <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+_:B2e1176ae512dd72e8dc3b4798556538a <http://open-services.net/ns/core#valueShape> <http://open-services.net/ns/config/shapes/1.0/#ContributionShape> .
+_:B2e1176ae512dd72e8dc3b4798556538a <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Inline> .
+_:B2e1176ae512dd72e8dc3b4798556538a <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B82548a52470734d9402c5bb77c103568 <http://purl.org/dc/terms/description> "Descriptive text about the progress of the activity, represented as rich text in XHTML content."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B82548a52470734d9402c5bb77c103568 <http://open-services.net/ns/core#valueType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B82548a52470734d9402c5bb77c103568 <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:B82548a52470734d9402c5bb77c103568 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+_:B82548a52470734d9402c5bb77c103568 <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#progressMessage> .
+_:B82548a52470734d9402c5bb77c103568 <http://open-services.net/ns/core#name> "progressMessage" .
+_:B82548a52470734d9402c5bb77c103568 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B3f38dc7b9ba9df7e4ad125d833a9e793 <http://purl.org/dc/terms/description> "Date and time this configuration was committed as a baseline."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B3f38dc7b9ba9df7e4ad125d833a9e793 <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:B3f38dc7b9ba9df7e4ad125d833a9e793 <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#dateTime> .
+_:B3f38dc7b9ba9df7e4ad125d833a9e793 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+_:B3f38dc7b9ba9df7e4ad125d833a9e793 <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#committed> .
+_:B3f38dc7b9ba9df7e4ad125d833a9e793 <http://open-services.net/ns/core#name> "committed" .
+_:B3f38dc7b9ba9df7e4ad125d833a9e793 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B8ff5463c88a180a2c58d4661c4e0cbe4 <http://purl.org/dc/terms/description> "The <a href=\"http://www.w3.org/TR/ldp/#ldpc\">Linked Data Platform Container</a>\nthat contains all the configurations (both streams and baselines) of this component.\n{{The `oslc_config:configurations` property on a component is read-only; servers MAY also treat the referenced container as read-only}}.\nIf it is not read-only, {{the container MAY have an `oslc:resourceShape` property referencing a resource shape that describes the\ncontainer}}. {{If a container resource shape is specified, the shape SHOULD have a property describing the membership of the container with a\n`oslc:valueShape` referencing a resource shape that describes the shapes of streams and baselines that may be created}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B8ff5463c88a180a2c58d4661c4e0cbe4 <http://open-services.net/ns/core#range> <http://www.w3.org/ns/ldp#Container> .
+_:B8ff5463c88a180a2c58d4661c4e0cbe4 <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:B8ff5463c88a180a2c58d4661c4e0cbe4 <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:B8ff5463c88a180a2c58d4661c4e0cbe4 <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:B8ff5463c88a180a2c58d4661c4e0cbe4 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+_:B8ff5463c88a180a2c58d4661c4e0cbe4 <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#configurations> .
+_:B8ff5463c88a180a2c58d4661c4e0cbe4 <http://open-services.net/ns/core#name> "configurations" .
+_:B8ff5463c88a180a2c58d4661c4e0cbe4 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#CSelectionsShape> <http://open-services.net/ns/core#property> _:B82ef9c0fd4bd85fe9ab98beab40b3553 .
+<http://open-services.net/ns/config/shapes/1.0/#CSelectionsShape> <http://open-services.net/ns/core#property> _:Bb51bcfcadbb1cf2326a6bdff35eec97a .
+<http://open-services.net/ns/config/shapes/1.0/#CSelectionsShape> <http://purl.org/dc/terms/title> "The resources selected by a change set." .
+<http://open-services.net/ns/config/shapes/1.0/#CSelectionsShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/config#ChangeSetSelections> .
+<http://open-services.net/ns/config/shapes/1.0/#CSelectionsShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/config/shapes/1.0/#subject> <http://purl.org/dc/terms/description> "Tag or keyword for a resource.\nEach occurrence of a `dcterms:subject` property denotes an additional tag for the resource."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#subject> <http://open-services.net/ns/core#readOnly> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/config/shapes/1.0/#subject> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+<http://open-services.net/ns/config/shapes/1.0/#subject> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+<http://open-services.net/ns/config/shapes/1.0/#subject> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/subject> .
+<http://open-services.net/ns/config/shapes/1.0/#subject> <http://open-services.net/ns/core#name> "subject" .
+<http://open-services.net/ns/config/shapes/1.0/#subject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#modified> <http://purl.org/dc/terms/description> "Timestamp of latest resource modification. {{Each resource SHOULD have one instance of the `dcterms:modified` property}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#modified> <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://open-services.net/ns/config/shapes/1.0/#modified> <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://open-services.net/ns/config/shapes/1.0/#modified> <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-one> .
+<http://open-services.net/ns/config/shapes/1.0/#modified> <http://open-services.net/ns/core#propertyDefinition> <http://purl.org/dc/terms/modified> .
+<http://open-services.net/ns/config/shapes/1.0/#modified> <http://open-services.net/ns/core#name> "modified" .
+<http://open-services.net/ns/config/shapes/1.0/#modified> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B8c1b1e4af39c018273114d65933fc93c <http://purl.org/dc/terms/description> "A resource type URI.\nClients can infer a resource type of `oslc_config:Contribution`,\nbut there is no requirement for servers to materialize this triple in the RDF representation."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B8c1b1e4af39c018273114d65933fc93c <http://open-services.net/ns/core#range> <http://www.w3.org/2000/01/rdf-schema#Class> .
+_:B8c1b1e4af39c018273114d65933fc93c <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:B8c1b1e4af39c018273114d65933fc93c <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:B8c1b1e4af39c018273114d65933fc93c <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:B8c1b1e4af39c018273114d65933fc93c <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+_:B8c1b1e4af39c018273114d65933fc93c <http://open-services.net/ns/core#propertyDefinition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> .
+_:B8c1b1e4af39c018273114d65933fc93c <http://open-services.net/ns/core#name> "type" .
+_:B8c1b1e4af39c018273114d65933fc93c <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B4520a2bb5ebbf80dafe9f79a406c0b3c <http://open-services.net/ns/core#name> "state" .
+_:B4520a2bb5ebbf80dafe9f79a406c0b3c <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/auto#state> .
+_:B4520a2bb5ebbf80dafe9f79a406c0b3c <http://open-services.net/ns/core#allowedValue> <http://open-services.net/ns/auto#complete> .
+_:B4520a2bb5ebbf80dafe9f79a406c0b3c <http://open-services.net/ns/core#allowedValue> <http://open-services.net/ns/auto#canceled> .
+_:B4520a2bb5ebbf80dafe9f79a406c0b3c <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:B4520a2bb5ebbf80dafe9f79a406c0b3c <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B4520a2bb5ebbf80dafe9f79a406c0b3c <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:B4520a2bb5ebbf80dafe9f79a406c0b3c <http://open-services.net/ns/core#allowedValue> <http://open-services.net/ns/auto#canceling> .
+_:B4520a2bb5ebbf80dafe9f79a406c0b3c <http://purl.org/dc/terms/description> "The state of the activity, as defined by OSLC Automation states."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B4520a2bb5ebbf80dafe9f79a406c0b3c <http://open-services.net/ns/core#readOnly> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:B4520a2bb5ebbf80dafe9f79a406c0b3c <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Exactly-one> .
+_:B4520a2bb5ebbf80dafe9f79a406c0b3c <http://open-services.net/ns/core#allowedValue> <http://open-services.net/ns/auto#new> .
+_:B4520a2bb5ebbf80dafe9f79a406c0b3c <http://open-services.net/ns/core#allowedValue> <http://open-services.net/ns/auto#inProgress> .
+_:B4520a2bb5ebbf80dafe9f79a406c0b3c <http://open-services.net/ns/core#allowedValue> <http://open-services.net/ns/auto#queued> .
+_:B259ab7c1ddcc81ee758591b75ecd54b6 <http://purl.org/dc/terms/description> "A contribution to this change set configuration.\n{{Servers MAY support contributions to change sets}}, and if so, this property behaves just as that for streams."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B259ab7c1ddcc81ee758591b75ecd54b6 <http://open-services.net/ns/core#range> <http://open-services.net/ns/config#Contribution> .
+_:B259ab7c1ddcc81ee758591b75ecd54b6 <http://open-services.net/ns/core#valueShape> <http://open-services.net/ns/config/shapes/1.0/#ContributionShape> .
+_:B259ab7c1ddcc81ee758591b75ecd54b6 <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#AnyResource> .
+_:B259ab7c1ddcc81ee758591b75ecd54b6 <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Inline> .
+_:B259ab7c1ddcc81ee758591b75ecd54b6 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+_:B259ab7c1ddcc81ee758591b75ecd54b6 <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#contribution> .
+_:B259ab7c1ddcc81ee758591b75ecd54b6 <http://open-services.net/ns/core#name> "contribution" .
+_:B259ab7c1ddcc81ee758591b75ecd54b6 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+<http://open-services.net/ns/config/shapes/1.0/#ComponentShape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#ResourceShape> .
+<http://open-services.net/ns/config/shapes/1.0/#ComponentShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#creator> .
+<http://open-services.net/ns/config/shapes/1.0/#ComponentShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#instanceShape> .
+<http://open-services.net/ns/config/shapes/1.0/#ComponentShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#archived> .
+<http://open-services.net/ns/config/shapes/1.0/#ComponentShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#contributor> .
+<http://open-services.net/ns/config/shapes/1.0/#ComponentShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#modifiedBy> .
+<http://open-services.net/ns/config/shapes/1.0/#ComponentShape> <http://purl.org/dc/terms/description> "A set of versioned resources; a configuration selects zero, one, or (very rarely) more than one version of these resources.\n{{A component itself MAY be a versioned resource}},\nindicated by the RDF type `oslc_config:VersionResource` on its versions, but need not be versioned;\nthe semantics of versioned components are not defined by this specification.\nTypically, components themselves are not nested - that is,\ntypically none of the members of an `oslc_config:Component` container are themselves of type `oslc_config:Component`;\nany required structure and hierarchy is realized through configurations,\nor through the structures within the configuration items themselves (e.g., versioned folders or directories)."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+<http://open-services.net/ns/config/shapes/1.0/#ComponentShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#serviceProvider> .
+<http://open-services.net/ns/config/shapes/1.0/#ComponentShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#shortTitle> .
+<http://open-services.net/ns/config/shapes/1.0/#ComponentShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#subject> .
+<http://open-services.net/ns/config/shapes/1.0/#ComponentShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#description> .
+<http://open-services.net/ns/config/shapes/1.0/#ComponentShape> <http://purl.org/dc/terms/title> "The shape of a component." .
+<http://open-services.net/ns/config/shapes/1.0/#ComponentShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#identifier> .
+<http://open-services.net/ns/config/shapes/1.0/#ComponentShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#created> .
+<http://open-services.net/ns/config/shapes/1.0/#ComponentShape> <http://open-services.net/ns/core#describes> <http://open-services.net/ns/config#Component> .
+<http://open-services.net/ns/config/shapes/1.0/#ComponentShape> <http://open-services.net/ns/core#property> _:B72ae3932948fd40b87e20060f06076d2 .
+<http://open-services.net/ns/config/shapes/1.0/#ComponentShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#title> .
+<http://open-services.net/ns/config/shapes/1.0/#ComponentShape> <http://open-services.net/ns/core#property> _:B8ff5463c88a180a2c58d4661c4e0cbe4 .
+<http://open-services.net/ns/config/shapes/1.0/#ComponentShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#modified> .
+<http://open-services.net/ns/config/shapes/1.0/#ComponentShape> <http://open-services.net/ns/core#property> <http://open-services.net/ns/config/shapes/1.0/#shortId> .
+_:Beaac6a0f6e20be17449ea3983a358b90 <http://purl.org/dc/terms/description> "A short human-readable identifier for the version of a resource.\n{{All versioned resources SHOULD have this property;\nwhere the property is present, this identifier MUST be unique amongst all currently existing versions of the same concept resource.\nThe subject of this property SHOULD be the concept resource URI}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:Beaac6a0f6e20be17449ea3983a358b90 <http://open-services.net/ns/core#valueType> <http://www.w3.org/2001/XMLSchema#string> .
+_:Beaac6a0f6e20be17449ea3983a358b90 <http://open-services.net/ns/core#propertyDefinition> <http://open-services.net/ns/config#versionId> .
+_:Beaac6a0f6e20be17449ea3983a358b90 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#Zero-or-many> .
+_:Beaac6a0f6e20be17449ea3983a358b90 <http://open-services.net/ns/core#name> "versionId" .
+_:Beaac6a0f6e20be17449ea3983a358b90 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B72ae3932948fd40b87e20060f06076d2 <http://purl.org/dc/terms/description> "A resource type URI. {{A Component MUST have a resource type of `oslc_config:Component`}}.\n{{A component MAY be a <a href=\"http://www.w3.org/TR/ldp/#ldpc\">Linked Data Platform Container</a>,\ncontaining the concept resources associated with this component}}.\n{{The members of such an `oslc_config:Component` container MUST NOT be of type `oslc_config:Configuration`}};\nsub-configurations are given in the `oslc_config:contributions` property.\nNo meaning is assigned to a member of type `oslc_config:Component`;\nneither client nor server is obligated to perform any recursion through nested Components.\n{{Servers MAY treat the `rdf:type` property for a component as read-only."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B72ae3932948fd40b87e20060f06076d2 <http://open-services.net/ns/core#range> <http://www.w3.org/2000/01/rdf-schema#Class> .
+_:B72ae3932948fd40b87e20060f06076d2 <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:B72ae3932948fd40b87e20060f06076d2 <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:B72ae3932948fd40b87e20060f06076d2 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#One-or-many> .
+_:B72ae3932948fd40b87e20060f06076d2 <http://open-services.net/ns/core#propertyDefinition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> .
+_:B72ae3932948fd40b87e20060f06076d2 <http://open-services.net/ns/core#name> "type" .
+_:B72ae3932948fd40b87e20060f06076d2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .
+_:B1bcc1c36d9e2235641a277fcfae3f878 <http://purl.org/dc/terms/description> "A resource type URI. {{One of the type properties MUST have the version resource URI as the subject,\nand MUST have a resource type of `oslc_config:VersionResource`}}.\n{{Other types for the concept resource of which this is a version SHOULD use the concept resource URI as the subject}}."^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+_:B1bcc1c36d9e2235641a277fcfae3f878 <http://open-services.net/ns/core#range> <http://www.w3.org/2000/01/rdf-schema#Class> .
+_:B1bcc1c36d9e2235641a277fcfae3f878 <http://open-services.net/ns/core#valueType> <http://open-services.net/ns/core#Resource> .
+_:B1bcc1c36d9e2235641a277fcfae3f878 <http://open-services.net/ns/core#representation> <http://open-services.net/ns/core#Reference> .
+_:B1bcc1c36d9e2235641a277fcfae3f878 <http://open-services.net/ns/core#propertyDefinition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> .
+_:B1bcc1c36d9e2235641a277fcfae3f878 <http://open-services.net/ns/core#occurs> <http://open-services.net/ns/core#One-or-many> .
+_:B1bcc1c36d9e2235641a277fcfae3f878 <http://open-services.net/ns/core#name> "type" .
+_:B1bcc1c36d9e2235641a277fcfae3f878 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://open-services.net/ns/core#Property> .

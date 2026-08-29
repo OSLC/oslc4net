@@ -1,11 +1,34 @@
 using OSLC4Net.Core.Attribute;
 using OSLC4Net.Core.Exceptions;
 using OSLC4Net.Core.Model;
+using VDS.RDF;
 
 namespace OSLC4Net.Core.DotNetRdfProvider;
 
 public static class Extensions
 {
+    /// <summary>
+    /// Non-throwing alternative to <see cref="INamespaceMapper.GetPrefix"/>, which throws
+    /// <c>RdfException</c> when the namespace URI is not mapped.
+    /// </summary>
+    /// <returns><see langword="true"/> when <paramref name="uri"/> is mapped, with the
+    /// matching prefix in <paramref name="prefix"/>; otherwise <see langword="false"/>.</returns>
+    public static bool TryGetPrefix(this INamespaceMapper namespaceMappings, Uri uri,
+        out string? prefix)
+    {
+        foreach (var existingPrefix in namespaceMappings.Prefixes)
+        {
+            if (namespaceMappings.GetNamespaceUri(existingPrefix).Equals(uri))
+            {
+                prefix = existingPrefix;
+                return true;
+            }
+        }
+
+        prefix = null;
+        return false;
+    }
+
     public static async Task<OslcCoreRequestException> ToOslcExceptionAsync(this
         HttpResponseMessage responseMessage, IResource? requestResource)
     {

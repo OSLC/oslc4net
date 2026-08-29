@@ -60,8 +60,9 @@ else
 ```
 
 Replace `resourceUri` with a valid OSLC resource URI. This should give you a
-valid response. See [full example
-project](./OSLC4Net_SDK/Examples/Oslc4NetExamples.Client/) for more details.
+valid response. See the
+[full example project](https://github.com/OSLC/oslc4net/tree/main/OSLC4Net_SDK/Examples/Oslc4NetExamples.Client)
+for more details.
 
 > [!TIP]
 >

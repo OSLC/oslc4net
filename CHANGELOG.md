@@ -17,6 +17,7 @@ This release does not contain security updates.
 
 ### Added
 
+- `OslcQuery.SubmitPost()` submits form-encoded OSLC queries over HTTP POST.
 - `RootServicesHelper` was added to assist with processing OSLC Root Services documents. It can help with direct lookups (as long as your URI ends with `/rootservices` or `/rootservices.xml`), can look up a standard `/.well-known/oslc/rootservices.xml` location, or fall back to appending `/rootservices` for legacy systems.
 - ⚡️Samples for IBM Jazz ERM (aka Doors NG), ETM, and EWM were migrated to .NET 10 and tested against Jazz.net. You can run them yourself using `OSLC4Net_SDK\Examples\scripts\test-jazz_net.ps1`.
 
@@ -26,6 +27,8 @@ This release does not contain security updates.
 - `OSLC4Net.Core` requires .NET 10 to be able to use the `[Experimental]` annotation.
 - `OSLC4Net.Client` requires .NET 10.
 - ❗️ `SignedByteNode` (which corresponds to `xsd:byte`) is now parsed as C# `sbyte` (signed byte) instead of `byte`.
+- 👉 Core `Property` is no longer `IComparable<T>` (because it is not immutable). Use `PropertyNameComparer` instead if you need sorting by name in some context.
+  - Users of `Property` collections are responsible to prevent duplicates, e.g. in `AutomationPlan`.
 
 ### Deprecated
 
@@ -38,8 +41,16 @@ This release does not remove any features.
 
 ### Fixed
 
+- Meziantou.Analyzer is configured with PrivateAssets="all" to avoid leaking it as a transitive dependency in built NuGet packages.
+- Query results recognize membership predicates declared through `ldp:hasMemberRelation` or explicitly supplied to `OslcQuery`, and support `ldp:contains` query containers.
+- Query result total counts are parsed from RDF literal nodes.
 - Properties backed by URI collections are now reflected in OSLC shapes correctly (thanks to @ZUOXIANGE)
 - `OslcQueryResult` now handles cases where RDF graph parsing from query responses produces malformed URI nodes. Instead of throwing `ArgumentNullException`, methods like `GetMembersUrls()`, `GetMembers<T>()`, `GetNextPageUrl()`, and `GetTotalCount()` now gracefully return empty results or null values.
+- Replaced the use of `SystemException` with `InvalidOperationException` in `Property.cs` to resolve compiler warning CA2201.
+- `OslcRdfOutputFormatter` no longer throws on a `ResponseInfo` without a next page: a missing next page is kept as `null` instead of being coerced to an empty string that reached `new Uri("")`. Server-side OSLC query responses without paging now serialize correctly.
+- `DotNetRdfHelper.CreateDotNetRdfGraph` serializes an empty `ResponseInfo` container (a query that matched no members) instead of throwing when the `oslc` namespace prefix is not already registered.
+- `OslcRdfOutputFormatter` builds the `ResponseInfo` container subject URI with `UriHelper.BuildAbsolute` instead of re-appending the port to a host string that already carried it, which produced an invalid `host:port:port` authority and threw `UriFormatException` whenever the request used a non-default port.
+- `EnumerableWrapper` disposes the wrapped enumerator through `IDisposable` instead of reflecting a public `Dispose` method, which is absent on enumerators (such as an array's) that implement `IDisposable` explicitly. Previously this threw `NullReferenceException` while serializing any `ResponseInfo` container whose members were wrapped.
 
 
 ## [0.6.3] - 2025-11-15

@@ -24,6 +24,56 @@ For `OSLC4Net_SDK`, use regular .NET 8+ SDK. `OSCL4Net_Framework` uses .NET Fram
 - Ensure your pull request has a clear title and description.
 - Link your pull request to any relevant issues.
 
+## Commit messages
+
+OSLC4Net uses [scoped commits](https://scopedcommits.com/) — a lightweight alternative to Conventional Commits. See [Stop using Conventional Commits](https://sumnerevans.com/posts/software-engineering/stop-using-conventional-commits/) for the motivation.
+
+The subject line is:
+
+```
+<scope>: <imperative summary in lowercase>
+```
+
+No `feat:` / `fix:` / `chore:` / `refactor:` type prefixes. The scope tells you where in the codebase the change lives; the summary tells you what changed.
+
+PR titles follow the same convention — the squash-merge subject becomes the commit subject.
+
+### Top-level scopes
+
+| Scope | What it covers |
+|---|---|
+| `core:` | `OSLC4Net.Core` — model, attributes, constants, wildcard properties |
+| `query:` | `OSLC4Net.Core.Query` |
+| `client:` | `OSLC4Net.Client`; sub-scope `client: restsharp:` for `OSLC4Net.Client.RestSharp` |
+| `server:` | `OSLC4Net.Server.Providers`; sub-scope `server: provider:` for `OSLC4Net.Core.DotNetRdfProvider` and `OSLC4Net.Core.JsonProvider` |
+| `domains:` | Domain libraries — always sub-scoped: `domains: rm:`, `domains: cm:`, future `domains: am:`, `domains: qm:`, `domains: config:` |
+| `trs:` | Tracked Resource Set (reserved; use once the module lands) |
+| `tests:` | Cross-cutting test infrastructure only (Aspire host, `Test.RefImpl`). Per-project test changes attribute to the code's own scope |
+| `docs:` | `docs/`, `README.md`, `CHANGELOG.md`, `MIGRATION.md`, `OSLC4Net_SDK/Examples/`, `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`, `misc/instructions/` |
+| `build:` | MSBuild plumbing, `Directory.*.props`, `global.json`, csproj files, `.github/workflows/`, dependency bumps, `.pre-commit-config.yaml`, `scripts/`, `LICENSE`, `.gitignore` |
+
+`docs:`, `build:`, and `server: provider:` are intentionally flat — the subject line says which file or package changed, so further sub-scoping adds noise without information. Sub-scopes only exist for `client:` and `domains:`.
+
+### Examples
+
+- `core: add property support to ResourceShape`
+- `domains: cm: migrate ChangeRequest to property-based shape`
+- `query: fix SortTermsImpl collection parsing`
+- `client: restsharp: drop sync overloads`
+- `server: provider: update dotNetRDF usage to avoid deprecations`
+- `server: sanitize user id before logging (CWE-117)`
+- `build: bump Meziantou.Analyzer to 3.0.84`
+- `build: upload coverage to GitHub PR Code Coverage`
+- `docs: document copyright-header policy for AGENTS.md`
+
+### Multiple scopes
+
+If a change genuinely spans top-level scopes, split it into separate commits. For a multi-scope PR, the squash-merge title picks the dominant scope and the PR description lists the others.
+
+### Dependabot
+
+Dependabot is configured (via `.github/dependabot.yml`) to emit `build:` prefixes for both NuGet and GitHub Actions bumps, so no retitling is needed on squash.
+
 ## Coding conventions
 
 Follow _Framework Design Guidelines_ where possible.
