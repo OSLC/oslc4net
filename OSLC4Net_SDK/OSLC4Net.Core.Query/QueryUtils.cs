@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -84,20 +85,51 @@ public class QueryUtils
         {
             var parser = new OslcWhereParser(whereExpression);
             var rawTree = (CommonTree)parser.Result;
-            var child = rawTree.GetChild(0);
 
-            if (child is CommonErrorNode)
+            // Reject if the lexer/parser did not consume the entire input
+            // (matches the kuribara fork's tolerance for trailing-garbage "in" clauses).
+            if (parser.input.ToString() != whereExpression)
             {
-                throw new ParseException(child.ToString());
+                return new WhereClauseImpl("parse error: unconsumed input");
+            }
+
+            if (TryFindError(rawTree, out var errorReason))
+            {
+                return new WhereClauseImpl(errorReason);
             }
 
             return (WhereClause)new WhereClauseImpl(rawTree, prefixMap);
-
         }
         catch (RecognitionException e)
         {
-            throw new ParseException(e);
+            return new WhereClauseImpl(e.Message);
         }
+    }
+
+    private static bool TryFindError(ITree? node, out string reason)
+    {
+        if (node is null)
+        {
+            reason = string.Empty;
+            return false;
+        }
+
+        if (node is CommonErrorNode err)
+        {
+            reason = err.ToString();
+            return true;
+        }
+
+        for (var i = 0; i < node.ChildCount; i++)
+        {
+            if (TryFindError(node.GetChild(i), out reason))
+            {
+                return true;
+            }
+        }
+
+        reason = string.Empty;
+        return false;
     }
 
     /// <summary>
@@ -184,22 +216,24 @@ public class QueryUtils
     {
         try
         {
-
             var parser = new OslcOrderByParser(orderByExpression);
             var rawTree = (CommonTree)parser.Result;
-            var child = rawTree.GetChild(0);
 
-            if (child is CommonErrorNode)
+            if (parser.input.ToString() != orderByExpression)
             {
-                throw new ParseException(child.ToString());
+                return new SortTermsImpl("parse error: unconsumed input");
+            }
+
+            if (TryFindError(rawTree, out var errorReason))
+            {
+                return new SortTermsImpl(errorReason);
             }
 
             return (OrderByClause)new SortTermsImpl(rawTree, prefixMap);
-
         }
         catch (RecognitionException e)
         {
-            throw new ParseException(e);
+            return new SortTermsImpl(e.Message);
         }
     }
 
