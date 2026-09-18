@@ -20,39 +20,6 @@ public partial record MetadataFeature : AnnotatingElement, IMetadataFeature
     public MetadataFeature() { }
 
 
-    [OslcDescription("Various alternative identifiers for this Element. Generally, these will be set by tools.")]
-    [OslcOccurs(Occurs.ZeroOrMany)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#aliasIds")]
-    [OslcName("aliasIds")]
-    [OslcReadOnly(false)]
-    [OslcTitle("aliasIds")]
-    public new HashSet<string> AliasIds { get; set; } = new();
-
-
-    [OslcDescription("The <code>Elements</code> that are annotated by this <code>AnnotatingElement</code>. If <code>annotation</code> is not empty, these are the <code>annotatedElements</code> of the <code>annotations</code>. If <code>annotation</code> is empty, then it is the <code>owningNamespace</code> of the <code>AnnotatingElement</code>.")]
-    [OslcOccurs(Occurs.OneOrMany)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#annotatedElement")]
-    [OslcName("annotatedElement")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Either)]
-    [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Element")]
-    [OslcReadOnly(false)]
-    [OslcTitle("annotatedElement")]
-    public new HashSet<Uri> AnnotatedElement { get; set; } = new(OslcUriEqualityComparer.Instance);
-
-
-    [OslcDescription("The <code>Annotations</code> that relate this <code>AnnotatingElement</code> to its <code>annotatedElements</code>. This includes the <code>owningAnnotatingRelationship</code> (if any) followed by all the <code>ownedAnnotatingRelationshps</code>.")]
-    [OslcOccurs(Occurs.ZeroOrMany)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#annotation")]
-    [OslcName("annotation")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Either)]
-    [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Annotation")]
-    [OslcReadOnly(false)]
-    [OslcTitle("annotation")]
-    public new HashSet<Uri> Annotation { get; set; } = new(OslcUriEqualityComparer.Instance);
-
-
     [OslcDescription("The <code>Feature</code> that are chained together to determine the values of this <code>Feature</code>, derived from the <code>chainingFeatures</code> of the <code>ownedFeatureChainings</code> of this <code>Feature</code>, in the same order. The values of a <code>Feature</code> with <code>chainingFeatures</code> are the same as values of the last <code>Feature</code> in the chain, which can be found by starting with the values of the first <code>Feature</code> (for each instance of the domain of the original <code>Feature</code>), then using each of those as domain instances to find the values of the second <code>Feature</code> in chainingFeatures, and so on, to values of the last <code>Feature</code>.")]
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#chainingFeature")]
@@ -65,40 +32,6 @@ public partial record MetadataFeature : AnnotatingElement, IMetadataFeature
     public HashSet<Uri> ChainingFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
-    [OslcDescription("Contributor or contributors to the resource. It is likely that the target resource will be a foaf:Person but that is not necessarily the case.")]
-    [OslcOccurs(Occurs.ZeroOrMany)]
-    [OslcPropertyDefinition("http://purl.org/dc/terms/contributor")]
-    [OslcName("contributor")]
-    [OslcValueType(ValueType.AnyResource)]
-    [OslcRepresentation(Representation.Either)]
-    [OslcRange("http://open-services.net/ns/core#Any")]
-    [OslcReadOnly(false)]
-    [OslcTitle("contributor")]
-    public new HashSet<Uri> Contributor { get; set; } = new(OslcUriEqualityComparer.Instance);
-
-
-    [OslcDescription("Timestamp of resource creation.")]
-    [OslcOccurs(Occurs.ZeroOrOne)]
-    [OslcPropertyDefinition("http://purl.org/dc/terms/created")]
-    [OslcName("created")]
-    [OslcValueType(ValueType.DateTime)]
-    [OslcReadOnly(false)]
-    [OslcTitle("created")]
-    public new DateTimeOffset? Created { get; set; }
-
-
-    [OslcDescription("Creator or creators of the resource. It is likely that the target resource will be a foaf:Person but that is not necessarily the case.")]
-    [OslcOccurs(Occurs.ZeroOrMany)]
-    [OslcPropertyDefinition("http://purl.org/dc/terms/creator")]
-    [OslcName("creator")]
-    [OslcValueType(ValueType.AnyResource)]
-    [OslcRepresentation(Representation.Either)]
-    [OslcRange("http://open-services.net/ns/core#Any")]
-    [OslcReadOnly(false)]
-    [OslcTitle("creator")]
-    public new HashSet<Uri> Creator { get; set; } = new(OslcUriEqualityComparer.Instance);
-
-
     [OslcDescription("The second <code>chainingFeature</code> of the <code>crossedFeature</code> of the <code>ownedCrossSubsetting</code> of this <code>Feature</code>, if it has one. Semantically, the values of the <code>crossFeature</code> of an end <code>Feature</code> must include all values of the end <code>Feature</code> obtained when navigating from values of the other end <code>Features</code> of the same <code>owningType</code>.\n.")]
     [OslcOccurs(Occurs.ZeroOrOne)]
     [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#crossFeature")]
@@ -109,56 +42,6 @@ public partial record MetadataFeature : AnnotatingElement, IMetadataFeature
     [OslcReadOnly(false)]
     [OslcTitle("crossFeature")]
     public Uri? CrossFeature { get; set; }
-
-
-    [OslcDescription("A short string representation for the type, for example ‘Car’.")]
-    [OslcOccurs(Occurs.ZeroOrMany)]
-    [OslcPropertyDefinition("http://purl.org/dc/terms/type")]
-    [OslcName("dctype")]
-    [OslcValueType(ValueType.String)]
-    [OslcReadOnly(false)]
-    [OslcTitle("dctype")]
-    public new HashSet<string> Dctype { get; set; } = new();
-
-
-    [OslcDescription("The declared name of this <code>Element</code>.")]
-    [OslcOccurs(Occurs.ZeroOrOne)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#declaredName")]
-    [OslcName("declaredName")]
-    [OslcReadOnly(false)]
-    [OslcTitle("declaredName")]
-    public new string? DeclaredName { get; set; }
-
-
-    [OslcDescription("An optional alternative name for the <code>Element</code> that is intended to be shorter or in some way more succinct than its primary <code>name</code>. It may act as a modeler-specified identifier for the <code>Element</code>, though it is then the responsibility of the modeler to maintain the uniqueness of this identifier within a model or relative to some other context.")]
-    [OslcOccurs(Occurs.ZeroOrOne)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#declaredShortName")]
-    [OslcName("declaredShortName")]
-    [OslcReadOnly(false)]
-    [OslcTitle("declaredShortName")]
-    public new string? DeclaredShortName { get; set; }
-
-
-    [OslcDescription("The resource that derives from another resource originated from or is\nsignificantly influenced by the referenced resource. For example a model element derives from a\nrequirement.")]
-    [OslcOccurs(Occurs.ZeroOrMany)]
-    [OslcPropertyDefinition("http://jazz.net/ns/dm/linktypes#derives")]
-    [OslcName("derives")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Reference)]
-    [OslcRange("http://open-services.net/ns/core#Any")]
-    [OslcReadOnly(false)]
-    [OslcTitle("derives")]
-    public new HashSet<Uri> Derives { get; set; } = new(OslcUriEqualityComparer.Instance);
-
-
-    [OslcDescription("Descriptive text about resource represented as rich text in XHTML content.")]
-    [OslcOccurs(Occurs.ZeroOrOne)]
-    [OslcPropertyDefinition("http://purl.org/dc/terms/description")]
-    [OslcName("description")]
-    [OslcValueType(ValueType.XMLLiteral)]
-    [OslcReadOnly(false)]
-    [OslcTitle("description")]
-    public new string? Description { get; set; }
 
 
     [OslcDescription("The interpretations of a <code>Type</code> with <code>differencingTypes</code> are asserted to be those of the first of those <code>Types</code>, but not including those of the remaining <code>Types</code>. For example, a <code>Classifier</code> might be the difference of a <code>Classifier</code> for people and another for people of a particular nationality, leaving people who are not of that nationality. Similarly, a feature of people might be the difference between a feature for their children and a <code>Classifier</code> for people of a particular sex, identifying their children not of that sex (because the interpretations of the children <code>Feature</code> that identify those of that sex are also interpretations of the <code>Classifier</code> for that sex).")]
@@ -194,39 +77,6 @@ public partial record MetadataFeature : AnnotatingElement, IMetadataFeature
     public string? Direction { get; set; }
 
 
-    [OslcDescription("The Documentation owned by this Element.")]
-    [OslcOccurs(Occurs.ZeroOrMany)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#documentation")]
-    [OslcName("documentation")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Either)]
-    [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Documentation")]
-    [OslcReadOnly(false)]
-    [OslcTitle("documentation")]
-    public new HashSet<Uri> Documentation { get; set; } = new(OslcUriEqualityComparer.Instance);
-
-
-    [OslcDescription("This resource elaborates the referenced resource.")]
-    [OslcOccurs(Occurs.ZeroOrMany)]
-    [OslcPropertyDefinition("http://jazz.net/ns/dm/linktypes#elaborates")]
-    [OslcName("elaborates")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Reference)]
-    [OslcRange("http://open-services.net/ns/core#Any")]
-    [OslcReadOnly(false)]
-    [OslcTitle("elaborates")]
-    public new HashSet<Uri> Elaborates { get; set; } = new(OslcUriEqualityComparer.Instance);
-
-
-    [OslcDescription("The globally unique identifier for this Element. This is intended to be set by tooling, and it must not change during the lifetime of the Element.")]
-    [OslcOccurs(Occurs.ExactlyOne)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#elementId")]
-    [OslcName("elementId")]
-    [OslcReadOnly(false)]
-    [OslcTitle("elementId")]
-    public new string ElementId { get; set; } = string.Empty;
-
-
     [OslcDescription("All <code>features</code> of this <code>Type</code> with <code>isEnd = true</code>.")]
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#endFeature")]
@@ -249,18 +99,6 @@ public partial record MetadataFeature : AnnotatingElement, IMetadataFeature
     [OslcReadOnly(false)]
     [OslcTitle("endOwningType")]
     public Uri? EndOwningType { get; set; }
-
-
-    [OslcDescription("A generic link from a resource to an external web page.")]
-    [OslcOccurs(Occurs.ZeroOrMany)]
-    [OslcPropertyDefinition("http://jazz.net/ns/dm/linktypes#external")]
-    [OslcName("external")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Reference)]
-    [OslcRange("http://open-services.net/ns/core#Any")]
-    [OslcReadOnly(false)]
-    [OslcTitle("external")]
-    public new HashSet<Uri> External { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedMemberFeatures</code> of the <code>featureMemberships</code> of this <code>Type</code>.")]
@@ -311,16 +149,6 @@ public partial record MetadataFeature : AnnotatingElement, IMetadataFeature
     public HashSet<Uri> FeaturingType { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
-    [OslcDescription("A unique identifier for a resource. Typically read-only and assigned by the\nservice provider when a resource is created. Not typically intended for end-user display.")]
-    [OslcOccurs(Occurs.ExactlyOne)]
-    [OslcPropertyDefinition("http://purl.org/dc/terms/identifier")]
-    [OslcName("identifier")]
-    [OslcValueType(ValueType.String)]
-    [OslcReadOnly(true)]
-    [OslcTitle("identifier")]
-    public new string Identifier { get; set; } = string.Empty;
-
-
     [OslcDescription("The <code>Memberships</code> in this <code>Namespace</code> that result from the <code>ownedImports</code> of this <code>Namespace</code>.")]
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#importedMembership")]
@@ -367,18 +195,6 @@ public partial record MetadataFeature : AnnotatingElement, IMetadataFeature
     [OslcReadOnly(false)]
     [OslcTitle("input")]
     public HashSet<Uri> Input { get; set; } = new(OslcUriEqualityComparer.Instance);
-
-
-    [OslcDescription("The URI of a Resource Shape that describes the possible properties, occurrence,\nvalue types, allowed values and labels. This shape information is useful in displaying the subject\nresource as well as guiding clients in performing modifications. Instance shapes may be specific\nto the authenticated user associated with the request that retrieved the resource, the current\nstate of the resource and other factors and thus should not be cached.")]
-    [OslcOccurs(Occurs.ZeroOrOne)]
-    [OslcPropertyDefinition("http://open-services.net/ns/core#instanceShape")]
-    [OslcName("instanceShape")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Reference)]
-    [OslcRange("http://open-services.net/ns/core#ResourceShape")]
-    [OslcReadOnly(false)]
-    [OslcTitle("instanceShape")]
-    public new Uri? InstanceShape { get; set; }
 
 
     [OslcDescription("The interpretations of a <code>Type</code> with <code>intersectingTypes</code> are asserted to be those in common among the <code>intersectingTypes</code>, which are the <code>Types</code> derived from the <code>intersectingType</code> of the <code>ownedIntersectings</code> of this <code>Type</code>. For example, a <code>Classifier</code> might be an intersection of <code>Classifiers</code> for people of a particular sex and of a particular nationality. Similarly, a feature for people's children of a particular sex might be the intersection of a <code>Feature</code> for their children and a <code>Classifier</code> for people of that sex (because the interpretations of the children <code>Feature</code> that identify those of that sex are also interpretations of the Classifier for that sex).")]
@@ -445,24 +261,6 @@ public partial record MetadataFeature : AnnotatingElement, IMetadataFeature
     [OslcReadOnly(false)]
     [OslcTitle("isEnd")]
     public string IsEnd { get; set; } = string.Empty;
-
-
-    [OslcDescription("Whether all necessary implied Relationships have been included in the <code>ownedRelationships</code> of this Element. This property may be true, even if there are not actually any <code>ownedRelationships</code> with <code>isImplied = true</code>, meaning that no such Relationships are actually implied for this Element. However, if it is false, then <code>ownedRelationships</code> may <em>not</em> contain any implied Relationships. That is, either <em>all</em> required implied Relationships must be included, or none of them.")]
-    [OslcOccurs(Occurs.ExactlyOne)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#isImpliedIncluded")]
-    [OslcName("isImpliedIncluded")]
-    [OslcReadOnly(false)]
-    [OslcTitle("isImpliedIncluded")]
-    public new string IsImpliedIncluded { get; set; } = string.Empty;
-
-
-    [OslcDescription("Whether this Element is contained in the ownership tree of a library model.")]
-    [OslcOccurs(Occurs.ExactlyOne)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#isLibraryElement")]
-    [OslcName("isLibraryElement")]
-    [OslcReadOnly(false)]
-    [OslcTitle("isLibraryElement")]
-    public new string IsLibraryElement { get; set; } = string.Empty;
 
 
     [OslcDescription("Whether an order exists for the values of this <code>Feature</code> or not.")]
@@ -546,16 +344,6 @@ public partial record MetadataFeature : AnnotatingElement, IMetadataFeature
     public Uri? Metaclass { get; set; }
 
 
-    [OslcDescription("Timestamp of latest resource modification.")]
-    [OslcOccurs(Occurs.ZeroOrOne)]
-    [OslcPropertyDefinition("http://purl.org/dc/terms/modified")]
-    [OslcName("modified")]
-    [OslcValueType(ValueType.DateTime)]
-    [OslcReadOnly(false)]
-    [OslcTitle("modified")]
-    public new DateTimeOffset? Modified { get; set; }
-
-
     [OslcDescription("An <code>ownedMember</code> of this <code>Type</code> that is a <code>Multiplicity</code>, which constraints the cardinality of the <code>Type</code>. If there is no such <code>ownedMember</code>, then the cardinality of this <code>Type</code> is constrained by all the <code>Multiplicity</code> constraints applicable to any direct supertypes.")]
     [OslcOccurs(Occurs.ZeroOrOne)]
     [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#multiplicity")]
@@ -568,15 +356,6 @@ public partial record MetadataFeature : AnnotatingElement, IMetadataFeature
     public Uri? Multiplicity { get; set; }
 
 
-    [OslcDescription("The name to be used for this <code>Element</code> during name resolution within its <code>owningNamespace</code>. This is derived using the <code>effectiveName()</code> operation. By default, it is the same as the <code>declaredName</code>, but this is overridden for certain kinds of <code>Elements</code> to compute a <code>name</code> even when the <code>declaredName</code> is null.")]
-    [OslcOccurs(Occurs.ZeroOrOne)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#name")]
-    [OslcName("name")]
-    [OslcReadOnly(false)]
-    [OslcTitle("name")]
-    public new string? Name { get; set; }
-
-
     [OslcDescription("All <code>features</code> related to this <code>Type</code> by <code>FeatureMemberships</code> that have <code>direction</code> <code>out</code> or <code>inout</code>.")]
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#output")]
@@ -587,30 +366,6 @@ public partial record MetadataFeature : AnnotatingElement, IMetadataFeature
     [OslcReadOnly(false)]
     [OslcTitle("output")]
     public HashSet<Uri> Output { get; set; } = new(OslcUriEqualityComparer.Instance);
-
-
-    [OslcDescription("The <code>ownedRelationships</code> of this <code>AnnotatingElement</code> that are <code>Annotations</code>, for which this <code>AnnotatingElement</code> is the <code>annotatingElement</code>.")]
-    [OslcOccurs(Occurs.ZeroOrMany)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#ownedAnnotatingRelationship")]
-    [OslcName("ownedAnnotatingRelationship")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Either)]
-    [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Annotation")]
-    [OslcReadOnly(false)]
-    [OslcTitle("ownedAnnotatingRelationship")]
-    public new HashSet<Uri> OwnedAnnotatingRelationship { get; set; } = new(OslcUriEqualityComparer.Instance);
-
-
-    [OslcDescription("The <code>ownedRelationships</code> of this <code>Element</code> that are <code>Annotations</code>, for which this <code>Element</code> is the <code>annotatedElement</code>.")]
-    [OslcOccurs(Occurs.ZeroOrMany)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#ownedAnnotation")]
-    [OslcName("ownedAnnotation")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Either)]
-    [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Annotation")]
-    [OslcReadOnly(false)]
-    [OslcTitle("ownedAnnotation")]
-    public new HashSet<Uri> OwnedAnnotation { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("A <code>Conjugation</code> owned by this <code>Type</code> for which the <code>Type</code> is the <code>originalType</code>.")]
@@ -659,18 +414,6 @@ public partial record MetadataFeature : AnnotatingElement, IMetadataFeature
     [OslcReadOnly(false)]
     [OslcTitle("ownedDisjoining")]
     public HashSet<Uri> OwnedDisjoining { get; set; } = new(OslcUriEqualityComparer.Instance);
-
-
-    [OslcDescription("The Elements owned by this Element, derived as the <tt>ownedRelatedElements</tt> of the <tt>ownedRelationships</tt> of this Element.")]
-    [OslcOccurs(Occurs.ZeroOrMany)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#ownedElement")]
-    [OslcName("ownedElement")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Either)]
-    [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Element")]
-    [OslcReadOnly(false)]
-    [OslcTitle("ownedElement")]
-    public new HashSet<Uri> OwnedElement { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("All <code>endFeatures</code> of this <code>Type</code> that are <code>ownedFeatures</code>.")]
@@ -805,18 +548,6 @@ public partial record MetadataFeature : AnnotatingElement, IMetadataFeature
     public Uri? OwnedReferenceSubsetting { get; set; }
 
 
-    [OslcDescription("The Relationships for which this Element is the <tt>owningRelatedElement</tt>.")]
-    [OslcOccurs(Occurs.ZeroOrMany)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#ownedRelationship")]
-    [OslcName("ownedRelationship")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Either)]
-    [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Relationship")]
-    [OslcReadOnly(false)]
-    [OslcTitle("ownedRelationship")]
-    public new HashSet<Uri> OwnedRelationship { get; set; } = new(OslcUriEqualityComparer.Instance);
-
-
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Type</code> that are <code>Specializations</code>, for which the <code>Type</code> is the <code>specific</code> <code>Type</code>.")]
     [OslcOccurs(Occurs.ZeroOrMany)]
     [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#ownedSpecialization")]
@@ -877,30 +608,6 @@ public partial record MetadataFeature : AnnotatingElement, IMetadataFeature
     public HashSet<Uri> OwnedUnioning { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
-    [OslcDescription("The owner of this Element, derived as the <code>owningRelatedElement</code> of the <code>owningRelationship</code> of this Element, if any.")]
-    [OslcOccurs(Occurs.ZeroOrOne)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#owner")]
-    [OslcName("owner")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Either)]
-    [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Element")]
-    [OslcReadOnly(false)]
-    [OslcTitle("owner")]
-    public new Uri? Owner { get; set; }
-
-
-    [OslcDescription("The <code>owningRelationship</code> of this <code>AnnotatingRelationship</code>, if it is an <code>Annotation</code>.")]
-    [OslcOccurs(Occurs.ZeroOrOne)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#owningAnnotatingRelationship")]
-    [OslcName("owningAnnotatingRelationship")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Either)]
-    [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Annotation")]
-    [OslcReadOnly(false)]
-    [OslcTitle("owningAnnotatingRelationship")]
-    public new Uri? OwningAnnotatingRelationship { get; set; }
-
-
     [OslcDescription("The <code>FeatureMembership</code> that owns this <code>Feature</code> as an <code>ownedMemberFeature</code>, determining its <code>owningType</code>.")]
     [OslcOccurs(Occurs.ZeroOrOne)]
     [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#owningFeatureMembership")]
@@ -913,42 +620,6 @@ public partial record MetadataFeature : AnnotatingElement, IMetadataFeature
     public Uri? OwningFeatureMembership { get; set; }
 
 
-    [OslcDescription("The <code>owningRelationship</code> of this <code>Element</code>, if that <code>Relationship</code> is a <code>Membership</code>.")]
-    [OslcOccurs(Occurs.ZeroOrOne)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#owningMembership")]
-    [OslcName("owningMembership")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Either)]
-    [OslcRange("https://www.omg.org/spec/sysml/vocabulary#OwningMembership")]
-    [OslcReadOnly(false)]
-    [OslcTitle("owningMembership")]
-    public new Uri? OwningMembership { get; set; }
-
-
-    [OslcDescription("The <code>Namespace</code> that owns this <code>Element</code>, which is the <code>membershipOwningNamespace</code> of the <code>owningMembership</code> of this <code>Element</code>, if any.")]
-    [OslcOccurs(Occurs.ZeroOrOne)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#owningNamespace")]
-    [OslcName("owningNamespace")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Either)]
-    [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Namespace")]
-    [OslcReadOnly(false)]
-    [OslcTitle("owningNamespace")]
-    public new Uri? OwningNamespace { get; set; }
-
-
-    [OslcDescription("The Relationship for which this Element is an <tt>ownedRelatedElement</tt>, if any.")]
-    [OslcOccurs(Occurs.ZeroOrOne)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#owningRelationship")]
-    [OslcName("owningRelationship")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Either)]
-    [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Relationship")]
-    [OslcReadOnly(false)]
-    [OslcTitle("owningRelationship")]
-    public new Uri? OwningRelationship { get; set; }
-
-
     [OslcDescription("The <code>Type</code> that is the <code>owningType</code> of the <code>owningFeatureMembership</code> of this <code>Feature</code>.")]
     [OslcOccurs(Occurs.ZeroOrOne)]
     [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#owningType")]
@@ -959,116 +630,6 @@ public partial record MetadataFeature : AnnotatingElement, IMetadataFeature
     [OslcReadOnly(false)]
     [OslcTitle("owningType")]
     public Uri? OwningType { get; set; }
-
-
-    [OslcDescription("The full ownership-qualified name of this <code>Element</code>, represented in a form that is valid according to the KerML textual concrete syntax for qualified names (including use of unrestricted name notation and escaped characters, as necessary). The <code>qualifiedName</code> is null if this <code>Element</code> has no <code>owningNamespace</code> or if there is not a complete ownership chain of named <code>Namespaces</code> from a root <code>Namespace</code> to this <code>Element</code>. If the <code>owningNamespace</code> has other <code>Elements</code> with the same name as this one, then the <code>qualifiedName</code> is null for all such <code>Elements</code> other than the first.")]
-    [OslcOccurs(Occurs.ZeroOrOne)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#qualifiedName")]
-    [OslcName("qualifiedName")]
-    [OslcReadOnly(false)]
-    [OslcTitle("qualifiedName")]
-    public new string? QualifiedName { get; set; }
-
-
-    [OslcDescription("The target is a refinement of the source. (e.g. a use case scenario\nmight be a refinement of a textual requirement that describes the interaction).")]
-    [OslcOccurs(Occurs.ZeroOrMany)]
-    [OslcPropertyDefinition("http://jazz.net/ns/dm/linktypes#refine")]
-    [OslcName("refine")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Reference)]
-    [OslcRange("http://open-services.net/ns/core#Any")]
-    [OslcReadOnly(false)]
-    [OslcTitle("refine")]
-    public new HashSet<Uri> Refine { get; set; } = new(OslcUriEqualityComparer.Instance);
-
-
-    [OslcDescription("The model element satisfies the requirement (e.g. The use case\nsatisfies a functional requirement).")]
-    [OslcOccurs(Occurs.ZeroOrMany)]
-    [OslcPropertyDefinition("http://jazz.net/ns/dm/linktypes#satisfy")]
-    [OslcName("satisfy")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Reference)]
-    [OslcRange("http://open-services.net/ns/core#Any")]
-    [OslcReadOnly(false)]
-    [OslcTitle("satisfy")]
-    public new HashSet<Uri> Satisfy { get; set; } = new(OslcUriEqualityComparer.Instance);
-
-
-    [OslcDescription("A link to the resource's OSLC Service Provider. There may be cases when the\nsubject resource is available from a service provider that implements multiple domain\nspecifications, which could result in multiple values for this property.")]
-    [OslcOccurs(Occurs.ZeroOrMany)]
-    [OslcPropertyDefinition("http://open-services.net/ns/core#serviceProvider")]
-    [OslcName("serviceProvider")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Reference)]
-    [OslcRange("http://open-services.net/ns/core#ServiceProvider")]
-    [OslcReadOnly(false)]
-    [OslcTitle("serviceProvider")]
-    public new HashSet<Uri> ServiceProvider { get; set; } = new(OslcUriEqualityComparer.Instance);
-
-
-    [OslcDescription("The short name to be used for this <code>Element</code> during name resolution within its <code>owningNamespace</code>. This is derived using the <code>effectiveShortName()</code> operation. By default, it is the same as the <code>declaredShortName</code>, but this is overridden for certain kinds of <code>Elements</code> to compute a <code>shortName</code> even when the <code>declaredName</code> is null.")]
-    [OslcOccurs(Occurs.ZeroOrOne)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#shortName")]
-    [OslcName("shortName")]
-    [OslcReadOnly(false)]
-    [OslcTitle("shortName")]
-    public new string? ShortName { get; set; }
-
-
-    [OslcDescription("{{Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users. SHOULD include only content that is valid inside an XHTML &lt;span&gt; element}}.")]
-    [OslcOccurs(Occurs.ZeroOrOne)]
-    [OslcPropertyDefinition("http://open-services.net/ns/core#shortTitle")]
-    [OslcName("shortTitle")]
-    [OslcValueType(ValueType.XMLLiteral)]
-    [OslcReadOnly(false)]
-    [OslcTitle("shortTitle")]
-    public new string? ShortTitle { get; set; }
-
-
-    [OslcDescription("The resource URI a client can perform a get on to obtain the original non-OSLC AM formatted resource that was used to create this resource. The source resource is usually a binary or proprietary format that the service provider can consume and convert into an OSLC AM format. The service may use content negotiation with the Accept header to obtain the desired content type.")]
-    [OslcOccurs(Occurs.ZeroOrOne)]
-    [OslcPropertyDefinition("http://purl.org/dc/terms/source")]
-    [OslcName("source")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Reference)]
-    [OslcRange("http://open-services.net/ns/core#Any")]
-    [OslcReadOnly(false)]
-    [OslcTitle("source")]
-    public new Uri? Source { get; set; }
-
-
-    [OslcDescription("The <code>TextualRepresentations</code> that annotate this <code>Element</code>.")]
-    [OslcOccurs(Occurs.ZeroOrMany)]
-    [OslcPropertyDefinition("https://www.omg.org/spec/sysml/vocabulary#textualRepresentation")]
-    [OslcName("textualRepresentation")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Either)]
-    [OslcRange("https://www.omg.org/spec/sysml/vocabulary#TextualRepresentation")]
-    [OslcReadOnly(false)]
-    [OslcTitle("textualRepresentation")]
-    public new HashSet<Uri> TextualRepresentation { get; set; } = new(OslcUriEqualityComparer.Instance);
-
-
-    [OslcDescription("Title of the resource represented as rich text in XHTML content.")]
-    [OslcOccurs(Occurs.ExactlyOne)]
-    [OslcPropertyDefinition("http://purl.org/dc/terms/title")]
-    [OslcName("title")]
-    [OslcValueType(ValueType.XMLLiteral)]
-    [OslcReadOnly(false)]
-    [OslcTitle("title")]
-    public new string Title { get; set; } = string.Empty;
-
-
-    [OslcDescription("The model element has a trace to the requirement (e.g. An attribute\nor its value are traced to a requirement).")]
-    [OslcOccurs(Occurs.ZeroOrMany)]
-    [OslcPropertyDefinition("http://jazz.net/ns/dm/linktypes#trace")]
-    [OslcName("trace")]
-    [OslcValueType(ValueType.Resource)]
-    [OslcRepresentation(Representation.Reference)]
-    [OslcRange("http://open-services.net/ns/core#Any")]
-    [OslcReadOnly(false)]
-    [OslcTitle("trace")]
-    public new HashSet<Uri> Trace { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The interpretations of a <code>Type</code> with <code>unioningTypes</code> are asserted to be the same as those of all the <code>unioningTypes</code> together, which are the <code>Types</code> derived from the <code>unioningType</code> of the <code>ownedUnionings</code> of this <code>Type</code>. For example, a <code>Classifier</code> for people might be the union of <code>Classifiers</code> for all the sexes. Similarly, a feature for people's children might be the union of features dividing them in the same ways as people in general.")]

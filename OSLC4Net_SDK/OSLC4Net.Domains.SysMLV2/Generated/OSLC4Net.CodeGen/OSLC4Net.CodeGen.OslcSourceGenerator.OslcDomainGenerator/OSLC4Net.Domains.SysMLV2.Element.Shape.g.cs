@@ -374,7 +374,7 @@ public partial record Element : AbstractResourceRecord, IElement
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("source")]
-    public Uri? Source { get; set; }
+    public Uri? SourceDcterms { get; set; }
 
 
     [OslcDescription("The <code>TextualRepresentations</code> that annotate this <code>Element</code>.")]

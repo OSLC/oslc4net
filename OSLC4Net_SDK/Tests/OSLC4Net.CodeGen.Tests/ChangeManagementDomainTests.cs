@@ -73,4 +73,28 @@ public sealed class ChangeManagementDomainTests
             )
             .IsEqualTo(typeof(ChangeRequest));
     }
+
+    [Test]
+    public async System.Threading.Tasks.Task InheritedPropertiesShareStorageAcrossClassViews()
+    {
+        ChangeNotice changeNotice = new();
+        ChangeRequest changeRequest = changeNotice;
+
+        await Assert
+            .That(ReferenceEquals(changeNotice.AffectedByDefect, changeRequest.AffectedByDefect))
+            .IsTrue();
+        await Assert
+            .That(
+                typeof(ChangeNotice)
+                    .GetProperty(nameof(ChangeNotice.AffectedByDefect))
+                    ?.DeclaringType
+            )
+            .IsEqualTo(typeof(ChangeRequest));
+        await Assert
+            .That(typeof(IChangeRequest).GetProperty(nameof(ChangeRequest.AffectedByDefect)))
+            .IsNull();
+        await Assert
+            .That(typeof(IChangeNotice).GetProperty(nameof(ChangeRequest.AffectedByDefect)))
+            .IsNull();
+    }
 }

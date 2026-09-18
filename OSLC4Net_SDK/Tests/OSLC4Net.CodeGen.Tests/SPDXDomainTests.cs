@@ -13,6 +13,7 @@ using OSLC4Net.Core.Model;
 using OSLC4Net.Domains.SPDX.Core;
 using OSLC4Net.Domains.SPDX.FunctionalSafety;
 using OSLC4Net.Domains.SPDX.Software;
+using SpdxAction = OSLC4Net.Domains.SPDX.Core.Action;
 
 namespace OSLC4Net.CodeGen.Tests;
 
@@ -101,5 +102,16 @@ public sealed class SPDXDomainTests
         await Assert
             .That(evidenceUid.GetRange())
             .IsEquivalentTo([new Uri(SpdxCore.ExternalIdentifier)]);
+    }
+
+    [Test]
+    public async Task UnrelatedPropertyNameCollisionsRemainUnqualified()
+    {
+        await Assert
+            .That(typeof(SpdxAction).GetProperty(nameof(SpdxAction.AdditionalInformation)))
+            .IsNotNull();
+        await Assert
+            .That(typeof(SpdxAction).GetProperty("AdditionalInformationCore"))
+            .IsNull();
     }
 }
