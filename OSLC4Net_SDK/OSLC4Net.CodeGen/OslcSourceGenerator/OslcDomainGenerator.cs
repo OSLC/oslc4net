@@ -808,11 +808,7 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         );
         List<ShapePropertyBinding> declaredClassProperties = propertyBindings
             .Where(property =>
-                !inheritedClassProperties.TryGetValue(
-                    property.Property.PropertyDefinition,
-                    out ShapePropertyBinding inheritedProperty
-                )
-                || !AreEquivalent(property.Property, inheritedProperty.Property)
+                !inheritedClassProperties.ContainsKey(property.Property.PropertyDefinition)
             )
             .ToList();
 
@@ -831,23 +827,6 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
             inheritedClassProperties,
             declaredClassProperties
         );
-    }
-
-    private static bool AreEquivalent(ShapeProperty left, ShapeProperty right)
-    {
-        return string.Equals(left.Name, right.Name, StringComparison.Ordinal)
-            && string.Equals(
-                left.PropertyDefinition,
-                right.PropertyDefinition,
-                StringComparison.Ordinal
-            )
-            && string.Equals(left.Description, right.Description, StringComparison.Ordinal)
-            && string.Equals(left.Occurs, right.Occurs, StringComparison.Ordinal)
-            && string.Equals(left.ReadOnlyText, right.ReadOnlyText, StringComparison.Ordinal)
-            && string.Equals(left.Representation, right.Representation, StringComparison.Ordinal)
-            && string.Equals(left.Title, right.Title, StringComparison.Ordinal)
-            && string.Equals(left.ValueType, right.ValueType, StringComparison.Ordinal)
-            && left.Ranges.SequenceEqual(right.Ranges, StringComparer.Ordinal);
     }
 
     private static List<ShapeProperty> GetGeneratedProperties(
@@ -976,10 +955,6 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
                 );
             string propertyName =
                 hasInheritedProperty
-                && (
-                    !usedPropertyNames.ContainsKey(inheritedProperty.PropertyName)
-                    || AreEquivalent(property, inheritedProperty.Property)
-                )
                     ? inheritedProperty.PropertyName
                     : GetPropertyName(property, usedPropertyNames, propertyNameCollisions);
             usedPropertyNames[propertyName] = property.PropertyDefinition;
