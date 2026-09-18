@@ -72,7 +72,7 @@ jobs:
         with:
           dotnet-version: 10.x
       - name: Restore dependencies
-        run: dotnet restore --locked-mode
+        run: dotnet restore
       - name: Verify formatting
         run: |
           dotnet format OSLC4Net.Core.slnx style --verify-no-changes
@@ -104,7 +104,7 @@ jobs:
         with:
           dotnet-version: 10.x
       - name: Restore dependencies
-        run: dotnet restore --locked-mode
+        run: dotnet restore
       - name: Regenerate domain sources
         run: |
           find OSLC4Net.Domains.* -path '*/Generated' -type d -prune -exec rm -rf {} +
@@ -193,7 +193,7 @@ jobs:
           path: ${{ env.NUGET_PACKAGES }}
           key: ${{ runner.os }}-nuget-${{ matrix.version.target }}-${{ hashFiles('.github/workflows/main.yml', '**/Directory.Build.props', '**/packages.config', '**/packages.lock.json', '**/*.slnx', '**/*.csproj') }}
       - name: Restore dependencies
-        run: dotnet restore --locked-mode
+        run: dotnet restore
       - name: Build
         run: dotnet build --no-restore --configuration Release
       - name: Test (with Refimpl CM tests)
