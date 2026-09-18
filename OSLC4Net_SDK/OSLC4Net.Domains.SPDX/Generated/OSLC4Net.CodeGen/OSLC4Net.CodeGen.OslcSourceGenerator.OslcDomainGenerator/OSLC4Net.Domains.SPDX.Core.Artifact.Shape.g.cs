@@ -35,7 +35,7 @@ public partial record Artifact : Element, IArtifact
     [OslcName("intendedUse")]
     [OslcValueType(ValueType.String)]
     [OslcTitle("intendedUse")]
-    public string? IntendedUse { get; set; }
+    public string? IntendedUseCore { get; set; }
 
 
     [OslcDescription("Identifies from where or whom the Element originally came.")]

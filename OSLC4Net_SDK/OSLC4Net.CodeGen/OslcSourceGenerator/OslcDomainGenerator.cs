@@ -76,6 +76,8 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
                 Dictionary<string, GenerationTarget> resourceTypesByUri = BuildResourceTypeMap(
                     shapesByTarget
                 );
+                Dictionary<string, HashSet<string>> propertyNameCollisions =
+                    BuildPropertyNameCollisions(shapesByTarget, graph, resourceTypesByUri);
 
                 foreach (GenerationTarget target in concreteTargets)
                 {
@@ -93,7 +95,8 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
                             target,
                             shapesByTarget[target],
                             graph,
-                            resourceTypesByUri
+                            resourceTypesByUri,
+                            propertyNameCollisions
                         );
                         if (source is not null)
                         {
@@ -184,6 +187,111 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         }
 
         return resourceTypesByUri;
+    }
+
+    private static Dictionary<string, HashSet<string>> BuildPropertyNameCollisions(
+        Dictionary<GenerationTarget, Shape> shapesByTarget,
+        Graph graph,
+        IReadOnlyDictionary<string, GenerationTarget> resourceTypesByUri
+    )
+    {
+        var propertyNameCollisions = new Dictionary<string, HashSet<string>>(
+            StringComparer.Ordinal
+        );
+        foreach (KeyValuePair<GenerationTarget, Shape> entry in shapesByTarget)
+        {
+            var hierarchy = new List<Shape>();
+            CollectSuperTypeShapes(
+                entry.Key,
+                entry.Value,
+                graph,
+                resourceTypesByUri,
+                hierarchy,
+                new HashSet<string>(StringComparer.Ordinal)
+            );
+            var propertyDefinitionsByName = new Dictionary<string, HashSet<string>>(
+                StringComparer.Ordinal
+            );
+            foreach (Shape shape in hierarchy)
+            {
+                foreach (ShapeProperty property in shape.Properties)
+                {
+                    string propertyName = ToIdentifier(property.Name);
+                    if (
+                        !propertyDefinitionsByName.TryGetValue(
+                            propertyName,
+                            out HashSet<string>? definitions
+                        )
+                    )
+                    {
+                        definitions = new HashSet<string>(StringComparer.Ordinal);
+                        propertyDefinitionsByName.Add(propertyName, definitions);
+                    }
+
+                    definitions.Add(property.PropertyDefinition);
+                }
+            }
+
+            foreach (KeyValuePair<string, HashSet<string>> entryByName in propertyDefinitionsByName)
+            {
+                if (entryByName.Value.Count <= 1)
+                {
+                    continue;
+                }
+
+                if (
+                    !propertyNameCollisions.TryGetValue(
+                        entryByName.Key,
+                        out HashSet<string>? definitions
+                    )
+                )
+                {
+                    definitions = new HashSet<string>(StringComparer.Ordinal);
+                    propertyNameCollisions.Add(entryByName.Key, definitions);
+                }
+
+                definitions.UnionWith(entryByName.Value);
+            }
+        }
+
+        return propertyNameCollisions;
+    }
+
+    private static void CollectSuperTypeShapes(
+        GenerationTarget target,
+        Shape shape,
+        Graph graph,
+        IReadOnlyDictionary<string, GenerationTarget> resourceTypesByUri,
+        ICollection<Shape> hierarchy,
+        HashSet<string> visited
+    )
+    {
+        string targetKey = target.ShapeUri ?? target.TypeName;
+        if (!visited.Add(targetKey))
+        {
+            return;
+        }
+
+        hierarchy.Add(shape);
+        foreach (GenerationTarget baseTarget in GetDirectSuperTypes(
+            target,
+            shape,
+            graph,
+            resourceTypesByUri
+        ))
+        {
+            if (baseTarget.ShapeUri is not null)
+            {
+                CollectSuperTypeShapes(
+                    baseTarget,
+                    Shape.FromGraph(baseTarget.ShapeUri, graph),
+                    graph,
+                    resourceTypesByUri,
+                    hierarchy,
+                    visited
+                );
+            }
+        }
     }
 
     private static GenerationTarget? GetGenerationTarget(GeneratorSyntaxContext context)
@@ -506,7 +614,8 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         GenerationTarget target,
         Shape shape,
         Graph graph,
-        IReadOnlyDictionary<string, GenerationTarget> resourceTypesByUri
+        IReadOnlyDictionary<string, GenerationTarget> resourceTypesByUri,
+        IReadOnlyDictionary<string, HashSet<string>> propertyNameCollisions
     )
     {
         if (shape.Describes.Count == 0 && shape.Properties.Count == 0)
@@ -520,25 +629,19 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
             graph,
             resourceTypesByUri
         );
-        HashSet<string> overriddenPropertyDefinitions = CollectOverriddenPropertyDefinitions(
+        PropertySurfaces propertySurfaces = GetPropertySurfaces(
             target,
             shape,
             graph,
-            resourceTypesByUri
+            resourceTypesByUri,
+            propertyNameCollisions,
+            new HashSet<string>(StringComparer.Ordinal)
         );
-        List<ShapeProperty> properties = target.SelectedPropertyUris.IsDefaultOrEmpty
-            ? shape.Properties
-            : shape
-                .Properties.Where(property =>
-                    target.SelectedPropertyUris.Contains(
-                        property.PropertyDefinition,
-                        StringComparer.Ordinal
-                    )
-                )
-                .ToList();
-        properties = properties
-            .Where(property => !overriddenPropertyDefinitions.Contains(property.PropertyDefinition))
-            .ToList();
+        List<ShapePropertyBinding> propertyBindings = propertySurfaces.DeclaredClassProperties;
+        var inheritedPropertyNames = new HashSet<string>(
+            propertySurfaces.InheritedClassProperties.Values.Select(static property => property.PropertyName),
+            StringComparer.Ordinal
+        );
 
         var builder = new StringBuilder();
         AppendAutoGeneratedHeader(builder);
@@ -548,7 +651,6 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         builder.AppendLine("using ValueType = OSLC4Net.Core.Model.ValueType;");
         builder.AppendLine();
         AppendNamespaceStart(builder, target.Namespace);
-        List<ShapePropertyBinding> propertyBindings = BindProperties(target, properties);
         GenerationTarget? baseTarget = superTypes.FirstOrDefault();
         string baseType = baseTarget is null
             ? target.IsRecord
@@ -619,13 +721,138 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         {
             builder.AppendLine();
             builder.AppendLine();
-            AppendProperty(builder, property.Property, property.PropertyName);
+            AppendProperty(
+                builder,
+                property.Property,
+                property.PropertyName,
+                inheritedPropertyNames.Contains(property.PropertyName)
+            );
         }
 
         builder.AppendLine();
         builder.AppendLine("}");
         AppendNamespaceEnd(builder, target.Namespace);
         return builder.ToString();
+    }
+
+    private sealed class PropertySurfaces
+    {
+        public PropertySurfaces(
+            Dictionary<string, ShapePropertyBinding> classProperties,
+            Dictionary<string, ShapePropertyBinding> inheritedClassProperties,
+            List<ShapePropertyBinding> declaredClassProperties
+        )
+        {
+            ClassProperties = classProperties;
+            InheritedClassProperties = inheritedClassProperties;
+            DeclaredClassProperties = declaredClassProperties;
+        }
+
+        public Dictionary<string, ShapePropertyBinding> ClassProperties { get; }
+
+        public Dictionary<string, ShapePropertyBinding> InheritedClassProperties { get; }
+
+        public List<ShapePropertyBinding> DeclaredClassProperties { get; }
+    }
+
+    private static PropertySurfaces GetPropertySurfaces(
+        GenerationTarget target,
+        Shape shape,
+        Graph graph,
+        IReadOnlyDictionary<string, GenerationTarget> resourceTypesByUri,
+        IReadOnlyDictionary<string, HashSet<string>> propertyNameCollisions,
+        HashSet<string> visited
+    )
+    {
+        string targetKey = target.ShapeUri ?? target.TypeName;
+        if (!visited.Add(targetKey))
+        {
+            return new PropertySurfaces(
+                new(StringComparer.Ordinal),
+                new(StringComparer.Ordinal),
+                []
+            );
+        }
+
+        List<GenerationTarget> superTypes = GetDirectSuperTypes(
+            target,
+            shape,
+            graph,
+            resourceTypesByUri
+        );
+        var inheritedClassProperties = new Dictionary<string, ShapePropertyBinding>(
+            StringComparer.Ordinal
+        );
+        GenerationTarget? baseTarget = superTypes.FirstOrDefault();
+        if (baseTarget?.ShapeUri is not null)
+        {
+            PropertySurfaces baseSurfaces = GetPropertySurfaces(
+                baseTarget,
+                Shape.FromGraph(baseTarget.ShapeUri, graph),
+                graph,
+                resourceTypesByUri,
+                propertyNameCollisions,
+                visited
+            );
+            foreach (var property in baseSurfaces.ClassProperties)
+            {
+                inheritedClassProperties[property.Key] = property.Value;
+            }
+        }
+
+        List<ShapePropertyBinding> propertyBindings = BindProperties(
+            target,
+            GetGeneratedProperties(target, shape, graph, resourceTypesByUri),
+            propertyNameCollisions,
+            inheritedClassProperties
+        );
+        List<ShapePropertyBinding> declaredClassProperties = propertyBindings
+            .Where(property =>
+                !inheritedClassProperties.ContainsKey(property.Property.PropertyDefinition)
+            )
+            .ToList();
+
+        var classProperties = new Dictionary<string, ShapePropertyBinding>(
+            inheritedClassProperties,
+            StringComparer.Ordinal
+        );
+        foreach (ShapePropertyBinding property in declaredClassProperties)
+        {
+            classProperties[property.Property.PropertyDefinition] = property;
+        }
+
+        visited.Remove(targetKey);
+        return new PropertySurfaces(
+            classProperties,
+            inheritedClassProperties,
+            declaredClassProperties
+        );
+    }
+
+    private static List<ShapeProperty> GetGeneratedProperties(
+        GenerationTarget target,
+        Shape shape,
+        Graph graph,
+        IReadOnlyDictionary<string, GenerationTarget> resourceTypesByUri
+    )
+    {
+        HashSet<string> overriddenPropertyDefinitions = CollectOverriddenPropertyDefinitions(
+            target,
+            shape,
+            graph,
+            resourceTypesByUri
+        );
+        IEnumerable<ShapeProperty> properties = target.SelectedPropertyUris.IsDefaultOrEmpty
+            ? shape.Properties
+            : shape.Properties.Where(property =>
+                target.SelectedPropertyUris.Contains(
+                    property.PropertyDefinition,
+                    StringComparer.Ordinal
+                )
+            );
+        return properties
+            .Where(property => !overriddenPropertyDefinitions.Contains(property.PropertyDefinition))
+            .ToList();
     }
 
     private static HashSet<string> CollectOverriddenPropertyDefinitions(
@@ -702,13 +929,15 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
 
     private static List<ShapePropertyBinding> BindProperties(
         GenerationTarget target,
-        IEnumerable<ShapeProperty> properties
+        IEnumerable<ShapeProperty> properties,
+        IReadOnlyDictionary<string, HashSet<string>> propertyNameCollisions,
+        IReadOnlyDictionary<string, ShapePropertyBinding>? inheritedClassProperties = null
     )
     {
-        var usedPropertyNames = new HashSet<string>(StringComparer.Ordinal)
+        var usedPropertyNames = new Dictionary<string, string?>(StringComparer.Ordinal)
         {
-            target.TypeName,
-            GetInterfaceName(target),
+            [target.TypeName] = null,
+            [GetInterfaceName(target)] = null,
         };
         var bindings = new List<ShapePropertyBinding>();
         foreach (
@@ -717,9 +946,19 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
             )
         )
         {
-            bindings.Add(
-                new ShapePropertyBinding(property, GetPropertyName(property, usedPropertyNames))
-            );
+            ShapePropertyBinding inheritedProperty = default;
+            bool hasInheritedProperty =
+                inheritedClassProperties is not null
+                && inheritedClassProperties.TryGetValue(
+                    property.PropertyDefinition,
+                    out inheritedProperty
+                );
+            string propertyName =
+                hasInheritedProperty
+                    ? inheritedProperty.PropertyName
+                    : GetPropertyName(property, usedPropertyNames, propertyNameCollisions);
+            usedPropertyNames[propertyName] = property.PropertyDefinition;
+            bindings.Add(new ShapePropertyBinding(property, propertyName));
         }
 
         return bindings;
@@ -795,13 +1034,15 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
     private static void AppendProperty(
         StringBuilder builder,
         ShapeProperty property,
-        string propertyName
+        string propertyName,
+        bool hidesInheritedProperty
     )
     {
         AppendPropertyAttributes(builder, property, "    ");
         string typeName = GetClrType(property);
         builder
             .Append("    public ")
+            .Append(hidesInheritedProperty ? "new " : string.Empty)
             .Append(typeName)
             .Append(' ')
             .Append(propertyName)
@@ -904,19 +1145,62 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
             .AppendLine(")]");
     }
 
-    private static string GetPropertyName(ShapeProperty property, HashSet<string> usedPropertyNames)
+    private static string GetPropertyName(
+        ShapeProperty property,
+        IDictionary<string, string?> usedPropertyNames,
+        IReadOnlyDictionary<string, HashSet<string>> propertyNameCollisions
+    )
     {
         string baseName = ToIdentifier(property.Name);
-        string propertyName = baseName;
+        string propertyName =
+            propertyNameCollisions.TryGetValue(
+                baseName,
+                out HashSet<string>? propertyDefinitions
+            ) && propertyDefinitions.Count > 1
+                ? baseName + GetPropertyNamespaceSuffix(property.PropertyDefinition)
+                : baseName;
         int suffix = 2;
 
-        while (!usedPropertyNames.Add(propertyName))
+        while (usedPropertyNames.ContainsKey(propertyName))
         {
             propertyName = baseName + suffix.ToString(CultureInfo.InvariantCulture);
             suffix++;
         }
 
+        usedPropertyNames[propertyName] = property.PropertyDefinition;
         return propertyName;
+    }
+
+    private static string GetPropertyNamespaceSuffix(string propertyDefinition)
+    {
+        int hash = propertyDefinition.LastIndexOf('#');
+        int slash = propertyDefinition.LastIndexOf('/');
+        int delimiter = Math.Max(hash, slash);
+        string namespaceUri =
+            delimiter >= 0 ? propertyDefinition.Substring(0, delimiter) : propertyDefinition;
+        string[] segments = namespaceUri
+            .Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(static segment => segment.Trim())
+            .ToArray();
+        string namespaceName =
+            segments.Length == 0 ? namespaceUri : segments[segments.Length - 1];
+        if (
+            string.Equals(namespaceName, "terms", StringComparison.OrdinalIgnoreCase)
+            && segments.Length > 1
+            && string.Equals(segments[segments.Length - 2], "dc", StringComparison.OrdinalIgnoreCase)
+        )
+        {
+            namespaceName = "dcterms";
+        }
+        else if (
+            string.Equals(namespaceName, "vocabulary", StringComparison.OrdinalIgnoreCase)
+            && segments.Length > 1
+        )
+        {
+            namespaceName = segments[segments.Length - 2];
+        }
+
+        return ToIdentifier(namespaceName);
     }
 
     private static string NamespaceFromShape(Shape shape)
