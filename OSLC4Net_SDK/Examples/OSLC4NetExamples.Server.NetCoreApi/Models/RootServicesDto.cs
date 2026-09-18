@@ -72,58 +72,47 @@ public record RootServicesDto
             nsManager.AddNamespace("oslc_am", "http://open-services.net/ns/am#");
             nsManager.AddNamespace("oslc_rm", "http://open-services.net/xmlns/rm/1.0/");
             nsManager.AddNamespace("oslc_cm", "http://open-services.net/xmlns/cm/1.0/");
-            nsManager.AddNamespace("jfs", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/"); var root = doc.DocumentElement;
+            nsManager.AddNamespace("jfs", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/");
+
+            var root = doc.DocumentElement;
             if (root == null)
             {
                 return new RootServicesDto();
             }
 
-            var dto = new RootServicesDto
-            {
-                About = root.GetAttribute("about", "http://www.w3.org/1999/02/22-rdf-syntax-ns#"),
-                Title = root.SelectSingleNode("dc:title", nsManager)?.InnerText ?? "Root Services",
-                OAuthRealmName = root.SelectSingleNode("jfs:oauthRealmName", nsManager)?.InnerText ?? "",
-                OAuthDomain = root.SelectSingleNode("jfs:oauthDomain", nsManager)?.InnerText ?? "",
-                AmServiceProviders = new ResourceReference
-                {
-                    Resource = (root.SelectSingleNode("oslc_am:amServiceProviders", nsManager) as XmlElement)?.GetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#") ?? ""
-                },
-                RmServiceProviders = new ResourceReference
-                {
-                    Resource = (root.SelectSingleNode("oslc_rm:rmServiceProviders", nsManager) as XmlElement)?.GetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#") ?? ""
-                },
-                CmServiceProviders = new ResourceReference
-                {
-                    Resource = (root.SelectSingleNode("oslc_cm:cmServiceProviders", nsManager) as XmlElement)?.GetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#") ?? ""
-                },
-                OAuthRequestConsumerKeyUrl = new ResourceReference
-                {
-                    Resource = (root.SelectSingleNode("jfs:oauthRequestConsumerKeyUrl", nsManager) as XmlElement)?.GetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#") ?? ""
-                },
-                OAuthApprovalModuleUrl = new ResourceReference
-                {
-                    Resource = (root.SelectSingleNode("jfs:oauthApprovalModuleUrl", nsManager) as XmlElement)?.GetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#") ?? ""
-                },
-                OAuthRequestTokenUrl = new ResourceReference
-                {
-                    Resource = (root.SelectSingleNode("jfs:oauthRequestTokenUrl", nsManager) as XmlElement)?.GetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#") ?? ""
-                },
-                OAuthUserAuthorizationUrl = new ResourceReference
-                {
-                    Resource = (root.SelectSingleNode("jfs:oauthUserAuthorizationUrl", nsManager) as XmlElement)?.GetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#") ?? ""
-                },
-                OAuthAccessTokenUrl = new ResourceReference
-                {
-                    Resource = (root.SelectSingleNode("jfs:oauthAccessTokenUrl", nsManager) as XmlElement)?.GetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#") ?? ""
-                }
-            };
-
-            return dto;
+            return ParseDtoFromXml(root, nsManager);
         }
         catch
         {
             return new RootServicesDto();
         }
+    }
+
+    private static RootServicesDto ParseDtoFromXml(XmlElement root, XmlNamespaceManager nsManager)
+    {
+        return new RootServicesDto
+        {
+            About = root.GetAttribute("about", "http://www.w3.org/1999/02/22-rdf-syntax-ns#"),
+            Title = root.SelectSingleNode("dc:title", nsManager)?.InnerText ?? "Root Services",
+            OAuthRealmName = root.SelectSingleNode("jfs:oauthRealmName", nsManager)?.InnerText ?? "",
+            OAuthDomain = root.SelectSingleNode("jfs:oauthDomain", nsManager)?.InnerText ?? "",
+            AmServiceProviders = GetResourceReference(root, "oslc_am:amServiceProviders", nsManager),
+            RmServiceProviders = GetResourceReference(root, "oslc_rm:rmServiceProviders", nsManager),
+            CmServiceProviders = GetResourceReference(root, "oslc_cm:cmServiceProviders", nsManager),
+            OAuthRequestConsumerKeyUrl = GetResourceReference(root, "jfs:oauthRequestConsumerKeyUrl", nsManager),
+            OAuthApprovalModuleUrl = GetResourceReference(root, "jfs:oauthApprovalModuleUrl", nsManager),
+            OAuthRequestTokenUrl = GetResourceReference(root, "jfs:oauthRequestTokenUrl", nsManager),
+            OAuthUserAuthorizationUrl = GetResourceReference(root, "jfs:oauthUserAuthorizationUrl", nsManager),
+            OAuthAccessTokenUrl = GetResourceReference(root, "jfs:oauthAccessTokenUrl", nsManager)
+        };
+    }
+
+    private static ResourceReference GetResourceReference(XmlElement root, string xpath, XmlNamespaceManager nsManager)
+    {
+        return new ResourceReference
+        {
+            Resource = (root.SelectSingleNode(xpath, nsManager) as XmlElement)?.GetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#") ?? ""
+        };
     }
 
     // Create a method to serialize to XML with proper RDF formatting
@@ -132,88 +121,86 @@ public record RootServicesDto
         try
         {
             var doc = new XmlDocument();
-
-            // Create the root element with proper namespace
-            var root = doc.CreateElement("rdf", "Description", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-
-            // Add namespace declarations
-            root.SetAttribute("xmlns:oslc_cm", "http://open-services.net/xmlns/cm/1.0/");
-            root.SetAttribute("xmlns:oslc_am", "http://open-services.net/ns/am#");
-            root.SetAttribute("xmlns:oslc_rm", "http://open-services.net/xmlns/rm/1.0/");
-            root.SetAttribute("xmlns:dc", "http://purl.org/dc/terms/");
-            root.SetAttribute("xmlns:jfs", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/");
-            root.SetAttribute("xmlns:rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-
-            // Add the rdf:about attribute
-            root.SetAttribute("about", "http://www.w3.org/1999/02/22-rdf-syntax-ns#", About);
-
+            var root = CreateRootElement(doc);
             doc.AppendChild(root);
 
-            // Add child elements
-            var titleElement = doc.CreateElement("dc", "title", "http://purl.org/dc/terms/");
-            titleElement.InnerText = Title;
-            root.AppendChild(titleElement);
+            AddBasicElements(doc, root);
+            AddServiceProviderElements(doc, root);
+            AddOAuthElements(doc, root);
 
-            // Add service provider elements
-            var amElement = doc.CreateElement("oslc_am", "amServiceProviders", "http://open-services.net/ns/am#");
-            amElement.SetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#", AmServiceProviders.Resource);
-            root.AppendChild(amElement);
-
-            var rmElement = doc.CreateElement("oslc_rm", "rmServiceProviders", "http://open-services.net/xmlns/rm/1.0/");
-            rmElement.SetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#", RmServiceProviders.Resource);
-            root.AppendChild(rmElement);
-
-            var cmElement = doc.CreateElement("oslc_cm", "cmServiceProviders", "http://open-services.net/xmlns/cm/1.0/");
-            cmElement.SetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#", CmServiceProviders.Resource);
-            root.AppendChild(cmElement);
-
-            // Add OAuth elements
-            var realmElement = doc.CreateElement("jfs", "oauthRealmName", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/");
-            realmElement.InnerText = OAuthRealmName;
-            root.AppendChild(realmElement);
-
-            var domainElement = doc.CreateElement("jfs", "oauthDomain", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/");
-            domainElement.InnerText = OAuthDomain;
-            root.AppendChild(domainElement);
-
-            var requestKeyElement = doc.CreateElement("jfs", "oauthRequestConsumerKeyUrl", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/");
-            requestKeyElement.SetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#", OAuthRequestConsumerKeyUrl.Resource);
-            root.AppendChild(requestKeyElement);
-
-            var approvalElement = doc.CreateElement("jfs", "oauthApprovalModuleUrl", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/");
-            approvalElement.SetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#", OAuthApprovalModuleUrl.Resource);
-            root.AppendChild(approvalElement);
-
-            var requestTokenElement = doc.CreateElement("jfs", "oauthRequestTokenUrl", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/");
-            requestTokenElement.SetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#", OAuthRequestTokenUrl.Resource);
-            root.AppendChild(requestTokenElement);
-
-            var authElement = doc.CreateElement("jfs", "oauthUserAuthorizationUrl", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/");
-            authElement.SetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#", OAuthUserAuthorizationUrl.Resource);
-            root.AppendChild(authElement);
-
-            var accessTokenElement = doc.CreateElement("jfs", "oauthAccessTokenUrl", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/");
-            accessTokenElement.SetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#", OAuthAccessTokenUrl.Resource);
-            root.AppendChild(accessTokenElement);
-
-            // Create XML declaration and format the output
-            using var stringWriter = new StringWriter();
-            using var xmlWriter = XmlWriter.Create(stringWriter, new XmlWriterSettings
-            {
-                Indent = true,
-                IndentChars = "    ",
-                OmitXmlDeclaration = false,
-                Encoding = Encoding.UTF8
-            });
-
-            doc.WriteContentTo(xmlWriter);
-            xmlWriter.Flush();
-
-            return stringWriter.ToString();
+            return FormatXmlDocument(doc);
         }
         catch
         {
             return string.Empty;
         }
+    }
+
+    private XmlElement CreateRootElement(XmlDocument doc)
+    {
+        var root = doc.CreateElement("rdf", "Description", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+        root.SetAttribute("xmlns:oslc_cm", "http://open-services.net/xmlns/cm/1.0/");
+        root.SetAttribute("xmlns:oslc_am", "http://open-services.net/ns/am#");
+        root.SetAttribute("xmlns:oslc_rm", "http://open-services.net/xmlns/rm/1.0/");
+        root.SetAttribute("xmlns:dc", "http://purl.org/dc/terms/");
+        root.SetAttribute("xmlns:jfs", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/");
+        root.SetAttribute("xmlns:rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+        root.SetAttribute("about", "http://www.w3.org/1999/02/22-rdf-syntax-ns#", About);
+        return root;
+    }
+
+    private void AddBasicElements(XmlDocument doc, XmlElement root)
+    {
+        var titleElement = doc.CreateElement("dc", "title", "http://purl.org/dc/terms/");
+        titleElement.InnerText = Title;
+        root.AppendChild(titleElement);
+    }
+
+    private void AddServiceProviderElements(XmlDocument doc, XmlElement root)
+    {
+        AddResourceElement(doc, root, "oslc_am", "amServiceProviders", "http://open-services.net/ns/am#", AmServiceProviders.Resource);
+        AddResourceElement(doc, root, "oslc_rm", "rmServiceProviders", "http://open-services.net/xmlns/rm/1.0/", RmServiceProviders.Resource);
+        AddResourceElement(doc, root, "oslc_cm", "cmServiceProviders", "http://open-services.net/xmlns/cm/1.0/", CmServiceProviders.Resource);
+    }
+
+    private void AddOAuthElements(XmlDocument doc, XmlElement root)
+    {
+        var realmElement = doc.CreateElement("jfs", "oauthRealmName", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/");
+        realmElement.InnerText = OAuthRealmName;
+        root.AppendChild(realmElement);
+
+        var domainElement = doc.CreateElement("jfs", "oauthDomain", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/");
+        domainElement.InnerText = OAuthDomain;
+        root.AppendChild(domainElement);
+
+        AddResourceElement(doc, root, "jfs", "oauthRequestConsumerKeyUrl", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/", OAuthRequestConsumerKeyUrl.Resource);
+        AddResourceElement(doc, root, "jfs", "oauthApprovalModuleUrl", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/", OAuthApprovalModuleUrl.Resource);
+        AddResourceElement(doc, root, "jfs", "oauthRequestTokenUrl", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/", OAuthRequestTokenUrl.Resource);
+        AddResourceElement(doc, root, "jfs", "oauthUserAuthorizationUrl", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/", OAuthUserAuthorizationUrl.Resource);
+        AddResourceElement(doc, root, "jfs", "oauthAccessTokenUrl", "http://jazz.net/xmlns/prod/jazz/jfs/1.0/", OAuthAccessTokenUrl.Resource);
+    }
+
+    private static void AddResourceElement(XmlDocument doc, XmlElement root, string prefix, string localName, string namespaceUri, string resourceValue)
+    {
+        var element = doc.CreateElement(prefix, localName, namespaceUri);
+        element.SetAttribute("resource", "http://www.w3.org/1999/02/22-rdf-syntax-ns#", resourceValue);
+        root.AppendChild(element);
+    }
+
+    private static string FormatXmlDocument(XmlDocument doc)
+    {
+        using var stringWriter = new StringWriter();
+        using var xmlWriter = XmlWriter.Create(stringWriter, new XmlWriterSettings
+        {
+            Indent = true,
+            IndentChars = "    ",
+            OmitXmlDeclaration = false,
+            Encoding = Encoding.UTF8
+        });
+
+        doc.WriteContentTo(xmlWriter);
+        xmlWriter.Flush();
+
+        return stringWriter.ToString();
     }
 }
