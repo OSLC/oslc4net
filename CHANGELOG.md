@@ -29,6 +29,8 @@ This release does not contain security updates.
 - ❗️ `SignedByteNode` (which corresponds to `xsd:byte`) is now parsed as C# `sbyte` (signed byte) instead of `byte`.
 - 👉 Core `Property` is no longer `IComparable<T>` (because it is not immutable). Use `PropertyNameComparer` instead if you need sorting by name in some context.
   - Users of `Property` collections are responsible to prevent duplicates, e.g. in `AutomationPlan`.
+- ❗️ Generated OSLC domain models now deduplicate inherited declarations by RDF `OslcPropertyDefinition`. This changes the declaring type and backing storage of properties that used to be redeclared on derived classes: for example, `ChangeNotice.AffectedByDefect` is now inherited from `ChangeRequest`, `ChangeSetSelections.Selects` is now inherited from `Selections`, and `KerML.AssociationStructure` now inherits the relevant properties from `Association`. Source code can still access these properties through the derived type, but binary consumers and reflection code that require the old derived declaration must be updated.
+- ❗️ Generated CLR property names are now namespace-qualified when distinct RDF predicates collide. Update `OSLC4Net.Domains.KerML.Element.Source` to `SourceDcterms`; `OSLC4Net.Domains.KerML.Association.Source2`, `Connector.Source2`, and `Relationship.Source2` to `SourceKerml`; `OSLC4Net.Domains.SysMLV2.Element.Source` to `SourceDcterms`; `OSLC4Net.Domains.SysMLV2.Association.Source2`, `Connector.Source2`, `Relationship.Source2`, `FlowDefinition.Source`, `FlowUsage.Source`, and `TransitionUsage.Source2` to `SourceSysml`; `OSLC4Net.Domains.SPDX.Core.Artifact.IntendedUse` to `IntendedUseCore`; and `OSLC4Net.Domains.SPDX.Dataset.DatasetPackage.IntendedUse` to `IntendedUseDataset`.
 
 ### Deprecated
 
