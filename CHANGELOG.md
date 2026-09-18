@@ -18,7 +18,7 @@ No security updates are included in this release.
 ### Added
 
 - `OslcQuery.SubmitPost()` now submits form-encoded OSLC queries over HTTP POST.
-- `RootServicesHelper` now resolves OSLC Root Services documents from direct `/rootservices` or `/rootservices.xml` URIs, the standard `/.well-known/oslc/rootservices.xml` location, and the legacy `/rootservices` fallback.
+- `RootServicesHelper` now resolves OSLC Root Services documents from direct `/rootservices` or `/rootservices.xml` URIs, the standard `/.well-known/oslc/rootservices.xml` location, and the legacy relative `/rootservices` fallback.
 - ⚡️ The IBM Jazz ERM (also known as Doors NG), ETM, and EWM samples now target .NET 10 and have been tested against Jazz.net. Run them with `OSLC4Net_SDK\Examples\scripts\test-jazz_net.ps1`.
 
 
