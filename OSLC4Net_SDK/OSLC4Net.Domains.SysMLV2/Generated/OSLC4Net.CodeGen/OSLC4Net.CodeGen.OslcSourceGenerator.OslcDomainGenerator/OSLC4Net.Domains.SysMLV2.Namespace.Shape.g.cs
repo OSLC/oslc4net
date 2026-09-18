@@ -26,7 +26,7 @@ public partial record Namespace : Element, INamespace
     [OslcName("aliasIds")]
     [OslcReadOnly(false)]
     [OslcTitle("aliasIds")]
-    public HashSet<string> AliasIds { get; set; } = new();
+    public new HashSet<string> AliasIds { get; set; } = new();
 
 
     [OslcDescription("Contributor or contributors to the resource. It is likely that the target resource will be a foaf:Person but that is not necessarily the case.")]
@@ -38,7 +38,7 @@ public partial record Namespace : Element, INamespace
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("contributor")]
-    public HashSet<Uri> Contributor { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Contributor { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Timestamp of resource creation.")]
@@ -48,7 +48,7 @@ public partial record Namespace : Element, INamespace
     [OslcValueType(ValueType.DateTime)]
     [OslcReadOnly(false)]
     [OslcTitle("created")]
-    public DateTimeOffset? Created { get; set; }
+    public new DateTimeOffset? Created { get; set; }
 
 
     [OslcDescription("Creator or creators of the resource. It is likely that the target resource will be a foaf:Person but that is not necessarily the case.")]
@@ -60,7 +60,7 @@ public partial record Namespace : Element, INamespace
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("creator")]
-    public HashSet<Uri> Creator { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Creator { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("A short string representation for the type, for example ‘Car’.")]
@@ -70,7 +70,7 @@ public partial record Namespace : Element, INamespace
     [OslcValueType(ValueType.String)]
     [OslcReadOnly(false)]
     [OslcTitle("dctype")]
-    public HashSet<string> Dctype { get; set; } = new();
+    public new HashSet<string> Dctype { get; set; } = new();
 
 
     [OslcDescription("The declared name of this <code>Element</code>.")]
@@ -79,7 +79,7 @@ public partial record Namespace : Element, INamespace
     [OslcName("declaredName")]
     [OslcReadOnly(false)]
     [OslcTitle("declaredName")]
-    public string? DeclaredName { get; set; }
+    public new string? DeclaredName { get; set; }
 
 
     [OslcDescription("An optional alternative name for the <code>Element</code> that is intended to be shorter or in some way more succinct than its primary <code>name</code>. It may act as a modeler-specified identifier for the <code>Element</code>, though it is then the responsibility of the modeler to maintain the uniqueness of this identifier within a model or relative to some other context.")]
@@ -88,7 +88,7 @@ public partial record Namespace : Element, INamespace
     [OslcName("declaredShortName")]
     [OslcReadOnly(false)]
     [OslcTitle("declaredShortName")]
-    public string? DeclaredShortName { get; set; }
+    public new string? DeclaredShortName { get; set; }
 
 
     [OslcDescription("The resource that derives from another resource originated from or is\nsignificantly influenced by the referenced resource. For example a model element derives from a\nrequirement.")]
@@ -100,7 +100,7 @@ public partial record Namespace : Element, INamespace
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("derives")]
-    public HashSet<Uri> Derives { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Derives { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Descriptive text about resource represented as rich text in XHTML content.")]
@@ -110,7 +110,7 @@ public partial record Namespace : Element, INamespace
     [OslcValueType(ValueType.XMLLiteral)]
     [OslcReadOnly(false)]
     [OslcTitle("description")]
-    public string? Description { get; set; }
+    public new string? Description { get; set; }
 
 
     [OslcDescription("The Documentation owned by this Element.")]
@@ -122,7 +122,7 @@ public partial record Namespace : Element, INamespace
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Documentation")]
     [OslcReadOnly(false)]
     [OslcTitle("documentation")]
-    public HashSet<Uri> Documentation { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Documentation { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("This resource elaborates the referenced resource.")]
@@ -134,7 +134,7 @@ public partial record Namespace : Element, INamespace
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("elaborates")]
-    public HashSet<Uri> Elaborates { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Elaborates { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The globally unique identifier for this Element. This is intended to be set by tooling, and it must not change during the lifetime of the Element.")]
@@ -143,7 +143,7 @@ public partial record Namespace : Element, INamespace
     [OslcName("elementId")]
     [OslcReadOnly(false)]
     [OslcTitle("elementId")]
-    public string ElementId { get; set; } = string.Empty;
+    public new string ElementId { get; set; } = string.Empty;
 
 
     [OslcDescription("A generic link from a resource to an external web page.")]
@@ -155,7 +155,7 @@ public partial record Namespace : Element, INamespace
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("external")]
-    public HashSet<Uri> External { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> External { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("A unique identifier for a resource. Typically read-only and assigned by the\nservice provider when a resource is created. Not typically intended for end-user display.")]
@@ -165,7 +165,7 @@ public partial record Namespace : Element, INamespace
     [OslcValueType(ValueType.String)]
     [OslcReadOnly(true)]
     [OslcTitle("identifier")]
-    public string Identifier { get; set; } = string.Empty;
+    public new string Identifier { get; set; } = string.Empty;
 
 
     [OslcDescription("The <code>Memberships</code> in this <code>Namespace</code> that result from the <code>ownedImports</code> of this <code>Namespace</code>.")]
@@ -189,7 +189,7 @@ public partial record Namespace : Element, INamespace
     [OslcRange("http://open-services.net/ns/core#ResourceShape")]
     [OslcReadOnly(false)]
     [OslcTitle("instanceShape")]
-    public Uri? InstanceShape { get; set; }
+    public new Uri? InstanceShape { get; set; }
 
 
     [OslcDescription("Whether all necessary implied Relationships have been included in the <code>ownedRelationships</code> of this Element. This property may be true, even if there are not actually any <code>ownedRelationships</code> with <code>isImplied = true</code>, meaning that no such Relationships are actually implied for this Element. However, if it is false, then <code>ownedRelationships</code> may <em>not</em> contain any implied Relationships. That is, either <em>all</em> required implied Relationships must be included, or none of them.")]
@@ -198,7 +198,7 @@ public partial record Namespace : Element, INamespace
     [OslcName("isImpliedIncluded")]
     [OslcReadOnly(false)]
     [OslcTitle("isImpliedIncluded")]
-    public string IsImpliedIncluded { get; set; } = string.Empty;
+    public new string IsImpliedIncluded { get; set; } = string.Empty;
 
 
     [OslcDescription("Whether this Element is contained in the ownership tree of a library model.")]
@@ -207,7 +207,7 @@ public partial record Namespace : Element, INamespace
     [OslcName("isLibraryElement")]
     [OslcReadOnly(false)]
     [OslcTitle("isLibraryElement")]
-    public string IsLibraryElement { get; set; } = string.Empty;
+    public new string IsLibraryElement { get; set; } = string.Empty;
 
 
     [OslcDescription("The set of all member <code>Elements</code> of this <code>Namespace</code>, which are the <code>memberElements</code> of all <code>memberships</code> of the <code>Namespace</code>.")]
@@ -241,7 +241,7 @@ public partial record Namespace : Element, INamespace
     [OslcValueType(ValueType.DateTime)]
     [OslcReadOnly(false)]
     [OslcTitle("modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public new DateTimeOffset? Modified { get; set; }
 
 
     [OslcDescription("The name to be used for this <code>Element</code> during name resolution within its <code>owningNamespace</code>. This is derived using the <code>effectiveName()</code> operation. By default, it is the same as the <code>declaredName</code>, but this is overridden for certain kinds of <code>Elements</code> to compute a <code>name</code> even when the <code>declaredName</code> is null.")]
@@ -250,7 +250,7 @@ public partial record Namespace : Element, INamespace
     [OslcName("name")]
     [OslcReadOnly(false)]
     [OslcTitle("name")]
-    public string? Name { get; set; }
+    public new string? Name { get; set; }
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Element</code> that are <code>Annotations</code>, for which this <code>Element</code> is the <code>annotatedElement</code>.")]
@@ -262,7 +262,7 @@ public partial record Namespace : Element, INamespace
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Annotation")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedAnnotation")]
-    public HashSet<Uri> OwnedAnnotation { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedAnnotation { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The Elements owned by this Element, derived as the <tt>ownedRelatedElements</tt> of the <tt>ownedRelationships</tt> of this Element.")]
@@ -274,7 +274,7 @@ public partial record Namespace : Element, INamespace
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Element")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedElement")]
-    public HashSet<Uri> OwnedElement { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedElement { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Namespace</code> that are <code>Imports</code>, for which the <code>Namespace</code> is the <code>importOwningNamespace</code>.")]
@@ -322,7 +322,7 @@ public partial record Namespace : Element, INamespace
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Relationship")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedRelationship")]
-    public HashSet<Uri> OwnedRelationship { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedRelationship { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The owner of this Element, derived as the <code>owningRelatedElement</code> of the <code>owningRelationship</code> of this Element, if any.")]
@@ -334,7 +334,7 @@ public partial record Namespace : Element, INamespace
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Element")]
     [OslcReadOnly(false)]
     [OslcTitle("owner")]
-    public Uri? Owner { get; set; }
+    public new Uri? Owner { get; set; }
 
 
     [OslcDescription("The <code>owningRelationship</code> of this <code>Element</code>, if that <code>Relationship</code> is a <code>Membership</code>.")]
@@ -346,7 +346,7 @@ public partial record Namespace : Element, INamespace
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#OwningMembership")]
     [OslcReadOnly(false)]
     [OslcTitle("owningMembership")]
-    public Uri? OwningMembership { get; set; }
+    public new Uri? OwningMembership { get; set; }
 
 
     [OslcDescription("The <code>Namespace</code> that owns this <code>Element</code>, which is the <code>membershipOwningNamespace</code> of the <code>owningMembership</code> of this <code>Element</code>, if any.")]
@@ -358,7 +358,7 @@ public partial record Namespace : Element, INamespace
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Namespace")]
     [OslcReadOnly(false)]
     [OslcTitle("owningNamespace")]
-    public Uri? OwningNamespace { get; set; }
+    public new Uri? OwningNamespace { get; set; }
 
 
     [OslcDescription("The Relationship for which this Element is an <tt>ownedRelatedElement</tt>, if any.")]
@@ -370,7 +370,7 @@ public partial record Namespace : Element, INamespace
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Relationship")]
     [OslcReadOnly(false)]
     [OslcTitle("owningRelationship")]
-    public Uri? OwningRelationship { get; set; }
+    public new Uri? OwningRelationship { get; set; }
 
 
     [OslcDescription("The full ownership-qualified name of this <code>Element</code>, represented in a form that is valid according to the KerML textual concrete syntax for qualified names (including use of unrestricted name notation and escaped characters, as necessary). The <code>qualifiedName</code> is null if this <code>Element</code> has no <code>owningNamespace</code> or if there is not a complete ownership chain of named <code>Namespaces</code> from a root <code>Namespace</code> to this <code>Element</code>. If the <code>owningNamespace</code> has other <code>Elements</code> with the same name as this one, then the <code>qualifiedName</code> is null for all such <code>Elements</code> other than the first.")]
@@ -379,7 +379,7 @@ public partial record Namespace : Element, INamespace
     [OslcName("qualifiedName")]
     [OslcReadOnly(false)]
     [OslcTitle("qualifiedName")]
-    public string? QualifiedName { get; set; }
+    public new string? QualifiedName { get; set; }
 
 
     [OslcDescription("The target is a refinement of the source. (e.g. a use case scenario\nmight be a refinement of a textual requirement that describes the interaction).")]
@@ -391,7 +391,7 @@ public partial record Namespace : Element, INamespace
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("refine")]
-    public HashSet<Uri> Refine { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Refine { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The model element satisfies the requirement (e.g. The use case\nsatisfies a functional requirement).")]
@@ -403,7 +403,7 @@ public partial record Namespace : Element, INamespace
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("satisfy")]
-    public HashSet<Uri> Satisfy { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Satisfy { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("A link to the resource's OSLC Service Provider. There may be cases when the\nsubject resource is available from a service provider that implements multiple domain\nspecifications, which could result in multiple values for this property.")]
@@ -415,7 +415,7 @@ public partial record Namespace : Element, INamespace
     [OslcRange("http://open-services.net/ns/core#ServiceProvider")]
     [OslcReadOnly(false)]
     [OslcTitle("serviceProvider")]
-    public HashSet<Uri> ServiceProvider { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> ServiceProvider { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The short name to be used for this <code>Element</code> during name resolution within its <code>owningNamespace</code>. This is derived using the <code>effectiveShortName()</code> operation. By default, it is the same as the <code>declaredShortName</code>, but this is overridden for certain kinds of <code>Elements</code> to compute a <code>shortName</code> even when the <code>declaredName</code> is null.")]
@@ -424,7 +424,7 @@ public partial record Namespace : Element, INamespace
     [OslcName("shortName")]
     [OslcReadOnly(false)]
     [OslcTitle("shortName")]
-    public string? ShortName { get; set; }
+    public new string? ShortName { get; set; }
 
 
     [OslcDescription("{{Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users. SHOULD include only content that is valid inside an XHTML &lt;span&gt; element}}.")]
@@ -434,7 +434,7 @@ public partial record Namespace : Element, INamespace
     [OslcValueType(ValueType.XMLLiteral)]
     [OslcReadOnly(false)]
     [OslcTitle("shortTitle")]
-    public string? ShortTitle { get; set; }
+    public new string? ShortTitle { get; set; }
 
 
     [OslcDescription("The resource URI a client can perform a get on to obtain the original non-OSLC AM formatted resource that was used to create this resource. The source resource is usually a binary or proprietary format that the service provider can consume and convert into an OSLC AM format. The service may use content negotiation with the Accept header to obtain the desired content type.")]
@@ -446,7 +446,7 @@ public partial record Namespace : Element, INamespace
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("source")]
-    public Uri? Source { get; set; }
+    public new Uri? Source { get; set; }
 
 
     [OslcDescription("The <code>TextualRepresentations</code> that annotate this <code>Element</code>.")]
@@ -458,7 +458,7 @@ public partial record Namespace : Element, INamespace
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#TextualRepresentation")]
     [OslcReadOnly(false)]
     [OslcTitle("textualRepresentation")]
-    public HashSet<Uri> TextualRepresentation { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> TextualRepresentation { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Title of the resource represented as rich text in XHTML content.")]
@@ -468,7 +468,7 @@ public partial record Namespace : Element, INamespace
     [OslcValueType(ValueType.XMLLiteral)]
     [OslcReadOnly(false)]
     [OslcTitle("title")]
-    public string Title { get; set; } = string.Empty;
+    public new string Title { get; set; } = string.Empty;
 
 
     [OslcDescription("The model element has a trace to the requirement (e.g. An attribute\nor its value are traced to a requirement).")]
@@ -480,6 +480,6 @@ public partial record Namespace : Element, INamespace
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("trace")]
-    public HashSet<Uri> Trace { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Trace { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 }

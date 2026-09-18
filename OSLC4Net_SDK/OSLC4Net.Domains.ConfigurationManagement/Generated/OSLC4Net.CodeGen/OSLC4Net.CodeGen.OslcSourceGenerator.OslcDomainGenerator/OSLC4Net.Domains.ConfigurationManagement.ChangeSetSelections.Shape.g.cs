@@ -27,6 +27,6 @@ public partial record ChangeSetSelections : Selections, IChangeSetSelections
     [OslcValueType(ValueType.Resource)]
     [OslcRepresentation(Representation.Reference)]
     [OslcTitle("selects")]
-    public HashSet<Uri> Selects { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Selects { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 }

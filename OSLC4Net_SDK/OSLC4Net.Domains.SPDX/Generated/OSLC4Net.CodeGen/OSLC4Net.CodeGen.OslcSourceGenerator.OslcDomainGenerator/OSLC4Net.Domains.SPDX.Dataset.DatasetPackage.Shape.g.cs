@@ -130,7 +130,7 @@ public partial record DatasetPackage : global::OSLC4Net.Domains.SPDX.Software.Pa
     [OslcName("intendedUse")]
     [OslcValueType(ValueType.String)]
     [OslcTitle("intendedUse")]
-    public string? IntendedUse { get; set; }
+    public new string? IntendedUse { get; set; }
 
 
     [OslcDescription("Records the biases that the dataset is known to encompass.")]

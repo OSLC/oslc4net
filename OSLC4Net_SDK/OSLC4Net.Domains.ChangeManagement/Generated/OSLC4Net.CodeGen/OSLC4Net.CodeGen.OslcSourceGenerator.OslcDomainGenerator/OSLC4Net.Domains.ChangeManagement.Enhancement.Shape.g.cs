@@ -28,7 +28,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcRepresentation(Representation.Reference)]
     [OslcRange("http://open-services.net/ns/cm#Defect")]
     [OslcTitle("Affected by Defect")]
-    public HashSet<Uri> AffectedByDefect { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> AffectedByDefect { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Change request affects plan item.")]
@@ -38,7 +38,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcValueType(ValueType.Resource)]
     [OslcRepresentation(Representation.Reference)]
     [OslcTitle("Affects PlanItem")]
-    public HashSet<Uri> AffectsPlanItem { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> AffectsPlanItem { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Change request affecting a Requirement. It is likely that the target resource will be an <code>oslc_rm:Requirement</code> but that is not necessarily the case.")]
@@ -49,7 +49,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcRepresentation(Representation.Reference)]
     [OslcRange("http://open-services.net/ns/rm#Requirement")]
     [OslcTitle("Affects Requirement")]
-    public HashSet<Uri> AffectsRequirement { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> AffectsRequirement { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Whether or not the Change Request has been approved.")]
@@ -58,7 +58,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcName("approved")]
     [OslcValueType(ValueType.Boolean)]
     [OslcTitle("approved")]
-    public bool? Approved { get; set; }
+    public new bool? Approved { get; set; }
 
 
     [OslcDescription("Agents who are responsible authorizing and/or has authorized effort to be expended to address a set of child change requests.")]
@@ -69,7 +69,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcRepresentation(Representation.Either)]
     [OslcRange("http://xmlns.com/foaf/0.1/Agent")]
     [OslcTitle("authorizer")]
-    public HashSet<Uri> Authorizer { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Authorizer { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The date at which no further activity or work is intended to be conducted.")]
@@ -79,7 +79,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcValueType(ValueType.DateTime)]
     [OslcReadOnly(true)]
     [OslcTitle("closeDate")]
-    public DateTimeOffset? CloseDate { get; set; }
+    public new DateTimeOffset? CloseDate { get; set; }
 
 
     [OslcDescription("Whether or not the Change Request is completely done, no further fixes or fix verification is needed.")]
@@ -88,7 +88,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcName("closed")]
     [OslcValueType(ValueType.Boolean)]
     [OslcTitle("closed")]
-    public bool? Closed { get; set; }
+    public new bool? Closed { get; set; }
 
 
     [OslcDescription("The person(s) who are responsible for the work needed to complete the change request (reference: Dublin Core). It is likely that the target resource will be a <code>foaf:Person</code> but that is not necessarily the case.")]
@@ -99,7 +99,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcRepresentation(Representation.Either)]
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcTitle("contributor")]
-    public HashSet<Uri> Contributor { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Contributor { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Timestamp of resource creation (reference: Dublin Core).")]
@@ -109,7 +109,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcValueType(ValueType.DateTime)]
     [OslcReadOnly(true)]
     [OslcTitle("created")]
-    public DateTimeOffset? Created { get; set; }
+    public new DateTimeOffset? Created { get; set; }
 
 
     [OslcDescription("Creator or creators of resource (reference: Dublin Core). It is likely that the target resource will be a <code>foaf:Person</code> but that is not necessarily the case.")]
@@ -120,7 +120,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcRepresentation(Representation.Either)]
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcTitle("creator")]
-    public HashSet<Uri> Creator { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Creator { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content. SHOULD include only content that is valid and suitable inside an XHTML &lt;div&gt; element.")]
@@ -129,7 +129,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcName("description")]
     [OslcValueType(ValueType.XMLLiteral)]
     [OslcTitle("description")]
-    public string? Description { get; set; }
+    public new string? Description { get; set; }
 
 
     [OslcDescription("A series of notes and comments about this change request.")]
@@ -140,7 +140,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcRepresentation(Representation.Either)]
     [OslcRange("http://open-services.net/ns/core#Discussion")]
     [OslcTitle("discussedBy")]
-    public Uri? DiscussedBy { get; set; }
+    public new Uri? DiscussedBy { get; set; }
 
 
     [OslcDescription("Whether or not the Change Request has been fixed.")]
@@ -149,7 +149,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcName("fixed")]
     [OslcValueType(ValueType.Boolean)]
     [OslcTitle("fixed")]
-    public bool? Fixed { get; set; }
+    public new bool? Fixed { get; set; }
 
 
     [OslcDescription("A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
@@ -159,7 +159,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcValueType(ValueType.String)]
     [OslcReadOnly(true)]
     [OslcTitle("identifier")]
-    public string Identifier { get; set; } = string.Empty;
+    public new string Identifier { get; set; } = string.Empty;
 
 
     [OslcDescription("Implements associated Requirement. It is likely that the target resource will be an <code>oslc_rm:Requirement</code> but that is not necessarily the case.")]
@@ -170,7 +170,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcRepresentation(Representation.Reference)]
     [OslcRange("http://open-services.net/ns/rm#Requirement")]
     [OslcTitle("Implements Requirement")]
-    public HashSet<Uri> ImplementsRequirement { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> ImplementsRequirement { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Whether or not the Change Request in a state indicating that active work is occurring. If oslc_cm:inProgress is true, then oslc_cm:fixed and oslc_cm:closed must also be false.")]
@@ -179,7 +179,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcName("inProgress")]
     [OslcValueType(ValueType.Boolean)]
     [OslcTitle("inProgress")]
-    public bool? InProgress { get; set; }
+    public new bool? InProgress { get; set; }
 
 
     [OslcDescription("Resource Shape that provides hints as to resource property value-types and allowed values.")]
@@ -190,7 +190,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcRepresentation(Representation.Reference)]
     [OslcRange("http://open-services.net/ns/core#ResourceShape")]
     [OslcTitle("instanceShape")]
-    public HashSet<Uri> InstanceShape { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> InstanceShape { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Timestamp of latest resource modification (reference: Dublin Core).")]
@@ -200,7 +200,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcValueType(ValueType.DateTime)]
     [OslcReadOnly(true)]
     [OslcTitle("modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public new DateTimeOffset? Modified { get; set; }
 
 
     [OslcDescription("The related parent change requests of the subject change request. Establishes a parent/child relationship between change requests.")]
@@ -211,7 +211,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcRepresentation(Representation.Either)]
     [OslcRange("http://open-services.net/ns/cm#ChangeRequest")]
     [OslcTitle("Parent of Change Request")]
-    public HashSet<Uri> Parent { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Parent { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Priority of this change request.")]
@@ -222,7 +222,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcRepresentation(Representation.Either)]
     [OslcRange("http://open-services.net/ns/cm#Priority")]
     [OslcTitle("priority")]
-    public HashSet<Uri> Priority { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Priority { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("This relationship is loosely coupled and has no specific meaning.")]
@@ -232,7 +232,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcValueType(ValueType.Resource)]
     [OslcRepresentation(Representation.Reference)]
     [OslcTitle("Related ChangeRequest")]
-    public HashSet<Uri> RelatedChangeRequest { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> RelatedChangeRequest { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Whether or not the Change Request has been reviewed.")]
@@ -241,7 +241,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcName("reviewed")]
     [OslcValueType(ValueType.Boolean)]
     [OslcTitle("reviewed")]
-    public bool? Reviewed { get; set; }
+    public new bool? Reviewed { get; set; }
 
 
     [OslcDescription("A link to the resource's OSLC Service Provider. There may be cases when the\nsubject resource is available from a service provider that implements multiple domain\nspecifications, which could result in multiple values for this property.")]
@@ -252,7 +252,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcRepresentation(Representation.Reference)]
     [OslcRange("http://open-services.net/ns/core#ServiceProvider")]
     [OslcTitle("serviceProvider")]
-    public HashSet<Uri> ServiceProvider { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> ServiceProvider { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users. SHOULD include only content that is valid inside an XHTML &lt;span&gt; element.")]
@@ -261,7 +261,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcName("shortTitle")]
     [OslcValueType(ValueType.XMLLiteral)]
     [OslcTitle("Short title")]
-    public string? ShortTitle { get; set; }
+    public new string? ShortTitle { get; set; }
 
 
     [OslcDescription("Used to indicate the state of the change request. This property is often read-only, but could be changed using OSLC Actions.")]
@@ -270,7 +270,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcName("state")]
     [OslcRange("http://open-services.net/ns/cm#State")]
     [OslcTitle("state")]
-    public string? State { get; set; }
+    public new string? State { get; set; }
 
 
     [OslcDescription("Used to indicate the status of the change request. This property is often read-only.")]
@@ -279,7 +279,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcName("status")]
     [OslcValueType(ValueType.String)]
     [OslcTitle("status")]
-    public string? Status { get; set; }
+    public new string? Status { get; set; }
 
 
     [OslcDescription("Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
@@ -288,7 +288,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcName("subject")]
     [OslcValueType(ValueType.String)]
     [OslcTitle("subject")]
-    public HashSet<string> Subject { get; set; } = new();
+    public new HashSet<string> Subject { get; set; } = new();
 
 
     [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content. SHOULD include only content that is valid and suitable inside an XHTML &lt;div&gt; element.")]
@@ -297,7 +297,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcName("title")]
     [OslcValueType(ValueType.XMLLiteral)]
     [OslcTitle("title")]
-    public string Title { get; set; } = string.Empty;
+    public new string Title { get; set; } = string.Empty;
 
 
     [OslcDescription("Tracks a resource that represents a set of changes on the resource.")]
@@ -308,7 +308,7 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcRepresentation(Representation.Reference)]
     [OslcRange("http://open-services.net/ns/config#ChangeSet")]
     [OslcTitle("Tracks Change Set")]
-    public HashSet<Uri> TracksChangeSet { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> TracksChangeSet { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Whether or not the resolution or fix of the Change Request has been verified.")]
@@ -317,6 +317,6 @@ public partial record Enhancement : ChangeRequest, IEnhancement
     [OslcName("verified")]
     [OslcValueType(ValueType.Boolean)]
     [OslcTitle("verified")]
-    public bool? Verified { get; set; }
+    public new bool? Verified { get; set; }
 
 }

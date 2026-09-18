@@ -26,7 +26,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("aliasIds")]
     [OslcReadOnly(false)]
     [OslcTitle("aliasIds")]
-    public HashSet<string> AliasIds { get; set; } = new();
+    public new HashSet<string> AliasIds { get; set; } = new();
 
 
     [OslcDescription("The <code>Associations</code> that type the <code>Connector</code>.")]
@@ -38,7 +38,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Association")]
     [OslcReadOnly(false)]
     [OslcTitle("association")]
-    public HashSet<Uri> Association { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Association { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>Behaviors</code> that type this <code>Step</code>.")]
@@ -50,7 +50,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Behavior")]
     [OslcReadOnly(false)]
     [OslcTitle("behavior")]
-    public HashSet<Uri> Behavior { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Behavior { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>Feature</code> that are chained together to determine the values of this <code>Feature</code>, derived from the <code>chainingFeatures</code> of the <code>ownedFeatureChainings</code> of this <code>Feature</code>, in the same order. The values of a <code>Feature</code> with <code>chainingFeatures</code> are the same as values of the last <code>Feature</code> in the chain, which can be found by starting with the values of the first <code>Feature</code> (for each instance of the domain of the original <code>Feature</code>), then using each of those as domain instances to find the values of the second <code>Feature</code> in chainingFeatures, and so on, to values of the last <code>Feature</code>.")]
@@ -62,7 +62,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("chainingFeature")]
-    public HashSet<Uri> ChainingFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> ChainingFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>endFeatures</code> of a <code>Connector</code>, which redefine the <code>endFeatures</code> of the <code>associations</code> of the <code>Connector</code>. The <code>connectorEnds</code> determine via <code>ReferenceSubsetting</code> <code>Relationships</code> which <code>Features</code> are related by the <code>Connector</code>.")]
@@ -74,7 +74,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("connectorEnd")]
-    public HashSet<Uri> ConnectorEnd { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> ConnectorEnd { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Contributor or contributors to the resource. It is likely that the target resource will be a foaf:Person but that is not necessarily the case.")]
@@ -86,7 +86,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("contributor")]
-    public HashSet<Uri> Contributor { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Contributor { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Timestamp of resource creation.")]
@@ -96,7 +96,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcValueType(ValueType.DateTime)]
     [OslcReadOnly(false)]
     [OslcTitle("created")]
-    public DateTimeOffset? Created { get; set; }
+    public new DateTimeOffset? Created { get; set; }
 
 
     [OslcDescription("Creator or creators of the resource. It is likely that the target resource will be a foaf:Person but that is not necessarily the case.")]
@@ -108,7 +108,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("creator")]
-    public HashSet<Uri> Creator { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Creator { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The second <code>chainingFeature</code> of the <code>crossedFeature</code> of the <code>ownedCrossSubsetting</code> of this <code>Feature</code>, if it has one. Semantically, the values of the <code>crossFeature</code> of an end <code>Feature</code> must include all values of the end <code>Feature</code> obtained when navigating from values of the other end <code>Features</code> of the same <code>owningType</code>.\n.")]
@@ -120,7 +120,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("crossFeature")]
-    public Uri? CrossFeature { get; set; }
+    public new Uri? CrossFeature { get; set; }
 
 
     [OslcDescription("A short string representation for the type, for example ‘Car’.")]
@@ -130,7 +130,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcValueType(ValueType.String)]
     [OslcReadOnly(false)]
     [OslcTitle("dctype")]
-    public HashSet<string> Dctype { get; set; } = new();
+    public new HashSet<string> Dctype { get; set; } = new();
 
 
     [OslcDescription("The declared name of this <code>Element</code>.")]
@@ -139,7 +139,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("declaredName")]
     [OslcReadOnly(false)]
     [OslcTitle("declaredName")]
-    public string? DeclaredName { get; set; }
+    public new string? DeclaredName { get; set; }
 
 
     [OslcDescription("An optional alternative name for the <code>Element</code> that is intended to be shorter or in some way more succinct than its primary <code>name</code>. It may act as a modeler-specified identifier for the <code>Element</code>, though it is then the responsibility of the modeler to maintain the uniqueness of this identifier within a model or relative to some other context.")]
@@ -148,7 +148,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("declaredShortName")]
     [OslcReadOnly(false)]
     [OslcTitle("declaredShortName")]
-    public string? DeclaredShortName { get; set; }
+    public new string? DeclaredShortName { get; set; }
 
 
     [OslcDescription("The innermost <code>Type</code> that is a common direct or indirect <code>featuringType</code> of the <code>relatedFeatures</code>, such that, if it exists and was the <code>featuringType</code> of this <code>Connector</code>, the <code>Connector</code> would satisfy the <code>checkConnectorTypeFeaturing</code> constraint.")]
@@ -160,7 +160,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Type")]
     [OslcReadOnly(false)]
     [OslcTitle("defaultFeaturingType")]
-    public Uri? DefaultFeaturingType { get; set; }
+    public new Uri? DefaultFeaturingType { get; set; }
 
 
     [OslcDescription("The resource that derives from another resource originated from or is\nsignificantly influenced by the referenced resource. For example a model element derives from a\nrequirement.")]
@@ -172,7 +172,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("derives")]
-    public HashSet<Uri> Derives { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Derives { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Descriptive text about resource represented as rich text in XHTML content.")]
@@ -182,7 +182,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcValueType(ValueType.XMLLiteral)]
     [OslcReadOnly(false)]
     [OslcTitle("description")]
-    public string? Description { get; set; }
+    public new string? Description { get; set; }
 
 
     [OslcDescription("The interpretations of a <code>Type</code> with <code>differencingTypes</code> are asserted to be those of the first of those <code>Types</code>, but not including those of the remaining <code>Types</code>. For example, a <code>Classifier</code> might be the difference of a <code>Classifier</code> for people and another for people of a particular nationality, leaving people who are not of that nationality. Similarly, a feature of people might be the difference between a feature for their children and a <code>Classifier</code> for people of a particular sex, identifying their children not of that sex (because the interpretations of the children <code>Feature</code> that identify those of that sex are also interpretations of the <code>Classifier</code> for that sex).")]
@@ -194,7 +194,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Type")]
     [OslcReadOnly(false)]
     [OslcTitle("differencingType")]
-    public HashSet<Uri> DifferencingType { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> DifferencingType { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>features</code> of this <code>Type</code> that have a non-null <code>direction</code>.")]
@@ -206,7 +206,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("directedFeature")]
-    public HashSet<Uri> DirectedFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> DirectedFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Indicates how values of this <code>Feature</code> are determined or used (as specified for the <code>FeatureDirectionKind</code>).")]
@@ -215,7 +215,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("direction")]
     [OslcReadOnly(false)]
     [OslcTitle("direction")]
-    public string? Direction { get; set; }
+    public new string? Direction { get; set; }
 
 
     [OslcDescription("The Documentation owned by this Element.")]
@@ -227,7 +227,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Documentation")]
     [OslcReadOnly(false)]
     [OslcTitle("documentation")]
-    public HashSet<Uri> Documentation { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Documentation { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("This resource elaborates the referenced resource.")]
@@ -239,7 +239,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("elaborates")]
-    public HashSet<Uri> Elaborates { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Elaborates { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The globally unique identifier for this Element. This is intended to be set by tooling, and it must not change during the lifetime of the Element.")]
@@ -248,7 +248,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("elementId")]
     [OslcReadOnly(false)]
     [OslcTitle("elementId")]
-    public string ElementId { get; set; } = string.Empty;
+    public new string ElementId { get; set; } = string.Empty;
 
 
     [OslcDescription("All <code>features</code> of this <code>Type</code> with <code>isEnd = true</code>.")]
@@ -260,7 +260,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("endFeature")]
-    public HashSet<Uri> EndFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> EndFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>Type</code> that is related to this <code>Feature</code> by an <code>EndFeatureMembership</code> in which the <code>Feature</code> is an <code>ownedMemberFeature</code>.")]
@@ -272,7 +272,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Type")]
     [OslcReadOnly(false)]
     [OslcTitle("endOwningType")]
-    public Uri? EndOwningType { get; set; }
+    public new Uri? EndOwningType { get; set; }
 
 
     [OslcDescription("A generic link from a resource to an external web page.")]
@@ -284,7 +284,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("external")]
-    public HashSet<Uri> External { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> External { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedMemberFeatures</code> of the <code>featureMemberships</code> of this <code>Type</code>.")]
@@ -296,7 +296,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("feature")]
-    public HashSet<Uri> Feature { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Feature { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>FeatureMemberships</code> for <code>features</code> of this <code>Type</code>, which include all <code>ownedFeatureMemberships</code> and those <code>inheritedMemberships</code> that are <code>FeatureMemberships</code> (but does <em>not</em> include any <code>importedMemberships</code>).")]
@@ -308,7 +308,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#FeatureMembership")]
     [OslcReadOnly(false)]
     [OslcTitle("featureMembership")]
-    public HashSet<Uri> FeatureMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> FeatureMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The last of the <code>chainingFeatures</code> of this <code>Feature</code>, if it has any. Otherwise, this <code>Feature</code> itself.")]
@@ -320,7 +320,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("featureTarget")]
-    public Uri FeatureTarget { get; set; } = null!;
+    public new Uri FeatureTarget { get; set; } = null!;
 
 
     [OslcDescription("<code>Types</code> that feature this <code>Feature</code>, such that any instance in the domain of the <code>Feature</code> must be classified by all of these <code>Types</code>, including at least all the <code>featuringTypes</code> of its <code>typeFeaturings</code>.  If the <code>Feature</code> is chained, then the <code>featuringTypes</code> of the first <code>Feature</code> in the chain are also <code>featuringTypes</code> of the chained <code>Feature</code>.")]
@@ -332,7 +332,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Type")]
     [OslcReadOnly(false)]
     [OslcTitle("featuringType")]
-    public HashSet<Uri> FeaturingType { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> FeaturingType { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>connectorEnds</code> of this <code>Flow</code> that are <code>FlowEnds</code>.")]
@@ -344,7 +344,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#FlowEnd")]
     [OslcReadOnly(false)]
     [OslcTitle("flowEnd")]
-    public HashSet<Uri> FlowEnd { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> FlowEnd { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("A unique identifier for a resource. Typically read-only and assigned by the\nservice provider when a resource is created. Not typically intended for end-user display.")]
@@ -354,7 +354,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcValueType(ValueType.String)]
     [OslcReadOnly(true)]
     [OslcTitle("identifier")]
-    public string Identifier { get; set; } = string.Empty;
+    public new string Identifier { get; set; } = string.Empty;
 
 
     [OslcDescription("The <code>Memberships</code> in this <code>Namespace</code> that result from the <code>ownedImports</code> of this <code>Namespace</code>.")]
@@ -366,7 +366,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Membership")]
     [OslcReadOnly(false)]
     [OslcTitle("importedMembership")]
-    public HashSet<Uri> ImportedMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> ImportedMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("All the <code>memberFeatures</code> of the <code>inheritedMemberships</code> of this <code>Type</code> that are <code>FeatureMemberships</code>.")]
@@ -378,7 +378,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("inheritedFeature")]
-    public HashSet<Uri> InheritedFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> InheritedFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("All <code>Memberships</code> inherited by this <code>Type</code> via <code>Specialization</code> or <code>Conjugation</code>. These are included in the derived union for the <code>memberships</code> of the <code>Type</code>.")]
@@ -390,7 +390,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Membership")]
     [OslcReadOnly(false)]
     [OslcTitle("inheritedMembership")]
-    public HashSet<Uri> InheritedMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> InheritedMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("All <code>features</code> related to this <code>Type</code> by <code>FeatureMemberships</code> that have <code>direction</code> <code>in</code> or <code>inout</code>.")]
@@ -402,7 +402,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("input")]
-    public HashSet<Uri> Input { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Input { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The URI of a Resource Shape that describes the possible properties, occurrence,\nvalue types, allowed values and labels. This shape information is useful in displaying the subject\nresource as well as guiding clients in performing modifications. Instance shapes may be specific\nto the authenticated user associated with the request that retrieved the resource, the current\nstate of the resource and other factors and thus should not be cached.")]
@@ -414,7 +414,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("http://open-services.net/ns/core#ResourceShape")]
     [OslcReadOnly(false)]
     [OslcTitle("instanceShape")]
-    public Uri? InstanceShape { get; set; }
+    public new Uri? InstanceShape { get; set; }
 
 
     [OslcDescription("The <code>Interactions</code> that type this <code>Flow</code>. <code>Interactions</code> are both <code>Associations</code> and <code>Behaviors</code>, which can type <code>Connectors</code> and <code>Steps</code>, respectively.")]
@@ -426,7 +426,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Interaction")]
     [OslcReadOnly(false)]
     [OslcTitle("interaction")]
-    public HashSet<Uri> Interaction { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Interaction { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The interpretations of a <code>Type</code> with <code>intersectingTypes</code> are asserted to be those in common among the <code>intersectingTypes</code>, which are the <code>Types</code> derived from the <code>intersectingType</code> of the <code>ownedIntersectings</code> of this <code>Type</code>. For example, a <code>Classifier</code> might be an intersection of <code>Classifiers</code> for people of a particular sex and of a particular nationality. Similarly, a feature for people's children of a particular sex might be the intersection of a <code>Feature</code> for their children and a <code>Classifier</code> for people of that sex (because the interpretations of the children <code>Feature</code> that identify those of that sex are also interpretations of the Classifier for that sex).")]
@@ -438,7 +438,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Type")]
     [OslcReadOnly(false)]
     [OslcTitle("intersectingType")]
-    public HashSet<Uri> IntersectingType { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> IntersectingType { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Indicates whether instances of this <code>Type</code> must also be instances of at least one of its specialized <code>Types</code>.")]
@@ -447,7 +447,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("isAbstract")]
     [OslcReadOnly(false)]
     [OslcTitle("isAbstract")]
-    public string IsAbstract { get; set; } = string.Empty;
+    public new string IsAbstract { get; set; } = string.Empty;
 
 
     [OslcDescription("Whether the <code>Feature</code> is a composite <code>feature</code> of its <code>featuringType</code>. If so, the values of the <code>Feature</code> cannot exist after its featuring instance no longer does and cannot be values of another composite feature that is not on the same featuring instance.")]
@@ -456,7 +456,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("isComposite")]
     [OslcReadOnly(false)]
     [OslcTitle("isComposite")]
-    public string IsComposite { get; set; } = string.Empty;
+    public new string IsComposite { get; set; } = string.Empty;
 
 
     [OslcDescription("Indicates whether this <code>Type</code> has an <code>ownedConjugator</code>.")]
@@ -465,7 +465,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("isConjugated")]
     [OslcReadOnly(false)]
     [OslcTitle("isConjugated")]
-    public string IsConjugated { get; set; } = string.Empty;
+    public new string IsConjugated { get; set; } = string.Empty;
 
 
     [OslcDescription("If <code>isVariable</code> is true, then whether the value of this <code>Feature</code> nevertheless does not change over all <code><em>snapshots</em></code> of its <code>owningType</code>.")]
@@ -474,7 +474,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("isConstant")]
     [OslcReadOnly(false)]
     [OslcTitle("isConstant")]
-    public string IsConstant { get; set; } = string.Empty;
+    public new string IsConstant { get; set; } = string.Empty;
 
 
     [OslcDescription("Whether the values of this <code>Feature</code> can always be computed from the values of other <code>Features</code>.")]
@@ -483,7 +483,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("isDerived")]
     [OslcReadOnly(false)]
     [OslcTitle("isDerived")]
-    public string IsDerived { get; set; } = string.Empty;
+    public new string IsDerived { get; set; } = string.Empty;
 
 
     [OslcDescription("Whether or not this <code>Feature</code> is an end <code>Feature</code>. An end <code>Feature</code> always has multiplicity 1, mapping each of its domain instances to a single co-domain instance. However, it may have a <code>crossFeature</code>, in which case values of the <code>crossFeature</code> must be the same as those found by navigation across instances of the <code>owningType</code> from values of other end <code>Features</code> to values of this Feature. If the <code>owningType</code> has <em>n</em> end <code>Features</code>, then the multiplicity, ordering, and uniqueness declared for the <code>crossFeature</code> of any one of these end <code>Features</code> constrains the cardinality, ordering, and uniqueness of the collection of values of that <code>Feature</code> reached by navigation when the values of the other <em>n-1</em> end <code>Features</code> are held fixed.")]
@@ -492,7 +492,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("isEnd")]
     [OslcReadOnly(false)]
     [OslcTitle("isEnd")]
-    public string IsEnd { get; set; } = string.Empty;
+    public new string IsEnd { get; set; } = string.Empty;
 
 
     [OslcDescription("Whether this Relationship was generated by tooling to meet semantic rules, rather than being directly created by a modeler.")]
@@ -501,7 +501,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("isImplied")]
     [OslcReadOnly(false)]
     [OslcTitle("isImplied")]
-    public string IsImplied { get; set; } = string.Empty;
+    public new string IsImplied { get; set; } = string.Empty;
 
 
     [OslcDescription("Whether all necessary implied Relationships have been included in the <code>ownedRelationships</code> of this Element. This property may be true, even if there are not actually any <code>ownedRelationships</code> with <code>isImplied = true</code>, meaning that no such Relationships are actually implied for this Element. However, if it is false, then <code>ownedRelationships</code> may <em>not</em> contain any implied Relationships. That is, either <em>all</em> required implied Relationships must be included, or none of them.")]
@@ -510,7 +510,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("isImpliedIncluded")]
     [OslcReadOnly(false)]
     [OslcTitle("isImpliedIncluded")]
-    public string IsImpliedIncluded { get; set; } = string.Empty;
+    public new string IsImpliedIncluded { get; set; } = string.Empty;
 
 
     [OslcDescription("Whether this Element is contained in the ownership tree of a library model.")]
@@ -519,7 +519,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("isLibraryElement")]
     [OslcReadOnly(false)]
     [OslcTitle("isLibraryElement")]
-    public string IsLibraryElement { get; set; } = string.Empty;
+    public new string IsLibraryElement { get; set; } = string.Empty;
 
 
     [OslcDescription("Whether an order exists for the values of this <code>Feature</code> or not.")]
@@ -528,7 +528,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("isOrdered")]
     [OslcReadOnly(false)]
     [OslcTitle("isOrdered")]
-    public string IsOrdered { get; set; } = string.Empty;
+    public new string IsOrdered { get; set; } = string.Empty;
 
 
     [OslcDescription("Whether the values of this <code>Feature</code> are contained in the space and time of instances of the domain of the <code>Feature</code> and represent the same thing as those instances.")]
@@ -537,7 +537,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("isPortion")]
     [OslcReadOnly(false)]
     [OslcTitle("isPortion")]
-    public string IsPortion { get; set; } = string.Empty;
+    public new string IsPortion { get; set; } = string.Empty;
 
 
     [OslcDescription("Whether all things that meet the classification conditions of this <code>Type</code> must be classified by the <code>Type</code>.")]
@@ -546,7 +546,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("isSufficient")]
     [OslcReadOnly(false)]
     [OslcTitle("isSufficient")]
-    public string IsSufficient { get; set; } = string.Empty;
+    public new string IsSufficient { get; set; } = string.Empty;
 
 
     [OslcDescription("Whether or not values for this <code>Feature</code> must have no duplicates or not.")]
@@ -555,7 +555,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("isUnique")]
     [OslcReadOnly(false)]
     [OslcTitle("isUnique")]
-    public string IsUnique { get; set; } = string.Empty;
+    public new string IsUnique { get; set; } = string.Empty;
 
 
     [OslcDescription("Whether the value of this <code>Feature</code> might vary over time. That is, whether the <code>Feature</code> may have a different value for each <em><code>snapshot</code></em> of an <code>owningType</code> that is an <em><code>Occurrence</code></em>.")]
@@ -564,7 +564,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("isVariable")]
     [OslcReadOnly(false)]
     [OslcTitle("isVariable")]
-    public string IsVariable { get; set; } = string.Empty;
+    public new string IsVariable { get; set; } = string.Empty;
 
 
     [OslcDescription("The set of all member <code>Elements</code> of this <code>Namespace</code>, which are the <code>memberElements</code> of all <code>memberships</code> of the <code>Namespace</code>.")]
@@ -576,7 +576,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Element")]
     [OslcReadOnly(false)]
     [OslcTitle("member")]
-    public HashSet<Uri> Member { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Member { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("All <code>Memberships</code> in this <code>Namespace</code>, including (at least) the union of <code>ownedMemberships</code> and <code>importedMemberships</code>.")]
@@ -588,7 +588,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Membership")]
     [OslcReadOnly(false)]
     [OslcTitle("membership")]
-    public HashSet<Uri> Membership { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Membership { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Timestamp of latest resource modification.")]
@@ -598,7 +598,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcValueType(ValueType.DateTime)]
     [OslcReadOnly(false)]
     [OslcTitle("modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public new DateTimeOffset? Modified { get; set; }
 
 
     [OslcDescription("An <code>ownedMember</code> of this <code>Type</code> that is a <code>Multiplicity</code>, which constraints the cardinality of the <code>Type</code>. If there is no such <code>ownedMember</code>, then the cardinality of this <code>Type</code> is constrained by all the <code>Multiplicity</code> constraints applicable to any direct supertypes.")]
@@ -610,7 +610,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Multiplicity")]
     [OslcReadOnly(false)]
     [OslcTitle("multiplicity")]
-    public Uri? Multiplicity { get; set; }
+    public new Uri? Multiplicity { get; set; }
 
 
     [OslcDescription("The name to be used for this <code>Element</code> during name resolution within its <code>owningNamespace</code>. This is derived using the <code>effectiveName()</code> operation. By default, it is the same as the <code>declaredName</code>, but this is overridden for certain kinds of <code>Elements</code> to compute a <code>name</code> even when the <code>declaredName</code> is null.")]
@@ -619,7 +619,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("name")]
     [OslcReadOnly(false)]
     [OslcTitle("name")]
-    public string? Name { get; set; }
+    public new string? Name { get; set; }
 
 
     [OslcDescription("All <code>features</code> related to this <code>Type</code> by <code>FeatureMemberships</code> that have <code>direction</code> <code>out</code> or <code>inout</code>.")]
@@ -631,7 +631,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("output")]
-    public HashSet<Uri> Output { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Output { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Element</code> that are <code>Annotations</code>, for which this <code>Element</code> is the <code>annotatedElement</code>.")]
@@ -643,7 +643,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Annotation")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedAnnotation")]
-    public HashSet<Uri> OwnedAnnotation { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedAnnotation { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("A <code>Conjugation</code> owned by this <code>Type</code> for which the <code>Type</code> is the <code>originalType</code>.")]
@@ -655,7 +655,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Conjugation")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedConjugator")]
-    public Uri? OwnedConjugator { get; set; }
+    public new Uri? OwnedConjugator { get; set; }
 
 
     [OslcDescription("The one <code>ownedSubsetting</code> of this <code>Feature</code>, if any, that is a <code>CrossSubsetting}, for which the <code>Feature</code> is the <code>crossingFeature</code>.</code>.")]
@@ -667,7 +667,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#CrossSubsetting")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedCrossSubsetting")]
-    public Uri? OwnedCrossSubsetting { get; set; }
+    public new Uri? OwnedCrossSubsetting { get; set; }
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Type</code> that are <code>Differencings</code>, having this <code>Type</code> as their <code>typeDifferenced</code>.")]
@@ -679,7 +679,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Differencing")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedDifferencing")]
-    public HashSet<Uri> OwnedDifferencing { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedDifferencing { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Type</code> that are <code>Disjoinings</code>, for which the <code>Type</code> is the <code>typeDisjoined</code> <code>Type</code>.")]
@@ -691,7 +691,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Disjoining")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedDisjoining")]
-    public HashSet<Uri> OwnedDisjoining { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedDisjoining { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The Elements owned by this Element, derived as the <tt>ownedRelatedElements</tt> of the <tt>ownedRelationships</tt> of this Element.")]
@@ -703,7 +703,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Element")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedElement")]
-    public HashSet<Uri> OwnedElement { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedElement { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("All <code>endFeatures</code> of this <code>Type</code> that are <code>ownedFeatures</code>.")]
@@ -715,7 +715,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedEndFeature")]
-    public HashSet<Uri> OwnedEndFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedEndFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedMemberFeatures</code> of the <code>ownedFeatureMemberships</code> of this <code>Type</code>.")]
@@ -727,7 +727,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedFeature")]
-    public HashSet<Uri> OwnedFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Feature</code> that are <code>FeatureChainings</code>, for which the <code>Feature</code> will be the <code>featureChained</code>.")]
@@ -739,7 +739,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#FeatureChaining")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedFeatureChaining")]
-    public HashSet<Uri> OwnedFeatureChaining { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedFeatureChaining { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Feature</code> that are <code>FeatureInvertings</code> and for which the <code>Feature</code> is the <code>featureInverted</code>.")]
@@ -751,7 +751,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#FeatureInverting")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedFeatureInverting")]
-    public HashSet<Uri> OwnedFeatureInverting { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedFeatureInverting { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedMemberships</code> of this <code>Type</code> that are <code>FeatureMemberships</code>, for which the <code>Type</code> is the <code>owningType</code>. Each such <code>FeatureMembership</code> identifies an <code>ownedFeature</code> of the <code>Type</code>.")]
@@ -763,7 +763,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#FeatureMembership")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedFeatureMembership")]
-    public HashSet<Uri> OwnedFeatureMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedFeatureMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Namespace</code> that are <code>Imports</code>, for which the <code>Namespace</code> is the <code>importOwningNamespace</code>.")]
@@ -775,7 +775,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Import")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedImport")]
-    public HashSet<Uri> OwnedImport { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedImport { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Type</code> that are <code>Intersectings</code>, have the <code>Type</code> as their <code>typeIntersected</code>.")]
@@ -787,7 +787,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Intersecting")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedIntersecting")]
-    public HashSet<Uri> OwnedIntersecting { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedIntersecting { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The owned <code>members</code> of this <code>Namespace</code>, which are the <cpde><code>ownedMemberElements</code> of the <code>ownedMemberships</code> of the <code>Namespace</code>.</cpde>.")]
@@ -799,7 +799,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Element")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedMember")]
-    public HashSet<Uri> OwnedMember { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedMember { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Namespace</code> that are <code>Memberships</code>, for which the <code>Namespace</code> is the <code>membershipOwningNamespace</code>.")]
@@ -811,7 +811,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Membership")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedMembership")]
-    public HashSet<Uri> OwnedMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedSubsettings</code> of this <code>Feature</code> that are <code>Redefinitions</code>, for which the <code>Feature</code> is the <code>redefiningFeature</code>.")]
@@ -823,7 +823,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Redefinition")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedRedefinition")]
-    public HashSet<Uri> OwnedRedefinition { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedRedefinition { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The one <code>ownedSubsetting</code> of this <code>Feature</code>, if any, that is a <code>ReferenceSubsetting</code>, for which the <code>Feature</code> is the <code>referencingFeature</code>.")]
@@ -835,7 +835,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#ReferenceSubsetting")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedReferenceSubsetting")]
-    public Uri? OwnedReferenceSubsetting { get; set; }
+    public new Uri? OwnedReferenceSubsetting { get; set; }
 
 
     [OslcDescription("The <tt>relatedElements</tt> of this Relationship that are owned by the Relationship.")]
@@ -847,7 +847,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Element")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedRelatedElement")]
-    public HashSet<Uri> OwnedRelatedElement { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedRelatedElement { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The Relationships for which this Element is the <tt>owningRelatedElement</tt>.")]
@@ -859,7 +859,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Relationship")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedRelationship")]
-    public HashSet<Uri> OwnedRelationship { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedRelationship { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Type</code> that are <code>Specializations</code>, for which the <code>Type</code> is the <code>specific</code> <code>Type</code>.")]
@@ -871,7 +871,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Specialization")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedSpecialization")]
-    public HashSet<Uri> OwnedSpecialization { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedSpecialization { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedSpecializations</code> of this <code>Feature</code> that are <code>Subsettings</code>, for which the <code>Feature</code> is the <code>subsettingFeature</code>.")]
@@ -883,7 +883,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Subsetting")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedSubsetting")]
-    public HashSet<Uri> OwnedSubsetting { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedSubsetting { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Feature</code> that are <code>TypeFeaturings</code> and for which the <code>Feature</code> is the <code>featureOfType</code>.")]
@@ -895,7 +895,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#TypeFeaturing")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedTypeFeaturing")]
-    public HashSet<Uri> OwnedTypeFeaturing { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedTypeFeaturing { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedSpecializations</code> of this <code>Feature</code> that are <code>FeatureTypings</code>, for which the <code>Feature</code> is the <code>typedFeature</code>.")]
@@ -907,7 +907,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#FeatureTyping")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedTyping")]
-    public HashSet<Uri> OwnedTyping { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedTyping { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Type</code> that are <code>Unionings</code>, having the <code>Type</code> as their <code>typeUnioned</code>.")]
@@ -919,7 +919,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Unioning")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedUnioning")]
-    public HashSet<Uri> OwnedUnioning { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedUnioning { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The owner of this Element, derived as the <code>owningRelatedElement</code> of the <code>owningRelationship</code> of this Element, if any.")]
@@ -931,7 +931,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Element")]
     [OslcReadOnly(false)]
     [OslcTitle("owner")]
-    public Uri? Owner { get; set; }
+    public new Uri? Owner { get; set; }
 
 
     [OslcDescription("The <code>FeatureMembership</code> that owns this <code>Feature</code> as an <code>ownedMemberFeature</code>, determining its <code>owningType</code>.")]
@@ -943,7 +943,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#FeatureMembership")]
     [OslcReadOnly(false)]
     [OslcTitle("owningFeatureMembership")]
-    public Uri? OwningFeatureMembership { get; set; }
+    public new Uri? OwningFeatureMembership { get; set; }
 
 
     [OslcDescription("The <code>owningRelationship</code> of this <code>Element</code>, if that <code>Relationship</code> is a <code>Membership</code>.")]
@@ -955,7 +955,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#OwningMembership")]
     [OslcReadOnly(false)]
     [OslcTitle("owningMembership")]
-    public Uri? OwningMembership { get; set; }
+    public new Uri? OwningMembership { get; set; }
 
 
     [OslcDescription("The <code>Namespace</code> that owns this <code>Element</code>, which is the <code>membershipOwningNamespace</code> of the <code>owningMembership</code> of this <code>Element</code>, if any.")]
@@ -967,7 +967,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Namespace")]
     [OslcReadOnly(false)]
     [OslcTitle("owningNamespace")]
-    public Uri? OwningNamespace { get; set; }
+    public new Uri? OwningNamespace { get; set; }
 
 
     [OslcDescription("The <tt>relatedElement</tt> of this Relationship that owns the Relationship, if any.")]
@@ -979,7 +979,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Element")]
     [OslcReadOnly(false)]
     [OslcTitle("owningRelatedElement")]
-    public Uri? OwningRelatedElement { get; set; }
+    public new Uri? OwningRelatedElement { get; set; }
 
 
     [OslcDescription("The Relationship for which this Element is an <tt>ownedRelatedElement</tt>, if any.")]
@@ -991,7 +991,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Relationship")]
     [OslcReadOnly(false)]
     [OslcTitle("owningRelationship")]
-    public Uri? OwningRelationship { get; set; }
+    public new Uri? OwningRelationship { get; set; }
 
 
     [OslcDescription("The <code>Type</code> that is the <code>owningType</code> of the <code>owningFeatureMembership</code> of this <code>Feature</code>.")]
@@ -1003,7 +1003,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Type")]
     [OslcReadOnly(false)]
     [OslcTitle("owningType")]
-    public Uri? OwningType { get; set; }
+    public new Uri? OwningType { get; set; }
 
 
     [OslcDescription("The <code>parameters</code> of this <code>Step</code>, which are defined as its <code>directedFeatures</code>, whose values are passed into and/or out of a performance of the <code>Step</code>.")]
@@ -1015,7 +1015,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("parameter")]
-    public HashSet<Uri> Parameter { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Parameter { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedFeature</code> of the <code>Flow</code> that is a <code>PayloadFeature</code> (if any).")]
@@ -1027,7 +1027,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#PayloadFeature")]
     [OslcReadOnly(false)]
     [OslcTitle("payloadFeature")]
-    public Uri? PayloadFeature { get; set; }
+    public new Uri? PayloadFeature { get; set; }
 
 
     [OslcDescription("The type of values transferred, which is the <code>type</code> of the <code>payloadFeature</code> of the <code>Flow</code>.")]
@@ -1039,7 +1039,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Classifier")]
     [OslcReadOnly(false)]
     [OslcTitle("payloadType")]
-    public HashSet<Uri> PayloadType { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> PayloadType { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The full ownership-qualified name of this <code>Element</code>, represented in a form that is valid according to the KerML textual concrete syntax for qualified names (including use of unrestricted name notation and escaped characters, as necessary). The <code>qualifiedName</code> is null if this <code>Element</code> has no <code>owningNamespace</code> or if there is not a complete ownership chain of named <code>Namespaces</code> from a root <code>Namespace</code> to this <code>Element</code>. If the <code>owningNamespace</code> has other <code>Elements</code> with the same name as this one, then the <code>qualifiedName</code> is null for all such <code>Elements</code> other than the first.")]
@@ -1048,7 +1048,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("qualifiedName")]
     [OslcReadOnly(false)]
     [OslcTitle("qualifiedName")]
-    public string? QualifiedName { get; set; }
+    public new string? QualifiedName { get; set; }
 
 
     [OslcDescription("The target is a refinement of the source. (e.g. a use case scenario\nmight be a refinement of a textual requirement that describes the interaction).")]
@@ -1060,7 +1060,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("refine")]
-    public HashSet<Uri> Refine { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Refine { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The Elements that are related by this Relationship, derived as the union of the <code>source</code> and <code>target</code> Elements of the Relationship.")]
@@ -1072,7 +1072,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Element")]
     [OslcReadOnly(false)]
     [OslcTitle("relatedElement")]
-    public HashSet<Uri> RelatedElement { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> RelatedElement { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>Features</code> that are related by this <code>Connector</code> considered as a <code>Relationship</code> and that restrict the links it identifies, given by the referenced <code>Features</code> of the <code>connectorEnds</code> of the <code>Connector</code>.")]
@@ -1084,7 +1084,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("relatedFeature")]
-    public HashSet<Uri> RelatedFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> RelatedFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The model element satisfies the requirement (e.g. The use case\nsatisfies a functional requirement).")]
@@ -1096,7 +1096,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("satisfy")]
-    public HashSet<Uri> Satisfy { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Satisfy { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("A link to the resource's OSLC Service Provider. There may be cases when the\nsubject resource is available from a service provider that implements multiple domain\nspecifications, which could result in multiple values for this property.")]
@@ -1108,7 +1108,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("http://open-services.net/ns/core#ServiceProvider")]
     [OslcReadOnly(false)]
     [OslcTitle("serviceProvider")]
-    public HashSet<Uri> ServiceProvider { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> ServiceProvider { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The short name to be used for this <code>Element</code> during name resolution within its <code>owningNamespace</code>. This is derived using the <code>effectiveShortName()</code> operation. By default, it is the same as the <code>declaredShortName</code>, but this is overridden for certain kinds of <code>Elements</code> to compute a <code>shortName</code> even when the <code>declaredName</code> is null.")]
@@ -1117,7 +1117,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcName("shortName")]
     [OslcReadOnly(false)]
     [OslcTitle("shortName")]
-    public string? ShortName { get; set; }
+    public new string? ShortName { get; set; }
 
 
     [OslcDescription("{{Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users. SHOULD include only content that is valid inside an XHTML &lt;span&gt; element}}.")]
@@ -1127,7 +1127,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcValueType(ValueType.XMLLiteral)]
     [OslcReadOnly(false)]
     [OslcTitle("shortTitle")]
-    public string? ShortTitle { get; set; }
+    public new string? ShortTitle { get; set; }
 
 
     [OslcDescription("The resource URI a client can perform a get on to obtain the original non-OSLC AM formatted resource that was used to create this resource. The source resource is usually a binary or proprietary format that the service provider can consume and convert into an OSLC AM format. The service may use content negotiation with the Accept header to obtain the desired content type.")]
@@ -1139,7 +1139,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("source")]
-    public Uri? Source { get; set; }
+    public new Uri? Source { get; set; }
 
 
     [OslcDescription("The <code>relatedElements from which this Relationship is considered to be directed.</code>.")]
@@ -1151,7 +1151,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Element")]
     [OslcReadOnly(false)]
     [OslcTitle("source")]
-    public HashSet<Uri> Source2 { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Source2 { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The source <code>relatedFeature</code> for this <code>Connector</code>. It is the first <code>relatedFeature</code>.")]
@@ -1163,7 +1163,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("sourceFeature")]
-    public Uri? SourceFeature { get; set; }
+    public new Uri? SourceFeature { get; set; }
 
 
     [OslcDescription("The <code>Feature</code> that provides the items carried by the <code>Flow</code>. It must be a <code>feature</code> of the <code>source</code> of the <code>Flow</code>.")]
@@ -1175,7 +1175,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("sourceOutputFeature")]
-    public Uri? SourceOutputFeature { get; set; }
+    public new Uri? SourceOutputFeature { get; set; }
 
 
     [OslcDescription("The <code>relatedElements</code> to which this Relationship is considered to be directed.")]
@@ -1187,7 +1187,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Element")]
     [OslcReadOnly(false)]
     [OslcTitle("target")]
-    public HashSet<Uri> Target { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Target { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The target <code>relatedFeatures</code> for this <code>Connector</code>. This includes all the <code>relatedFeatures</code> other than the <code>sourceFeature</code>.")]
@@ -1199,7 +1199,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("targetFeature")]
-    public HashSet<Uri> TargetFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> TargetFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>Feature</code> that receives the values carried by the <code>Flow</code>. It must be a <code>feature</code> of the <code>target</code> of the <code>Flow</code>.")]
@@ -1211,7 +1211,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("targetInputFeature")]
-    public Uri? TargetInputFeature { get; set; }
+    public new Uri? TargetInputFeature { get; set; }
 
 
     [OslcDescription("The <code>TextualRepresentations</code> that annotate this <code>Element</code>.")]
@@ -1223,7 +1223,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#TextualRepresentation")]
     [OslcReadOnly(false)]
     [OslcTitle("textualRepresentation")]
-    public HashSet<Uri> TextualRepresentation { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> TextualRepresentation { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Title of the resource represented as rich text in XHTML content.")]
@@ -1233,7 +1233,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcValueType(ValueType.XMLLiteral)]
     [OslcReadOnly(false)]
     [OslcTitle("title")]
-    public string Title { get; set; } = string.Empty;
+    public new string Title { get; set; } = string.Empty;
 
 
     [OslcDescription("The model element has a trace to the requirement (e.g. An attribute\nor its value are traced to a requirement).")]
@@ -1245,7 +1245,7 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("trace")]
-    public HashSet<Uri> Trace { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Trace { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The interpretations of a <code>Type</code> with <code>unioningTypes</code> are asserted to be the same as those of all the <code>unioningTypes</code> together, which are the <code>Types</code> derived from the <code>unioningType</code> of the <code>ownedUnionings</code> of this <code>Type</code>. For example, a <code>Classifier</code> for people might be the union of <code>Classifiers</code> for all the sexes. Similarly, a feature for people's children might be the union of features dividing them in the same ways as people in general.")]
@@ -1257,6 +1257,6 @@ public partial record SuccessionFlow : Flow, ISuccessionFlow
     [OslcRange("https://www.omg.org/spec/kerml/vocabulary#Type")]
     [OslcReadOnly(false)]
     [OslcTitle("unioningType")]
-    public HashSet<Uri> UnioningType { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> UnioningType { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 }

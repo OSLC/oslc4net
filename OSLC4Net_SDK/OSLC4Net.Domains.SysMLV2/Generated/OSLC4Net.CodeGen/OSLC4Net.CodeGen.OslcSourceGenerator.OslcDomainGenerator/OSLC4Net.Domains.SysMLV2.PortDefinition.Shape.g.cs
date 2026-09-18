@@ -26,7 +26,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcName("aliasIds")]
     [OslcReadOnly(false)]
     [OslcTitle("aliasIds")]
-    public HashSet<string> AliasIds { get; set; } = new();
+    public new HashSet<string> AliasIds { get; set; } = new();
 
 
     [OslcDescription("The <codeconjugatedportdefinition> that is conjugate to this <code>PortDefinition</code>.</codeconjugatedportdefinition>.")]
@@ -50,7 +50,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("contributor")]
-    public HashSet<Uri> Contributor { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Contributor { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Timestamp of resource creation.")]
@@ -60,7 +60,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcValueType(ValueType.DateTime)]
     [OslcReadOnly(false)]
     [OslcTitle("created")]
-    public DateTimeOffset? Created { get; set; }
+    public new DateTimeOffset? Created { get; set; }
 
 
     [OslcDescription("Creator or creators of the resource. It is likely that the target resource will be a foaf:Person but that is not necessarily the case.")]
@@ -72,7 +72,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("creator")]
-    public HashSet<Uri> Creator { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Creator { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("A short string representation for the type, for example ‘Car’.")]
@@ -82,7 +82,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcValueType(ValueType.String)]
     [OslcReadOnly(false)]
     [OslcTitle("dctype")]
-    public HashSet<string> Dctype { get; set; } = new();
+    public new HashSet<string> Dctype { get; set; } = new();
 
 
     [OslcDescription("The declared name of this <code>Element</code>.")]
@@ -91,7 +91,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcName("declaredName")]
     [OslcReadOnly(false)]
     [OslcTitle("declaredName")]
-    public string? DeclaredName { get; set; }
+    public new string? DeclaredName { get; set; }
 
 
     [OslcDescription("An optional alternative name for the <code>Element</code> that is intended to be shorter or in some way more succinct than its primary <code>name</code>. It may act as a modeler-specified identifier for the <code>Element</code>, though it is then the responsibility of the modeler to maintain the uniqueness of this identifier within a model or relative to some other context.")]
@@ -100,7 +100,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcName("declaredShortName")]
     [OslcReadOnly(false)]
     [OslcTitle("declaredShortName")]
-    public string? DeclaredShortName { get; set; }
+    public new string? DeclaredShortName { get; set; }
 
 
     [OslcDescription("The resource that derives from another resource originated from or is\nsignificantly influenced by the referenced resource. For example a model element derives from a\nrequirement.")]
@@ -112,7 +112,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("derives")]
-    public HashSet<Uri> Derives { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Derives { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Descriptive text about resource represented as rich text in XHTML content.")]
@@ -122,7 +122,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcValueType(ValueType.XMLLiteral)]
     [OslcReadOnly(false)]
     [OslcTitle("description")]
-    public string? Description { get; set; }
+    public new string? Description { get; set; }
 
 
     [OslcDescription("The interpretations of a <code>Type</code> with <code>differencingTypes</code> are asserted to be those of the first of those <code>Types</code>, but not including those of the remaining <code>Types</code>. For example, a <code>Classifier</code> might be the difference of a <code>Classifier</code> for people and another for people of a particular nationality, leaving people who are not of that nationality. Similarly, a feature of people might be the difference between a feature for their children and a <code>Classifier</code> for people of a particular sex, identifying their children not of that sex (because the interpretations of the children <code>Feature</code> that identify those of that sex are also interpretations of the <code>Classifier</code> for that sex).")]
@@ -134,7 +134,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Type")]
     [OslcReadOnly(false)]
     [OslcTitle("differencingType")]
-    public HashSet<Uri> DifferencingType { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> DifferencingType { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>features</code> of this <code>Type</code> that have a non-null <code>direction</code>.")]
@@ -146,7 +146,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("directedFeature")]
-    public HashSet<Uri> DirectedFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> DirectedFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>usages</code> of this <code>Definition</code> that are <code>directedFeatures</code>.")]
@@ -158,7 +158,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Usage")]
     [OslcReadOnly(false)]
     [OslcTitle("directedUsage")]
-    public HashSet<Uri> DirectedUsage { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> DirectedUsage { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The Documentation owned by this Element.")]
@@ -170,7 +170,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Documentation")]
     [OslcReadOnly(false)]
     [OslcTitle("documentation")]
-    public HashSet<Uri> Documentation { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Documentation { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("This resource elaborates the referenced resource.")]
@@ -182,7 +182,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("elaborates")]
-    public HashSet<Uri> Elaborates { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Elaborates { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The globally unique identifier for this Element. This is intended to be set by tooling, and it must not change during the lifetime of the Element.")]
@@ -191,7 +191,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcName("elementId")]
     [OslcReadOnly(false)]
     [OslcTitle("elementId")]
-    public string ElementId { get; set; } = string.Empty;
+    public new string ElementId { get; set; } = string.Empty;
 
 
     [OslcDescription("All <code>features</code> of this <code>Type</code> with <code>isEnd = true</code>.")]
@@ -203,7 +203,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("endFeature")]
-    public HashSet<Uri> EndFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> EndFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("A generic link from a resource to an external web page.")]
@@ -215,7 +215,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("external")]
-    public HashSet<Uri> External { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> External { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedMemberFeatures</code> of the <code>featureMemberships</code> of this <code>Type</code>.")]
@@ -227,7 +227,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("feature")]
-    public HashSet<Uri> Feature { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Feature { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>FeatureMemberships</code> for <code>features</code> of this <code>Type</code>, which include all <code>ownedFeatureMemberships</code> and those <code>inheritedMemberships</code> that are <code>FeatureMemberships</code> (but does <em>not</em> include any <code>importedMemberships</code>).")]
@@ -239,7 +239,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#FeatureMembership")]
     [OslcReadOnly(false)]
     [OslcTitle("featureMembership")]
-    public HashSet<Uri> FeatureMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> FeatureMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("A unique identifier for a resource. Typically read-only and assigned by the\nservice provider when a resource is created. Not typically intended for end-user display.")]
@@ -249,7 +249,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcValueType(ValueType.String)]
     [OslcReadOnly(true)]
     [OslcTitle("identifier")]
-    public string Identifier { get; set; } = string.Empty;
+    public new string Identifier { get; set; } = string.Empty;
 
 
     [OslcDescription("The <code>Memberships</code> in this <code>Namespace</code> that result from the <code>ownedImports</code> of this <code>Namespace</code>.")]
@@ -261,7 +261,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Membership")]
     [OslcReadOnly(false)]
     [OslcTitle("importedMembership")]
-    public HashSet<Uri> ImportedMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> ImportedMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("All the <code>memberFeatures</code> of the <code>inheritedMemberships</code> of this <code>Type</code> that are <code>FeatureMemberships</code>.")]
@@ -273,7 +273,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("inheritedFeature")]
-    public HashSet<Uri> InheritedFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> InheritedFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("All <code>Memberships</code> inherited by this <code>Type</code> via <code>Specialization</code> or <code>Conjugation</code>. These are included in the derived union for the <code>memberships</code> of the <code>Type</code>.")]
@@ -285,7 +285,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Membership")]
     [OslcReadOnly(false)]
     [OslcTitle("inheritedMembership")]
-    public HashSet<Uri> InheritedMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> InheritedMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("All <code>features</code> related to this <code>Type</code> by <code>FeatureMemberships</code> that have <code>direction</code> <code>in</code> or <code>inout</code>.")]
@@ -297,7 +297,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("input")]
-    public HashSet<Uri> Input { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Input { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The URI of a Resource Shape that describes the possible properties, occurrence,\nvalue types, allowed values and labels. This shape information is useful in displaying the subject\nresource as well as guiding clients in performing modifications. Instance shapes may be specific\nto the authenticated user associated with the request that retrieved the resource, the current\nstate of the resource and other factors and thus should not be cached.")]
@@ -309,7 +309,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("http://open-services.net/ns/core#ResourceShape")]
     [OslcReadOnly(false)]
     [OslcTitle("instanceShape")]
-    public Uri? InstanceShape { get; set; }
+    public new Uri? InstanceShape { get; set; }
 
 
     [OslcDescription("The interpretations of a <code>Type</code> with <code>intersectingTypes</code> are asserted to be those in common among the <code>intersectingTypes</code>, which are the <code>Types</code> derived from the <code>intersectingType</code> of the <code>ownedIntersectings</code> of this <code>Type</code>. For example, a <code>Classifier</code> might be an intersection of <code>Classifiers</code> for people of a particular sex and of a particular nationality. Similarly, a feature for people's children of a particular sex might be the intersection of a <code>Feature</code> for their children and a <code>Classifier</code> for people of that sex (because the interpretations of the children <code>Feature</code> that identify those of that sex are also interpretations of the Classifier for that sex).")]
@@ -321,7 +321,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Type")]
     [OslcReadOnly(false)]
     [OslcTitle("intersectingType")]
-    public HashSet<Uri> IntersectingType { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> IntersectingType { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Indicates whether instances of this <code>Type</code> must also be instances of at least one of its specialized <code>Types</code>.")]
@@ -330,7 +330,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcName("isAbstract")]
     [OslcReadOnly(false)]
     [OslcTitle("isAbstract")]
-    public string IsAbstract { get; set; } = string.Empty;
+    public new string IsAbstract { get; set; } = string.Empty;
 
 
     [OslcDescription("Indicates whether this <code>Type</code> has an <code>ownedConjugator</code>.")]
@@ -339,7 +339,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcName("isConjugated")]
     [OslcReadOnly(false)]
     [OslcTitle("isConjugated")]
-    public string IsConjugated { get; set; } = string.Empty;
+    public new string IsConjugated { get; set; } = string.Empty;
 
 
     [OslcDescription("Whether all necessary implied Relationships have been included in the <code>ownedRelationships</code> of this Element. This property may be true, even if there are not actually any <code>ownedRelationships</code> with <code>isImplied = true</code>, meaning that no such Relationships are actually implied for this Element. However, if it is false, then <code>ownedRelationships</code> may <em>not</em> contain any implied Relationships. That is, either <em>all</em> required implied Relationships must be included, or none of them.")]
@@ -348,7 +348,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcName("isImpliedIncluded")]
     [OslcReadOnly(false)]
     [OslcTitle("isImpliedIncluded")]
-    public string IsImpliedIncluded { get; set; } = string.Empty;
+    public new string IsImpliedIncluded { get; set; } = string.Empty;
 
 
     [OslcDescription("Whether this <code>OccurrenceDefinition</code> is constrained to represent at most one thing.")]
@@ -357,7 +357,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcName("isIndividual")]
     [OslcReadOnly(false)]
     [OslcTitle("isIndividual")]
-    public string IsIndividual { get; set; } = string.Empty;
+    public new string IsIndividual { get; set; } = string.Empty;
 
 
     [OslcDescription("Whether this Element is contained in the ownership tree of a library model.")]
@@ -366,7 +366,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcName("isLibraryElement")]
     [OslcReadOnly(false)]
     [OslcTitle("isLibraryElement")]
-    public string IsLibraryElement { get; set; } = string.Empty;
+    public new string IsLibraryElement { get; set; } = string.Empty;
 
 
     [OslcDescription("Whether all things that meet the classification conditions of this <code>Type</code> must be classified by the <code>Type</code>.")]
@@ -375,7 +375,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcName("isSufficient")]
     [OslcReadOnly(false)]
     [OslcTitle("isSufficient")]
-    public string IsSufficient { get; set; } = string.Empty;
+    public new string IsSufficient { get; set; } = string.Empty;
 
 
     [OslcDescription("Whether this <code>Definition</code> is for a variation point or not. If true, then all the <code>memberships</code> of the <code>Definition</code> must be <code>VariantMemberships</code>.")]
@@ -384,7 +384,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcName("isVariation")]
     [OslcReadOnly(false)]
     [OslcTitle("isVariation")]
-    public string IsVariation { get; set; } = string.Empty;
+    public new string IsVariation { get; set; } = string.Empty;
 
 
     [OslcDescription("The set of all member <code>Elements</code> of this <code>Namespace</code>, which are the <code>memberElements</code> of all <code>memberships</code> of the <code>Namespace</code>.")]
@@ -396,7 +396,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Element")]
     [OslcReadOnly(false)]
     [OslcTitle("member")]
-    public HashSet<Uri> Member { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Member { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("All <code>Memberships</code> in this <code>Namespace</code>, including (at least) the union of <code>ownedMemberships</code> and <code>importedMemberships</code>.")]
@@ -408,7 +408,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Membership")]
     [OslcReadOnly(false)]
     [OslcTitle("membership")]
-    public HashSet<Uri> Membership { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Membership { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Timestamp of latest resource modification.")]
@@ -418,7 +418,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcValueType(ValueType.DateTime)]
     [OslcReadOnly(false)]
     [OslcTitle("modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public new DateTimeOffset? Modified { get; set; }
 
 
     [OslcDescription("An <code>ownedMember</code> of this <code>Type</code> that is a <code>Multiplicity</code>, which constraints the cardinality of the <code>Type</code>. If there is no such <code>ownedMember</code>, then the cardinality of this <code>Type</code> is constrained by all the <code>Multiplicity</code> constraints applicable to any direct supertypes.")]
@@ -430,7 +430,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Multiplicity")]
     [OslcReadOnly(false)]
     [OslcTitle("multiplicity")]
-    public Uri? Multiplicity { get; set; }
+    public new Uri? Multiplicity { get; set; }
 
 
     [OslcDescription("The name to be used for this <code>Element</code> during name resolution within its <code>owningNamespace</code>. This is derived using the <code>effectiveName()</code> operation. By default, it is the same as the <code>declaredName</code>, but this is overridden for certain kinds of <code>Elements</code> to compute a <code>name</code> even when the <code>declaredName</code> is null.")]
@@ -439,7 +439,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcName("name")]
     [OslcReadOnly(false)]
     [OslcTitle("name")]
-    public string? Name { get; set; }
+    public new string? Name { get; set; }
 
 
     [OslcDescription("All <code>features</code> related to this <code>Type</code> by <code>FeatureMemberships</code> that have <code>direction</code> <code>out</code> or <code>inout</code>.")]
@@ -451,7 +451,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("output")]
-    public HashSet<Uri> Output { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Output { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ActionUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -463,7 +463,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#ActionUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedAction")]
-    public HashSet<Uri> OwnedAction { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedAction { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>AllocationUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -475,7 +475,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#AllocationUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedAllocation")]
-    public HashSet<Uri> OwnedAllocation { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedAllocation { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>AnalysisCaseUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -487,7 +487,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#AnalysisCaseUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedAnalysisCase")]
-    public HashSet<Uri> OwnedAnalysisCase { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedAnalysisCase { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Element</code> that are <code>Annotations</code>, for which this <code>Element</code> is the <code>annotatedElement</code>.")]
@@ -499,7 +499,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Annotation")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedAnnotation")]
-    public HashSet<Uri> OwnedAnnotation { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedAnnotation { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>AttributeUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -511,7 +511,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#AttributeUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedAttribute")]
-    public HashSet<Uri> OwnedAttribute { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedAttribute { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>CalculationUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -523,7 +523,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#CalculationUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedCalculation")]
-    public HashSet<Uri> OwnedCalculation { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedCalculation { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The code&gt;CaseUsages that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -535,7 +535,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#CaseUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedCase")]
-    public HashSet<Uri> OwnedCase { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedCase { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ConcernUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -547,7 +547,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#ConcernUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedConcern")]
-    public HashSet<Uri> OwnedConcern { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedConcern { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("A <code>Conjugation</code> owned by this <code>Type</code> for which the <code>Type</code> is the <code>originalType</code>.")]
@@ -559,7 +559,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Conjugation")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedConjugator")]
-    public Uri? OwnedConjugator { get; set; }
+    public new Uri? OwnedConjugator { get; set; }
 
 
     [OslcDescription("The <code>ConnectorAsUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>. Note that this list includes <code>BindingConnectorAsUsages</code>, <code>SuccessionAsUsages</code>, and <code>FlowUsages</code> because these are <code>ConnectorAsUsages</code> even though they are not <code>ConnectionUsages</code>.")]
@@ -571,7 +571,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#ConnectorAsUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedConnection")]
-    public HashSet<Uri> OwnedConnection { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedConnection { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ConstraintUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -583,7 +583,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#ConstraintUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedConstraint")]
-    public HashSet<Uri> OwnedConstraint { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedConstraint { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Type</code> that are <code>Differencings</code>, having this <code>Type</code> as their <code>typeDifferenced</code>.")]
@@ -595,7 +595,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Differencing")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedDifferencing")]
-    public HashSet<Uri> OwnedDifferencing { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedDifferencing { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Type</code> that are <code>Disjoinings</code>, for which the <code>Type</code> is the <code>typeDisjoined</code> <code>Type</code>.")]
@@ -607,7 +607,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Disjoining")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedDisjoining")]
-    public HashSet<Uri> OwnedDisjoining { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedDisjoining { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The Elements owned by this Element, derived as the <tt>ownedRelatedElements</tt> of the <tt>ownedRelationships</tt> of this Element.")]
@@ -619,7 +619,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Element")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedElement")]
-    public HashSet<Uri> OwnedElement { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedElement { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("All <code>endFeatures</code> of this <code>Type</code> that are <code>ownedFeatures</code>.")]
@@ -631,7 +631,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedEndFeature")]
-    public HashSet<Uri> OwnedEndFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedEndFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>EnumerationUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -643,7 +643,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#EnumerationUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedEnumeration")]
-    public HashSet<Uri> OwnedEnumeration { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedEnumeration { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedMemberFeatures</code> of the <code>ownedFeatureMemberships</code> of this <code>Type</code>.")]
@@ -655,7 +655,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Feature")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedFeature")]
-    public HashSet<Uri> OwnedFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedFeature { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedMemberships</code> of this <code>Type</code> that are <code>FeatureMemberships</code>, for which the <code>Type</code> is the <code>owningType</code>. Each such <code>FeatureMembership</code> identifies an <code>ownedFeature</code> of the <code>Type</code>.")]
@@ -667,7 +667,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#FeatureMembership")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedFeatureMembership")]
-    public HashSet<Uri> OwnedFeatureMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedFeatureMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>FlowUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -679,7 +679,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#FlowUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedFlow")]
-    public HashSet<Uri> OwnedFlow { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedFlow { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Namespace</code> that are <code>Imports</code>, for which the <code>Namespace</code> is the <code>importOwningNamespace</code>.")]
@@ -691,7 +691,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Import")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedImport")]
-    public HashSet<Uri> OwnedImport { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedImport { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>InterfaceUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -703,7 +703,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#InterfaceUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedInterface")]
-    public HashSet<Uri> OwnedInterface { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedInterface { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Type</code> that are <code>Intersectings</code>, have the <code>Type</code> as their <code>typeIntersected</code>.")]
@@ -715,7 +715,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Intersecting")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedIntersecting")]
-    public HashSet<Uri> OwnedIntersecting { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedIntersecting { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ItemUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -727,7 +727,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#ItemUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedItem")]
-    public HashSet<Uri> OwnedItem { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedItem { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The owned <code>members</code> of this <code>Namespace</code>, which are the <cpde><code>ownedMemberElements</code> of the <code>ownedMemberships</code> of the <code>Namespace</code>.</cpde>.")]
@@ -739,7 +739,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Element")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedMember")]
-    public HashSet<Uri> OwnedMember { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedMember { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Namespace</code> that are <code>Memberships</code>, for which the <code>Namespace</code> is the <code>membershipOwningNamespace</code>.")]
@@ -751,7 +751,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Membership")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedMembership")]
-    public HashSet<Uri> OwnedMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>MetadataUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -763,7 +763,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#MetadataUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedMetadata")]
-    public HashSet<Uri> OwnedMetadata { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedMetadata { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>OccurrenceUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -775,7 +775,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#OccurrenceUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedOccurrence")]
-    public HashSet<Uri> OwnedOccurrence { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedOccurrence { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>PartUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -787,7 +787,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#PartUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedPart")]
-    public HashSet<Uri> OwnedPart { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedPart { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>PortUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -799,7 +799,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#PortUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedPort")]
-    public HashSet<Uri> OwnedPort { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedPort { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ReferenceUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -811,7 +811,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#ReferenceUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedReference")]
-    public HashSet<Uri> OwnedReference { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedReference { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The Relationships for which this Element is the <tt>owningRelatedElement</tt>.")]
@@ -823,7 +823,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Relationship")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedRelationship")]
-    public HashSet<Uri> OwnedRelationship { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedRelationship { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>RenderingUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -835,7 +835,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#RenderingUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedRendering")]
-    public HashSet<Uri> OwnedRendering { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedRendering { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>RequirementUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -847,7 +847,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#RequirementUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedRequirement")]
-    public HashSet<Uri> OwnedRequirement { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedRequirement { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Type</code> that are <code>Specializations</code>, for which the <code>Type</code> is the <code>specific</code> <code>Type</code>.")]
@@ -859,7 +859,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Specialization")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedSpecialization")]
-    public HashSet<Uri> OwnedSpecialization { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedSpecialization { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>StateUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -871,7 +871,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#StateUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedState")]
-    public HashSet<Uri> OwnedState { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedState { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedSpecializations</code> of this <code>Classifier</code> that are <code>Subclassifications</code>, for which this <code>Classifier</code> is the <code>subclassifier</code>.")]
@@ -883,7 +883,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Subclassification")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedSubclassification")]
-    public HashSet<Uri> OwnedSubclassification { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedSubclassification { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>TransitionUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -895,7 +895,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#TransitionUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedTransition")]
-    public HashSet<Uri> OwnedTransition { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedTransition { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedRelationships</code> of this <code>Type</code> that are <code>Unionings</code>, having the <code>Type</code> as their <code>typeUnioned</code>.")]
@@ -907,7 +907,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Unioning")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedUnioning")]
-    public HashSet<Uri> OwnedUnioning { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedUnioning { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>Usages</code> that are <code>ownedFeatures</code> of this <code>Definition</code>.")]
@@ -919,7 +919,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Usage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedUsage")]
-    public HashSet<Uri> OwnedUsage { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedUsage { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>UseCaseUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -931,7 +931,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#UseCaseUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedUseCase")]
-    public HashSet<Uri> OwnedUseCase { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedUseCase { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>VerificationCaseUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -943,7 +943,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#VerificationCaseUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedVerificationCase")]
-    public HashSet<Uri> OwnedVerificationCase { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedVerificationCase { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ViewUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -955,7 +955,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#ViewUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedView")]
-    public HashSet<Uri> OwnedView { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedView { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ViewpointUsages</code> that are <code>ownedUsages</code> of this <code>Definition</code>.")]
@@ -967,7 +967,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#ViewpointUsage")]
     [OslcReadOnly(false)]
     [OslcTitle("ownedViewpoint")]
-    public HashSet<Uri> OwnedViewpoint { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> OwnedViewpoint { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The owner of this Element, derived as the <code>owningRelatedElement</code> of the <code>owningRelationship</code> of this Element, if any.")]
@@ -979,7 +979,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Element")]
     [OslcReadOnly(false)]
     [OslcTitle("owner")]
-    public Uri? Owner { get; set; }
+    public new Uri? Owner { get; set; }
 
 
     [OslcDescription("The <code>owningRelationship</code> of this <code>Element</code>, if that <code>Relationship</code> is a <code>Membership</code>.")]
@@ -991,7 +991,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#OwningMembership")]
     [OslcReadOnly(false)]
     [OslcTitle("owningMembership")]
-    public Uri? OwningMembership { get; set; }
+    public new Uri? OwningMembership { get; set; }
 
 
     [OslcDescription("The <code>Namespace</code> that owns this <code>Element</code>, which is the <code>membershipOwningNamespace</code> of the <code>owningMembership</code> of this <code>Element</code>, if any.")]
@@ -1003,7 +1003,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Namespace")]
     [OslcReadOnly(false)]
     [OslcTitle("owningNamespace")]
-    public Uri? OwningNamespace { get; set; }
+    public new Uri? OwningNamespace { get; set; }
 
 
     [OslcDescription("The Relationship for which this Element is an <tt>ownedRelatedElement</tt>, if any.")]
@@ -1015,7 +1015,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Relationship")]
     [OslcReadOnly(false)]
     [OslcTitle("owningRelationship")]
-    public Uri? OwningRelationship { get; set; }
+    public new Uri? OwningRelationship { get; set; }
 
 
     [OslcDescription("The full ownership-qualified name of this <code>Element</code>, represented in a form that is valid according to the KerML textual concrete syntax for qualified names (including use of unrestricted name notation and escaped characters, as necessary). The <code>qualifiedName</code> is null if this <code>Element</code> has no <code>owningNamespace</code> or if there is not a complete ownership chain of named <code>Namespaces</code> from a root <code>Namespace</code> to this <code>Element</code>. If the <code>owningNamespace</code> has other <code>Elements</code> with the same name as this one, then the <code>qualifiedName</code> is null for all such <code>Elements</code> other than the first.")]
@@ -1024,7 +1024,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcName("qualifiedName")]
     [OslcReadOnly(false)]
     [OslcTitle("qualifiedName")]
-    public string? QualifiedName { get; set; }
+    public new string? QualifiedName { get; set; }
 
 
     [OslcDescription("The target is a refinement of the source. (e.g. a use case scenario\nmight be a refinement of a textual requirement that describes the interaction).")]
@@ -1036,7 +1036,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("refine")]
-    public HashSet<Uri> Refine { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Refine { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The model element satisfies the requirement (e.g. The use case\nsatisfies a functional requirement).")]
@@ -1048,7 +1048,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("satisfy")]
-    public HashSet<Uri> Satisfy { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Satisfy { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("A link to the resource's OSLC Service Provider. There may be cases when the\nsubject resource is available from a service provider that implements multiple domain\nspecifications, which could result in multiple values for this property.")]
@@ -1060,7 +1060,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("http://open-services.net/ns/core#ServiceProvider")]
     [OslcReadOnly(false)]
     [OslcTitle("serviceProvider")]
-    public HashSet<Uri> ServiceProvider { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> ServiceProvider { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The short name to be used for this <code>Element</code> during name resolution within its <code>owningNamespace</code>. This is derived using the <code>effectiveShortName()</code> operation. By default, it is the same as the <code>declaredShortName</code>, but this is overridden for certain kinds of <code>Elements</code> to compute a <code>shortName</code> even when the <code>declaredName</code> is null.")]
@@ -1069,7 +1069,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcName("shortName")]
     [OslcReadOnly(false)]
     [OslcTitle("shortName")]
-    public string? ShortName { get; set; }
+    public new string? ShortName { get; set; }
 
 
     [OslcDescription("{{Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users. SHOULD include only content that is valid inside an XHTML &lt;span&gt; element}}.")]
@@ -1079,7 +1079,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcValueType(ValueType.XMLLiteral)]
     [OslcReadOnly(false)]
     [OslcTitle("shortTitle")]
-    public string? ShortTitle { get; set; }
+    public new string? ShortTitle { get; set; }
 
 
     [OslcDescription("The resource URI a client can perform a get on to obtain the original non-OSLC AM formatted resource that was used to create this resource. The source resource is usually a binary or proprietary format that the service provider can consume and convert into an OSLC AM format. The service may use content negotiation with the Accept header to obtain the desired content type.")]
@@ -1091,7 +1091,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("source")]
-    public Uri? Source { get; set; }
+    public new Uri? Source { get; set; }
 
 
     [OslcDescription("The <code>TextualRepresentations</code> that annotate this <code>Element</code>.")]
@@ -1103,7 +1103,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#TextualRepresentation")]
     [OslcReadOnly(false)]
     [OslcTitle("textualRepresentation")]
-    public HashSet<Uri> TextualRepresentation { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> TextualRepresentation { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("Title of the resource represented as rich text in XHTML content.")]
@@ -1113,7 +1113,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcValueType(ValueType.XMLLiteral)]
     [OslcReadOnly(false)]
     [OslcTitle("title")]
-    public string Title { get; set; } = string.Empty;
+    public new string Title { get; set; } = string.Empty;
 
 
     [OslcDescription("The model element has a trace to the requirement (e.g. An attribute\nor its value are traced to a requirement).")]
@@ -1125,7 +1125,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("http://open-services.net/ns/core#Any")]
     [OslcReadOnly(false)]
     [OslcTitle("trace")]
-    public HashSet<Uri> Trace { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Trace { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The interpretations of a <code>Type</code> with <code>unioningTypes</code> are asserted to be the same as those of all the <code>unioningTypes</code> together, which are the <code>Types</code> derived from the <code>unioningType</code> of the <code>ownedUnionings</code> of this <code>Type</code>. For example, a <code>Classifier</code> for people might be the union of <code>Classifiers</code> for all the sexes. Similarly, a feature for people's children might be the union of features dividing them in the same ways as people in general.")]
@@ -1137,7 +1137,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Type")]
     [OslcReadOnly(false)]
     [OslcTitle("unioningType")]
-    public HashSet<Uri> UnioningType { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> UnioningType { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>Usages</code> that are <code>features</code> of this <code>Definition</code> (not necessarily owned).")]
@@ -1149,7 +1149,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Usage")]
     [OslcReadOnly(false)]
     [OslcTitle("usage")]
-    public HashSet<Uri> Usage { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Usage { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>Usages</code> which represent the variants of this <code>Definition</code> as a variation point <code>Definition</code>, if <code>isVariation</code> = true. If <code>isVariation = false</code>, the there must be no <code>variants</code>.")]
@@ -1161,7 +1161,7 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#Usage")]
     [OslcReadOnly(false)]
     [OslcTitle("variant")]
-    public HashSet<Uri> Variant { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> Variant { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 
     [OslcDescription("The <code>ownedMemberships</code> of this <code>Definition</code> that are <code>VariantMemberships</code>. If <code>isVariation</code> = true, then this must be all <code>ownedMemberships</code> of the <code>Definition</code>. If <code>isVariation</code> = false, then <code>variantMembership</code>must be empty.")]
@@ -1173,6 +1173,6 @@ public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
     [OslcRange("https://www.omg.org/spec/sysml/vocabulary#VariantMembership")]
     [OslcReadOnly(false)]
     [OslcTitle("variantMembership")]
-    public HashSet<Uri> VariantMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
+    public new HashSet<Uri> VariantMembership { get; set; } = new(OslcUriEqualityComparer.Instance);
 
 }
