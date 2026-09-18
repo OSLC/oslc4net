@@ -5,6 +5,7 @@ OSLC4Net<img src="misc/_static/logo.svg" align="right" width="96px" height="96px
 [![NuGet Version](https://img.shields.io/nuget/v/OSLC4Net.Core)](https://www.nuget.org/packages/OSLC4Net.Core#versions-body-tab)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/OSLC/oslc4net/badge)](https://scorecard.dev/viewer/?uri=github.com/OSLC/oslc4net)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9671/badge)](https://www.bestpractices.dev/projects/9671)
+[![CodeFactor](https://www.codefactor.io/repository/github/oslc/oslc4net/badge)](https://www.codefactor.io/repository/github/oslc/oslc4net)
 [![Discourse forum](https://img.shields.io/discourse/users?color=28bd84&server=https%3A%2F%2Fforum.open-services.net%2F)](https://forum.open-services.net/c/sdks/oslc4net/10)
 
 ## OSLC4Net, an OSLC SDK for dotnet
