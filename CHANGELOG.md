@@ -13,59 +13,57 @@ important notes.
 
 ### Security
 
-This release does not contain security updates.
+No security updates are included in this release.
 
 ### Added
 
-- `OslcQuery.SubmitPost()` submits form-encoded OSLC queries over HTTP POST.
-- `RootServicesHelper` was added to assist with processing OSLC Root Services documents. It can help with direct lookups (as long as your URI ends with `/rootservices` or `/rootservices.xml`), can look up a standard `/.well-known/oslc/rootservices.xml` location, or fall back to appending `/rootservices` for legacy systems.
-- ⚡️Samples for IBM Jazz ERM (aka Doors NG), ETM, and EWM were migrated to .NET 10 and tested against Jazz.net. You can run them yourself using `OSLC4Net_SDK\Examples\scripts\test-jazz_net.ps1`.
+- `OslcQuery.SubmitPost()` now submits form-encoded OSLC queries over HTTP POST.
+- `RootServicesHelper` now resolves OSLC Root Services documents from direct `/rootservices` or `/rootservices.xml` URIs, the standard `/.well-known/oslc/rootservices.xml` location, and the legacy `/rootservices` fallback.
+- ⚡️ The IBM Jazz ERM (also known as Doors NG), ETM, and EWM samples now target .NET 10 and have been tested against Jazz.net. Run them with `OSLC4Net_SDK\Examples\scripts\test-jazz_net.ps1`.
 
 
 ### Changed
 
-- `OSLC4Net.Core` requires .NET 10 to be able to use the `[Experimental]` annotation.
-- `OSLC4Net.Client` requires .NET 10.
-- ❗️ `SignedByteNode` (which corresponds to `xsd:byte`) is now parsed as C# `sbyte` (signed byte) instead of `byte`.
-- 👉 Core `Property` is no longer `IComparable<T>` (because it is not immutable). Use `PropertyNameComparer` instead if you need sorting by name in some context.
-  - Users of `Property` collections are responsible to prevent duplicates, e.g. in `AutomationPlan`.
-- ❗️ Generated OSLC domain models now deduplicate inherited declarations by RDF `OslcPropertyDefinition`. This changes the declaring type and backing storage of properties that used to be redeclared on derived classes.
-  - `ChangeNotice.AffectedByDefect` is now inherited from `ChangeRequest`.
-  - `ChangeSetSelections.Selects` is now inherited from `Selections`.
+- `OSLC4Net.Core` now requires .NET 10 to use the `[Experimental]` annotation.
+- `OSLC4Net.Client` now requires .NET 10.
+- ❗️ `SignedByteNode` now maps `xsd:byte` to C# `sbyte` (signed byte) instead of `byte`.
+- 👉 Core `Property` no longer implements `IComparable<T>` because it is mutable. Use `PropertyNameComparer` to sort properties by name.
+  - Code that creates `Property` collections must prevent duplicates, including collections in `AutomationPlan`.
+- ❗️ Generated OSLC domain models now declare each RDF property once, based on `OslcPropertyDefinition`, instead of redeclaring inherited properties on derived classes. Update binary consumers and reflection code that depend on a derived declaration; source code can continue to access the property through the derived type.
+  - `ChangeNotice.AffectedByDefect` now comes from `ChangeRequest`.
+  - `ChangeSetSelections.Selects` now comes from `Selections`.
   - `KerML.AssociationStructure` now inherits the relevant properties from `Association`.
-  - Source code can still access these properties through the derived type, but binary consumers and reflection code that require the old derived declaration must be updated.
-- ❗️ Generated CLR property names are now namespace-qualified when distinct RDF predicates collide:
+- ❗️ Generated CLR property names are now namespace-qualified when distinct RDF predicates have the same local name:
   - KerML:
-    - `Element.Source` → `Element.SourceDcterms`.
-    - `Association.Source2`, `Connector.Source2`, and `Relationship.Source2` → `SourceKerml`.
+    - `Element.Source` is now `Element.SourceDcterms`.
+    - `Association.Source2`, `Connector.Source2`, and `Relationship.Source2` are now `SourceKerml`.
   - SysMLV2:
-    - `Element.Source` → `Element.SourceDcterms`.
-    - `Association.Source2`, `Connector.Source2`, `Relationship.Source2`, `FlowDefinition.Source`, `FlowUsage.Source`, and `TransitionUsage.Source2` → `SourceSysml`.
+    - `Element.Source` is now `Element.SourceDcterms`.
+    - `Association.Source2`, `Connector.Source2`, `Relationship.Source2`, `FlowDefinition.Source`, `FlowUsage.Source`, and `TransitionUsage.Source2` are now `SourceSysml`.
   - SPDX:
-    - `Core.Artifact.IntendedUse` → `IntendedUseCore`.
-    - `Dataset.DatasetPackage.IntendedUse` → `IntendedUseDataset`.
+    - `Core.Artifact.IntendedUse` is now `IntendedUseCore`.
+    - `Dataset.DatasetPackage.IntendedUse` is now `IntendedUseDataset`.
 
 ### Deprecated
 
-- Getters and setters for the RDF type (both `GetRdfTypes()` and `GetTypes()`)
-  are deprecated in favor of the `.Types` property.
+- The RDF type getters and setters, `GetRdfTypes()` and `GetTypes()`, are deprecated; use the `.Types` property instead.
 
 ### Removed
 
-This release does not remove any features.
+No features are removed in this release.
 
 ### Fixed
 
-- Meziantou.Analyzer is configured with PrivateAssets="all" to avoid leaking it as a transitive dependency in built NuGet packages.
-- Query results recognize membership predicates declared through `ldp:hasMemberRelation` or explicitly supplied to `OslcQuery`, and support `ldp:contains` query containers.
-- Query result total counts are parsed from RDF literal nodes.
-- Properties backed by URI collections are now reflected in OSLC shapes correctly (thanks to @ZUOXIANGE)
-- `OslcQueryResult` now handles cases where RDF graph parsing from query responses produces malformed URI nodes. Instead of throwing `ArgumentNullException`, methods like `GetMembersUrls()`, `GetMembers<T>()`, `GetNextPageUrl()`, and `GetTotalCount()` now gracefully return empty results or null values.
-- Replaced the use of `SystemException` with `InvalidOperationException` in `Property.cs` to resolve compiler warning CA2201.
-- `OslcRdfOutputFormatter` no longer throws on a `ResponseInfo` without a next page: a missing next page is kept as `null` instead of being coerced to an empty string that reached `new Uri("")`. Server-side OSLC query responses without paging now serialize correctly.
-- `DotNetRdfHelper.CreateDotNetRdfGraph` serializes an empty `ResponseInfo` container (a query that matched no members) instead of throwing when the `oslc` namespace prefix is not already registered.
-- `OslcRdfOutputFormatter` builds the `ResponseInfo` container subject URI with `UriHelper.BuildAbsolute` instead of re-appending the port to a host string that already carried it, which produced an invalid `host:port:port` authority and threw `UriFormatException` whenever the request used a non-default port.
-- `EnumerableWrapper` disposes the wrapped enumerator through `IDisposable` instead of reflecting a public `Dispose` method, which is absent on enumerators (such as an array's) that implement `IDisposable` explicitly. Previously this threw `NullReferenceException` while serializing any `ResponseInfo` container whose members were wrapped.
+- `Meziantou.Analyzer` now uses `PrivateAssets="all"`, so it is not exposed as a transitive dependency of built NuGet packages.
+- Query results now recognize membership predicates declared through `ldp:hasMemberRelation` or supplied explicitly to `OslcQuery`, and they support `ldp:contains` query containers.
+- Query result total counts are now parsed from RDF literal nodes.
+- OSLC shapes now reflect properties backed by URI collections correctly (thanks to @ZUOXIANGE).
+- When RDF graph parsing produces malformed URI nodes in a query response, `OslcQueryResult.GetMembersUrls()`, `GetMembers<T>()`, `GetNextPageUrl()`, and `GetTotalCount()` now return empty results or `null` instead of throwing `ArgumentNullException`.
+- `Property.cs` now uses `InvalidOperationException` instead of `SystemException`, resolving compiler warning CA2201.
+- `OslcRdfOutputFormatter` now serializes server-side OSLC query responses without paging by keeping a missing `ResponseInfo` next page as `null` instead of passing an empty string to `new Uri("")`.
+- `DotNetRdfHelper.CreateDotNetRdfGraph` now serializes an empty `ResponseInfo` container for queries that match no members, even when the `oslc` namespace prefix is not already registered.
+- `OslcRdfOutputFormatter` now builds the `ResponseInfo` container subject URI with `UriHelper.BuildAbsolute`, so requests using a non-default port no longer produce an invalid `host:port:port` authority or throw `UriFormatException`.
+- `EnumerableWrapper` now disposes wrapped enumerators through `IDisposable` instead of reflecting a public `Dispose` method. Serializing a `ResponseInfo` container whose members are wrapped no longer throws `NullReferenceException` for enumerators that implement `IDisposable` explicitly.
 
 
 ## [0.6.3] - 2025-11-15
