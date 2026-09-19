@@ -66,7 +66,7 @@ PR titles follow the same convention — the squash-merge subject becomes the co
 | `domains:` | Domain libraries — always sub-scoped: `domains: rm:`, `domains: cm:`, future `domains: am:`, `domains: qm:`, `domains: config:` |
 | `trs:` | Tracked Resource Set (reserved; use once the module lands) |
 | `tests:` | Cross-cutting test infrastructure only (Aspire host, `Test.RefImpl`). Per-project test changes attribute to the code's own scope |
-| `docs:` | `docs/`, `README.md`, `CHANGELOG.md`, `MIGRATION.md`, `OSLC4Net_SDK/Examples/`, `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`, `misc/instructions/` |
+| `docs:` | `docs/`, `README.md`, `CHANGELOG.md`, `MIGRATION.md`, `OSLC4Net_SDK/Examples/`, `AGENTS.md`, `.agents/skills/`, `misc/instructions/` |
 | `build:` | MSBuild plumbing, `Directory.*.props`, `global.json`, csproj files, `.github/workflows/`, dependency bumps, `.pre-commit-config.yaml`, `scripts/`, `LICENSE`, `.gitignore` |
 
 `docs:`, `build:`, and `server: provider:` are intentionally flat — the subject line says which file or package changed, so further sub-scoping adds noise without information. Sub-scopes only exist for `client:` and `domains:`.
