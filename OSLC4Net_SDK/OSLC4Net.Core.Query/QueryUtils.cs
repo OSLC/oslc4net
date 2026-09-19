@@ -310,9 +310,25 @@ public class QueryUtils
                         break;
                     }
 
-                    result.Add(propertyName,
-                               InvertSelectedProperties(
-                                       (NestedProperty)property));
+                    if (result is SingletonWildcardProperties)
+                    {
+                        break;
+                    }
+
+                    var nestedProperties =
+                        InvertSelectedProperties((NestedProperty)property);
+
+                    if (result.TryGetValue(propertyName!, out var existingProperties))
+                    {
+                        if (existingProperties is IDictionary<string, object> existingNestedProperties)
+                        {
+                            MergePropertyMaps(existingNestedProperties, nestedProperties);
+                        }
+
+                        break;
+                    }
+
+                    result.Add(propertyName!, nestedProperties);
 
                     break;
             }
@@ -329,14 +345,13 @@ public class QueryUtils
         foreach (var propertyName in result.Keys)
         {
 
-            var nestedProperties =
-                (IDictionary<string, object>)result[propertyName];
+            var selectedProperties = result[propertyName];
 
-            if (nestedProperties == OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON)
+            if (selectedProperties == OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON)
             {
-                result.Add(propertyName, commonNestedProperties);
+                result[propertyName] = commonNestedProperties;
             }
-            else
+            else if (selectedProperties is IDictionary<string, object> nestedProperties)
             {
                 MergePropertyMaps(nestedProperties, commonNestedProperties);
             }
@@ -550,27 +565,31 @@ public class QueryUtils
 
         foreach (var propertyName in propertyNames)
         {
+            var rhsValue = rhs[propertyName];
 
-            var lhsNestedProperties =
-                (IDictionary<string, object>)lhs[propertyName];
-            var rhsNestedProperties =
-                (IDictionary<string, object>)rhs[propertyName];
+            if (!lhs.TryGetValue(propertyName, out var lhsValue))
+            {
+                lhs.Add(propertyName, rhsValue);
+                continue;
+            }
 
-            if (lhsNestedProperties == rhsNestedProperties)
+            if (lhsValue == rhsValue ||
+                lhsValue == OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON)
             {
                 continue;
             }
 
-            if (lhsNestedProperties == null ||
-                lhsNestedProperties == OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON)
+            if (rhsValue == OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON)
             {
-
-                lhs.Add(propertyName, rhsNestedProperties);
-
+                lhs[propertyName] = rhsValue;
                 continue;
             }
 
-            MergePropertyMaps(lhsNestedProperties, rhsNestedProperties);
+            if (lhsValue is IDictionary<string, object> lhsNestedProperties &&
+                rhsValue is IDictionary<string, object> rhsNestedProperties)
+            {
+                MergePropertyMaps(lhsNestedProperties, rhsNestedProperties);
+            }
         }
     }
 }

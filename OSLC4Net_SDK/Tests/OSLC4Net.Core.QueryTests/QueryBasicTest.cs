@@ -240,6 +240,40 @@ public class QueryBasicTest
     }
 
     [Test]
+    public async Task InvertDuplicateNestedSelectPropertiesDoesNotThrow()
+    {
+        const string expression =
+            "qm:property{dcterms:title},qm:property{oslc:shortTitle}";
+        const string prefixes = "qm=<http://qm.example.com/ns/>," +
+                                "dcterms=<http://purl.org/dc/terms/>," +
+                                "oslc=<http://open-services.net/ns/core#>";
+        var prefixMap = QueryUtils.ParsePrefixes(prefixes);
+        var selectClause = QueryUtils.ParseSelect(expression, prefixMap);
+
+        var result = QueryUtils.InvertSelectedProperties(selectClause);
+
+        await Assert.That(result).HasCount(1);
+        var nested = (IDictionary<string, object>)result["http://qm.example.com/ns/property"];
+        await Assert.That(nested.ContainsKey("http://purl.org/dc/terms/title")).IsTrue();
+        await Assert.That(nested.ContainsKey("http://open-services.net/ns/core#shortTitle")).IsTrue();
+    }
+
+    [Test]
+    public async Task InvertNestedWildcardWithSiblingPropertyDoesNotThrow()
+    {
+        const string expression = "qm:property,*{dcterms:title}";
+        const string prefixes = "qm=<http://qm.example.com/ns/>," +
+                                "dcterms=<http://purl.org/dc/terms/>";
+        var prefixMap = QueryUtils.ParsePrefixes(prefixes);
+        var selectClause = QueryUtils.ParseSelect(expression, prefixMap);
+
+        var result = QueryUtils.InvertSelectedProperties(selectClause);
+
+        await Assert.That(result).HasCount(1);
+        await Assert.That(result.ContainsKey("http://qm.example.com/ns/property")).IsTrue();
+    }
+
+    [Test]
     public async Task TestUriRef()
     {
         var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
