@@ -1,3 +1,13 @@
+/*
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution.
+ *
+ * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
+ */
+
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
@@ -61,9 +71,18 @@ public record RootServicesDto
     {
         try
         {
-            // Create an XmlDocument to parse the RDF
-            var doc = new XmlDocument();
-            doc.LoadXml(xml);
+            // Create an XmlDocument to parse the RDF securely (disabling external entity resolution)
+            var doc = new XmlDocument
+            {
+                XmlResolver = null
+            };
+            var settings = new XmlReaderSettings
+            {
+                DtdProcessing = DtdProcessing.Prohibit,
+                XmlResolver = null
+            };
+            using var reader = XmlReader.Create(new StringReader(xml), settings);
+            doc.Load(reader);
 
             // Set up namespace manager
             var nsManager = new XmlNamespaceManager(doc.NameTable);
@@ -131,7 +150,10 @@ public record RootServicesDto
     {
         try
         {
-            var doc = new XmlDocument();
+            var doc = new XmlDocument
+            {
+                XmlResolver = null
+            };
 
             // Create the root element with proper namespace
             var root = doc.CreateElement("rdf", "Description", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
