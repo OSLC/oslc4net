@@ -20,6 +20,7 @@ No security updates are included in this release.
 - `OslcQuery.SubmitPost()` now submits form-encoded OSLC queries over HTTP POST.
 - `RootServicesHelper` now resolves OSLC Root Services documents from direct `/rootservices` or `/rootservices.xml` URIs, the standard `/.well-known/oslc/rootservices.xml` location, and the legacy relative `/rootservices` fallback.
 - ⚡️ The IBM Jazz ERM (also known as Doors NG), ETM, and EWM samples now target .NET 10 and have been tested against Jazz.net. Run them with `OSLC4Net_SDK\Examples\scripts\test-jazz_net.ps1`.
+- Added an opt-in SharpFuzz harness for the OSLC query parsers under `OSLC4Net_SDK/Tests/OSLC4Net.Fuzzing`, with a 90-second CI smoke run and weekly or manually triggered extended campaigns.
 
 
 ### Changed
@@ -64,6 +65,8 @@ No features are removed in this release.
 - `DotNetRdfHelper.CreateDotNetRdfGraph` now serializes an empty `ResponseInfo` container for queries that match no members, even when the `oslc` namespace prefix is not already registered.
 - `OslcRdfOutputFormatter` now builds the `ResponseInfo` container subject URI with `UriHelper.BuildAbsolute`, so requests using a non-default port no longer produce an invalid `host:port:port` authority or throw `UriFormatException`.
 - `EnumerableWrapper` now disposes wrapped enumerators through `IDisposable` instead of reflecting a public `Dispose` method. Serializing a `ResponseInfo` container whose members are wrapped no longer throws `NullReferenceException` for enumerators that implement `IDisposable` explicitly.
+- OSLC query parsing now reports malformed property trees, unknown or duplicate prefixes, duplicate selected properties, and malformed search terms as parse failures instead of leaking implementation exceptions.
+- The AFL++ helper now opts out of external core-pattern crash notification checks in CI and local test runs.
 
 
 ## [0.6.3] - 2025-11-15

@@ -1,0 +1,1 @@
+oslc:status in ["Open","In Progress","Done"] and dcterms:modified>="2026-09-19T00:00:00Z"^^xs:dateTime and oslc:shortTitle="A \"quoted\" title"@en

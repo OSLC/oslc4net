@@ -1,0 +1,1 @@
+rdf:type=<http://open-services.net/ns/config#VersionResource> and dcterms:title in ["Baseline A","Baseline B","Active stream"]

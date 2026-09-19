@@ -17,6 +17,38 @@ First, thank you for considering contributing to OSLC4Net. It is contributors li
 
 For `OSLC4Net_SDK`, use regular .NET 8+ SDK. `OSCL4Net_Framework` uses .NET Framework and is unmaintained.
 
+### Fuzzing on macOS
+
+The SharpFuzz harness uses AFL++'s legacy fork-server shared-memory protocol.
+On macOS, use AFL++ 4.21c for this harness. Homebrew currently installs AFL++
+5.x, whose macOS support uses a newer POSIX shared-memory protocol that does not
+currently handshake with SharpFuzz 2.3.0.
+
+Install the current Homebrew release for other AFL++ work with:
+
+```shell
+brew install afl++
+```
+
+Build the compatible AFL++ release from its tagged source when running the
+SharpFuzz harness on macOS:
+
+```shell
+aflpp_dir=/tmp/aflplusplus-v4.21c
+git clone --branch v4.21c --depth 1 https://github.com/AFLplusplus/AFLplusplus.git "$aflpp_dir"
+make -C "$aflpp_dir" -j"$(sysctl -n hw.ncpu)"
+pwsh scripts/fuzz-oslc-query.ps1 -Fuzzer "$aflpp_dir/afl-fuzz"
+```
+
+[AFL++'s macOS installation guide](https://github.com/AFLplusplus/AFLplusplus/blob/stable/docs/INSTALL.md)
+also documents `afl-system-config`, which adjusts shared-memory limits and the
+system crash reporter for local fuzzing. The [AFL++ 5.x changelog](https://github.com/AFLplusplus/AFLplusplus/blob/stable/docs/Changelog.md)
+describes the macOS shared-memory protocol change.
+The repository script applies the crash-reporter override automatically.
+
+On Linux, install the distribution `afl++` package and use the default
+`afl-fuzz` command.
+
 ### NuGet lock files
 
 `OSLC4Net_SDK` uses NuGet lock files for every project. Continuous integration restores in locked mode, so dependency changes must update and commit the affected `packages.lock.json` files.
@@ -25,7 +57,6 @@ When changing a package reference or a central package version, regenerate the l
 
 ```bash
 cd OSLC4Net_SDK
-export AGENT_BUILD=true
 dotnet restore OSLC4Net.Core.slnx --force-evaluate -p:RestoreLockedMode=false
 dotnet restore Tests/OSLC4NetExamples.Server.Tests/OSLC4NetExamples.Server.Tests.csproj --force-evaluate -p:RestoreLockedMode=false
 ```

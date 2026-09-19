@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,6 +29,7 @@ public class QueryBasicTest
 
     [Test]
     [Arguments("qm=<http://qm.example.com/ns/>,olsc=<http://open-services.net/ns/core#>,xs=<http://www.w3.org/2001/XMLSchema>", true)]
+    [Arguments("qm=<http://qm.example.com/ns/>,qm=<http://qm.example.com/other/>", false)]
     [Arguments("qm=<http://qm.example.com/ns/>,XXX>", false)]
     public async Task BasicPrefixesTest(string expression, bool shouldSucceed)
     {
@@ -79,6 +81,7 @@ public class QueryBasicTest
     [Test]
     [Arguments("\"foobar\"", true)]
     [Arguments("\"foobar\",\"whatsis\",\"yousa\"", true)]
+    [Arguments("-oslc:priority,+dcterms:title", false)]
     [Arguments("", false)]
     public async Task BasicSearchTermsTest(string expression, bool shouldSucceed)
     {
@@ -197,6 +200,77 @@ public class QueryBasicTest
 
             await Assert.That(shouldSucceed).IsFalse();
         }
+    }
+
+    [Test]
+    public async Task InvertMalformedSelectThrowsParseException()
+    {
+        const string expression = "*Open\",\"In Progress\",\"Done\"";
+        const string prefixes = "qm=<http://qm.example.com/ns/>";
+        var prefixMap = QueryUtils.ParsePrefixes(prefixes);
+        var selectClause = QueryUtils.ParseSelect(expression, prefixMap);
+
+        await Assert.That(() => QueryUtils.InvertSelectedProperties(selectClause))
+            .Throws<ParseException>();
+    }
+
+    [Test]
+    public async Task InvertUnknownPrefixThrowsParseException()
+    {
+        const string expression = "unknown:property";
+        const string prefixes = "qm=<http://qm.example.com/ns/>";
+        var prefixMap = QueryUtils.ParsePrefixes(prefixes);
+        var selectClause = QueryUtils.ParseSelect(expression, prefixMap);
+
+        await Assert.That(() => QueryUtils.InvertSelectedProperties(selectClause))
+            .Throws<ParseException>();
+    }
+
+    [Test]
+    public async Task InvertDuplicateSelectPropertiesDoesNotThrow()
+    {
+        const string expression = "qm:property,qm:property";
+        const string prefixes = "qm=<http://qm.example.com/ns/>";
+        var prefixMap = QueryUtils.ParsePrefixes(prefixes);
+        var selectClause = QueryUtils.ParseSelect(expression, prefixMap);
+
+        var result = QueryUtils.InvertSelectedProperties(selectClause);
+
+        await Assert.That(result).HasCount(1);
+    }
+
+    [Test]
+    public async Task InvertDuplicateNestedSelectPropertiesDoesNotThrow()
+    {
+        const string expression =
+            "qm:property{dcterms:title},qm:property{oslc:shortTitle}";
+        const string prefixes = "qm=<http://qm.example.com/ns/>," +
+                                "dcterms=<http://purl.org/dc/terms/>," +
+                                "oslc=<http://open-services.net/ns/core#>";
+        var prefixMap = QueryUtils.ParsePrefixes(prefixes);
+        var selectClause = QueryUtils.ParseSelect(expression, prefixMap);
+
+        var result = QueryUtils.InvertSelectedProperties(selectClause);
+
+        await Assert.That(result).HasCount(1);
+        var nested = (IDictionary<string, object>)result["http://qm.example.com/ns/property"];
+        await Assert.That(nested.ContainsKey("http://purl.org/dc/terms/title")).IsTrue();
+        await Assert.That(nested.ContainsKey("http://open-services.net/ns/core#shortTitle")).IsTrue();
+    }
+
+    [Test]
+    public async Task InvertNestedWildcardWithSiblingPropertyDoesNotThrow()
+    {
+        const string expression = "qm:property,*{dcterms:title}";
+        const string prefixes = "qm=<http://qm.example.com/ns/>," +
+                                "dcterms=<http://purl.org/dc/terms/>";
+        var prefixMap = QueryUtils.ParsePrefixes(prefixes);
+        var selectClause = QueryUtils.ParseSelect(expression, prefixMap);
+
+        var result = QueryUtils.InvertSelectedProperties(selectClause);
+
+        await Assert.That(result).HasCount(1);
+        await Assert.That(result.ContainsKey("http://qm.example.com/ns/property")).IsTrue();
     }
 
     [Test]

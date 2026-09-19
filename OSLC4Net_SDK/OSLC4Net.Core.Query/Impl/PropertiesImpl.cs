@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -83,11 +84,19 @@ internal class PropertiesImpl : Properties
         IDictionary<string, string> prefixMap
     )
     {
-        var treeChildren = tree.Children;
+        if (tree?.Children is not { } treeChildren)
+        {
+            throw new ParseException("Invalid property expression.");
+        }
+
         IList<Property> children = new List<Property>(treeChildren.Count);
 
         foreach (CommonTree treeChild in treeChildren)
         {
+            if (treeChild is null || treeChild.Token is null)
+            {
+                throw new ParseException("Invalid property expression.");
+            }
 
             Property property;
 
@@ -97,11 +106,24 @@ internal class PropertiesImpl : Properties
                     property = (Property)new WildcardImpl();
                     break;
                 case OslcSelectParser.PREFIXED_NAME:
-                    property = (Property)new PropertyImpl((CommonTree)treeChild.GetChild(0),
+                    if (treeChild.GetChild(0) is not CommonTree propertyName ||
+                        propertyName.Token is null)
+                    {
+                        throw new ParseException("Invalid property expression.");
+                    }
+
+                    property = (Property)new PropertyImpl(propertyName,
                                                           PropertyType.IDENTIFIER, prefixMap, false);
                     break;
                 default:
                 case OslcSelectParser.NESTED_PROPERTIES:
+                    if (treeChild.GetChild(0) is not CommonTree nestedProperty ||
+                        nestedProperty.Token is null ||
+                        treeChild.GetChild(1) is not CommonTree nestedProperties)
+                    {
+                        throw new ParseException("Invalid property expression.");
+                    }
+
                     property = (Property)new NestedPropertyImpl(treeChild, prefixMap);
                     break;
             }
