@@ -64,10 +64,8 @@ foreach ($fuzzingTarget in $fuzzingTargets) {
     }
 }
 
+$env:AFL_I_DONT_CARE_ABOUT_MISSING_CRASHES = "1"
 $env:AFL_SKIP_BIN_CHECK = "1"
-if ($IsMacOS) {
-    $env:AFL_I_DONT_CARE_ABOUT_MISSING_CRASHES = "1"
-}
 
 & $Fuzzer -i $corpusPath -o $findingsDirectory -m none -t 10000 -V $DurationSeconds -x $dictionaryPath dotnet $projectDll
 exit $LASTEXITCODE
