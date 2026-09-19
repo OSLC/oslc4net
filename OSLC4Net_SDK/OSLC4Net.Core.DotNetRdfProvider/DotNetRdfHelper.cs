@@ -1045,11 +1045,9 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         IGraph graph,
         IDictionary<string, object> visitedResources)
     {
-        // TODO: use modern C#
         if (obj is ILiteralNode node)
         {
-            var valuedNode = node.AsValuedNode();
-            return valuedNode switch
+            return node.AsValuedNode() switch
             {
                 BooleanNode booleanNode => booleanNode.AsBoolean(),
                 ByteNode byteNode => byte.Parse(byteNode.Value, CultureInfo.InvariantCulture),
@@ -1060,20 +1058,23 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                 LongNode longNode => longNode.AsInteger(),
                 SignedByteNode signedByteNode => (sbyte)signedByteNode.AsInteger(),
                 StringNode stringNode => stringNode.AsString(),
-                // DotNetRDF does not expose a ulong directly.
-                // An OverflowException is thrown for illegal conversion attempts.
-                UnsignedLongNode unsignedLongNode => (ulong)unsignedLongNode.AsInteger(),
+                // DotNetRDF's AsInteger() returns a signed long, so parse the lexical value
+                // to preserve the full xsd:unsignedLong range.
+                UnsignedLongNode unsignedLongNode => ulong.Parse(unsignedLongNode.Value, CultureInfo.InvariantCulture),
                 _ => node.Value
             };
         }
 
         var nestedResource = obj as IUriNode;
-
-        // REVISIT: Is this an inline resource? AND we have not visited it yet?
         var visitedName = GetVisitedResourceName(obj);
-        if ((obj is IBlankNode || graph.GetTriplesWithSubject(nestedResource).Any()) &&
-            visitedName != null && !visitedResources.ContainsKey(visitedName))
+
+        if (visitedName != null && (obj is IBlankNode || graph.GetTriplesWithSubject(nestedResource).Any()))
         {
+            if (visitedResources.TryGetValue(visitedName, out var existingResource))
+            {
+                return existingResource;
+            }
+
             AbstractResource any = new AnyResource();
             var typePropertyDefinitionsToSetMethods =
                 new Dictionary<Type, IDictionary<string, MemberInfo>>();
@@ -1085,11 +1086,6 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                 visitedResources);
 
             return any;
-        }
-
-        if ((obj is IBlankNode || graph.GetTriplesWithSubject(nestedResource).Any()) && visitedName != null)
-        {
-            return visitedResources[visitedName];
         }
 
         // It's a resource reference.
