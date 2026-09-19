@@ -222,4 +222,28 @@ public class RootServicesDtoTests
         namespaces.Should().ContainKey("jfs").WhoseValue.Should().Be("http://jazz.net/xmlns/prod/jazz/jfs/1.0/");
         namespaces.Should().ContainKey("rdf").WhoseValue.Should().Be("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
     }
+
+    [Fact]
+    public void FromXml_WithXmlExternalEntity_ShouldNotResolveExternalEntity()
+    {
+        // Arrange
+        var xxeXml = """
+            <?xml version="1.0" encoding="utf-8"?>
+            <!DOCTYPE rdf:Description [
+                <!ENTITY xxe SYSTEM "file:///etc/passwd">
+            ]>
+            <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                             xmlns:dc="http://purl.org/dc/terms/"
+                             rdf:about="http://example.com/rootservices">
+                <dc:title>&xxe;</dc:title>
+            </rdf:Description>
+            """;
+
+        // Act
+        var result = RootServicesDto.FromXml(xxeXml);
+
+        // Assert
+        result.Should().NotBeNull();
+        result.Title.Should().NotContain("root:");
+    }
 }

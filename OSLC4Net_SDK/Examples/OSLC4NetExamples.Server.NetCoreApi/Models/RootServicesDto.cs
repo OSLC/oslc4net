@@ -61,8 +61,11 @@ public record RootServicesDto
     {
         try
         {
-            // Create an XmlDocument to parse the RDF
-            var doc = new XmlDocument();
+            // Create an XmlDocument to parse the RDF securely (disabling external entity resolution)
+            var doc = new XmlDocument
+            {
+                XmlResolver = null
+            };
             doc.LoadXml(xml);
 
             // Set up namespace manager
@@ -131,7 +134,10 @@ public record RootServicesDto
     {
         try
         {
-            var doc = new XmlDocument();
+            var doc = new XmlDocument
+            {
+                XmlResolver = null
+            };
 
             // Create the root element with proper namespace
             var root = doc.CreateElement("rdf", "Description", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
