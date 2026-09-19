@@ -59,7 +59,12 @@ public class QueryUtils
             var pn = rawPrefix.GetChild(0).Text;
             var uri = rawPrefix.GetChild(1).Text;
 
-            uri = uri.Substring(1, uri.Length - 2);
+            if (uri.Length < 2 || uri[0] != '<' || uri[^1] != '>')
+            {
+                throw new ParseException($"Invalid prefix URI: {uri}");
+            }
+
+            uri = uri[1..^1];
 
             if (!prefixMap.TryAdd(pn, uri))
             {
@@ -129,7 +134,9 @@ public class QueryUtils
                 throw new ParseException(child.ToString());
             }
 
-            return new SelectClauseImpl(rawTree, prefixMap);
+            var selectClause = new SelectClauseImpl(rawTree, prefixMap);
+            ValidateNoDuplicateProperties(selectClause);
+            return selectClause;
 
         }
         catch (RecognitionException e)
@@ -147,7 +154,7 @@ public class QueryUtils
     ///associated URLs></param>
     /// <returns>the parsed properties clause</returns>
     public static PropertiesClause
-    parseProperties(
+    ParseProperties(
         string propertiesExpression,
         IDictionary<string, string> prefixMap
     )
@@ -163,13 +170,61 @@ public class QueryUtils
                 throw new ParseException(child.ToString());
             }
 
-            return new PropertiesClauseImpl(rawTree, prefixMap);
+            var propertiesClause = new PropertiesClauseImpl(rawTree, prefixMap);
+            ValidateNoDuplicateProperties(propertiesClause);
+            return propertiesClause;
 
         }
         catch (RecognitionException e)
         {
             throw new ParseException(e);
         }
+    }
+
+    /// <summary>
+    /// Compatibility alias for the original lower-case method name.
+    /// </summary>
+    public static PropertiesClause
+    parseProperties(
+        string propertiesExpression,
+        IDictionary<string, string> prefixMap
+    ) => ParseProperties(propertiesExpression, prefixMap);
+
+    private static void
+    ValidateNoDuplicateProperties(Properties properties)
+    {
+        HashSet<string> selectedProperties = new(StringComparer.Ordinal);
+
+        foreach (var property in properties.Children)
+        {
+            if (property is NestedProperty nestedProperty)
+            {
+                if (!property.IsWildcard &&
+                    !selectedProperties.Add(GetPropertyName(property)))
+                {
+                    throw new ParseException(
+                        $"Duplicate selected property: {GetPropertyName(property)}");
+                }
+
+                ValidateNoDuplicateProperties(nestedProperty);
+            }
+            else
+            {
+                var propertyName = property.IsWildcard ? "*" : GetPropertyName(property);
+
+                if (!selectedProperties.Add(propertyName))
+                {
+                    throw new ParseException($"Duplicate selected property: {propertyName}");
+                }
+            }
+        }
+    }
+
+    private static string
+    GetPropertyName(Property property)
+    {
+        var propertyName = property.Identifier;
+        return propertyName.ns + propertyName.local;
     }
 
     /// <summary>
@@ -277,8 +332,13 @@ public class QueryUtils
                         }
                     }
 
-                    result[propertyName!] =
-                        OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON;
+                    if (!result.TryAdd(
+                            propertyName!,
+                            OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON))
+                    {
+                        throw new ParseException(
+                            $"Duplicate selected property: {propertyName}");
+                    }
 
                     break;
 
@@ -318,17 +378,11 @@ public class QueryUtils
                     var nestedProperties =
                         InvertSelectedProperties((NestedProperty)property);
 
-                    if (result.TryGetValue(propertyName!, out var existingProperties))
+                    if (!result.TryAdd(propertyName!, nestedProperties))
                     {
-                        if (existingProperties is IDictionary<string, object> existingNestedProperties)
-                        {
-                            MergePropertyMaps(existingNestedProperties, nestedProperties);
-                        }
-
-                        break;
+                        throw new ParseException(
+                            $"Duplicate selected property: {propertyName}");
                     }
-
-                    result.Add(propertyName!, nestedProperties);
 
                     break;
             }
