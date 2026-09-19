@@ -1,3 +1,5 @@
+<!-- Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors. -->
+
 # Contributing to OSLC4Net
 
 First, thank you for considering contributing to OSLC4Net. It is contributors like you who make OSLC4Net a great tool.
@@ -14,6 +16,21 @@ First, thank you for considering contributing to OSLC4Net. It is contributors li
 ### Setting up your development environment
 
 For `OSLC4Net_SDK`, use regular .NET 8+ SDK. `OSCL4Net_Framework` uses .NET Framework and is unmaintained.
+
+### NuGet lock files
+
+`OSLC4Net_SDK` uses NuGet lock files for every project. Continuous integration restores in locked mode, so dependency changes must update and commit the affected `packages.lock.json` files.
+
+When changing a package reference or a central package version, regenerate the lock files from `OSLC4Net_SDK`:
+
+```bash
+cd OSLC4Net_SDK
+export AGENT_BUILD=true
+dotnet restore OSLC4Net.Core.slnx --force-evaluate -p:RestoreLockedMode=false
+dotnet restore Tests/OSLC4NetExamples.Server.Tests/OSLC4NetExamples.Server.Tests.csproj --force-evaluate -p:RestoreLockedMode=false
+```
+
+The second restore covers the example test project and its Aspire host, which are not part of the solution. Review all changed `packages.lock.json` files, run the normal tests, and include the lockfile updates in the same commit as the dependency change. Do not edit lock files by hand.
 
 ### Submitting pull requests
 - Fork the repository on GitHub.

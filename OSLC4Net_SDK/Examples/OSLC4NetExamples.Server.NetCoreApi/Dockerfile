@@ -16,9 +16,14 @@ COPY ["Directory.Packages.props", "."]
 COPY ["Directory.Build.props", "."]
 COPY ["Examples/Directory.Build.props", "Examples/"]
 COPY ["OSLC4Net.Server.Providers/OSLC4Net.Server.Providers.csproj", "OSLC4Net.Server.Providers/"]
+COPY ["OSLC4Net.Server.Providers/packages.lock.json", "OSLC4Net.Server.Providers/"]
+COPY ["OSLC4Net.Core.DotNetRdfProvider/packages.lock.json", "OSLC4Net.Core.DotNetRdfProvider/"]
+COPY ["OSLC4Net.Core/packages.lock.json", "OSLC4Net.Core/"]
 COPY ["OSLC4Net.ChangeManagement/OSLC4Net.ChangeManagementCommon.csproj", "OSLC4Net.ChangeManagement/"]
+COPY ["OSLC4Net.ChangeManagement/packages.lock.json", "OSLC4Net.ChangeManagement/"]
 COPY ["Examples/OSLC4NetExamples.Server.NetCoreApi/OSLC4NetExamples.Server.NetCoreApi.csproj", "Examples/OSLC4NetExamples.Server.NetCoreApi/"]
-RUN dotnet restore "./Examples/OSLC4NetExamples.Server.NetCoreApi/OSLC4NetExamples.Server.NetCoreApi.csproj"
+COPY ["Examples/OSLC4NetExamples.Server.NetCoreApi/packages.lock.json", "Examples/OSLC4NetExamples.Server.NetCoreApi/"]
+RUN dotnet restore "./Examples/OSLC4NetExamples.Server.NetCoreApi/OSLC4NetExamples.Server.NetCoreApi.csproj" --locked-mode
 COPY . .
 WORKDIR "/src/Examples/OSLC4NetExamples.Server.NetCoreApi"
 RUN dotnet build "./OSLC4NetExamples.Server.NetCoreApi.csproj" -c $BUILD_CONFIGURATION -o /app/build

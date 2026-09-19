@@ -8,7 +8,25 @@
  The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
 -->
 <Project>
-  <PropertyGroup Condition="'$(IsPackable)' != 'false'">
+  <PropertyGroup>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RestoreLockedMode Condition="'$(GITHUB_ACTIONS)' == 'true'">true</RestoreLockedMode>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsAspireHost)' == 'true'">
+    <!-- Aspire resolves RID-specific packages; keep all supported CI and developer RIDs in one lock file. -->
+    <RuntimeIdentifiers Condition="'$(RuntimeIdentifiers)' == ''">linux-x64;linux-arm64;osx-arm64;win-x64</RuntimeIdentifiers>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(IsAspireHost)' == 'true'">
+    <!-- The Aspire SDK selects only the host RID dynamically; restore the other supported packages without importing their assets. -->
+    <PackageReference Include="Aspire.Dashboard.Sdk.linux-x64" VersionOverride="$(AspireVersion)" ExcludeAssets="all" Condition="'$(NETCoreSdkRuntimeIdentifier)' != 'linux-x64'" />
+    <PackageReference Include="Aspire.Dashboard.Sdk.linux-arm64" VersionOverride="$(AspireVersion)" ExcludeAssets="all" Condition="'$(NETCoreSdkRuntimeIdentifier)' != 'linux-arm64'" />
+    <PackageReference Include="Aspire.Dashboard.Sdk.osx-arm64" VersionOverride="$(AspireVersion)" ExcludeAssets="all" Condition="'$(NETCoreSdkRuntimeIdentifier)' != 'osx-arm64'" />
+    <PackageReference Include="Aspire.Dashboard.Sdk.win-x64" VersionOverride="$(AspireVersion)" ExcludeAssets="all" Condition="'$(NETCoreSdkRuntimeIdentifier)' != 'win-x64'" />
+    <PackageReference Include="Aspire.Hosting.Orchestration.linux-x64" VersionOverride="$(AspireVersion)" ExcludeAssets="all" Condition="'$(NETCoreSdkRuntimeIdentifier)' != 'linux-x64'" />
+    <PackageReference Include="Aspire.Hosting.Orchestration.linux-arm64" VersionOverride="$(AspireVersion)" ExcludeAssets="all" Condition="'$(NETCoreSdkRuntimeIdentifier)' != 'linux-arm64'" />
+    <PackageReference Include="Aspire.Hosting.Orchestration.osx-arm64" VersionOverride="$(AspireVersion)" ExcludeAssets="all" Condition="'$(NETCoreSdkRuntimeIdentifier)' != 'osx-arm64'" />
+    <PackageReference Include="Aspire.Hosting.Orchestration.win-x64" VersionOverride="$(AspireVersion)" ExcludeAssets="all" Condition="'$(NETCoreSdkRuntimeIdentifier)' != 'win-x64'" />
+  </ItemGroup>
 </Project>
