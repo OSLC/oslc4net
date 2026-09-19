@@ -8,7 +8,7 @@
  The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
 -->
 <Project>
-  <PropertyGroup Condition="'$(IsPackable)' != 'false'">
+  <PropertyGroup>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <RestoreLockedMode Condition="'$(GITHUB_ACTIONS)' == 'true'">true</RestoreLockedMode>
   </PropertyGroup>
@@ -16,8 +16,6 @@
   <PropertyGroup Condition="'$(IsAspireHost)' == 'true'">
     <!-- Aspire resolves RID-specific packages; keep all supported CI and developer RIDs in one lock file. -->
     <RuntimeIdentifiers Condition="'$(RuntimeIdentifiers)' == ''">linux-x64;linux-arm64;osx-arm64;win-x64</RuntimeIdentifiers>
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-    <RestoreLockedMode Condition="'$(GITHUB_ACTIONS)' == 'true'">true</RestoreLockedMode>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(IsAspireHost)' == 'true'">
