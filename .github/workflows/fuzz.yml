@@ -75,11 +75,18 @@ jobs:
             echo "Unexpected fuzzing crash: $crash_file"
             exit 1
           fi
+      - name: Package fuzzing findings
+        if: always()
+        working-directory: main
+        run: |
+          mkdir -p OSLC4Net_SDK/Tests/OSLC4Net.Fuzzing/findings
+          tar -czf oslc-query-fuzz-findings.tar.gz \
+            -C OSLC4Net_SDK/Tests/OSLC4Net.Fuzzing/findings .
       - name: Upload fuzzing findings
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: oslc-query-fuzz-findings
-          path: main/OSLC4Net_SDK/Tests/OSLC4Net.Fuzzing/findings
-          if-no-files-found: warn
+          path: main/oslc-query-fuzz-findings.tar.gz
+          if-no-files-found: error
           retention-days: 14
