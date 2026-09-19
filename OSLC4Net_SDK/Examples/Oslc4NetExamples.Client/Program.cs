@@ -23,16 +23,13 @@ using (var scope = host.Services.CreateScope())
     var logger = services.GetRequiredService<ILogger<Program>>();
     logger.LogInformation("OSLC4Net client started");
 
-    string username = Environment.GetEnvironmentVariable("OSLC_USERNAME")
-        ?? Environment.GetEnvironmentVariable("JAZZ_NET_USERNAME")
-        ?? string.Empty;
-    string password = Environment.GetEnvironmentVariable("OSLC_PASSWORD")
-        ?? Environment.GetEnvironmentVariable("JAZZ_NET_PASSWORD")
-        ?? string.Empty;
+    string username = GetCredential("OSLC_USERNAME", "JAZZ_NET_USERNAME");
+    string password = GetCredential("OSLC_PASSWORD", "JAZZ_NET_PASSWORD");
 
-    if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+    if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
     {
-        logger.LogWarning("Credentials not provided. Please set OSLC_USERNAME and OSLC_PASSWORD (or JAZZ_NET_USERNAME and JAZZ_NET_PASSWORD) environment variables.");
+        logger.LogError("Credentials not provided. Please set OSLC_USERNAME and OSLC_PASSWORD (or JAZZ_NET_USERNAME and JAZZ_NET_PASSWORD) environment variables.");
+        return;
     }
 
     var oslcClient = OslcClient.ForBasicAuth(username, password,
@@ -56,4 +53,15 @@ using (var scope = host.Services.CreateScope())
     }
 
     logger.LogDebug("END");
+}
+
+static string GetCredential(string primaryName, string fallbackName)
+{
+    string? primaryValue = Environment.GetEnvironmentVariable(primaryName);
+    if (!string.IsNullOrWhiteSpace(primaryValue))
+    {
+        return primaryValue;
+    }
+
+    return Environment.GetEnvironmentVariable(fallbackName) ?? string.Empty;
 }
