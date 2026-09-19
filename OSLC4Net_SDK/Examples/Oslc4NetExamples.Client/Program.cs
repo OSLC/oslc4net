@@ -23,8 +23,18 @@ using (var scope = host.Services.CreateScope())
     var logger = services.GetRequiredService<ILogger<Program>>();
     logger.LogInformation("OSLC4Net client started");
 
-    string username = "%USERNAME%";
-    string password = "%PASSWORD%";
+    string username = Environment.GetEnvironmentVariable("OSLC_USERNAME")
+        ?? Environment.GetEnvironmentVariable("JAZZ_NET_USERNAME")
+        ?? string.Empty;
+    string password = Environment.GetEnvironmentVariable("OSLC_PASSWORD")
+        ?? Environment.GetEnvironmentVariable("JAZZ_NET_PASSWORD")
+        ?? string.Empty;
+
+    if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+    {
+        logger.LogWarning("Credentials not provided. Please set OSLC_USERNAME and OSLC_PASSWORD (or JAZZ_NET_USERNAME and JAZZ_NET_PASSWORD) environment variables.");
+    }
+
     var oslcClient = OslcClient.ForBasicAuth(username, password,
         services.GetRequiredService<ILogger<OslcClient>>());
 
