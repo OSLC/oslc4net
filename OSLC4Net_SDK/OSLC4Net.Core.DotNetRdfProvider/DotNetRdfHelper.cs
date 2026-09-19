@@ -1058,9 +1058,9 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                 LongNode longNode => longNode.AsInteger(),
                 SignedByteNode signedByteNode => (sbyte)signedByteNode.AsInteger(),
                 StringNode stringNode => stringNode.AsString(),
-                // DotNetRDF does not expose a ulong directly.
-                // An OverflowException is thrown for illegal conversion attempts.
-                UnsignedLongNode unsignedLongNode => (ulong)unsignedLongNode.AsInteger(),
+                // DotNetRDF's AsInteger() returns a signed long, so parse the lexical value
+                // to preserve the full xsd:unsignedLong range.
+                UnsignedLongNode unsignedLongNode => ulong.Parse(unsignedLongNode.Value, CultureInfo.InvariantCulture),
                 _ => node.Value
             };
         }

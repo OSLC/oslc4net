@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Andrii Berezovskyi and OSLC4Net contributors.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -52,6 +52,32 @@ public class ExtendedPropertyValueTests
         await Assert.That(extProps[intKey]).IsEqualTo(42L);
         await Assert.That(extProps[doubleKey]).IsEqualTo(3.14d);
         await Assert.That(extProps[stringKey]).IsEqualTo("hello");
+    }
+
+    [Test]
+    public async Task HandleExtendedPropertyValue_UnsignedLong_DeserializesValuesAboveLongMaxValue()
+    {
+        var helper = new DotNetRdfHelper();
+        IGraph graph = new Graph();
+
+        var subjectNode = graph.CreateUriNode(new Uri("http://example.com/cr/unsigned-long"));
+        var predicateType = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
+        var typeNode = graph.CreateUriNode(new Uri(Constants.CHANGE_MANAGEMENT_NAMESPACE + "ChangeRequest"));
+        var predicateUnsignedLong = graph.CreateUriNode(new Uri("http://example.com/ns#extUnsignedLong"));
+        var unsignedLongNode = graph.CreateLiteralNode(
+            "18446744073709551615",
+            new Uri("http://www.w3.org/2001/XMLSchema#unsignedLong"));
+
+        graph.Assert(new Triple(subjectNode, predicateType, typeNode));
+        graph.Assert(new Triple(subjectNode, predicateUnsignedLong, unsignedLongNode));
+
+        var result = (ChangeRequest)helper.FromDotNetRdfNode(subjectNode, graph, typeof(ChangeRequest));
+
+        await Assert.That(result).IsNotNull();
+        var extProps = result.GetExtendedProperties();
+        var key = new QName("http://example.com/ns#", "extUnsignedLong");
+
+        await Assert.That(extProps[key]).IsEqualTo(ulong.MaxValue);
     }
 
     [Test]
