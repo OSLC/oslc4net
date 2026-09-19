@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -60,7 +61,10 @@ public class QueryUtils
 
             uri = uri.Substring(1, uri.Length - 2);
 
-            prefixMap.Add(pn, uri);
+            if (!prefixMap.TryAdd(pn, uri))
+            {
+                throw new ParseException($"Duplicate prefix: {pn}");
+            }
         }
 
         return prefixMap;
@@ -273,8 +277,8 @@ public class QueryUtils
                         }
                     }
 
-                    result.Add(propertyName,
-                               OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON);
+                    result[propertyName!] =
+                        OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON;
 
                     break;
 
@@ -375,6 +379,11 @@ public class QueryUtils
                 var str = (CommonTree)iTree;
 
                 var rawString = str.Text;
+
+                if (rawString.Length < 2 || rawString[0] != '"' || rawString[^1] != '"')
+                {
+                    throw new ParseException($"Invalid search term: {rawString}");
+                }
 
                 stringList.Add(rawString.Substring(1, rawString.Length - 2));
             }

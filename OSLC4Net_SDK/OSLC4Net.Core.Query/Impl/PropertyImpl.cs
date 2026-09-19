@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -76,7 +77,12 @@ internal class PropertyImpl : Property
                 if (colon > 0)
                 {
                     identifier.prefix = rawIdentifier.Substring(0, colon);
-                    identifier.ns = prefixMap[identifier.prefix];
+                    if (!prefixMap.TryGetValue(identifier.prefix, out var namespaceUri))
+                    {
+                        throw new ParseException($"Unknown prefix: {identifier.prefix}");
+                    }
+
+                    identifier.ns = namespaceUri;
                 }
                 identifier.local = rawIdentifier.Substring(colon + 1);
             }

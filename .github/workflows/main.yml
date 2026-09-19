@@ -289,6 +289,60 @@ jobs:
           && matrix.version.target == 'net10.0' && matrix.os == 'windows-latest'
           && (github.event_name == 'release' || inputs.release )
 
+  fuzz:
+    name: Fuzz query parsers (SharpFuzz/AFL++)
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          disable-sudo: false
+          egress-policy: audit
+      - name: Checkout Code
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          show-progress: false
+          persist-credentials: false
+          path: main
+      - name: Setup .NET
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: 10.x
+      - name: Install AFL++
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes afl++
+      - name: Install SharpFuzz command-line tool
+        run: |
+          dotnet tool install --global SharpFuzz.CommandLine --version 2.3.0
+          echo "$HOME/.dotnet/tools" >> "$GITHUB_PATH"
+      - name: Run 90-second fuzzing smoke test
+        working-directory: main
+        env:
+          AFL_NO_UI: "1"
+          AFL_SKIP_CPUFREQ: "1"
+        run: pwsh scripts/fuzz-oslc-query.ps1 -DurationSeconds 90
+      - name: Fail on fuzzing crashes
+        working-directory: main
+        run: |
+          crash_file=$(find OSLC4Net_SDK/Tests/OSLC4Net.Fuzzing/findings/default/crashes \
+            -type f ! -name README.txt -print -quit)
+          if [[ -n "$crash_file" ]]; then
+            echo "Unexpected fuzzing crash: $crash_file"
+            exit 1
+          fi
+      - name: Upload fuzzing findings
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: oslc-query-fuzz-findings
+          path: main/OSLC4Net_SDK/Tests/OSLC4Net.Fuzzing/findings
+          if-no-files-found: warn
+          retention-days: 7
+
   build-docker-example:
     name: Build Docker Image (Example)
     runs-on: ubuntu-24.04

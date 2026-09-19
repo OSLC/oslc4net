@@ -2,6 +2,9 @@
 
 CoverageReport/
 
+OSLC4Net_SDK/Tests/OSLC4Net.Fuzzing/fuzz-bin/
+OSLC4Net_SDK/Tests/OSLC4Net.Fuzzing/findings/
+
 ### Verify
 
 *.received.*
