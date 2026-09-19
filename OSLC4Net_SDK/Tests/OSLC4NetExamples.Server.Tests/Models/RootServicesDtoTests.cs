@@ -1,3 +1,13 @@
+/*
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution.
+ *
+ * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
+ */
+
 using FluentAssertions;
 using OSLC4NetExamples.Server.NetCoreApi.Models;
 using System.Text;
@@ -245,5 +255,29 @@ public class RootServicesDtoTests
         // Assert
         result.Should().NotBeNull();
         result.Title.Should().NotContain("root:");
+    }
+
+    [Fact]
+    public void FromXml_WithInlineDtd_ShouldNotProcessDtd()
+    {
+        // Arrange
+        var dtdXml = """
+            <?xml version="1.0" encoding="utf-8"?>
+            <!DOCTYPE rdf:Description [
+                <!ENTITY expanded "expanded-value">
+            ]>
+            <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                             xmlns:dc="http://purl.org/dc/terms/"
+                             rdf:about="http://example.com/rootservices">
+                <dc:title>&expanded;</dc:title>
+            </rdf:Description>
+            """;
+
+        // Act
+        var result = RootServicesDto.FromXml(dtdXml);
+
+        // Assert
+        result.Should().NotBeNull();
+        result.Title.Should().NotBe("expanded-value");
     }
 }
