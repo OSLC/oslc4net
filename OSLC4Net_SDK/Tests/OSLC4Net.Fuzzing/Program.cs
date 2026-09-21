@@ -17,12 +17,12 @@ internal static class Program
 {
     private static readonly IDictionary<string, string> Prefixes = new Dictionary<string, string>(StringComparer.Ordinal)
     {
-        ["dcterms"] = "http://purl.org/dc/terms/",
-        ["oslc"] = "http://open-services.net/ns/core#",
-        ["oslc_config"] = "http://open-services.net/ns/config#",
-        ["qm"] = "http://qm.example.com/ns/",
-        ["rdf"] = "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-        ["xs"] = "http://www.w3.org/2001/XMLSchema"
+        ["dcterms"] = "http://purl.org/dc/terms/", // NOSONAR: RDF namespace identifier, not a network endpoint.
+        ["oslc"] = "http://open-services.net/ns/core#", // NOSONAR: RDF namespace identifier, not a network endpoint.
+        ["oslc_config"] = "http://open-services.net/ns/config#", // NOSONAR: RDF namespace identifier, not a network endpoint.
+        ["qm"] = "http://qm.example.com/ns/", // NOSONAR: test namespace identifier, not a network endpoint.
+        ["rdf"] = "http://www.w3.org/1999/02/22-rdf-syntax-ns#", // NOSONAR: RDF namespace identifier, not a network endpoint.
+        ["xs"] = "http://www.w3.org/2001/XMLSchema" // NOSONAR: RDF namespace identifier, not a network endpoint.
     };
 
     private static void Main()
@@ -38,7 +38,7 @@ internal static class Program
         TryParse(() => QueryUtils.ParsePrefixes(expression));
         TryParse(() => QueryUtils.ParseWhere(expression, Prefixes));
         TryParse(() => QueryUtils.ParseSelect(expression, Prefixes));
-        TryParse(() => QueryUtils.parseProperties(expression, Prefixes));
+        TryParse(() => QueryUtils.ParseProperties(expression, Prefixes));
         TryParse(() => QueryUtils.ParseOrderBy(expression, Prefixes));
         TryParse(() => QueryUtils.ParseSearchTerms(expression));
         TryParse(() => QueryUtils.InvertSelectedProperties(QueryUtils.ParseSelect(expression, Prefixes)));
