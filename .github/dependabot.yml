@@ -52,3 +52,7 @@ updates:
       interval: "daily"
     commit-message:
       prefix: "build"
+    groups:
+      codeql-actions:
+        patterns:
+          - "github/codeql-action/*"
