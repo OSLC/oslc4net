@@ -32,7 +32,7 @@ internal class CompoundTermImpl : SimpleTermImpl, CompoundTerm
              isTopLevel ? TermType.TOP_LEVEL : TermType.NESTED,
              prefixMap)
     {
-        this.tree = tree;
+        _tree = tree;
         this.isTopLevel = isTopLevel;
     }
 
@@ -44,8 +44,8 @@ internal class CompoundTermImpl : SimpleTermImpl, CompoundTerm
             {
                 var treeChildren =
                     isTopLevel ?
-                        tree.Children :
-                        ((CommonTree)tree.GetChild(1)).Children;
+                        _tree.Children :
+                        ((CommonTree)_tree.GetChild(1)).Children;
 
                 children =
                     new List<SimpleTerm>(
@@ -114,7 +114,7 @@ internal class CompoundTermImpl : SimpleTermImpl, CompoundTerm
         return builder.ToString();
     }
 
-    private readonly CommonTree tree;
+    private readonly CommonTree _tree;
     private readonly bool isTopLevel;
     private IList<SimpleTerm> children;
 }
