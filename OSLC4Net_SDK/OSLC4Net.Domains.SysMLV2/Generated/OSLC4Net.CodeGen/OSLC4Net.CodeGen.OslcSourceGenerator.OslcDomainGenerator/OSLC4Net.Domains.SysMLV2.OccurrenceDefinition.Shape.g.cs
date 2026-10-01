@@ -11,7 +11,7 @@ public partial interface IOccurrenceDefinition : IClass, IDefinition
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "OccurrenceDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#OccurrenceDefinition" })]
+[OslcResourceShape(Title = "OccurrenceDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#OccurrenceDefinition" })]
 public partial record OccurrenceDefinition : Class, IOccurrenceDefinition
 {
     public OccurrenceDefinition(Uri about)

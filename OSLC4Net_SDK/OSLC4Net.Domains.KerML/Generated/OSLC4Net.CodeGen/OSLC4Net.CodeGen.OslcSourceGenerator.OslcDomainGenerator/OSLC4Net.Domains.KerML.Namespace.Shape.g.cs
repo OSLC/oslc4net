@@ -11,7 +11,7 @@ public partial interface INamespace : IElement
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "NamespaceShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Namespace" })]
+[OslcResourceShape(Title = "NamespaceShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Namespace" })]
 public partial record Namespace : Element, INamespace
 {
     public Namespace(Uri about)

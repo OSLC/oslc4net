@@ -1,3 +1,5 @@
+<!-- Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors. -->
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -25,6 +27,7 @@ No security updates are included in this release.
 
 ### Changed
 
+- ❗️ Replaced public/protected instance fields and mutable public static fields with private fields or properties backed by private storage. Rebuild consumers; see the member-by-member changes in [MIGRATION.md](MIGRATION.md).
 - `OSLC4Net.Core` now requires .NET 10 to use the `[Experimental]` annotation.
 - `OSLC4Net.Client` now requires .NET 10.
 - ❗️ `SignedByteNode` now maps `xsd:byte` to C# `sbyte` (signed byte) instead of `byte`.

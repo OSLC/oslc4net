@@ -271,27 +271,27 @@ public sealed class OslcRdfInputFormatterSysMLInterfaceTests
 }
 
 [OslcNamespace("http://example.org/vocab#")]
-[OslcResourceShape(title = "Alpha Shape", describes = ["http://example.org/vocab#Alpha"])]
+[OslcResourceShape(Title = "Alpha Shape", Describes = ["http://example.org/vocab#Alpha"])]
 public partial record AlphaElement : AbstractResourceRecord, IElement;
 
 [OslcNamespace("http://example.org/vocab#")]
-[OslcResourceShape(title = "Beta Shape", describes = ["http://example.org/vocab#Beta"])]
+[OslcResourceShape(Title = "Beta Shape", Describes = ["http://example.org/vocab#Beta"])]
 public partial record BetaElement : AbstractResourceRecord, IElement;
 
 [OslcNamespace("http://example.org/vocab#")]
-[OslcResourceShape(title = "Base Shape", describes = ["http://example.org/vocab#Base"])]
+[OslcResourceShape(Title = "Base Shape", Describes = ["http://example.org/vocab#Base"])]
 public partial record BaseElement : AbstractResourceRecord, IElement;
 
 [OslcNamespace("http://example.org/vocab#")]
-[OslcResourceShape(title = "Derived Shape", describes = ["http://example.org/vocab#Derived"])]
+[OslcResourceShape(Title = "Derived Shape", Describes = ["http://example.org/vocab#Derived"])]
 public partial record DerivedElement : BaseElement;
 
 [OslcNamespace("http://example.org/vocab#")]
-[OslcResourceShape(title = "Shared A Shape", describes = ["http://example.org/vocab#Shared"])]
+[OslcResourceShape(Title = "Shared A Shape", Describes = ["http://example.org/vocab#Shared"])]
 public partial record SharedAlphaElement : AbstractResourceRecord, IElement;
 
 [OslcNamespace("http://example.org/vocab#")]
-[OslcResourceShape(title = "Shared B Shape", describes = ["http://example.org/vocab#Shared"])]
+[OslcResourceShape(Title = "Shared B Shape", Describes = ["http://example.org/vocab#Shared"])]
 public partial record SharedBetaElement : AbstractResourceRecord, IElement;
 
 [ApiController]

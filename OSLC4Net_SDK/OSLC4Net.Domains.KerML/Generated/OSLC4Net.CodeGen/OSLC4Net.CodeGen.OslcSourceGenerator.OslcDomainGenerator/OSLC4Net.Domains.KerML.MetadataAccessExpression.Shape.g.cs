@@ -11,7 +11,7 @@ public partial interface IMetadataAccessExpression : IExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "MetadataAccessExpressionShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#MetadataAccessExpression" })]
+[OslcResourceShape(Title = "MetadataAccessExpressionShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#MetadataAccessExpression" })]
 public partial record MetadataAccessExpression : Expression, IMetadataAccessExpression
 {
     public MetadataAccessExpression(Uri about)

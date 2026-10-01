@@ -11,7 +11,7 @@ public partial interface IRelationship : IElement
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "RelationshipShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Relationship" })]
+[OslcResourceShape(Title = "RelationshipShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Relationship" })]
 public partial record Relationship : Element, IRelationship
 {
     public Relationship(Uri about)

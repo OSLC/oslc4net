@@ -22,7 +22,7 @@ namespace OSLC4Net.Core.Model;
 ///     OSLC ServiceProvider resource
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Service Provider Resource Shape", describes =
+[OslcResourceShape(Title = "OSLC Service Provider Resource Shape", Describes =
 [
     OslcConstants.TYPE_SERVICE_PROVIDER
 ])]

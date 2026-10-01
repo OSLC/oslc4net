@@ -125,7 +125,7 @@ internal static class OslcResourceMaterializer
                 )
             )
             {
-                foreach (string describedType in resourceShape.describes)
+                foreach (string describedType in resourceShape.Describes)
                 {
                     if (
                         !candidates.TryGetValue(

@@ -11,7 +11,7 @@ public partial interface IConjugatedPortDefinition : IPortDefinition
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ConjugatedPortDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ConjugatedPortDefinition" })]
+[OslcResourceShape(Title = "ConjugatedPortDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ConjugatedPortDefinition" })]
 public partial record ConjugatedPortDefinition : PortDefinition, IConjugatedPortDefinition
 {
     public ConjugatedPortDefinition(Uri about)

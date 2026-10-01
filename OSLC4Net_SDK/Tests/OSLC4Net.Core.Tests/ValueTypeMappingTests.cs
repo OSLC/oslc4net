@@ -68,8 +68,8 @@ public sealed class ValueTypeMappingTests
 
     [OslcNamespace("https://example.test/types#")]
     [OslcResourceShape(
-        title = "Datatype Probe",
-        describes = new[] { "https://example.test/types#DatatypeProbe" }
+        Title = "Datatype Probe",
+        Describes = new[] { "https://example.test/types#DatatypeProbe" }
     )]
     private sealed class DatatypeProbe
     {

@@ -11,7 +11,7 @@ public partial interface IRequirementVerificationMembership : IRequirementConstr
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "RequirementVerificationMembershipShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#RequirementVerificationMembership" })]
+[OslcResourceShape(Title = "RequirementVerificationMembershipShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#RequirementVerificationMembership" })]
 public partial record RequirementVerificationMembership : RequirementConstraintMembership, IRequirementVerificationMembership
 {
     public RequirementVerificationMembership(Uri about)

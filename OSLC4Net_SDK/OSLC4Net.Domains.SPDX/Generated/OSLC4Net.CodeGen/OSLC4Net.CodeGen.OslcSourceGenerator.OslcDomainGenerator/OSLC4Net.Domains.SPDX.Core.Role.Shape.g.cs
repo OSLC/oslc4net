@@ -11,7 +11,7 @@ public partial interface IRole : IElement
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Role", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Role" })]
+[OslcResourceShape(Title = "Role", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Role" })]
 public partial record Role : Element, IRole
 {
     public Role(Uri about)

@@ -11,7 +11,7 @@ public partial interface IEnhancement : IChangeRequest
 }
 
 [OslcNamespace("http://open-services.net/ns/cm#")]
-[OslcResourceShape(title = "A request for new functionality.", describes = new string[] { "http://open-services.net/ns/cm#Enhancement" })]
+[OslcResourceShape(Title = "A request for new functionality.", Describes = new string[] { "http://open-services.net/ns/cm#Enhancement" })]
 public partial record Enhancement : ChangeRequest, IEnhancement
 {
     public Enhancement(Uri about)

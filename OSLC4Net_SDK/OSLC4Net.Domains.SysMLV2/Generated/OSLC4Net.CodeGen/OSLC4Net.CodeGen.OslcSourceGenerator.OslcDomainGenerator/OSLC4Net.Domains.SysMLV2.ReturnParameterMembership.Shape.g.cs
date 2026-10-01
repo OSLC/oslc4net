@@ -11,7 +11,7 @@ public partial interface IReturnParameterMembership : IParameterMembership
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ReturnParameterMembershipShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ReturnParameterMembership" })]
+[OslcResourceShape(Title = "ReturnParameterMembershipShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ReturnParameterMembership" })]
 public partial record ReturnParameterMembership : ParameterMembership, IReturnParameterMembership
 {
     public ReturnParameterMembership(Uri about)

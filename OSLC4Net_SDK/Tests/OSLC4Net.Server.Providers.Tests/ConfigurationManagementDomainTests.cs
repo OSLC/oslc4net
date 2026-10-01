@@ -24,7 +24,7 @@ public sealed class ConfigurationManagementDomainTests
                 (
                     Attribute.GetCustomAttribute(property, typeof(OslcPropertyDefinition))
                     as OslcPropertyDefinition
-                )?.value == "http://open-services.net/ns/config#selects"
+                )?.Value == "http://open-services.net/ns/config#selects"
             )
             .ToArray();
 

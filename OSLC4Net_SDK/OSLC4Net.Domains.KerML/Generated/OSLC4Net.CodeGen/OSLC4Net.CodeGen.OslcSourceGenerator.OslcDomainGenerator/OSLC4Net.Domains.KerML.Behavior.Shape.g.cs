@@ -11,7 +11,7 @@ public partial interface IBehavior : IClass
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "BehaviorShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Behavior" })]
+[OslcResourceShape(Title = "BehaviorShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Behavior" })]
 public partial record Behavior : Class, IBehavior
 {
     public Behavior(Uri about)

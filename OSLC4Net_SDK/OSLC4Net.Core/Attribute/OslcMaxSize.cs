@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,10 +29,10 @@ public class OslcMaxSize : System.Attribute
      * For String properties only, specifies maximum characters allowed.
      * If not set, then there is no maximum or maximum is specified elsewhere.
      */
-    public readonly int value;
+    public int Value { get; }
 
     public OslcMaxSize(int value)
     {
-        this.value = value;
+        Value = value;
     }
 }

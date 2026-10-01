@@ -11,7 +11,7 @@ public partial interface ISelectExpression : IOperatorExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "SelectExpressionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#SelectExpression" })]
+[OslcResourceShape(Title = "SelectExpressionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#SelectExpression" })]
 public partial record SelectExpression : OperatorExpression, ISelectExpression
 {
     public SelectExpression(Uri about)

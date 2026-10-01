@@ -11,7 +11,7 @@ public partial interface IVulnAssessmentRelationship : global::OSLC4Net.Domains.
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Security/")]
-[OslcResourceShape(title = "Vuln Assessment Relationship", describes = new string[] { "https://spdx.org/rdf/3/terms/Security/VulnAssessmentRelationship" })]
+[OslcResourceShape(Title = "Vuln Assessment Relationship", Describes = new string[] { "https://spdx.org/rdf/3/terms/Security/VulnAssessmentRelationship" })]
 public partial record VulnAssessmentRelationship : global::OSLC4Net.Domains.SPDX.Core.Relationship, IVulnAssessmentRelationship
 {
     public VulnAssessmentRelationship(Uri about)

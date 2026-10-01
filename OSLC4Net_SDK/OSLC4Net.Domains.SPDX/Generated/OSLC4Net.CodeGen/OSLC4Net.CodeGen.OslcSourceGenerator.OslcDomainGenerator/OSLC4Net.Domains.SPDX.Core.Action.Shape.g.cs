@@ -11,7 +11,7 @@ public partial interface IAction : IArtifact
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Action", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Action" })]
+[OslcResourceShape(Title = "Action", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Action" })]
 public partial record Action : Artifact, IAction
 {
     public Action(Uri about)

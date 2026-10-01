@@ -11,7 +11,7 @@ public partial interface IUnioning : IRelationship
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "UnioningShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Unioning" })]
+[OslcResourceShape(Title = "UnioningShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Unioning" })]
 public partial record Unioning : Relationship, IUnioning
 {
     public Unioning(Uri about)

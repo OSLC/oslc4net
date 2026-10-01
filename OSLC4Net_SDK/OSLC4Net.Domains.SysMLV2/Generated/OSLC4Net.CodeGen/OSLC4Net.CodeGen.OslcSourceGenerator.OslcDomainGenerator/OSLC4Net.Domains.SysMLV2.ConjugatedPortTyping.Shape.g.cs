@@ -11,7 +11,7 @@ public partial interface IConjugatedPortTyping : IFeatureTyping
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ConjugatedPortTypingShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ConjugatedPortTyping" })]
+[OslcResourceShape(Title = "ConjugatedPortTypingShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ConjugatedPortTyping" })]
 public partial record ConjugatedPortTyping : FeatureTyping, IConjugatedPortTyping
 {
     public ConjugatedPortTyping(Uri about)

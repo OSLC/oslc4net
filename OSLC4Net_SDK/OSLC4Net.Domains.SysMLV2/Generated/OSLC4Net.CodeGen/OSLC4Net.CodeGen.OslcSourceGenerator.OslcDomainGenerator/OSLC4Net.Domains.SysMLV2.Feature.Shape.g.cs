@@ -11,7 +11,7 @@ public partial interface IFeature : ISType
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "FeatureShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Feature" })]
+[OslcResourceShape(Title = "FeatureShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Feature" })]
 public partial record Feature : SType, IFeature
 {
     public Feature(Uri about)

@@ -11,7 +11,7 @@ public partial interface IDatasetPackage : global::OSLC4Net.Domains.SPDX.Softwar
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Dataset/")]
-[OslcResourceShape(title = "Dataset Package", describes = new string[] { "https://spdx.org/rdf/3/terms/Dataset/DatasetPackage" })]
+[OslcResourceShape(Title = "Dataset Package", Describes = new string[] { "https://spdx.org/rdf/3/terms/Dataset/DatasetPackage" })]
 public partial record DatasetPackage : global::OSLC4Net.Domains.SPDX.Software.Package, IDatasetPackage
 {
     public DatasetPackage(Uri about)

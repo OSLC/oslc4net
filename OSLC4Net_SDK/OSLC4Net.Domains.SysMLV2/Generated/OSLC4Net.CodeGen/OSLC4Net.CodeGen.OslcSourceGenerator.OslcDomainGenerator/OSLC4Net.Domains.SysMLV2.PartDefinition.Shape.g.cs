@@ -11,7 +11,7 @@ public partial interface IPartDefinition : IItemDefinition
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "PartDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#PartDefinition" })]
+[OslcResourceShape(Title = "PartDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#PartDefinition" })]
 public partial record PartDefinition : ItemDefinition, IPartDefinition
 {
     public PartDefinition(Uri about)

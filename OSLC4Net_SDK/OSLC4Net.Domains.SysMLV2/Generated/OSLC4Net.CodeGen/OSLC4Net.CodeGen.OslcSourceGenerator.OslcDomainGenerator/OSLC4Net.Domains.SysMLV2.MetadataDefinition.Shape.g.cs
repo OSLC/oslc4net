@@ -11,7 +11,7 @@ public partial interface IMetadataDefinition : IItemDefinition, IMetaclass
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "MetadataDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#MetadataDefinition" })]
+[OslcResourceShape(Title = "MetadataDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#MetadataDefinition" })]
 public partial record MetadataDefinition : ItemDefinition, IMetadataDefinition
 {
     public MetadataDefinition(Uri about)

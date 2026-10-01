@@ -17,7 +17,7 @@ public static class ValueTypeExtension
         var attributes = (URI[])valueType.GetType().GetField(valueType.ToString())!
             .GetCustomAttributes(typeof(URI), false);
 
-        return attributes.Length > 0 ? attributes[0].uri : string.Empty;
+        return attributes.Length > 0 ? attributes[0].Uri : string.Empty;
     }
 
     public static ValueType FromString(string value)
@@ -37,6 +37,6 @@ public static class ValueTypeExtension
 
     public static ValueType FromURI(URI uri)
     {
-        return FromString(uri.uri);
+        return FromString(uri.Uri);
     }
 }

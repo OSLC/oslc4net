@@ -11,7 +11,7 @@ public partial interface IStructure : IClass
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "StructureShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Structure" })]
+[OslcResourceShape(Title = "StructureShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Structure" })]
 public partial record Structure : Class, IStructure
 {
     public Structure(Uri about)

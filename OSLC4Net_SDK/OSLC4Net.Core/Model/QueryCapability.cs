@@ -21,8 +21,8 @@ namespace OSLC4Net.Core.Model;
 ///     OSLC QueryCapability resource
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Query Capability Resource Shape",
-    describes = new[] { OslcConstants.TYPE_QUERY_CAPABILITY })]
+[OslcResourceShape(Title = "OSLC Query Capability Resource Shape",
+    Describes = new[] { OslcConstants.TYPE_QUERY_CAPABILITY })]
 public class QueryCapability : AbstractResource
 {
     private readonly SortedSet<Uri> resourceTypes = new SortedUriSet();

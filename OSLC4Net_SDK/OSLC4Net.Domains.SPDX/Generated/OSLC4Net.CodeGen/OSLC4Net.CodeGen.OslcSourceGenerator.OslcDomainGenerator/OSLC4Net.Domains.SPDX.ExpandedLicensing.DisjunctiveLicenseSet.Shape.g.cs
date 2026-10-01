@@ -11,7 +11,7 @@ public partial interface IDisjunctiveLicenseSet : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/ExpandedLicensing/")]
-[OslcResourceShape(title = "Disjunctive License Set", describes = new string[] { "https://spdx.org/rdf/3/terms/ExpandedLicensing/DisjunctiveLicenseSet" })]
+[OslcResourceShape(Title = "Disjunctive License Set", Describes = new string[] { "https://spdx.org/rdf/3/terms/ExpandedLicensing/DisjunctiveLicenseSet" })]
 public partial record DisjunctiveLicenseSet : AbstractResourceRecord, IDisjunctiveLicenseSet
 {
     public DisjunctiveLicenseSet(Uri about)

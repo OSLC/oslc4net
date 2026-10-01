@@ -11,7 +11,7 @@ public partial interface INullExpression : IExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "NullExpressionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#NullExpression" })]
+[OslcResourceShape(Title = "NullExpressionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#NullExpression" })]
 public partial record NullExpression : Expression, INullExpression
 {
     public NullExpression(Uri about)

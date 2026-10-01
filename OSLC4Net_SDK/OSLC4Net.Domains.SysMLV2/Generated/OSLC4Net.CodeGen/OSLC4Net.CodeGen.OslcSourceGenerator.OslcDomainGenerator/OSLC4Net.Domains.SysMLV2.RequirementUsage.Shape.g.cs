@@ -11,7 +11,7 @@ public partial interface IRequirementUsage : IConstraintUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "RequirementUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#RequirementUsage" })]
+[OslcResourceShape(Title = "RequirementUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#RequirementUsage" })]
 public partial record RequirementUsage : ConstraintUsage, IRequirementUsage
 {
     public RequirementUsage(Uri about)

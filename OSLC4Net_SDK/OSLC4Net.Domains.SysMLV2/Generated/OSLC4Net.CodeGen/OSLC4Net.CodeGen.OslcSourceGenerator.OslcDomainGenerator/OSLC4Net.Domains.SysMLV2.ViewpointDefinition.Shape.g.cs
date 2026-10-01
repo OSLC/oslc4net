@@ -11,7 +11,7 @@ public partial interface IViewpointDefinition : IRequirementDefinition
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ViewpointDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ViewpointDefinition" })]
+[OslcResourceShape(Title = "ViewpointDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ViewpointDefinition" })]
 public partial record ViewpointDefinition : RequirementDefinition, IViewpointDefinition
 {
     public ViewpointDefinition(Uri about)

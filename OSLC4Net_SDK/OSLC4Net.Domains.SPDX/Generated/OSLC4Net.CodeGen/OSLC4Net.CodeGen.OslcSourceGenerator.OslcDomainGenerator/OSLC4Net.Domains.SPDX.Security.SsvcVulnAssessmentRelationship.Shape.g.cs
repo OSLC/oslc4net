@@ -11,7 +11,7 @@ public partial interface ISsvcVulnAssessmentRelationship : IVulnAssessmentRelati
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Security/")]
-[OslcResourceShape(title = "Ssvc Vuln Assessment Relationship", describes = new string[] { "https://spdx.org/rdf/3/terms/Security/SsvcVulnAssessmentRelationship" })]
+[OslcResourceShape(Title = "Ssvc Vuln Assessment Relationship", Describes = new string[] { "https://spdx.org/rdf/3/terms/Security/SsvcVulnAssessmentRelationship" })]
 public partial record SsvcVulnAssessmentRelationship : VulnAssessmentRelationship, ISsvcVulnAssessmentRelationship
 {
     public SsvcVulnAssessmentRelationship(Uri about)

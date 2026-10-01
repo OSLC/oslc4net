@@ -21,7 +21,7 @@ public class OslcCoreInvalidOccursException(
     Type resourceType,
     MemberInfo method,
     OslcOccurs oslcOccurs) : OslcCoreApplicationException(
-    $"OSLC1003: Invalid occurs annotation {OccursExtension.ToString(oslcOccurs.value)} for method {method.Name} of class {resourceType.Name}")
+    $"OSLC1003: Invalid occurs annotation {OccursExtension.ToString(oslcOccurs.Value)} for method {method.Name} of class {resourceType.Name}")
 {
     public Type ResourceType { get; } = resourceType;
     public MemberInfo Method { get; } = method;

@@ -11,7 +11,7 @@ public partial interface IPayloadFeature : IFeature
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "PayloadFeatureShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#PayloadFeature" })]
+[OslcResourceShape(Title = "PayloadFeatureShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#PayloadFeature" })]
 public partial record PayloadFeature : Feature, IPayloadFeature
 {
     public PayloadFeature(Uri about)

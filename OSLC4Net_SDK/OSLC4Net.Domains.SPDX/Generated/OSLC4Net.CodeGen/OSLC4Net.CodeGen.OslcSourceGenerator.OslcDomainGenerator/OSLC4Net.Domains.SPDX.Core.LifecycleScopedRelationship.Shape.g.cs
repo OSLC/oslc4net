@@ -11,7 +11,7 @@ public partial interface ILifecycleScopedRelationship : IRelationship
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Lifecycle Scoped Relationship", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/LifecycleScopedRelationship" })]
+[OslcResourceShape(Title = "Lifecycle Scoped Relationship", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/LifecycleScopedRelationship" })]
 public partial record LifecycleScopedRelationship : Relationship, ILifecycleScopedRelationship
 {
     public LifecycleScopedRelationship(Uri about)

@@ -33,7 +33,7 @@ internal class PropertyImpl : Property
     {
         this.tree = tree;
         this.type = type;
-        this.prefixMap = prefixMap;
+        PrefixMap = prefixMap;
         this.isWildcard = isWildcard;
     }
 
@@ -70,21 +70,21 @@ internal class PropertyImpl : Property
 
             if (colon < 0)
             {
-                identifier.local = rawIdentifier;
+                identifier.LocalName = rawIdentifier;
             }
             else
             {
                 if (colon > 0)
                 {
-                    identifier.prefix = rawIdentifier.Substring(0, colon);
-                    if (!prefixMap.TryGetValue(identifier.prefix, out var namespaceUri))
+                    identifier.Prefix = rawIdentifier.Substring(0, colon);
+                    if (!PrefixMap.TryGetValue(identifier.Prefix, out var namespaceUri))
                     {
-                        throw new ParseException($"Unknown prefix: {identifier.prefix}");
+                        throw new ParseException($"Unknown prefix: {identifier.Prefix}");
                     }
 
-                    identifier.ns = namespaceUri;
+                    identifier.Namespace = namespaceUri;
                 }
-                identifier.local = rawIdentifier.Substring(colon + 1);
+                identifier.LocalName = rawIdentifier.Substring(colon + 1);
             }
 
             return identifier;
@@ -98,7 +98,7 @@ internal class PropertyImpl : Property
 
     private readonly CommonTree tree;
     private readonly PropertyType type;
-    protected readonly IDictionary<string, string> prefixMap;
+    protected IDictionary<string, string> PrefixMap { get; }
     private readonly bool isWildcard;
     private PName identifier;
 }

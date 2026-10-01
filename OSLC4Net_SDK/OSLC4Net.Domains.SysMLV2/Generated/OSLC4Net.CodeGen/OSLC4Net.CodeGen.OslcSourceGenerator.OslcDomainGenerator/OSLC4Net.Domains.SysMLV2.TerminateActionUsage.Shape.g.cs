@@ -11,7 +11,7 @@ public partial interface ITerminateActionUsage : IActionUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "TerminateActionUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#TerminateActionUsage" })]
+[OslcResourceShape(Title = "TerminateActionUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#TerminateActionUsage" })]
 public partial record TerminateActionUsage : ActionUsage, ITerminateActionUsage
 {
     public TerminateActionUsage(Uri about)

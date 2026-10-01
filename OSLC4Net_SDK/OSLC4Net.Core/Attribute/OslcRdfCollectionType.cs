@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -25,16 +26,16 @@ public class OslcRdfCollectionType : System.Attribute
     /**
      * Prefix for the namespace.
      */
-    public readonly string collectionType = "List";
+    public string CollectionType { get; } = "List";
 
     /**
      * Namespace URI.
      */
-    public readonly string namespaceURI = OslcConstants.RDF_NAMESPACE;
+    public string NamespaceUri { get; } = OslcConstants.RDF_NAMESPACE;
 
     public OslcRdfCollectionType(string namespaceURI, string collectionType)
     {
-        this.namespaceURI = namespaceURI;
-        this.collectionType = collectionType;
+        NamespaceUri = namespaceURI;
+        CollectionType = collectionType;
     }
 }

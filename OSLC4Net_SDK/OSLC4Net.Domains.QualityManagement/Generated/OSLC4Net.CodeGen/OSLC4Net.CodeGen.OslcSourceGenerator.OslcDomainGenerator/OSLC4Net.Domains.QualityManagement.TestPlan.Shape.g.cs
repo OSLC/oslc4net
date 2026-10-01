@@ -11,7 +11,7 @@ public partial interface ITestPlan : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/qm#")]
-[OslcResourceShape(title = "QM Test Plan", describes = new string[] { "http://open-services.net/ns/qm#TestPlan" })]
+[OslcResourceShape(Title = "QM Test Plan", Describes = new string[] { "http://open-services.net/ns/qm#TestPlan" })]
 public partial record TestPlan : AbstractResourceRecord, ITestPlan
 {
     public TestPlan(Uri about)

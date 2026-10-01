@@ -11,7 +11,7 @@ public partial interface IOrganization : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Organization", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Organization" })]
+[OslcResourceShape(Title = "Organization", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Organization" })]
 public partial record Organization : AbstractResourceRecord, IOrganization
 {
     public Organization(Uri about)

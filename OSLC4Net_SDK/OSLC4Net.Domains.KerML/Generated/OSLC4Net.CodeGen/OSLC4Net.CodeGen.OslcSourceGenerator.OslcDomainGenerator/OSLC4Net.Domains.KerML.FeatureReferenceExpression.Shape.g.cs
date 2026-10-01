@@ -11,7 +11,7 @@ public partial interface IFeatureReferenceExpression : IExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "FeatureReferenceExpressionShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#FeatureReferenceExpression" })]
+[OslcResourceShape(Title = "FeatureReferenceExpressionShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#FeatureReferenceExpression" })]
 public partial record FeatureReferenceExpression : Expression, IFeatureReferenceExpression
 {
     public FeatureReferenceExpression(Uri about)

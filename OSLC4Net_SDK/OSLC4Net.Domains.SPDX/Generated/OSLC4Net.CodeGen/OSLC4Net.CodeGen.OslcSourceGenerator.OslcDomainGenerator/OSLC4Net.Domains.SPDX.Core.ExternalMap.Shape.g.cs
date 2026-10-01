@@ -11,7 +11,7 @@ public partial interface IExternalMap : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "External Map", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/ExternalMap" })]
+[OslcResourceShape(Title = "External Map", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/ExternalMap" })]
 public partial record ExternalMap : AbstractResourceRecord, IExternalMap
 {
     public ExternalMap(Uri about)

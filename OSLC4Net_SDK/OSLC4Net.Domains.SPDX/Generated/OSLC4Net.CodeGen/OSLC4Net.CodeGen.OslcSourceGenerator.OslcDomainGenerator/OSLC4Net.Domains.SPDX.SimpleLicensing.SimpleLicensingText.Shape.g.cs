@@ -11,7 +11,7 @@ public partial interface ISimpleLicensingText : global::OSLC4Net.Domains.SPDX.Co
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/SimpleLicensing/")]
-[OslcResourceShape(title = "Simple Licensing Text", describes = new string[] { "https://spdx.org/rdf/3/terms/SimpleLicensing/SimpleLicensingText" })]
+[OslcResourceShape(Title = "Simple Licensing Text", Describes = new string[] { "https://spdx.org/rdf/3/terms/SimpleLicensing/SimpleLicensingText" })]
 public partial record SimpleLicensingText : global::OSLC4Net.Domains.SPDX.Core.Element, ISimpleLicensingText
 {
     public SimpleLicensingText(Uri about)

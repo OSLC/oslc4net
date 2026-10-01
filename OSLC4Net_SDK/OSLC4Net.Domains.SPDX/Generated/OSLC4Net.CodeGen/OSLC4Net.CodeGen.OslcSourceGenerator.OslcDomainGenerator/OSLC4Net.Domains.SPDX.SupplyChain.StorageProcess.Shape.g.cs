@@ -11,7 +11,7 @@ public partial interface IStorageProcess : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/SupplyChain/")]
-[OslcResourceShape(title = "Storage Process", describes = new string[] { "https://spdx.org/rdf/3/terms/SupplyChain/StorageProcess" })]
+[OslcResourceShape(Title = "Storage Process", Describes = new string[] { "https://spdx.org/rdf/3/terms/SupplyChain/StorageProcess" })]
 public partial record StorageProcess : AbstractResourceRecord, IStorageProcess
 {
     public StorageProcess(Uri about)

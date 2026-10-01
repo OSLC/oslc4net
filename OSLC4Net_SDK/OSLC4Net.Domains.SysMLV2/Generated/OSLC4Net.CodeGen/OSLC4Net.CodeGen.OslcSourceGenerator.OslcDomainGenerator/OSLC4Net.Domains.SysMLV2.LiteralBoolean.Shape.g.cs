@@ -11,7 +11,7 @@ public partial interface ILiteralBoolean : ILiteralExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "LiteralBooleanShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#LiteralBoolean" })]
+[OslcResourceShape(Title = "LiteralBooleanShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#LiteralBoolean" })]
 public partial record LiteralBoolean : LiteralExpression, ILiteralBoolean
 {
     public LiteralBoolean(Uri about)

@@ -11,7 +11,7 @@ public partial interface IConjunctiveLicenseSet : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/ExpandedLicensing/")]
-[OslcResourceShape(title = "Conjunctive License Set", describes = new string[] { "https://spdx.org/rdf/3/terms/ExpandedLicensing/ConjunctiveLicenseSet" })]
+[OslcResourceShape(Title = "Conjunctive License Set", Describes = new string[] { "https://spdx.org/rdf/3/terms/ExpandedLicensing/ConjunctiveLicenseSet" })]
 public partial record ConjunctiveLicenseSet : AbstractResourceRecord, IConjunctiveLicenseSet
 {
     public ConjunctiveLicenseSet(Uri about)

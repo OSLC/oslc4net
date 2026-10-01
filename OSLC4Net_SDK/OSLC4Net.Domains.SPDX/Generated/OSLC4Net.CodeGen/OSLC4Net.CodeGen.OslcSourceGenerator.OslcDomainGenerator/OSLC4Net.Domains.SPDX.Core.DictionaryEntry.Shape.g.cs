@@ -11,7 +11,7 @@ public partial interface IDictionaryEntry : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Dictionary Entry", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/DictionaryEntry" })]
+[OslcResourceShape(Title = "Dictionary Entry", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/DictionaryEntry" })]
 public partial record DictionaryEntry : AbstractResourceRecord, IDictionaryEntry
 {
     public DictionaryEntry(Uri about)

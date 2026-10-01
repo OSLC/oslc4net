@@ -18,7 +18,7 @@ public class AllowedValuesSerializationTests
         allowedValues.AddAllowedValue("http://example.com/values/low");
 
         var formatter = new RdfXmlMediaTypeFormatter();
-        var mediaType = OslcMediaType.APPLICATION_RDF_XML_TYPE;
+        var mediaType = OslcMediaType.ApplicationRdfXmlType;
 
         var rdfXml = await RdfHelpers.SerializeAsync(formatter, allowedValues, mediaType);
         var deserialized = await RdfHelpers.DeserializeAsync<AllowedValuesResource<string>>(formatter, rdfXml, mediaType);

@@ -17,7 +17,7 @@ public static class RepresentationExtension
         var attributes = (URI[])representation.GetType().GetField(representation.ToString())!
             .GetCustomAttributes(typeof(URI), false);
 
-        return attributes.Length > 0 ? attributes[0].uri : string.Empty;
+        return attributes.Length > 0 ? attributes[0].Uri : string.Empty;
     }
 
     public static Representation FromString(string value)
@@ -37,6 +37,6 @@ public static class RepresentationExtension
 
     public static Representation FromURI(URI uri)
     {
-        return FromString(uri.uri);
+        return FromString(uri.Uri);
     }
 }

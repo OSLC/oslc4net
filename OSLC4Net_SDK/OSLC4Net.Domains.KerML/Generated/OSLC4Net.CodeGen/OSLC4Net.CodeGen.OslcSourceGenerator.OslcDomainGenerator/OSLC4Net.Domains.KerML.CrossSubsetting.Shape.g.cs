@@ -11,7 +11,7 @@ public partial interface ICrossSubsetting : ISubsetting
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "CrossSubsettingShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#CrossSubsetting" })]
+[OslcResourceShape(Title = "CrossSubsettingShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#CrossSubsetting" })]
 public partial record CrossSubsetting : Subsetting, ICrossSubsetting
 {
     public CrossSubsetting(Uri about)

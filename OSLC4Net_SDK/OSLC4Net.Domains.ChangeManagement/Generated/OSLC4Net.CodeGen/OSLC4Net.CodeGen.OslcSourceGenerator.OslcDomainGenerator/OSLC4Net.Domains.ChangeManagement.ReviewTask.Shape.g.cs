@@ -11,7 +11,7 @@ public partial interface IReviewTask : ITask
 }
 
 [OslcNamespace("http://open-services.net/ns/cm#")]
-[OslcResourceShape(title = "A request to make a changes and review the change.", describes = new string[] { "http://open-services.net/ns/cm#ReviewTask" })]
+[OslcResourceShape(Title = "A request to make a changes and review the change.", Describes = new string[] { "http://open-services.net/ns/cm#ReviewTask" })]
 public partial record ReviewTask : Task, IReviewTask
 {
     public ReviewTask(Uri about)

@@ -115,13 +115,13 @@ public sealed class ResourceShapeFactory
         var about = new Uri(baseURI + "/" + resourceShapesPath + "/" + resourceShapePath);
         var resourceShape = new ResourceShape(about);
 
-        var title = resourceShapeAttribute[0].title;
+        var title = resourceShapeAttribute[0].Title;
         if (title != null && title.Length > 0)
         {
             resourceShape.SetTitle(title);
         }
 
-        foreach (var describesItem in resourceShapeAttribute[0].describes)
+        foreach (var describesItem in resourceShapeAttribute[0].Describes)
         {
             resourceShape.AddDescribeItem(new Uri(describesItem));
         }
@@ -149,7 +149,7 @@ public sealed class ResourceShapeFactory
                         InheritedMethodAttributeHelper.GetAttribute<OslcPropertyDefinition>(method);
                     if (propertyDefinitionAttribute != null)
                     {
-                        var propertyDefinition = propertyDefinitionAttribute.value;
+                        var propertyDefinition = propertyDefinitionAttribute.Value;
                         if (propertyDefinitions.Contains(propertyDefinition))
                         {
                             throw new OslcCoreDuplicatePropertyDefinitionException(
@@ -181,7 +181,7 @@ public sealed class ResourceShapeFactory
                 InheritedMethodAttributeHelper.GetAttribute<OslcPropertyDefinition>(prop);
             if (propertyDefinitionAttribute != null)
             {
-                var propertyDefinition = propertyDefinitionAttribute.value;
+                var propertyDefinition = propertyDefinitionAttribute.Value;
                 if (propertyDefinitions.Contains(propertyDefinition))
                 {
                     throw new OslcCoreDuplicatePropertyDefinitionException(
@@ -218,7 +218,7 @@ public sealed class ResourceShapeFactory
         var nameAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcName>(method);
         if (nameAttribute != null)
         {
-            name = nameAttribute.value;
+            name = nameAttribute.Value;
         }
         else
         {
@@ -230,7 +230,7 @@ public sealed class ResourceShapeFactory
             };
         }
 
-        var propertyDefinition = propertyDefinitionAttribute.value;
+        var propertyDefinition = propertyDefinitionAttribute.Value;
 
         if (!propertyDefinition.EndsWith(name, StringComparison.Ordinal))
         {
@@ -252,7 +252,7 @@ public sealed class ResourceShapeFactory
         var occursAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcOccurs>(method);
         if (occursAttribute != null)
         {
-            occurs = occursAttribute.value;
+            occurs = occursAttribute.Value;
             ValidateUserSpecifiedOccurs(resourceType, method, occursAttribute);
         }
         else
@@ -288,7 +288,7 @@ public sealed class ResourceShapeFactory
         var valueTypeAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcValueType>(method);
         if (valueTypeAttribute != null)
         {
-            valueType = valueTypeAttribute.value;
+            valueType = valueTypeAttribute.Value;
             ValidateUserSpecifiedValueType(resourceType, method, valueType, componentType);
         }
         else
@@ -302,7 +302,7 @@ public sealed class ResourceShapeFactory
         var titleAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcTitle>(method);
         if (titleAttribute != null)
         {
-            property.SetTitle(titleAttribute.value);
+            property.SetTitle(titleAttribute.Value);
         }
 
         var descriptionAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcDescription>(
@@ -310,13 +310,13 @@ public sealed class ResourceShapeFactory
         );
         if (descriptionAttribute != null)
         {
-            property.SetDescription(descriptionAttribute.value);
+            property.SetDescription(descriptionAttribute.Value);
         }
 
         var rangeAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcRange>(method);
         if (rangeAttribute != null)
         {
-            foreach (var range in rangeAttribute.value)
+            foreach (var range in rangeAttribute.Value)
             {
                 property.AddRange(new Uri(range));
             }
@@ -326,7 +326,7 @@ public sealed class ResourceShapeFactory
             InheritedMethodAttributeHelper.GetAttribute<OslcRepresentation>(method);
         if (representationAttribute != null)
         {
-            var representation = representationAttribute.value;
+            var representation = representationAttribute.Value;
             ValidateUserSpecifiedRepresentation(
                 resourceType,
                 method,
@@ -351,7 +351,7 @@ public sealed class ResourceShapeFactory
         );
         if (allowedValueAttribute != null)
         {
-            foreach (var allowedValue in allowedValueAttribute.value)
+            foreach (var allowedValue in allowedValueAttribute.Value)
             {
                 property.AddAllowedValue(allowedValue);
             }
@@ -362,7 +362,7 @@ public sealed class ResourceShapeFactory
         );
         if (allowedValuesAttribute != null)
         {
-            property.SetAllowedValuesRef(new Uri(allowedValuesAttribute.value));
+            property.SetAllowedValuesRef(new Uri(allowedValuesAttribute.Value));
         }
 
         var defaultValueAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcDefaultValue>(
@@ -370,32 +370,32 @@ public sealed class ResourceShapeFactory
         );
         if (defaultValueAttribute != null)
         {
-            property.SetDefaultValue(defaultValueAttribute.value);
+            property.SetDefaultValue(defaultValueAttribute.Value);
         }
 
         var hiddenAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcHidden>(method);
         if (hiddenAttribute != null)
         {
-            property.SetHidden(hiddenAttribute.value);
+            property.SetHidden(hiddenAttribute.Value);
         }
 
         var memberPropertyAttribute =
             InheritedMethodAttributeHelper.GetAttribute<OslcMemberProperty>(method);
         if (memberPropertyAttribute != null)
         {
-            property.SetMemberProperty(memberPropertyAttribute.value);
+            property.SetMemberProperty(memberPropertyAttribute.Value);
         }
 
         var readOnlyAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcReadOnly>(method);
         if (readOnlyAttribute != null)
         {
-            property.SetReadOnly(readOnlyAttribute.value);
+            property.SetReadOnly(readOnlyAttribute.Value);
         }
 
         var maxSizeAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcMaxSize>(method);
         if (maxSizeAttribute != null)
         {
-            property.SetMaxSize(maxSizeAttribute.value);
+            property.SetMaxSize(maxSizeAttribute.Value);
         }
 
         var valueShapeAttribute = InheritedMethodAttributeHelper.GetAttribute<OslcValueShape>(
@@ -403,7 +403,7 @@ public sealed class ResourceShapeFactory
         );
         if (valueShapeAttribute != null)
         {
-            property.SetValueShape(new Uri(baseURI + "/" + valueShapeAttribute.value));
+            property.SetValueShape(new Uri(baseURI + "/" + valueShapeAttribute.Value));
         }
 
         if (ValueType.LocalResource.Equals(valueType))
@@ -579,7 +579,7 @@ public sealed class ResourceShapeFactory
             PropertyInfo propertyInfo => propertyInfo.PropertyType,
             _ => throw new ArgumentException("Unsupported member type", nameof(method)),
         };
-        var occurs = occursAttribute.value;
+        var occurs = occursAttribute.Value;
 
         if (
             !IsBinaryArray(returnType)

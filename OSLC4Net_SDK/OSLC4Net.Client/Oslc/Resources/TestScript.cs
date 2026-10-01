@@ -21,8 +21,8 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// https://docs.oasis-open-projects.org/oslc-op/qm/v2.1/os/quality-management-shapes.html#TestScriptShape
 /// </summary>
-[OslcResourceShape(title = "Quality Management Resource Shape",
-    describes = new string[] { QmConstants.TYPE_TEST_SCRIPT })]
+[OslcResourceShape(Title = "Quality Management Resource Shape",
+    Describes = new string[] { QmConstants.TYPE_TEST_SCRIPT })]
 [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
 public class TestScript : QmResource
 {

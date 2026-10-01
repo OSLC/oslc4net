@@ -11,7 +11,7 @@ public partial interface ITransportAction : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/SupplyChain/")]
-[OslcResourceShape(title = "Transport Action", describes = new string[] { "https://spdx.org/rdf/3/terms/SupplyChain/TransportAction" })]
+[OslcResourceShape(Title = "Transport Action", Describes = new string[] { "https://spdx.org/rdf/3/terms/SupplyChain/TransportAction" })]
 public partial record TransportAction : AbstractResourceRecord, ITransportAction
 {
     public TransportAction(Uri about)

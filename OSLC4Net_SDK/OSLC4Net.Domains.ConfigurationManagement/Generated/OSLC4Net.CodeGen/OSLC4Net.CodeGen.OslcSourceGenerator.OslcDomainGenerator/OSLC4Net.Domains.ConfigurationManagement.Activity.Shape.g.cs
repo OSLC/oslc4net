@@ -11,7 +11,7 @@ public partial interface IActivity : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/config#")]
-[OslcResourceShape(title = "The shape of an activity.", describes = new string[] { "http://open-services.net/ns/config#Activity" })]
+[OslcResourceShape(Title = "The shape of an activity.", Describes = new string[] { "http://open-services.net/ns/config#Activity" })]
 public partial record Activity : AbstractResourceRecord, IActivity
 {
     public Activity(Uri about)

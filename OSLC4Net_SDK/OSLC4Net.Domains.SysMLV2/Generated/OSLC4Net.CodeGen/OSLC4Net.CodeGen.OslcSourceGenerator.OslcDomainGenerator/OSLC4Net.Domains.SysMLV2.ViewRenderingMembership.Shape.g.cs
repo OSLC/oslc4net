@@ -11,7 +11,7 @@ public partial interface IViewRenderingMembership : IFeatureMembership
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ViewRenderingMembershipShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ViewRenderingMembership" })]
+[OslcResourceShape(Title = "ViewRenderingMembershipShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ViewRenderingMembership" })]
 public partial record ViewRenderingMembership : FeatureMembership, IViewRenderingMembership
 {
     public ViewRenderingMembership(Uri about)

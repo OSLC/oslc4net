@@ -11,7 +11,7 @@ public partial interface IEnumerationUsage : IAttributeUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "EnumerationUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#EnumerationUsage" })]
+[OslcResourceShape(Title = "EnumerationUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#EnumerationUsage" })]
 public partial record EnumerationUsage : AttributeUsage, IEnumerationUsage
 {
     public EnumerationUsage(Uri about)

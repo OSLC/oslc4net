@@ -24,12 +24,12 @@ namespace OSLC4Net.Core.Query;
 public class QueryUtils
 {
     /// <summary>
-    ///  Parse a oslc.prefix clause into a map between prefixes
+    ///  Parse a oslc.Prefix clause into a map between prefixes
     /// and corresponding URIs
     /// <p><b>Note</b>: {@link Object#toString()} of result has been overridden to
     /// return input expression.
     /// </summary>
-    /// <param name="prefixExpression">the oslc.prefix expression</param>
+    /// <param name="prefixExpression">the oslc.Prefix expression</param>
     /// <returns>the prefix map</returns>
     public static IDictionary<string, string>
     ParsePrefixes(
@@ -221,7 +221,7 @@ public class QueryUtils
     /// <li> OSLC4NetConstants.OSLC4NET_PROPERTY_WILDCARD - if all
     /// properties at this level are to be output.  No recursion
     /// below this level is to be done.</li>
-    /// <li> OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON - if only
+    /// <li> OSLC4NetConstants.Oslc4NetPropertySingleton - if only
     /// the named property is to be output, without recursion</li>
     /// <li> a nested property list to recurse through</li>
     /// </ul>
@@ -241,7 +241,7 @@ public class QueryUtils
             if (!property.IsWildcard)
             {
                 var pName = property.Identifier;
-                propertyName = pName.ns + pName.local;
+                propertyName = pName.Namespace + pName.LocalName;
             }
 
             switch (property.Type)
@@ -278,7 +278,7 @@ public class QueryUtils
                     }
 
                     result[propertyName!] =
-                        OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON;
+                        OSLC4NetConstants.Oslc4NetPropertySingleton;
 
                     break;
 
@@ -347,7 +347,7 @@ public class QueryUtils
 
             var selectedProperties = result[propertyName];
 
-            if (selectedProperties == OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON)
+            if (selectedProperties == OSLC4NetConstants.Oslc4NetPropertySingleton)
             {
                 result[propertyName] = commonNestedProperties;
             }
@@ -574,12 +574,12 @@ public class QueryUtils
             }
 
             if (lhsValue == rhsValue ||
-                lhsValue == OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON)
+                lhsValue == OSLC4NetConstants.Oslc4NetPropertySingleton)
             {
                 continue;
             }
 
-            if (rhsValue == OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON)
+            if (rhsValue == OSLC4NetConstants.Oslc4NetPropertySingleton)
             {
                 lhs[propertyName] = rhsValue;
                 continue;

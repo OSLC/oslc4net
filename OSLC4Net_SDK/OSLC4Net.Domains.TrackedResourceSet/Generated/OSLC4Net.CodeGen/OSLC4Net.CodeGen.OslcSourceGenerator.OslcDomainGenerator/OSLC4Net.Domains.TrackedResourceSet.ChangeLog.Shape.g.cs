@@ -11,7 +11,7 @@ public partial interface IChangeLog : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/core/trs#")]
-[OslcResourceShape(title = "The shape of a ChangeLog", describes = new string[] { "http://open-services.net/ns/core/trs#ChangeLog" })]
+[OslcResourceShape(Title = "The shape of a ChangeLog", Describes = new string[] { "http://open-services.net/ns/core/trs#ChangeLog" })]
 public partial record ChangeLog : AbstractResourceRecord, IChangeLog
 {
     public ChangeLog(Uri about)

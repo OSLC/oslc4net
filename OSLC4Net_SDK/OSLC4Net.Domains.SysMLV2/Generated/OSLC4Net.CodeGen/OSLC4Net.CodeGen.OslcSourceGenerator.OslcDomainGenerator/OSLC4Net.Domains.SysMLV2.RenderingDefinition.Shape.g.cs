@@ -11,7 +11,7 @@ public partial interface IRenderingDefinition : IPartDefinition
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "RenderingDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#RenderingDefinition" })]
+[OslcResourceShape(Title = "RenderingDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#RenderingDefinition" })]
 public partial record RenderingDefinition : PartDefinition, IRenderingDefinition
 {
     public RenderingDefinition(Uri about)

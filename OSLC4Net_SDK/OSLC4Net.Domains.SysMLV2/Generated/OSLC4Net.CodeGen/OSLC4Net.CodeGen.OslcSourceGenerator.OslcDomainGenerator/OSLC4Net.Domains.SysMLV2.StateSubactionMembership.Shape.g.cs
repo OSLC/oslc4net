@@ -11,7 +11,7 @@ public partial interface IStateSubactionMembership : IFeatureMembership
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "StateSubactionMembershipShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#StateSubactionMembership" })]
+[OslcResourceShape(Title = "StateSubactionMembershipShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#StateSubactionMembership" })]
 public partial record StateSubactionMembership : FeatureMembership, IStateSubactionMembership
 {
     public StateSubactionMembership(Uri about)
