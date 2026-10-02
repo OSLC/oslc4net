@@ -17,5 +17,5 @@ internal sealed class Description(string value) : Attribute
     /**
      *  Description of element; used in enumerations
      */
-    public readonly string value = value;
+    public string Value { get; } = value;
 }

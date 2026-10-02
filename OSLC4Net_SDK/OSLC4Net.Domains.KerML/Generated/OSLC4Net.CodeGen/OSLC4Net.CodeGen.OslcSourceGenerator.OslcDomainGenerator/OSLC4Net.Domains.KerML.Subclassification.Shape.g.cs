@@ -11,7 +11,7 @@ public partial interface ISubclassification : ISpecialization
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "SubclassificationShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Subclassification" })]
+[OslcResourceShape(Title = "SubclassificationShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Subclassification" })]
 public partial record Subclassification : Specialization, ISubclassification
 {
     public Subclassification(Uri about)

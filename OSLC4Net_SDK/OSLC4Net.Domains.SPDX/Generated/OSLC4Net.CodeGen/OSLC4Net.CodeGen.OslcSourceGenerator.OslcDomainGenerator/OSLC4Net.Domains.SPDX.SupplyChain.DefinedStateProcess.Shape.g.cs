@@ -11,7 +11,7 @@ public partial interface IDefinedStateProcess : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/SupplyChain/")]
-[OslcResourceShape(title = "Defined State Process", describes = new string[] { "https://spdx.org/rdf/3/terms/SupplyChain/DefinedStateProcess" })]
+[OslcResourceShape(Title = "Defined State Process", Describes = new string[] { "https://spdx.org/rdf/3/terms/SupplyChain/DefinedStateProcess" })]
 public partial record DefinedStateProcess : AbstractResourceRecord, IDefinedStateProcess
 {
     public DefinedStateProcess(Uri about)

@@ -11,7 +11,7 @@ public partial interface IBulkHardware : ISpdxHardware
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Hardware/")]
-[OslcResourceShape(title = "Bulk Hardware", describes = new string[] { "https://spdx.org/rdf/3/terms/Hardware/BulkHardware" })]
+[OslcResourceShape(Title = "Bulk Hardware", Describes = new string[] { "https://spdx.org/rdf/3/terms/Hardware/BulkHardware" })]
 public partial record BulkHardware : SpdxHardware, IBulkHardware
 {
     public BulkHardware(Uri about)

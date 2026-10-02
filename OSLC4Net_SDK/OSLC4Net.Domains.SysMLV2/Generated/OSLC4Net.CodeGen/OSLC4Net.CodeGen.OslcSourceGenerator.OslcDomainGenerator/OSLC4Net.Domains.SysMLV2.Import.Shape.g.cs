@@ -11,7 +11,7 @@ public partial interface IImport : IRelationship
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ImportShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Import" })]
+[OslcResourceShape(Title = "ImportShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Import" })]
 public partial record Import : Relationship, IImport
 {
     public Import(Uri about)

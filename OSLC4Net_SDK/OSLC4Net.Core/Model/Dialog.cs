@@ -21,8 +21,8 @@ namespace OSLC4Net.Core.Model;
 ///     OSLC Dialog resource
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Dialog Resource Shape",
-    describes = new[] { OslcConstants.TYPE_DIALOG })]
+[OslcResourceShape(Title = "OSLC Dialog Resource Shape",
+    Describes = new[] { OslcConstants.TYPE_DIALOG })]
 public class Dialog : AbstractResource
 {
     private readonly SortedSet<Uri> resourceTypes = new SortedUriSet();

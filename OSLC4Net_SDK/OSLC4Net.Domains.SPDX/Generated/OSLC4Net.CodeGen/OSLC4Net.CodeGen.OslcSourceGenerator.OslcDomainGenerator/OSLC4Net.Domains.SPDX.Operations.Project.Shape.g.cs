@@ -11,7 +11,7 @@ public partial interface IProject : global::OSLC4Net.Domains.SPDX.Core.IBundle
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Operations/")]
-[OslcResourceShape(title = "Project", describes = new string[] { "https://spdx.org/rdf/3/terms/Operations/Project" })]
+[OslcResourceShape(Title = "Project", Describes = new string[] { "https://spdx.org/rdf/3/terms/Operations/Project" })]
 public partial record Project : global::OSLC4Net.Domains.SPDX.Core.Bundle, IProject
 {
     public Project(Uri about)

@@ -11,7 +11,7 @@ public partial interface IViewpointUsage : IRequirementUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ViewpointUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ViewpointUsage" })]
+[OslcResourceShape(Title = "ViewpointUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ViewpointUsage" })]
 public partial record ViewpointUsage : RequirementUsage, IViewpointUsage
 {
     public ViewpointUsage(Uri about)

@@ -11,7 +11,7 @@ public partial interface IResultExpressionMembership : IFeatureMembership
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ResultExpressionMembershipShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ResultExpressionMembership" })]
+[OslcResourceShape(Title = "ResultExpressionMembershipShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ResultExpressionMembership" })]
 public partial record ResultExpressionMembership : FeatureMembership, IResultExpressionMembership
 {
     public ResultExpressionMembership(Uri about)

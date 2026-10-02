@@ -11,7 +11,7 @@ public partial interface IRequirement : IElement
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Requirement", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Requirement" })]
+[OslcResourceShape(Title = "Requirement", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Requirement" })]
 public partial record Requirement : Element, IRequirement
 {
     public Requirement(Uri about)

@@ -11,7 +11,7 @@ public partial interface IElementCollection : IElement
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Element Collection", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/ElementCollection" })]
+[OslcResourceShape(Title = "Element Collection", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/ElementCollection" })]
 public partial record ElementCollection : Element, IElementCollection
 {
     public ElementCollection(Uri about)

@@ -11,7 +11,7 @@ public partial interface IUnitOfMeasure : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Unit Of Measure", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/UnitOfMeasure" })]
+[OslcResourceShape(Title = "Unit Of Measure", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/UnitOfMeasure" })]
 public partial record UnitOfMeasure : AbstractResourceRecord, IUnitOfMeasure
 {
     public UnitOfMeasure(Uri about)

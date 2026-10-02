@@ -11,7 +11,7 @@ public partial interface IRenderingUsage : IPartUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "RenderingUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#RenderingUsage" })]
+[OslcResourceShape(Title = "RenderingUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#RenderingUsage" })]
 public partial record RenderingUsage : PartUsage, IRenderingUsage
 {
     public RenderingUsage(Uri about)

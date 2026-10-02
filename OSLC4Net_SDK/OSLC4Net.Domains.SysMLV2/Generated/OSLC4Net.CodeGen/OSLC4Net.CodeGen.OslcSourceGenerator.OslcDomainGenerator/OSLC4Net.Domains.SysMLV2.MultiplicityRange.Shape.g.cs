@@ -11,7 +11,7 @@ public partial interface IMultiplicityRange : IMultiplicity
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "MultiplicityRangeShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#MultiplicityRange" })]
+[OslcResourceShape(Title = "MultiplicityRangeShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#MultiplicityRange" })]
 public partial record MultiplicityRange : Multiplicity, IMultiplicityRange
 {
     public MultiplicityRange(Uri about)

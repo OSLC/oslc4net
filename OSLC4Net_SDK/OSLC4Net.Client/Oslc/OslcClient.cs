@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -39,8 +40,11 @@ public class OslcClient : IDisposable
     // As of 2020, FF allows 20, Blink - 19, Safari - 16.
     private const int MAX_REDIRECTS = 20;
 
-    protected readonly ISet<MediaTypeFormatter> _formatters;
-    protected readonly HttpClient _client;
+    private readonly ISet<MediaTypeFormatter> _formatters;
+    private readonly HttpClient _client;
+
+    protected ISet<MediaTypeFormatter> Formatters => _formatters;
+    protected HttpClient Client => _client;
 
     protected string AcceptHeader { get; } =
         "text/turtle;q=1.0, application/rdf+xml;q=0.9, application/n-triples;q=0.8, text/n3;q=0.7";

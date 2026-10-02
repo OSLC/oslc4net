@@ -11,7 +11,7 @@ public partial interface IIndexExpression : IOperatorExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "IndexExpressionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#IndexExpression" })]
+[OslcResourceShape(Title = "IndexExpressionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#IndexExpression" })]
 public partial record IndexExpression : OperatorExpression, IIndexExpression
 {
     public IndexExpression(Uri about)

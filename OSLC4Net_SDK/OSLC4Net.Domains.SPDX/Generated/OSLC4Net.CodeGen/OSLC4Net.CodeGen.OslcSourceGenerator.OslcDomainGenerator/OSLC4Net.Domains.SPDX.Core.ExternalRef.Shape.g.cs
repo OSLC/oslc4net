@@ -11,7 +11,7 @@ public partial interface IExternalRef : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "External Ref", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/ExternalRef" })]
+[OslcResourceShape(Title = "External Ref", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/ExternalRef" })]
 public partial record ExternalRef : AbstractResourceRecord, IExternalRef
 {
     public ExternalRef(Uri about)

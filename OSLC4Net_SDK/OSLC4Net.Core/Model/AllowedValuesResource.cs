@@ -6,8 +6,8 @@ namespace OSLC4Net.Core.Model;
 [Experimental("OSLCEXP001", Message = "This class may change or be removed in future releases after [OslcAllowedValues] attribute support is fully implemented and verified.")]
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
 [OslcName("AllowedValues")]
-[OslcResourceShape(title = "OSLC Allowed Values Resource Shape",
-    describes = new[] { OslcConstants.TYPE_ALLOWED_VALUES })]
+[OslcResourceShape(Title = "OSLC Allowed Values Resource Shape",
+    Describes = new[] { OslcConstants.TYPE_ALLOWED_VALUES })]
 public sealed class AllowedValuesResource<T> : IResource
 {
     public Uri About { get; set; } = null!;

@@ -11,7 +11,7 @@ public partial interface IConcernUsage : IRequirementUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ConcernUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ConcernUsage" })]
+[OslcResourceShape(Title = "ConcernUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ConcernUsage" })]
 public partial record ConcernUsage : RequirementUsage, IConcernUsage
 {
     public ConcernUsage(Uri about)

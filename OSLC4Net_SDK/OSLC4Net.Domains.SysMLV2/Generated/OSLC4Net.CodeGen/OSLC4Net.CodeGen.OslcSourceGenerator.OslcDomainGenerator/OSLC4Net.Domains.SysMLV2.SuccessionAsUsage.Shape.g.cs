@@ -11,7 +11,7 @@ public partial interface ISuccessionAsUsage : IConnectorAsUsage, ISuccession
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "SuccessionAsUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#SuccessionAsUsage" })]
+[OslcResourceShape(Title = "SuccessionAsUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#SuccessionAsUsage" })]
 public partial record SuccessionAsUsage : ConnectorAsUsage, ISuccessionAsUsage
 {
     public SuccessionAsUsage(Uri about)

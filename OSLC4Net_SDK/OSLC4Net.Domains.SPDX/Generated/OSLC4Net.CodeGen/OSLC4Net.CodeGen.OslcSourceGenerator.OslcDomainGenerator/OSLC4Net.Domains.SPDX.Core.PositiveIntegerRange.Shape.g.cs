@@ -11,7 +11,7 @@ public partial interface IPositiveIntegerRange : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Positive Integer Range", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/PositiveIntegerRange" })]
+[OslcResourceShape(Title = "Positive Integer Range", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/PositiveIntegerRange" })]
 public partial record PositiveIntegerRange : AbstractResourceRecord, IPositiveIntegerRange
 {
     public PositiveIntegerRange(Uri about)

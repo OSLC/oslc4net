@@ -11,7 +11,7 @@ public partial interface ISatisfyRequirementUsage : IAssertConstraintUsage, IReq
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "SatisfyRequirementUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#SatisfyRequirementUsage" })]
+[OslcResourceShape(Title = "SatisfyRequirementUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#SatisfyRequirementUsage" })]
 public partial record SatisfyRequirementUsage : AssertConstraintUsage, ISatisfyRequirementUsage
 {
     public SatisfyRequirementUsage(Uri about)

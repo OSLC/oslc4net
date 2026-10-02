@@ -11,7 +11,7 @@ public partial interface IFlowEnd : IFeature
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "FlowEndShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#FlowEnd" })]
+[OslcResourceShape(Title = "FlowEndShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#FlowEnd" })]
 public partial record FlowEnd : Feature, IFlowEnd
 {
     public FlowEnd(Uri about)

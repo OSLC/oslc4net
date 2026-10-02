@@ -11,7 +11,7 @@ public partial interface IBooleanExpression : IExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "BooleanExpressionShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#BooleanExpression" })]
+[OslcResourceShape(Title = "BooleanExpressionShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#BooleanExpression" })]
 public partial record BooleanExpression : Expression, IBooleanExpression
 {
     public BooleanExpression(Uri about)

@@ -11,7 +11,7 @@ public partial interface ISnippet : ISoftwareArtifact
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Software/")]
-[OslcResourceShape(title = "Snippet", describes = new string[] { "https://spdx.org/rdf/3/terms/Software/Snippet" })]
+[OslcResourceShape(Title = "Snippet", Describes = new string[] { "https://spdx.org/rdf/3/terms/Software/Snippet" })]
 public partial record Snippet : SoftwareArtifact, ISnippet
 {
     public Snippet(Uri about)

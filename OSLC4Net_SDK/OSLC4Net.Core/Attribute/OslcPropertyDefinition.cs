@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -26,10 +27,10 @@ public class OslcPropertyDefinition : System.Attribute
     /**
      * URI of the property whose usage is being described.
      */
-    public readonly string value;
+    public string Value { get; }
 
     public OslcPropertyDefinition(string value)
     {
-        this.value = value;
+        Value = value;
     }
 }

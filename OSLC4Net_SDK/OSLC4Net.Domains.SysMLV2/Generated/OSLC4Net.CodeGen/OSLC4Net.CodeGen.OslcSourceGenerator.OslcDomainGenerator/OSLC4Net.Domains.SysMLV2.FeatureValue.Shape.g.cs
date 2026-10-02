@@ -11,7 +11,7 @@ public partial interface IFeatureValue : IOwningMembership
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "FeatureValueShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#FeatureValue" })]
+[OslcResourceShape(Title = "FeatureValueShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#FeatureValue" })]
 public partial record FeatureValue : OwningMembership, IFeatureValue
 {
     public FeatureValue(Uri about)

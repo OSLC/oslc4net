@@ -11,7 +11,7 @@ public partial interface IRequirementDefinition : IConstraintDefinition
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "RequirementDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#RequirementDefinition" })]
+[OslcResourceShape(Title = "RequirementDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#RequirementDefinition" })]
 public partial record RequirementDefinition : ConstraintDefinition, IRequirementDefinition
 {
     public RequirementDefinition(Uri about)

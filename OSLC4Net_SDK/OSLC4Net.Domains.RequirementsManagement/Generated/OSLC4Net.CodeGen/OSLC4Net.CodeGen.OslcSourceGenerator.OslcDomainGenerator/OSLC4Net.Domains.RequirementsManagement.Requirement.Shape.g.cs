@@ -11,7 +11,7 @@ public partial interface IRequirement : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/rm#")]
-[OslcResourceShape(title = "Requirement Resource Shape", describes = new string[] { "http://open-services.net/ns/rm#Requirement" })]
+[OslcResourceShape(Title = "Requirement Resource Shape", Describes = new string[] { "http://open-services.net/ns/rm#Requirement" })]
 public partial record Requirement : AbstractResourceRecord, IRequirement
 {
     public Requirement(Uri about)

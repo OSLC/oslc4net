@@ -11,7 +11,7 @@ public partial interface IPortDefinition : IOccurrenceDefinition, IStructure
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "PortDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#PortDefinition" })]
+[OslcResourceShape(Title = "PortDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#PortDefinition" })]
 public partial record PortDefinition : OccurrenceDefinition, IPortDefinition
 {
     public PortDefinition(Uri about)

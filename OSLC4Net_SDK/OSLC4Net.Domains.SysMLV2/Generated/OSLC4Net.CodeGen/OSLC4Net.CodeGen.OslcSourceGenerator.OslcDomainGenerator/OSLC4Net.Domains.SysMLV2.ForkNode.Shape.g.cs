@@ -11,7 +11,7 @@ public partial interface IForkNode : IControlNode
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ForkNodeShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ForkNode" })]
+[OslcResourceShape(Title = "ForkNodeShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ForkNode" })]
 public partial record ForkNode : ControlNode, IForkNode
 {
     public ForkNode(Uri about)

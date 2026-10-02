@@ -11,7 +11,7 @@ public partial interface ISuccession : IConnector
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "SuccessionShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Succession" })]
+[OslcResourceShape(Title = "SuccessionShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Succession" })]
 public partial record Succession : Connector, ISuccession
 {
     public Succession(Uri about)

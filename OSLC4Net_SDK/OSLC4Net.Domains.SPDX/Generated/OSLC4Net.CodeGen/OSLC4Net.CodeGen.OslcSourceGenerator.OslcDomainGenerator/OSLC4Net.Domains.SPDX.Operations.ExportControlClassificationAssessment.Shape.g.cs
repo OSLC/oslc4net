@@ -11,7 +11,7 @@ public partial interface IExportControlClassificationAssessment : global::OSLC4N
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Operations/")]
-[OslcResourceShape(title = "Export Control Classification Assessment", describes = new string[] { "https://spdx.org/rdf/3/terms/Operations/ExportControlClassificationAssessment" })]
+[OslcResourceShape(Title = "Export Control Classification Assessment", Describes = new string[] { "https://spdx.org/rdf/3/terms/Operations/ExportControlClassificationAssessment" })]
 public partial record ExportControlClassificationAssessment : global::OSLC4Net.Domains.SPDX.Core.Artifact, IExportControlClassificationAssessment
 {
     public ExportControlClassificationAssessment(Uri about)

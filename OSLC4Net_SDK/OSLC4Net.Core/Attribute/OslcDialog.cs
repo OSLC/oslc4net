@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -26,35 +27,35 @@ public class OslcDialog : System.Attribute
     /**
      * Values MUST be expressed in relative length units.  Em and ex units are interpreted relative to the default system font (at 100% size).
      */
-    public string hintHeight = "";
+    public string HintHeight { get; set; } = "";
 
     /**
      * Values MUST be expressed in relative length units.  Em and ex units are interpreted relative to the default system font (at 100% size).
      */
-    public string hintWidth = "";
+    public string HintWidth { get; set; } = "";
 
     /**
      * Very short label for use in menu items
      */
-    public string label = "";
+    public string Label { get; set; } = "";
 
     /**
      * Resource types
      */
-    public string[] resourceTypes = Array.Empty<string>();
+    public string[] ResourceTypes { get; set; } = Array.Empty<string>();
 
     /**
      * Title string that could be used for display
      */
-    public string title;
+    public string Title { get; set; }
 
     /**
      * The URI of the dialog
      */
-    public string uri;
+    public string Uri { get; set; }
 
     /**
      * Usages
      */
-    public string[] usages = Array.Empty<string>();
+    public string[] Usages { get; set; } = Array.Empty<string>();
 }

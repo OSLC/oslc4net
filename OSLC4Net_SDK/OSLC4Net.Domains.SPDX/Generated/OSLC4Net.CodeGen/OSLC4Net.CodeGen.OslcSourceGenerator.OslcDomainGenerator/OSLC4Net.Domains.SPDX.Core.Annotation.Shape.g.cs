@@ -11,7 +11,7 @@ public partial interface IAnnotation : IElement
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Annotation", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Annotation" })]
+[OslcResourceShape(Title = "Annotation", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Annotation" })]
 public partial record Annotation : Element, IAnnotation
 {
     public Annotation(Uri about)

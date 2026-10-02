@@ -11,7 +11,7 @@ public partial interface IDefinedType : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Defined Type", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/DefinedType" })]
+[OslcResourceShape(Title = "Defined Type", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/DefinedType" })]
 public partial record DefinedType : AbstractResourceRecord, IDefinedType
 {
     public DefinedType(Uri about)

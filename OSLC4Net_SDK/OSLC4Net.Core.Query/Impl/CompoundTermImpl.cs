@@ -59,13 +59,13 @@ internal class CompoundTermImpl : SimpleTermImpl, CompoundTerm
                     switch (child.Token.Type)
                     {
                         case OslcWhereParser.SIMPLE_TERM:
-                            simpleTerm = new ComparisonTermImpl(child, prefixMap);
+                            simpleTerm = new ComparisonTermImpl(child, PrefixMap);
                             break;
                         case OslcWhereParser.IN_TERM:
-                            simpleTerm = new InTermImpl(child, prefixMap);
+                            simpleTerm = new InTermImpl(child, PrefixMap);
                             break;
                         case OslcWhereParser.COMPOUND_TERM:
-                            simpleTerm = new CompoundTermImpl(child, false, prefixMap);
+                            simpleTerm = new CompoundTermImpl(child, false, PrefixMap);
                             break;
                         default:
                             throw new InvalidOperationException("unimplemented type of simple term: " + child.Token.Text);

@@ -11,7 +11,7 @@ public partial interface ILiteralRational : ILiteralExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "LiteralRationalShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#LiteralRational" })]
+[OslcResourceShape(Title = "LiteralRationalShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#LiteralRational" })]
 public partial record LiteralRational : LiteralExpression, ILiteralRational
 {
     public LiteralRational(Uri about)

@@ -11,7 +11,7 @@ public partial interface ITextualRepresentation : IAnnotatingElement
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "TextualRepresentationShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#TextualRepresentation" })]
+[OslcResourceShape(Title = "TextualRepresentationShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#TextualRepresentation" })]
 public partial record TextualRepresentation : AnnotatingElement, ITextualRepresentation
 {
     public TextualRepresentation(Uri about)

@@ -11,7 +11,7 @@ public partial interface ISpecification : IArtifact
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Specification", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Specification" })]
+[OslcResourceShape(Title = "Specification", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Specification" })]
 public partial record Specification : Artifact, ISpecification
 {
     public Specification(Uri about)

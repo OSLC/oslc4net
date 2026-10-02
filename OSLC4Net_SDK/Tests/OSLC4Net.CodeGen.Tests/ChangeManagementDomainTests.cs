@@ -59,7 +59,7 @@ public sealed class ChangeManagementDomainTests
             .OfType<OslcRange>()
             .SingleOrDefault();
 
-        await Assert.That(range?.value).IsEquivalentTo([expectedRange]);
+        await Assert.That(range?.Value).IsEquivalentTo([expectedRange]);
     }
 
     [Test]

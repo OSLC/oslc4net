@@ -11,7 +11,7 @@ public partial interface IOwningMembership : IMembership
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "OwningMembershipShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#OwningMembership" })]
+[OslcResourceShape(Title = "OwningMembershipShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#OwningMembership" })]
 public partial record OwningMembership : Membership, IOwningMembership
 {
     public OwningMembership(Uri about)

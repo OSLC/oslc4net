@@ -67,8 +67,8 @@ public class OslcQuerySpecificationTests
         await Assert.That(typedComparison.Operand is TypedValue).IsTrue();
         var typedValue = (TypedValue)typedComparison.Operand;
         await Assert.That(typedValue.Value).IsEqualTo("2026-09-19T00:00:00Z");
-        await Assert.That(typedValue.PrefixedName.ns).IsEqualTo(Prefixes["xs"]);
-        await Assert.That(typedValue.PrefixedName.local).IsEqualTo("dateTime");
+        await Assert.That(typedValue.PrefixedName.Namespace).IsEqualTo(Prefixes["xs"]);
+        await Assert.That(typedValue.PrefixedName.LocalName).IsEqualTo("dateTime");
 
         var languageComparison = (ComparisonTerm)where.Children[6];
         await Assert.That(languageComparison.Operand is LangedStringValue).IsTrue();
@@ -111,12 +111,12 @@ public class OslcQuerySpecificationTests
             Prefixes);
 
         await Assert.That(select.Children).HasCount(4);
-        await Assert.That(select.Children[0].Identifier.local).IsEqualTo("title");
-        await Assert.That(select.Children[1].Identifier.local).IsEqualTo("shortTitle");
+        await Assert.That(select.Children[0].Identifier.LocalName).IsEqualTo("title");
+        await Assert.That(select.Children[1].Identifier.LocalName).IsEqualTo("shortTitle");
         await Assert.That(select.Children[2] is NestedProperty).IsTrue();
 
         var nested = (NestedProperty)select.Children[2];
-        await Assert.That(nested.Identifier.local).IsEqualTo("relatedArtifact");
+        await Assert.That(nested.Identifier.LocalName).IsEqualTo("relatedArtifact");
         await Assert.That(nested.Children).HasCount(2);
         await Assert.That(select.Children[3].IsWildcard).IsTrue();
 
@@ -137,11 +137,11 @@ public class OslcQuerySpecificationTests
 
         var descending = (SimpleSortTerm)orderBy.Children[0];
         await Assert.That(descending.Ascending).IsFalse();
-        await Assert.That(descending.Identifier.local).IsEqualTo("title");
+        await Assert.That(descending.Identifier.LocalName).IsEqualTo("title");
 
         var ascending = (SimpleSortTerm)orderBy.Children[1];
         await Assert.That(ascending.Ascending).IsTrue();
-        await Assert.That(ascending.Identifier.local).IsEqualTo("identifier");
+        await Assert.That(ascending.Identifier.LocalName).IsEqualTo("identifier");
 
         await Assert.That(orderBy.Children[2] is ScopedSortTerm).IsTrue();
         var scoped = (ScopedSortTerm)orderBy.Children[2];

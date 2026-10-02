@@ -11,7 +11,7 @@ public partial interface IPhysicalHardware : ISpdxHardware
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Hardware/")]
-[OslcResourceShape(title = "Physical Hardware", describes = new string[] { "https://spdx.org/rdf/3/terms/Hardware/PhysicalHardware" })]
+[OslcResourceShape(Title = "Physical Hardware", Describes = new string[] { "https://spdx.org/rdf/3/terms/Hardware/PhysicalHardware" })]
 public partial record PhysicalHardware : SpdxHardware, IPhysicalHardware
 {
     public PhysicalHardware(Uri about)

@@ -11,7 +11,7 @@ public partial interface IRequirementConstraintMembership : IFeatureMembership
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "RequirementConstraintMembershipShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#RequirementConstraintMembership" })]
+[OslcResourceShape(Title = "RequirementConstraintMembershipShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#RequirementConstraintMembership" })]
 public partial record RequirementConstraintMembership : FeatureMembership, IRequirementConstraintMembership
 {
     public RequirementConstraintMembership(Uri about)

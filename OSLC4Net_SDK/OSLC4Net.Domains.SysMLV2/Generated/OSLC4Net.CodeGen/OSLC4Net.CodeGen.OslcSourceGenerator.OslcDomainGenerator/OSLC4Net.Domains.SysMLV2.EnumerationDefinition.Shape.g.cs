@@ -11,7 +11,7 @@ public partial interface IEnumerationDefinition : IAttributeDefinition
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "EnumerationDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#EnumerationDefinition" })]
+[OslcResourceShape(Title = "EnumerationDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#EnumerationDefinition" })]
 public partial record EnumerationDefinition : AttributeDefinition, IEnumerationDefinition
 {
     public EnumerationDefinition(Uri about)

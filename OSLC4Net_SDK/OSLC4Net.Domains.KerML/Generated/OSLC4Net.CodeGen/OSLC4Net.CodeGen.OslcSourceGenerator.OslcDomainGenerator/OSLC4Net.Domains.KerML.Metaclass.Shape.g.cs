@@ -11,7 +11,7 @@ public partial interface IMetaclass : IStructure
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "MetaclassShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Metaclass" })]
+[OslcResourceShape(Title = "MetaclassShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Metaclass" })]
 public partial record Metaclass : Structure, IMetaclass
 {
     public Metaclass(Uri about)

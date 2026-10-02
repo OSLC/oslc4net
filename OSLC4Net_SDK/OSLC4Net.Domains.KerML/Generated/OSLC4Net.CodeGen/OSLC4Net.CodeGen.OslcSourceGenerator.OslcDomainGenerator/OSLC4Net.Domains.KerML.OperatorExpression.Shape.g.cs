@@ -11,7 +11,7 @@ public partial interface IOperatorExpression : IInvocationExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "OperatorExpressionShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#OperatorExpression" })]
+[OslcResourceShape(Title = "OperatorExpressionShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#OperatorExpression" })]
 public partial record OperatorExpression : InvocationExpression, IOperatorExpression
 {
     public OperatorExpression(Uri about)

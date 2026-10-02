@@ -11,7 +11,7 @@ public partial interface IConnectorAsUsage : IConnector, IUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ConnectorAsUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ConnectorAsUsage" })]
+[OslcResourceShape(Title = "ConnectorAsUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ConnectorAsUsage" })]
 public partial record ConnectorAsUsage : Connector, IConnectorAsUsage
 {
     public ConnectorAsUsage(Uri about)

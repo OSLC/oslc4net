@@ -11,7 +11,7 @@ public partial interface IInstantiationExpression : IExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "InstantiationExpressionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#InstantiationExpression" })]
+[OslcResourceShape(Title = "InstantiationExpressionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#InstantiationExpression" })]
 public partial record InstantiationExpression : Expression, IInstantiationExpression
 {
     public InstantiationExpression(Uri about)

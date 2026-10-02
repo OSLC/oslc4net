@@ -11,7 +11,7 @@ public partial interface ITrackedResourceSetResource : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/core/trs#")]
-[OslcResourceShape(title = "The shape of a TrackedResourceSet", describes = new string[] { "http://open-services.net/ns/core/trs#TrackedResourceSet" })]
+[OslcResourceShape(Title = "The shape of a TrackedResourceSet", Describes = new string[] { "http://open-services.net/ns/core/trs#TrackedResourceSet" })]
 public partial record TrackedResourceSetResource : AbstractResourceRecord, ITrackedResourceSetResource
 {
     public TrackedResourceSetResource(Uri about)

@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -27,7 +28,7 @@ public class OslcAllowedValues : System.Attribute
     /// <summary>
     ///     URI of the allowed values resource for the OSLC property.
     /// </summary>
-    public readonly string value;
+    public string Value { get; }
 
     /// <summary>
     ///    Define an OSLC AllowedValues (enumeration) attribute
@@ -35,6 +36,6 @@ public class OslcAllowedValues : System.Attribute
     /// <param name="value">URI of the allowed values resource for the OSLC property.</param>
     public OslcAllowedValues(string value)
     {
-        this.value = value;
+        Value = value;
     }
 }

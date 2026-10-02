@@ -11,7 +11,7 @@ public partial interface IIfActionUsage : IActionUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "IfActionUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#IfActionUsage" })]
+[OslcResourceShape(Title = "IfActionUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#IfActionUsage" })]
 public partial record IfActionUsage : ActionUsage, IIfActionUsage
 {
     public IfActionUsage(Uri about)

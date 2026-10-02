@@ -11,7 +11,7 @@ public partial interface IAnnotation : IRelationship
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "AnnotationShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Annotation" })]
+[OslcResourceShape(Title = "AnnotationShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Annotation" })]
 public partial record Annotation : Relationship, IAnnotation
 {
     public Annotation(Uri about)

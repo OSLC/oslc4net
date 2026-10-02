@@ -37,7 +37,7 @@ internal sealed class TypedValueImpl : ValueImpl, TypedValue
         {
             if (value == null)
             {
-                value = tree.GetChild(0).Text;
+                value = Tree.GetChild(0).Text;
                 value = value.Substring(1, value.Length - 2);
             }
 
@@ -51,7 +51,7 @@ internal sealed class TypedValueImpl : ValueImpl, TypedValue
         {
             if (prefixedName == null)
             {
-                var rawPName = tree.GetChild(1).Text;
+                var rawPName = Tree.GetChild(1).Text;
 
                 prefixedName = new PName();
 
@@ -59,16 +59,16 @@ internal sealed class TypedValueImpl : ValueImpl, TypedValue
 
                 if (colon < 0)
                 {
-                    prefixedName.local = rawPName;
+                    prefixedName.LocalName = rawPName;
                 }
                 else
                 {
                     if (colon > 0)
                     {
-                        prefixedName.prefix = rawPName.Substring(0, colon);
-                        prefixedName.ns = prefixMap[prefixedName.prefix];
+                        prefixedName.Prefix = rawPName.Substring(0, colon);
+                        prefixedName.Namespace = prefixMap[prefixedName.Prefix];
                     }
-                    prefixedName.local = rawPName.Substring(colon + 1);
+                    prefixedName.LocalName = rawPName.Substring(colon + 1);
                 }
             }
 

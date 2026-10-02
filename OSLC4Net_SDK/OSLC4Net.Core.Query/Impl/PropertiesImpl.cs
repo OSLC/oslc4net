@@ -31,8 +31,8 @@ internal class PropertiesImpl : Properties
     )
     {
         this.tree = tree;
-        this.prefixMap = prefixMap;
-        // this.children = CreateChildren(tree, prefixMap);
+        this._prefixMap = prefixMap;
+        // this.children = CreateChildren(tree, _prefixMap);
     }
 
     /**
@@ -43,7 +43,7 @@ internal class PropertiesImpl : Properties
     PropertiesImpl()
     {
         this.tree = null;
-        this.prefixMap = null;
+        this._prefixMap = null;
 
         children = new List<Property>(1);
 
@@ -56,7 +56,7 @@ internal class PropertiesImpl : Properties
         {
             if (children == null)
             {
-                children = CreateChildren(tree, prefixMap);
+                children = CreateChildren(tree, _prefixMap);
             }
 
             return children;
@@ -171,6 +171,6 @@ internal class PropertiesImpl : Properties
     }
 
     private readonly CommonTree tree;
-    protected readonly IDictionary<string, string> prefixMap;
+    private readonly IDictionary<string, string> _prefixMap;
     private IList<Property> children;
 }
