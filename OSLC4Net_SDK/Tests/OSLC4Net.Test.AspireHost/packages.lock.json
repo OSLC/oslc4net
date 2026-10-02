@@ -4,15 +4,15 @@
     "net10.0": {
       "Aspire.Dashboard.Sdk.linux-arm64": {
         "type": "Direct",
-        "requested": "[13.5.4, )",
-        "resolved": "13.5.4",
-        "contentHash": "gXNzTRlF9Lzfq1p0A+RTuzX6w30S7HgQURRmko3Vn0UyKC9dUfYTeLJxIMCceQydS2UEt1DG8YBYBfIARA3bHg=="
+        "requested": "[13.6.0, )",
+        "resolved": "13.6.0",
+        "contentHash": "EhVoXskENxeHXQbt/OokpjeZVJbkfwK8XBkX4Sgx+xqqmC9HIXeDzUzZYmiuBGDwNB94cTxUtY6KLXF5cuU3pg=="
       },
       "Aspire.Dashboard.Sdk.linux-x64": {
         "type": "Direct",
-        "requested": "[13.5.4, )",
-        "resolved": "13.5.4",
-        "contentHash": "5lue0VICBqdjnBN/gipjC8JDc77IhHIx6JpEDdnW2lTxonz+RrzblRIh2Qt5HfZx9TC13r2wLBrL4sDDYCEsIA=="
+        "requested": "[13.6.0, )",
+        "resolved": "13.6.0",
+        "contentHash": "SL9fKg19kbyl0S+vy5mULQNbBW0mhzH9PRE6neNTX0CvH/+b93XOGgXKiKjhOJpXy4bCAMNz+gLd0W9GeR7AAw=="
       },
       "Aspire.Dashboard.Sdk.osx-arm64": {
         "type": "Direct",
@@ -22,9 +22,9 @@
       },
       "Aspire.Dashboard.Sdk.win-x64": {
         "type": "Direct",
-        "requested": "[13.5.4, )",
-        "resolved": "13.5.4",
-        "contentHash": "akkstfiRZzI+b+nckbR+WrQ0o1Q0OJ/RUNRk5e8wq9MNj9daHLgn5ewVJ/YjEU8ij3s/5B2jp6eVtxlIPoz4JQ=="
+        "requested": "[13.6.0, )",
+        "resolved": "13.6.0",
+        "contentHash": "0wTYcoH0cX+MsAKycJZl+olFVdfvwQze1cDhMsXFkW8oHiZZi//ows5MZkrH53YrhCM3T2Eec/YNqmcx5Eg1eQ=="
       },
       "Aspire.Hosting.AppHost": {
         "type": "Direct",
@@ -67,15 +67,15 @@
       },
       "Aspire.Hosting.Orchestration.linux-arm64": {
         "type": "Direct",
-        "requested": "[13.5.4, )",
-        "resolved": "13.5.4",
-        "contentHash": "mdz16zFFsWWhYS19aVcPU7hj+CEcpZkJxZbl6oNIVOQ+LSmNfQhGS1ChN363BwoJ2U5abYmlHDde9mB0PE2cew=="
+        "requested": "[13.6.0, )",
+        "resolved": "13.6.0",
+        "contentHash": "Oyq13xul/NEi3oLDgtwcnsiocraFBtph0aH0pojGQytyuHEPJNYnaZLi2fC8n0gzFmLYphjkImAOxcrYnX1gNw=="
       },
       "Aspire.Hosting.Orchestration.linux-x64": {
         "type": "Direct",
-        "requested": "[13.5.4, )",
-        "resolved": "13.5.4",
-        "contentHash": "xKrHygWTazTw7JGtsSA4LYWIV80AkaRg8K9oZONTsh2XENIRjOT8VAE3C2MvTy6zdwr+Gfh3hP9MreRB++MJkA=="
+        "requested": "[13.6.0, )",
+        "resolved": "13.6.0",
+        "contentHash": "ON+wG4VERVoQs58nlzhwDatzSraf5KZQDqnO/doZqMzSW+zae9kJImEdOhrIudeBs7x3dSa81l09nL5vRO3QuA=="
       },
       "Aspire.Hosting.Orchestration.osx-arm64": {
         "type": "Direct",
@@ -85,9 +85,9 @@
       },
       "Aspire.Hosting.Orchestration.win-x64": {
         "type": "Direct",
-        "requested": "[13.5.4, )",
-        "resolved": "13.5.4",
-        "contentHash": "Nt9kfr4ihe32xdDOtsDBIgLkCP3mpWPwWNvjMd9J4cptEO81LADizPZUOedoNolidLCLkJfNdCJ9RonpEi935w=="
+        "requested": "[13.6.0, )",
+        "resolved": "13.6.0",
+        "contentHash": "XoOhssW5SE+3qRx/MJMA2BGDvI1VpFH13o5HCM0HbTw2Okq9o+tuAqXo9H2mzEj7/E95ZVP+sLJO9QyQRVscZw=="
       },
       "Meziantou.Analyzer": {
         "type": "Direct",

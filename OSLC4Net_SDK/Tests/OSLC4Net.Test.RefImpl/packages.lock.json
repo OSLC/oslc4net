@@ -4,45 +4,45 @@
     "net10.0": {
       "Aspire.Hosting.Testing": {
         "type": "Direct",
-        "requested": "[13.5.4, )",
-        "resolved": "13.5.4",
-        "contentHash": "DNYhS4BscXvWZARKNz/UCVuywjTppXQ/GaZn55aEINV/+FQGpDG837Bu8X5CY7Xl9nYZClRVC3bll1gn3crrMA==",
+        "requested": "[13.6.0, )",
+        "resolved": "13.6.0",
+        "contentHash": "dGErLzQzdkN6rfE8yU1yA187tlCXm3w4I0jBCMFt91G0dXZmvGfGE60OK1SvfVmVOspTpXZPhfIOL65KJvjewA==",
         "dependencies": {
           "AspNetCore.HealthChecks.Uris": "9.0.0",
-          "Aspire.Hosting": "13.5.4",
-          "Aspire.Hosting.AppHost": "13.5.4",
-          "Google.Protobuf": "3.34.1",
-          "Grpc.AspNetCore": "2.80.0",
-          "Grpc.Net.ClientFactory": "2.80.0",
-          "Grpc.Tools": "2.80.0",
-          "Humanizer.Core": "3.0.10",
-          "JsonPatch.Net": "5.0.2",
+          "Aspire.Hosting": "13.6.0",
+          "Aspire.Hosting.AppHost": "13.6.0",
+          "Google.Protobuf": "3.36.1",
+          "Grpc.AspNetCore": "2.83.0",
+          "Grpc.Net.ClientFactory": "2.83.0",
+          "Grpc.Tools": "2.83.0",
+          "Hex1b": "0.168.0",
           "KubernetesClient": "19.0.2",
-          "Microsoft.Extensions.Configuration.Abstractions": "10.0.11",
-          "Microsoft.Extensions.Configuration.Binder": "10.0.11",
-          "Microsoft.Extensions.Configuration.EnvironmentVariables": "10.0.11",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.11",
-          "Microsoft.Extensions.DependencyInjection.AutoActivation": "10.8.0",
-          "Microsoft.Extensions.Diagnostics.HealthChecks": "10.0.11",
-          "Microsoft.Extensions.FileSystemGlobbing": "10.0.11",
-          "Microsoft.Extensions.Hosting": "10.0.11",
-          "Microsoft.Extensions.Hosting.Abstractions": "10.0.11",
-          "Microsoft.Extensions.Http": "10.0.11",
-          "Microsoft.Extensions.Http.Resilience": "10.8.0",
-          "Microsoft.Extensions.Logging": "10.0.11",
-          "Microsoft.Extensions.Logging.Abstractions": "10.0.11",
-          "Microsoft.Extensions.Options": "10.0.11",
-          "Microsoft.Extensions.Primitives": "10.0.11",
-          "ModelContextProtocol": "1.3.0",
+          "MessagePack": "2.5.302",
+          "Microsoft.Extensions.Configuration.Abstractions": "10.0.12",
+          "Microsoft.Extensions.Configuration.Binder": "10.0.12",
+          "Microsoft.Extensions.Configuration.EnvironmentVariables": "10.0.12",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.12",
+          "Microsoft.Extensions.DependencyInjection.AutoActivation": "10.10.0",
+          "Microsoft.Extensions.Diagnostics.HealthChecks": "10.0.12",
+          "Microsoft.Extensions.FileSystemGlobbing": "10.0.12",
+          "Microsoft.Extensions.Hosting": "10.0.12",
+          "Microsoft.Extensions.Hosting.Abstractions": "10.0.12",
+          "Microsoft.Extensions.Http": "10.0.12",
+          "Microsoft.Extensions.Http.Resilience": "10.10.0",
+          "Microsoft.Extensions.Logging": "10.0.12",
+          "Microsoft.Extensions.Logging.Abstractions": "10.0.12",
+          "Microsoft.Extensions.Options": "10.0.12",
+          "Microsoft.Extensions.Primitives": "10.0.12",
+          "ModelContextProtocol": "1.4.1",
           "Newtonsoft.Json": "13.0.4",
-          "OpenTelemetry.Exporter.OpenTelemetryProtocol": "1.15.3",
-          "OpenTelemetry.Extensions.Hosting": "1.15.3",
-          "Polly.Core": "8.6.6",
-          "Polly.Extensions": "8.6.6",
+          "OpenTelemetry.Exporter.OpenTelemetryProtocol": "1.17.0",
+          "OpenTelemetry.Extensions.Hosting": "1.17.0",
+          "Polly.Core": "8.7.0",
+          "Polly.Extensions": "8.7.0",
           "Semver": "3.0.0",
           "StreamJsonRpc": "2.25.29",
-          "System.IO.Hashing": "10.0.8",
-          "YamlDotNet": "16.3.0"
+          "System.IO.Hashing": "10.0.12",
+          "YamlDotNet": "18.1.0"
         }
       },
       "CommunityToolkit.Diagnostics": {
@@ -105,13 +105,13 @@
       },
       "Aspire.Dashboard.Sdk.linux-arm64": {
         "type": "Transitive",
-        "resolved": "13.5.4",
-        "contentHash": "gXNzTRlF9Lzfq1p0A+RTuzX6w30S7HgQURRmko3Vn0UyKC9dUfYTeLJxIMCceQydS2UEt1DG8YBYBfIARA3bHg=="
+        "resolved": "13.6.0",
+        "contentHash": "EhVoXskENxeHXQbt/OokpjeZVJbkfwK8XBkX4Sgx+xqqmC9HIXeDzUzZYmiuBGDwNB94cTxUtY6KLXF5cuU3pg=="
       },
       "Aspire.Dashboard.Sdk.linux-x64": {
         "type": "Transitive",
-        "resolved": "13.5.4",
-        "contentHash": "5lue0VICBqdjnBN/gipjC8JDc77IhHIx6JpEDdnW2lTxonz+RrzblRIh2Qt5HfZx9TC13r2wLBrL4sDDYCEsIA=="
+        "resolved": "13.6.0",
+        "contentHash": "SL9fKg19kbyl0S+vy5mULQNbBW0mhzH9PRE6neNTX0CvH/+b93XOGgXKiKjhOJpXy4bCAMNz+gLd0W9GeR7AAw=="
       },
       "Aspire.Dashboard.Sdk.osx-arm64": {
         "type": "Transitive",
@@ -120,8 +120,8 @@
       },
       "Aspire.Dashboard.Sdk.win-x64": {
         "type": "Transitive",
-        "resolved": "13.5.4",
-        "contentHash": "akkstfiRZzI+b+nckbR+WrQ0o1Q0OJ/RUNRk5e8wq9MNj9daHLgn5ewVJ/YjEU8ij3s/5B2jp6eVtxlIPoz4JQ=="
+        "resolved": "13.6.0",
+        "contentHash": "0wTYcoH0cX+MsAKycJZl+olFVdfvwQze1cDhMsXFkW8oHiZZi//ows5MZkrH53YrhCM3T2Eec/YNqmcx5Eg1eQ=="
       },
       "Aspire.Hosting": {
         "type": "Transitive",
@@ -200,13 +200,13 @@
       },
       "Aspire.Hosting.Orchestration.linux-arm64": {
         "type": "Transitive",
-        "resolved": "13.5.4",
-        "contentHash": "mdz16zFFsWWhYS19aVcPU7hj+CEcpZkJxZbl6oNIVOQ+LSmNfQhGS1ChN363BwoJ2U5abYmlHDde9mB0PE2cew=="
+        "resolved": "13.6.0",
+        "contentHash": "Oyq13xul/NEi3oLDgtwcnsiocraFBtph0aH0pojGQytyuHEPJNYnaZLi2fC8n0gzFmLYphjkImAOxcrYnX1gNw=="
       },
       "Aspire.Hosting.Orchestration.linux-x64": {
         "type": "Transitive",
-        "resolved": "13.5.4",
-        "contentHash": "xKrHygWTazTw7JGtsSA4LYWIV80AkaRg8K9oZONTsh2XENIRjOT8VAE3C2MvTy6zdwr+Gfh3hP9MreRB++MJkA=="
+        "resolved": "13.6.0",
+        "contentHash": "ON+wG4VERVoQs58nlzhwDatzSraf5KZQDqnO/doZqMzSW+zae9kJImEdOhrIudeBs7x3dSa81l09nL5vRO3QuA=="
       },
       "Aspire.Hosting.Orchestration.osx-arm64": {
         "type": "Transitive",
@@ -215,8 +215,8 @@
       },
       "Aspire.Hosting.Orchestration.win-x64": {
         "type": "Transitive",
-        "resolved": "13.5.4",
-        "contentHash": "Nt9kfr4ihe32xdDOtsDBIgLkCP3mpWPwWNvjMd9J4cptEO81LADizPZUOedoNolidLCLkJfNdCJ9RonpEi935w=="
+        "resolved": "13.6.0",
+        "contentHash": "XoOhssW5SE+3qRx/MJMA2BGDvI1VpFH13o5HCM0HbTw2Okq9o+tuAqXo9H2mzEj7/E95ZVP+sLJO9QyQRVscZw=="
       },
       "AspNetCore.HealthChecks.Uris": {
         "type": "Transitive",
@@ -321,33 +321,6 @@
         "type": "Transitive",
         "resolved": "1.12.4",
         "contentHash": "ljqvBabvFwKoLniuoQKO8b5bJfJweKLs4fUNS/V5dsvpo0A8MlJqxxn9XVmP2DaskbUXty6IYaWAi1SArGIMeQ=="
-      },
-      "Humanizer.Core": {
-        "type": "Transitive",
-        "resolved": "3.0.10",
-        "contentHash": "yZIhtw8sYuvsONzQbZxWpR60tMWYHXoo0DL6nyOqSFiU5POjBTSEyWFpTQtJEZuy+oqiYTXKXY/Mjx7KnqIQFw=="
-      },
-      "Json.More.Net": {
-        "type": "Transitive",
-        "resolved": "3.0.1",
-        "contentHash": "fRctF2J2SILYG6wqP21drmeEODmCVkVQ/b3MndDu2fT1swfySyUgq7ePCk+aENGlDcIm05fyfjh9vcuqDEfv3w=="
-      },
-      "JsonPatch.Net": {
-        "type": "Transitive",
-        "resolved": "5.0.2",
-        "contentHash": "q28VIShVPwsyDCFgQbLJGteUcTyixnyGHDhC3JzgTQddr9yBpbAGkuUpYinSeaSJtPju3P3AnNAamgfwuZpcjA==",
-        "dependencies": {
-          "JsonPointer.Net": "7.0.1"
-        }
-      },
-      "JsonPointer.Net": {
-        "type": "Transitive",
-        "resolved": "7.0.1",
-        "contentHash": "5C497yxfktYFsqxKG+GUQPsMvBqIjzLkqtDEdMGsnBpl3/OB8DOvTo7LEyRX7AVc1kVVj0IX5zhmLrlbvAYEnw==",
-        "dependencies": {
-          "Humanizer.Core": "3.0.10",
-          "Json.More.Net": "3.0.1"
-        }
       },
       "KubernetesClient": {
         "type": "Transitive",
@@ -865,12 +838,12 @@
       },
       "Polly.Extensions": {
         "type": "Transitive",
-        "resolved": "8.6.6",
-        "contentHash": "hUhiTVtJud5PhVmt6bnns164wn5BPLzdzXIu09aZOHf/1NiHYgL+wzpQpvj00Fhcp0OYnFaVMcolMYQjxtVKrg==",
+        "resolved": "8.7.0",
+        "contentHash": "qWLAolrrRkkmDRhQTWZRAxUWxoCmOvcTeFAb8DLEr/nroroq7zypWYvefX9W8h+gGIxRphB+DS0bXOohK8/rpA==",
         "dependencies": {
           "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
           "Microsoft.Extensions.Options": "8.0.0",
-          "Polly.Core": "8.6.6"
+          "Polly.Core": "8.7.0"
         }
       },
       "Polly.RateLimiting": {
@@ -1043,15 +1016,15 @@
       "oslc4net.test.aspirehost": {
         "type": "Project",
         "dependencies": {
-          "Aspire.Dashboard.Sdk.linux-arm64": "[13.5.4, )",
-          "Aspire.Dashboard.Sdk.linux-x64": "[13.5.4, )",
+          "Aspire.Dashboard.Sdk.linux-arm64": "[13.6.0, )",
+          "Aspire.Dashboard.Sdk.linux-x64": "[13.6.0, )",
           "Aspire.Dashboard.Sdk.osx-arm64": "[13.6.0, )",
-          "Aspire.Dashboard.Sdk.win-x64": "[13.5.4, )",
+          "Aspire.Dashboard.Sdk.win-x64": "[13.6.0, )",
           "Aspire.Hosting.AppHost": "[13.6.0, )",
-          "Aspire.Hosting.Orchestration.linux-arm64": "[13.5.4, )",
-          "Aspire.Hosting.Orchestration.linux-x64": "[13.5.4, )",
+          "Aspire.Hosting.Orchestration.linux-arm64": "[13.6.0, )",
+          "Aspire.Hosting.Orchestration.linux-x64": "[13.6.0, )",
           "Aspire.Hosting.Orchestration.osx-arm64": "[13.6.0, )",
-          "Aspire.Hosting.Orchestration.win-x64": "[13.5.4, )"
+          "Aspire.Hosting.Orchestration.win-x64": "[13.6.0, )"
         }
       },
       "AngleSharp": {
