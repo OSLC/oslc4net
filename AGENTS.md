@@ -36,6 +36,10 @@ Overall, follow `misc/instructions/gov-uk-technical-content.md` and `misc/instru
 
 Domain `Resources/*.nt` files copied from OSLC, OMG, or W3C specifications are canonical upstream files. Do not patch spelling, labels, ranges, or other vocabulary data locally unless the change is generated from an upstream update. For temporary SDK behavior, prefer code-side overrides or extensions with a `REVISIT` comment and report the source defect upstream.
 
+## Aspire dependency upgrades
+
+For any Aspire SDK or package version change, follow the coordinated version and lock-file workflow in [.agents/skills/aspire-version-upgrade/SKILL.md](.agents/skills/aspire-version-upgrade/SKILL.md). Keep the AppHost SDK version and central `AspireVersion` aligned, regenerate lock files for Aspire projects outside the main solution, and verify restore in locked mode.
+
 ## Running the code and tests
 
 When running builds or tests in this project, set the `AGENT_BUILD` environment variable to minimize build output from warnings and analyzer messages:
