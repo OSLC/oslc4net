@@ -27,7 +27,7 @@ Keep `Aspire.AppHost.Sdk` and `AspireVersion` on the same target version unless 
 
 ## Upgrade workflow
 
-1. Check the working tree and identify the requested Aspire version. Find all relevant SDK and package references:
+1. Start at the repository root. Check the working tree and identify the requested Aspire version. Find all relevant SDK and package references:
 
    ```bash
    rg -n 'Aspire\.AppHost\.Sdk|AspireVersion|Aspire\.Hosting\.Testing|Aspire\.(Dashboard\.Sdk|Hosting\.Orchestration)' \
@@ -36,9 +36,10 @@ Keep `Aspire.AppHost.Sdk` and `AspireVersion` on the same target version unless 
 
 2. Set `Aspire.AppHost.Sdk` in `OSLC4Net_SDK/global.json` and `AspireVersion` in `OSLC4Net_SDK/Directory.Packages.props` to the requested version. Inspect any other Aspire version declarations found by the search and keep them aligned where they belong to the same release train.
 
-3. Regenerate lock files; do not edit `packages.lock.json` by hand. Run restore from `OSLC4Net_SDK`:
+3. Regenerate lock files; do not edit `packages.lock.json` by hand. Change to `OSLC4Net_SDK` and stay there through the build checks:
 
    ```bash
+   cd OSLC4Net_SDK
    export AGENT_BUILD=true
    dotnet restore OSLC4Net.Core.slnx --force-evaluate
    ```
@@ -47,7 +48,7 @@ Keep `Aspire.AppHost.Sdk` and `AspireVersion` on the same target version unless 
 
    ```bash
    rg -l 'Aspire\.Hosting\.Testing|<Project Sdk="Aspire\.AppHost\.Sdk"' \
-     OSLC4Net_SDK -g '*.csproj'
+     . -g '*.csproj'
    ```
 
    Restore every such project that is not included in `OSLC4Net.Core.slnx`, also with `--force-evaluate`. Some projects have independent lock files even though the main solution does not include them. For example, `Tests/OSLC4NetExamples.Server.Tests` and `Tests/OSLC4NetExamples.Server.Tests.AspireHost` have separate lock files and must be refreshed when their dependency graph changes.
@@ -69,7 +70,21 @@ Keep `Aspire.AppHost.Sdk` and `AspireVersion` on the same target version unless 
    dotnet build OSLC4Net.Core.slnx --configuration Release --no-restore
    ```
 
-7. Run `git diff --check`. Before committing, follow the formatting commands and commit-message convention in the repository `AGENTS.md`.
+   Also build every Aspire-consuming project outside the solution with `--configuration Release --no-restore`. Locked restore verifies the dependency graph; building checks compatibility with Aspire APIs. For the example-server projects:
+
+   ```bash
+   dotnet build Tests/OSLC4NetExamples.Server.Tests.AspireHost/OSLC4NetExamples.Server.Tests.AspireHost.csproj --configuration Release --no-restore
+   dotnet build Tests/OSLC4NetExamples.Server.Tests/OSLC4NetExamples.Server.Tests.csproj --configuration Release --no-restore
+   ```
+
+7. Return to the repository root and check the diff:
+
+   ```bash
+   cd ..
+   git diff --check
+   ```
+
+   Before committing, follow the formatting commands and commit-message convention in the repository `AGENTS.md`.
 
 ## Diagnose restore failures
 
