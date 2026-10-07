@@ -360,29 +360,23 @@ public class ServiceProviderFactory
     }
 
     private static string ResolvePathParameters(string basePath, string pathAttribute,
-        Dictionary<string, object> pathParameterValues)
+        Dictionary<string, object>? pathParameterValues)
     {
-        string returnUri;
-
+        _ = pathParameterValues;
         //Build the path from the @Path template + map of parameter value replacements
+        /* TODO - not supported yet
         if (pathParameterValues != null && pathParameterValues.Count > 0)
         {
-            /* TODO - not supported yet
             UriBuilder builder = UriBuilder.fromUri(basePath);
             URI resolvedUri = builder.path(pathAttribute).buildFromMap(pathParameterValues);
             if (resolvedUri != null)
             {
                 returnUri = resolvedUri.tostring();
             }
+        }
         */
-            returnUri = basePath + "/" + pathAttribute;
-        }
-        else
-        {
-            // no parameters supplied - assume @Path not templated
-            returnUri = basePath + "/" + pathAttribute;
-        }
 
-        return returnUri;
+        // assume @Path not templated
+        return basePath + "/" + pathAttribute;
     }
 }
