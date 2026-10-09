@@ -1,6 +1,6 @@
 ---
 name: aspire-version-upgrade
-description: Update Aspire AppHost SDK and package versions consistently in OSLC4Net, regenerate every affected NuGet lock file, and verify locked restore and builds. Use whenever upgrading, downgrading, or aligning Aspire dependencies in this repository.
+description: Update Aspire AppHost SDK and package versions consistently in OSLC4Net, regenerate every affected NuGet lock file, and verify locked restore and builds. Use for Aspire dependency version bumps from Dependabot or other PRs, including SDK-only changes and locked-restore/NU1004 failures, as well as manual upgrades, downgrades, or alignment.
 ---
 
 <!--
