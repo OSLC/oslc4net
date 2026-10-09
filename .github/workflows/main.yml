@@ -255,7 +255,7 @@ jobs:
           success()
           && matrix.version.target == 'net10.0' && matrix.os == 'windows-latest'
           && ( github.event_name == 'release' || inputs.release )
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: nuget
           # if-no-files-found: error
@@ -343,7 +343,7 @@ jobs:
             -C OSLC4Net_SDK/Tests/OSLC4Net.Fuzzing/findings .
       - name: Upload fuzzing findings
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: oslc-query-fuzz-findings
           path: main/oslc-query-fuzz-findings.tar.gz
