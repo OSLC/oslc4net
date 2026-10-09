@@ -115,8 +115,8 @@
       },
       "Aspire.Dashboard.Sdk.osx-arm64": {
         "type": "Transitive",
-        "resolved": "13.6.0",
-        "contentHash": "3zSr+4clAMX3o3leZiEEWVH8wPesq9BPCaFi9e+XlqZDYSkCh+2CaSY4yn2uqNSsdkjLF8z6wDB7lIDfRTz7Yw=="
+        "resolved": "13.6.1",
+        "contentHash": "TbCkUhBqM+Gat0SbuSOsL39OOYp/wtqr7Eh2eYdc9yy8jDq6KyIkGRr2pWcz0pHX4s+TWKHP9ihFOkRBze0JcQ=="
       },
       "Aspire.Dashboard.Sdk.win-x64": {
         "type": "Transitive",
@@ -125,8 +125,8 @@
       },
       "Aspire.Hosting": {
         "type": "Transitive",
-        "resolved": "13.6.0",
-        "contentHash": "o6N282WsIcyT3+CH5WGwG/4oTVrE2ZfPS6FkjAPFqPWoidymd0Oak5dWfImvPbpfaZfhmGoBdAOfSJBu5YIvdQ==",
+        "resolved": "13.6.1",
+        "contentHash": "gIcP7+rPSBPWLlEpFGCWGKdjoXvyn0rZRCbjxUHTMnw8Y+a6Esp915o8MOROpYI++MQN3Fo55Yu0XuBJ6MqEIw==",
         "dependencies": {
           "AspNetCore.HealthChecks.Uris": "9.0.0",
           "Google.Protobuf": "3.36.1",
@@ -162,11 +162,11 @@
       },
       "Aspire.Hosting.AppHost": {
         "type": "Transitive",
-        "resolved": "13.6.0",
-        "contentHash": "teoQZnz1BDg2zBbxxRKk6/xcTFGRUqltK6ceEeq3De25ZM1GbVbob098HAewlNI3zyHfbLPCxvFnQ/ozc48LFA==",
+        "resolved": "13.6.1",
+        "contentHash": "1qfHjEFIwPErKUdvlwySgSbUgZtuvKTq1x8WRhl7hAOYvr/WouiSeA5DhVST0Ig6ZFPiTOEG2AJqJjmS6ZEMzw==",
         "dependencies": {
           "AspNetCore.HealthChecks.Uris": "9.0.0",
-          "Aspire.Hosting": "13.6.0",
+          "Aspire.Hosting": "13.6.1",
           "Google.Protobuf": "3.36.1",
           "Grpc.AspNetCore": "2.83.0",
           "Grpc.Net.ClientFactory": "2.83.0",
@@ -210,8 +210,8 @@
       },
       "Aspire.Hosting.Orchestration.osx-arm64": {
         "type": "Transitive",
-        "resolved": "13.6.0",
-        "contentHash": "lx2hHcF5Ictm7JluSNPf/ChwEoJ0srVwkHuAHKaerSj+7kHR+j5iVz9/wzUJ6HMrUzVIytVlcE98+8ntEJ421g=="
+        "resolved": "13.6.1",
+        "contentHash": "e9JOX5QZ9G65TH66KtU389cF8AfoLMyPRNS6bZ98P3FTlQ6OrnRA9Wpstaj01H0dEbht9FEPFs/rOmChNb4bDg=="
       },
       "Aspire.Hosting.Orchestration.win-x64": {
         "type": "Transitive",
@@ -1018,12 +1018,12 @@
         "dependencies": {
           "Aspire.Dashboard.Sdk.linux-arm64": "[13.6.0, )",
           "Aspire.Dashboard.Sdk.linux-x64": "[13.6.0, )",
-          "Aspire.Dashboard.Sdk.osx-arm64": "[13.6.0, )",
+          "Aspire.Dashboard.Sdk.osx-arm64": "[13.6.1, )",
           "Aspire.Dashboard.Sdk.win-x64": "[13.6.0, )",
-          "Aspire.Hosting.AppHost": "[13.6.0, )",
+          "Aspire.Hosting.AppHost": "[13.6.1, )",
           "Aspire.Hosting.Orchestration.linux-arm64": "[13.6.0, )",
           "Aspire.Hosting.Orchestration.linux-x64": "[13.6.0, )",
-          "Aspire.Hosting.Orchestration.osx-arm64": "[13.6.0, )",
+          "Aspire.Hosting.Orchestration.osx-arm64": "[13.6.1, )",
           "Aspire.Hosting.Orchestration.win-x64": "[13.6.0, )"
         }
       },
