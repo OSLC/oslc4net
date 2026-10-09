@@ -4,13 +4,13 @@
     "net10.0": {
       "Aspire.Hosting.Testing": {
         "type": "Direct",
-        "requested": "[13.6.0, )",
-        "resolved": "13.6.0",
-        "contentHash": "dGErLzQzdkN6rfE8yU1yA187tlCXm3w4I0jBCMFt91G0dXZmvGfGE60OK1SvfVmVOspTpXZPhfIOL65KJvjewA==",
+        "requested": "[13.6.1, )",
+        "resolved": "13.6.1",
+        "contentHash": "Tpg60qoFCZbuR1abm6AZRLhn6SPvUwOBM6RMrP41uV1LrUmDIBBn2NDTuOgP5w/wQUzvJISf5jGVI1MOVCWBtg==",
         "dependencies": {
           "AspNetCore.HealthChecks.Uris": "9.0.0",
-          "Aspire.Hosting": "13.6.0",
-          "Aspire.Hosting.AppHost": "13.6.0",
+          "Aspire.Hosting": "13.6.1",
+          "Aspire.Hosting.AppHost": "13.6.1",
           "Google.Protobuf": "3.36.1",
           "Grpc.AspNetCore": "2.83.0",
           "Grpc.Net.ClientFactory": "2.83.0",
@@ -105,28 +105,28 @@
       },
       "Aspire.Dashboard.Sdk.linux-arm64": {
         "type": "Transitive",
-        "resolved": "13.6.0",
-        "contentHash": "EhVoXskENxeHXQbt/OokpjeZVJbkfwK8XBkX4Sgx+xqqmC9HIXeDzUzZYmiuBGDwNB94cTxUtY6KLXF5cuU3pg=="
+        "resolved": "13.6.1",
+        "contentHash": "Ginb/R3faurVRtjyzzdyqbNNUTTRum60Hcz0Q9Cx/l4rLRsEroYfOk+kyNEaFlQfkCqejNwGTs9IO7WRfeCnQQ=="
       },
       "Aspire.Dashboard.Sdk.linux-x64": {
         "type": "Transitive",
-        "resolved": "13.6.0",
-        "contentHash": "SL9fKg19kbyl0S+vy5mULQNbBW0mhzH9PRE6neNTX0CvH/+b93XOGgXKiKjhOJpXy4bCAMNz+gLd0W9GeR7AAw=="
+        "resolved": "13.6.1",
+        "contentHash": "7SleuF3C/vACKF1eN++e31c+LhkbQ9pTbHtlMbHIoN/rNoVaMuyKWT1yhuDBdof+Y8zi5+c2gYtm9tjABBbAcQ=="
       },
       "Aspire.Dashboard.Sdk.osx-arm64": {
         "type": "Transitive",
-        "resolved": "13.6.0",
-        "contentHash": "3zSr+4clAMX3o3leZiEEWVH8wPesq9BPCaFi9e+XlqZDYSkCh+2CaSY4yn2uqNSsdkjLF8z6wDB7lIDfRTz7Yw=="
+        "resolved": "13.6.1",
+        "contentHash": "TbCkUhBqM+Gat0SbuSOsL39OOYp/wtqr7Eh2eYdc9yy8jDq6KyIkGRr2pWcz0pHX4s+TWKHP9ihFOkRBze0JcQ=="
       },
       "Aspire.Dashboard.Sdk.win-x64": {
         "type": "Transitive",
-        "resolved": "13.6.0",
-        "contentHash": "0wTYcoH0cX+MsAKycJZl+olFVdfvwQze1cDhMsXFkW8oHiZZi//ows5MZkrH53YrhCM3T2Eec/YNqmcx5Eg1eQ=="
+        "resolved": "13.6.1",
+        "contentHash": "ZzwJf0E36BGiYSH/i90wGhNqsg5yk9dLGzajK4mfOK1PEdfOMLsO41f8Qe1hUQ2p7wAHWvkJj9/00/8w99VqLw=="
       },
       "Aspire.Hosting": {
         "type": "Transitive",
-        "resolved": "13.6.0",
-        "contentHash": "o6N282WsIcyT3+CH5WGwG/4oTVrE2ZfPS6FkjAPFqPWoidymd0Oak5dWfImvPbpfaZfhmGoBdAOfSJBu5YIvdQ==",
+        "resolved": "13.6.1",
+        "contentHash": "gIcP7+rPSBPWLlEpFGCWGKdjoXvyn0rZRCbjxUHTMnw8Y+a6Esp915o8MOROpYI++MQN3Fo55Yu0XuBJ6MqEIw==",
         "dependencies": {
           "AspNetCore.HealthChecks.Uris": "9.0.0",
           "Google.Protobuf": "3.36.1",
@@ -162,11 +162,11 @@
       },
       "Aspire.Hosting.AppHost": {
         "type": "Transitive",
-        "resolved": "13.6.0",
-        "contentHash": "teoQZnz1BDg2zBbxxRKk6/xcTFGRUqltK6ceEeq3De25ZM1GbVbob098HAewlNI3zyHfbLPCxvFnQ/ozc48LFA==",
+        "resolved": "13.6.1",
+        "contentHash": "1qfHjEFIwPErKUdvlwySgSbUgZtuvKTq1x8WRhl7hAOYvr/WouiSeA5DhVST0Ig6ZFPiTOEG2AJqJjmS6ZEMzw==",
         "dependencies": {
           "AspNetCore.HealthChecks.Uris": "9.0.0",
-          "Aspire.Hosting": "13.6.0",
+          "Aspire.Hosting": "13.6.1",
           "Google.Protobuf": "3.36.1",
           "Grpc.AspNetCore": "2.83.0",
           "Grpc.Net.ClientFactory": "2.83.0",
@@ -200,23 +200,23 @@
       },
       "Aspire.Hosting.Orchestration.linux-arm64": {
         "type": "Transitive",
-        "resolved": "13.6.0",
-        "contentHash": "Oyq13xul/NEi3oLDgtwcnsiocraFBtph0aH0pojGQytyuHEPJNYnaZLi2fC8n0gzFmLYphjkImAOxcrYnX1gNw=="
+        "resolved": "13.6.1",
+        "contentHash": "zHxzKLeWnrE6sB146b4hkYCIAcST1+Qp8Rqb8M3EidAADEM4RPpwrX8M5CYGa17WwDYZmbM84t4pmjImHhDYBg=="
       },
       "Aspire.Hosting.Orchestration.linux-x64": {
         "type": "Transitive",
-        "resolved": "13.6.0",
-        "contentHash": "ON+wG4VERVoQs58nlzhwDatzSraf5KZQDqnO/doZqMzSW+zae9kJImEdOhrIudeBs7x3dSa81l09nL5vRO3QuA=="
+        "resolved": "13.6.1",
+        "contentHash": "3egUoP8xlZngXNOb7FdPNDD5K+0d6NfS7YUo8D77/rnZTAMBosBNmNiBorG9XR5n4D49Rep70r8yqXkI2PEgng=="
       },
       "Aspire.Hosting.Orchestration.osx-arm64": {
         "type": "Transitive",
-        "resolved": "13.6.0",
-        "contentHash": "lx2hHcF5Ictm7JluSNPf/ChwEoJ0srVwkHuAHKaerSj+7kHR+j5iVz9/wzUJ6HMrUzVIytVlcE98+8ntEJ421g=="
+        "resolved": "13.6.1",
+        "contentHash": "e9JOX5QZ9G65TH66KtU389cF8AfoLMyPRNS6bZ98P3FTlQ6OrnRA9Wpstaj01H0dEbht9FEPFs/rOmChNb4bDg=="
       },
       "Aspire.Hosting.Orchestration.win-x64": {
         "type": "Transitive",
-        "resolved": "13.6.0",
-        "contentHash": "XoOhssW5SE+3qRx/MJMA2BGDvI1VpFH13o5HCM0HbTw2Okq9o+tuAqXo9H2mzEj7/E95ZVP+sLJO9QyQRVscZw=="
+        "resolved": "13.6.1",
+        "contentHash": "exo2DVGpYWRsnOgGVhbbLqIX3Q7Nc6kpn4+VJSMdanSW04uUZLQ1+Sfc6KJ4kK8QGYlihvPDJ6kfGeXmLAb/ig=="
       },
       "AspNetCore.HealthChecks.Uris": {
         "type": "Transitive",
@@ -1016,15 +1016,15 @@
       "oslc4net.test.aspirehost": {
         "type": "Project",
         "dependencies": {
-          "Aspire.Dashboard.Sdk.linux-arm64": "[13.6.0, )",
-          "Aspire.Dashboard.Sdk.linux-x64": "[13.6.0, )",
-          "Aspire.Dashboard.Sdk.osx-arm64": "[13.6.0, )",
-          "Aspire.Dashboard.Sdk.win-x64": "[13.6.0, )",
-          "Aspire.Hosting.AppHost": "[13.6.0, )",
-          "Aspire.Hosting.Orchestration.linux-arm64": "[13.6.0, )",
-          "Aspire.Hosting.Orchestration.linux-x64": "[13.6.0, )",
-          "Aspire.Hosting.Orchestration.osx-arm64": "[13.6.0, )",
-          "Aspire.Hosting.Orchestration.win-x64": "[13.6.0, )"
+          "Aspire.Dashboard.Sdk.linux-arm64": "[13.6.1, )",
+          "Aspire.Dashboard.Sdk.linux-x64": "[13.6.1, )",
+          "Aspire.Dashboard.Sdk.osx-arm64": "[13.6.1, )",
+          "Aspire.Dashboard.Sdk.win-x64": "[13.6.1, )",
+          "Aspire.Hosting.AppHost": "[13.6.1, )",
+          "Aspire.Hosting.Orchestration.linux-arm64": "[13.6.1, )",
+          "Aspire.Hosting.Orchestration.linux-x64": "[13.6.1, )",
+          "Aspire.Hosting.Orchestration.osx-arm64": "[13.6.1, )",
+          "Aspire.Hosting.Orchestration.win-x64": "[13.6.1, )"
         }
       },
       "AngleSharp": {
