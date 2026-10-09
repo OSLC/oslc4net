@@ -11,7 +11,7 @@ public partial interface IPredicate : IFunction
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "PredicateShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Predicate" })]
+[OslcResourceShape(Title = "PredicateShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Predicate" })]
 public partial record Predicate : Function, IPredicate
 {
     public Predicate(Uri about)

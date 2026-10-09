@@ -11,7 +11,7 @@ public partial interface IAnalysisCaseDefinition : ICaseDefinition
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "AnalysisCaseDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#AnalysisCaseDefinition" })]
+[OslcResourceShape(Title = "AnalysisCaseDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#AnalysisCaseDefinition" })]
 public partial record AnalysisCaseDefinition : CaseDefinition, IAnalysisCaseDefinition
 {
     public AnalysisCaseDefinition(Uri about)

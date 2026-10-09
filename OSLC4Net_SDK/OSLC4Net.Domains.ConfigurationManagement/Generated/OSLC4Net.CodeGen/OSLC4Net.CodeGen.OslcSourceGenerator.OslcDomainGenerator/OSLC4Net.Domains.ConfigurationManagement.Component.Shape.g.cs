@@ -11,7 +11,7 @@ public partial interface IComponent : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/config#")]
-[OslcResourceShape(title = "The shape of a component.", describes = new string[] { "http://open-services.net/ns/config#Component" })]
+[OslcResourceShape(Title = "The shape of a component.", Describes = new string[] { "http://open-services.net/ns/config#Component" })]
 public partial record Component : AbstractResourceRecord, IComponent
 {
     public Component(Uri about)

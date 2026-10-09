@@ -11,7 +11,7 @@ public partial interface IExpose : IImport
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ExposeShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Expose" })]
+[OslcResourceShape(Title = "ExposeShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Expose" })]
 public partial record Expose : Import, IExpose
 {
     public Expose(Uri about)

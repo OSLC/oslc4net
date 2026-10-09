@@ -11,7 +11,7 @@ public partial interface IControlNode : IActionUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ControlNodeShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ControlNode" })]
+[OslcResourceShape(Title = "ControlNodeShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ControlNode" })]
 public partial record ControlNode : ActionUsage, IControlNode
 {
     public ControlNode(Uri about)

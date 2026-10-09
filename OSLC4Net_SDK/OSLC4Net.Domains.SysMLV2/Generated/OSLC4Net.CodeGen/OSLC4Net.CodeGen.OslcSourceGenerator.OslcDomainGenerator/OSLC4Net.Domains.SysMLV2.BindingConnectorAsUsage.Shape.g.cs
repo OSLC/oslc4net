@@ -11,7 +11,7 @@ public partial interface IBindingConnectorAsUsage : IBindingConnector, IConnecto
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "BindingConnectorAsUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#BindingConnectorAsUsage" })]
+[OslcResourceShape(Title = "BindingConnectorAsUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#BindingConnectorAsUsage" })]
 public partial record BindingConnectorAsUsage : BindingConnector, IBindingConnectorAsUsage
 {
     public BindingConnectorAsUsage(Uri about)

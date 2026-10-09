@@ -11,7 +11,7 @@ public partial interface IPortConjugation : IConjugation
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "PortConjugationShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#PortConjugation" })]
+[OslcResourceShape(Title = "PortConjugationShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#PortConjugation" })]
 public partial record PortConjugation : Conjugation, IPortConjugation
 {
     public PortConjugation(Uri about)

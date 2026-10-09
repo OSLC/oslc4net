@@ -11,7 +11,7 @@ public partial interface IIntegrityMethod : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Integrity Method", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/IntegrityMethod" })]
+[OslcResourceShape(Title = "Integrity Method", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/IntegrityMethod" })]
 public partial record IntegrityMethod : AbstractResourceRecord, IIntegrityMethod
 {
     public IntegrityMethod(Uri about)

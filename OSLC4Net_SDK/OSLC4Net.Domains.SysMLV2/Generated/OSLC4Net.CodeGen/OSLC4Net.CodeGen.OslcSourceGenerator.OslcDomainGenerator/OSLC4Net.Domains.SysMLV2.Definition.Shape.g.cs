@@ -11,7 +11,7 @@ public partial interface IDefinition : IClassifier
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "DefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Definition" })]
+[OslcResourceShape(Title = "DefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Definition" })]
 public partial record Definition : Classifier, IDefinition
 {
     public Definition(Uri about)

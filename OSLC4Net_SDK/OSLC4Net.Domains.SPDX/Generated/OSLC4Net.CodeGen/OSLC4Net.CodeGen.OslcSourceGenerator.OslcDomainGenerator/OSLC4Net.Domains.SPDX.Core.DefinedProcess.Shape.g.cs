@@ -11,7 +11,7 @@ public partial interface IDefinedProcess : IArtifact
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Defined Process", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/DefinedProcess" })]
+[OslcResourceShape(Title = "Defined Process", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/DefinedProcess" })]
 public partial record DefinedProcess : Artifact, IDefinedProcess
 {
     public DefinedProcess(Uri about)

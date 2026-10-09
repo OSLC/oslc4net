@@ -11,7 +11,7 @@ public partial interface ILicenseExpression : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/SimpleLicensing/")]
-[OslcResourceShape(title = "License Expression", describes = new string[] { "https://spdx.org/rdf/3/terms/SimpleLicensing/LicenseExpression" })]
+[OslcResourceShape(Title = "License Expression", Describes = new string[] { "https://spdx.org/rdf/3/terms/SimpleLicensing/LicenseExpression" })]
 public partial record LicenseExpression : AbstractResourceRecord, ILicenseExpression
 {
     public LicenseExpression(Uri about)

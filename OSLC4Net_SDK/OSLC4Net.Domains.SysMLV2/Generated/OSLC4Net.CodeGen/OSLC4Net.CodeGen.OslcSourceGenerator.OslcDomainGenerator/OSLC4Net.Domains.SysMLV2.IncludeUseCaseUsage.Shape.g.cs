@@ -11,7 +11,7 @@ public partial interface IIncludeUseCaseUsage : IPerformActionUsage, IUseCaseUsa
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "IncludeUseCaseUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#IncludeUseCaseUsage" })]
+[OslcResourceShape(Title = "IncludeUseCaseUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#IncludeUseCaseUsage" })]
 public partial record IncludeUseCaseUsage : PerformActionUsage, IIncludeUseCaseUsage
 {
     public IncludeUseCaseUsage(Uri about)

@@ -11,7 +11,7 @@ public partial interface IBase : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/core/trs#")]
-[OslcResourceShape(title = "The shape of a Base", describes = new string[] { "http://open-services.net/ns/core/trs#Base" })]
+[OslcResourceShape(Title = "The shape of a Base", Describes = new string[] { "http://open-services.net/ns/core/trs#Base" })]
 public partial record Base : AbstractResourceRecord, IBase
 {
     public Base(Uri about)

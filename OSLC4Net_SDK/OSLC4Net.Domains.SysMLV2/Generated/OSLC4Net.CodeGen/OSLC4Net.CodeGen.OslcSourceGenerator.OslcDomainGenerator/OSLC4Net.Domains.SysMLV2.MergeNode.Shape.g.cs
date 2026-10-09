@@ -11,7 +11,7 @@ public partial interface IMergeNode : IControlNode
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "MergeNodeShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#MergeNode" })]
+[OslcResourceShape(Title = "MergeNodeShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#MergeNode" })]
 public partial record MergeNode : ControlNode, IMergeNode
 {
     public MergeNode(Uri about)

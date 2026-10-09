@@ -11,7 +11,7 @@ public partial interface ITransitionFeatureMembership : IFeatureMembership
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "TransitionFeatureMembershipShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#TransitionFeatureMembership" })]
+[OslcResourceShape(Title = "TransitionFeatureMembershipShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#TransitionFeatureMembership" })]
 public partial record TransitionFeatureMembership : FeatureMembership, ITransitionFeatureMembership
 {
     public TransitionFeatureMembership(Uri about)

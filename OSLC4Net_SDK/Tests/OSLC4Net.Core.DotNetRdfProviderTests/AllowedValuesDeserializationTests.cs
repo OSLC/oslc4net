@@ -26,7 +26,7 @@ public class AllowedValuesDeserializationTests
     {
         // Arrange
         var formatter = new RdfXmlMediaTypeFormatter();
-        var mediaType = OslcMediaType.APPLICATION_RDF_XML_TYPE;
+        var mediaType = OslcMediaType.ApplicationRdfXmlType;
 
         // Act
         var allowedValues = await RdfHelpers.DeserializeAsync<AllowedValuesResource<Uri>>(formatter, SamplePayload, mediaType);

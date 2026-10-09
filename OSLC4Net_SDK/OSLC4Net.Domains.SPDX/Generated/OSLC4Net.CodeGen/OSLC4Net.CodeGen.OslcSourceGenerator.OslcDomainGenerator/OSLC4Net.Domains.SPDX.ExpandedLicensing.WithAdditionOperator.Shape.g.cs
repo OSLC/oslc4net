@@ -11,7 +11,7 @@ public partial interface IWithAdditionOperator : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/ExpandedLicensing/")]
-[OslcResourceShape(title = "With Addition Operator", describes = new string[] { "https://spdx.org/rdf/3/terms/ExpandedLicensing/WithAdditionOperator" })]
+[OslcResourceShape(Title = "With Addition Operator", Describes = new string[] { "https://spdx.org/rdf/3/terms/ExpandedLicensing/WithAdditionOperator" })]
 public partial record WithAdditionOperator : AbstractResourceRecord, IWithAdditionOperator
 {
     public WithAdditionOperator(Uri about)

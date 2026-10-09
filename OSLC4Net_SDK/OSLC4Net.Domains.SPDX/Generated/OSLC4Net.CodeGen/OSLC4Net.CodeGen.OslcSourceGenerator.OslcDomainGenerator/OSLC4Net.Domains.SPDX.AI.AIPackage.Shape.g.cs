@@ -11,7 +11,7 @@ public partial interface IAIPackage : global::OSLC4Net.Domains.SPDX.Software.IPa
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/AI/")]
-[OslcResourceShape(title = "AIPackage", describes = new string[] { "https://spdx.org/rdf/3/terms/AI/AIPackage" })]
+[OslcResourceShape(Title = "AIPackage", Describes = new string[] { "https://spdx.org/rdf/3/terms/AI/AIPackage" })]
 public partial record AIPackage : global::OSLC4Net.Domains.SPDX.Software.Package, IAIPackage
 {
     public AIPackage(Uri about)

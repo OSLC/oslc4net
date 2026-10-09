@@ -11,7 +11,7 @@ public partial interface ILiteralInteger : ILiteralExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "LiteralIntegerShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#LiteralInteger" })]
+[OslcResourceShape(Title = "LiteralIntegerShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#LiteralInteger" })]
 public partial record LiteralInteger : LiteralExpression, ILiteralInteger
 {
     public LiteralInteger(Uri about)

@@ -11,7 +11,7 @@ public partial interface IDestroyAction : global::OSLC4Net.Domains.SPDX.Core.IAc
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/SupplyChain/")]
-[OslcResourceShape(title = "Destroy Action", describes = new string[] { "https://spdx.org/rdf/3/terms/SupplyChain/DestroyAction" })]
+[OslcResourceShape(Title = "Destroy Action", Describes = new string[] { "https://spdx.org/rdf/3/terms/SupplyChain/DestroyAction" })]
 public partial record DestroyAction : global::OSLC4Net.Domains.SPDX.Core.Action, IDestroyAction
 {
     public DestroyAction(Uri about)

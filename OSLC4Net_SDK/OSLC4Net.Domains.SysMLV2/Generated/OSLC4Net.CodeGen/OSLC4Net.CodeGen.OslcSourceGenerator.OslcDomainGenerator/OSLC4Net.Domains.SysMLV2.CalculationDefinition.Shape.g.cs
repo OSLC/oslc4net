@@ -11,7 +11,7 @@ public partial interface ICalculationDefinition : IActionDefinition, IFunction
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "CalculationDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#CalculationDefinition" })]
+[OslcResourceShape(Title = "CalculationDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#CalculationDefinition" })]
 public partial record CalculationDefinition : ActionDefinition, ICalculationDefinition
 {
     public CalculationDefinition(Uri about)

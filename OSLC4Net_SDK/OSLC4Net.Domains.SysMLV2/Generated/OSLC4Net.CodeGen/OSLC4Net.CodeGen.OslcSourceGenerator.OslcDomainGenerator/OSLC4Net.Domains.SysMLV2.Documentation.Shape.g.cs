@@ -11,7 +11,7 @@ public partial interface IDocumentation : IComment
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "DocumentationShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Documentation" })]
+[OslcResourceShape(Title = "DocumentationShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Documentation" })]
 public partial record Documentation : Comment, IDocumentation
 {
     public Documentation(Uri about)

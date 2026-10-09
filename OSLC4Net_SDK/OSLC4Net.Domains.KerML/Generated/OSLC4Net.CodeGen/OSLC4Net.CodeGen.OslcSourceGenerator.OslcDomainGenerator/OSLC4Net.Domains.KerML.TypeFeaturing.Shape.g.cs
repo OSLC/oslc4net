@@ -11,7 +11,7 @@ public partial interface ITypeFeaturing : IRelationship
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "TypeFeaturingShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#TypeFeaturing" })]
+[OslcResourceShape(Title = "TypeFeaturingShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#TypeFeaturing" })]
 public partial record TypeFeaturing : Relationship, ITypeFeaturing
 {
     public TypeFeaturing(Uri about)

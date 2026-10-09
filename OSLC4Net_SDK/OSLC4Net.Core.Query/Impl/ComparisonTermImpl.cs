@@ -66,10 +66,10 @@ internal sealed class ComparisonTermImpl : SimpleTermImpl, ComparisonTerm
         {
             if (operand == null)
             {
-                var treeOperand = (CommonTree)tree.GetChild(2);
+                var treeOperand = (CommonTree)Tree.GetChild(2);
 
                 operand = CreateValue(treeOperand, "unspported literal value type",
-                                      prefixMap);
+                                      PrefixMap);
             }
 
             return operand;

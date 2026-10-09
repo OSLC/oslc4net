@@ -11,7 +11,7 @@ public partial interface IInterfaceDefinition : IConnectionDefinition
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "InterfaceDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#InterfaceDefinition" })]
+[OslcResourceShape(Title = "InterfaceDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#InterfaceDefinition" })]
 public partial record InterfaceDefinition : ConnectionDefinition, IInterfaceDefinition
 {
     public InterfaceDefinition(Uri about)

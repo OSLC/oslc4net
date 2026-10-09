@@ -11,7 +11,7 @@ public partial interface IBundle : IElementCollection
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Bundle", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Bundle" })]
+[OslcResourceShape(Title = "Bundle", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Bundle" })]
 public partial record Bundle : ElementCollection, IBundle
 {
     public Bundle(Uri about)

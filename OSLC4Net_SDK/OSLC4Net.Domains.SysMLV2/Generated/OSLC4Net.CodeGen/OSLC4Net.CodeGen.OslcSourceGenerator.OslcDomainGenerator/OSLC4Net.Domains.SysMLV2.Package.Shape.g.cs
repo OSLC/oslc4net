@@ -11,7 +11,7 @@ public partial interface IPackage : INamespace
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "PackageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Package" })]
+[OslcResourceShape(Title = "PackageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Package" })]
 public partial record Package : Namespace, IPackage
 {
     public Package(Uri about)

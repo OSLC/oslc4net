@@ -21,8 +21,8 @@ namespace OSLC4Net.Core.Model;
 ///     OSLC ResourceShape resource
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Resource Shape Resource Shape",
-    describes = new[] { OslcConstants.TYPE_RESOURCE_SHAPE })]
+[OslcResourceShape(Title = "OSLC Resource Shape Resource Shape",
+    Describes = new[] { OslcConstants.TYPE_RESOURCE_SHAPE })]
 public class ResourceShape : AbstractResource
 {
     private readonly SortedSet<Uri> describes = new SortedUriSet();

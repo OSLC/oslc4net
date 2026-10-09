@@ -11,7 +11,7 @@ public partial interface IFeatureChainExpression : IOperatorExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "FeatureChainExpressionShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#FeatureChainExpression" })]
+[OslcResourceShape(Title = "FeatureChainExpressionShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#FeatureChainExpression" })]
 public partial record FeatureChainExpression : OperatorExpression, IFeatureChainExpression
 {
     public FeatureChainExpression(Uri about)

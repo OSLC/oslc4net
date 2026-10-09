@@ -21,8 +21,8 @@ namespace OSLC4Net.Core.Model;
 ///     OSLC Service Provider Catalog resource
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Service Provider Catalog Resource Shape",
-    describes = new[] { OslcConstants.TYPE_SERVICE_PROVIDER_CATALOG })]
+[OslcResourceShape(Title = "OSLC Service Provider Catalog Resource Shape",
+    Describes = new[] { OslcConstants.TYPE_SERVICE_PROVIDER_CATALOG })]
 public class ServiceProviderCatalog : AbstractResource
 {
     private readonly SortedSet<Uri> domains = new SortedUriSet();

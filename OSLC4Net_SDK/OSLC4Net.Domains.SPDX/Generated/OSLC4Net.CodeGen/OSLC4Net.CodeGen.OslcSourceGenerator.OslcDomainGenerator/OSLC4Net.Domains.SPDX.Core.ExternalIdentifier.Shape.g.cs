@@ -11,7 +11,7 @@ public partial interface IExternalIdentifier : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "External Identifier", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/ExternalIdentifier" })]
+[OslcResourceShape(Title = "External Identifier", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/ExternalIdentifier" })]
 public partial record ExternalIdentifier : AbstractResourceRecord, IExternalIdentifier
 {
     public ExternalIdentifier(Uri about)

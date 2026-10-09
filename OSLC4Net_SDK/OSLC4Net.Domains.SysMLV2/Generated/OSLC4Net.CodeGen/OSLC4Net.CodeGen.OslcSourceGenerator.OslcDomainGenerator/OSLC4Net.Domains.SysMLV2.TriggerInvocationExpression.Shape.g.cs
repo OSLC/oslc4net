@@ -11,7 +11,7 @@ public partial interface ITriggerInvocationExpression : IInvocationExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "TriggerInvocationExpressionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#TriggerInvocationExpression" })]
+[OslcResourceShape(Title = "TriggerInvocationExpressionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#TriggerInvocationExpression" })]
 public partial record TriggerInvocationExpression : InvocationExpression, ITriggerInvocationExpression
 {
     public TriggerInvocationExpression(Uri about)

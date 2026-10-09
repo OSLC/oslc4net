@@ -11,7 +11,7 @@ public partial interface ISupportRelationship : IRelationship
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Support Relationship", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/SupportRelationship" })]
+[OslcResourceShape(Title = "Support Relationship", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/SupportRelationship" })]
 public partial record SupportRelationship : Relationship, ISupportRelationship
 {
     public SupportRelationship(Uri about)

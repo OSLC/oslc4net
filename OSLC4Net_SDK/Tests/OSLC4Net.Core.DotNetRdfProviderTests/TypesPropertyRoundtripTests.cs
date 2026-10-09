@@ -18,10 +18,10 @@ public class TypesPropertyRoundtripTests
 
         var formatter = new RdfXmlMediaTypeFormatter();
         var rdfXml = await RdfHelpers.SerializeAsync(formatter, cr,
-            OslcMediaType.APPLICATION_RDF_XML_TYPE);
+            OslcMediaType.ApplicationRdfXmlType);
 
         var deserialized = await RdfHelpers.DeserializeAsync<ChangeRequest>(formatter, rdfXml,
-            OslcMediaType.APPLICATION_RDF_XML_TYPE);
+            OslcMediaType.ApplicationRdfXmlType);
 
         await Assert.That(deserialized).IsNotNull();
         await Assert.That(deserialized!.Types.Count).IsEqualTo(cr.Types.Count);
@@ -56,10 +56,10 @@ public class TypesPropertyRoundtripTests
 
         var formatter = new RdfXmlMediaTypeFormatter();
         var rdfXml = await RdfHelpers.SerializeAsync(formatter, cr,
-            OslcMediaType.APPLICATION_RDF_XML_TYPE);
+            OslcMediaType.ApplicationRdfXmlType);
 
         var deserialized = await RdfHelpers.DeserializeAsync<ChangeRequest>(formatter, rdfXml,
-            OslcMediaType.APPLICATION_RDF_XML_TYPE);
+            OslcMediaType.ApplicationRdfXmlType);
 
         await Assert.That(deserialized).IsNotNull();
 

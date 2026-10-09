@@ -11,7 +11,7 @@ public partial interface IMembership : IRelationship
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "MembershipShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Membership" })]
+[OslcResourceShape(Title = "MembershipShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Membership" })]
 public partial record Membership : Relationship, IMembership
 {
     public Membership(Uri about)

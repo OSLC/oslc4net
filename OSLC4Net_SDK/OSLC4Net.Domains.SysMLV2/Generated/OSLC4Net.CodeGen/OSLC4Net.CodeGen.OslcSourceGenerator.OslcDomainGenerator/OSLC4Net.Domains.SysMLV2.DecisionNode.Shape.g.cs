@@ -11,7 +11,7 @@ public partial interface IDecisionNode : IControlNode
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "DecisionNodeShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#DecisionNode" })]
+[OslcResourceShape(Title = "DecisionNodeShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#DecisionNode" })]
 public partial record DecisionNode : ControlNode, IDecisionNode
 {
     public DecisionNode(Uri about)

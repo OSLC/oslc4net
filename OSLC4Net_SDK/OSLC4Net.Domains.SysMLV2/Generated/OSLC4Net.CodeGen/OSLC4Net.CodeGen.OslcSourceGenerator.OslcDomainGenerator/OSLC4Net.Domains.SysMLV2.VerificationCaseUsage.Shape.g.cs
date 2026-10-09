@@ -11,7 +11,7 @@ public partial interface IVerificationCaseUsage : ICaseUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "VerificationCaseUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#VerificationCaseUsage" })]
+[OslcResourceShape(Title = "VerificationCaseUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#VerificationCaseUsage" })]
 public partial record VerificationCaseUsage : CaseUsage, IVerificationCaseUsage
 {
     public VerificationCaseUsage(Uri about)

@@ -11,7 +11,7 @@ public partial interface ITestExecutionRecord : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/qm#")]
-[OslcResourceShape(title = "QM Test Execution Record", describes = new string[] { "http://open-services.net/ns/qm#TestExecutionRecord" })]
+[OslcResourceShape(Title = "QM Test Execution Record", Describes = new string[] { "http://open-services.net/ns/qm#TestExecutionRecord" })]
 public partial record TestExecutionRecord : AbstractResourceRecord, ITestExecutionRecord
 {
     public TestExecutionRecord(Uri about)

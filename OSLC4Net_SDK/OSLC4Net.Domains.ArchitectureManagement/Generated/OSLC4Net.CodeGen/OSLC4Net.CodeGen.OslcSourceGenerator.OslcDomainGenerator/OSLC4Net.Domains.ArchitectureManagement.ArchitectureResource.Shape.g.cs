@@ -11,7 +11,7 @@ public partial interface IArchitectureResource : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/am#")]
-[OslcResourceShape(title = "Resource", describes = new string[] { "http://open-services.net/ns/am#Resource" })]
+[OslcResourceShape(Title = "Resource", Describes = new string[] { "http://open-services.net/ns/am#Resource" })]
 public partial record ArchitectureResource : AbstractResourceRecord, IArchitectureResource
 {
     public ArchitectureResource(Uri about)

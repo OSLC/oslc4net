@@ -11,7 +11,7 @@ public partial interface IHash : IIntegrityMethod
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Hash", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Hash" })]
+[OslcResourceShape(Title = "Hash", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Hash" })]
 public partial record Hash : IntegrityMethod, IHash
 {
     public Hash(Uri about)

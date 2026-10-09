@@ -11,7 +11,7 @@ public partial interface IProductSpecification : global::OSLC4Net.Domains.SPDX.C
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Hardware/")]
-[OslcResourceShape(title = "Product Specification", describes = new string[] { "https://spdx.org/rdf/3/terms/Hardware/ProductSpecification" })]
+[OslcResourceShape(Title = "Product Specification", Describes = new string[] { "https://spdx.org/rdf/3/terms/Hardware/ProductSpecification" })]
 public partial record ProductSpecification : global::OSLC4Net.Domains.SPDX.Core.Specification, IProductSpecification
 {
     public ProductSpecification(Uri about)

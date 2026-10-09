@@ -11,7 +11,7 @@ public partial interface IAutomationResult : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/auto#")]
-[OslcResourceShape(title = "AutomationResult", describes = new string[] { "http://open-services.net/ns/auto#AutomationResult" })]
+[OslcResourceShape(Title = "AutomationResult", Describes = new string[] { "http://open-services.net/ns/auto#AutomationResult" })]
 public partial record AutomationResult : AbstractResourceRecord, IAutomationResult
 {
     public AutomationResult(Uri about)

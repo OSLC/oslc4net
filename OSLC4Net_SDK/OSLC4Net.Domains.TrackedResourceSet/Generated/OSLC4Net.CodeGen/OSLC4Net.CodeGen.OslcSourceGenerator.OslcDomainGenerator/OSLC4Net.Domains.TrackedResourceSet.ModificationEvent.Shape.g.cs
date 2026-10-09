@@ -11,7 +11,7 @@ public partial interface IModificationEvent : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/core/trs#")]
-[OslcResourceShape(title = "Modification Event", describes = new string[] { "http://open-services.net/ns/core/trs#Modification" })]
+[OslcResourceShape(Title = "Modification Event", Describes = new string[] { "http://open-services.net/ns/core/trs#Modification" })]
 public partial record ModificationEvent : AbstractResourceRecord, IModificationEvent
 {
     public ModificationEvent(Uri about)

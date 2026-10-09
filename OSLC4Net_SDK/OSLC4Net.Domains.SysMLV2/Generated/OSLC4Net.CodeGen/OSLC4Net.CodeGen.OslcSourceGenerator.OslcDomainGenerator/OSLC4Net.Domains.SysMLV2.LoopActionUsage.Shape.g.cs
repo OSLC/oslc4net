@@ -11,7 +11,7 @@ public partial interface ILoopActionUsage : IActionUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "LoopActionUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#LoopActionUsage" })]
+[OslcResourceShape(Title = "LoopActionUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#LoopActionUsage" })]
 public partial record LoopActionUsage : ActionUsage, ILoopActionUsage
 {
     public LoopActionUsage(Uri about)

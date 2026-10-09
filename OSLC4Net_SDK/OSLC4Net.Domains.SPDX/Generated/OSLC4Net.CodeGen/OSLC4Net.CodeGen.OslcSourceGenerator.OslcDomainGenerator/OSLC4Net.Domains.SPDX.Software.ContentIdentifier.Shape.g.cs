@@ -11,7 +11,7 @@ public partial interface IContentIdentifier : global::OSLC4Net.Domains.SPDX.Core
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Software/")]
-[OslcResourceShape(title = "Content Identifier", describes = new string[] { "https://spdx.org/rdf/3/terms/Software/ContentIdentifier" })]
+[OslcResourceShape(Title = "Content Identifier", Describes = new string[] { "https://spdx.org/rdf/3/terms/Software/ContentIdentifier" })]
 public partial record ContentIdentifier : global::OSLC4Net.Domains.SPDX.Core.IntegrityMethod, IContentIdentifier
 {
     public ContentIdentifier(Uri about)

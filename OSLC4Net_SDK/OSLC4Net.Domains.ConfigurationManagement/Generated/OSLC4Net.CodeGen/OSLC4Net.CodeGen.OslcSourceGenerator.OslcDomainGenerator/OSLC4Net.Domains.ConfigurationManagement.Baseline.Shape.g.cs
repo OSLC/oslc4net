@@ -11,7 +11,7 @@ public partial interface IBaseline : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/config#")]
-[OslcResourceShape(title = "The shape of a baseline. {{Properties of a baseline defined in this specification MUST be read-only unless stated otherwise}}.", describes = new string[] { "http://open-services.net/ns/config#Baseline" })]
+[OslcResourceShape(Title = "The shape of a baseline. {{Properties of a baseline defined in this specification MUST be read-only unless stated otherwise}}.", Describes = new string[] { "http://open-services.net/ns/config#Baseline" })]
 public partial record Baseline : AbstractResourceRecord, IBaseline
 {
     public Baseline(Uri about)

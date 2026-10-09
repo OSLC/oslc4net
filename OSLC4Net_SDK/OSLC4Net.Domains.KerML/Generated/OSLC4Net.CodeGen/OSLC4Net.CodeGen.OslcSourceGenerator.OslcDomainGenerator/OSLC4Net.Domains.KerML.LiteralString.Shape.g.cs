@@ -11,7 +11,7 @@ public partial interface ILiteralString : ILiteralExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "LiteralStringShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#LiteralString" })]
+[OslcResourceShape(Title = "LiteralStringShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#LiteralString" })]
 public partial record LiteralString : LiteralExpression, ILiteralString
 {
     public LiteralString(Uri about)

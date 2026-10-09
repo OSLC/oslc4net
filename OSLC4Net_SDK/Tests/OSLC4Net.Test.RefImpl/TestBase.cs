@@ -35,23 +35,23 @@ public abstract class TestBase
 {
     private OslcClient? _testClient;
 
-    protected string ServiceProviderCatalogUri;
-    protected readonly IConfigurationRoot Config;
+    protected string ServiceProviderCatalogUri { get; set; }
+    protected IConfigurationRoot Configuration { get; }
     protected IHost AppHost { get; set; }
     protected ILoggerFactory LoggerFactory { get; set; }
 
     protected TestBase()
     {
-        Config = new ConfigurationBuilder()
+        Configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.Development.json")
             //  .AddEnvironmentVariables()
             .Build();
-        if (Config["serviceProviderCatalog:auth:type"] is not null
-            && Config["serviceProviderCatalog:auth:type"]!.Equals("basic",
+        if (Configuration["serviceProviderCatalog:auth:type"] is not null
+            && Configuration["serviceProviderCatalog:auth:type"]!.Equals("basic",
                 StringComparison.InvariantCultureIgnoreCase))
         {
-            Username = Config["serviceProviderCatalog:auth:user"];
-            Password = Config["serviceProviderCatalog:auth:password"];
+            Username = Configuration["serviceProviderCatalog:auth:user"];
+            Password = Configuration["serviceProviderCatalog:auth:password"];
         }
 
         AppHost = Host.CreateDefaultBuilder()

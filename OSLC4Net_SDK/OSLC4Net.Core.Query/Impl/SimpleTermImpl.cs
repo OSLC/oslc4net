@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -29,9 +30,9 @@ internal abstract class SimpleTermImpl : SimpleTerm
         IDictionary<string, string> prefixMap
     )
     {
-        this.tree = tree;
+        Tree = tree;
         this.type = type;
-        this.prefixMap = prefixMap;
+        PrefixMap = prefixMap;
     }
 
     public TermType Type
@@ -48,7 +49,7 @@ internal abstract class SimpleTermImpl : SimpleTerm
         {
             if (property == null)
             {
-                var rawPName = tree.GetChild(0).Text;
+                var rawPName = Tree.GetChild(0).Text;
 
                 property = new PName();
 
@@ -56,16 +57,16 @@ internal abstract class SimpleTermImpl : SimpleTerm
 
                 if (colon < 0)
                 {
-                    property.local = rawPName;
+                    property.LocalName = rawPName;
                 }
                 else
                 {
                     if (colon > 0)
                     {
-                        property.prefix = rawPName.Substring(0, colon);
-                        property.ns = prefixMap[property.prefix];
+                        property.Prefix = rawPName.Substring(0, colon);
+                        property.Namespace = PrefixMap[property.Prefix];
                     }
-                    property.local = rawPName.Substring(colon + 1);
+                    property.LocalName = rawPName.Substring(colon + 1);
                 }
             }
 
@@ -73,8 +74,8 @@ internal abstract class SimpleTermImpl : SimpleTerm
         }
     }
 
-    protected readonly CommonTree tree;
-    protected readonly IDictionary<string, string> prefixMap;
+    protected CommonTree Tree { get; }
+    protected IDictionary<string, string> PrefixMap { get; }
     private readonly TermType type;
     private PName property;
 }

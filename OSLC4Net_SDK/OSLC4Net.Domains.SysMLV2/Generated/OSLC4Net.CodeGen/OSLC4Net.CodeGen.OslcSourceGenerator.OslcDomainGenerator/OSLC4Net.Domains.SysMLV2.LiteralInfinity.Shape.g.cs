@@ -11,7 +11,7 @@ public partial interface ILiteralInfinity : ILiteralExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "LiteralInfinityShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#LiteralInfinity" })]
+[OslcResourceShape(Title = "LiteralInfinityShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#LiteralInfinity" })]
 public partial record LiteralInfinity : LiteralExpression, ILiteralInfinity
 {
     public LiteralInfinity(Uri about)

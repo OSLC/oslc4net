@@ -22,8 +22,8 @@ namespace OSLC4Net.Core.Model;
 ///     OSLC Resource Shape resource
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Creation Factory Resource Shape",
-    describes = new[] { OslcConstants.TYPE_CREATION_FACTORY })]
+[OslcResourceShape(Title = "OSLC Creation Factory Resource Shape",
+    Describes = new[] { OslcConstants.TYPE_CREATION_FACTORY })]
 public class CreationFactory : AbstractResource
 {
     private readonly SortedSet<Uri> resourceShapes = new SortedUriSet();

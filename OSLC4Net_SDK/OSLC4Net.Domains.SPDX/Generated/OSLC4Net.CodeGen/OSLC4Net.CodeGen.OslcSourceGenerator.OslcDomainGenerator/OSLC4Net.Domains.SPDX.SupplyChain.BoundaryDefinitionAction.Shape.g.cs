@@ -11,7 +11,7 @@ public partial interface IBoundaryDefinitionAction : global::OSLC4Net.Domains.SP
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/SupplyChain/")]
-[OslcResourceShape(title = "Boundary Definition Action", describes = new string[] { "https://spdx.org/rdf/3/terms/SupplyChain/BoundaryDefinitionAction" })]
+[OslcResourceShape(Title = "Boundary Definition Action", Describes = new string[] { "https://spdx.org/rdf/3/terms/SupplyChain/BoundaryDefinitionAction" })]
 public partial record BoundaryDefinitionAction : global::OSLC4Net.Domains.SPDX.Core.Action, IBoundaryDefinitionAction
 {
     public BoundaryDefinitionAction(Uri about)

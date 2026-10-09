@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -26,10 +27,10 @@ public class OslcResourceShape : System.Attribute
     /**
      * Type or types of resource described by this shape.
      */
-    public string[] describes = Array.Empty<string>();
+    public string[] Describes { get; set; } = Array.Empty<string>();
 
     /**
      * Title string that could be used for display
      */
-    public string title;
+    public string Title { get; set; }
 }

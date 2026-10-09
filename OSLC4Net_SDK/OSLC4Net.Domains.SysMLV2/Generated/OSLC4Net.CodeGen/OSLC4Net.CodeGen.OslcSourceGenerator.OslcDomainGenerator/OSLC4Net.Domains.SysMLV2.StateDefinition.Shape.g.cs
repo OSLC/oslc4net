@@ -11,7 +11,7 @@ public partial interface IStateDefinition : IActionDefinition
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "StateDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#StateDefinition" })]
+[OslcResourceShape(Title = "StateDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#StateDefinition" })]
 public partial record StateDefinition : ActionDefinition, IStateDefinition
 {
     public StateDefinition(Uri about)

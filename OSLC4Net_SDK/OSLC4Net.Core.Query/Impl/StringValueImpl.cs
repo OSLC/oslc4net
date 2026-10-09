@@ -33,7 +33,7 @@ internal sealed class StringValueImpl : ValueImpl, StringValue
         {
             if (value == null)
             {
-                value = tree.Text;
+                value = Tree.Text;
                 value = value.Substring(1, value.Length - 2);
             }
 

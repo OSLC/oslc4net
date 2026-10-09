@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -26,25 +27,25 @@ public class OslcCreationFactory : System.Attribute
     /**
      * Very short label for use in menu items
      */
-    public string label = "";
+    public string Label { get; set; } = "";
 
     /**
      * Resource shapes
      */
-    public string[] resourceShapes = Array.Empty<string>();
+    public string[] ResourceShapes { get; set; } = Array.Empty<string>();
 
     /**
      * Resource types
      */
-    public string[] resourceTypes = Array.Empty<string>();
+    public string[] ResourceTypes { get; set; } = Array.Empty<string>();
 
     /**
      * Title string that could be used for display
      */
-    public string title;
+    public string Title { get; set; }
 
     /**
      * Usages
      */
-    public string[] usages = Array.Empty<string>();
+    public string[] Usages { get; set; } = Array.Empty<string>();
 }

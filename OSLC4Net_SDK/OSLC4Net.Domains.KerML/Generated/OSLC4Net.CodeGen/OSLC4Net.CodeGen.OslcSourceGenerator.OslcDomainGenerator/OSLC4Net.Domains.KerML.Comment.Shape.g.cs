@@ -11,7 +11,7 @@ public partial interface IComment : IAnnotatingElement
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "CommentShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Comment" })]
+[OslcResourceShape(Title = "CommentShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Comment" })]
 public partial record Comment : AnnotatingElement, IComment
 {
     public Comment(Uri about)

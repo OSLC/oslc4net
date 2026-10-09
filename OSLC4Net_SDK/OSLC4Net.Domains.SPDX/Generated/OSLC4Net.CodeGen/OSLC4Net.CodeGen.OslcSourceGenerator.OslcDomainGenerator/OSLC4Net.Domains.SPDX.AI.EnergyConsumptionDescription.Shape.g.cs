@@ -11,7 +11,7 @@ public partial interface IEnergyConsumptionDescription : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/AI/")]
-[OslcResourceShape(title = "Energy Consumption Description", describes = new string[] { "https://spdx.org/rdf/3/terms/AI/EnergyConsumptionDescription" })]
+[OslcResourceShape(Title = "Energy Consumption Description", Describes = new string[] { "https://spdx.org/rdf/3/terms/AI/EnergyConsumptionDescription" })]
 public partial record EnergyConsumptionDescription : AbstractResourceRecord, IEnergyConsumptionDescription
 {
     public EnergyConsumptionDescription(Uri about)

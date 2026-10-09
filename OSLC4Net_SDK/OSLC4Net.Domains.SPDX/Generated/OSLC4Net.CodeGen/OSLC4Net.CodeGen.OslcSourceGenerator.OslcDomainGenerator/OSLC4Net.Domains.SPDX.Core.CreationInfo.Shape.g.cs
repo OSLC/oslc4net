@@ -11,7 +11,7 @@ public partial interface ICreationInfo : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Creation Info", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/CreationInfo" })]
+[OslcResourceShape(Title = "Creation Info", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/CreationInfo" })]
 public partial record CreationInfo : AbstractResourceRecord, ICreationInfo
 {
     public CreationInfo(Uri about)
