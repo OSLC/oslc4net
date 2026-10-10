@@ -11,7 +11,7 @@ public partial interface IAssumption : global::OSLC4Net.Domains.SPDX.Core.IEleme
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/FunctionalSafety/")]
-[OslcResourceShape(title = "Assumption", describes = new string[] { "https://spdx.org/rdf/3/terms/FunctionalSafety/Assumption" })]
+[OslcResourceShape(Title = "Assumption", Describes = new string[] { "https://spdx.org/rdf/3/terms/FunctionalSafety/Assumption" })]
 public partial record Assumption : global::OSLC4Net.Domains.SPDX.Core.Element, IAssumption
 {
     public Assumption(Uri about)

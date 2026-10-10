@@ -23,8 +23,8 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// https://docs.oasis-open-projects.org/oslc-op/am/v3.0/os/architecture-management-spec.html
 /// </summary>
-[OslcResourceShape(title = "Architecture Management Resource Resource Shape",
-    describes = new string[] { ArchitectureConstants.TYPE_ARCHITECTURE_RESOURCE })]
+[OslcResourceShape(Title = "Architecture Management Resource Resource Shape",
+    Describes = new string[] { ArchitectureConstants.TYPE_ARCHITECTURE_RESOURCE })]
 [OslcNamespace(ArchitectureConstants.ARCHITECTURE_NAMESPACE)]
 public class ArchitectureResource : AbstractResource
 {

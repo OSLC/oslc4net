@@ -11,7 +11,7 @@ public partial interface IActionDefinition : IBehavior, IOccurrenceDefinition
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ActionDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ActionDefinition" })]
+[OslcResourceShape(Title = "ActionDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ActionDefinition" })]
 public partial record ActionDefinition : Behavior, IActionDefinition
 {
     public ActionDefinition(Uri about)

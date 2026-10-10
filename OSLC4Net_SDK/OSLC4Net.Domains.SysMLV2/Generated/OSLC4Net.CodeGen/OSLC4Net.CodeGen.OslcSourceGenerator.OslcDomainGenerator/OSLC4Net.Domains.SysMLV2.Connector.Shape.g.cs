@@ -11,7 +11,7 @@ public partial interface IConnector : IFeature, IRelationship
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ConnectorShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Connector" })]
+[OslcResourceShape(Title = "ConnectorShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Connector" })]
 public partial record Connector : Feature, IConnector
 {
     public Connector(Uri about)

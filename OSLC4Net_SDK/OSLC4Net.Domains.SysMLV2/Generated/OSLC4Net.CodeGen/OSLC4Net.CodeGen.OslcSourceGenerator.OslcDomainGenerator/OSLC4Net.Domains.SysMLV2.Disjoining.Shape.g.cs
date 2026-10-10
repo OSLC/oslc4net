@@ -11,7 +11,7 @@ public partial interface IDisjoining : IRelationship
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "DisjoiningShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Disjoining" })]
+[OslcResourceShape(Title = "DisjoiningShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Disjoining" })]
 public partial record Disjoining : Relationship, IDisjoining
 {
     public Disjoining(Uri about)

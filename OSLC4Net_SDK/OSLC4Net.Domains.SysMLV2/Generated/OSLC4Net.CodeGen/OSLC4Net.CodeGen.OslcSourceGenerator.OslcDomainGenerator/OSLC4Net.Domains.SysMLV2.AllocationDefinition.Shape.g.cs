@@ -11,7 +11,7 @@ public partial interface IAllocationDefinition : IConnectionDefinition
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "AllocationDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#AllocationDefinition" })]
+[OslcResourceShape(Title = "AllocationDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#AllocationDefinition" })]
 public partial record AllocationDefinition : ConnectionDefinition, IAllocationDefinition
 {
     public AllocationDefinition(Uri about)

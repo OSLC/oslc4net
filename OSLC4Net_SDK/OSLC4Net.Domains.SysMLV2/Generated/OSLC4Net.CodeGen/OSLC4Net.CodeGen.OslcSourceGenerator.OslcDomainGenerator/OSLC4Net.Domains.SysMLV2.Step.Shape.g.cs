@@ -11,7 +11,7 @@ public partial interface IStep : IFeature
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "StepShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Step" })]
+[OslcResourceShape(Title = "StepShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Step" })]
 public partial record Step : Feature, IStep
 {
     public Step(Uri about)

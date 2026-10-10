@@ -11,7 +11,7 @@ public partial interface IElementMap : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Element Map", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/ElementMap" })]
+[OslcResourceShape(Title = "Element Map", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/ElementMap" })]
 public partial record ElementMap : AbstractResourceRecord, IElementMap
 {
     public ElementMap(Uri about)

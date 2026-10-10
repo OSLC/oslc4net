@@ -11,7 +11,7 @@ public partial interface IAssociationStructure : IAssociation, IStructure
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "AssociationStructureShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#AssociationStructure" })]
+[OslcResourceShape(Title = "AssociationStructureShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#AssociationStructure" })]
 public partial record AssociationStructure : Association, IAssociationStructure
 {
     public AssociationStructure(Uri about)

@@ -11,7 +11,7 @@ public partial interface IFile : ISoftwareArtifact
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Software/")]
-[OslcResourceShape(title = "File", describes = new string[] { "https://spdx.org/rdf/3/terms/Software/File" })]
+[OslcResourceShape(Title = "File", Describes = new string[] { "https://spdx.org/rdf/3/terms/Software/File" })]
 public partial record File : SoftwareArtifact, IFile
 {
     public File(Uri about)

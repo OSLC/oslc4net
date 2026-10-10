@@ -11,7 +11,7 @@ public partial interface IRelationship : IElement
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Relationship", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Relationship" })]
+[OslcResourceShape(Title = "Relationship", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Relationship" })]
 public partial record Relationship : Element, IRelationship
 {
     public Relationship(Uri about)

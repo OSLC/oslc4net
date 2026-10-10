@@ -33,7 +33,7 @@ sealed class SimpleSortTermImpl : SortTermImpl, SimpleSortTerm
         {
             if (ascending == null)
             {
-                ascending = tree.GetChild(1).Text.Equals("+");
+                ascending = Tree.GetChild(1).Text.Equals("+");
             }
 
             return ascending == true ? true : false;

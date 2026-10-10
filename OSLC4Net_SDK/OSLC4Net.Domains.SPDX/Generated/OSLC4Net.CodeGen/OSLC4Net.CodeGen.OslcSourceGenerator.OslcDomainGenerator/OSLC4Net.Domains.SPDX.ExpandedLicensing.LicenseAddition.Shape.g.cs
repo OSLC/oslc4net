@@ -11,7 +11,7 @@ public partial interface ILicenseAddition : global::OSLC4Net.Domains.SPDX.Core.I
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/ExpandedLicensing/")]
-[OslcResourceShape(title = "License Addition", describes = new string[] { "https://spdx.org/rdf/3/terms/ExpandedLicensing/LicenseAddition" })]
+[OslcResourceShape(Title = "License Addition", Describes = new string[] { "https://spdx.org/rdf/3/terms/ExpandedLicensing/LicenseAddition" })]
 public partial record LicenseAddition : global::OSLC4Net.Domains.SPDX.Core.Element, ILicenseAddition
 {
     public LicenseAddition(Uri about)

@@ -36,13 +36,13 @@ public class RdfXmlMediaTypeFormatterTests
         var formatter = new RdfXmlMediaTypeFormatter();
 
         var rdfXml = await RdfHelpers.SerializeAsync(formatter, changeRequest1,
-            OslcMediaType.APPLICATION_RDF_XML_TYPE);
+            OslcMediaType.ApplicationRdfXmlType);
 
         Debug.WriteLine(rdfXml);
 
         var changeRequest2 =
             await RdfHelpers.DeserializeAsync<ChangeRequest>(formatter, rdfXml,
-                OslcMediaType.APPLICATION_RDF_XML_TYPE);
+                OslcMediaType.ApplicationRdfXmlType);
 
         await Assert.That(changeRequest2).IsNotNull();
         await Assert.That(changeRequest2.GetAbout()).IsEqualTo(changeRequest1.GetAbout());
@@ -80,13 +80,13 @@ public class RdfXmlMediaTypeFormatterTests
 
         var rdfXml =
             await RdfHelpers.SerializeCollectionAsync(formatter, crListOut,
-                OslcMediaType.APPLICATION_RDF_XML_TYPE);
+                OslcMediaType.ApplicationRdfXmlType);
 
         Debug.WriteLine(rdfXml);
 
         var crListIn =
             (await RdfHelpers.DeserializeCollectionAsync<ChangeRequest>(formatter, rdfXml,
-                OslcMediaType.APPLICATION_RDF_XML_TYPE) ?? throw new InvalidOperationException())
+                OslcMediaType.ApplicationRdfXmlType) ?? throw new InvalidOperationException())
             .ToList();
         await Assert.That(crListIn.Count).IsEqualTo(crListOut.Count);
 
@@ -129,13 +129,13 @@ public class RdfXmlMediaTypeFormatterTests
         var formatter = new RdfXmlMediaTypeFormatter();
 
         var rdfXml =
-            await RdfHelpers.SerializeAsync(formatter, changeRequest1, OslcMediaType.APPLICATION_XML_TYPE);
+            await RdfHelpers.SerializeAsync(formatter, changeRequest1, OslcMediaType.ApplicationXmlType);
 
         Debug.WriteLine(rdfXml);
 
         var changeRequest2 =
             await RdfHelpers.DeserializeAsync<ChangeRequest>(formatter, rdfXml,
-                OslcMediaType.APPLICATION_XML_TYPE);
+                OslcMediaType.ApplicationXmlType);
 
         await Assert.That(changeRequest2).IsNotNull();
         await Assert.That(changeRequest2.GetAbout()).IsEqualTo(changeRequest1.GetAbout());
@@ -155,13 +155,13 @@ public class RdfXmlMediaTypeFormatterTests
         var formatter = new RdfXmlMediaTypeFormatter();
 
         var turtle =
-            await RdfHelpers.SerializeAsync(formatter, changeRequest1, OslcMediaType.TEXT_TURTLE_TYPE);
+            await RdfHelpers.SerializeAsync(formatter, changeRequest1, OslcMediaType.TextTurtleType);
 
         Debug.WriteLine(turtle);
 
         var changeRequest2 =
             await RdfHelpers.DeserializeAsync<ChangeRequest>(formatter, turtle,
-                OslcMediaType.TEXT_TURTLE_TYPE);
+                OslcMediaType.TextTurtleType);
 
         await Assert.That(changeRequest2).IsNotNull();
         await Assert.That(changeRequest2.GetAbout()).IsEqualTo(changeRequest1.GetAbout());
@@ -182,13 +182,13 @@ public class RdfXmlMediaTypeFormatterTests
         var formatter = new RdfXmlMediaTypeFormatter();
 
         var jsonLd =
-            await RdfHelpers.SerializeAsync(formatter, changeRequest1, OslcMediaType.APPLICATION_JSON_LD_TYPE);
+            await RdfHelpers.SerializeAsync(formatter, changeRequest1, OslcMediaType.ApplicationJsonLdType);
 
         Debug.WriteLine(jsonLd);
 
         var changeRequest2 =
             await RdfHelpers.DeserializeAsync<ChangeRequest>(formatter, jsonLd,
-                OslcMediaType.APPLICATION_JSON_LD_TYPE);
+                OslcMediaType.ApplicationJsonLdType);
 
         await Assert.That(changeRequest2).IsNotNull();
         await Assert.That(changeRequest2.GetAbout()).IsEqualTo(changeRequest1.GetAbout());

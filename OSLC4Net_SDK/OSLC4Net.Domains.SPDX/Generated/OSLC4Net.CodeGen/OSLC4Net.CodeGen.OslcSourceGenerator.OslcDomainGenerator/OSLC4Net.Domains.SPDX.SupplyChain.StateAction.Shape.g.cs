@@ -11,7 +11,7 @@ public partial interface IStateAction : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/SupplyChain/")]
-[OslcResourceShape(title = "State Action", describes = new string[] { "https://spdx.org/rdf/3/terms/SupplyChain/StateAction" })]
+[OslcResourceShape(Title = "State Action", Describes = new string[] { "https://spdx.org/rdf/3/terms/SupplyChain/StateAction" })]
 public partial record StateAction : AbstractResourceRecord, IStateAction
 {
     public StateAction(Uri about)

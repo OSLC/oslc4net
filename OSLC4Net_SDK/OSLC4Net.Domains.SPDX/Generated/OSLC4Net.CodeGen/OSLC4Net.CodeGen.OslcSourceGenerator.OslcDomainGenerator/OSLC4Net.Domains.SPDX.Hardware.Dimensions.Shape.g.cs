@@ -11,7 +11,7 @@ public partial interface IDimensions : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Hardware/")]
-[OslcResourceShape(title = "Dimensions", describes = new string[] { "https://spdx.org/rdf/3/terms/Hardware/Dimensions" })]
+[OslcResourceShape(Title = "Dimensions", Describes = new string[] { "https://spdx.org/rdf/3/terms/Hardware/Dimensions" })]
 public partial record Dimensions : AbstractResourceRecord, IDimensions
 {
     public Dimensions(Uri about)

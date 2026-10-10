@@ -11,7 +11,7 @@ public partial interface IPartUsage : IItemUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "PartUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#PartUsage" })]
+[OslcResourceShape(Title = "PartUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#PartUsage" })]
 public partial record PartUsage : ItemUsage, IPartUsage
 {
     public PartUsage(Uri about)

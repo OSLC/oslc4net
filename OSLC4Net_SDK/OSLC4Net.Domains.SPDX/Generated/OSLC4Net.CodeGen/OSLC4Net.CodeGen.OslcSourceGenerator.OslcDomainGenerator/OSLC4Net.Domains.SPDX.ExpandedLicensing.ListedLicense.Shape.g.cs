@@ -11,7 +11,7 @@ public partial interface IListedLicense : ILicense
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/ExpandedLicensing/")]
-[OslcResourceShape(title = "Listed License", describes = new string[] { "https://spdx.org/rdf/3/terms/ExpandedLicensing/ListedLicense" })]
+[OslcResourceShape(Title = "Listed License", Describes = new string[] { "https://spdx.org/rdf/3/terms/ExpandedLicensing/ListedLicense" })]
 public partial record ListedLicense : License, IListedLicense
 {
     public ListedLicense(Uri about)

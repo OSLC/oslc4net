@@ -11,7 +11,7 @@ public partial interface IAssertConstraintUsage : IConstraintUsage, IInvariant
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "AssertConstraintUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#AssertConstraintUsage" })]
+[OslcResourceShape(Title = "AssertConstraintUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#AssertConstraintUsage" })]
 public partial record AssertConstraintUsage : ConstraintUsage, IAssertConstraintUsage
 {
     public AssertConstraintUsage(Uri about)

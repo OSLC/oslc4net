@@ -11,7 +11,7 @@ public partial interface IAcceptActionUsage : IActionUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "AcceptActionUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#AcceptActionUsage" })]
+[OslcResourceShape(Title = "AcceptActionUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#AcceptActionUsage" })]
 public partial record AcceptActionUsage : ActionUsage, IAcceptActionUsage
 {
     public AcceptActionUsage(Uri about)

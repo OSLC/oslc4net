@@ -11,7 +11,7 @@ public partial interface IExhibitStateUsage : IPerformActionUsage, IStateUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ExhibitStateUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ExhibitStateUsage" })]
+[OslcResourceShape(Title = "ExhibitStateUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ExhibitStateUsage" })]
 public partial record ExhibitStateUsage : PerformActionUsage, IExhibitStateUsage
 {
     public ExhibitStateUsage(Uri about)

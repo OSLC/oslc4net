@@ -11,7 +11,7 @@ public partial interface IRequirementVerification : global::OSLC4Net.Domains.SPD
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/FunctionalSafety/")]
-[OslcResourceShape(title = "Requirement Verification", describes = new string[] { "https://spdx.org/rdf/3/terms/FunctionalSafety/RequirementVerification" })]
+[OslcResourceShape(Title = "Requirement Verification", Describes = new string[] { "https://spdx.org/rdf/3/terms/FunctionalSafety/RequirementVerification" })]
 public partial record RequirementVerification : global::OSLC4Net.Domains.SPDX.Core.Element, IRequirementVerification
 {
     public RequirementVerification(Uri about)

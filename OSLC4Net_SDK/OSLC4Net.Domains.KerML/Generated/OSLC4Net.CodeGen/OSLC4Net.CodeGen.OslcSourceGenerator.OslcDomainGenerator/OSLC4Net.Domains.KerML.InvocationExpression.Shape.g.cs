@@ -11,7 +11,7 @@ public partial interface IInvocationExpression : IInstantiationExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "InvocationExpressionShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#InvocationExpression" })]
+[OslcResourceShape(Title = "InvocationExpressionShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#InvocationExpression" })]
 public partial record InvocationExpression : InstantiationExpression, IInvocationExpression
 {
     public InvocationExpression(Uri about)

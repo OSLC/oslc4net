@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -25,19 +26,19 @@ public class OslcNamespaceDefinition
     /**
      * Namespace URI.
      */
-    public readonly string namespaceURI;
+    public string NamespaceUri { get; }
 
     /**
      * Prefix for the namespace.
      */
-    public readonly string prefix;
+    public string Prefix { get; }
 
     public OslcNamespaceDefinition(
         string namespaceURI,
         string prefix
     )
     {
-        this.namespaceURI = namespaceURI;
-        this.prefix = prefix;
+        NamespaceUri = namespaceURI;
+        Prefix = prefix;
     }
 }

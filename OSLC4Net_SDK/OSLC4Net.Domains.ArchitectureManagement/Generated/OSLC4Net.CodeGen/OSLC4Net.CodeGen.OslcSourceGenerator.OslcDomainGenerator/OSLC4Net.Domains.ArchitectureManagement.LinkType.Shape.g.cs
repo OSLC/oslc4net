@@ -11,7 +11,7 @@ public partial interface ILinkType : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/am#")]
-[OslcResourceShape(title = "LinkType", describes = new string[] { "http://open-services.net/ns/am#LinkType" })]
+[OslcResourceShape(Title = "LinkType", Describes = new string[] { "http://open-services.net/ns/am#LinkType" })]
 public partial record LinkType : AbstractResourceRecord, ILinkType
 {
     public LinkType(Uri about)

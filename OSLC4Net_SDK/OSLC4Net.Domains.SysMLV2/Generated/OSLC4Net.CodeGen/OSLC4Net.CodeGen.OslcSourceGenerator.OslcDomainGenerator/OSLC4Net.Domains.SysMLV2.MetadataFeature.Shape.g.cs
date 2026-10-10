@@ -11,7 +11,7 @@ public partial interface IMetadataFeature : IAnnotatingElement, IFeature
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "MetadataFeatureShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#MetadataFeature" })]
+[OslcResourceShape(Title = "MetadataFeatureShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#MetadataFeature" })]
 public partial record MetadataFeature : AnnotatingElement, IMetadataFeature
 {
     public MetadataFeature(Uri about)

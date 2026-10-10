@@ -11,7 +11,7 @@ public partial interface IArtifact : IElement
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Artifact", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Artifact" })]
+[OslcResourceShape(Title = "Artifact", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Artifact" })]
 public partial record Artifact : Element, IArtifact
 {
     public Artifact(Uri about)

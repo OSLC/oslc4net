@@ -11,7 +11,7 @@ public partial interface ITestCase : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/qm#")]
-[OslcResourceShape(title = "QM Test Case", describes = new string[] { "http://open-services.net/ns/qm#TestCase" })]
+[OslcResourceShape(Title = "QM Test Case", Describes = new string[] { "http://open-services.net/ns/qm#TestCase" })]
 public partial record TestCase : AbstractResourceRecord, ITestCase
 {
     public TestCase(Uri about)

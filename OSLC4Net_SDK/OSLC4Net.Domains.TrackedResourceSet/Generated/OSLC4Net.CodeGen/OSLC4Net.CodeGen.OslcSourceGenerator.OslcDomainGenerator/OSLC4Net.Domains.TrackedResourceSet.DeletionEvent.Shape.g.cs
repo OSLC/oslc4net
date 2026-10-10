@@ -11,7 +11,7 @@ public partial interface IDeletionEvent : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/core/trs#")]
-[OslcResourceShape(title = "Deletion Event", describes = new string[] { "http://open-services.net/ns/core/trs#Deletion" })]
+[OslcResourceShape(Title = "Deletion Event", Describes = new string[] { "http://open-services.net/ns/core/trs#Deletion" })]
 public partial record DeletionEvent : AbstractResourceRecord, IDeletionEvent
 {
     public DeletionEvent(Uri about)

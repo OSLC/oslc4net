@@ -11,7 +11,7 @@ public partial interface IFeatureTyping : ISpecialization
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "FeatureTypingShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#FeatureTyping" })]
+[OslcResourceShape(Title = "FeatureTypingShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#FeatureTyping" })]
 public partial record FeatureTyping : Specialization, IFeatureTyping
 {
     public FeatureTyping(Uri about)

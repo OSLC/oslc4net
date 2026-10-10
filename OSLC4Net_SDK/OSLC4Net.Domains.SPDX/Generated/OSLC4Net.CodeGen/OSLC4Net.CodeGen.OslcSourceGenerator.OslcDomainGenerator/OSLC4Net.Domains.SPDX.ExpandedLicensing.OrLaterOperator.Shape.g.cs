@@ -11,7 +11,7 @@ public partial interface IOrLaterOperator : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/ExpandedLicensing/")]
-[OslcResourceShape(title = "Or Later Operator", describes = new string[] { "https://spdx.org/rdf/3/terms/ExpandedLicensing/OrLaterOperator" })]
+[OslcResourceShape(Title = "Or Later Operator", Describes = new string[] { "https://spdx.org/rdf/3/terms/ExpandedLicensing/OrLaterOperator" })]
 public partial record OrLaterOperator : AbstractResourceRecord, IOrLaterOperator
 {
     public OrLaterOperator(Uri about)

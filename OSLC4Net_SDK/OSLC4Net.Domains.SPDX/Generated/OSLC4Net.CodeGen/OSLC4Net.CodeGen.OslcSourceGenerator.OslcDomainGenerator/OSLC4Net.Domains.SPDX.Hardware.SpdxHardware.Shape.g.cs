@@ -11,7 +11,7 @@ public partial interface ISpdxHardware : global::OSLC4Net.Domains.SPDX.Core.IArt
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Hardware/")]
-[OslcResourceShape(title = "Spdx Hardware", describes = new string[] { "https://spdx.org/rdf/3/terms/Hardware/Hardware" })]
+[OslcResourceShape(Title = "Spdx Hardware", Describes = new string[] { "https://spdx.org/rdf/3/terms/Hardware/Hardware" })]
 public partial record SpdxHardware : global::OSLC4Net.Domains.SPDX.Core.Artifact, ISpdxHardware
 {
     public SpdxHardware(Uri about)

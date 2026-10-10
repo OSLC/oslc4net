@@ -11,7 +11,7 @@ public partial interface ITask : IChangeRequest
 }
 
 [OslcNamespace("http://open-services.net/ns/cm#")]
-[OslcResourceShape(title = "An executable and trackable activity.", describes = new string[] { "http://open-services.net/ns/cm#Task" })]
+[OslcResourceShape(Title = "An executable and trackable activity.", Describes = new string[] { "http://open-services.net/ns/cm#Task" })]
 public partial record Task : ChangeRequest, ITask
 {
     public Task(Uri about)

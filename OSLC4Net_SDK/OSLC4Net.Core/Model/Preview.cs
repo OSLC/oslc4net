@@ -23,8 +23,8 @@ namespace OSLC4Net.Core.Model;
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
 [OslcResourceShape(
-    title = "OSLC Preview Resource Shape",
-    describes = new[] { OslcConstants.TYPE_PREVIEW }
+    Title = "OSLC Preview Resource Shape",
+    Describes = new[] { OslcConstants.TYPE_PREVIEW }
 )]
 public class Preview : AbstractResource
 {

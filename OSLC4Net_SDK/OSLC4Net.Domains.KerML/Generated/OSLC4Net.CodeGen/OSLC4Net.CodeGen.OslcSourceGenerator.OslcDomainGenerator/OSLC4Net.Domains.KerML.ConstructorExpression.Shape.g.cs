@@ -11,7 +11,7 @@ public partial interface IConstructorExpression : IInstantiationExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "ConstructorExpressionShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#ConstructorExpression" })]
+[OslcResourceShape(Title = "ConstructorExpressionShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#ConstructorExpression" })]
 public partial record ConstructorExpression : InstantiationExpression, IConstructorExpression
 {
     public ConstructorExpression(Uri about)

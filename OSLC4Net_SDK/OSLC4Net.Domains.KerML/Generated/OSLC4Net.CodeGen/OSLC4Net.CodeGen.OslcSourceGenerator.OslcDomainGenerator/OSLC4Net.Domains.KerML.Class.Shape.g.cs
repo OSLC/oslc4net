@@ -11,7 +11,7 @@ public partial interface IClass : IClassifier
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "ClassShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Class" })]
+[OslcResourceShape(Title = "ClassShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Class" })]
 public partial record Class : Classifier, IClass
 {
     public Class(Uri about)

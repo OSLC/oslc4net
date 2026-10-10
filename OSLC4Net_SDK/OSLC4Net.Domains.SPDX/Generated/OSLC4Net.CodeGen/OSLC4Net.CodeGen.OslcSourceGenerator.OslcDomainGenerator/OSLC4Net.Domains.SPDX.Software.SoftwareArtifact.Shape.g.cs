@@ -11,7 +11,7 @@ public partial interface ISoftwareArtifact : global::OSLC4Net.Domains.SPDX.Core.
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Software/")]
-[OslcResourceShape(title = "Software Artifact", describes = new string[] { "https://spdx.org/rdf/3/terms/Software/SoftwareArtifact" })]
+[OslcResourceShape(Title = "Software Artifact", Describes = new string[] { "https://spdx.org/rdf/3/terms/Software/SoftwareArtifact" })]
 public partial record SoftwareArtifact : global::OSLC4Net.Domains.SPDX.Core.Artifact, ISoftwareArtifact
 {
     public SoftwareArtifact(Uri about)

@@ -11,7 +11,7 @@ public partial interface IChangeSet : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/config#")]
-[OslcResourceShape(title = "The shape of a ChangeSet.", describes = new string[] { "http://open-services.net/ns/config#ChangeSet" })]
+[OslcResourceShape(Title = "The shape of a ChangeSet.", Describes = new string[] { "http://open-services.net/ns/config#ChangeSet" })]
 public partial record ChangeSet : AbstractResourceRecord, IChangeSet
 {
     public ChangeSet(Uri about)

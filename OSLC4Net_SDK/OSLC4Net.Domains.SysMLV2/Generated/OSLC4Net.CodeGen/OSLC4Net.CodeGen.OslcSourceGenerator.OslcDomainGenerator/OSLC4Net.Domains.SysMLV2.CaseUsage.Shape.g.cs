@@ -11,7 +11,7 @@ public partial interface ICaseUsage : ICalculationUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "CaseUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#CaseUsage" })]
+[OslcResourceShape(Title = "CaseUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#CaseUsage" })]
 public partial record CaseUsage : CalculationUsage, ICaseUsage
 {
     public CaseUsage(Uri about)

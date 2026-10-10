@@ -11,7 +11,7 @@ public partial interface IDifferencing : IRelationship
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "DifferencingShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Differencing" })]
+[OslcResourceShape(Title = "DifferencingShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Differencing" })]
 public partial record Differencing : Relationship, IDifferencing
 {
     public Differencing(Uri about)

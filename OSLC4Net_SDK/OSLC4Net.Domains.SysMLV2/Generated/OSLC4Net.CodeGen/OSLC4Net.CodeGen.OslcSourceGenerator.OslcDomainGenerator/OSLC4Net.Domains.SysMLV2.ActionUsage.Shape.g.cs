@@ -11,7 +11,7 @@ public partial interface IActionUsage : IOccurrenceUsage, IStep
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ActionUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ActionUsage" })]
+[OslcResourceShape(Title = "ActionUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ActionUsage" })]
 public partial record ActionUsage : OccurrenceUsage, IActionUsage
 {
     public ActionUsage(Uri about)

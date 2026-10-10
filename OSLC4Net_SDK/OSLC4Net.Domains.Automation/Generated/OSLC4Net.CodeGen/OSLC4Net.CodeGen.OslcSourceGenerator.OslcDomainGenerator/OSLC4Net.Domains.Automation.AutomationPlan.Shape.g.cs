@@ -11,7 +11,7 @@ public partial interface IAutomationPlan : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/auto#")]
-[OslcResourceShape(title = "Statement of need.", describes = new string[] { "http://open-services.net/ns/auto#AutomationPlan" })]
+[OslcResourceShape(Title = "Statement of need.", Describes = new string[] { "http://open-services.net/ns/auto#AutomationPlan" })]
 public partial record AutomationPlan : AbstractResourceRecord, IAutomationPlan
 {
     public AutomationPlan(Uri about)

@@ -11,7 +11,7 @@ public partial interface ISubjectMembership : IParameterMembership
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "SubjectMembershipShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#SubjectMembership" })]
+[OslcResourceShape(Title = "SubjectMembershipShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#SubjectMembership" })]
 public partial record SubjectMembership : ParameterMembership, ISubjectMembership
 {
     public SubjectMembership(Uri about)

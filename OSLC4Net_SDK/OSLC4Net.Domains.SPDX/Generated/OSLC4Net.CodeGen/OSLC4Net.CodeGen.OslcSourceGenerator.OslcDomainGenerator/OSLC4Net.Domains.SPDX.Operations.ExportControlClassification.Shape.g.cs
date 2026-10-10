@@ -11,7 +11,7 @@ public partial interface IExportControlClassification : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Operations/")]
-[OslcResourceShape(title = "Export Control Classification", describes = new string[] { "https://spdx.org/rdf/3/terms/Operations/ExportControlClassification" })]
+[OslcResourceShape(Title = "Export Control Classification", Describes = new string[] { "https://spdx.org/rdf/3/terms/Operations/ExportControlClassification" })]
 public partial record ExportControlClassification : AbstractResourceRecord, IExportControlClassification
 {
     public ExportControlClassification(Uri about)

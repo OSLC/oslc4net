@@ -11,7 +11,7 @@ public partial interface IPhysicalLocation : ILocation
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Physical Location", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/PhysicalLocation" })]
+[OslcResourceShape(Title = "Physical Location", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/PhysicalLocation" })]
 public partial record PhysicalLocation : Location, IPhysicalLocation
 {
     public PhysicalLocation(Uri about)

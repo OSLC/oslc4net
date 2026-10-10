@@ -11,7 +11,7 @@ public partial interface IFunction : IBehavior
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "FunctionShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Function" })]
+[OslcResourceShape(Title = "FunctionShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Function" })]
 public partial record Function : Behavior, IFunction
 {
     public Function(Uri about)

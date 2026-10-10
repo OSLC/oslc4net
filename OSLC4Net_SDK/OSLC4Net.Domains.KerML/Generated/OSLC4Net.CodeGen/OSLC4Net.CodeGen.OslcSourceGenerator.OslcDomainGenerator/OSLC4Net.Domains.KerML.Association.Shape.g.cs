@@ -11,7 +11,7 @@ public partial interface IAssociation : IClassifier, IRelationship
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "AssociationShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Association" })]
+[OslcResourceShape(Title = "AssociationShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Association" })]
 public partial record Association : Classifier, IAssociation
 {
     public Association(Uri about)

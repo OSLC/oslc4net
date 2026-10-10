@@ -11,7 +11,7 @@ public partial interface INamespaceImport : IImport
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "NamespaceImportShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#NamespaceImport" })]
+[OslcResourceShape(Title = "NamespaceImportShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#NamespaceImport" })]
 public partial record NamespaceImport : Import, INamespaceImport
 {
     public NamespaceImport(Uri about)

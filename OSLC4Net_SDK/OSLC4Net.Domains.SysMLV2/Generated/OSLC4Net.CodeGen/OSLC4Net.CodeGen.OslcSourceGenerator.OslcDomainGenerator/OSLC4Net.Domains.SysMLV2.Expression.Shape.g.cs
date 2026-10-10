@@ -11,7 +11,7 @@ public partial interface IExpression : IStep
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ExpressionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Expression" })]
+[OslcResourceShape(Title = "ExpressionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Expression" })]
 public partial record Expression : Step, IExpression
 {
     public Expression(Uri about)

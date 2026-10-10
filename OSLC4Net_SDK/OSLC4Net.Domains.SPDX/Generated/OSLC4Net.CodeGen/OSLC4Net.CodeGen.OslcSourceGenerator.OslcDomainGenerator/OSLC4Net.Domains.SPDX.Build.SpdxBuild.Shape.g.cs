@@ -11,7 +11,7 @@ public partial interface ISpdxBuild : global::OSLC4Net.Domains.SPDX.Core.IElemen
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Build/")]
-[OslcResourceShape(title = "Spdx Build", describes = new string[] { "https://spdx.org/rdf/3/terms/Build/Build" })]
+[OslcResourceShape(Title = "Spdx Build", Describes = new string[] { "https://spdx.org/rdf/3/terms/Build/Build" })]
 public partial record SpdxBuild : global::OSLC4Net.Domains.SPDX.Core.Element, ISpdxBuild
 {
     public SpdxBuild(Uri about)

@@ -11,7 +11,7 @@ public partial interface IAllocationUsage : IConnectionUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "AllocationUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#AllocationUsage" })]
+[OslcResourceShape(Title = "AllocationUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#AllocationUsage" })]
 public partial record AllocationUsage : ConnectionUsage, IAllocationUsage
 {
     public AllocationUsage(Uri about)

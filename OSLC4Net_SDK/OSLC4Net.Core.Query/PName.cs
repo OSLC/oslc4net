@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,9 +18,9 @@ namespace OSLC4Net.Core.Query;
 
 public class PName
 {
-    public string ns;
-    public string prefix;
-    public string local;
+    public string Namespace { get; set; }
+    public string Prefix { get; set; }
+    public string LocalName { get; set; }
 
-    public override string ToString() { return prefix + ':' + local; }
+    public override string ToString() { return Prefix + ':' + LocalName; }
 }

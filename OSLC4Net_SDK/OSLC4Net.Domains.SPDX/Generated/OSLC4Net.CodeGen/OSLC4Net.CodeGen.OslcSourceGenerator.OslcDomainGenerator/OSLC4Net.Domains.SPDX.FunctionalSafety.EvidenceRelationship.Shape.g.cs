@@ -11,7 +11,7 @@ public partial interface IEvidenceRelationship : global::OSLC4Net.Domains.SPDX.C
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/FunctionalSafety/")]
-[OslcResourceShape(title = "Evidence Relationship", describes = new string[] { "https://spdx.org/rdf/3/terms/FunctionalSafety/EvidenceRelationship" })]
+[OslcResourceShape(Title = "Evidence Relationship", Describes = new string[] { "https://spdx.org/rdf/3/terms/FunctionalSafety/EvidenceRelationship" })]
 public partial record EvidenceRelationship : global::OSLC4Net.Domains.SPDX.Core.Relationship, IEvidenceRelationship
 {
     public EvidenceRelationship(Uri about)

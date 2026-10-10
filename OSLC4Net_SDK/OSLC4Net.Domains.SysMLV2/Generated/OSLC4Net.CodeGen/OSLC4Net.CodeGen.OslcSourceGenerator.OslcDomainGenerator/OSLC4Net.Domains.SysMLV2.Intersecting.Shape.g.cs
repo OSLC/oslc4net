@@ -11,7 +11,7 @@ public partial interface IIntersecting : IRelationship
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "IntersectingShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Intersecting" })]
+[OslcResourceShape(Title = "IntersectingShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Intersecting" })]
 public partial record Intersecting : Relationship, IIntersecting
 {
     public Intersecting(Uri about)

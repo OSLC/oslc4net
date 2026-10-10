@@ -11,7 +11,7 @@ public partial interface IFeatureChaining : IRelationship
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "FeatureChainingShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#FeatureChaining" })]
+[OslcResourceShape(Title = "FeatureChainingShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#FeatureChaining" })]
 public partial record FeatureChaining : Relationship, IFeatureChaining
 {
     public FeatureChaining(Uri about)

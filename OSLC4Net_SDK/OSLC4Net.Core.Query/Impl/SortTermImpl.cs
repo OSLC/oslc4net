@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2013 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -26,8 +27,8 @@ class SortTermImpl : SortTerm
     )
     {
         this.type = type;
-        this.tree = tree;
-        this.prefixMap = prefixMap;
+        Tree = tree;
+        PrefixMap = prefixMap;
     }
 
     public SortTermType
@@ -44,7 +45,7 @@ class SortTermImpl : SortTerm
             if (identifier == null)
             {
 
-                var rawProperty = tree.GetChild(0).Text;
+                var rawProperty = Tree.GetChild(0).Text;
 
                 identifier = new PName();
 
@@ -52,16 +53,16 @@ class SortTermImpl : SortTerm
 
                 if (colon < 0)
                 {
-                    identifier.local = rawProperty;
+                    identifier.LocalName = rawProperty;
                 }
                 else
                 {
                     if (colon > 0)
                     {
-                        identifier.prefix = rawProperty.Substring(0, colon);
-                        identifier.ns = prefixMap[identifier.prefix];
+                        identifier.Prefix = rawProperty.Substring(0, colon);
+                        identifier.Namespace = PrefixMap[identifier.Prefix];
                     }
-                    identifier.local = rawProperty.Substring(colon + 1);
+                    identifier.LocalName = rawProperty.Substring(colon + 1);
                 }
             }
 
@@ -70,7 +71,7 @@ class SortTermImpl : SortTerm
     }
 
     private readonly SortTermType type;
-    protected readonly CommonTree tree;
-    protected readonly IDictionary<string, string> prefixMap;
+    protected CommonTree Tree { get; }
+    protected IDictionary<string, string> PrefixMap { get; }
     private PName identifier;
 }

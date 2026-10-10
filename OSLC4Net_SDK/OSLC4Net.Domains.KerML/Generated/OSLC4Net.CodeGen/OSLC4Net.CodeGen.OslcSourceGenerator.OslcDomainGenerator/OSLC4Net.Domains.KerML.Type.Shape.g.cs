@@ -11,7 +11,7 @@ public partial interface IType : INamespace
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "TypeShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Type" })]
+[OslcResourceShape(Title = "TypeShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Type" })]
 public partial record Type : Namespace, IType
 {
     public Type(Uri about)

@@ -11,7 +11,7 @@ public partial interface IPackage : ISoftwareArtifact
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Software/")]
-[OslcResourceShape(title = "Package", describes = new string[] { "https://spdx.org/rdf/3/terms/Software/Package" })]
+[OslcResourceShape(Title = "Package", Describes = new string[] { "https://spdx.org/rdf/3/terms/Software/Package" })]
 public partial record Package : SoftwareArtifact, IPackage
 {
     public Package(Uri about)

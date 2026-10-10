@@ -11,7 +11,7 @@ public partial interface IWhileLoopActionUsage : ILoopActionUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "WhileLoopActionUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#WhileLoopActionUsage" })]
+[OslcResourceShape(Title = "WhileLoopActionUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#WhileLoopActionUsage" })]
 public partial record WhileLoopActionUsage : LoopActionUsage, IWhileLoopActionUsage
 {
     public WhileLoopActionUsage(Uri about)

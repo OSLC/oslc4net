@@ -11,7 +11,7 @@ public partial interface IFeatureInverting : IRelationship
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "FeatureInvertingShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#FeatureInverting" })]
+[OslcResourceShape(Title = "FeatureInvertingShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#FeatureInverting" })]
 public partial record FeatureInverting : Relationship, IFeatureInverting
 {
     public FeatureInverting(Uri about)

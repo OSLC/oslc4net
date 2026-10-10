@@ -11,7 +11,7 @@ public partial interface IConstraintUsage : IBooleanExpression, IOccurrenceUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ConstraintUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ConstraintUsage" })]
+[OslcResourceShape(Title = "ConstraintUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ConstraintUsage" })]
 public partial record ConstraintUsage : BooleanExpression, IConstraintUsage
 {
     public ConstraintUsage(Uri about)

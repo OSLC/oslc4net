@@ -11,7 +11,7 @@ public partial interface IChangeSetSelections : ISelections
 }
 
 [OslcNamespace("http://open-services.net/ns/config#")]
-[OslcResourceShape(title = "The resources selected by a change set.", describes = new string[] { "http://open-services.net/ns/config#ChangeSetSelections" })]
+[OslcResourceShape(Title = "The resources selected by a change set.", Describes = new string[] { "http://open-services.net/ns/config#ChangeSetSelections" })]
 public partial record ChangeSetSelections : Selections, IChangeSetSelections
 {
     public ChangeSetSelections(Uri about)

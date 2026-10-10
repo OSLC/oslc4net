@@ -11,7 +11,7 @@ public partial interface IMultiplicity : IFeature
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "MultiplicityShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Multiplicity" })]
+[OslcResourceShape(Title = "MultiplicityShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Multiplicity" })]
 public partial record Multiplicity : Feature, IMultiplicity
 {
     public Multiplicity(Uri about)

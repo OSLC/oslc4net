@@ -11,7 +11,7 @@ public partial interface ITestScript : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/qm#")]
-[OslcResourceShape(title = "QM Test Script", describes = new string[] { "http://open-services.net/ns/qm#TestScript" })]
+[OslcResourceShape(Title = "QM Test Script", Describes = new string[] { "http://open-services.net/ns/qm#TestScript" })]
 public partial record TestScript : AbstractResourceRecord, ITestScript
 {
     public TestScript(Uri about)

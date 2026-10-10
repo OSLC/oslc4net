@@ -11,7 +11,7 @@ public partial interface IItemUsage : IOccurrenceUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ItemUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ItemUsage" })]
+[OslcResourceShape(Title = "ItemUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ItemUsage" })]
 public partial record ItemUsage : OccurrenceUsage, IItemUsage
 {
     public ItemUsage(Uri about)

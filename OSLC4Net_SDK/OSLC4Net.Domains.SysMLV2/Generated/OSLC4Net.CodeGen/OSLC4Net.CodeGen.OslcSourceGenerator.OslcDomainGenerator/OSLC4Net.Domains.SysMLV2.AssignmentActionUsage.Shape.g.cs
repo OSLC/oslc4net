@@ -11,7 +11,7 @@ public partial interface IAssignmentActionUsage : IActionUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "AssignmentActionUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#AssignmentActionUsage" })]
+[OslcResourceShape(Title = "AssignmentActionUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#AssignmentActionUsage" })]
 public partial record AssignmentActionUsage : ActionUsage, IAssignmentActionUsage
 {
     public AssignmentActionUsage(Uri about)

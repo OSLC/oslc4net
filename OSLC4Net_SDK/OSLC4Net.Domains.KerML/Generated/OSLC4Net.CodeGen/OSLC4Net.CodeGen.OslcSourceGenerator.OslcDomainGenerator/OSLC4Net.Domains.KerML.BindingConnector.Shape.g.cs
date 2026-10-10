@@ -11,7 +11,7 @@ public partial interface IBindingConnector : IConnector
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "BindingConnectorShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#BindingConnector" })]
+[OslcResourceShape(Title = "BindingConnectorShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#BindingConnector" })]
 public partial record BindingConnector : Connector, IBindingConnector
 {
     public BindingConnector(Uri about)

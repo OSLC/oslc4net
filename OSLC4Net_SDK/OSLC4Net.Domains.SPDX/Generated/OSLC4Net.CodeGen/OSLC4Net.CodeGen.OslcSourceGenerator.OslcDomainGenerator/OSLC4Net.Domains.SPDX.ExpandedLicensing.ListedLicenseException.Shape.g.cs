@@ -11,7 +11,7 @@ public partial interface IListedLicenseException : ILicenseAddition
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/ExpandedLicensing/")]
-[OslcResourceShape(title = "Listed License Exception", describes = new string[] { "https://spdx.org/rdf/3/terms/ExpandedLicensing/ListedLicenseException" })]
+[OslcResourceShape(Title = "Listed License Exception", Describes = new string[] { "https://spdx.org/rdf/3/terms/ExpandedLicensing/ListedLicenseException" })]
 public partial record ListedLicenseException : LicenseAddition, IListedLicenseException
 {
     public ListedLicenseException(Uri about)

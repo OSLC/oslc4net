@@ -11,7 +11,7 @@ public partial interface IDependency : IRelationship
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "DependencyShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Dependency" })]
+[OslcResourceShape(Title = "DependencyShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Dependency" })]
 public partial record Dependency : Relationship, IDependency
 {
     public Dependency(Uri about)

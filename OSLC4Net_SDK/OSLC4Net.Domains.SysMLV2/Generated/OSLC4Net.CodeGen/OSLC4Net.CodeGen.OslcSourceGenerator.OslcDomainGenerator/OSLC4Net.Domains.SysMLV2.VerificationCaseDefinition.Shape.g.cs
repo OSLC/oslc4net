@@ -11,7 +11,7 @@ public partial interface IVerificationCaseDefinition : ICaseDefinition
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "VerificationCaseDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#VerificationCaseDefinition" })]
+[OslcResourceShape(Title = "VerificationCaseDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#VerificationCaseDefinition" })]
 public partial record VerificationCaseDefinition : CaseDefinition, IVerificationCaseDefinition
 {
     public VerificationCaseDefinition(Uri about)

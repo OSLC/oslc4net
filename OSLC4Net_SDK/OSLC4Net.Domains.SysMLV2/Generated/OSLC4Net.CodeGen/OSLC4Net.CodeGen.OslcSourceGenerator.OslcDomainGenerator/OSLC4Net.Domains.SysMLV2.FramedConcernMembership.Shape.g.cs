@@ -11,7 +11,7 @@ public partial interface IFramedConcernMembership : IRequirementConstraintMember
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "FramedConcernMembershipShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#FramedConcernMembership" })]
+[OslcResourceShape(Title = "FramedConcernMembershipShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#FramedConcernMembership" })]
 public partial record FramedConcernMembership : RequirementConstraintMembership, IFramedConcernMembership
 {
     public FramedConcernMembership(Uri about)

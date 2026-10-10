@@ -11,7 +11,7 @@ public partial interface IInspectionProcess : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/SupplyChain/")]
-[OslcResourceShape(title = "Inspection Process", describes = new string[] { "https://spdx.org/rdf/3/terms/SupplyChain/InspectionProcess" })]
+[OslcResourceShape(Title = "Inspection Process", Describes = new string[] { "https://spdx.org/rdf/3/terms/SupplyChain/InspectionProcess" })]
 public partial record InspectionProcess : AbstractResourceRecord, IInspectionProcess
 {
     public InspectionProcess(Uri about)

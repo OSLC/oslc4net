@@ -11,7 +11,7 @@ public partial interface ISubsetting : ISpecialization
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "SubsettingShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Subsetting" })]
+[OslcResourceShape(Title = "SubsettingShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Subsetting" })]
 public partial record Subsetting : Specialization, ISubsetting
 {
     public Subsetting(Uri about)

@@ -33,7 +33,7 @@ internal sealed class LangedStringValueImpl : ValueImpl, LangedStringValue
         {
             if (value == null)
             {
-                value = tree.GetChild(0).Text;
+                value = Tree.GetChild(0).Text;
                 value = value.Substring(1, value.Length - 2);
             }
 
@@ -47,7 +47,7 @@ internal sealed class LangedStringValueImpl : ValueImpl, LangedStringValue
         {
             if (langTag == null)
             {
-                langTag = tree.GetChild(1).Text.Substring(1);
+                langTag = Tree.GetChild(1).Text.Substring(1);
             }
 
             return langTag;

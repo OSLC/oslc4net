@@ -22,8 +22,8 @@ namespace OSLC4Net.Core.Model;
 /// </summary>
 /// <remarks>See https://docs.oasis-open-projects.org/oslc-op/core/v3.0/os/core-vocab.html </remarks>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Property Resource Shape",
-    describes = new[] { OslcConstants.TYPE_PROPERTY })]
+[OslcResourceShape(Title = "OSLC Property Resource Shape",
+    Describes = new[] { OslcConstants.TYPE_PROPERTY })]
 public sealed class Property : AbstractResource
 {
     private readonly IList<string> allowedValues = new List<string>();

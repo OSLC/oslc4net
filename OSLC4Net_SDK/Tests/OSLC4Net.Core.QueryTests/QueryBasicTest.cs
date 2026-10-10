@@ -286,7 +286,7 @@ public class QueryBasicTest
 
         var simpleTerm = children[0];
         var prop = simpleTerm.Property;
-        await Assert.That(prop.ns + prop.local).IsEqualTo("http://qm.example.com/ns/testCase");
+        await Assert.That(prop.Namespace + prop.LocalName).IsEqualTo("http://qm.example.com/ns/testCase");
         await Assert.That(simpleTerm is ComparisonTerm).IsTrue();
 
         var comparison = (ComparisonTerm)simpleTerm;

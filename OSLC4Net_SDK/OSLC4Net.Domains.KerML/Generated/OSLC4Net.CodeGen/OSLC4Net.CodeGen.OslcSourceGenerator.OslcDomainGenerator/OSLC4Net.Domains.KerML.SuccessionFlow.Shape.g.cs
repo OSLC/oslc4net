@@ -11,7 +11,7 @@ public partial interface ISuccessionFlow : IFlow, ISuccession
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "SuccessionFlowShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#SuccessionFlow" })]
+[OslcResourceShape(Title = "SuccessionFlowShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#SuccessionFlow" })]
 public partial record SuccessionFlow : Flow, ISuccessionFlow
 {
     public SuccessionFlow(Uri about)

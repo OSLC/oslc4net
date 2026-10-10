@@ -31,7 +31,7 @@ internal sealed class NestedPropertyImpl : PropertyImpl, NestedProperty
               prefixMap, ((CommonTree)tree.GetChild(0)).Token.Type == OslcSelectParser.WILDCARD)
     {
         this.tree = tree;
-        // children = PropertiesImpl.CreateChildren((CommonTree)tree.GetChild(1), prefixMap);
+        // children = PropertiesImpl.CreateChildren((CommonTree)tree.GetChild(1), PrefixMap);
     }
 
     public IList<Property> Children
@@ -40,7 +40,7 @@ internal sealed class NestedPropertyImpl : PropertyImpl, NestedProperty
         {
             if (children == null)
             {
-                children = PropertiesImpl.CreateChildren((CommonTree)tree.GetChild(1), prefixMap);
+                children = PropertiesImpl.CreateChildren((CommonTree)tree.GetChild(1), PrefixMap);
             }
 
             return children;

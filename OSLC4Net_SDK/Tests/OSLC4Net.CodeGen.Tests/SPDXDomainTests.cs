@@ -67,9 +67,9 @@ public sealed class SPDXDomainTests
             Attribute.GetCustomAttribute(typeof(EvidenceRelationship), typeof(OslcNamespace))
             as OslcNamespace;
 
-        await Assert.That(namespaceAttribute?.value).IsEqualTo(SpdxFunctionalSafety.NS);
+        await Assert.That(namespaceAttribute?.Value).IsEqualTo(SpdxFunctionalSafety.NS);
         await Assert
-            .That(shapeAttribute?.describes)
+            .That(shapeAttribute?.Describes)
             .IsEquivalentTo([SpdxFunctionalSafety.EvidenceRelationship]);
         await Assert.That(typeof(EvidenceRelationship).IsSubclassOf(typeof(Relationship))).IsTrue();
     }

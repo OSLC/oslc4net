@@ -11,7 +11,7 @@ public partial interface IRoleRelationship : IRelationship
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Role Relationship", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/RoleRelationship" })]
+[OslcResourceShape(Title = "Role Relationship", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/RoleRelationship" })]
 public partial record RoleRelationship : Relationship, IRoleRelationship
 {
     public RoleRelationship(Uri about)

@@ -11,7 +11,7 @@ public partial interface IMembershipExpose : IExpose, IMembershipImport
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "MembershipExposeShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#MembershipExpose" })]
+[OslcResourceShape(Title = "MembershipExposeShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#MembershipExpose" })]
 public partial record MembershipExpose : Expose, IMembershipExpose
 {
     public MembershipExpose(Uri about)

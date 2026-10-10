@@ -11,7 +11,7 @@ public partial interface IElementFilterMembership : IOwningMembership
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "ElementFilterMembershipShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#ElementFilterMembership" })]
+[OslcResourceShape(Title = "ElementFilterMembershipShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#ElementFilterMembership" })]
 public partial record ElementFilterMembership : OwningMembership, IElementFilterMembership
 {
     public ElementFilterMembership(Uri about)

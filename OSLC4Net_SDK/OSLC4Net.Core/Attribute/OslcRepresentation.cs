@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,10 +29,10 @@ public class OslcRepresentation : System.Attribute
     /**
      * Specify how the resource will be represented (for properties with a resource value-type).
      */
-    public readonly Representation value;
+    public Representation Value { get; }
 
     public OslcRepresentation(Representation value)
     {
-        this.value = value;
+        Value = value;
     }
 }

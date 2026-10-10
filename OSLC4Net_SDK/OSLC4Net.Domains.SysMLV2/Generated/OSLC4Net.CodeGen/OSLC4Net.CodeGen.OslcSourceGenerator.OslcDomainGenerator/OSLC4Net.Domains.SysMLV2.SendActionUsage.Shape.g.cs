@@ -11,7 +11,7 @@ public partial interface ISendActionUsage : IActionUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "SendActionUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#SendActionUsage" })]
+[OslcResourceShape(Title = "SendActionUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#SendActionUsage" })]
 public partial record SendActionUsage : ActionUsage, ISendActionUsage
 {
     public SendActionUsage(Uri about)

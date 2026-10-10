@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -27,25 +28,25 @@ public class OslcQueryCapability(string? title) : System.Attribute
     /**
      * Very short label for use in menu items
      */
-    public readonly string Label = "";
+    public string Label { get; } = "";
 
     /**
  * Resource shapes
  */
-    public readonly string ResourceShape = "";
+    public string ResourceShape { get; } = "";
 
     /**
      * Resource types
      */
-    public readonly string[] ResourceTypes = Array.Empty<string>();
+    public string[] ResourceTypes { get; } = Array.Empty<string>();
 
     /**
      * Title string that could be used for display
      */
-    public readonly string? Title = title;
+    public string? Title { get; } = title;
 
     /**
      * Usages
      */
-    public readonly string[] Usages = Array.Empty<string>();
+    public string[] Usages { get; } = Array.Empty<string>();
 }

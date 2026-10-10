@@ -11,7 +11,7 @@ public partial interface ITransitionUsage : IActionUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "TransitionUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#TransitionUsage" })]
+[OslcResourceShape(Title = "TransitionUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#TransitionUsage" })]
 public partial record TransitionUsage : ActionUsage, ITransitionUsage
 {
     public TransitionUsage(Uri about)

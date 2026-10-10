@@ -11,7 +11,7 @@ public partial interface INamespaceExpose : IExpose, INamespaceImport
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "NamespaceExposeShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#NamespaceExpose" })]
+[OslcResourceShape(Title = "NamespaceExposeShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#NamespaceExpose" })]
 public partial record NamespaceExpose : Expose, INamespaceExpose
 {
     public NamespaceExpose(Uri about)

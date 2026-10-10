@@ -23,7 +23,7 @@ namespace OSLC4Net.ChangeManagement;
 /// OSLC Change Management resource
 /// </summary>
 [OslcNamespace(Constants.CHANGE_MANAGEMENT_NAMESPACE)]
-[OslcResourceShape(title = "Change Request Resource Shape", describes = new string[] { Constants.TYPE_CHANGE_REQUEST })]
+[OslcResourceShape(Title = "Change Request Resource Shape", Describes = new string[] { Constants.TYPE_CHANGE_REQUEST })]
 public class ChangeRequest : AbstractResource
 {
     private Severity _severity = ChangeManagement.Severity.Unclassified; // TODO - Added severity for demo

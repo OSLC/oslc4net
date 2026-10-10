@@ -39,7 +39,7 @@ public sealed class KerMLDomainTests
             .Where(property =>
                 (Attribute.GetCustomAttribute(property, typeof(OslcPropertyDefinition))
                     as OslcPropertyDefinition)
-                    ?.value == sourceProperty
+                    ?.Value == sourceProperty
             )
             .ToArray();
 

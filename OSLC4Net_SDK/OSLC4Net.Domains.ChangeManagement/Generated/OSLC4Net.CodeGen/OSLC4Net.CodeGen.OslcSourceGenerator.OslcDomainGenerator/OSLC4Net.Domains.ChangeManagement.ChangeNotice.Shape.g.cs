@@ -11,7 +11,7 @@ public partial interface IChangeNotice : IChangeRequest
 }
 
 [OslcNamespace("http://open-services.net/ns/cm#")]
-[OslcResourceShape(title = "A notification of a change request that requires authorization to address.", describes = new string[] { "http://open-services.net/ns/cm#ChangeNotice" })]
+[OslcResourceShape(Title = "A notification of a change request that requires authorization to address.", Describes = new string[] { "http://open-services.net/ns/cm#ChangeNotice" })]
 public partial record ChangeNotice : ChangeRequest, IChangeNotice
 {
     public ChangeNotice(Uri about)

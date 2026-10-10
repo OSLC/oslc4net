@@ -11,7 +11,7 @@ public partial interface ILocation : IElement
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Location", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Location" })]
+[OslcResourceShape(Title = "Location", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Location" })]
 public partial record Location : Element, ILocation
 {
     public Location(Uri about)

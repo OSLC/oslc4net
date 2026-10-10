@@ -11,7 +11,7 @@ public partial interface IMetadataUsage : IItemUsage, IMetadataFeature
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "MetadataUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#MetadataUsage" })]
+[OslcResourceShape(Title = "MetadataUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#MetadataUsage" })]
 public partial record MetadataUsage : ItemUsage, IMetadataUsage
 {
     public MetadataUsage(Uri about)

@@ -11,7 +11,7 @@ public partial interface IChangeRequest : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/cm#")]
-[OslcResourceShape(title = "A general type for records in a Change Management.", describes = new string[] { "http://open-services.net/ns/cm#ChangeRequest" })]
+[OslcResourceShape(Title = "A general type for records in a Change Management.", Describes = new string[] { "http://open-services.net/ns/cm#ChangeRequest" })]
 public partial record ChangeRequest : AbstractResourceRecord, IChangeRequest
 {
     public ChangeRequest(Uri about)

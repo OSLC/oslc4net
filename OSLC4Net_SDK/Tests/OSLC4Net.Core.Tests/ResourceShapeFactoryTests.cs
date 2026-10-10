@@ -338,7 +338,7 @@ public class ResourceShapeFactoryTests
 
 // Test resource class for getter/setter pattern testing
 
-[OslcResourceShape(title = "Test Resource Shape", describes = new[] { "http://example.com/TestResource" })]
+[OslcResourceShape(Title = "Test Resource Shape", Describes = new[] { "http://example.com/TestResource" })]
 public class TestResourceWithGetterSetterPattern
 {
     private readonly ISet<Uri> _implementedBy = new HashSet<Uri>();
@@ -366,7 +366,7 @@ public class TestResourceWithGetterSetterPattern
 }
 
 // Test resource class for ISet<Uri> testing
-[OslcResourceShape(title = "Test Resource Shape", describes = new[] { "http://example.com/TestResource" })]
+[OslcResourceShape(Title = "Test Resource Shape", Describes = new[] { "http://example.com/TestResource" })]
 public class TestResourceWithISetUri
 {
     [OslcDescription("A set of URIs")]
@@ -377,7 +377,7 @@ public class TestResourceWithISetUri
 }
 
 // Test resource class for ICollection<Uri> testing
-[OslcResourceShape(title = "Test Resource Shape", describes = new[] { "http://example.com/TestResource" })]
+[OslcResourceShape(Title = "Test Resource Shape", Describes = new[] { "http://example.com/TestResource" })]
 public class TestResourceWithICollectionUri
 {
     private ICollection<Uri> _uriCollection = new List<Uri>();
@@ -398,7 +398,7 @@ public class TestResourceWithICollectionUri
 }
 
 // Test resource class for List<Uri> testing
-[OslcResourceShape(title = "Test Resource Shape", describes = new[] { "http://example.com/TestResource" })]
+[OslcResourceShape(Title = "Test Resource Shape", Describes = new[] { "http://example.com/TestResource" })]
 public class TestResourceWithListUri
 {
     private List<Uri> _uriList = new List<Uri>();
@@ -419,7 +419,7 @@ public class TestResourceWithListUri
 }
 
 // Test resource class for Uri[] testing
-[OslcResourceShape(title = "Test Resource Shape", describes = new[] { "http://example.com/TestResource" })]
+[OslcResourceShape(Title = "Test Resource Shape", Describes = new[] { "http://example.com/TestResource" })]
 public class TestResourceWithUriArray
 {
     private Uri[] _uriArray = new Uri[0];
@@ -440,7 +440,7 @@ public class TestResourceWithUriArray
 }
 
 // Test resource class for HashSet<Uri> testing
-[OslcResourceShape(title = "Test Resource Shape", describes = new[] { "http://example.com/TestResource" })]
+[OslcResourceShape(Title = "Test Resource Shape", Describes = new[] { "http://example.com/TestResource" })]
 public class TestResourceWithHashSetUri
 {
     private HashSet<Uri> _uriHashSet = new HashSet<Uri>();

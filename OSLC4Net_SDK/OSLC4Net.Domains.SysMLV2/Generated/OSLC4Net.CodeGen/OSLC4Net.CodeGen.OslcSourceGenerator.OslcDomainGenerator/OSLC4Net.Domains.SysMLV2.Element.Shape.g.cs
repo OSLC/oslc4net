@@ -11,7 +11,7 @@ public partial interface IElement : IExtendedResource
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ElementShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Element" })]
+[OslcResourceShape(Title = "ElementShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Element" })]
 public partial record Element : AbstractResourceRecord, IElement
 {
     public Element(Uri about)

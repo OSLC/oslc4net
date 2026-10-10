@@ -11,7 +11,7 @@ public partial interface IConcernDefinition : IRequirementDefinition
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ConcernDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ConcernDefinition" })]
+[OslcResourceShape(Title = "ConcernDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ConcernDefinition" })]
 public partial record ConcernDefinition : RequirementDefinition, IConcernDefinition
 {
     public ConcernDefinition(Uri about)

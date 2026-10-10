@@ -11,7 +11,7 @@ public partial interface IPackageVerificationCode : IIntegrityMethod
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Package Verification Code", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/PackageVerificationCode" })]
+[OslcResourceShape(Title = "Package Verification Code", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/PackageVerificationCode" })]
 public partial record PackageVerificationCode : IntegrityMethod, IPackageVerificationCode
 {
     public PackageVerificationCode(Uri about)

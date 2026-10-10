@@ -23,8 +23,8 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// https://archive.open-services.net/wiki/automation/OSLC-Automation-Specification-Version-2.0/index.html#Resource_ParameterInstance
 /// </summary>
-[OslcResourceShape(title = "Parameter Instance Resource Shape",
-    describes = new string[] { AutomationConstants.TYPE_PARAMETER_INSTANCE })]
+[OslcResourceShape(Title = "Parameter Instance Resource Shape",
+    Describes = new string[] { AutomationConstants.TYPE_PARAMETER_INSTANCE })]
 [OslcNamespace(AutomationConstants.AUTOMATION_NAMESPACE)]
 public class ParameterInstance : AbstractResource
 {

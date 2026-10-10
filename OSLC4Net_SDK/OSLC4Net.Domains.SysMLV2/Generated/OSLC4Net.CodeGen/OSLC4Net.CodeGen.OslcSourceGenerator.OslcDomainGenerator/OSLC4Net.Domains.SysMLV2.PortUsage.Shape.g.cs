@@ -11,7 +11,7 @@ public partial interface IPortUsage : IOccurrenceUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "PortUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#PortUsage" })]
+[OslcResourceShape(Title = "PortUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#PortUsage" })]
 public partial record PortUsage : OccurrenceUsage, IPortUsage
 {
     public PortUsage(Uri about)

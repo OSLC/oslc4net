@@ -11,7 +11,7 @@ public partial interface ISoftwareService : global::OSLC4Net.Domains.SPDX.Core.I
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Service/")]
-[OslcResourceShape(title = "Software Service", describes = new string[] { "https://spdx.org/rdf/3/terms/Service/SoftwareService" })]
+[OslcResourceShape(Title = "Software Service", Describes = new string[] { "https://spdx.org/rdf/3/terms/Service/SoftwareService" })]
 public partial record SoftwareService : global::OSLC4Net.Domains.SPDX.Core.Element, ISoftwareService
 {
     public SoftwareService(Uri about)

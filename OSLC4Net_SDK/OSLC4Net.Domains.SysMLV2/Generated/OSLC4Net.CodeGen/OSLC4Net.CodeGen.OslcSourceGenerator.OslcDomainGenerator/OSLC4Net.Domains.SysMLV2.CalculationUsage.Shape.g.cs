@@ -11,7 +11,7 @@ public partial interface ICalculationUsage : IActionUsage, IExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "CalculationUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#CalculationUsage" })]
+[OslcResourceShape(Title = "CalculationUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#CalculationUsage" })]
 public partial record CalculationUsage : ActionUsage, ICalculationUsage
 {
     public CalculationUsage(Uri about)

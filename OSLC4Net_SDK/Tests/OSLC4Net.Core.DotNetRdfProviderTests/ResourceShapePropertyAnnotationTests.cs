@@ -4,7 +4,7 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Core.DotNetRdfProviderTests;
 
-[OslcResourceShape(title = "Test Shape", describes = new[] { "http://example.com/TestResource" })]
+[OslcResourceShape(Title = "Test Shape", Describes = new[] { "http://example.com/TestResource" })]
 [OslcNamespace("http://example.com/ns#")]
 public class TestResourceWithTypesProperty : AbstractResource
 {

@@ -50,11 +50,11 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         _rdfHelper = rdfHelper ?? Activator.CreateInstance<DotNetRdfHelper>();
         RebuildGraph = rebuildgraph;
 
-        SupportedMediaTypes.Add(OslcMediaType.APPLICATION_RDF_XML_TYPE);
-        SupportedMediaTypes.Add(OslcMediaType.APPLICATION_XML_TYPE);
-        SupportedMediaTypes.Add(OslcMediaType.TEXT_XML_TYPE);
-        SupportedMediaTypes.Add(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML_TYPE);
-        SupportedMediaTypes.Add(OslcMediaType.TEXT_TURTLE_TYPE);
+        SupportedMediaTypes.Add(OslcMediaType.ApplicationRdfXmlType);
+        SupportedMediaTypes.Add(OslcMediaType.ApplicationXmlType);
+        SupportedMediaTypes.Add(OslcMediaType.TextXmlType);
+        SupportedMediaTypes.Add(OslcMediaType.ApplicationXOslcCompactXmlType);
+        SupportedMediaTypes.Add(OslcMediaType.TextTurtleType);
     }
 
     /// <summary>

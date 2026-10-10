@@ -1149,7 +1149,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 
             if (setMethod != null)
             {
-                result.Add(oslcPropertyDefinitionAnnotation.value,
+                result.Add(oslcPropertyDefinitionAnnotation.Value,
                     setMethod);
             }
             else
@@ -1169,7 +1169,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                 continue;
             }
 
-            result.Add(oslcPropertyDefinitionAnnotation.value, propertyInfo);
+            result.Add(oslcPropertyDefinitionAnnotation.Value, propertyInfo);
         }
 
         return result;
@@ -1181,7 +1181,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         INode mainResource,
         IDictionary<string, object>? oslcProperties)
     {
-        if (oslcProperties == OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON)
+        if (oslcProperties == OSLC4NetConstants.Oslc4NetPropertySingleton)
         {
             return;
         }
@@ -1223,7 +1223,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 
             if (oslcProperties != null)
             {
-                if (oslcProperties.TryGetValue(oslcPropertyDefinitionAnnotation.value, out var mapObj) && mapObj is IDictionary<string, object> map)
+                if (oslcProperties.TryGetValue(oslcPropertyDefinitionAnnotation.Value, out var mapObj) && mapObj is IDictionary<string, object> map)
                 {
                     nestedProperties = map;
                 }
@@ -1231,7 +1231,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                          !(oslcProperties is NestedWildcardProperties))
                 {
                     nestedProperties =
-                        OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON;
+                        OSLC4NetConstants.Oslc4NetPropertySingleton;
                 }
                 else if (oslcProperties is NestedWildcardProperties properties)
                 {
@@ -1277,7 +1277,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 
             if (oslcProperties != null)
             {
-                if (oslcProperties.TryGetValue(oslcPropertyDefinitionAnnotation.value, out var mapObj) && mapObj is IDictionary<string, object> map)
+                if (oslcProperties.TryGetValue(oslcPropertyDefinitionAnnotation.Value, out var mapObj) && mapObj is IDictionary<string, object> map)
                 {
                     nestedProperties = map;
                 }
@@ -1285,7 +1285,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                          !(oslcProperties is NestedWildcardProperties))
                 {
                     nestedProperties =
-                        OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON;
+                        OSLC4NetConstants.Oslc4NetPropertySingleton;
                 }
                 else if (oslcProperties is NestedWildcardProperties properties)
                 {
@@ -1363,7 +1363,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                 else if (properties is SingletonWildcardProperties &&
                          !(properties is NestedWildcardProperties))
                 {
-                    nestedProperties = OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON;
+                    nestedProperties = OSLC4NetConstants.Oslc4NetPropertySingleton;
                 }
                 else if (properties is NestedWildcardProperties wildcardProperties)
                 {
@@ -1553,14 +1553,14 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         IDictionary<string, object>? nestedProperties,
         bool onlyNested)
     {
-        var propertyDefinition = propertyDefinitionAnnotation.value;
+        var propertyDefinition = propertyDefinitionAnnotation.Value;
 
         var nameAnnotation = InheritedMethodAttributeHelper.GetAttribute<OslcName>(method);
 
         string name;
         if (nameAnnotation != null)
         {
-            name = nameAnnotation.value;
+            name = nameAnnotation.Value;
         }
         else
         {
@@ -1577,7 +1577,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         var valueTypeAnnotation =
             InheritedMethodAttributeHelper.GetAttribute<OslcValueType>(method);
 
-        var xmlLiteral = valueTypeAnnotation is { value: ValueType.XMLLiteral };
+        var xmlLiteral = valueTypeAnnotation is { Value: ValueType.XMLLiteral };
 
         var attribute = graph.CreateUriNode(new Uri(propertyDefinition));
 
@@ -1593,11 +1593,11 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         List<INode>? rdfNodeContainer;
 
         if (collectionType != null &&
-            OslcConstants.RDF_NAMESPACE.Equals(collectionType.namespaceURI) &&
-            (RDF_LIST.Equals(collectionType.collectionType)
-             || RDF_ALT.Equals(collectionType.collectionType)
-             || RDF_BAG.Equals(collectionType.collectionType)
-             || RDF_SEQ.Equals(collectionType.collectionType)))
+            OslcConstants.RDF_NAMESPACE.Equals(collectionType.NamespaceUri) &&
+            (RDF_LIST.Equals(collectionType.CollectionType)
+             || RDF_ALT.Equals(collectionType.CollectionType)
+             || RDF_BAG.Equals(collectionType.CollectionType)
+             || RDF_SEQ.Equals(collectionType.CollectionType)))
         {
             rdfNodeContainer = new List<INode>();
         }
@@ -1691,7 +1691,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         IList<INode> rdfNodeContainer,
         IGraph graph)
     {
-        if (RDF_LIST.Equals(collectionType.collectionType))
+        if (RDF_LIST.Equals(collectionType.CollectionType))
         {
             INode root = graph.CreateBlankNode();
             var current = root;
@@ -1727,12 +1727,12 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
 
         INode container = graph.CreateBlankNode();
 
-        if (RDF_ALT.Equals(collectionType.collectionType))
+        if (RDF_ALT.Equals(collectionType.CollectionType))
         {
             graph.Assert(new Triple(container, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType)),
                 graph.CreateUriNode(OslcConstants.RDF_NAMESPACE + RDF_ALT)));
         }
-        else if (RDF_BAG.Equals(collectionType.collectionType))
+        else if (RDF_BAG.Equals(collectionType.CollectionType))
         {
             graph.Assert(new Triple(container, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType)),
                 graph.CreateUriNode(OslcConstants.RDF_NAMESPACE + RDF_BAG)));
@@ -1942,7 +1942,7 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
                 var triple = new Triple(resource, attribute, nestedNode);
 
                 if (isReifiedResource &&
-                    nestedProperties != OSLC4NetConstants.OSLC4NET_PROPERTY_SINGLETON)
+                    nestedProperties != OSLC4NetConstants.Oslc4NetPropertySingleton)
                 {
                     AddReifiedStatements(graph, triple, obj, nestedProperties!);
                 }
@@ -2006,13 +2006,13 @@ public class DotNetRdfHelper(ILogger<DotNetRdfHelper> logger)
         if (oslcSchemaAttribute.Length > 0)
         {
             var oslcNamespaceDefinitionAnnotations =
-                (OslcNamespaceDefinition[])oslcSchemaAttribute[0].namespaceType
+                (OslcNamespaceDefinition[])oslcSchemaAttribute[0].NamespaceType
                     .GetMethod("GetNamespaces", Type.EmptyTypes)!.Invoke(null, null)!;
 
             foreach (var oslcNamespaceDefinitionAnnotation in oslcNamespaceDefinitionAnnotations)
             {
-                var prefix = oslcNamespaceDefinitionAnnotation.prefix;
-                var namespaceURI = oslcNamespaceDefinitionAnnotation.namespaceURI;
+                var prefix = oslcNamespaceDefinitionAnnotation.Prefix;
+                var namespaceURI = oslcNamespaceDefinitionAnnotation.NamespaceUri;
 
                 namespaceMappings.AddNamespace(prefix,
                     new Uri(namespaceURI));

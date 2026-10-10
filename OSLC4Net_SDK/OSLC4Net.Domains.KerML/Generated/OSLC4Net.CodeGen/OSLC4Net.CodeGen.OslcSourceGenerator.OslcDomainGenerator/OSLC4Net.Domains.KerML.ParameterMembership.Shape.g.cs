@@ -11,7 +11,7 @@ public partial interface IParameterMembership : IFeatureMembership
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "ParameterMembershipShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#ParameterMembership" })]
+[OslcResourceShape(Title = "ParameterMembershipShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#ParameterMembership" })]
 public partial record ParameterMembership : FeatureMembership, IParameterMembership
 {
     public ParameterMembership(Uri about)

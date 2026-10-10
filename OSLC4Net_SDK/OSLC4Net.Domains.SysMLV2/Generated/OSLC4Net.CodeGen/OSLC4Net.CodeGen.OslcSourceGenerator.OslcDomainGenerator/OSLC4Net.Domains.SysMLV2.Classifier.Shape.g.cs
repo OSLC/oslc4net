@@ -11,7 +11,7 @@ public partial interface IClassifier : ISType
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ClassifierShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Classifier" })]
+[OslcResourceShape(Title = "ClassifierShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Classifier" })]
 public partial record Classifier : SType, IClassifier
 {
     public Classifier(Uri about)

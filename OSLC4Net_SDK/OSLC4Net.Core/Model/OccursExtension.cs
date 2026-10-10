@@ -17,7 +17,7 @@ public static class OccursExtension
         var attributes = (URI[])occurs.GetType().GetField(occurs.ToString())!
             .GetCustomAttributes(typeof(URI), false);
 
-        return attributes.Length > 0 ? attributes[0].uri : string.Empty;
+        return attributes.Length > 0 ? attributes[0].Uri : string.Empty;
     }
 
     public static Occurs FromString(string value)
@@ -37,6 +37,6 @@ public static class OccursExtension
 
     public static Occurs FromURI(URI uri)
     {
-        return FromString(uri.uri);
+        return FromString(uri.Uri);
     }
 }

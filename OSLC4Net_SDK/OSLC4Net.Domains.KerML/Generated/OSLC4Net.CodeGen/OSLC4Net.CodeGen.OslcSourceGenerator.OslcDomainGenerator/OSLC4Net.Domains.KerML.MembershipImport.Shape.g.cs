@@ -11,7 +11,7 @@ public partial interface IMembershipImport : IImport
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "MembershipImportShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#MembershipImport" })]
+[OslcResourceShape(Title = "MembershipImportShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#MembershipImport" })]
 public partial record MembershipImport : Import, IMembershipImport
 {
     public MembershipImport(Uri about)

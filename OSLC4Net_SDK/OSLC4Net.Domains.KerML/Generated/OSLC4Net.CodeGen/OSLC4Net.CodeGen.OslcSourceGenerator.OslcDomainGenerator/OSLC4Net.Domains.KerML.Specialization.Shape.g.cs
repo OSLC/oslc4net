@@ -11,7 +11,7 @@ public partial interface ISpecialization : IRelationship
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "SpecializationShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Specialization" })]
+[OslcResourceShape(Title = "SpecializationShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Specialization" })]
 public partial record Specialization : Relationship, ISpecialization
 {
     public Specialization(Uri about)

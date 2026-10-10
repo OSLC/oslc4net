@@ -11,7 +11,7 @@ public partial interface IContactPointRelationship : IRelationship
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Contact Point Relationship", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/ContactPointRelationship" })]
+[OslcResourceShape(Title = "Contact Point Relationship", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/ContactPointRelationship" })]
 public partial record ContactPointRelationship : Relationship, IContactPointRelationship
 {
     public ContactPointRelationship(Uri about)

@@ -11,7 +11,7 @@ public partial interface ISType : INamespace
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "TypeShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Type" })]
+[OslcResourceShape(Title = "TypeShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Type" })]
 public partial record SType : Namespace, ISType
 {
     public SType(Uri about)

@@ -682,9 +682,9 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
             .Append(ToLiteral(NamespaceFromShape(shape)))
             .AppendLine(")]");
         builder
-            .Append("[OslcResourceShape(title = ")
+            .Append("[OslcResourceShape(Title = ")
             .Append(ToLiteral(target.ShapeTitle ?? shape.Title ?? Humanize(target.TypeName)))
-            .Append(", describes = new string[] { ");
+            .Append(", Describes = new string[] { ");
         builder.Append(string.Join(", ", shape.Describes.Select(ToLiteral)));
         builder.AppendLine(" })]");
         string interfaceName = GetInterfaceName(target);

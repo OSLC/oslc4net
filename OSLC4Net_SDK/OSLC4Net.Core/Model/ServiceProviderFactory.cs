@@ -66,7 +66,7 @@ public class ServiceProviderFactory
                 throw new OslcCoreInvalidAttributeException(resourceType, typeof(OslcService));
             }
 
-            var domain = serviceAttribute[0].value;
+            var domain = serviceAttribute[0].Value;
             Service? service;
             var serviceExists = serviceMap.TryGetValue(domain, out service);
             if (!serviceExists && service == null)
@@ -155,7 +155,7 @@ public class ServiceProviderFactory
                     {
                         service.AddCreationFactory(CreateCreationFactory(baseURI, method,
                             pathParameterValues));
-                        resourceShapes = creationFactoryAttribute[0].resourceShapes;
+                        resourceShapes = creationFactoryAttribute[0].ResourceShapes;
                     }
 
                     var dialogsAttribute =
@@ -193,11 +193,11 @@ public class ServiceProviderFactory
         var creationFactoryAttribute =
             (OslcCreationFactory[])method.GetCustomAttributes(typeof(OslcCreationFactory), false);
 
-        var title = creationFactoryAttribute[0].title;
-        var label = creationFactoryAttribute[0].label;
-        var resourceShapes = creationFactoryAttribute[0].resourceShapes;
-        var resourceTypes = creationFactoryAttribute[0].resourceTypes;
-        var usages = creationFactoryAttribute[0].usages;
+        var title = creationFactoryAttribute[0].Title;
+        var label = creationFactoryAttribute[0].Label;
+        var resourceShapes = creationFactoryAttribute[0].ResourceShapes;
+        var resourceTypes = creationFactoryAttribute[0].ResourceTypes;
+        var usages = creationFactoryAttribute[0].Usages;
 
         var typeName = method.DeclaringType!.Name;
         //controller names must end with Controller
@@ -305,13 +305,13 @@ public class ServiceProviderFactory
         MethodInfo method, OslcDialog dialogAttribute,
         Dictionary<string, object> pathParameterValues)
     {
-        var title = dialogAttribute.title;
-        var label = dialogAttribute.label;
-        var dialogURI = dialogAttribute.uri;
-        var hintWidth = dialogAttribute.hintWidth;
-        var hintHeight = dialogAttribute.hintHeight;
-        var resourceTypes = dialogAttribute.resourceTypes;
-        var usages = dialogAttribute.usages;
+        var title = dialogAttribute.Title;
+        var label = dialogAttribute.Label;
+        var dialogURI = dialogAttribute.Uri;
+        var hintWidth = dialogAttribute.HintWidth;
+        var hintHeight = dialogAttribute.HintHeight;
+        var resourceTypes = dialogAttribute.ResourceTypes;
+        var usages = dialogAttribute.Usages;
         var typeName = method.DeclaringType!.Name;
         //controller names must end with Controller
         var pos = typeName.IndexOf("Controller", StringComparison.Ordinal);

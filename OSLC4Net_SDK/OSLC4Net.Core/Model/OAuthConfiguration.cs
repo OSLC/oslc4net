@@ -21,8 +21,8 @@ namespace OSLC4Net.Core.Model;
 ///     An OSLC OAuth configuration resource
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC OAuth Configuration Resource Shape",
-    describes = new[] { OslcConstants.TYPE_O_AUTH_CONFIGURATION })]
+[OslcResourceShape(Title = "OSLC OAuth Configuration Resource Shape",
+    Describes = new[] { OslcConstants.TYPE_O_AUTH_CONFIGURATION })]
 public class OAuthConfiguration : AbstractResource
 {
     private Uri authorizationURI;

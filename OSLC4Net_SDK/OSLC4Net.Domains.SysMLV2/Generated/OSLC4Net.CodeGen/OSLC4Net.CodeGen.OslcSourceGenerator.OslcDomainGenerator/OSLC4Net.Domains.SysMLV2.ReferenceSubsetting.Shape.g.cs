@@ -11,7 +11,7 @@ public partial interface IReferenceSubsetting : ISubsetting
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ReferenceSubsettingShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ReferenceSubsetting" })]
+[OslcResourceShape(Title = "ReferenceSubsettingShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ReferenceSubsetting" })]
 public partial record ReferenceSubsetting : Subsetting, IReferenceSubsetting
 {
     public ReferenceSubsetting(Uri about)

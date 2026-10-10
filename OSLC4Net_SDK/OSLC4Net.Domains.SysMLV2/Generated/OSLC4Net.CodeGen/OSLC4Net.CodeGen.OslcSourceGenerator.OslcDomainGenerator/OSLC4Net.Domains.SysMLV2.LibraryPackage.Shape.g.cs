@@ -11,7 +11,7 @@ public partial interface ILibraryPackage : IPackage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "LibraryPackageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#LibraryPackage" })]
+[OslcResourceShape(Title = "LibraryPackageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#LibraryPackage" })]
 public partial record LibraryPackage : Package, ILibraryPackage
 {
     public LibraryPackage(Uri about)

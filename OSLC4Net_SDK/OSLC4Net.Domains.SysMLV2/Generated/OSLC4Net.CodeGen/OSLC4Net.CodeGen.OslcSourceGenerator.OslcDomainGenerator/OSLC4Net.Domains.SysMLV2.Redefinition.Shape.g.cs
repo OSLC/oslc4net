@@ -11,7 +11,7 @@ public partial interface IRedefinition : ISubsetting
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "RedefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Redefinition" })]
+[OslcResourceShape(Title = "RedefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Redefinition" })]
 public partial record Redefinition : Subsetting, IRedefinition
 {
     public Redefinition(Uri about)

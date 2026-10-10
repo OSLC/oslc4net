@@ -34,9 +34,9 @@ public sealed class QualityManagementDomainTests
         OslcNamespace? namespaceAttribute = Attribute.GetCustomAttribute(testPlanType, typeof(OslcNamespace)) as OslcNamespace;
         OslcResourceShape? shapeAttribute = Attribute.GetCustomAttribute(testPlanType, typeof(OslcResourceShape)) as OslcResourceShape;
 
-        await Assert.That(namespaceAttribute?.value).IsEqualTo(QM.NS);
-        await Assert.That(shapeAttribute?.describes).IsEquivalentTo([QM.TestPlan]);
-        await Assert.That(shapeAttribute?.title).IsEqualTo("QM Test Plan");
+        await Assert.That(namespaceAttribute?.Value).IsEqualTo(QM.NS);
+        await Assert.That(shapeAttribute?.Describes).IsEquivalentTo([QM.TestPlan]);
+        await Assert.That(shapeAttribute?.Title).IsEqualTo("QM Test Plan");
     }
 
     [Test]
@@ -52,8 +52,8 @@ public sealed class QualityManagementDomainTests
         TestPlan testPlan = new(new Uri("https://example.test/test-plan/1"));
         testPlan.UsesTestCase.Add(new Uri("https://example.test/test-case/1"));
 
-        await Assert.That(propertyDefinition?.value).IsEqualTo(QM.P.UsesTestCase);
-        await Assert.That(range?.value).IsEquivalentTo([QM.TestCase]);
+        await Assert.That(propertyDefinition?.Value).IsEqualTo(QM.P.UsesTestCase);
+        await Assert.That(range?.Value).IsEquivalentTo([QM.TestCase]);
         await Assert.That(testPlan.UsesTestCase).Contains(new Uri("https://example.test/test-case/1"));
     }
 

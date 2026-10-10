@@ -11,7 +11,7 @@ public partial interface IDefect : IChangeRequest
 }
 
 [OslcNamespace("http://open-services.net/ns/cm#")]
-[OslcResourceShape(title = "A software or product defect.", describes = new string[] { "http://open-services.net/ns/cm#Defect" })]
+[OslcResourceShape(Title = "A software or product defect.", Describes = new string[] { "http://open-services.net/ns/cm#Defect" })]
 public partial record Defect : ChangeRequest, IDefect
 {
     public Defect(Uri about)

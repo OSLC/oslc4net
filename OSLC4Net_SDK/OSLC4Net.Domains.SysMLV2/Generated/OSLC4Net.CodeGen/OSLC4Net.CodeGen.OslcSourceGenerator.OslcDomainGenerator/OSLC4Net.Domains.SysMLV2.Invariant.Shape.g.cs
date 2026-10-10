@@ -11,7 +11,7 @@ public partial interface IInvariant : IBooleanExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "InvariantShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Invariant" })]
+[OslcResourceShape(Title = "InvariantShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Invariant" })]
 public partial record Invariant : BooleanExpression, IInvariant
 {
     public Invariant(Uri about)

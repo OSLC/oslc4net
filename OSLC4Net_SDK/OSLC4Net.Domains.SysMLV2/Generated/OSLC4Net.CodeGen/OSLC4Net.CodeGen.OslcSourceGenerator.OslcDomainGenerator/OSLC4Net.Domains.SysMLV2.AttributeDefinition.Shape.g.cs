@@ -11,7 +11,7 @@ public partial interface IAttributeDefinition : IDataType, IDefinition
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "AttributeDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#AttributeDefinition" })]
+[OslcResourceShape(Title = "AttributeDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#AttributeDefinition" })]
 public partial record AttributeDefinition : DataType, IAttributeDefinition
 {
     public AttributeDefinition(Uri about)

@@ -11,7 +11,7 @@ public partial interface IContribution : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/config#")]
-[OslcResourceShape(title = "A contribution to a configuration.", describes = new string[] { "http://open-services.net/ns/config#Contribution" })]
+[OslcResourceShape(Title = "A contribution to a configuration.", Describes = new string[] { "http://open-services.net/ns/config#Contribution" })]
 public partial record Contribution : AbstractResourceRecord, IContribution
 {
     public Contribution(Uri about)

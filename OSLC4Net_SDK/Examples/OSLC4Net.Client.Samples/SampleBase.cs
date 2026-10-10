@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
 using Microsoft.Extensions.Logging;
 using OSLC4Net.Client.Oslc;
 using OSLC4Net.Client.Oslc.Resources;
@@ -7,7 +8,7 @@ namespace OSLC4Net.Client.Samples;
 
 public abstract class SampleBase<TResource> where TResource : IExtendedResource
 {
-    protected readonly ILogger Logger;
+    protected ILogger Logger { get; }
 
     protected SampleBase(ILogger logger)
     {

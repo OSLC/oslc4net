@@ -34,7 +34,7 @@ public static class TypeFactory
             (OslcNamespace[])objectType.GetCustomAttributes(typeof(OslcNamespace), false);
 
         return oslcNamespaceAnnotation.Length > 0
-            ? oslcNamespaceAnnotation[0].value
+            ? oslcNamespaceAnnotation[0].Value
             : OslcConstants.OSLC_DATA_NAMESPACE;
     }
 
@@ -45,7 +45,7 @@ public static class TypeFactory
 
         if (oslcNameAnnotation.Length > 0)
         {
-            return oslcNameAnnotation[0].value;
+            return oslcNameAnnotation[0].Value;
         }
 
         // For generic types, strip the generic argument suffix (e.g., `AllowedValuesResource`1 -> AllowedValuesResource)

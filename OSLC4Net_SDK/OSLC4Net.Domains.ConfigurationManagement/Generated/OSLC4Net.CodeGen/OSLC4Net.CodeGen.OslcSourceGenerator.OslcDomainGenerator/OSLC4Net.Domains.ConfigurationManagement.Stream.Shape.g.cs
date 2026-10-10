@@ -11,7 +11,7 @@ public partial interface IStream : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/config#")]
-[OslcResourceShape(title = "The shape of a stream.", describes = new string[] { "http://open-services.net/ns/config#Stream" })]
+[OslcResourceShape(Title = "The shape of a stream.", Describes = new string[] { "http://open-services.net/ns/config#Stream" })]
 public partial record Stream : AbstractResourceRecord, IStream
 {
     public Stream(Uri about)

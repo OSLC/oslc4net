@@ -11,7 +11,7 @@ public partial interface IConjugation : IRelationship
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ConjugationShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Conjugation" })]
+[OslcResourceShape(Title = "ConjugationShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Conjugation" })]
 public partial record Conjugation : Relationship, IConjugation
 {
     public Conjugation(Uri about)

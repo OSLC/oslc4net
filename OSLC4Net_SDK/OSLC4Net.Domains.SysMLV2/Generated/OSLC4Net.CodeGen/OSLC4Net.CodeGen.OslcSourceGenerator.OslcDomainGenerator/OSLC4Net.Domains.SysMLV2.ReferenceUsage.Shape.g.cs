@@ -11,7 +11,7 @@ public partial interface IReferenceUsage : IUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ReferenceUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ReferenceUsage" })]
+[OslcResourceShape(Title = "ReferenceUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ReferenceUsage" })]
 public partial record ReferenceUsage : Usage, IReferenceUsage
 {
     public ReferenceUsage(Uri about)

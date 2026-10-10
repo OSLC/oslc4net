@@ -11,7 +11,7 @@ public partial interface ISelections : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/config#")]
-[OslcResourceShape(title = "The resources selected by a configuration.", describes = new string[] { "http://open-services.net/ns/config#Selections" })]
+[OslcResourceShape(Title = "The resources selected by a configuration.", Describes = new string[] { "http://open-services.net/ns/config#Selections" })]
 public partial record Selections : AbstractResourceRecord, ISelections
 {
     public Selections(Uri about)

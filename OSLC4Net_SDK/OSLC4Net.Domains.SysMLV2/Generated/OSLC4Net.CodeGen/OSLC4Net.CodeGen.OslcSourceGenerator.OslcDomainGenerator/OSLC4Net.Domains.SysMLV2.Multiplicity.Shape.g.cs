@@ -11,7 +11,7 @@ public partial interface IMultiplicity : IFeature
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "MultiplicityShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Multiplicity" })]
+[OslcResourceShape(Title = "MultiplicityShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Multiplicity" })]
 public partial record Multiplicity : Feature, IMultiplicity
 {
     public Multiplicity(Uri about)

@@ -11,7 +11,7 @@ public partial interface IVirtualHardware : ISpdxHardware
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Hardware/")]
-[OslcResourceShape(title = "Virtual Hardware", describes = new string[] { "https://spdx.org/rdf/3/terms/Hardware/VirtualHardware" })]
+[OslcResourceShape(Title = "Virtual Hardware", Describes = new string[] { "https://spdx.org/rdf/3/terms/Hardware/VirtualHardware" })]
 public partial record VirtualHardware : SpdxHardware, IVirtualHardware
 {
     public VirtualHardware(Uri about)

@@ -33,7 +33,7 @@ sealed class ScopedSortTermImpl : SortTermImpl, ScopedSortTerm
         {
             if (sortTerms == null)
             {
-                sortTerms = new SortTermsImpl((CommonTree)tree.GetChild(1), prefixMap);
+                sortTerms = new SortTermsImpl((CommonTree)Tree.GetChild(1), PrefixMap);
             }
 
             return sortTerms;

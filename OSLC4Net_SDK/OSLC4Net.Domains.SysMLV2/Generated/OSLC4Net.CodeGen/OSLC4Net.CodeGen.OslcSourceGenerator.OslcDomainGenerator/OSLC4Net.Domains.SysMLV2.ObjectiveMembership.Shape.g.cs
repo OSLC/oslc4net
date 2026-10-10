@@ -11,7 +11,7 @@ public partial interface IObjectiveMembership : IFeatureMembership
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ObjectiveMembershipShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ObjectiveMembership" })]
+[OslcResourceShape(Title = "ObjectiveMembershipShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ObjectiveMembership" })]
 public partial record ObjectiveMembership : FeatureMembership, IObjectiveMembership
 {
     public ObjectiveMembership(Uri about)

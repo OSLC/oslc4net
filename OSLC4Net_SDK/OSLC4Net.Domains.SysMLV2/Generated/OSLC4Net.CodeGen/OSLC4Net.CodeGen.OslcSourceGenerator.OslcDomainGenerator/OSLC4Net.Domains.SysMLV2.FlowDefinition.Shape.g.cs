@@ -11,7 +11,7 @@ public partial interface IFlowDefinition : IActionDefinition, IInteraction
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "FlowDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#FlowDefinition" })]
+[OslcResourceShape(Title = "FlowDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#FlowDefinition" })]
 public partial record FlowDefinition : ActionDefinition, IFlowDefinition
 {
     public FlowDefinition(Uri about)

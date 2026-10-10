@@ -11,7 +11,7 @@ public partial interface IResponsibilityChangeAction : global::OSLC4Net.Domains.
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/SupplyChain/")]
-[OslcResourceShape(title = "Responsibility Change Action", describes = new string[] { "https://spdx.org/rdf/3/terms/SupplyChain/ResponsibilityChangeAction" })]
+[OslcResourceShape(Title = "Responsibility Change Action", Describes = new string[] { "https://spdx.org/rdf/3/terms/SupplyChain/ResponsibilityChangeAction" })]
 public partial record ResponsibilityChangeAction : global::OSLC4Net.Domains.SPDX.Core.Action, IResponsibilityChangeAction
 {
     public ResponsibilityChangeAction(Uri about)

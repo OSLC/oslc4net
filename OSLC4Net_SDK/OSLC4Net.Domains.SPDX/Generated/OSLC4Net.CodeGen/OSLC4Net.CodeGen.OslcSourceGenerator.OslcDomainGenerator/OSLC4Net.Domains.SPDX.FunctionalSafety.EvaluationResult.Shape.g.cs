@@ -11,7 +11,7 @@ public partial interface IEvaluationResult : global::OSLC4Net.Domains.SPDX.Core.
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/FunctionalSafety/")]
-[OslcResourceShape(title = "Evaluation Result", describes = new string[] { "https://spdx.org/rdf/3/terms/FunctionalSafety/EvaluationResult" })]
+[OslcResourceShape(Title = "Evaluation Result", Describes = new string[] { "https://spdx.org/rdf/3/terms/FunctionalSafety/EvaluationResult" })]
 public partial record EvaluationResult : global::OSLC4Net.Domains.SPDX.Core.Element, IEvaluationResult
 {
     public EvaluationResult(Uri about)

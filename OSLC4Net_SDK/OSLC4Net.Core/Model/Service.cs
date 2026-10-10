@@ -21,8 +21,8 @@ namespace OSLC4Net.Core.Model;
 ///     OSLC Service attribute
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Service Resource Shape",
-    describes = new[] { OslcConstants.TYPE_SERVICE })]
+[OslcResourceShape(Title = "OSLC Service Resource Shape",
+    Describes = new[] { OslcConstants.TYPE_SERVICE })]
 public class Service : AbstractResource
 {
     private readonly IList<Dialog> creationDialogs = new List<Dialog>();

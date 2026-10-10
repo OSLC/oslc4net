@@ -11,7 +11,7 @@ public partial interface ICaseDefinition : ICalculationDefinition
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "CaseDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#CaseDefinition" })]
+[OslcResourceShape(Title = "CaseDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#CaseDefinition" })]
 public partial record CaseDefinition : CalculationDefinition, ICaseDefinition
 {
     public CaseDefinition(Uri about)

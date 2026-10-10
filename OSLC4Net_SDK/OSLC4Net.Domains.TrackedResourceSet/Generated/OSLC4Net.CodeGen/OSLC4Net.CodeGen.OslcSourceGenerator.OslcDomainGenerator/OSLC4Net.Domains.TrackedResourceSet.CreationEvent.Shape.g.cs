@@ -11,7 +11,7 @@ public partial interface ICreationEvent : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/core/trs#")]
-[OslcResourceShape(title = "Creation Event", describes = new string[] { "http://open-services.net/ns/core/trs#Creation" })]
+[OslcResourceShape(Title = "Creation Event", Describes = new string[] { "http://open-services.net/ns/core/trs#Creation" })]
 public partial record CreationEvent : AbstractResourceRecord, ICreationEvent
 {
     public CreationEvent(Uri about)

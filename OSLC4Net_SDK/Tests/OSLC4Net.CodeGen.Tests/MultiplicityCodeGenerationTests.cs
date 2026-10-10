@@ -433,7 +433,7 @@ public sealed class MultiplicityCodeGenerationTests
             typeof(ConstantAttributeProbe).GetCustomAttribute<OslcResourceShape>();
 
         await Assert.That(MultiplicityVocabulary.NS).IsEqualTo(MultiplicityUris.Vocabulary);
-        await Assert.That(shapeAttribute?.title).IsEqualTo(MultiplicityUris.ShapeTitle);
+        await Assert.That(shapeAttribute?.Title).IsEqualTo(MultiplicityUris.ShapeTitle);
     }
 
     private static async Task AssertProperty(
@@ -452,7 +452,7 @@ public sealed class MultiplicityCodeGenerationTests
         if (expectedValueType is { } valueType)
         {
             OslcValueType? attribute = property.GetCustomAttribute<OslcValueType>();
-            await Assert.That(attribute?.value).IsEqualTo(valueType);
+            await Assert.That(attribute?.Value).IsEqualTo(valueType);
         }
     }
 }

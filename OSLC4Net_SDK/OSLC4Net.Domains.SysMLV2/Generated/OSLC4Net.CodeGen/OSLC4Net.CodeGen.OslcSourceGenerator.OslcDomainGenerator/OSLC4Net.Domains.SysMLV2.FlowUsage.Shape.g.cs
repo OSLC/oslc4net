@@ -11,7 +11,7 @@ public partial interface IFlowUsage : IActionUsage, IConnectorAsUsage, IFlow
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "FlowUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#FlowUsage" })]
+[OslcResourceShape(Title = "FlowUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#FlowUsage" })]
 public partial record FlowUsage : ActionUsage, IFlowUsage
 {
     public FlowUsage(Uri about)

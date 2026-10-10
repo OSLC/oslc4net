@@ -11,7 +11,7 @@ public partial interface IStakeholderMembership : IParameterMembership
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "StakeholderMembershipShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#StakeholderMembership" })]
+[OslcResourceShape(Title = "StakeholderMembershipShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#StakeholderMembership" })]
 public partial record StakeholderMembership : ParameterMembership, IStakeholderMembership
 {
     public StakeholderMembership(Uri about)

@@ -11,7 +11,7 @@ public partial interface IConstraintDefinition : IOccurrenceDefinition, IPredica
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ConstraintDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ConstraintDefinition" })]
+[OslcResourceShape(Title = "ConstraintDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ConstraintDefinition" })]
 public partial record ConstraintDefinition : OccurrenceDefinition, IConstraintDefinition
 {
     public ConstraintDefinition(Uri about)

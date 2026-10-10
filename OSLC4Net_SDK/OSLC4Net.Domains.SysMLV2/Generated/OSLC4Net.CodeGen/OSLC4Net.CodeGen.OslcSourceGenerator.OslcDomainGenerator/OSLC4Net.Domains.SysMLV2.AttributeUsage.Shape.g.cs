@@ -11,7 +11,7 @@ public partial interface IAttributeUsage : IUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "AttributeUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#AttributeUsage" })]
+[OslcResourceShape(Title = "AttributeUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#AttributeUsage" })]
 public partial record AttributeUsage : Usage, IAttributeUsage
 {
     public AttributeUsage(Uri about)

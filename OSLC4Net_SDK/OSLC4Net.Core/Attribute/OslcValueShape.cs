@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -27,10 +28,10 @@ public class OslcValueShape : System.Attribute
      * If the value-type is a resource type, then Property MAY provide a shape value
      * to indicate the Resource Shape that applies to the resource.
      */
-    public readonly string value;
+    public string Value { get; }
 
     public OslcValueShape(string value)
     {
-        this.value = value;
+        Value = value;
     }
 }

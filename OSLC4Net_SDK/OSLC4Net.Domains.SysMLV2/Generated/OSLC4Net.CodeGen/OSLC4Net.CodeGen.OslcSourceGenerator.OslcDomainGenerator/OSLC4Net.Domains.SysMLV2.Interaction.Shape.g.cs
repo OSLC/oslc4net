@@ -11,7 +11,7 @@ public partial interface IInteraction : IAssociation, IBehavior
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "InteractionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Interaction" })]
+[OslcResourceShape(Title = "InteractionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#Interaction" })]
 public partial record Interaction : Association, IInteraction
 {
     public Interaction(Uri about)

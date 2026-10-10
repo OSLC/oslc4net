@@ -11,7 +11,7 @@ public partial interface IElement : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Element", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Element" })]
+[OslcResourceShape(Title = "Element", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/Element" })]
 public partial record Element : AbstractResourceRecord, IElement
 {
     public Element(Uri about)

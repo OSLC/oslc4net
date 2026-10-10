@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2012 IBM Corporation.
+ * Copyright (c) 2026 Andrii Berezovskyi and OSLC4Net contributors.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -26,6 +27,8 @@ public static class OSLC4NetConstants
     /// </summary>
     public const string INNER_URI_HEADER = "$X-OSLC4Net-GraphUriBase";
 
-    public static readonly IDictionary<string, object> OSLC4NET_PROPERTY_SINGLETON =
+    private static readonly IDictionary<string, object> _oslc4NetPropertySingleton =
         new Dictionary<string, object>(0, StringComparer.Ordinal);
+
+    public static IDictionary<string, object> Oslc4NetPropertySingleton => _oslc4NetPropertySingleton;
 }

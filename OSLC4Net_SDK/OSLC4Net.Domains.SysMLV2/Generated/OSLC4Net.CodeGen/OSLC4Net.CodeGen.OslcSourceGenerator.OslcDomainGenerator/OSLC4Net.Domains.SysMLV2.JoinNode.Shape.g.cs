@@ -11,7 +11,7 @@ public partial interface IJoinNode : IControlNode
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "JoinNodeShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#JoinNode" })]
+[OslcResourceShape(Title = "JoinNodeShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#JoinNode" })]
 public partial record JoinNode : ControlNode, IJoinNode
 {
     public JoinNode(Uri about)

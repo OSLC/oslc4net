@@ -22,8 +22,8 @@ namespace OSLC4Net.Core.Model;
 ///     OSLC Compact resource representation.
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Compact Resource Shape",
-    describes = new[] { OslcConstants.TYPE_COMPACT })]
+[OslcResourceShape(Title = "OSLC Compact Resource Shape",
+    Describes = new[] { OslcConstants.TYPE_COMPACT })]
 public class Compact : AbstractResource
 {
     public Compact()

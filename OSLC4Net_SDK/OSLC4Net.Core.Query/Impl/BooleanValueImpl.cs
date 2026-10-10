@@ -33,7 +33,7 @@ internal sealed class BooleanValueImpl : ValueImpl, BooleanValue
         {
             if (value == null)
             {
-                value = bool.Parse(tree.Text);
+                value = bool.Parse(Tree.Text);
             }
 
             return value.Value;

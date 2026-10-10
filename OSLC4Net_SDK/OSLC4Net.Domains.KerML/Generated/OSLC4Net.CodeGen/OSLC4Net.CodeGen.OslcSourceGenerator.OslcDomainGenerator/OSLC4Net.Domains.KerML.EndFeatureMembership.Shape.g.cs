@@ -11,7 +11,7 @@ public partial interface IEndFeatureMembership : IFeatureMembership
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "EndFeatureMembershipShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#EndFeatureMembership" })]
+[OslcResourceShape(Title = "EndFeatureMembershipShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#EndFeatureMembership" })]
 public partial record EndFeatureMembership : FeatureMembership, IEndFeatureMembership
 {
     public EndFeatureMembership(Uri about)

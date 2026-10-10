@@ -37,7 +37,7 @@ internal sealed class InTermImpl : SimpleTermImpl, InTerm
         {
             if (values == null)
             {
-                var treeValues = ((CommonTree)tree.GetChild(1)).Children;
+                var treeValues = ((CommonTree)Tree.GetChild(1)).Children;
 
                 values = new List<Value>(treeValues.Count - 1);
 
@@ -47,7 +47,7 @@ internal sealed class InTermImpl : SimpleTermImpl, InTerm
                     var value =
                         ComparisonTermImpl.CreateValue(
                                 treeValue, "unspported literal value type",
-                                prefixMap);
+                                PrefixMap);
 
                     values.Add(value);
                 }

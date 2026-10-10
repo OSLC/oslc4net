@@ -11,7 +11,7 @@ public partial interface ICollectExpression : IOperatorExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "CollectExpressionShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#CollectExpression" })]
+[OslcResourceShape(Title = "CollectExpressionShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#CollectExpression" })]
 public partial record CollectExpression : OperatorExpression, ICollectExpression
 {
     public CollectExpression(Uri about)

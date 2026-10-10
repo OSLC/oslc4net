@@ -124,7 +124,10 @@ Dependabot is configured (via `.github/dependabot.yml`) to emit `build:` prefixe
 
 ## Coding conventions
 
-Follow _Framework Design Guidelines_ where possible.
+Follow _Framework Design Guidelines_ where possible. Keep instance fields private;
+use correctly named properties when callers or derived types need access. Follow
+the guideline exceptions for public constants and immutable `static readonly`
+predefined values.
 
 ## Code of Conduct
 This project and everyone participating in it are governed by the [.NET Foundation Code of Conduct](https://dotnetfoundation.org/about/policies/code-of-conduct). By participating, you are expected to uphold this code.

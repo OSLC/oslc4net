@@ -23,8 +23,8 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// https://archive.open-services.net/wiki/automation/OSLC-Automation-Specification-Version-2.0/index.html#Resource_AutomationResult
 /// </summary>
-[OslcResourceShape(title = "Automation Result Resource Shape",
-    describes = new string[] { AutomationConstants.TYPE_AUTOMATION_RESULT })]
+[OslcResourceShape(Title = "Automation Result Resource Shape",
+    Describes = new string[] { AutomationConstants.TYPE_AUTOMATION_RESULT })]
 [OslcNamespace(AutomationConstants.AUTOMATION_NAMESPACE)]
 public class AutomationResult : AbstractResource
 {

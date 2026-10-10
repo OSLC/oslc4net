@@ -11,7 +11,7 @@ public partial interface IParameterInstance : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/auto#")]
-[OslcResourceShape(title = "ParameterInstance", describes = new string[] { "http://open-services.net/ns/auto#ParameterInstance" })]
+[OslcResourceShape(Title = "ParameterInstance", Describes = new string[] { "http://open-services.net/ns/auto#ParameterInstance" })]
 public partial record ParameterInstance : AbstractResourceRecord, IParameterInstance
 {
     public ParameterInstance(Uri about)

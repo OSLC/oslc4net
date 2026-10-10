@@ -21,8 +21,8 @@ namespace OSLC4Net.Core.Model;
 ///     OSLC Publisher resource
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Publisher Resource Shape",
-    describes = new[] { OslcConstants.TYPE_PUBLISHER })]
+[OslcResourceShape(Title = "OSLC Publisher Resource Shape",
+    Describes = new[] { OslcConstants.TYPE_PUBLISHER })]
 public class Publisher : AbstractResource
 {
     private Uri icon;

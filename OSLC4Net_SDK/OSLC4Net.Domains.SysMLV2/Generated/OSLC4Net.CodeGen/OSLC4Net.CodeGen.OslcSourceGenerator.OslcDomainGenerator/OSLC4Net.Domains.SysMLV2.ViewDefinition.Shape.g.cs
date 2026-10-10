@@ -11,7 +11,7 @@ public partial interface IViewDefinition : IPartDefinition
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "ViewDefinitionShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ViewDefinition" })]
+[OslcResourceShape(Title = "ViewDefinitionShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#ViewDefinition" })]
 public partial record ViewDefinition : PartDefinition, IViewDefinition
 {
     public ViewDefinition(Uri about)

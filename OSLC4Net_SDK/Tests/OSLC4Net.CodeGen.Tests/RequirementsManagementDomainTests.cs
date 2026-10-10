@@ -40,9 +40,9 @@ public sealed class RequirementsManagementDomainTests
             typeof(Requirement),
             typeof(OslcNamespace)) as OslcNamespace;
 
-        await Assert.That(namespaceAttribute?.value).IsEqualTo(RM.NS);
-        await Assert.That(shapeAttribute?.describes).IsEquivalentTo([RM.Requirement]);
-        await Assert.That(shapeAttribute?.title).IsEqualTo("Requirement Resource Shape");
+        await Assert.That(namespaceAttribute?.Value).IsEqualTo(RM.NS);
+        await Assert.That(shapeAttribute?.Describes).IsEquivalentTo([RM.Requirement]);
+        await Assert.That(shapeAttribute?.Title).IsEqualTo("Requirement Resource Shape");
     }
 
     [Test]
@@ -52,7 +52,7 @@ public sealed class RequirementsManagementDomainTests
             .GetProperties()
             .Select(property => Attribute.GetCustomAttribute(property, typeof(OslcPropertyDefinition)) as OslcPropertyDefinition)
             .Where(attribute => attribute is not null)
-            .Select(attribute => attribute!.value)
+            .Select(attribute => attribute!.Value)
             .OrderBy(value => value, StringComparer.Ordinal)
             .ToArray();
 
@@ -70,7 +70,7 @@ public sealed class RequirementsManagementDomainTests
             .GetProperties()
             .Select(property => Attribute.GetCustomAttribute(property, typeof(OslcPropertyDefinition)) as OslcPropertyDefinition)
             .Where(attribute => attribute is not null)
-            .Select(attribute => attribute!.value)
+            .Select(attribute => attribute!.Value)
             .OrderBy(value => value, StringComparer.Ordinal)
             .ToArray();
 

@@ -11,7 +11,7 @@ public partial interface IStateUsage : IActionUsage
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "StateUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#StateUsage" })]
+[OslcResourceShape(Title = "StateUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#StateUsage" })]
 public partial record StateUsage : ActionUsage, IStateUsage
 {
     public StateUsage(Uri about)

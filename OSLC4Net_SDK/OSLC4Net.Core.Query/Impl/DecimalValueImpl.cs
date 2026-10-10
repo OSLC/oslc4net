@@ -33,7 +33,7 @@ internal sealed class DecimalValueImpl : ValueImpl, DecimalValue
         {
             if (value == null)
             {
-                value = tree.Text;
+                value = Tree.Text;
             }
 
             return value;

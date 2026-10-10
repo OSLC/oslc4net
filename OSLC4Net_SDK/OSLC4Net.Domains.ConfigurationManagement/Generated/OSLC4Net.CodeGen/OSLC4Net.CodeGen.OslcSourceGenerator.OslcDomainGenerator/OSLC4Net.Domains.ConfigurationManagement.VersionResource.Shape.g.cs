@@ -11,7 +11,7 @@ public partial interface IVersionResource : IExtendedResource
 }
 
 [OslcNamespace("http://open-services.net/ns/config#")]
-[OslcResourceShape(title = "{{The shape of a versioned resource: all versioned resources MUST match this shape}}.\n{{Versioned resources SHOULD match other shapes appropriate for their types - that is, they MAY have additional\nproperties and property constraints beyond those defined here}}.", describes = new string[] { "http://open-services.net/ns/config#VersionResource" })]
+[OslcResourceShape(Title = "{{The shape of a versioned resource: all versioned resources MUST match this shape}}.\n{{Versioned resources SHOULD match other shapes appropriate for their types - that is, they MAY have additional\nproperties and property constraints beyond those defined here}}.", Describes = new string[] { "http://open-services.net/ns/config#VersionResource" })]
 public partial record VersionResource : AbstractResourceRecord, IVersionResource
 {
     public VersionResource(Uri about)

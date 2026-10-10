@@ -54,7 +54,7 @@ public abstract class RequirementBase : AbstractResource
     private readonly ISet<Link> _constrains = new HashSet<Link>();
 
     // REVISIT: should it now be OSLC4Net.Core.Model.AbstractResource.SetTypes instead? (@berezovskyi 2025-02)
-    protected readonly ISet<Uri> RdfTypes = new HashSet<Uri>();
+    protected ISet<Uri> RdfTypes { get; } = new HashSet<Uri>();
 
     protected RequirementBase()
     {

@@ -11,7 +11,7 @@ public partial interface IPerformActionUsage : IActionUsage, IEventOccurrenceUsa
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "PerformActionUsageShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#PerformActionUsage" })]
+[OslcResourceShape(Title = "PerformActionUsageShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#PerformActionUsage" })]
 public partial record PerformActionUsage : ActionUsage, IPerformActionUsage
 {
     public PerformActionUsage(Uri about)

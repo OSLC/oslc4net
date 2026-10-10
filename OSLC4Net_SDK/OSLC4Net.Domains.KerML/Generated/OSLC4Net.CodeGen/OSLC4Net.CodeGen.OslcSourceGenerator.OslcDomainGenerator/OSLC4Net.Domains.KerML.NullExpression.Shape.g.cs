@@ -11,7 +11,7 @@ public partial interface INullExpression : IExpression
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "NullExpressionShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#NullExpression" })]
+[OslcResourceShape(Title = "NullExpressionShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#NullExpression" })]
 public partial record NullExpression : Expression, INullExpression
 {
     public NullExpression(Uri about)

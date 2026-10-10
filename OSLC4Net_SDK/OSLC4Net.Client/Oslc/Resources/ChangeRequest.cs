@@ -20,8 +20,8 @@ using ValueType = OSLC4Net.Core.Model.ValueType;
 namespace OSLC4Net.Client.Oslc.Resources;
 
 [OslcNamespace(CmConstants.CHANGE_MANAGEMENT_NAMESPACE)]
-[OslcResourceShape(title = "Change Request Resource Shape",
-    describes = new string[] { CmConstants.TYPE_CHANGE_REQUEST })]
+[OslcResourceShape(Title = "Change Request Resource Shape",
+    Describes = new string[] { CmConstants.TYPE_CHANGE_REQUEST })]
 public class ChangeRequest : AbstractResource
 {
     private readonly ISet<Link> affectedByDefects = new HashSet<Link>();

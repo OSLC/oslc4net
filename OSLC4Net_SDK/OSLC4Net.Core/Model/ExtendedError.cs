@@ -3,8 +3,8 @@ using OSLC4Net.Core.Attribute;
 namespace OSLC4Net.Core.Model;
 
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Extended Error Resource Shape",
-    describes = new[] { OslcConstants.TYPE_EXTENDED_ERROR })]
+[OslcResourceShape(Title = "OSLC Extended Error Resource Shape",
+    Describes = new[] { OslcConstants.TYPE_EXTENDED_ERROR })]
 public class ExtendedError
 {
     private string hintHeight;

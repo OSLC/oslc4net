@@ -11,7 +11,7 @@ public partial interface IFlow : IConnector, IStep
 }
 
 [OslcNamespace("https://www.omg.org/spec/kerml/vocabulary#")]
-[OslcResourceShape(title = "FlowShape", describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Flow" })]
+[OslcResourceShape(Title = "FlowShape", Describes = new string[] { "https://www.omg.org/spec/kerml/vocabulary#Flow" })]
 public partial record Flow : Connector, IFlow
 {
     public Flow(Uri about)

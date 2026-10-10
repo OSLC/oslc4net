@@ -11,7 +11,7 @@ public partial interface IDataType : IClassifier
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "DataTypeShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#DataType" })]
+[OslcResourceShape(Title = "DataTypeShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#DataType" })]
 public partial record DataType : Classifier, IDataType
 {
     public DataType(Uri about)

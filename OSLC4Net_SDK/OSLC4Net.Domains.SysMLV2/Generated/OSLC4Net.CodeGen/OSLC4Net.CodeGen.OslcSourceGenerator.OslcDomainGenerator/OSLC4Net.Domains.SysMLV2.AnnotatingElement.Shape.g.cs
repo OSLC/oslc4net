@@ -11,7 +11,7 @@ public partial interface IAnnotatingElement : IElement
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "AnnotatingElementShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#AnnotatingElement" })]
+[OslcResourceShape(Title = "AnnotatingElementShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#AnnotatingElement" })]
 public partial record AnnotatingElement : Element, IAnnotatingElement
 {
     public AnnotatingElement(Uri about)

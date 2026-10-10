@@ -11,7 +11,7 @@ public partial interface INamespaceMap : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Core/")]
-[OslcResourceShape(title = "Namespace Map", describes = new string[] { "https://spdx.org/rdf/3/terms/Core/NamespaceMap" })]
+[OslcResourceShape(Title = "Namespace Map", Describes = new string[] { "https://spdx.org/rdf/3/terms/Core/NamespaceMap" })]
 public partial record NamespaceMap : AbstractResourceRecord, INamespaceMap
 {
     public NamespaceMap(Uri about)

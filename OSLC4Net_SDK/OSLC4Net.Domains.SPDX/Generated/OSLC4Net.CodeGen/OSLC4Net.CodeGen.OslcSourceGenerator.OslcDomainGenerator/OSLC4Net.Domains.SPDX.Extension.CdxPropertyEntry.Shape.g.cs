@@ -11,7 +11,7 @@ public partial interface ICdxPropertyEntry : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Extension/")]
-[OslcResourceShape(title = "Cdx Property Entry", describes = new string[] { "https://spdx.org/rdf/3/terms/Extension/CdxPropertyEntry" })]
+[OslcResourceShape(Title = "Cdx Property Entry", Describes = new string[] { "https://spdx.org/rdf/3/terms/Extension/CdxPropertyEntry" })]
 public partial record CdxPropertyEntry : AbstractResourceRecord, ICdxPropertyEntry
 {
     public CdxPropertyEntry(Uri about)

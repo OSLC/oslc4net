@@ -11,7 +11,7 @@ public partial interface IVariantMembership : IOwningMembership
 }
 
 [OslcNamespace("https://www.omg.org/spec/sysml/vocabulary#")]
-[OslcResourceShape(title = "VariantMembershipShape", describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#VariantMembership" })]
+[OslcResourceShape(Title = "VariantMembershipShape", Describes = new string[] { "https://www.omg.org/spec/sysml/vocabulary#VariantMembership" })]
 public partial record VariantMembership : OwningMembership, IVariantMembership
 {
     public VariantMembership(Uri about)

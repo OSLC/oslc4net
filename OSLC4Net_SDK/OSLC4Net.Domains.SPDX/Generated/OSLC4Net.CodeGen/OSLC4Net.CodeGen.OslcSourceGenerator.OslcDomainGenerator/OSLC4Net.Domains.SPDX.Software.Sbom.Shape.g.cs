@@ -11,7 +11,7 @@ public partial interface ISbom : IExtendedResource
 }
 
 [OslcNamespace("https://spdx.org/rdf/3/terms/Software/")]
-[OslcResourceShape(title = "Sbom", describes = new string[] { "https://spdx.org/rdf/3/terms/Software/Sbom" })]
+[OslcResourceShape(Title = "Sbom", Describes = new string[] { "https://spdx.org/rdf/3/terms/Software/Sbom" })]
 public partial record Sbom : AbstractResourceRecord, ISbom
 {
     public Sbom(Uri about)
