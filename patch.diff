@@ -1,0 +1,44 @@
+--- OSLC4Net_SDK/OSLC4Net.Core/Model/ServiceProviderFactory.cs
++++ OSLC4Net_SDK/OSLC4Net.Core/Model/ServiceProviderFactory.cs
+@@ -362,25 +362,17 @@
+     private static string ResolvePathParameters(string basePath, string pathAttribute,
+         Dictionary<string, object> pathParameterValues)
+     {
+-        string returnUri;
+-
+         //Build the path from the @Path template + map of parameter value replacements
+-        if (pathParameterValues != null && pathParameterValues.Count > 0)
+-        {
+-            /* TODO - not supported yet
+-            UriBuilder builder = UriBuilder.fromUri(basePath);
+-            URI resolvedUri = builder.path(pathAttribute).buildFromMap(pathParameterValues);
+-            if (resolvedUri != null)
+-            {
+-                returnUri = resolvedUri.tostring();
+-            }
+-        */
+-            returnUri = basePath + "/" + pathAttribute;
+-        }
+-        else
+-        {
+-            // no parameters supplied - assume @Path not templated
+-            returnUri = basePath + "/" + pathAttribute;
+-        }
+-
+-        return returnUri;
++        /* TODO - not supported yet
++        if (pathParameterValues != null && pathParameterValues.Count > 0)
++        {
++            UriBuilder builder = UriBuilder.fromUri(basePath);
++            URI resolvedUri = builder.path(pathAttribute).buildFromMap(pathParameterValues);
++            if (resolvedUri != null)
++            {
++                returnUri = resolvedUri.tostring();
++            }
++        }
++        */
++
++        // assume @Path not templated
++        return basePath + "/" + pathAttribute;
+     }
+ }
