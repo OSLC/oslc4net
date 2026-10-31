@@ -17,6 +17,43 @@ namespace OSLC4Net.Core.Tests;
 public sealed class ValueTypeMappingTests
 {
     [Test]
+    public async Task AnyResourceReferencePropertiesPreserveDeclaredShapeConstraints()
+    {
+        ResourceShape shape = ResourceShapeFactory.CreateResourceShape(
+            "https://example.test", "shapes", "reference-probe", typeof(ReferenceProbe));
+
+        foreach (string name in new[] { "reference", "contributors" })
+        {
+            Property property = shape.GetProperties().Single(property => property.GetName() == name);
+            await Assert.That(property.GetValueType())
+                .IsEqualTo(new Uri(ValueTypeExtension.ToString(ValueType.AnyResource)));
+            await Assert.That(property.GetRepresentation())
+                .IsEqualTo(new Uri(RepresentationExtension.ToString(Representation.Reference)));
+            await Assert.That(property.GetOccurs()).IsEqualTo(new Uri(OccursExtension.ToString(
+                name == "reference" ? Occurs.ZeroOrOne : Occurs.ZeroOrMany)));
+        }
+    }
+
+    [OslcNamespace("https://example.test/types#")]
+    [OslcResourceShape(title = "Reference Probe", describes = new[] { "https://example.test/types#ReferenceProbe" })]
+    private sealed class ReferenceProbe
+    {
+        [OslcName("reference")]
+        [OslcPropertyDefinition("https://example.test/types#reference")]
+        [OslcValueType(ValueType.AnyResource)]
+        [OslcRepresentation(Representation.Reference)]
+        [OslcOccurs(Occurs.ZeroOrOne)]
+        public Uri? Reference { get; set; }
+
+        [OslcName("contributors")]
+        [OslcPropertyDefinition("https://example.test/types#contributors")]
+        [OslcValueType(ValueType.AnyResource)]
+        [OslcRepresentation(Representation.Reference)]
+        [OslcOccurs(Occurs.ZeroOrMany)]
+        public HashSet<Uri> Contributors { get; set; } = [];
+    }
+
+    [Test]
     public async Task UnknownValueTypeIsTheDefaultEnumValue()
     {
         await Assert.That((int)ValueType.Unknown).IsEqualTo(0);
