@@ -28,15 +28,13 @@ public class ResponseInfoCollection<T> : ResponseInfo<ICollection<T>>
     /// <param name="properties"></param>
     /// <param name="totalCount"></param>
     /// <param name="nextPage"></param>
-    public
-        ResponseInfoCollection(
-            ICollection<T> collection,
-            IDictionary<string, object> properties,
-            int totalCount,
-            string nextPage
-        ) : base(collection, properties, totalCount, nextPage)
-    {
-    }
+    public ResponseInfoCollection(
+        ICollection<T> collection,
+        IDictionary<string, object> properties,
+        int totalCount,
+        string nextPage
+    )
+        : base(collection, properties, totalCount, nextPage) { }
 
     /// <summary>
     /// </summary>
@@ -44,15 +42,13 @@ public class ResponseInfoCollection<T> : ResponseInfo<ICollection<T>>
     /// <param name="properties"></param>
     /// <param name="totalCount"></param>
     /// <param name="nextPage"></param>
-    public
-        ResponseInfoCollection(
-            ICollection<T> collection,
-            IDictionary<string, object> properties,
-            int totalCount,
-            Uri nextPage
-        ) : base(collection, properties, totalCount, nextPage)
-    {
-    }
+    public ResponseInfoCollection(
+        ICollection<T> collection,
+        IDictionary<string, object> properties,
+        int totalCount,
+        Uri nextPage
+    )
+        : base(collection, properties, totalCount, nextPage) { }
 
     /**
      * Collection of resources

@@ -22,10 +22,8 @@ namespace OSLC4Net.Core.Query.Impl;
 /// </summary>
 internal sealed class UriRefValueImpl : ValueImpl, UriRefValue
 {
-    public
-    UriRefValueImpl(CommonTree tree) : base(tree, ValueType.URI_REF)
-    {
-    }
+    public UriRefValueImpl(CommonTree tree)
+        : base(tree, ValueType.URI_REF) { }
 
     public string Value
     {

@@ -7,5 +7,4 @@ public class DummyTest
 
         await Assert.That(success).IsTrue();
     }
-
 }

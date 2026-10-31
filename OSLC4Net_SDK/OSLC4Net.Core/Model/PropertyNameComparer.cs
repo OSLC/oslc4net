@@ -25,8 +25,13 @@ public sealed class PropertyNameComparer : IComparer<Property>
             return nameComparison;
         }
 
-        var propertyDefComparison = Uri.Compare(x.GetPropertyDefinition(), y.GetPropertyDefinition(),
-            UriComponents.AbsoluteUri, UriFormat.UriEscaped, StringComparison.Ordinal);
+        var propertyDefComparison = Uri.Compare(
+            x.GetPropertyDefinition(),
+            y.GetPropertyDefinition(),
+            UriComponents.AbsoluteUri,
+            UriFormat.UriEscaped,
+            StringComparison.Ordinal
+        );
 
         if (propertyDefComparison != 0)
         {
@@ -40,7 +45,13 @@ public sealed class PropertyNameComparer : IComparer<Property>
 
         if (xAbout != null && yAbout != null)
         {
-            var aboutComparison = Uri.Compare(xAbout, yAbout, UriComponents.AbsoluteUri, UriFormat.UriEscaped, StringComparison.Ordinal);
+            var aboutComparison = Uri.Compare(
+                xAbout,
+                yAbout,
+                UriComponents.AbsoluteUri,
+                UriFormat.UriEscaped,
+                StringComparison.Ordinal
+            );
             if (aboutComparison != 0)
             {
                 return aboutComparison;
@@ -56,6 +67,8 @@ public sealed class PropertyNameComparer : IComparer<Property>
         }
 
         // Lastly, fallback to object identity hash code for stable sorting of BNodes
-        return System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(x).CompareTo(System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(y));
+        return System
+            .Runtime.CompilerServices.RuntimeHelpers.GetHashCode(x)
+            .CompareTo(System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(y));
     }
 }

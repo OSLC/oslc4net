@@ -18,6 +18,4 @@ namespace OSLC4Net.Core.Query;
 /// <summary>
 /// Nested property from olsc.select of oslc.properties clause
 /// </summary>
-public interface NestedProperty : Property, Properties
-{
-}
+public interface NestedProperty : Property, Properties { }

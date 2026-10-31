@@ -19,8 +19,7 @@ namespace OSLC4Net.Core.Attribute;
 /// <summary>
 ///     OSLC Dialog attribute
 /// </summary>
-[AttributeUsage(AttributeTargets.Method)
-]
+[AttributeUsage(AttributeTargets.Method)]
 public class OslcDialog : System.Attribute
 {
     /**

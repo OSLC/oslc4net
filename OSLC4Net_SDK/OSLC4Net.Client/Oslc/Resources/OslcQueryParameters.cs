@@ -26,9 +26,7 @@ public class OslcQueryParameters
     private string? _orderBy;
     private string? _prefix;
 
-    public OslcQueryParameters()
-    {
-    }
+    public OslcQueryParameters() { }
 
     /// <summary>
     /// Initialize an OSLC Parameter using the supplied terms
@@ -38,7 +36,13 @@ public class OslcQueryParameters
     /// <param name="searchTerms"></param>
     /// <param name="orderBy"></param>
     /// <param name="prefix"></param>
-    public OslcQueryParameters(string where, string select, string searchTerms, string orderBy, string prefix)
+    public OslcQueryParameters(
+        string where,
+        string select,
+        string searchTerms,
+        string orderBy,
+        string prefix
+    )
     {
         _where = where;
         _select = select;
@@ -103,14 +107,20 @@ public class OslcQueryParameters
         {
             var encodedQueryParms = Uri.EscapeUriString(oslcQueryParam);
             // NOTE: CLM is picky about encoding and native .NET URL encoder doesn't encode these extra substitutions
-            return encodedQueryParms.Replace("#", "%23").Replace("/", "%2F").Replace(":", "%3A")
+            return encodedQueryParms
+                .Replace("#", "%23")
+                .Replace("/", "%2F")
+                .Replace(":", "%3A")
                 .Replace("=", "%3D");
         }
         catch (UriFormatException)
         {
             //Should not occur
-            throw new ArgumentOutOfRangeException(nameof(oslcQueryParam), oslcQueryParam,
-                "Could not UTF-8 encode query parameters");
+            throw new ArgumentOutOfRangeException(
+                nameof(oslcQueryParam),
+                oslcQueryParam,
+                "Could not UTF-8 encode query parameters"
+            );
         }
     }
 }

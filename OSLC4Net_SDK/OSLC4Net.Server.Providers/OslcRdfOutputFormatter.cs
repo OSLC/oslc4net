@@ -37,8 +37,10 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
         // SupportedEncodings.Add(Encoding.Unicode);
     }
 
-    public override async Task WriteResponseBodyAsync(OutputFormatterWriteContext context,
-        Encoding selectedEncoding)
+    public override async Task WriteResponseBodyAsync(
+        OutputFormatterWriteContext context,
+        Encoding selectedEncoding
+    )
     {
         var httpContext = context.HttpContext;
 
@@ -63,27 +65,34 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
                 OslcMediaType.APPLICATION_JSON_LD => RdfFormat.JsonLd,
                 _ => throw new NotSupportedException($"Unknown RDF format: {requestedType}"),
             },
-            Graph = graph
+            Graph = graph,
         };
 
         await SerializeToRdfAsync(ctx, httpContext.Response).ConfigureAwait(false);
     }
 
-    private static IGraph ConvertOslcObjectsToGraph(Type? type, object? value,
-        HttpRequest httpRequest)
+    private static IGraph ConvertOslcObjectsToGraph(
+        Type? type,
+        object? value,
+        HttpRequest httpRequest
+    )
     {
         IGraph graph;
         if (type != null && ImplementsGenericType(typeof(FilteredResource<>), type))
         {
             if (value == null)
             {
-                throw new ArgumentNullException(nameof(value),
-                    "Value cannot be null for FilteredResource");
+                throw new ArgumentNullException(
+                    nameof(value),
+                    "Value cannot be null for FilteredResource"
+                );
             }
 
             var resourceProp = value.GetType().GetProperty("Resource");
-            var actualTypeArguments =
-                GetChildClassParameterArguments(typeof(FilteredResource<>), type);
+            var actualTypeArguments = GetChildClassParameterArguments(
+                typeof(FilteredResource<>),
+                type
+            );
             var objects = resourceProp?.GetValue(value, null);
             var propertiesProp = value.GetType().GetProperty("Properties");
             if (!ImplementsICollection(actualTypeArguments[0]))
@@ -100,8 +109,12 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
                 //without the query string. HostString already carries the port, so it must not be
                 //appended again (doing so produced an invalid "host:port:port" authority).
                 // FIXME: should this be set by the app based on service provider info
-                var descriptionAbout = UriHelper.BuildAbsolute(httpRequest.Scheme,
-                    httpRequest.Host, httpRequest.PathBase, httpRequest.Path);
+                var descriptionAbout = UriHelper.BuildAbsolute(
+                    httpRequest.Scheme,
+                    httpRequest.Host,
+                    httpRequest.PathBase,
+                    httpRequest.Path
+                );
 
                 //Subject URI for the responseInfo is the full request URI
                 var responseInfoAbout = httpRequest.GetEncodedUrl();
@@ -117,54 +130,71 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
                 var propertiesValue =
                     propertiesProp?.GetValue(value, null) as IDictionary<string, object>;
 
-                graph = DotNetRdfHelper.CreateDotNetRdfGraph(descriptionAbout,
+                graph = DotNetRdfHelper.CreateDotNetRdfGraph(
+                    descriptionAbout,
                     responseInfoAbout,
                     nextPageValue,
                     totalCount,
                     objects as IEnumerable<object> ?? Enumerable.Empty<object>(),
-                    propertiesValue ?? new Dictionary<string, object>(StringComparer.Ordinal));
+                    propertiesValue ?? new Dictionary<string, object>(StringComparer.Ordinal)
+                );
             }
             else
             {
                 var propertiesValue =
                     propertiesProp?.GetValue(value, null) as IDictionary<string, object>;
 
-                graph = DotNetRdfHelper.CreateDotNetRdfGraph(string.Empty, string.Empty,
-                    string.Empty, null,
+                graph = DotNetRdfHelper.CreateDotNetRdfGraph(
+                    string.Empty,
+                    string.Empty,
+                    string.Empty,
+                    null,
                     objects as IEnumerable<object> ?? Enumerable.Empty<object>(),
-                    propertiesValue ?? new Dictionary<string, object>(StringComparer.Ordinal));
+                    propertiesValue ?? new Dictionary<string, object>(StringComparer.Ordinal)
+                );
             }
         }
-        else if (value != null && InheritedGenericInterfacesHelper.ImplementsGenericInterface(
-                     typeof(IEnumerable<>), value.GetType()))
+        else if (
+            value != null
+            && InheritedGenericInterfacesHelper.ImplementsGenericInterface(
+                typeof(IEnumerable<>),
+                value.GetType()
+            )
+        )
         {
-            graph = DotNetRdfHelper.CreateDotNetRdfGraph(value as IEnumerable<object> ??
-                                                         Enumerable.Empty<object>());
+            graph = DotNetRdfHelper.CreateDotNetRdfGraph(
+                value as IEnumerable<object> ?? Enumerable.Empty<object>()
+            );
         }
-        else if (type != null &&
-                 type.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0)
+        else if (
+            type != null
+            && type.GetCustomAttributes(typeof(OslcResourceShape), false).Length > 0
+        )
         {
-            graph = DotNetRdfHelper.CreateDotNetRdfGraph(value != null
-                ? new[] { value }
-                : Enumerable.Empty<object>());
+            graph = DotNetRdfHelper.CreateDotNetRdfGraph(
+                value != null ? new[] { value } : Enumerable.Empty<object>()
+            );
         }
         else
         {
-            graph = DotNetRdfHelper.CreateDotNetRdfGraph(value != null
-                ? new EnumerableWrapper(value)
-                : Enumerable.Empty<object>());
+            graph = DotNetRdfHelper.CreateDotNetRdfGraph(
+                value != null ? new EnumerableWrapper(value) : Enumerable.Empty<object>()
+            );
         }
 
         return graph;
     }
 
-    private async Task SerializeToRdfAsync(SerializationContext ctx,
-        HttpResponse httpContextResponse)
+    private async Task SerializeToRdfAsync(
+        SerializationContext ctx,
+        HttpResponse httpContextResponse
+    )
     {
         // TODO: deal with namespaces
         var responseStreamWriter = new HttpResponseStreamWriter(
             httpContextResponse.BodyWriter.AsStream(),
-            Encoding.UTF8);
+            Encoding.UTF8
+        );
         if (ctx.Format is RdfFormat.Turtle or RdfFormat.NTriples or RdfFormat.RdfXml)
         {
             await SerializeTriplesAsync(ctx, responseStreamWriter).ConfigureAwait(false);
@@ -175,8 +205,10 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
         }
     }
 
-    private async Task SerializeTriplesAsync(SerializationContext ctx,
-        HttpResponseStreamWriter textWriter)
+    private async Task SerializeTriplesAsync(
+        SerializationContext ctx,
+        HttpResponseStreamWriter textWriter
+    )
     {
         IRdfWriter triplesWriter = ctx.Format switch
         {
@@ -184,20 +216,21 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
             {
                 UseDtd = _config.UseDtd,
                 PrettyPrintMode = _config.PrettyPrint,
-                CompressionLevel = _config.CompressionLevel
+                CompressionLevel = _config.CompressionLevel,
             },
             RdfFormat.Turtle => new CompressingTurtleWriter(TurtleSyntax.W3C)
             {
                 PrettyPrintMode = _config.PrettyPrint,
                 CompressionLevel = _config.CompressionLevel,
-                HighSpeedModePermitted = !_config.PrettyPrint
+                HighSpeedModePermitted = !_config.PrettyPrint,
             },
             RdfFormat.NTriples => new NTriplesWriter(NTriplesSyntax.Rdf11)
             {
-                SortTriples = _config.PrettyPrint
+                SortTriples = _config.PrettyPrint,
             },
             RdfFormat.JsonLd => throw new NotSupportedException(
-                "This method supports only triple-based formats, use quad-based method"),
+                "This method supports only triple-based formats, use quad-based method"
+            ),
             _ => throw new ArgumentOutOfRangeException(nameof(ctx), "Unknown RDF format"),
         };
 
@@ -207,20 +240,25 @@ public class OslcRdfOutputFormatter : TextOutputFormatter
         }
     }
 
-    private async Task SerializeQuadsAsync(SerializationContext ctx,
-        HttpResponseStreamWriter textWriter)
+    private async Task SerializeQuadsAsync(
+        SerializationContext ctx,
+        HttpResponseStreamWriter textWriter
+    )
     {
         IStoreWriter quadsWriter = ctx.Format switch
         {
-            RdfFormat.JsonLd => new JsonLdWriter(new JsonLdWriterOptions
-            {
-                JsonFormatting = _config.PrettyPrint ? Formatting.Indented : Formatting.None,
-                Ordered = _config.PrettyPrint,
-                ProcessingMode = _config.JsonLdMode
-            }),
-            RdfFormat.NTriples or RdfFormat.RdfXml or RdfFormat.Turtle => throw
-                new NotSupportedException(
-                    "This method supports only quad-based formats, use triple-based method"),
+            RdfFormat.JsonLd => new JsonLdWriter(
+                new JsonLdWriterOptions
+                {
+                    JsonFormatting = _config.PrettyPrint ? Formatting.Indented : Formatting.None,
+                    Ordered = _config.PrettyPrint,
+                    ProcessingMode = _config.JsonLdMode,
+                }
+            ),
+            RdfFormat.NTriples or RdfFormat.RdfXml or RdfFormat.Turtle =>
+                throw new NotSupportedException(
+                    "This method supports only quad-based formats, use triple-based method"
+                ),
             _ => throw new ArgumentOutOfRangeException(nameof(ctx), "Unknown RDF format"),
         };
 

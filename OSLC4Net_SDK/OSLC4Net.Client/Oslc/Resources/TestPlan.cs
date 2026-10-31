@@ -22,8 +22,10 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// https://docs.oasis-open-projects.org/oslc-op/qm/v2.1/os/quality-management-shapes.html#TestPlanShape
 /// </summary>
-[OslcResourceShape(title = "Quality Management Resource Shape",
-    describes = new string[] { QmConstants.TYPE_TEST_PLAN })]
+[OslcResourceShape(
+    title = "Quality Management Resource Shape",
+    describes = new string[] { QmConstants.TYPE_TEST_PLAN }
+)]
 [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
 public class TestPlan : QmResource
 {
@@ -36,9 +38,8 @@ public class TestPlan : QmResource
 
     private string description;
 
-    public TestPlan() : base()
-    {
-    }
+    public TestPlan()
+        : base() { }
 
     protected override Uri GetRdfType()
     {
@@ -75,7 +76,9 @@ public class TestPlan : QmResource
         this.validatesRequirementCollections.Add(requirementCollection);
     }
 
-    [OslcDescription("The person(s) who are responsible for the work needed to complete the change request.")]
+    [OslcDescription(
+        "The person(s) who are responsible for the work needed to complete the change request."
+    )]
     [OslcName("contributor")]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "contributor")]
     [OslcRange(QmConstants.TYPE_PERSON)]
@@ -96,7 +99,8 @@ public class TestPlan : QmResource
     }
 
     [OslcDescription(
-        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
+        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content."
+    )]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "description")]
     [OslcTitle("Description")]
     [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
@@ -117,7 +121,8 @@ public class TestPlan : QmResource
     }
 
     [OslcDescription(
-        "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
+        "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource."
+    )]
     [OslcName("subject")]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "subject")]
     [OslcReadOnly(false)]
@@ -140,7 +145,9 @@ public class TestPlan : QmResource
 
     [OslcDescription("Requirement Collection that is validated by the Test Plan.")]
     [OslcName("validatesRequirementCollection")]
-    [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "validatesRequirementCollection")]
+    [OslcPropertyDefinition(
+        QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "validatesRequirementCollection"
+    )]
     [OslcRange(QmConstants.TYPE_REQUIREMENT_COLLECTION)]
     [OslcReadOnly(false)]
     [OslcTitle("Validates Requirement Collection")]

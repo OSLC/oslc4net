@@ -30,7 +30,9 @@ public class ExtendedPropertyValueTests
         var predicateDouble = graph.CreateUriNode(new Uri("http://example.com/ns#extDouble"));
         var predicateString = graph.CreateUriNode(new Uri("http://example.com/ns#extString"));
         var predicateType = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
-        var typeNode = graph.CreateUriNode(new Uri(Constants.CHANGE_MANAGEMENT_NAMESPACE + "ChangeRequest"));
+        var typeNode = graph.CreateUriNode(
+            new Uri(Constants.CHANGE_MANAGEMENT_NAMESPACE + "ChangeRequest")
+        );
 
         graph.Assert(new Triple(subjectNode, predicateType, typeNode));
         graph.Assert(new Triple(subjectNode, predicateBool, true.ToLiteral(graph)));
@@ -38,7 +40,8 @@ public class ExtendedPropertyValueTests
         graph.Assert(new Triple(subjectNode, predicateDouble, 3.14.ToLiteral(graph)));
         graph.Assert(new Triple(subjectNode, predicateString, "hello".ToLiteral(graph)));
 
-        var result = (ChangeRequest)helper.FromDotNetRdfNode(subjectNode, graph, typeof(ChangeRequest));
+        var result = (ChangeRequest)
+            helper.FromDotNetRdfNode(subjectNode, graph, typeof(ChangeRequest));
 
         await Assert.That(result).IsNotNull();
         var extProps = result.GetExtendedProperties();
@@ -62,16 +65,22 @@ public class ExtendedPropertyValueTests
 
         var subjectNode = graph.CreateUriNode(new Uri("http://example.com/cr/unsigned-long"));
         var predicateType = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
-        var typeNode = graph.CreateUriNode(new Uri(Constants.CHANGE_MANAGEMENT_NAMESPACE + "ChangeRequest"));
-        var predicateUnsignedLong = graph.CreateUriNode(new Uri("http://example.com/ns#extUnsignedLong"));
+        var typeNode = graph.CreateUriNode(
+            new Uri(Constants.CHANGE_MANAGEMENT_NAMESPACE + "ChangeRequest")
+        );
+        var predicateUnsignedLong = graph.CreateUriNode(
+            new Uri("http://example.com/ns#extUnsignedLong")
+        );
         var unsignedLongNode = graph.CreateLiteralNode(
             "18446744073709551615",
-            new Uri("http://www.w3.org/2001/XMLSchema#unsignedLong"));
+            new Uri("http://www.w3.org/2001/XMLSchema#unsignedLong")
+        );
 
         graph.Assert(new Triple(subjectNode, predicateType, typeNode));
         graph.Assert(new Triple(subjectNode, predicateUnsignedLong, unsignedLongNode));
 
-        var result = (ChangeRequest)helper.FromDotNetRdfNode(subjectNode, graph, typeof(ChangeRequest));
+        var result = (ChangeRequest)
+            helper.FromDotNetRdfNode(subjectNode, graph, typeof(ChangeRequest));
 
         await Assert.That(result).IsNotNull();
         var extProps = result.GetExtendedProperties();
@@ -88,7 +97,9 @@ public class ExtendedPropertyValueTests
 
         var subjectNode = graph.CreateUriNode(new Uri("http://example.com/cr/2"));
         var predicateType = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
-        var typeNode = graph.CreateUriNode(new Uri(Constants.CHANGE_MANAGEMENT_NAMESPACE + "ChangeRequest"));
+        var typeNode = graph.CreateUriNode(
+            new Uri(Constants.CHANGE_MANAGEMENT_NAMESPACE + "ChangeRequest")
+        );
 
         var refPredicate = graph.CreateUriNode(new Uri("http://example.com/ns#extRef"));
         var targetUri = new Uri("http://example.com/otherResource");
@@ -97,7 +108,8 @@ public class ExtendedPropertyValueTests
         graph.Assert(new Triple(subjectNode, predicateType, typeNode));
         graph.Assert(new Triple(subjectNode, refPredicate, targetNode));
 
-        var result = (ChangeRequest)helper.FromDotNetRdfNode(subjectNode, graph, typeof(ChangeRequest));
+        var result = (ChangeRequest)
+            helper.FromDotNetRdfNode(subjectNode, graph, typeof(ChangeRequest));
 
         await Assert.That(result).IsNotNull();
         var extProps = result.GetExtendedProperties();
@@ -114,7 +126,9 @@ public class ExtendedPropertyValueTests
 
         var subjectNode = graph.CreateUriNode(new Uri("http://example.com/cr/3"));
         var predicateType = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
-        var typeNode = graph.CreateUriNode(new Uri(Constants.CHANGE_MANAGEMENT_NAMESPACE + "ChangeRequest"));
+        var typeNode = graph.CreateUriNode(
+            new Uri(Constants.CHANGE_MANAGEMENT_NAMESPACE + "ChangeRequest")
+        );
 
         var inlinePredicate = graph.CreateUriNode(new Uri("http://example.com/ns#extInline"));
         var blankNode = graph.CreateBlankNode();
@@ -124,7 +138,8 @@ public class ExtendedPropertyValueTests
         graph.Assert(new Triple(subjectNode, inlinePredicate, blankNode));
         graph.Assert(new Triple(blankNode, innerPredicate, "innerValue".ToLiteral(graph)));
 
-        var result = (ChangeRequest)helper.FromDotNetRdfNode(subjectNode, graph, typeof(ChangeRequest));
+        var result = (ChangeRequest)
+            helper.FromDotNetRdfNode(subjectNode, graph, typeof(ChangeRequest));
 
         await Assert.That(result).IsNotNull();
         var extProps = result.GetExtendedProperties();
@@ -145,7 +160,9 @@ public class ExtendedPropertyValueTests
 
         var subjectNode = graph.CreateUriNode(new Uri("http://example.com/cr/4"));
         var predicateType = graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
-        var typeNode = graph.CreateUriNode(new Uri(Constants.CHANGE_MANAGEMENT_NAMESPACE + "ChangeRequest"));
+        var typeNode = graph.CreateUriNode(
+            new Uri(Constants.CHANGE_MANAGEMENT_NAMESPACE + "ChangeRequest")
+        );
 
         var inlinePredicate1 = graph.CreateUriNode(new Uri("http://example.com/ns#extInline1"));
         var inlinePredicate2 = graph.CreateUriNode(new Uri("http://example.com/ns#extInline2"));
@@ -157,7 +174,8 @@ public class ExtendedPropertyValueTests
         graph.Assert(new Triple(subjectNode, inlinePredicate2, nestedUriNode));
         graph.Assert(new Triple(nestedUriNode, innerPredicate, "nestedValue".ToLiteral(graph)));
 
-        var result = (ChangeRequest)helper.FromDotNetRdfNode(subjectNode, graph, typeof(ChangeRequest));
+        var result = (ChangeRequest)
+            helper.FromDotNetRdfNode(subjectNode, graph, typeof(ChangeRequest));
 
         await Assert.That(result).IsNotNull();
         var extProps = result.GetExtendedProperties();

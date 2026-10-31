@@ -20,8 +20,10 @@ using ValueType = OSLC4Net.Core.Model.ValueType;
 namespace OSLC4Net.Client.Oslc.Resources;
 
 [OslcNamespace(CmConstants.CHANGE_MANAGEMENT_NAMESPACE)]
-[OslcResourceShape(title = "Change Request Resource Shape",
-    describes = new string[] { CmConstants.TYPE_CHANGE_REQUEST })]
+[OslcResourceShape(
+    title = "Change Request Resource Shape",
+    describes = new string[] { CmConstants.TYPE_CHANGE_REQUEST }
+)]
 public class ChangeRequest : AbstractResource
 {
     private readonly ISet<Link> affectedByDefects = new HashSet<Link>();
@@ -35,8 +37,7 @@ public class ChangeRequest : AbstractResource
     private readonly ISet<Link> implementsRequirements = new HashSet<Link>();
     private readonly ISet<Link> relatedChangeRequests = new HashSet<Link>();
 
-    private readonly ISet<Link>
-        relatedResources = new HashSet<Link>(); // TODO - Extension to point to any other OSLC resource(s).
+    private readonly ISet<Link> relatedResources = new HashSet<Link>(); // TODO - Extension to point to any other OSLC resource(s).
 
     private readonly ISet<Link> relatedTestCases = new HashSet<Link>();
     private readonly ISet<Link> relatedTestExecutionRecords = new HashSet<Link>();
@@ -65,12 +66,14 @@ public class ChangeRequest : AbstractResource
     private string title;
     private bool verified;
 
-    public ChangeRequest() : base()
+    public ChangeRequest()
+        : base()
     {
         AddType(new Uri(CmConstants.TYPE_CHANGE_REQUEST));
     }
 
-    public ChangeRequest(Uri about) : base(about)
+    public ChangeRequest(Uri about)
+        : base(about)
     {
         AddType(new Uri(CmConstants.TYPE_CHANGE_REQUEST));
     }
@@ -240,7 +243,9 @@ public class ChangeRequest : AbstractResource
         return closeDate;
     }
 
-    [OslcDescription("The person(s) who are responsible for the work needed to complete the change request.")]
+    [OslcDescription(
+        "The person(s) who are responsible for the work needed to complete the change request."
+    )]
     [OslcName("contributor")]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "contributor")]
     [OslcRange(CmConstants.TYPE_PERSON)]
@@ -280,7 +285,8 @@ public class ChangeRequest : AbstractResource
     }
 
     [OslcDescription(
-        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
+        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content."
+    )]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "description")]
     [OslcTitle("Description")]
     [OslcValueType(ValueType.XMLLiteral)]
@@ -299,7 +305,8 @@ public class ChangeRequest : AbstractResource
     }
 
     [OslcDescription(
-        "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
+        "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display."
+    )]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "identifier")]
     [OslcReadOnly]
@@ -320,7 +327,9 @@ public class ChangeRequest : AbstractResource
         return implementsRequirements.ToArray();
     }
 
-    [OslcDescription("Resource Shape that provides hints as to resource property value-types and allowed values. ")]
+    [OslcDescription(
+        "Resource Shape that provides hints as to resource property value-types and allowed values. "
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "instanceShape")]
     [OslcRange(OslcConstants.TYPE_RESOURCE_SHAPE)]
     [OslcTitle("Instance Shape")]
@@ -418,7 +427,8 @@ public class ChangeRequest : AbstractResource
     }
 
     [OslcDescription(
-        "Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users.")]
+        "Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users."
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "shortTitle")]
     [OslcTitle("Short Title")]
     [OslcValueType(ValueType.XMLLiteral)]
@@ -428,7 +438,8 @@ public class ChangeRequest : AbstractResource
     }
 
     [OslcDescription(
-        "Used to indicate the status of the change request based on values defined by the service provider. Most often a read-only property. Some possible values may include: 'Submitted', 'Done', 'InProgress', etc.")]
+        "Used to indicate the status of the change request based on values defined by the service provider. Most often a read-only property. Some possible values may include: 'Submitted', 'Done', 'InProgress', etc."
+    )]
     [OslcPropertyDefinition(CmConstants.CHANGE_MANAGEMENT_NAMESPACE + "status")]
     [OslcTitle("Status")]
     public string GetStatus()
@@ -437,7 +448,8 @@ public class ChangeRequest : AbstractResource
     }
 
     [OslcDescription(
-        "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
+        "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource."
+    )]
     [OslcName("subject")]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "subject")]
     [OslcReadOnly(false)]
@@ -459,7 +471,8 @@ public class ChangeRequest : AbstractResource
     }
 
     [OslcDescription(
-        "Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
+        "Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content."
+    )]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]
     [OslcTitle("Title")]
@@ -501,7 +514,8 @@ public class ChangeRequest : AbstractResource
     }
 
     [OslcDescription(
-        "Whether or not the Change Request is completely done, no further fixes or fix verification is needed.")]
+        "Whether or not the Change Request is completely done, no further fixes or fix verification is needed."
+    )]
     [OslcPropertyDefinition(CmConstants.CHANGE_MANAGEMENT_NAMESPACE + "closed")]
     [OslcReadOnly]
     [OslcTitle("Closed")]
@@ -520,7 +534,8 @@ public class ChangeRequest : AbstractResource
     }
 
     [OslcDescription(
-        "Whether or not the Change Request in a state indicating that active work is occurring. If oslc_cm:inprogress is true, then oslc_cm:fixed and oslc_cm:closed must also be false.")]
+        "Whether or not the Change Request in a state indicating that active work is occurring. If oslc_cm:inprogress is true, then oslc_cm:fixed and oslc_cm:closed must also be false."
+    )]
     [OslcName("inprogress")]
     [OslcPropertyDefinition(CmConstants.CHANGE_MANAGEMENT_NAMESPACE + "inprogress")]
     [OslcReadOnly]
@@ -539,7 +554,9 @@ public class ChangeRequest : AbstractResource
         return reviewed;
     }
 
-    [OslcDescription("Whether or not the resolution or fix of the Change Request has been verified.")]
+    [OslcDescription(
+        "Whether or not the resolution or fix of the Change Request has been verified."
+    )]
     [OslcPropertyDefinition(CmConstants.CHANGE_MANAGEMENT_NAMESPACE + "verified")]
     [OslcReadOnly]
     [OslcTitle("Verified")]

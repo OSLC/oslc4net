@@ -32,9 +32,7 @@ public abstract class AbstractResource : IExtendedResource
         About = about;
     }
 
-    protected AbstractResource()
-    {
-    }
+    protected AbstractResource() { }
 
     public Uri About { get; set; }
 

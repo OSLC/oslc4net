@@ -24,9 +24,7 @@ public class Link : AbstractReifiedResource<Uri>
 {
     private string label;
 
-    public Link()
-    {
-    }
+    public Link() { }
 
     public Link(Uri resource)
     {

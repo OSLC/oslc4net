@@ -22,8 +22,10 @@ namespace OSLC4Net.Core.Model;
 ///     OSLC Resource Shape resource
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Creation Factory Resource Shape",
-    describes = new[] { OslcConstants.TYPE_CREATION_FACTORY })]
+[OslcResourceShape(
+    title = "OSLC Creation Factory Resource Shape",
+    describes = new[] { OslcConstants.TYPE_CREATION_FACTORY }
+)]
 public class CreationFactory : AbstractResource
 {
     private readonly SortedSet<Uri> resourceShapes = new SortedUriSet();
@@ -34,11 +36,10 @@ public class CreationFactory : AbstractResource
     private string label;
     private string title;
 
-    public CreationFactory()
-    {
-    }
+    public CreationFactory() { }
 
-    public CreationFactory(string title, Uri creation) : this()
+    public CreationFactory(string title, Uri creation)
+        : this()
     {
         this.title = title;
         this.creation = creation;
@@ -79,7 +80,8 @@ public class CreationFactory : AbstractResource
     }
 
     [OslcDescription(
-        "A creation factory may provide resource shapes that describe shapes of resources that may be created")]
+        "A creation factory may provide resource shapes that describe shapes of resources that may be created"
+    )]
     [OslcName("resourceShape")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "resourceShape")]
     [OslcRange(OslcConstants.TYPE_RESOURCE_SHAPE)]
@@ -92,8 +94,9 @@ public class CreationFactory : AbstractResource
     }
 
     [OslcDescription(
-        "The expected resource type Uri of the resource that will be created using this creation factory. These would be " +
-        "the URIs found in the result resource's rdf:type property")]
+        "The expected resource type Uri of the resource that will be created using this creation factory. These would be "
+            + "the URIs found in the result resource's rdf:type property"
+    )]
     [OslcName("resourceType")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "resourceType")]
     [OslcReadOnly]
@@ -115,9 +118,10 @@ public class CreationFactory : AbstractResource
     }
 
     [OslcDescription(
-        "An identifier Uri for the domain specified usage of this creation factory. If a service provides multiple " +
-        "creation factories, it may designate the primary or default one that should be used with a property value of " +
-        "https://open-services.net/ns/core#default")]
+        "An identifier Uri for the domain specified usage of this creation factory. If a service provides multiple "
+            + "creation factories, it may designate the primary or default one that should be used with a property value of "
+            + "https://open-services.net/ns/core#default"
+    )]
     [OslcName("usage")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "usage")]
     [OslcReadOnly]

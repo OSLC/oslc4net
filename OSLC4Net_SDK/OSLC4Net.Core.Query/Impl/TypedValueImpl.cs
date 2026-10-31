@@ -22,11 +22,8 @@ namespace OSLC4Net.Core.Query.Impl;
 /// </summary>
 internal sealed class TypedValueImpl : ValueImpl, TypedValue
 {
-    public
-    TypedValueImpl(
-        CommonTree tree,
-        IDictionary<string, string> prefixMap
-    ) : base(tree, ValueType.TYPED_STRING)
+    public TypedValueImpl(CommonTree tree, IDictionary<string, string> prefixMap)
+        : base(tree, ValueType.TYPED_STRING)
     {
         this.prefixMap = prefixMap;
     }

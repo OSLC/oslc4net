@@ -14,8 +14,11 @@ public static class RepresentationExtension
 {
     public static string ToString(Representation representation)
     {
-        var attributes = (URI[])representation.GetType().GetField(representation.ToString())!
-            .GetCustomAttributes(typeof(URI), false);
+        var attributes = (URI[])
+            representation
+                .GetType()
+                .GetField(representation.ToString())!
+                .GetCustomAttributes(typeof(URI), false);
 
         return attributes.Length > 0 ? attributes[0].uri : string.Empty;
     }
@@ -32,7 +35,10 @@ public static class RepresentationExtension
             }
         }
 
-        throw new ArgumentException($"Invalid string representation of Representation value: {value}", nameof(value));
+        throw new ArgumentException(
+            $"Invalid string representation of Representation value: {value}",
+            nameof(value)
+        );
     }
 
     public static Representation FromURI(URI uri)

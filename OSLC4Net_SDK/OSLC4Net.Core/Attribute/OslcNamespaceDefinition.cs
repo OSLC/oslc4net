@@ -32,10 +32,7 @@ public class OslcNamespaceDefinition
      */
     public readonly string prefix;
 
-    public OslcNamespaceDefinition(
-        string namespaceURI,
-        string prefix
-    )
+    public OslcNamespaceDefinition(string namespaceURI, string prefix)
     {
         this.namespaceURI = namespaceURI;
         this.prefix = prefix;

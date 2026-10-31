@@ -18,6 +18,4 @@ namespace OSLC4Net.Core.Query;
 /// <summary>
 /// Top level select clause from olsc.select
 /// </summary>
-public interface SelectClause : Properties
-{
-}
+public interface SelectClause : Properties { }

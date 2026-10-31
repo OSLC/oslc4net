@@ -8,7 +8,6 @@
  The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
 -->
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
@@ -23,16 +22,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\OSLC4Net.Core\OSLC4Net.Core.csproj" />
-    <ProjectReference Include="..\..\OSLC4Net.CodeGen\OSLC4Net.CodeGen.csproj"
+    <ProjectReference
+      Include="..\..\OSLC4Net.CodeGen\OSLC4Net.CodeGen.csproj"
       OutputItemType="Analyzer"
-      ReferenceOutputAssembly="false" />
-    <ProjectReference
-      Include="..\..\OSLC4Net.Domains.ChangeManagement\OSLC4Net.Domains.ChangeManagement.csproj" />
+      ReferenceOutputAssembly="false"
+    />
+    <ProjectReference Include="..\..\OSLC4Net.Domains.ChangeManagement\OSLC4Net.Domains.ChangeManagement.csproj" />
     <ProjectReference Include="..\..\OSLC4Net.Domains.KerML\OSLC4Net.Domains.KerML.csproj" />
-    <ProjectReference
-      Include="..\..\OSLC4Net.Domains.QualityManagement\OSLC4Net.Domains.QualityManagement.csproj" />
-    <ProjectReference
-      Include="..\..\OSLC4Net.Domains.RequirementsManagement\OSLC4Net.Domains.RequirementsManagement.csproj" />
+    <ProjectReference Include="..\..\OSLC4Net.Domains.QualityManagement\OSLC4Net.Domains.QualityManagement.csproj" />
+    <ProjectReference Include="..\..\OSLC4Net.Domains.RequirementsManagement\OSLC4Net.Domains.RequirementsManagement.csproj" />
     <ProjectReference Include="..\..\OSLC4Net.Domains.SPDX\OSLC4Net.Domains.SPDX.csproj" />
     <ProjectReference Include="..\..\OSLC4Net.Domains.SysMLV2\OSLC4Net.Domains.SysMLV2.csproj" />
   </ItemGroup>
@@ -41,5 +39,4 @@
     <PackageReference Include="TUnit" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
   </ItemGroup>
-
 </Project>

@@ -5,7 +5,8 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Client.Samples;
 
-public abstract class SampleBase<TResource> where TResource : IExtendedResource
+public abstract class SampleBase<TResource>
+    where TResource : IExtendedResource
 {
     protected readonly ILogger Logger;
 
@@ -14,7 +15,11 @@ public abstract class SampleBase<TResource> where TResource : IExtendedResource
         Logger = logger;
     }
 
-    protected async Task ProcessPagedQueryResultsAsync(OslcQueryResult result, OslcClient client, bool asDotNetObjects)
+    protected async Task ProcessPagedQueryResultsAsync(
+        OslcQueryResult result,
+        OslcClient client,
+        bool asDotNetObjects
+    )
     {
         int page = 1;
         do
@@ -33,7 +38,11 @@ public abstract class SampleBase<TResource> where TResource : IExtendedResource
         } while (true);
     }
 
-    protected async Task ProcessCurrentPageAsync(OslcQueryResult result, OslcClient client, bool asDotNetObjects)
+    protected async Task ProcessCurrentPageAsync(
+        OslcQueryResult result,
+        OslcClient client,
+        bool asDotNetObjects
+    )
     {
         if (asDotNetObjects)
         {
@@ -51,7 +60,9 @@ public abstract class SampleBase<TResource> where TResource : IExtendedResource
             try
             {
                 //Get a single artifact by its URL
-                HttpResponseMessage response = await client.GetResourceRawAsync(resultsUrl, OSLCConstants.CT_RDF).ConfigureAwait(false);
+                HttpResponseMessage response = await client
+                    .GetResourceRawAsync(resultsUrl, OSLCConstants.CT_RDF)
+                    .ConfigureAwait(false);
 
                 if (response != null)
                 {
@@ -76,7 +87,10 @@ public abstract class SampleBase<TResource> where TResource : IExtendedResource
         }
 
         using Stream inStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
-        using StreamReader streamReader = new StreamReader(new BufferedStream(inStream), System.Text.Encoding.UTF8);
+        using StreamReader streamReader = new StreamReader(
+            new BufferedStream(inStream),
+            System.Text.Encoding.UTF8
+        );
 
         string line = null;
         while ((line = await streamReader.ReadLineAsync().ConfigureAwait(false)) != null)

@@ -16,7 +16,7 @@ public class SortTermsTests
         {
             { "oslc", "http://open-services.net/ns/core#" },
             { "dcterms", "http://purl.org/dc/terms/" },
-            { "foaf", "http://xmlns.com/foaf/0.1/" }
+            { "foaf", "http://xmlns.com/foaf/0.1/" },
         };
         var orderByStr = "+oslc:name,-oslc:shortId,dcterms:creator{+foaf:name}";
         var sortTerms = QueryUtils.ParseOrderBy(orderByStr, prefixMap);

@@ -22,13 +22,13 @@ namespace OSLC4Net.Core.Model;
 ///     OSLC Compact resource representation.
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Compact Resource Shape",
-    describes = new[] { OslcConstants.TYPE_COMPACT })]
+[OslcResourceShape(
+    title = "OSLC Compact Resource Shape",
+    describes = new[] { OslcConstants.TYPE_COMPACT }
+)]
 public class Compact : AbstractResource
 {
-    public Compact()
-    {
-    }
+    public Compact() { }
 
     public Compact(Uri about)
     {
@@ -48,7 +48,8 @@ public class Compact : AbstractResource
     /// Uri of an image which may be used in the display of a link to the resource. The image SHOULD be 16x16 pixels in size.
     /// </summary>
     [OslcDescription(
-        "Uri of an image which may be used in the display of a link to the resource. The image SHOULD be 16x16 pixels in size.")]
+        "Uri of an image which may be used in the display of a link to the resource. The image SHOULD be 16x16 pixels in size."
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "icon")]
     [OslcReadOnly]
     [OslcTitle("Icon")]
@@ -62,7 +63,8 @@ public class Compact : AbstractResource
     /// Uri and sizing properties for an HTML document to be used for a large preview.
     /// </summary>
     [OslcDescription(
-        "Uri and sizing properties for an HTML document to be used for a large preview.")]
+        "Uri and sizing properties for an HTML document to be used for a large preview."
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "largePreview")]
     [OslcRange(OslcConstants.TYPE_PREVIEW)]
     [OslcReadOnly]
@@ -80,7 +82,8 @@ public class Compact : AbstractResource
     /// Abbreviated title which may be used in the display of a link to the resource.
     /// </summary>
     [OslcDescription(
-        "Abbreviated title which may be used in the display of a link to the resource.")]
+        "Abbreviated title which may be used in the display of a link to the resource."
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "shortTitle")]
     [OslcReadOnly]
     [OslcTitle("Short Title")]
@@ -94,7 +97,8 @@ public class Compact : AbstractResource
     /// Uri and sizing properties for an HTML document to be used for a small preview.
     /// </summary>
     [OslcDescription(
-        "Uri and sizing properties for an HTML document to be used for a small preview.")]
+        "Uri and sizing properties for an HTML document to be used for a small preview."
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "smallPreview")]
     [OslcRange(OslcConstants.TYPE_PREVIEW)]
     [OslcReadOnly]
@@ -126,7 +130,9 @@ public class Compact : AbstractResource
     /// <summary>
     /// Alternative text for the icon image. It should be used if the icon fails to load, or for screen readers.
     /// </summary>
-    [OslcDescription("Alternative text for the icon image. It should be used if the icon fails to load, or for screen readers.")]
+    [OslcDescription(
+        "Alternative text for the icon image. It should be used if the icon fails to load, or for screen readers."
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "iconTitle")]
     [OslcReadOnly]
     [OslcTitle("Icon Title")]
@@ -139,7 +145,9 @@ public class Compact : AbstractResource
     /// <summary>
     /// Alternative label text for the icon image, e.g. for accessibility. This property is deprecated. Programmatic users should use oslc:iconTitle instead.
     /// </summary>
-    [OslcDescription("Alternative label text for the icon image, e.g. for accessibility. This property is deprecated. Programmatic users should use oslc:iconTitle instead.")]
+    [OslcDescription(
+        "Alternative label text for the icon image, e.g. for accessibility. This property is deprecated. Programmatic users should use oslc:iconTitle instead."
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "iconAltLabel")]
     [OslcReadOnly]
     [OslcTitle("Icon Alternative Label")]
@@ -152,7 +160,9 @@ public class Compact : AbstractResource
     /// <summary>
     /// A list of alternate icon images, e.g. for high-resolution displays. The syntax of this property's value is the same as the srcset attribute of the HTML img element.
     /// </summary>
-    [OslcDescription("A list of alternate icon images, e.g. for high-resolution displays. The syntax of this property's value is the same as the srcset attribute of the HTML img element.")]
+    [OslcDescription(
+        "A list of alternate icon images, e.g. for high-resolution displays. The syntax of this property's value is the same as the srcset attribute of the HTML img element."
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "iconSrcSet")]
     [OslcReadOnly]
     [OslcTitle("Icon Source Set")]

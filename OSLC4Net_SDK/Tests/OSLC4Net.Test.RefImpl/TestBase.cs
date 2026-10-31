@@ -46,9 +46,13 @@ public abstract class TestBase
             .AddJsonFile("appsettings.Development.json")
             //  .AddEnvironmentVariables()
             .Build();
-        if (Config["serviceProviderCatalog:auth:type"] is not null
-            && Config["serviceProviderCatalog:auth:type"]!.Equals("basic",
-                StringComparison.InvariantCultureIgnoreCase))
+        if (
+            Config["serviceProviderCatalog:auth:type"] is not null
+            && Config["serviceProviderCatalog:auth:type"]!.Equals(
+                "basic",
+                StringComparison.InvariantCultureIgnoreCase
+            )
+        )
         {
             Username = Config["serviceProviderCatalog:auth:user"];
             Password = Config["serviceProviderCatalog:auth:password"];
@@ -58,7 +62,8 @@ public abstract class TestBase
             .ConfigureServices(services =>
             {
                 // Register HttpClient with standard resilience handler for transient errors
-                services.AddHttpClient("OslcClient")
+                services
+                    .AddHttpClient("OslcClient")
                     .AddStandardResilienceHandler(options =>
                     {
                         // Retry on transient server errors (>=500) OR network exceptions during server warm-up
@@ -67,7 +72,9 @@ public abstract class TestBase
                             if (args.Outcome.Exception is HttpRequestException)
                                 return ValueTask.FromResult(true);
                             var statusCode = args.Outcome.Result?.StatusCode;
-                            return ValueTask.FromResult(statusCode >= HttpStatusCode.InternalServerError);
+                            return ValueTask.FromResult(
+                                statusCode >= HttpStatusCode.InternalServerError
+                            );
                         };
                         options.Retry.MaxRetryAttempts = 8; // extend warm-up window
                         options.Retry.Delay = TimeSpan.FromMilliseconds(250); // slightly longer base before exponential
@@ -104,7 +111,11 @@ public abstract class TestBase
     private ServiceProviderRegistryClient GetTestSPCClient()
     {
         // Use the resilient OslcClient so ServiceProviderRegistryClient inherits retry/circuit breaker policies
-        return new ServiceProviderRegistryClient(ServiceProviderCatalogUri, TestClient, LoggerFactory);
+        return new ServiceProviderRegistryClient(
+            ServiceProviderCatalogUri,
+            TestClient,
+            LoggerFactory
+        );
     }
 
     protected OslcClient GetTestClient()
@@ -121,12 +132,10 @@ public abstract class TestBase
         return new OslcClient(httpClient, logger);
     }
 
-    protected async Task<string> GetCreationAsync(string mediaType,
-        string type)
+    protected async Task<string> GetCreationAsync(string mediaType, string type)
     {
         var registryClient = GetTestSPCClient();
-        var serviceProviders =
-            await registryClient.GetServiceProvidersAsync().ConfigureAwait(true);
+        var serviceProviders = await registryClient.GetServiceProvidersAsync().ConfigureAwait(true);
 
         foreach (var serviceProvider in serviceProviders)
         {
@@ -151,12 +160,10 @@ public abstract class TestBase
         throw new Exception("Unable to retrieve creation for type '" + type + "'");
     }
 
-    protected async Task<string> GetQueryBaseAsync(string mediaType,
-        string type)
+    protected async Task<string> GetQueryBaseAsync(string mediaType, string type)
     {
         var registryClient = GetTestSPCClient();
-        var serviceProviders =
-            await registryClient.GetServiceProvidersAsync().ConfigureAwait(true);
+        var serviceProviders = await registryClient.GetServiceProvidersAsync().ConfigureAwait(true);
 
         foreach (var serviceProvider in serviceProviders)
         {
@@ -187,12 +194,10 @@ public abstract class TestBase
         throw new Exception("Unable to retrieve queryBase for type '" + type + "'");
     }
 
-    protected async Task<ResourceShape> GetResourceShapeAsync(string mediaType,
-        string type)
+    protected async Task<ResourceShape> GetResourceShapeAsync(string mediaType, string type)
     {
         var registryClient = GetTestSPCClient();
-        var serviceProviders =
-            await registryClient.GetServiceProvidersAsync().ConfigureAwait(true);
+        var serviceProviders = await registryClient.GetServiceProvidersAsync().ConfigureAwait(true);
 
         foreach (var serviceProvider in serviceProviders)
         {
@@ -224,13 +229,14 @@ public abstract class TestBase
             }
         }
 
-        throw new Exception("Unable to retrieve resource shape for type '" + type +
-                                       "'");
+        throw new Exception("Unable to retrieve resource shape for type '" + type + "'");
     }
 
-    protected async Task VerifyChangeRequestAsync(string mediaType,
+    protected async Task VerifyChangeRequestAsync(
+        string mediaType,
         ChangeRequest? changeRequest,
-        bool recurse)
+        bool recurse
+    )
     {
         Assert.NotNull(changeRequest);
 
@@ -264,12 +270,13 @@ public abstract class TestBase
 
             if (aboutResponse.Resources == null || !aboutResponse.Resources.Any())
             {
-                throw new Exception($"Change request GET returned empty or null Resources collection for URI: {aboutURI}");
+                throw new Exception(
+                    $"Change request GET returned empty or null Resources collection for URI: {aboutURI}"
+                );
             }
 
-            await VerifyChangeRequestAsync(mediaType,
-                aboutResponse.Resources.Single(),
-                false).ConfigureAwait(true);
+            await VerifyChangeRequestAsync(mediaType, aboutResponse.Resources.Single(), false)
+                .ConfigureAwait(true);
             if (serviceProviderURI != null)
             {
                 var serviceProviderResponse = await TestClient
@@ -282,8 +289,7 @@ public abstract class TestBase
         }
     }
 
-    protected async Task VerifyCompact(string mediaType,
-        Compact? compact)
+    protected async Task VerifyCompact(string mediaType, Compact? compact)
     {
         Assert.NotNull(compact);
 
@@ -297,15 +303,14 @@ public abstract class TestBase
         Assert.NotNull(titleString);
 
         var aboutResponse = await TestClient
-            .GetResourceAsync<ChangeRequest>(aboutURI.ToString(), mediaType).ConfigureAwait(true);
+            .GetResourceAsync<ChangeRequest>(aboutURI.ToString(), mediaType)
+            .ConfigureAwait(true);
 
-        await VerifyChangeRequestAsync(mediaType,
-            aboutResponse.Resources?.SingleOrDefault(),
-            false).ConfigureAwait(true);
+        await VerifyChangeRequestAsync(mediaType, aboutResponse.Resources?.SingleOrDefault(), false)
+            .ConfigureAwait(true);
     }
 
-    protected async Task VerifyResourceShape(ResourceShape resourceShape,
-        string type)
+    protected async Task VerifyResourceShape(ResourceShape resourceShape, string type)
     {
         await Assert.That(resourceShape).IsNotNull();
 
@@ -345,15 +350,13 @@ public abstract class TestBase
 
     protected async Task TestResourceShapeAsync(string mediaType)
     {
-        var resourceShape = await GetResourceShapeAsync(mediaType,
-            Constants.TYPE_CHANGE_REQUEST).ConfigureAwait(true);
+        var resourceShape = await GetResourceShapeAsync(mediaType, Constants.TYPE_CHANGE_REQUEST)
+            .ConfigureAwait(true);
 
-        await VerifyResourceShape(resourceShape,
-            Constants.TYPE_CHANGE_REQUEST);
+        await VerifyResourceShape(resourceShape, Constants.TYPE_CHANGE_REQUEST);
     }
 
-    protected async Task TestCompactAsync(string compactMediaType,
-        string normalMediaType)
+    protected async Task TestCompactAsync(string compactMediaType, string normalMediaType)
     {
         await Assert.That(ChangeRequestUri).IsNotNull();
 
@@ -367,8 +370,7 @@ public abstract class TestBase
 
         var compact = compactResponse.Resources?.SingleOrDefault();
 
-        await VerifyCompact(normalMediaType,
-            compact).ConfigureAwait(true);
+        await VerifyCompact(normalMediaType, compact).ConfigureAwait(true);
     }
 
     protected async Task<ChangeRequest> MakeChangeRequestAsync(string mediaType)
@@ -381,11 +383,13 @@ public abstract class TestBase
         changeRequest.AddCreator(new Uri("http://myserver/mycmapp/users/bob"));
         changeRequest.AddDctermsType(Type.Defect.ToString());
         changeRequest.SetDescription(
-            "Invalid installation instructions indicating invalid patches to be applied.");
+            "Invalid installation instructions indicating invalid patches to be applied."
+        );
         changeRequest.SetDiscussedBy(new Uri("http://example.com/bugs/2314/discussion"));
         changeRequest.SetInstanceShape(new Uri("http://example.com/shapes/defect"));
-        changeRequest.AddRelatedChangeRequest(new Link(new Uri("http://myserver/mycmapp/bugs/1235"),
-            "Bug 1235"));
+        changeRequest.AddRelatedChangeRequest(
+            new Link(new Uri("http://myserver/mycmapp/bugs/1235"), "Bug 1235")
+        );
         changeRequest.SetSeverity(Severity.Major.ToString());
         changeRequest.SetShortTitle("Bug 2314");
         changeRequest.SetStatus("InProgress");
@@ -393,9 +397,11 @@ public abstract class TestBase
         changeRequest.AddSubject("install");
         changeRequest.SetTitle("Invalid installation instructions");
         changeRequest.AddTracksRequirement(
-            new Link(new Uri("http://myserver/reqtool/req/34ef31af")));
+            new Link(new Uri("http://myserver/reqtool/req/34ef31af"))
+        );
         changeRequest.AddTracksRequirement(
-            new Link(new Uri("http://remoteserver/reqrepo/project1/req456"), "Requirement 456"));
+            new Link(new Uri("http://remoteserver/reqrepo/project1/req456"), "Requirement 456")
+        );
 
         var creation = await GetCreationAsync(mediaType, Constants.TYPE_CHANGE_REQUEST)
             .ConfigureAwait(true);
@@ -410,9 +416,11 @@ public abstract class TestBase
         var createdResource = addedChangeRequestResponse.Resources?.SingleOrDefault();
         ChangeRequestUri = createdResource?.GetAbout();
 
-        return createdResource ?? throw new OslcCoreRequestException(
-            addedChangeRequestResponse.StatusCode,
-            addedChangeRequestResponse.ResponseMessage?.ReasonPhrase);
+        return createdResource
+            ?? throw new OslcCoreRequestException(
+                addedChangeRequestResponse.StatusCode,
+                addedChangeRequestResponse.ResponseMessage?.ReasonPhrase
+            );
     }
 
     protected async Task TestCreateAsync(string mediaType)
@@ -421,9 +429,7 @@ public abstract class TestBase
 
         var addedChangeRequest = await MakeChangeRequestAsync(mediaType).ConfigureAwait(true);
 
-        await VerifyChangeRequestAsync(mediaType,
-            addedChangeRequest,
-            true).ConfigureAwait(true);
+        await VerifyChangeRequestAsync(mediaType, addedChangeRequest, true).ConfigureAwait(true);
     }
 
     protected async Task<HttpResponseMessage?> DeleteChangeRequestAsync(string mediaType)
@@ -464,8 +470,12 @@ public abstract class TestBase
             .GetResourceAsync<ChangeRequest>(resourceToBeDeleted.ToString(), mediaType)
             .ConfigureAwait(true);
 
-        await Assert.That(response.StatusCode == HttpStatusCode.NotFound ||
-                    response.StatusCode == HttpStatusCode.Gone).IsTrue();
+        await Assert
+            .That(
+                response.StatusCode == HttpStatusCode.NotFound
+                    || response.StatusCode == HttpStatusCode.Gone
+            )
+            .IsTrue();
         await Assert.That(response.Resources?.FirstOrDefault()).IsNull();
     }
 
@@ -477,9 +487,8 @@ public abstract class TestBase
             .GetResourceAsync<ChangeRequest>(ChangeRequestUri.ToString(), mediaType)
             .ConfigureAwait(true);
 
-        await VerifyChangeRequestAsync(mediaType,
-            response.Resources?.SingleOrDefault(),
-            true).ConfigureAwait(true);
+        await VerifyChangeRequestAsync(mediaType, response.Resources?.SingleOrDefault(), true)
+            .ConfigureAwait(true);
     }
 
     protected async Task TestRetrievesAsync(string mediaType)
@@ -492,7 +501,8 @@ public abstract class TestBase
         await Assert.That(queryBase).IsNotNull();
 
         var response = await TestClient
-            .GetResourceAsync<ChangeRequest>(queryBase, mediaType).ConfigureAwait(true);
+            .GetResourceAsync<ChangeRequest>(queryBase, mediaType)
+            .ConfigureAwait(true);
 
         await Assert.That(response.Resources?.FirstOrDefault()).IsNotNull();
         await Assert.That(response.Resources.Count > 0).IsTrue();
@@ -500,12 +510,12 @@ public abstract class TestBase
         // Find and verify only the change request that THIS test created.
         // We don't verify all change requests because other parallel tests may
         // create/delete their own change requests, causing race conditions.
-        var ourChangeRequest = response.Resources
-            .FirstOrDefault(cr => ChangeRequestUri.Equals(cr.GetAbout()));
+        var ourChangeRequest = response.Resources.FirstOrDefault(cr =>
+            ChangeRequestUri.Equals(cr.GetAbout())
+        );
 
         await Assert.That(ourChangeRequest).IsNotNull();
-        await VerifyChangeRequestAsync(mediaType, ourChangeRequest!, true)
-            .ConfigureAwait(true);
+        await VerifyChangeRequestAsync(mediaType, ourChangeRequest!, true).ConfigureAwait(true);
     }
 
     protected async Task TestUpdateAsync(string mediaType)
@@ -517,8 +527,7 @@ public abstract class TestBase
             .ConfigureAwait(true);
 
         var changeRequest = response.Resources?.SingleOrDefault();
-        await VerifyChangeRequestAsync(mediaType, changeRequest, true)
-            .ConfigureAwait(true);
+        await VerifyChangeRequestAsync(mediaType, changeRequest, true).ConfigureAwait(true);
 
         await Assert.That(changeRequest!.IsApproved()).IsNull();
         await Assert.That(changeRequest!.GetCloseDate()).IsNull();
@@ -541,21 +550,28 @@ public abstract class TestBase
 
         if (updatedResponse.Resources == null || !updatedResponse.Resources.Any())
         {
-            throw new Exception($"Updated change request GET returned empty or null Resources collection for URI: {ChangeRequestUri}");
+            throw new Exception(
+                $"Updated change request GET returned empty or null Resources collection for URI: {ChangeRequestUri}"
+            );
         }
 
         var updatedChangeRequest = updatedResponse.Resources.Single();
 
-        await VerifyChangeRequestAsync(mediaType,
-            updatedChangeRequest,
-            true).ConfigureAwait(true);
+        await VerifyChangeRequestAsync(mediaType, updatedChangeRequest, true).ConfigureAwait(true);
         await Assert.That(updatedChangeRequest.GetAbout()).IsEqualTo(changeRequest.GetAbout());
         await Assert.That(updatedChangeRequest.IsApproved()).IsEqualTo(true);
-        await Assert.That(
-            updatedChangeRequest.GetCloseDate()?.ToShortDateString() + " - " +
-            updatedChangeRequest.GetCloseDate()?.ToShortTimeString()).IsEqualTo(
-            closeDate.ToShortDateString() + " - " + closeDate.ToShortTimeString());
-        await Assert.That(changeRequest.GetModified().Equals(updatedChangeRequest.GetModified())).IsFalse();
-        await Assert.That(updatedChangeRequest.GetModified() > updatedChangeRequest.GetCreated()).IsTrue();
+        await Assert
+            .That(
+                updatedChangeRequest.GetCloseDate()?.ToShortDateString()
+                    + " - "
+                    + updatedChangeRequest.GetCloseDate()?.ToShortTimeString()
+            )
+            .IsEqualTo(closeDate.ToShortDateString() + " - " + closeDate.ToShortTimeString());
+        await Assert
+            .That(changeRequest.GetModified().Equals(updatedChangeRequest.GetModified()))
+            .IsFalse();
+        await Assert
+            .That(updatedChangeRequest.GetModified() > updatedChangeRequest.GetCreated())
+            .IsTrue();
     }
 }

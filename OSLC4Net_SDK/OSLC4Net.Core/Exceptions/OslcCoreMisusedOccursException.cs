@@ -18,10 +18,10 @@ namespace OSLC4Net.Core.Exceptions;
 /// <summary>
 ///     Exception thrown for an incorrect use of the OSLC Occurs attribute
 /// </summary>
-public class OslcCoreMisusedOccursException(
-    Type resourceType,
-    MemberInfo member) : OslcCoreApplicationException(
-    $"OSLC1012: Multiple values for method {member.Name} of class {resourceType.Name} that supports at most one value")
+public class OslcCoreMisusedOccursException(Type resourceType, MemberInfo member)
+    : OslcCoreApplicationException(
+        $"OSLC1012: Multiple values for method {member.Name} of class {resourceType.Name} that supports at most one value"
+    )
 {
     public Type ResourceType { get; } = resourceType;
     public MemberInfo Member { get; } = member;

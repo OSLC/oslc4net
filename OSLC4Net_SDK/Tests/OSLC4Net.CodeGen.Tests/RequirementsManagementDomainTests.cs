@@ -22,7 +22,9 @@ public sealed class RequirementsManagementDomainTests
         await Assert.That(RM.NS).IsEqualTo(Constants.Domains.RM.NS);
         await Assert.That(RM.Prefix).IsEqualTo(Constants.Domains.RM.Prefix);
         await Assert.That(RM.Requirement).IsEqualTo(Constants.Domains.RM.Requirement);
-        await Assert.That(RM.RequirementCollection).IsEqualTo(Constants.Domains.RM.RequirementCollection);
+        await Assert
+            .That(RM.RequirementCollection)
+            .IsEqualTo(Constants.Domains.RM.RequirementCollection);
         await Assert.That(RM.P.ManagedBy).IsEqualTo(Constants.Domains.RM.P.ManagedBy);
         await Assert.That(RM.Q.ManagedBy).IsEqualTo(Constants.Domains.RM.Q.ManagedBy);
         await Assert.That(RM.P.ValidatedBy).IsEqualTo(Constants.Domains.RM.P.ValidatedBy);
@@ -32,13 +34,13 @@ public sealed class RequirementsManagementDomainTests
     [Test]
     public async Task RequirementShapeHasExpectedMetadata()
     {
-        OslcResourceShape? shapeAttribute = Attribute.GetCustomAttribute(
-            typeof(Requirement),
-            typeof(OslcResourceShape)) as OslcResourceShape;
+        OslcResourceShape? shapeAttribute =
+            Attribute.GetCustomAttribute(typeof(Requirement), typeof(OslcResourceShape))
+            as OslcResourceShape;
 
-        OslcNamespace? namespaceAttribute = Attribute.GetCustomAttribute(
-            typeof(Requirement),
-            typeof(OslcNamespace)) as OslcNamespace;
+        OslcNamespace? namespaceAttribute =
+            Attribute.GetCustomAttribute(typeof(Requirement), typeof(OslcNamespace))
+            as OslcNamespace;
 
         await Assert.That(namespaceAttribute?.value).IsEqualTo(RM.NS);
         await Assert.That(shapeAttribute?.describes).IsEquivalentTo([RM.Requirement]);
@@ -50,16 +52,25 @@ public sealed class RequirementsManagementDomainTests
     {
         string[] propertyDefinitions = typeof(Requirement)
             .GetProperties()
-            .Select(property => Attribute.GetCustomAttribute(property, typeof(OslcPropertyDefinition)) as OslcPropertyDefinition)
+            .Select(property =>
+                Attribute.GetCustomAttribute(property, typeof(OslcPropertyDefinition))
+                as OslcPropertyDefinition
+            )
             .Where(attribute => attribute is not null)
             .Select(attribute => attribute!.value)
             .OrderBy(value => value, StringComparer.Ordinal)
             .ToArray();
 
         await Assert.That(propertyDefinitions).Contains("http://purl.org/dc/terms/title");
-        await Assert.That(propertyDefinitions).Contains("http://open-services.net/ns/rm#validatedBy");
-        await Assert.That(propertyDefinitions).Contains("http://open-services.net/ns/rm#satisfiedBy");
-        await Assert.That(propertyDefinitions).Contains("http://open-services.net/ns/core#serviceProvider");
+        await Assert
+            .That(propertyDefinitions)
+            .Contains("http://open-services.net/ns/rm#validatedBy");
+        await Assert
+            .That(propertyDefinitions)
+            .Contains("http://open-services.net/ns/rm#satisfiedBy");
+        await Assert
+            .That(propertyDefinitions)
+            .Contains("http://open-services.net/ns/core#serviceProvider");
         await Assert.That(propertyDefinitions.Length).IsGreaterThanOrEqualTo(24);
     }
 
@@ -68,7 +79,10 @@ public sealed class RequirementsManagementDomainTests
     {
         string[] propertyDefinitions = typeof(RequirementCollection)
             .GetProperties()
-            .Select(property => Attribute.GetCustomAttribute(property, typeof(OslcPropertyDefinition)) as OslcPropertyDefinition)
+            .Select(property =>
+                Attribute.GetCustomAttribute(property, typeof(OslcPropertyDefinition))
+                as OslcPropertyDefinition
+            )
             .Where(attribute => attribute is not null)
             .Select(attribute => attribute!.value)
             .OrderBy(value => value, StringComparer.Ordinal)
@@ -88,17 +102,21 @@ public sealed class RequirementsManagementDomainTests
             "https://example.test",
             "resourceShapes",
             "requirement",
-            typeof(Requirement));
+            typeof(Requirement)
+        );
 
-        Property[] validatedByProperties = shape.GetProperties()
+        Property[] validatedByProperties = shape
+            .GetProperties()
             .Where(property => property.GetPropertyDefinition() == new Uri(RM.P.ValidatedBy))
             .ToArray();
 
         await Assert.That(shape.GetDescribes()).IsEquivalentTo([new Uri(RM.Requirement)]);
         await Assert.That(validatedByProperties).IsNotEmpty();
-        await Assert.That(validatedByProperties.Select(property => property.GetValueType()))
+        await Assert
+            .That(validatedByProperties.Select(property => property.GetValueType()))
             .Contains(new Uri("http://open-services.net/ns/core#Resource"));
-        await Assert.That(validatedByProperties.Select(property => property.GetOccurs()))
+        await Assert
+            .That(validatedByProperties.Select(property => property.GetOccurs()))
             .Contains(new Uri("http://open-services.net/ns/core#Zero-or-many"));
     }
 
@@ -122,7 +140,9 @@ public sealed class RequirementsManagementDomainTests
         resource.ValidatedBy.Add(new Uri("https://example.test/test-case#two"));
 
         await Assert.That(resource is AbstractResource).IsTrue();
-        await Assert.That(resource.GetAbout()).IsEqualTo(new Uri("https://example.test/requirement/1"));
+        await Assert
+            .That(resource.GetAbout())
+            .IsEqualTo(new Uri("https://example.test/requirement/1"));
         await Assert.That(resource.ValidatedBy.Count).IsEqualTo(2);
     }
 }

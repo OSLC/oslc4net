@@ -20,7 +20,8 @@ namespace OSLC4Net.Client.Exceptions;
 /// </summary>
 public class JazzAuthErrorException(HttpStatusCode status, string jazzUrl)
     : OslcClientApplicationException(
-        $"OSLC2002: An error occurred attempting to login to the Jazz server. Status code {status}. Server location: {jazzUrl}.")
+        $"OSLC2002: An error occurred attempting to login to the Jazz server. Status code {status}. Server location: {jazzUrl}."
+    )
 {
     /// <summary>
     ///     HTTP status code returned by the Jazz server.

@@ -24,10 +24,7 @@ namespace OSLC4Net.Core.Model;
 /// <typeparam name="T"></typeparam>
 public class FilteredResource<T>
 {
-    public FilteredResource(
-        T resource,
-        IDictionary<string, object> properties
-    )
+    public FilteredResource(T resource, IDictionary<string, object> properties)
     {
         Resource = resource;
         Properties = properties;

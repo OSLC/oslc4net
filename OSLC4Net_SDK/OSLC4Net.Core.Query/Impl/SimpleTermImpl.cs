@@ -22,12 +22,7 @@ namespace OSLC4Net.Core.Query.Impl;
 /// </summary>
 internal abstract class SimpleTermImpl : SimpleTerm
 {
-    protected
-    SimpleTermImpl(
-        CommonTree tree,
-        TermType type,
-        IDictionary<string, string> prefixMap
-    )
+    protected SimpleTermImpl(CommonTree tree, TermType type, IDictionary<string, string> prefixMap)
     {
         this.tree = tree;
         this.type = type;
@@ -36,10 +31,7 @@ internal abstract class SimpleTermImpl : SimpleTerm
 
     public TermType Type
     {
-        get
-        {
-            return type;
-        }
+        get { return type; }
     }
 
     public PName Property

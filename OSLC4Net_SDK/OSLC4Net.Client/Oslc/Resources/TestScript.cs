@@ -21,8 +21,10 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// https://docs.oasis-open-projects.org/oslc-op/qm/v2.1/os/quality-management-shapes.html#TestScriptShape
 /// </summary>
-[OslcResourceShape(title = "Quality Management Resource Shape",
-    describes = new string[] { QmConstants.TYPE_TEST_SCRIPT })]
+[OslcResourceShape(
+    title = "Quality Management Resource Shape",
+    describes = new string[] { QmConstants.TYPE_TEST_SCRIPT }
+)]
 [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
 public class TestScript : QmResource
 {
@@ -34,9 +36,8 @@ public class TestScript : QmResource
     private Uri executionInstructions;
     private string description;
 
-    public TestScript() : base()
-    {
-    }
+    public TestScript()
+        : base() { }
 
     protected override Uri GetRdfType()
     {
@@ -63,7 +64,9 @@ public class TestScript : QmResource
         this.validatesRequirements.Add(requirement);
     }
 
-    [OslcDescription("The person(s) who are responsible for the work needed to complete the change request.")]
+    [OslcDescription(
+        "The person(s) who are responsible for the work needed to complete the change request."
+    )]
     [OslcName("contributor")]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "contributor")]
     [OslcRange(QmConstants.TYPE_PERSON)]
@@ -84,7 +87,8 @@ public class TestScript : QmResource
     }
 
     [OslcDescription(
-        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
+        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content."
+    )]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "description")]
     [OslcTitle("Description")]
     [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]

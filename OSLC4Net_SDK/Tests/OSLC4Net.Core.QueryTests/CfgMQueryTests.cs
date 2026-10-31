@@ -18,26 +18,29 @@ public class CfgMQueryTests
     {
         ["dcterms"] = "http://purl.org/dc/terms/",
         ["oslc_config"] = "http://open-services.net/ns/config#",
-        ["rdf"] = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        ["rdf"] = "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     };
 
     [Test]
     public async Task ParseConfigurationResourceQuery()
     {
         var where = QueryUtils.ParseWhere(
-            "rdf:type=<http://open-services.net/ns/config#VersionResource> and " +
-            "dcterms:title in [\"Baseline A\",\"Baseline B\",\"Active stream\"]",
-            Prefixes);
+            "rdf:type=<http://open-services.net/ns/config#VersionResource> and "
+                + "dcterms:title in [\"Baseline A\",\"Baseline B\",\"Active stream\"]",
+            Prefixes
+        );
         var select = QueryUtils.ParseSelect(
-            "dcterms:title,oslc_config:component{dcterms:title}," +
-            "oslc_config:versionResource",
-            Prefixes);
+            "dcterms:title,oslc_config:component{dcterms:title}," + "oslc_config:versionResource",
+            Prefixes
+        );
         var orderBy = QueryUtils.ParseOrderBy(
             "-dcterms:title,+oslc_config:versionResource",
-            Prefixes);
+            Prefixes
+        );
 
         await Assert.That(where.Children).HasCount(2);
-        await Assert.That(((UriRefValue)((ComparisonTerm)where.Children[0]).Operand).Value)
+        await Assert
+            .That(((UriRefValue)((ComparisonTerm)where.Children[0]).Operand).Value)
             .IsEqualTo("http://open-services.net/ns/config#VersionResource");
         await Assert.That(((InTerm)where.Children[1]).Values).HasCount(3);
 
@@ -53,7 +56,8 @@ public class CfgMQueryTests
     public async Task ParseConfigurationHistorySearchTerms()
     {
         var searchTerms = QueryUtils.ParseSearchTerms(
-            "\"Baseline A\",\"Baseline B\",\"Active stream\"");
+            "\"Baseline A\",\"Baseline B\",\"Active stream\""
+        );
 
         await Assert.That(searchTerms).HasCount(3);
         await Assert.That(searchTerms).Contains("Baseline A");

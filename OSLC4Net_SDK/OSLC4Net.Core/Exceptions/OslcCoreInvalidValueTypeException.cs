@@ -20,8 +20,11 @@ namespace OSLC4Net.Core.Exceptions;
 public class OslcCoreInvalidValueTypeException(
     Type resourceType,
     MemberInfo method,
-    ValueType valueType) : OslcCoreApplicationException(
-    $"OSLC1007: Invalid value type {ValueTypeExtension.ToString(valueType)} defined for method {method.Name} of class {resourceType.Name}")
+    ValueType valueType
+)
+    : OslcCoreApplicationException(
+        $"OSLC1007: Invalid value type {ValueTypeExtension.ToString(valueType)} defined for method {method.Name} of class {resourceType.Name}"
+    )
 {
     public Type ResourceType { get; } = resourceType;
     public MemberInfo Method { get; } = method;

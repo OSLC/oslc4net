@@ -16,10 +16,10 @@ namespace OSLC4Net.Core.Exceptions;
 /// <summary>
 ///     Exception thrown when a required OSLC attribute definition is missing.
 /// </summary>
-public class OslcCoreMissingAttributeException(
-    Type resourceType,
-    Type annotationType) : OslcCoreApplicationException(
-    $"OSLC1008: Missing mandatory OSLC annotation {annotationType.Name} for class {resourceType.Name}")
+public class OslcCoreMissingAttributeException(Type resourceType, Type annotationType)
+    : OslcCoreApplicationException(
+        $"OSLC1008: Missing mandatory OSLC annotation {annotationType.Name} for class {resourceType.Name}"
+    )
 {
     public Type ResourceType { get; } = resourceType;
     public Type AnnotationType { get; } = annotationType;

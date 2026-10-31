@@ -18,6 +18,4 @@ namespace OSLC4Net.Core.Query;
 /// <summary>
 /// String list from oslc.searchTerms clause
 /// </summary>
-public interface SearchTermsClause : IList<string>
-{
-}
+public interface SearchTermsClause : IList<string> { }

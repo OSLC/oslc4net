@@ -25,7 +25,8 @@ public class ResponseInfoNextPageTests
             nextPageAbout: string.Empty,
             totalCount: 3,
             objects: [],
-            properties: new Dictionary<string, object>(StringComparer.Ordinal));
+            properties: new Dictionary<string, object>(StringComparer.Ordinal)
+        );
 
         await Assert.That(HasPredicate(graph, NextPagePredicate)).IsFalse();
         await Assert.That(HasPredicate(graph, TotalCountPredicate)).IsTrue();
@@ -40,7 +41,8 @@ public class ResponseInfoNextPageTests
             nextPageAbout: null,
             totalCount: 3,
             objects: [],
-            properties: new Dictionary<string, object>(StringComparer.Ordinal));
+            properties: new Dictionary<string, object>(StringComparer.Ordinal)
+        );
 
         await Assert.That(HasPredicate(graph, NextPagePredicate)).IsFalse();
     }
@@ -56,7 +58,8 @@ public class ResponseInfoNextPageTests
             nextPageAbout: nextPage,
             totalCount: 20,
             objects: [],
-            properties: new Dictionary<string, object>(StringComparer.Ordinal));
+            properties: new Dictionary<string, object>(StringComparer.Ordinal)
+        );
 
         await Assert.That(HasPredicate(graph, NextPagePredicate)).IsTrue();
     }

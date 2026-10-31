@@ -16,8 +16,11 @@ namespace OSLC4Net.Core.Exceptions;
 public class OslcCoreDeregistrationException(
     Uri serviceProviderUri,
     int statusCode,
-    string responseMessage) : OslcCoreApplicationException(
-    $"OSLC1001: Error unregistering Service Provider URI {serviceProviderUri}. Returned error code is: {statusCode}; error message is: {responseMessage}")
+    string responseMessage
+)
+    : OslcCoreApplicationException(
+        $"OSLC1001: Error unregistering Service Provider URI {serviceProviderUri}. Returned error code is: {statusCode}; error message is: {responseMessage}"
+    )
 {
     public Uri ServiceProviderUri { get; } = serviceProviderUri;
     public int StatusCode { get; } = statusCode;

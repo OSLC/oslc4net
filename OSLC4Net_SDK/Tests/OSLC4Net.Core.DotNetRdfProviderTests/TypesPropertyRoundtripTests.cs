@@ -13,15 +13,21 @@ public class TypesPropertyRoundtripTests
         cr.Types = new List<Uri>
         {
             new Uri(Constants.CHANGE_MANAGEMENT_NAMESPACE + "ChangeRequest"),
-            new Uri(Constants.CHANGE_MANAGEMENT_NAMESPACE + "Defect")
+            new Uri(Constants.CHANGE_MANAGEMENT_NAMESPACE + "Defect"),
         };
 
         var formatter = new RdfXmlMediaTypeFormatter();
-        var rdfXml = await RdfHelpers.SerializeAsync(formatter, cr,
-            OslcMediaType.APPLICATION_RDF_XML_TYPE);
+        var rdfXml = await RdfHelpers.SerializeAsync(
+            formatter,
+            cr,
+            OslcMediaType.APPLICATION_RDF_XML_TYPE
+        );
 
-        var deserialized = await RdfHelpers.DeserializeAsync<ChangeRequest>(formatter, rdfXml,
-            OslcMediaType.APPLICATION_RDF_XML_TYPE);
+        var deserialized = await RdfHelpers.DeserializeAsync<ChangeRequest>(
+            formatter,
+            rdfXml,
+            OslcMediaType.APPLICATION_RDF_XML_TYPE
+        );
 
         await Assert.That(deserialized).IsNotNull();
         await Assert.That(deserialized!.Types.Count).IsEqualTo(cr.Types.Count);
@@ -55,11 +61,17 @@ public class TypesPropertyRoundtripTests
         // Don't set any types - should roundtrip as empty
 
         var formatter = new RdfXmlMediaTypeFormatter();
-        var rdfXml = await RdfHelpers.SerializeAsync(formatter, cr,
-            OslcMediaType.APPLICATION_RDF_XML_TYPE);
+        var rdfXml = await RdfHelpers.SerializeAsync(
+            formatter,
+            cr,
+            OslcMediaType.APPLICATION_RDF_XML_TYPE
+        );
 
-        var deserialized = await RdfHelpers.DeserializeAsync<ChangeRequest>(formatter, rdfXml,
-            OslcMediaType.APPLICATION_RDF_XML_TYPE);
+        var deserialized = await RdfHelpers.DeserializeAsync<ChangeRequest>(
+            formatter,
+            rdfXml,
+            OslcMediaType.APPLICATION_RDF_XML_TYPE
+        );
 
         await Assert.That(deserialized).IsNotNull();
 

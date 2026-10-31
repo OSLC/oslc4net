@@ -22,11 +22,8 @@ namespace OSLC4Net.Core.Query.Impl;
 /// </summary>
 internal sealed class ComparisonTermImpl : SimpleTermImpl, ComparisonTerm
 {
-    public
-    ComparisonTermImpl(
-        CommonTree tree,
-        IDictionary<string, string> prefixMap
-    ) : base(tree, TermType.COMPARISON, prefixMap)
+    public ComparisonTermImpl(CommonTree tree, IDictionary<string, string> prefixMap)
+        : base(tree, TermType.COMPARISON, prefixMap)
     {
         switch (((CommonTree)tree.GetChild(1)).Token.Type)
         {
@@ -54,10 +51,7 @@ internal sealed class ComparisonTermImpl : SimpleTermImpl, ComparisonTerm
 
     public Operator Operator
     {
-        get
-        {
-            return op;
-        }
+        get { return op; }
     }
 
     public Value Operand
@@ -68,8 +62,7 @@ internal sealed class ComparisonTermImpl : SimpleTermImpl, ComparisonTerm
             {
                 var treeOperand = (CommonTree)tree.GetChild(2);
 
-                operand = CreateValue(treeOperand, "unspported literal value type",
-                                      prefixMap);
+                operand = CreateValue(treeOperand, "unspported literal value type", prefixMap);
             }
 
             return operand;
@@ -81,8 +74,7 @@ internal sealed class ComparisonTermImpl : SimpleTermImpl, ComparisonTerm
         return Property.ToString() + OperatorExtension.ToString(op) + Operand.ToString();
     }
 
-    internal static Value
-    CreateValue(
+    internal static Value CreateValue(
         CommonTree treeOperand,
         string errorPrefix,
         IDictionary<string, string> prefixMap
@@ -103,9 +95,7 @@ internal sealed class ComparisonTermImpl : SimpleTermImpl, ComparisonTerm
             case OslcWhereParser.LANGED_VALUE:
                 return new LangedStringValueImpl(treeOperand);
             default:
-                throw new InvalidOperationException(
-                        errorPrefix + ": " +
-                            treeOperand.Token.Text);
+                throw new InvalidOperationException(errorPrefix + ": " + treeOperand.Token.Text);
         }
     }
 

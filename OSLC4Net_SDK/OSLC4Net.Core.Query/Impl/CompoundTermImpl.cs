@@ -23,14 +23,12 @@ namespace OSLC4Net.Core.Query.Impl;
 /// </summary>
 internal class CompoundTermImpl : SimpleTermImpl, CompoundTerm
 {
-    public
-    CompoundTermImpl(
-        CommonTree tree,
-        bool isTopLevel,
-        IDictionary<string, string> prefixMap
-    ) : base(isTopLevel ? null : tree,
-             isTopLevel ? TermType.TOP_LEVEL : TermType.NESTED,
-             prefixMap)
+    public CompoundTermImpl(CommonTree tree, bool isTopLevel, IDictionary<string, string> prefixMap)
+        : base(
+            isTopLevel ? null : tree,
+            isTopLevel ? TermType.TOP_LEVEL : TermType.NESTED,
+            prefixMap
+        )
     {
         this.tree = tree;
         this.isTopLevel = isTopLevel;
@@ -42,18 +40,14 @@ internal class CompoundTermImpl : SimpleTermImpl, CompoundTerm
         {
             if (children == null)
             {
-                var treeChildren =
-                    isTopLevel ?
-                        tree.Children :
-                        ((CommonTree)tree.GetChild(1)).Children;
+                var treeChildren = isTopLevel
+                    ? tree.Children
+                    : ((CommonTree)tree.GetChild(1)).Children;
 
-                children =
-                    new List<SimpleTerm>(
-                            treeChildren.Count - (isTopLevel ? 0 : 1));
+                children = new List<SimpleTerm>(treeChildren.Count - (isTopLevel ? 0 : 1));
 
                 foreach (CommonTree child in treeChildren)
                 {
-
                     SimpleTerm simpleTerm;
 
                     switch (child.Token.Type)
@@ -68,7 +62,9 @@ internal class CompoundTermImpl : SimpleTermImpl, CompoundTerm
                             simpleTerm = new CompoundTermImpl(child, false, prefixMap);
                             break;
                         default:
-                            throw new InvalidOperationException("unimplemented type of simple term: " + child.Token.Text);
+                            throw new InvalidOperationException(
+                                "unimplemented type of simple term: " + child.Token.Text
+                            );
                     }
 
                     children.Add(simpleTerm);
@@ -93,7 +89,6 @@ internal class CompoundTermImpl : SimpleTermImpl, CompoundTerm
 
         foreach (var term in Children)
         {
-
             if (first)
             {
                 first = false;

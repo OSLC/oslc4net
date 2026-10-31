@@ -22,28 +22,56 @@ namespace OSLC4Net.Core.Model;
 
 public class ServiceProviderFactory
 {
-    private ServiceProviderFactory()
+    private ServiceProviderFactory() { }
+
+    public static ServiceProvider CreateServiceProvider(
+        string baseURI,
+        string title,
+        string description,
+        Publisher publisher,
+        Type[] resourceTypes
+    )
     {
+        return InitServiceProvider(
+            new ServiceProvider(),
+            baseURI,
+            title,
+            description,
+            publisher,
+            resourceTypes,
+            null
+        );
     }
 
-    public static ServiceProvider CreateServiceProvider(string baseURI, string title,
-        string description, Publisher publisher, Type[] resourceTypes)
+    public static ServiceProvider CreateServiceProvider(
+        string baseURI,
+        string title,
+        string description,
+        Publisher publisher,
+        Type[] resourceTypes,
+        Dictionary<string, object> pathParameterValues
+    )
     {
-        return InitServiceProvider(new ServiceProvider(), baseURI, title, description, publisher,
-            resourceTypes, null);
+        return InitServiceProvider(
+            new ServiceProvider(),
+            baseURI,
+            title,
+            description,
+            publisher,
+            resourceTypes,
+            pathParameterValues
+        );
     }
 
-    public static ServiceProvider CreateServiceProvider(string baseURI, string title,
-        string description, Publisher publisher, Type[] resourceTypes,
-        Dictionary<string, object> pathParameterValues)
-    {
-        return InitServiceProvider(new ServiceProvider(), baseURI, title, description, publisher,
-            resourceTypes, pathParameterValues);
-    }
-
-    public static ServiceProvider InitServiceProvider(ServiceProvider serviceProvider,
-        string baseURI, string title, string description, Publisher publisher, Type[] resourceTypes,
-        Dictionary<string, object> pathParameterValues)
+    public static ServiceProvider InitServiceProvider(
+        ServiceProvider serviceProvider,
+        string baseURI,
+        string title,
+        string description,
+        Publisher publisher,
+        Type[] resourceTypes,
+        Dictionary<string, object> pathParameterValues
+    )
     {
         serviceProvider.SetTitle(title);
         serviceProvider.SetDescription(description);
@@ -53,8 +81,8 @@ public class ServiceProviderFactory
 
         foreach (var resourceType in resourceTypes)
         {
-            var serviceAttribute =
-                (OslcService[])resourceType.GetCustomAttributes(typeof(OslcService), false);
+            var serviceAttribute = (OslcService[])
+                resourceType.GetCustomAttributes(typeof(OslcService), false);
 
             if (serviceAttribute == null || serviceAttribute.Length == 0)
             {
@@ -96,21 +124,26 @@ public class ServiceProviderFactory
     /// <param name="resourceType"></param>
     /// <param name="service"></param>
     /// <param name="pathParameterValues"></param>
-    private static void HandleResourceType(string baseURI, Type resourceType,
-        Service service, Dictionary<string, object> pathParameterValues)
+    private static void HandleResourceType(
+        string baseURI,
+        Type resourceType,
+        Service service,
+        Dictionary<string, object> pathParameterValues
+    )
     {
         foreach (var method in resourceType.GetMethods())
         {
             if (method.Name.StartsWith("Get", StringComparison.Ordinal))
             {
                 var queryCapabilityAttribute =
-                    method.GetCustomAttributes(typeof(OslcQueryCapability),
-                        false) as OslcQueryCapability[];
+                    method.GetCustomAttributes(typeof(OslcQueryCapability), false)
+                    as OslcQueryCapability[];
                 string[]? resourceShapes = null;
                 if (queryCapabilityAttribute?.Length > 0)
                 {
-                    service.AddQueryCapability(CreateQueryCapability(baseURI, method,
-                        pathParameterValues));
+                    service.AddQueryCapability(
+                        CreateQueryCapability(baseURI, method, pathParameterValues)
+                    );
                     var resourceShape = queryCapabilityAttribute[0].ResourceShape;
                     if (resourceShape != null && resourceShape.Length > 0)
                     {
@@ -118,8 +151,8 @@ public class ServiceProviderFactory
                     }
                 }
 
-                var dialogsAttribute =
-                    (OslcDialogs[])method.GetCustomAttributes(typeof(OslcDialogs), false);
+                var dialogsAttribute = (OslcDialogs[])
+                    method.GetCustomAttributes(typeof(OslcDialogs), false);
                 if (dialogsAttribute != null && dialogsAttribute.Length > 0)
                 {
                     var dialogs = dialogsAttribute[0].Value;
@@ -127,8 +160,9 @@ public class ServiceProviderFactory
                     {
                         foreach (var dialog in dialogs)
                         {
-                            service.AddSelectionDialog(CreateSelectionDialog(baseURI, method,
-                                dialog, pathParameterValues));
+                            service.AddSelectionDialog(
+                                CreateSelectionDialog(baseURI, method, dialog, pathParameterValues)
+                            );
                         }
                     }
                 }
@@ -138,8 +172,14 @@ public class ServiceProviderFactory
                         method.GetCustomAttributes(typeof(OslcDialog), false) as OslcDialog[];
                     if (dialogAttribute is { Length: > 0 })
                     {
-                        service.AddSelectionDialog(CreateSelectionDialog(baseURI, method,
-                            dialogAttribute[0], pathParameterValues));
+                        service.AddSelectionDialog(
+                            CreateSelectionDialog(
+                                baseURI,
+                                method,
+                                dialogAttribute[0],
+                                pathParameterValues
+                            )
+                        );
                     }
                 }
             }
@@ -148,13 +188,14 @@ public class ServiceProviderFactory
                 if (method.Name.StartsWith("Post", StringComparison.Ordinal))
                 {
                     var creationFactoryAttribute =
-                        method.GetCustomAttributes(
-                            typeof(OslcCreationFactory), false) as OslcCreationFactory[];
+                        method.GetCustomAttributes(typeof(OslcCreationFactory), false)
+                        as OslcCreationFactory[];
                     string[]? resourceShapes = null;
                     if (creationFactoryAttribute is { Length: > 0 })
                     {
-                        service.AddCreationFactory(CreateCreationFactory(baseURI, method,
-                            pathParameterValues));
+                        service.AddCreationFactory(
+                            CreateCreationFactory(baseURI, method, pathParameterValues)
+                        );
                         resourceShapes = creationFactoryAttribute[0].resourceShapes;
                     }
 
@@ -167,19 +208,31 @@ public class ServiceProviderFactory
                         {
                             foreach (var dialog in dialogs)
                             {
-                                service.AddCreationDialog(CreateCreationDialog(baseURI, method,
-                                    dialog, pathParameterValues));
+                                service.AddCreationDialog(
+                                    CreateCreationDialog(
+                                        baseURI,
+                                        method,
+                                        dialog,
+                                        pathParameterValues
+                                    )
+                                );
                             }
                         }
                     }
                     else
                     {
-                        var dialogAttribute =
-                            (OslcDialog[])method.GetCustomAttributes(typeof(OslcDialog), false);
+                        var dialogAttribute = (OslcDialog[])
+                            method.GetCustomAttributes(typeof(OslcDialog), false);
                         if (dialogAttribute != null && dialogAttribute.Length > 0)
                         {
-                            service.AddCreationDialog(CreateCreationDialog(baseURI, method,
-                                dialogAttribute[0], pathParameterValues));
+                            service.AddCreationDialog(
+                                CreateCreationDialog(
+                                    baseURI,
+                                    method,
+                                    dialogAttribute[0],
+                                    pathParameterValues
+                                )
+                            );
                         }
                     }
                 }
@@ -187,11 +240,14 @@ public class ServiceProviderFactory
         }
     }
 
-    private static CreationFactory CreateCreationFactory(string baseURI, MethodInfo method,
-        Dictionary<string, object> pathParameterValues)
+    private static CreationFactory CreateCreationFactory(
+        string baseURI,
+        MethodInfo method,
+        Dictionary<string, object> pathParameterValues
+    )
     {
-        var creationFactoryAttribute =
-            (OslcCreationFactory[])method.GetCustomAttributes(typeof(OslcCreationFactory), false);
+        var creationFactoryAttribute = (OslcCreationFactory[])
+            method.GetCustomAttributes(typeof(OslcCreationFactory), false);
 
         var title = creationFactoryAttribute[0].title;
         var label = creationFactoryAttribute[0].label;
@@ -204,8 +260,11 @@ public class ServiceProviderFactory
         var pos = typeName.IndexOf("Controller", StringComparison.Ordinal);
         var controllerName = typeName.Substring(0, pos);
 
-        var creation =
-            ResolvePathParameters(baseURI, controllerName.ToLower(CultureInfo.InvariantCulture), pathParameterValues);
+        var creation = ResolvePathParameters(
+            baseURI,
+            controllerName.ToLower(CultureInfo.InvariantCulture),
+            pathParameterValues
+        );
         /* TODO Path methodPathAttribute = method.getAttribute(Path.class);
         if (methodPathAttribute != null) {
             creation = creation + '/' + methodPathAttribute.value();
@@ -238,11 +297,14 @@ public class ServiceProviderFactory
         return creationFactory;
     }
 
-    private static QueryCapability CreateQueryCapability(string baseURI, MethodInfo method,
-        Dictionary<string, object> pathParameterValues)
+    private static QueryCapability CreateQueryCapability(
+        string baseURI,
+        MethodInfo method,
+        Dictionary<string, object> pathParameterValues
+    )
     {
-        var queryCapabilityAttribute =
-            (OslcQueryCapability[])method.GetCustomAttributes(typeof(OslcQueryCapability), false);
+        var queryCapabilityAttribute = (OslcQueryCapability[])
+            method.GetCustomAttributes(typeof(OslcQueryCapability), false);
 
         var title = queryCapabilityAttribute[0].Title;
         var label = queryCapabilityAttribute[0].Label;
@@ -255,7 +317,11 @@ public class ServiceProviderFactory
         var pos = typeName.IndexOf("Controller", StringComparison.Ordinal);
         var controllerName = typeName.Substring(0, pos);
 
-        var query = ResolvePathParameters(baseURI, controllerName.ToLower(CultureInfo.InvariantCulture), pathParameterValues);
+        var query = ResolvePathParameters(
+            baseURI,
+            controllerName.ToLower(CultureInfo.InvariantCulture),
+            pathParameterValues
+        );
         /* TODO
         Path methodPathAttribute = method.getAttribute(Path.class);
         if (methodPathAttribute != null) {
@@ -287,23 +353,32 @@ public class ServiceProviderFactory
         return queryCapability;
     }
 
-    private static Dialog CreateCreationDialog(string baseURI, MethodInfo method,
+    private static Dialog CreateCreationDialog(
+        string baseURI,
+        MethodInfo method,
         OslcDialog dialogAttribute,
-        Dictionary<string, object> pathParameterValues)
+        Dictionary<string, object> pathParameterValues
+    )
     {
         return CreateDialog(baseURI, method, dialogAttribute, pathParameterValues);
     }
 
-    private static Dialog CreateSelectionDialog(string baseURI, MethodInfo method,
+    private static Dialog CreateSelectionDialog(
+        string baseURI,
+        MethodInfo method,
         OslcDialog dialogAttribute,
-        Dictionary<string, object> pathParameterValues)
+        Dictionary<string, object> pathParameterValues
+    )
     {
         return CreateDialog(baseURI, method, dialogAttribute, pathParameterValues);
     }
 
-    private static Dialog CreateDialog(string baseURI,
-        MethodInfo method, OslcDialog dialogAttribute,
-        Dictionary<string, object> pathParameterValues)
+    private static Dialog CreateDialog(
+        string baseURI,
+        MethodInfo method,
+        OslcDialog dialogAttribute,
+        Dictionary<string, object> pathParameterValues
+    )
     {
         var title = dialogAttribute.title;
         var label = dialogAttribute.label;
@@ -359,8 +434,11 @@ public class ServiceProviderFactory
         return dialog;
     }
 
-    private static string ResolvePathParameters(string basePath, string pathAttribute,
-        Dictionary<string, object> pathParameterValues)
+    private static string ResolvePathParameters(
+        string basePath,
+        string pathAttribute,
+        Dictionary<string, object> pathParameterValues
+    )
     {
         string returnUri;
 

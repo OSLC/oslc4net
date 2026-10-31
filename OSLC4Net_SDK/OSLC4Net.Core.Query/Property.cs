@@ -20,7 +20,6 @@ namespace OSLC4Net.Core.Query;
 /// </summary>
 public interface Property
 {
-
     PropertyType Type { get; }
 
     bool IsWildcard { get; }

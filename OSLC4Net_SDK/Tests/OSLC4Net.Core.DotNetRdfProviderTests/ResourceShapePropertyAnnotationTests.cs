@@ -24,11 +24,13 @@ public class ResourceShapePropertyAnnotationTests
             "http://example.com",
             OslcConstants.PATH_RESOURCE_SHAPES,
             "changeRequest",
-            typeof(ChangeRequest));
+            typeof(ChangeRequest)
+        );
 
         var properties = shape.GetProperties();
         var typeProperty = properties.FirstOrDefault(p =>
-            p.GetPropertyDefinition().ToString() == OslcConstants.RDF_NAMESPACE + "type");
+            p.GetPropertyDefinition().ToString() == OslcConstants.RDF_NAMESPACE + "type"
+        );
 
         await Assert.That(typeProperty).IsNotNull();
         await Assert.That(typeProperty!.GetName()).IsEqualTo("type");
@@ -42,11 +44,15 @@ public class ResourceShapePropertyAnnotationTests
             "http://example.com",
             OslcConstants.PATH_RESOURCE_SHAPES,
             "changeRequest",
-            typeof(ChangeRequest));
+            typeof(ChangeRequest)
+        );
 
         var properties = shape.GetProperties();
-        var typeProperties = properties.Where(p =>
-            p.GetPropertyDefinition().ToString() == OslcConstants.RDF_NAMESPACE + "type").ToList();
+        var typeProperties = properties
+            .Where(p =>
+                p.GetPropertyDefinition().ToString() == OslcConstants.RDF_NAMESPACE + "type"
+            )
+            .ToList();
 
         // Should be exactly one rdf:type property (from the Types property, not from GetTypes)
         await Assert.That(typeProperties.Count).IsEqualTo(1);
@@ -59,16 +65,19 @@ public class ResourceShapePropertyAnnotationTests
             "http://example.com",
             OslcConstants.PATH_RESOURCE_SHAPES,
             "testResource",
-            typeof(TestResourceWithTypesProperty));
+            typeof(TestResourceWithTypesProperty)
+        );
 
         var properties = shape.GetProperties();
 
         var nameProperty = properties.FirstOrDefault(p =>
-            p.GetPropertyDefinition().ToString() == "http://example.com/ns#name");
+            p.GetPropertyDefinition().ToString() == "http://example.com/ns#name"
+        );
         await Assert.That(nameProperty).IsNotNull();
 
         var typeProperty = properties.FirstOrDefault(p =>
-            p.GetPropertyDefinition().ToString() == OslcConstants.RDF_NAMESPACE + "type");
+            p.GetPropertyDefinition().ToString() == OslcConstants.RDF_NAMESPACE + "type"
+        );
         await Assert.That(typeProperty).IsNotNull();
     }
 }

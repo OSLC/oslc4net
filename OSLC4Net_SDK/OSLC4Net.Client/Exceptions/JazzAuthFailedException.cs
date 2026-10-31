@@ -18,7 +18,8 @@ namespace OSLC4Net.Client.Exceptions;
 /// </summary>
 public class JazzAuthFailedException(string user, string jazzUrl)
     : OslcClientApplicationException(
-        $"OSLC2001: Unable to authenticate user {user} with the Jazz server at {jazzUrl}.")
+        $"OSLC2001: Unable to authenticate user {user} with the Jazz server at {jazzUrl}."
+    )
 {
     /// <summary>
     ///     User that failed authentication.

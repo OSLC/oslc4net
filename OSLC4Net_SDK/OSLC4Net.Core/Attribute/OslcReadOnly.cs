@@ -20,8 +20,7 @@ namespace OSLC4Net.Core.Attribute;
 ///     OSLC ReadOnly attribute
 /// </summary>
 /// <remarks>See https://docs.oasis-open-projects.org/oslc-op/core/v3.0/os/core-vocab.html </remarks>
-[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)
-]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
 public class OslcReadOnly : System.Attribute
 {
     /**

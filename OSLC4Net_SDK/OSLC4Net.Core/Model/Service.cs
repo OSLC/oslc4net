@@ -21,8 +21,10 @@ namespace OSLC4Net.Core.Model;
 ///     OSLC Service attribute
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Service Resource Shape",
-    describes = new[] { OslcConstants.TYPE_SERVICE })]
+[OslcResourceShape(
+    title = "OSLC Service Resource Shape",
+    describes = new[] { OslcConstants.TYPE_SERVICE }
+)]
 public class Service : AbstractResource
 {
     private readonly IList<Dialog> creationDialogs = new List<Dialog>();
@@ -32,11 +34,10 @@ public class Service : AbstractResource
 
     private Uri domain;
 
-    public Service()
-    {
-    }
+    public Service() { }
 
-    public Service(Uri domain) : this()
+    public Service(Uri domain)
+        : this()
     {
         this.domain = domain;
     }
@@ -90,7 +91,8 @@ public class Service : AbstractResource
     }
 
     [OslcDescription(
-        "Namespace Uri of the OSLC domain specification that is implemented by this service")]
+        "Namespace Uri of the OSLC domain specification that is implemented by this service"
+    )]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "domain")]
     [OslcReadOnly]

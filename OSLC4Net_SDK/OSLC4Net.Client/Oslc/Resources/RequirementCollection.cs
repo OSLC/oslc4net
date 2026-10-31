@@ -23,20 +23,24 @@ namespace OSLC4Net.Client.Oslc.Resources;
 ///     OSLC shape for <c>oslc_rm:RequirementCollection</c>
 /// </summary>
 [OslcNamespace(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE)]
-[OslcResourceShape(title = "Requirement Collection Resource Shape",
-    describes = new string[] { RmConstants.TYPE_REQUIREMENT_COLLECTION })]
+[OslcResourceShape(
+    title = "Requirement Collection Resource Shape",
+    describes = new string[] { RmConstants.TYPE_REQUIREMENT_COLLECTION }
+)]
 [Obsolete("See OSLC4Net.Domains.RequirementsManagement")]
 public class RequirementCollection : RequirementBase
 {
     // The only extra field is uses
     private readonly ISet<Uri> _uses = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
-    public RequirementCollection() : base()
+    public RequirementCollection()
+        : base()
     {
         AddRdfType(new Uri(RmConstants.TYPE_REQUIREMENT_COLLECTION));
     }
 
-    public RequirementCollection(Uri about) : base(about)
+    public RequirementCollection(Uri about)
+        : base(about)
     {
         AddRdfType(new Uri(RmConstants.TYPE_REQUIREMENT_COLLECTION));
     }
@@ -46,7 +50,9 @@ public class RequirementCollection : RequirementBase
         _uses.Add(uses);
     }
 
-    [OslcDescription("A collection uses a resource - the resource is in the requirement collection.")]
+    [OslcDescription(
+        "A collection uses a resource - the resource is in the requirement collection."
+    )]
     [OslcName("uses")]
     [OslcPropertyDefinition(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE + "uses")]
     [OslcRange(RmConstants.TYPE_REQUIREMENT)]

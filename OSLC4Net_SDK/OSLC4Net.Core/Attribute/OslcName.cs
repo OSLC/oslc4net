@@ -19,11 +19,12 @@ namespace OSLC4Net.Core.Attribute;
 /// <summary>
 ///     OSLC Name attribute
 /// </summary>
-[AttributeUsage(AttributeTargets.Method |
-                AttributeTargets.Class |
-                AttributeTargets.Interface |
-                AttributeTargets.Property)
-]
+[AttributeUsage(
+    AttributeTargets.Method
+        | AttributeTargets.Class
+        | AttributeTargets.Interface
+        | AttributeTargets.Property
+)]
 public class OslcName : System.Attribute
 {
     /**

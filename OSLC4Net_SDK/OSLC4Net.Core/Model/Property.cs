@@ -22,8 +22,10 @@ namespace OSLC4Net.Core.Model;
 /// </summary>
 /// <remarks>See https://docs.oasis-open-projects.org/oslc-op/core/v3.0/os/core-vocab.html </remarks>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Property Resource Shape",
-    describes = new[] { OslcConstants.TYPE_PROPERTY })]
+[OslcResourceShape(
+    title = "OSLC Property Resource Shape",
+    describes = new[] { OslcConstants.TYPE_PROPERTY }
+)]
 public sealed class Property : AbstractResource
 {
     private readonly IList<string> allowedValues = new List<string>();
@@ -44,14 +46,10 @@ public sealed class Property : AbstractResource
     private Uri valueShape;
     private ValueType valueType;
 
-    public Property()
-    {
-    }
+    public Property() { }
 
-    public Property(string name,
-        Occurs occurs,
-        Uri propertyDefinition,
-        ValueType valueType) : this()
+    public Property(string name, Occurs occurs, Uri propertyDefinition, ValueType valueType)
+        : this()
     {
         this.name = name;
         this.occurs = occurs;
@@ -73,7 +71,8 @@ public sealed class Property : AbstractResource
     /// A value allowed for property, inlined into property definition. If there are both oslc:allowedValue elements and an oslc:allowedValue resource, then the full-set of allowed values is the union of both
     /// </summary>
     [OslcDescription(
-        "A value allowed for property, inlined into property definition. If there are both oslc:allowedValue elements and an oslc:allowedValue resource, then the full-set of allowed values is the union of both")]
+        "A value allowed for property, inlined into property definition. If there are both oslc:allowedValue elements and an oslc:allowedValue resource, then the full-set of allowed values is the union of both"
+    )]
     [OslcName("allowedValue")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "allowedValue")]
     [OslcReadOnly]
@@ -114,7 +113,8 @@ public sealed class Property : AbstractResource
     /// Description of the property. SHOULD include only content that is valid and suitable inside an XHTML &lt;div&gt; element
     /// </summary>
     [OslcDescription(
-        "Description of the property. SHOULD include only content that is valid and suitable inside an XHTML <div> element")]
+        "Description of the property. SHOULD include only content that is valid and suitable inside an XHTML <div> element"
+    )]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "description")]
     [OslcReadOnly]
     [OslcTitle("Description")]
@@ -128,7 +128,8 @@ public sealed class Property : AbstractResource
     /// For string properties only, specifies maximum characters allowed. If not set, then there is no maximum or maximum is specified elsewhere
     /// </summary>
     [OslcDescription(
-        "For string properties only, specifies maximum characters allowed. If not set, then there is no maximum or maximum is specified elsewhere")]
+        "For string properties only, specifies maximum characters allowed. If not set, then there is no maximum or maximum is specified elsewhere"
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "maxSize")]
     [OslcReadOnly]
     [OslcTitle("Maximum Size")]
@@ -141,7 +142,8 @@ public sealed class Property : AbstractResource
     /// Name of property being defined, i.e. second part of property's Prefixed Name
     /// </summary>
     [OslcDescription(
-        "Name of property being defined, i.e. second part of property's Prefixed Name")]
+        "Name of property being defined, i.e. second part of property's Prefixed Name"
+    )]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "name")]
     [OslcReadOnly]
@@ -154,12 +156,15 @@ public sealed class Property : AbstractResource
     /// <summary>
     /// MUST be either http://open-services.net/ns/core#Exactly-one, http://open-services.net/ns/core#Zero-or-one, http://open-services.net/ns/core#Zero-or-many or http://open-services.net/ns/core#One-or-many
     /// </summary>
-    [OslcAllowedValue(OslcConstants.OSLC_CORE_NAMESPACE + "Exactly-one",
+    [OslcAllowedValue(
+        OslcConstants.OSLC_CORE_NAMESPACE + "Exactly-one",
         OslcConstants.OSLC_CORE_NAMESPACE + "Zero-or-one",
         OslcConstants.OSLC_CORE_NAMESPACE + "Zero-or-many",
-        OslcConstants.OSLC_CORE_NAMESPACE + "One-or-many")]
+        OslcConstants.OSLC_CORE_NAMESPACE + "One-or-many"
+    )]
     [OslcDescription(
-        "MUST be either http://open-services.net/ns/core#Exactly-one, http://open-services.net/ns/core#Zero-or-one, http://open-services.net/ns/core#Zero-or-many or http://open-services.net/ns/core#One-or-many")]
+        "MUST be either http://open-services.net/ns/core#Exactly-one, http://open-services.net/ns/core#Zero-or-one, http://open-services.net/ns/core#Zero-or-many or http://open-services.net/ns/core#One-or-many"
+    )]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "occurs")]
     [OslcReadOnly]
@@ -199,7 +204,8 @@ public sealed class Property : AbstractResource
     /// For properties with a resource value-type, Providers MAY also specify the range of possible resource classes allowed, each specified by Uri. The default range is http://open-services.net/ns/core#Any
     /// </summary>
     [OslcDescription(
-        "For properties with a resource value-type, Providers MAY also specify the range of possible resource classes allowed, each specified by Uri. The default range is http://open-services.net/ns/core#Any")]
+        "For properties with a resource value-type, Providers MAY also specify the range of possible resource classes allowed, each specified by Uri. The default range is http://open-services.net/ns/core#Any"
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "range")]
     [OslcReadOnly]
     [OslcTitle("Ranges")]
@@ -211,11 +217,14 @@ public sealed class Property : AbstractResource
     /// <summary>
     /// Should be http://open-services.net/ns/core#Reference, http://open-services.net/ns/core#Inline or http://open-services.net/ns/core#Either
     /// </summary>
-    [OslcAllowedValue(OslcConstants.OSLC_CORE_NAMESPACE + "Reference",
+    [OslcAllowedValue(
+        OslcConstants.OSLC_CORE_NAMESPACE + "Reference",
         OslcConstants.OSLC_CORE_NAMESPACE + "Inline",
-        OslcConstants.OSLC_CORE_NAMESPACE + "Either")]
+        OslcConstants.OSLC_CORE_NAMESPACE + "Either"
+    )]
     [OslcDescription(
-        "Should be http://open-services.net/ns/core#Reference, http://open-services.net/ns/core#Inline or http://open-services.net/ns/core#Either")]
+        "Should be http://open-services.net/ns/core#Reference, http://open-services.net/ns/core#Inline or http://open-services.net/ns/core#Either"
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "representation")]
     [OslcReadOnly]
     [OslcTitle("Representation")]
@@ -241,7 +250,8 @@ public sealed class Property : AbstractResource
     /// Title of the property. SHOULD include only content that is valid and suitable inside an XHTML &lt;div&gt; element
     /// </summary>
     [OslcDescription(
-        "Title of the property. SHOULD include only content that is valid and suitable inside an XHTML <div> element")]
+        "Title of the property. SHOULD include only content that is valid and suitable inside an XHTML <div> element"
+    )]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]
     [OslcReadOnly]
     [OslcTitle("Title")]
@@ -255,7 +265,8 @@ public sealed class Property : AbstractResource
     /// if the value-type is a resource type, then Property MAY provide a shape value to indicate the Resource Shape that applies to the resource
     /// </summary>
     [OslcDescription(
-        "if the value-type is a resource type, then Property MAY provide a shape value to indicate the Resource Shape that applies to the resource")]
+        "if the value-type is a resource type, then Property MAY provide a shape value to indicate the Resource Shape that applies to the resource"
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "valueShape")]
     [OslcRange(OslcConstants.TYPE_RESOURCE_SHAPE)]
     [OslcReadOnly]
@@ -268,7 +279,8 @@ public sealed class Property : AbstractResource
     /// <summary>
     /// See list of allowed values for oslc:valueType
     /// </summary>
-    [OslcAllowedValue(OslcConstants.XML_NAMESPACE + "boolean",
+    [OslcAllowedValue(
+        OslcConstants.XML_NAMESPACE + "boolean",
         OslcConstants.XML_NAMESPACE + "dateTime",
         OslcConstants.XML_NAMESPACE + "decimal",
         OslcConstants.XML_NAMESPACE + "double",
@@ -278,7 +290,8 @@ public sealed class Property : AbstractResource
         OslcConstants.RDF_NAMESPACE + "XMLLiteral",
         OslcConstants.OSLC_CORE_NAMESPACE + "Resource",
         OslcConstants.OSLC_CORE_NAMESPACE + "LocalResource",
-        OslcConstants.OSLC_CORE_NAMESPACE + "AnyResource")]
+        OslcConstants.OSLC_CORE_NAMESPACE + "AnyResource"
+    )]
     [OslcDescription("See list of allowed values for oslc:valueType")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "valueType")]
@@ -306,7 +319,8 @@ public sealed class Property : AbstractResource
     /// A hint that indicates that property MAY be hidden when presented in a user interface
     /// </summary>
     [OslcDescription(
-        "A hint that indicates that property MAY be hidden when presented in a user interface")]
+        "A hint that indicates that property MAY be hidden when presented in a user interface"
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hidden")]
     [OslcReadOnly]
     [OslcTitle("Hidden")]
@@ -319,7 +333,8 @@ public sealed class Property : AbstractResource
     /// If set to true, this indicates that the property is a membership property, as described in the Query Syntax Specification: Member List Patterns. This is useful when the resource whose shape is being defined is viewed as a container of other resources. For example, look at the last example in Appendix B's RDF/XML Representation Examples: Specifying the shape of a query result, where blog:comment is defined as a membership property and comment that matches the query is returned as value of that property.
     /// </summary>
     [OslcDescription(
-        "If set to true, this indicates that the property is a membership property, as described in the Query Syntax Specification: Member List Patterns. This is useful when the resource whose shape is being defined is viewed as a container of other resources. For example, look at the last example in Appendix B's RDF/XML Representation Examples: Specifying the shape of a query result, where blog:comment is defined as a membership property and comment that matches the query is returned as value of that property.")]
+        "If set to true, this indicates that the property is a membership property, as described in the Query Syntax Specification: Member List Patterns. This is useful when the resource whose shape is being defined is viewed as a container of other resources. For example, look at the last example in Appendix B's RDF/XML Representation Examples: Specifying the shape of a query result, where blog:comment is defined as a membership property and comment that matches the query is returned as value of that property."
+    )]
     [OslcName("isMemberProperty")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "isMemberProperty")]
     [OslcReadOnly]
@@ -333,7 +348,8 @@ public sealed class Property : AbstractResource
     /// true if the property is read-only. If not set, or set to false, then the property is writable. Providers SHOULD declare a property read-only when changes to the value of that property will not be accepted on PUT. Consumers should note that the converse does not apply: Providers MAY reject a change to the value of a writable property.
     /// </summary>
     [OslcDescription(
-        "true if the property is read-only. If not set, or set to false, then the property is writable. Providers SHOULD declare a property read-only when changes to the value of that property will not be accepted on PUT. Consumers should note that the converse does not apply: Providers MAY reject a change to the value of a writable property.")]
+        "true if the property is read-only. If not set, or set to false, then the property is writable. Providers SHOULD declare a property read-only when changes to the value of that property will not be accepted on PUT. Consumers should note that the converse does not apply: Providers MAY reject a change to the value of a writable property."
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "readOnly")]
     [OslcReadOnly]
     [OslcTitle("Read Only")]

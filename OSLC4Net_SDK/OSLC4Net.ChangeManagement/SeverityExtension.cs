@@ -29,7 +29,10 @@ internal static class SeverityExtension
             }
         }
 
-        throw new ArgumentOutOfRangeException(nameof(value), value,
-            "The string must correspond to one of the Severity enum values");
+        throw new ArgumentOutOfRangeException(
+            nameof(value),
+            value,
+            "The string must correspond to one of the Severity enum values"
+        );
     }
 }

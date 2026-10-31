@@ -71,8 +71,10 @@ public class EnumerableWrapper : IEnumerable<object>
                 return;
             }
 
-            opaqueEnumerator.GetType().GetMethod("Dispose", Type.EmptyTypes)?
-                .Invoke(opaqueEnumerator, Type.EmptyTypes);
+            opaqueEnumerator
+                .GetType()
+                .GetMethod("Dispose", Type.EmptyTypes)
+                ?.Invoke(opaqueEnumerator, Type.EmptyTypes);
         }
 
         public bool MoveNext()
@@ -82,7 +84,9 @@ public class EnumerableWrapper : IEnumerable<object>
 
         public void Reset()
         {
-            opaqueEnumerator.GetType().GetMethod("Reset", Type.EmptyTypes)!
+            opaqueEnumerator
+                .GetType()
+                .GetMethod("Reset", Type.EmptyTypes)!
                 .Invoke(opaqueEnumerator, Type.EmptyTypes);
         }
     }

@@ -4,7 +4,9 @@ public class FakeHttpMessageHandler : HttpMessageHandler
 {
     private Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> _handlerFunc;
 
-    public FakeHttpMessageHandler(Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> handlerFunc)
+    public FakeHttpMessageHandler(
+        Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> handlerFunc
+    )
     {
         _handlerFunc = handlerFunc ?? throw new ArgumentNullException(nameof(handlerFunc));
     }
@@ -14,14 +16,18 @@ public class FakeHttpMessageHandler : HttpMessageHandler
     {
         // Default behavior: return a simple NotFound response if no specific handler is set via property/method.
         _handlerFunc = (request, cancellationToken) =>
-            Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
-            {
-                RequestMessage = request
-            });
+            Task.FromResult(
+                new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                {
+                    RequestMessage = request,
+                }
+            );
     }
 
     // Optional: A way to set or change the handler logic after construction
-    public void SetHandler(Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> handlerFunc)
+    public void SetHandler(
+        Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> handlerFunc
+    )
     {
         _handlerFunc = handlerFunc ?? throw new ArgumentNullException(nameof(handlerFunc));
     }
@@ -35,7 +41,10 @@ public class FakeHttpMessageHandler : HttpMessageHandler
     // In netstandard2.0 (which this project targets), SendAsync is:
     // protected internal abstract System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> SendAsync(System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken);
     // So overriding it is correct.
-    protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    protected override Task<HttpResponseMessage> SendAsync(
+        HttpRequestMessage request,
+        CancellationToken cancellationToken
+    )
     {
         return _handlerFunc(request, cancellationToken);
     }

@@ -28,28 +28,38 @@ using (var scope = host.Services.CreateScope())
 
     if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
     {
-        logger.LogError("Credentials not provided. Please set OSLC_USERNAME and OSLC_PASSWORD (or JAZZ_NET_USERNAME and JAZZ_NET_PASSWORD) environment variables.");
+        logger.LogError(
+            "Credentials not provided. Please set OSLC_USERNAME and OSLC_PASSWORD (or JAZZ_NET_USERNAME and JAZZ_NET_PASSWORD) environment variables."
+        );
         return;
     }
 
-    var oslcClient = OslcClient.ForBasicAuth(username, password,
-        services.GetRequiredService<ILogger<OslcClient>>());
+    var oslcClient = OslcClient.ForBasicAuth(
+        username,
+        password,
+        services.GetRequiredService<ILogger<OslcClient>>()
+    );
 
-    var resourceUri =
-        $"{jazzCmBase}/resource/itemName/com.ibm.team.workitem.WorkItem/{workItemId}";
-    OslcResponse<ChangeRequest> response = await oslcClient.GetResourceAsync<ChangeRequest>(resourceUri).ConfigureAwait(false);
+    var resourceUri = $"{jazzCmBase}/resource/itemName/com.ibm.team.workitem.WorkItem/{workItemId}";
+    OslcResponse<ChangeRequest> response = await oslcClient
+        .GetResourceAsync<ChangeRequest>(resourceUri)
+        .ConfigureAwait(false);
     if (response.Resources?.SingleOrDefault() is not null)
     {
         var changeRequestResource = response.Resources.Single();
         logger.LogInformation(
-            "{shortTitle} {title}", changeRequestResource.GetShortTitle(),
-            changeRequestResource.GetTitle());
+            "{shortTitle} {title}",
+            changeRequestResource.GetShortTitle(),
+            changeRequestResource.GetTitle()
+        );
     }
     else
     {
-        logger.LogError("Something went wrong: {status} {reason}",
+        logger.LogError(
+            "Something went wrong: {status} {reason}",
             (int?)response.StatusCode ?? -1,
-            response.ResponseMessage?.ReasonPhrase);
+            response.ResponseMessage?.ReasonPhrase
+        );
     }
 
     logger.LogDebug("END");

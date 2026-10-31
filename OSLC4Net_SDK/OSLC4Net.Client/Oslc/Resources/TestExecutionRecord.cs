@@ -22,8 +22,10 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// https://docs.oasis-open-projects.org/oslc-op/qm/v2.1/os/quality-management-shapes.html#TestExecutionRecordShape
 /// </summary>
-[OslcResourceShape(title = "Quality Management Resource Shape",
-    describes = new string[] { QmConstants.TYPE_TEST_EXECUTION_RECORD })]
+[OslcResourceShape(
+    title = "Quality Management Resource Shape",
+    describes = new string[] { QmConstants.TYPE_TEST_EXECUTION_RECORD }
+)]
 [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
 public class TestExecutionRecord : QmResource
 {
@@ -36,9 +38,8 @@ public class TestExecutionRecord : QmResource
     private Uri runsOnTestEnvironment;
     private Link runsTestCase;
 
-    public TestExecutionRecord() : base()
-    {
-    }
+    public TestExecutionRecord()
+        : base() { }
 
     protected override Uri GetRdfType()
     {
@@ -65,7 +66,9 @@ public class TestExecutionRecord : QmResource
         this.relatedChangeRequests.Add(relatedChangeRequest);
     }
 
-    [OslcDescription("The person(s) who are responsible for the work needed to complete the change request.")]
+    [OslcDescription(
+        "The person(s) who are responsible for the work needed to complete the change request."
+    )]
     [OslcName("contributor")]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "contributor")]
     [OslcRange(QmConstants.TYPE_PERSON)]
@@ -118,7 +121,9 @@ public class TestExecutionRecord : QmResource
         return reportsOnTestPlan;
     }
 
-    [OslcDescription("Indicates the environment details of the test case for this execution record.")]
+    [OslcDescription(
+        "Indicates the environment details of the test case for this execution record."
+    )]
     [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "runsOnTestEnvironment")]
     [OslcTitle("Runs On Test Environment")]
     public Uri GetRunsOnTestEnvironment()

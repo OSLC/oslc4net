@@ -10,8 +10,7 @@
 
 namespace OSLC4Net.ChangeManagement;
 
-[AttributeUsage(AttributeTargets.Field)
-]
+[AttributeUsage(AttributeTargets.Field)]
 internal sealed class Description(string value) : Attribute
 {
     /**

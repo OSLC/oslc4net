@@ -21,8 +21,11 @@ namespace OSLC4Net.Core.Exceptions;
 public class OslcCoreInvalidPropertyTypeException(
     Type resourceType,
     MemberInfo method,
-    Type returnType) : OslcCoreApplicationException(
-    $"OSLC1005: Invalid property type {returnType.Name} returned by method {method.Name} of class {resourceType.Name}")
+    Type returnType
+)
+    : OslcCoreApplicationException(
+        $"OSLC1005: Invalid property type {returnType.Name} returned by method {method.Name} of class {resourceType.Name}"
+    )
 {
     public Type ResourceType { get; } = resourceType;
     public MemberInfo Method { get; } = method;

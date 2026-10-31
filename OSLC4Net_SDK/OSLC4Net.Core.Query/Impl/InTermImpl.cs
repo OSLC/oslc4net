@@ -23,13 +23,8 @@ namespace OSLC4Net.Core.Query.Impl;
 /// </summary>
 internal sealed class InTermImpl : SimpleTermImpl, InTerm
 {
-    public
-    InTermImpl(
-        CommonTree tree,
-        IDictionary<string, string> prefixMap
-    ) : base(tree, TermType.IN_TERM, prefixMap)
-    {
-    }
+    public InTermImpl(CommonTree tree, IDictionary<string, string> prefixMap)
+        : base(tree, TermType.IN_TERM, prefixMap) { }
 
     public IList<Value> Values
     {
@@ -43,11 +38,11 @@ internal sealed class InTermImpl : SimpleTermImpl, InTerm
 
                 foreach (CommonTree treeValue in treeValues)
                 {
-
-                    var value =
-                        ComparisonTermImpl.CreateValue(
-                                treeValue, "unspported literal value type",
-                                prefixMap);
+                    var value = ComparisonTermImpl.CreateValue(
+                        treeValue,
+                        "unspported literal value type",
+                        prefixMap
+                    );
 
                     values.Add(value);
                 }
@@ -68,7 +63,6 @@ internal sealed class InTermImpl : SimpleTermImpl, InTerm
 
         foreach (var value in Values)
         {
-
             if (first)
             {
                 first = false;

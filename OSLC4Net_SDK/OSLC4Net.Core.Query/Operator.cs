@@ -17,5 +17,5 @@ public enum Operator
     LESS_THAN,
     GREATER_THAN,
     LESS_EQUALS,
-    GREATER_EQUALS
+    GREATER_EQUALS,
 }

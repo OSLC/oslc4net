@@ -22,8 +22,10 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// https://docs.oasis-open-projects.org/oslc-op/qm/v2.1/os/quality-management-shapes.html#TestCaseShape
 /// </summary>
-[OslcResourceShape(title = "Quality Management Resource Shape",
-    describes = new string[] { QmConstants.TYPE_TEST_CASE })]
+[OslcResourceShape(
+    title = "Quality Management Resource Shape",
+    describes = new string[] { QmConstants.TYPE_TEST_CASE }
+)]
 [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
 public class TestCase : QmResource
 {
@@ -37,9 +39,8 @@ public class TestCase : QmResource
 
     private string description;
 
-    public TestCase() : base()
-    {
-    }
+    public TestCase()
+        : base() { }
 
     protected override Uri GetRdfType()
     {
@@ -81,7 +82,9 @@ public class TestCase : QmResource
         this.validatesRequirements.Add(requirement);
     }
 
-    [OslcDescription("The person(s) who are responsible for the work needed to complete the test case.")]
+    [OslcDescription(
+        "The person(s) who are responsible for the work needed to complete the test case."
+    )]
     [OslcName("contributor")]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "contributor")]
     [OslcRange(QmConstants.TYPE_PERSON)]
@@ -102,7 +105,8 @@ public class TestCase : QmResource
     }
 
     [OslcDescription(
-        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
+        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content."
+    )]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "description")]
     [OslcTitle("Description")]
     [OslcValueType(OSLC4Net.Core.Model.ValueType.XMLLiteral)]
@@ -123,7 +127,8 @@ public class TestCase : QmResource
     }
 
     [OslcDescription(
-        "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
+        "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource."
+    )]
     [OslcName("subject")]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "subject")]
     [OslcReadOnly(false)]

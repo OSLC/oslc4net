@@ -110,8 +110,6 @@ public sealed class SPDXDomainTests
         await Assert
             .That(typeof(SpdxAction).GetProperty(nameof(SpdxAction.AdditionalInformation)))
             .IsNotNull();
-        await Assert
-            .That(typeof(SpdxAction).GetProperty("AdditionalInformationCore"))
-            .IsNull();
+        await Assert.That(typeof(SpdxAction).GetProperty("AdditionalInformationCore")).IsNull();
     }
 }

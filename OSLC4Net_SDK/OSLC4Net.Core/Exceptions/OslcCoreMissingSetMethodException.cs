@@ -21,8 +21,11 @@ namespace OSLC4Net.Core.Exceptions;
 public class OslcCoreMissingSetMethodException(
     Type resourceType,
     MethodInfo getMethod,
-    Exception? exception = null) : OslcCoreApplicationException(
-    $"OSLC1011: Missing corresponding set method for method {getMethod.Name} of class {resourceType.Name}")
+    Exception? exception = null
+)
+    : OslcCoreApplicationException(
+        $"OSLC1011: Missing corresponding set method for method {getMethod.Name} of class {resourceType.Name}"
+    )
 {
     public Type ResourceType { get; } = resourceType;
     public MethodInfo GetMethod { get; } = getMethod;

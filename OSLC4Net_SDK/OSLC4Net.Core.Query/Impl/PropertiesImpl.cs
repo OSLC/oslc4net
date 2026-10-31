@@ -24,11 +24,7 @@ namespace OSLC4Net.Core.Query.Impl;
 /// </summary>
 internal class PropertiesImpl : Properties
 {
-    public
-    PropertiesImpl(
-        CommonTree tree,
-        IDictionary<string, string> prefixMap
-    )
+    public PropertiesImpl(CommonTree tree, IDictionary<string, string> prefixMap)
     {
         this.tree = tree;
         this.prefixMap = prefixMap;
@@ -39,8 +35,7 @@ internal class PropertiesImpl : Properties
      * Construct a {@link Properties} proxy that has a single
      * {@link Wildcard} child
      */
-    public
-    PropertiesImpl()
+    public PropertiesImpl()
     {
         this.tree = null;
         this.prefixMap = null;
@@ -78,8 +73,7 @@ internal class PropertiesImpl : Properties
      *
      * @return the resulting property list
      */
-    internal static IList<Property>
-    CreateChildren(
+    internal static IList<Property> CreateChildren(
         CommonTree tree,
         IDictionary<string, string> prefixMap
     )
@@ -106,20 +100,24 @@ internal class PropertiesImpl : Properties
                     property = (Property)new WildcardImpl();
                     break;
                 case OslcSelectParser.PREFIXED_NAME:
-                    if (treeChild.GetChild(0) is not CommonTree propertyName ||
-                        propertyName.Token is null)
+                    if (
+                        treeChild.GetChild(0) is not CommonTree propertyName
+                        || propertyName.Token is null
+                    )
                     {
                         throw new ParseException("Invalid property expression.");
                     }
 
-                    property = (Property)new PropertyImpl(propertyName,
-                                                          PropertyType.IDENTIFIER, prefixMap, false);
+                    property = (Property)
+                        new PropertyImpl(propertyName, PropertyType.IDENTIFIER, prefixMap, false);
                     break;
                 default:
                 case OslcSelectParser.NESTED_PROPERTIES:
-                    if (treeChild.GetChild(0) is not CommonTree nestedProperty ||
-                        nestedProperty.Token is null ||
-                        treeChild.GetChild(1) is not CommonTree nestedProperties)
+                    if (
+                        treeChild.GetChild(0) is not CommonTree nestedProperty
+                        || nestedProperty.Token is null
+                        || treeChild.GetChild(1) is not CommonTree nestedProperties
+                    )
                     {
                         throw new ParseException("Invalid property expression.");
                     }
@@ -144,17 +142,12 @@ internal class PropertiesImpl : Properties
      *
      * @return the builder representation of the property list
      */
-    internal static StringBuilder
-    ChildrenToString(
-        StringBuilder builder,
-        IList<Property> children
-    )
+    internal static StringBuilder ChildrenToString(StringBuilder builder, IList<Property> children)
     {
         var first = true;
 
         foreach (var property in children)
         {
-
             if (first)
             {
                 first = false;

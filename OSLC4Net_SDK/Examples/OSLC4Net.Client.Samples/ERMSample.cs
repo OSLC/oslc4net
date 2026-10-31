@@ -38,7 +38,8 @@ sealed class ERMSample : SampleBase<Requirement>
 {
     private readonly ILoggerFactory _loggerFactory;
 
-    public ERMSample(ILoggerFactory loggerFactory) : base(loggerFactory.CreateLogger<ERMSample>())
+    public ERMSample(ILoggerFactory loggerFactory)
+        : base(loggerFactory.CreateLogger<ERMSample>())
     {
         _loggerFactory = loggerFactory;
     }
@@ -54,10 +55,22 @@ sealed class ERMSample : SampleBase<Requirement>
             builder.SetMinimumLevel(LogLevel.Information);
         });
 
-        var urlOption = new System.CommandLine.Option<string>("--url") { Arity = ArgumentArity.ExactlyOne };
-        var userOption = new System.CommandLine.Option<string>("--user") { Arity = ArgumentArity.ExactlyOne };
-        var passwordOption = new System.CommandLine.Option<string>("--password") { Arity = ArgumentArity.ExactlyOne };
-        var projectAreaOption = new System.CommandLine.Option<string>("--project") { Arity = ArgumentArity.ExactlyOne };
+        var urlOption = new System.CommandLine.Option<string>("--url")
+        {
+            Arity = ArgumentArity.ExactlyOne,
+        };
+        var userOption = new System.CommandLine.Option<string>("--user")
+        {
+            Arity = ArgumentArity.ExactlyOne,
+        };
+        var passwordOption = new System.CommandLine.Option<string>("--password")
+        {
+            Arity = ArgumentArity.ExactlyOne,
+        };
+        var projectAreaOption = new System.CommandLine.Option<string>("--project")
+        {
+            Arity = ArgumentArity.ExactlyOne,
+        };
 
         var rootCommand = new System.CommandLine.RootCommand("ERM Sample");
         rootCommand.Add(urlOption);
@@ -89,7 +102,11 @@ sealed class ERMSample : SampleBase<Requirement>
     {
         if (resource != null)
         {
-            Logger.LogInformation("Requirement: {Title} ({Identifier})", resource.Title, resource.Identifier);
+            Logger.LogInformation(
+                "Requirement: {Title} ({Identifier})",
+                resource.Title,
+                resource.Identifier
+            );
         }
     }
 
@@ -102,32 +119,53 @@ sealed class ERMSample : SampleBase<Requirement>
             //For ERM, use the JTS for the authorization URL
             //This assumes ERM is at context /rm
             String authUrl = webContextUrl.Replace("/rm", "/jts");
-            JazzFormAuthClient client = new JazzFormAuthClient(webContextUrl, authUrl, user, passwd, _loggerFactory.CreateLogger<OslcClient>());
+            JazzFormAuthClient client = new JazzFormAuthClient(
+                webContextUrl,
+                authUrl,
+                user,
+                passwd,
+                _loggerFactory.CreateLogger<OslcClient>()
+            );
 
             //STEP 2: Login to Jazz Server
             if (await client.FormLoginAsync().ConfigureAwait(false) == HttpStatusCode.OK)
             {
                 //STEP 3: Initialize a Jazz rootservices helper and indicate we're looking for the RequirementManagement catalog
                 //For Jazz servers, use the RM-specific property rmServiceProviders in the RM v1.0 namespace
-                var rootServicesHelper = new RootServicesHelper(webContextUrl,
-                    "http://open-services.net/xmlns/rm/1.0/", "rmServiceProviders");
-                var rootServices = await rootServicesHelper.DiscoverAsync(client.GetHttpClient()).ConfigureAwait(false);
+                var rootServicesHelper = new RootServicesHelper(
+                    webContextUrl,
+                    "http://open-services.net/xmlns/rm/1.0/",
+                    "rmServiceProviders"
+                );
+                var rootServices = await rootServicesHelper
+                    .DiscoverAsync(client.GetHttpClient())
+                    .ConfigureAwait(false);
 
                 //STEP 4: Get the URL of the OSLC RequirementManagement catalog
                 String catalogUrl = rootServices.ServiceProviderCatalog;
 
                 //STEP 5: Find the OSLC Service Provider for the project area we want to work with
-                String serviceProviderUrl = await client.LookupServiceProviderUrl(catalogUrl, projectArea).ConfigureAwait(false);
+                String serviceProviderUrl = await client
+                    .LookupServiceProviderUrl(catalogUrl, projectArea)
+                    .ConfigureAwait(false);
 
                 //STEP 6: Get the Query Capabilities URL so that we can run some OSLC queries
-                String queryCapability = await client.LookupQueryCapabilityAsync(serviceProviderUrl,
-                    OSLCConstants.OSLC_RM_V2,
-                    OSLCConstants.RM_REQUIREMENT_TYPE).ConfigureAwait(false);
+                String queryCapability = await client
+                    .LookupQueryCapabilityAsync(
+                        serviceProviderUrl,
+                        OSLCConstants.OSLC_RM_V2,
+                        OSLCConstants.RM_REQUIREMENT_TYPE
+                    )
+                    .ConfigureAwait(false);
 
                 //STEP 7: Create base requirements using instance shapes and primary text
-                String requirementFactory = await client.LookupCreationFactoryAsync(serviceProviderUrl,
-                    OSLCConstants.OSLC_RM_V2,
-                    OSLCConstants.RM_REQUIREMENT_TYPE).ConfigureAwait(false);
+                String requirementFactory = await client
+                    .LookupCreationFactoryAsync(
+                        serviceProviderUrl,
+                        OSLCConstants.OSLC_RM_V2,
+                        OSLCConstants.RM_REQUIREMENT_TYPE
+                    )
+                    .ConfigureAwait(false);
 
                 ResourceShape? featureInstanceShape = null;
                 ResourceShape? collectionInstanceShape = null;
@@ -135,35 +173,47 @@ sealed class ERMSample : SampleBase<Requirement>
                 {
                     try
                     {
-                        featureInstanceShape = await RmUtil.LookupRequirementsInstanceShapesAsync(
-                            serviceProviderUrl,
-                            OSLCConstants.OSLC_RM_V2,
-                            OSLCConstants.RM_REQUIREMENT_TYPE,
-                            client,
-                            "Feature").ConfigureAwait(false);
+                        featureInstanceShape = await RmUtil
+                            .LookupRequirementsInstanceShapesAsync(
+                                serviceProviderUrl,
+                                OSLCConstants.OSLC_RM_V2,
+                                OSLCConstants.RM_REQUIREMENT_TYPE,
+                                client,
+                                "Feature"
+                            )
+                            .ConfigureAwait(false);
                     }
                     catch (ResourceNotFoundException)
                     {
-                        featureInstanceShape = await RmUtil.LookupRequirementsInstanceShapesAsync(
-                            serviceProviderUrl,
-                            OSLCConstants.OSLC_RM_V2,
-                            OSLCConstants.RM_REQUIREMENT_TYPE,
-                            client,
-                            "User Requirement").ConfigureAwait(false);
+                        featureInstanceShape = await RmUtil
+                            .LookupRequirementsInstanceShapesAsync(
+                                serviceProviderUrl,
+                                OSLCConstants.OSLC_RM_V2,
+                                OSLCConstants.RM_REQUIREMENT_TYPE,
+                                client,
+                                "User Requirement"
+                            )
+                            .ConfigureAwait(false);
                     }
 
                     try
                     {
-                        collectionInstanceShape = await RmUtil.LookupRequirementsInstanceShapesAsync(
-                            serviceProviderUrl,
-                            OSLCConstants.OSLC_RM_V2,
-                            OSLCConstants.RM_REQUIREMENT_COLLECTION_TYPE,
-                            client,
-                            "Collection").ConfigureAwait(false);
+                        collectionInstanceShape = await RmUtil
+                            .LookupRequirementsInstanceShapesAsync(
+                                serviceProviderUrl,
+                                OSLCConstants.OSLC_RM_V2,
+                                OSLCConstants.RM_REQUIREMENT_COLLECTION_TYPE,
+                                client,
+                                "Collection"
+                            )
+                            .ConfigureAwait(false);
                     }
                     catch (ResourceNotFoundException ex)
                     {
-                        Logger.LogWarning(ex, "Collection instance shape not found; proceeding without it");
+                        Logger.LogWarning(
+                            ex,
+                            "Collection instance shape not found; proceeding without it"
+                        );
                     }
                 }
                 catch (Exception ex)
@@ -190,12 +240,17 @@ sealed class ERMSample : SampleBase<Requirement>
                         requirement.ImplementedBy.Add(new Uri("http://google.com"));
 
                         XElement primaryText = RmUtil.ConvertStringToHTML("My Primary Text");
-                        requirement.GetExtendedProperties()[RmConstants.PROPERTY_PRIMARY_TEXT] = primaryText;
+                        requirement.GetExtendedProperties()[RmConstants.PROPERTY_PRIMARY_TEXT] =
+                            primaryText;
 
-                        HttpResponseMessage creationResponse = await client.CreateResourceRawAsync(
-                            requirementFactory, requirement,
-                            OslcMediaType.APPLICATION_RDF_XML,
-                            OslcMediaType.APPLICATION_RDF_XML).ConfigureAwait(false);
+                        HttpResponseMessage creationResponse = await client
+                            .CreateResourceRawAsync(
+                                requirementFactory,
+                                requirement,
+                                OslcMediaType.APPLICATION_RDF_XML,
+                                OslcMediaType.APPLICATION_RDF_XML
+                            )
+                            .ConfigureAwait(false);
 
                         if (creationResponse.IsSuccessStatusCode)
                         {
@@ -205,7 +260,10 @@ sealed class ERMSample : SampleBase<Requirement>
                         }
                         else
                         {
-                            Logger.LogWarning("Failed to create REQ01: {StatusCode}", creationResponse.StatusCode);
+                            Logger.LogWarning(
+                                "Failed to create REQ01: {StatusCode}",
+                                creationResponse.StatusCode
+                            );
                             creationResponse.ConsumeContent();
                         }
 
@@ -217,10 +275,14 @@ sealed class ERMSample : SampleBase<Requirement>
                         requirement.ValidatedBy ??= new HashSet<Uri>();
                         requirement.ValidatedBy.Add(new Uri("http://bancomer.com"));
 
-                        creationResponse = await client.CreateResourceRawAsync(
-                            requirementFactory, requirement,
-                            OslcMediaType.APPLICATION_RDF_XML,
-                            OslcMediaType.APPLICATION_RDF_XML).ConfigureAwait(false);
+                        creationResponse = await client
+                            .CreateResourceRawAsync(
+                                requirementFactory,
+                                requirement,
+                                OslcMediaType.APPLICATION_RDF_XML,
+                                OslcMediaType.APPLICATION_RDF_XML
+                            )
+                            .ConfigureAwait(false);
 
                         if (creationResponse.IsSuccessStatusCode)
                         {
@@ -230,7 +292,10 @@ sealed class ERMSample : SampleBase<Requirement>
                         }
                         else
                         {
-                            Logger.LogWarning("Failed to create REQ02: {StatusCode}", creationResponse.StatusCode);
+                            Logger.LogWarning(
+                                "Failed to create REQ02: {StatusCode}",
+                                creationResponse.StatusCode
+                            );
                             creationResponse.ConsumeContent();
                         }
 
@@ -242,10 +307,14 @@ sealed class ERMSample : SampleBase<Requirement>
                         requirement.ValidatedBy ??= new HashSet<Uri>();
                         requirement.ValidatedBy.Add(new Uri("http://outlook.com"));
 
-                        creationResponse = await client.CreateResourceRawAsync(
-                            requirementFactory, requirement,
-                            OslcMediaType.APPLICATION_RDF_XML,
-                            OslcMediaType.APPLICATION_RDF_XML).ConfigureAwait(false);
+                        creationResponse = await client
+                            .CreateResourceRawAsync(
+                                requirementFactory,
+                                requirement,
+                                OslcMediaType.APPLICATION_RDF_XML,
+                                OslcMediaType.APPLICATION_RDF_XML
+                            )
+                            .ConfigureAwait(false);
 
                         if (creationResponse.IsSuccessStatusCode)
                         {
@@ -255,7 +324,10 @@ sealed class ERMSample : SampleBase<Requirement>
                         }
                         else
                         {
-                            Logger.LogWarning("Failed to create REQ03: {StatusCode}", creationResponse.StatusCode);
+                            Logger.LogWarning(
+                                "Failed to create REQ03: {StatusCode}",
+                                creationResponse.StatusCode
+                            );
                             creationResponse.ConsumeContent();
                         }
 
@@ -265,10 +337,14 @@ sealed class ERMSample : SampleBase<Requirement>
                         requirement.Description = "Created By OSLC4Net";
                         requirement.InstanceShape = featureInstanceShape?.About;
 
-                        creationResponse = await client.CreateResourceRawAsync(
-                            requirementFactory, requirement,
-                            OslcMediaType.APPLICATION_RDF_XML,
-                            OslcMediaType.APPLICATION_RDF_XML).ConfigureAwait(false);
+                        creationResponse = await client
+                            .CreateResourceRawAsync(
+                                requirementFactory,
+                                requirement,
+                                OslcMediaType.APPLICATION_RDF_XML,
+                                OslcMediaType.APPLICATION_RDF_XML
+                            )
+                            .ConfigureAwait(false);
 
                         if (creationResponse.IsSuccessStatusCode)
                         {
@@ -278,7 +354,10 @@ sealed class ERMSample : SampleBase<Requirement>
                         }
                         else
                         {
-                            Logger.LogWarning("Failed to create REQ04: {StatusCode}", creationResponse.StatusCode);
+                            Logger.LogWarning(
+                                "Failed to create REQ04: {StatusCode}",
+                                creationResponse.StatusCode
+                            );
                             creationResponse.ConsumeContent();
                         }
 
@@ -292,13 +371,17 @@ sealed class ERMSample : SampleBase<Requirement>
                             collection.Uses = new HashSet<Uri>
                             {
                                 new Uri(req03URL),
-                                new Uri(req04URL)
+                                new Uri(req04URL),
                             };
 
-                            creationResponse = await client.CreateResourceRawAsync(
-                                requirementFactory, collection,
-                                OslcMediaType.APPLICATION_RDF_XML,
-                                OslcMediaType.APPLICATION_RDF_XML).ConfigureAwait(false);
+                            creationResponse = await client
+                                .CreateResourceRawAsync(
+                                    requirementFactory,
+                                    collection,
+                                    OslcMediaType.APPLICATION_RDF_XML,
+                                    OslcMediaType.APPLICATION_RDF_XML
+                                )
+                                .ConfigureAwait(false);
 
                             if (creationResponse.IsSuccessStatusCode)
                             {
@@ -308,7 +391,10 @@ sealed class ERMSample : SampleBase<Requirement>
                             }
                             else
                             {
-                                Logger.LogWarning("Failed to create Collection01: {StatusCode}", creationResponse.StatusCode);
+                                Logger.LogWarning(
+                                    "Failed to create Collection01: {StatusCode}",
+                                    creationResponse.StatusCode
+                                );
                                 creationResponse.ConsumeContent();
                             }
                         }
@@ -324,7 +410,8 @@ sealed class ERMSample : SampleBase<Requirement>
 
                 OslcQuery query = new OslcQuery(client, queryCapability, 10, queryParams);
                 OslcQueryResult queryResults = await query.Submit().ConfigureAwait(false);
-                await ProcessPagedQueryResultsAsync(queryResults, client, false).ConfigureAwait(false);
+                await ProcessPagedQueryResultsAsync(queryResults, client, false)
+                    .ConfigureAwait(false);
 
                 Logger.LogInformation("Requirements query completed successfully.");
             }

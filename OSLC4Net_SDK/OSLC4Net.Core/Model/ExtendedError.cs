@@ -3,8 +3,10 @@ using OSLC4Net.Core.Attribute;
 namespace OSLC4Net.Core.Model;
 
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Extended Error Resource Shape",
-    describes = new[] { OslcConstants.TYPE_EXTENDED_ERROR })]
+[OslcResourceShape(
+    title = "OSLC Extended Error Resource Shape",
+    describes = new[] { OslcConstants.TYPE_EXTENDED_ERROR }
+)]
 public class ExtendedError
 {
     private string hintHeight;
@@ -13,7 +15,8 @@ public class ExtendedError
     private string rel;
 
     [OslcDescription(
-        "Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1) Em and ex units are interpreted relative to the default system font (at 100% size).")]
+        "Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1) Em and ex units are interpreted relative to the default system font (at 100% size)."
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintHeight")]
     [OslcReadOnly]
     [OslcTitle("Hint Height")]
@@ -23,7 +26,8 @@ public class ExtendedError
     }
 
     [OslcDescription(
-        "Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1) Em and ex units are interpreted relative to the default system font (at 100% size).")]
+        "Values MUST be expressed in relative length units as defined in the W3C Cascading Style Sheets Specification (CSS 2.1) Em and ex units are interpreted relative to the default system font (at 100% size)."
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "hintWidth")]
     [OslcReadOnly]
     [OslcTitle("Hint Width")]
@@ -33,7 +37,8 @@ public class ExtendedError
     }
 
     [OslcDescription(
-        "A resource giving more information on the error SHOULD be of an HTML content-type.")]
+        "A resource giving more information on the error SHOULD be of an HTML content-type."
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "moreInfo")]
     [OslcReadOnly]
     [OslcTitle("More Info")]
@@ -43,7 +48,8 @@ public class ExtendedError
     }
 
     [OslcDescription(
-        "If present and set to 'alternate' then indicates that work-around is provided, behavior for other values is undefined.")]
+        "If present and set to 'alternate' then indicates that work-around is provided, behavior for other values is undefined."
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "rel")]
     [OslcReadOnly]
     [OslcTitle("Rel")]

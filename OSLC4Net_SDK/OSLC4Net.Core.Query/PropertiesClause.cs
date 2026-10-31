@@ -18,6 +18,4 @@ namespace OSLC4Net.Core.Query;
 /// <summary>
 /// Top-level properties from oslc.Properties clause
 /// </summary>
-public interface PropertiesClause : Properties
-{
-}
+public interface PropertiesClause : Properties { }

@@ -23,25 +23,24 @@ namespace OSLC4Net.Core.Model;
 public abstract class ResponseInfo<T> : FilteredResource<T>
 {
     protected ResponseInfo(
-            T resource,
-            IDictionary<string, object> properties,
-            int totalCount,
-            string nextPage
-        ) : base(resource, properties)
+        T resource,
+        IDictionary<string, object> properties,
+        int totalCount,
+        string nextPage
+    )
+        : base(resource, properties)
     {
         TotalCount = totalCount;
         NextPage = nextPage;
     }
 
     protected ResponseInfo(
-            T resource,
-            IDictionary<string, object> properties,
-            int totalCount,
-            Uri nextPage
-        ) : this(resource, properties, totalCount,
-        nextPage?.ToString())
-    {
-    }
+        T resource,
+        IDictionary<string, object> properties,
+        int totalCount,
+        Uri nextPage
+    )
+        : this(resource, properties, totalCount, nextPage?.ToString()) { }
 
     /**
      * Total count of resource

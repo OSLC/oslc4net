@@ -21,11 +21,8 @@ namespace OSLC4Net.Core.Model;
 /// </summary>
 public class AnyResource : AbstractResource
 {
-    public AnyResource(Uri about) : base(about)
-    {
-    }
+    public AnyResource(Uri about)
+        : base(about) { }
 
-    public AnyResource()
-    {
-    }
+    public AnyResource() { }
 }

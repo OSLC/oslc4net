@@ -24,14 +24,22 @@ public static class XmlNamespace
 {
     private static readonly OslcNamespaceDefinition[] namespaces = new[]
     {
-        new OslcNamespaceDefinition(prefix: OslcConstants.Domains.DCTerms.Prefix,
-            namespaceURI: OslcConstants.Domains.DCTerms.NS),
-        new OslcNamespaceDefinition(prefix: OslcConstants.OSLC_CORE_NAMESPACE_PREFIX,
-            namespaceURI: OslcConstants.OSLC_CORE_NAMESPACE),
-        new OslcNamespaceDefinition(prefix: OslcConstants.RDF_NAMESPACE_PREFIX,
-            namespaceURI: OslcConstants.RDF_NAMESPACE),
-        new OslcNamespaceDefinition(prefix: OslcConstants.RDFS_NAMESPACE_PREFIX,
-            namespaceURI: OslcConstants.RDFS_NAMESPACE)
+        new OslcNamespaceDefinition(
+            prefix: OslcConstants.Domains.DCTerms.Prefix,
+            namespaceURI: OslcConstants.Domains.DCTerms.NS
+        ),
+        new OslcNamespaceDefinition(
+            prefix: OslcConstants.OSLC_CORE_NAMESPACE_PREFIX,
+            namespaceURI: OslcConstants.OSLC_CORE_NAMESPACE
+        ),
+        new OslcNamespaceDefinition(
+            prefix: OslcConstants.RDF_NAMESPACE_PREFIX,
+            namespaceURI: OslcConstants.RDF_NAMESPACE
+        ),
+        new OslcNamespaceDefinition(
+            prefix: OslcConstants.RDFS_NAMESPACE_PREFIX,
+            namespaceURI: OslcConstants.RDFS_NAMESPACE
+        ),
     };
 
     /// <summary>

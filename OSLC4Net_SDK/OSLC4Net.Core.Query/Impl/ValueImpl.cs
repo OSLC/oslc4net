@@ -22,11 +22,7 @@ namespace OSLC4Net.Core.Query.Impl;
 /// </summary>
 internal class ValueImpl : Value
 {
-    protected
-    ValueImpl(
-        CommonTree tree,
-        ValueType type
-    )
+    protected ValueImpl(CommonTree tree, ValueType type)
     {
         this.tree = tree;
         this.type = type;
@@ -34,10 +30,7 @@ internal class ValueImpl : Value
 
     public ValueType Type
     {
-        get
-        {
-            return type;
-        }
+        get { return type; }
     }
 
     protected readonly CommonTree tree;

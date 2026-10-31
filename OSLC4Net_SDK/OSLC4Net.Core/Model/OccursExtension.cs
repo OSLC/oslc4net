@@ -14,8 +14,8 @@ public static class OccursExtension
 {
     public static string ToString(Occurs occurs)
     {
-        var attributes = (URI[])occurs.GetType().GetField(occurs.ToString())!
-            .GetCustomAttributes(typeof(URI), false);
+        var attributes = (URI[])
+            occurs.GetType().GetField(occurs.ToString())!.GetCustomAttributes(typeof(URI), false);
 
         return attributes.Length > 0 ? attributes[0].uri : string.Empty;
     }
@@ -32,7 +32,10 @@ public static class OccursExtension
             }
         }
 
-        throw new ArgumentException($"Invalid string representation of Occurs value: {value}", nameof(value));
+        throw new ArgumentException(
+            $"Invalid string representation of Occurs value: {value}",
+            nameof(value)
+        );
     }
 
     public static Occurs FromURI(URI uri)

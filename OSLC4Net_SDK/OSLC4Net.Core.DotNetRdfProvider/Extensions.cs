@@ -13,8 +13,11 @@ public static class Extensions
     /// </summary>
     /// <returns><see langword="true"/> when <paramref name="uri"/> is mapped, with the
     /// matching prefix in <paramref name="prefix"/>; otherwise <see langword="false"/>.</returns>
-    public static bool TryGetPrefix(this INamespaceMapper namespaceMappings, Uri uri,
-        out string? prefix)
+    public static bool TryGetPrefix(
+        this INamespaceMapper namespaceMappings,
+        Uri uri,
+        out string? prefix
+    )
     {
         foreach (var existingPrefix in namespaceMappings.Prefixes)
         {
@@ -29,26 +32,36 @@ public static class Extensions
         return false;
     }
 
-    public static async Task<OslcCoreRequestException> ToOslcExceptionAsync(this
-        HttpResponseMessage responseMessage, IResource? requestResource)
+    public static async Task<OslcCoreRequestException> ToOslcExceptionAsync(
+        this HttpResponseMessage responseMessage,
+        IResource? requestResource
+    )
     {
         Error? errorResource = null;
         try
         {
             var formatter = new RdfXmlMediaTypeFormatter();
-            errorResource = await formatter.ReadFromStreamAsync(typeof(Error),
-                    await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false),
-                    responseMessage.Content,
-                    null)
-                .ConfigureAwait(false) as Error;
+            errorResource =
+                await formatter
+                    .ReadFromStreamAsync(
+                        typeof(Error),
+                        await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false),
+                        responseMessage.Content,
+                        null
+                    )
+                    .ConfigureAwait(false) as Error;
         }
         catch
         {
             // ignored
         }
 
-        return new OslcCoreRequestException(responseMessage.StatusCode,
-            responseMessage.ReasonPhrase, requestResource, errorResource);
+        return new OslcCoreRequestException(
+            responseMessage.StatusCode,
+            responseMessage.ReasonPhrase,
+            requestResource,
+            errorResource
+        );
     }
 
     public static bool IsOslcSingleton(this Type type)
@@ -63,15 +76,19 @@ public static class Extensions
             return type.GetElementType();
         }
 
-        if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IEnumerable<>),
-                type))
+        if (
+            InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IEnumerable<>), type)
+        )
         {
             var interfaces = type.GetInterfaces();
 
             foreach (var iface in interfaces)
             {
-                if (iface.IsGenericType && iface.GetGenericTypeDefinition() ==
-                    typeof(IEnumerable<object>).GetGenericTypeDefinition())
+                if (
+                    iface.IsGenericType
+                    && iface.GetGenericTypeDefinition()
+                        == typeof(IEnumerable<object>).GetGenericTypeDefinition()
+                )
                 {
                     var memberType = iface.GetGenericArguments()[0];
 

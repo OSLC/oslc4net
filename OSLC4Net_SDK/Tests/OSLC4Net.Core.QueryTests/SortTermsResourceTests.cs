@@ -27,10 +27,7 @@ public class SortTermsResourceTests
     [Test]
     public async Task SortTerms_SortsResources()
     {
-        var prefixMap = new Dictionary<string, string>
-        {
-            { "ex", "http://example.com/ns#" }
-        };
+        var prefixMap = new Dictionary<string, string> { { "ex", "http://example.com/ns#" } };
 
         var orderByStr = "+ex:id,-ex:name";
         var orderBy = QueryUtils.ParseOrderBy(orderByStr, prefixMap);
@@ -65,12 +62,16 @@ public class SortTermsResourceTests
                 {
                     if (isFirst)
                     {
-                        ordered = simpleTerm.Ascending ? resources.OrderBy(keySelector) : resources.OrderByDescending(keySelector);
+                        ordered = simpleTerm.Ascending
+                            ? resources.OrderBy(keySelector)
+                            : resources.OrderByDescending(keySelector);
                         isFirst = false;
                     }
                     else
                     {
-                        ordered = simpleTerm.Ascending ? ordered.ThenBy(keySelector) : ordered.ThenByDescending(keySelector);
+                        ordered = simpleTerm.Ascending
+                            ? ordered.ThenBy(keySelector)
+                            : ordered.ThenByDescending(keySelector);
                     }
                 }
             }

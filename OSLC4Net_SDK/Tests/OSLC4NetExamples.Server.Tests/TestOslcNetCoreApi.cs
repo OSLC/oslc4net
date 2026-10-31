@@ -29,7 +29,7 @@ public class TestOslcNetCoreApi : IDisposable
     private readonly HttpClient _httpClient;
 
     public TestOslcNetCoreApi(RefimplAspireFixture aspireFixture)
-        {
+    {
         _aspireFixture = aspireFixture;
 
         // Create HTTP client for direct API testing
@@ -40,7 +40,8 @@ public class TestOslcNetCoreApi : IDisposable
     public async Task TestRootServicesEndpoint()
     {
         // Arrange
-        var rootServicesUrl = $"{_aspireFixture.NetCoreApiBaseUri}.well-known/oslc/rootservices.xml";
+        var rootServicesUrl =
+            $"{_aspireFixture.NetCoreApiBaseUri}.well-known/oslc/rootservices.xml";
 
         // Act
         using var response = await _httpClient.GetAsync(rootServicesUrl);
@@ -72,7 +73,9 @@ public class TestOslcNetCoreApi : IDisposable
         // Arrange
         var catalogUrl = $"{_aspireFixture.NetCoreApiBaseUri}oslc/catalog";
         _httpClient.DefaultRequestHeaders.Accept.Clear();
-        _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/ld+json"));
+        _httpClient.DefaultRequestHeaders.Accept.Add(
+            new MediaTypeWithQualityHeaderValue("application/ld+json")
+        );
 
         // Act
         using var response = await _httpClient.GetAsync(catalogUrl);
@@ -87,8 +90,9 @@ public class TestOslcNetCoreApi : IDisposable
         using var jsonDoc = JsonDocument.Parse(content);
 
         // Check for OSLC catalog structure
-        var hasServiceProvider = content.Contains("ServiceProvider", StringComparison.Ordinal) ||
-                                 content.Contains("serviceProvider", StringComparison.Ordinal);
+        var hasServiceProvider =
+            content.Contains("ServiceProvider", StringComparison.Ordinal)
+            || content.Contains("serviceProvider", StringComparison.Ordinal);
         Assert.True(hasServiceProvider, "Response should contain ServiceProvider reference");
     }
 
@@ -99,25 +103,31 @@ public class TestOslcNetCoreApi : IDisposable
         var catalogUrl = $"{_aspireFixture.NetCoreApiBaseUri}oslc/catalog";
 
         var serviceProviderJson = """
-        [
-          {
-            "@id": "https://localhost:44387/oslc/catalog",
-            "@type": [
-              "http://open-services.net/ns/core#ServiceProvider"
-            ],
-            "http://purl.org/dc/terms/description": [
+            [
               {
-                "@value": "test me",
-                "@type": "http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral"
+                "@id": "https://localhost:44387/oslc/catalog",
+                "@type": [
+                  "http://open-services.net/ns/core#ServiceProvider"
+                ],
+                "http://purl.org/dc/terms/description": [
+                  {
+                    "@value": "test me",
+                    "@type": "http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral"
+                  }
+                ]
               }
             ]
-          }
-        ]
-        """;
+            """;
 
-        using var requestContent = new StringContent(serviceProviderJson, Encoding.UTF8, "application/ld+json");
+        using var requestContent = new StringContent(
+            serviceProviderJson,
+            Encoding.UTF8,
+            "application/ld+json"
+        );
         _httpClient.DefaultRequestHeaders.Accept.Clear();
-        _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/ld+json"));
+        _httpClient.DefaultRequestHeaders.Accept.Add(
+            new MediaTypeWithQualityHeaderValue("application/ld+json")
+        );
 
         // Act
         using var response = await _httpClient.PutAsync(catalogUrl, requestContent);
@@ -132,8 +142,9 @@ public class TestOslcNetCoreApi : IDisposable
         using var jsonDoc = JsonDocument.Parse(responseContent);
 
         // Verify the service provider was processed
-        var hasServiceProvider = responseContent.Contains("ServiceProvider", StringComparison.Ordinal) ||
-                                 responseContent.Contains("serviceProvider", StringComparison.Ordinal);
+        var hasServiceProvider =
+            responseContent.Contains("ServiceProvider", StringComparison.Ordinal)
+            || responseContent.Contains("serviceProvider", StringComparison.Ordinal);
         Assert.True(hasServiceProvider, "Response should contain ServiceProvider reference");
     }
 
@@ -143,7 +154,9 @@ public class TestOslcNetCoreApi : IDisposable
         // Arrange
         var catalogUrl = $"{_aspireFixture.NetCoreApiBaseUri}oslc/catalog";
         _httpClient.DefaultRequestHeaders.Accept.Clear();
-        _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/rdf+xml"));
+        _httpClient.DefaultRequestHeaders.Accept.Add(
+            new MediaTypeWithQualityHeaderValue("application/rdf+xml")
+        );
 
         // Act
         using var response = await _httpClient.GetAsync(catalogUrl);
@@ -169,7 +182,9 @@ public class TestOslcNetCoreApi : IDisposable
         // Arrange
         var catalogUrl = $"{_aspireFixture.NetCoreApiBaseUri}oslc/catalog";
         _httpClient.DefaultRequestHeaders.Accept.Clear();
-        _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/turtle"));
+        _httpClient.DefaultRequestHeaders.Accept.Add(
+            new MediaTypeWithQualityHeaderValue("text/turtle")
+        );
 
         // Act
         using var response = await _httpClient.GetAsync(catalogUrl);
@@ -196,14 +211,16 @@ public class TestOslcNetCoreApi : IDisposable
             "application/rdf+xml",
             "text/turtle",
             "application/ld+json",
-            "application/n-triples"
+            "application/n-triples",
         };
 
         foreach (var mediaType in mediaTypes)
         {
             // Act
             _httpClient.DefaultRequestHeaders.Accept.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
+            _httpClient.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue(mediaType)
+            );
 
             using var response = await _httpClient.GetAsync(catalogUrl);
 
@@ -220,7 +237,8 @@ public class TestOslcNetCoreApi : IDisposable
     public async Task TestRootServicesContainsCorrectUrls()
     {
         // Arrange
-        var rootServicesUrl = $"{_aspireFixture.NetCoreApiBaseUri}.well-known/oslc/rootservices.xml";
+        var rootServicesUrl =
+            $"{_aspireFixture.NetCoreApiBaseUri}.well-known/oslc/rootservices.xml";
 
         // Act
         using var response = await _httpClient.GetAsync(rootServicesUrl);
@@ -230,7 +248,11 @@ public class TestOslcNetCoreApi : IDisposable
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
         // Verify dynamic URL generation based on request
-        Assert.Contains(_aspireFixture.NetCoreApiBaseUri.TrimEnd('/'), content, StringComparison.Ordinal);
+        Assert.Contains(
+            _aspireFixture.NetCoreApiBaseUri.TrimEnd('/'),
+            content,
+            StringComparison.Ordinal
+        );
         Assert.Contains("/services/catalog/singleton", content, StringComparison.Ordinal);
         Assert.Contains("/services/oauth/", content, StringComparison.Ordinal);
 
@@ -241,10 +263,19 @@ public class TestOslcNetCoreApi : IDisposable
         var namespaceManager = new XmlNamespaceManager(xmlDoc.NameTable);
         namespaceManager.AddNamespace("oslc_cm", "http://open-services.net/xmlns/cm/1.0/");
         namespaceManager.AddNamespace("oslc_rm", "http://open-services.net/xmlns/rm/1.0/");
-        namespaceManager.AddNamespace("oslc_auto", "http://open-services.net/xmlns/automation/1.0/");
+        namespaceManager.AddNamespace(
+            "oslc_auto",
+            "http://open-services.net/xmlns/automation/1.0/"
+        );
 
-        var cmServiceProviders = xmlDoc.SelectSingleNode("//oslc_cm:cmServiceProviders", namespaceManager);
-        var rmServiceProviders = xmlDoc.SelectSingleNode("//oslc_rm:rmServiceProviders", namespaceManager);
+        var cmServiceProviders = xmlDoc.SelectSingleNode(
+            "//oslc_cm:cmServiceProviders",
+            namespaceManager
+        );
+        var rmServiceProviders = xmlDoc.SelectSingleNode(
+            "//oslc_rm:rmServiceProviders",
+            namespaceManager
+        );
 
         Assert.NotNull(cmServiceProviders);
         Assert.NotNull(rmServiceProviders);

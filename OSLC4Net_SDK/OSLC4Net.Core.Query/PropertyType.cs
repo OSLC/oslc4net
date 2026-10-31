@@ -13,5 +13,5 @@ namespace OSLC4Net.Core.Query;
 public enum PropertyType
 {
     IDENTIFIER,
-    NESTED_PROPERTY
+    NESTED_PROPERTY,
 }

@@ -32,5 +32,7 @@ public enum Occurs
 
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "One-or-many")]
     OneOrMany,
-    [URI("")] Unknown
+
+    [URI("")]
+    Unknown,
 }
