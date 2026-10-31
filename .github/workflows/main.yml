@@ -47,7 +47,7 @@ permissions:
 
 jobs:
   format:
-    name: Format (dotnet format)
+    name: Format (CSharpier)
     permissions:
       contents: read
     runs-on: ubuntu-24.04
@@ -71,12 +71,10 @@ jobs:
         uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
         with:
           dotnet-version: 10.x
-      - name: Restore dependencies
-        run: dotnet restore
+      - name: Restore local .NET tools
+        run: dotnet tool restore
       - name: Verify formatting
-        run: |
-          dotnet format OSLC4Net.Core.slnx style --verify-no-changes
-          dotnet format OSLC4Net.Core.slnx whitespace --verify-no-changes
+        run: dotnet csharpier check .
 
   generated-domains:
     name: Generated domain sources

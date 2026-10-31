@@ -126,5 +126,16 @@ Dependabot is configured (via `.github/dependabot.yml`) to emit `build:` prefixe
 
 Follow _Framework Design Guidelines_ where possible.
 
+Format C# code with the repository-pinned CSharpier tool before committing,
+running the commands from `OSLC4Net_SDK`:
+
+```shell
+cd OSLC4Net_SDK
+dotnet tool restore
+dotnet csharpier format .
+```
+
+The CI format job and pre-commit hook check formatting with CSharpier.
+
 ## Code of Conduct
 This project and everyone participating in it are governed by the [.NET Foundation Code of Conduct](https://dotnetfoundation.org/about/policies/code-of-conduct). By participating, you are expected to uphold this code.

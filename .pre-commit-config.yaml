@@ -10,9 +10,9 @@ repos:
   - id: trailing-whitespace
 - repo: local
   hooks:
-  - id: dotnet-format
-    name: dotnet format (whitespace + style, verify only)
-    entry: bash -c 'cd OSLC4Net_SDK && dotnet format whitespace . --verify-no-changes && dotnet format style . --verify-no-changes --no-restore'
+  - id: csharpier
+    name: CSharpier (check formatting)
+    entry: bash -c 'cd OSLC4Net_SDK && dotnet tool restore && dotnet csharpier check .'
     language: system
     pass_filenames: false
     files: '\.cs$'
