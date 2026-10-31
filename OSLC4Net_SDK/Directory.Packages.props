@@ -4,7 +4,7 @@
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
   <PropertyGroup>
-    <AspireVersion>13.6.1</AspireVersion>
+    <AspireVersion>13.6.4</AspireVersion>
     <DotNetRdfVersion>3.5.2</DotNetRdfVersion>
     <!-- Update the dotnet-runtime-deps group when adding packages that use this variable. -->
     <DotnetRuntimeVersion>10.0.12</DotnetRuntimeVersion>
@@ -17,7 +17,6 @@
     <!-- depedencyManagement / convergence -->
     <PackageVersion Include="System.Net.Http" Version="4.3.4" />
     <PackageVersion Include="System.Text.RegularExpressions" Version="4.3.1" />
-    <PackageVersion Include="MessagePack" Version="2.5.302" />
     <PackageVersion Include="AngleSharp" Version="1.5.2" />
     <!-- Main deps -->
     <PackageVersion Include="dotNetRdf.Core" Version="$(DotNetRdfVersion)" />
