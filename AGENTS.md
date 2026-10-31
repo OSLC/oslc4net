@@ -107,16 +107,17 @@ Use the scoped-commit convention defined in [CONTRIBUTING.md](CONTRIBUTING.md#co
 
 ## Formatting (required before every commit)
 
-Run from the repo root:
+The repository pins CSharpier in `OSLC4Net_SDK/.config/dotnet-tools.json`.
+Restore the local tool and format the SDK C# sources from `OSLC4Net_SDK`:
 
 ```bash
-dotnet format whitespace ./OSLC4Net_SDK && dotnet format style ./OSLC4Net_SDK --no-restore
+cd OSLC4Net_SDK
+dotnet tool restore
+dotnet csharpier format .
 ```
 
-- Use `whitespace` + `style` only. Skip `analyzers` — it runs third-party rules (Meziantou etc.) and is slow/noisy.
-- `--no-restore` on the second call avoids a redundant restore.
 - Also run this **after resolving merge conflicts**. Hand-edited hunks re-introduce style drift even when both parents were clean.
-- A pre-commit hook (`.pre-commit-config.yaml`) enforces this; install once with `pre-commit install`.
+- A pre-commit hook (`.pre-commit-config.yaml`) checks formatting; install once with `pre-commit install`.
 
 ## Copyright headers
 

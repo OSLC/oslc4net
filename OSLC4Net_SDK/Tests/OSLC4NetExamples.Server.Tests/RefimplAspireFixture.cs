@@ -1,8 +1,8 @@
 using Aspire.Hosting;
 using Aspire.Hosting.Testing;
 using OSLC4Net.ChangeManagementTest;
-using Xunit;
 using Projects;
+using Xunit;
 
 // TODO: consider a refimpl-aspire collection instead https://xunit.net/docs/shared-context#collection-fixture (@berezovskyi 2025-04)
 [assembly: AssemblyFixture(typeof(RefimplAspireFixture))]
@@ -32,7 +32,8 @@ public class RefimplAspireFixture : IAsyncLifetime
     protected async Task<DistributedApplication> SetupAspireAsync()
     {
         var builder = await DistributedApplicationTestingBuilder
-            .CreateAsync<OSLC4NetExamples_Server_Tests_AspireHost>().ConfigureAwait(true);
+            .CreateAsync<OSLC4NetExamples_Server_Tests_AspireHost>()
+            .ConfigureAwait(true);
 
         var app = await builder.BuildAsync();
 
@@ -41,8 +42,7 @@ public class RefimplAspireFixture : IAsyncLifetime
         // Wait a bit for the application to fully start
         await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(true);
 
-        NetCoreApiBaseUri =
-            app.GetEndpoint("oslc-netcore-api", "api-https").AbsoluteUri;
+        NetCoreApiBaseUri = app.GetEndpoint("oslc-netcore-api", "api-https").AbsoluteUri;
 
         return app;
     }

@@ -7,9 +7,7 @@ namespace OSLC4Net.Server.Providers;
 [StructLayout(LayoutKind.Auto)]
 public readonly struct OslcOutputFormatConfig
 {
-    public OslcOutputFormatConfig()
-    {
-    }
+    public OslcOutputFormatConfig() { }
 
     public bool PrettyPrint { get; init; } = true;
 

@@ -12,7 +12,10 @@ public abstract class ChangeRequestController(ILogger<ChangeRequestController> l
     [Route("{id}")]
     public override ChangeRequest GetResource(string id)
     {
-        var tInstance = ActivatorUtilities.CreateInstance<ChangeRequest>(HttpContext.RequestServices, id);
+        var tInstance = ActivatorUtilities.CreateInstance<ChangeRequest>(
+            HttpContext.RequestServices,
+            id
+        );
         return tInstance;
     }
 }

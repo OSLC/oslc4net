@@ -23,20 +23,23 @@ namespace OSLC4Net.Core.QueryTests;
 
 public class QueryBasicTest
 {
-    const string PREFIXES = "qm=<http://qm.example.com/ns/>," +
-                             "olsc=<http://open-services.net/ns/core#>," +
-                             "xs=<http://www.w3.org/2001/XMLSchema>";
+    const string PREFIXES =
+        "qm=<http://qm.example.com/ns/>,"
+        + "olsc=<http://open-services.net/ns/core#>,"
+        + "xs=<http://www.w3.org/2001/XMLSchema>";
 
     [Test]
-    [Arguments("qm=<http://qm.example.com/ns/>,olsc=<http://open-services.net/ns/core#>,xs=<http://www.w3.org/2001/XMLSchema>", true)]
+    [Arguments(
+        "qm=<http://qm.example.com/ns/>,olsc=<http://open-services.net/ns/core#>,xs=<http://www.w3.org/2001/XMLSchema>",
+        true
+    )]
     [Arguments("qm=<http://qm.example.com/ns/>,qm=<http://qm.example.com/other/>", false)]
     [Arguments("qm=<http://qm.example.com/ns/>,XXX>", false)]
     public async Task BasicPrefixesTest(string expression, bool shouldSucceed)
     {
         try
         {
-            var prefixMap =
-                QueryUtils.ParsePrefixes(expression);
+            var prefixMap = QueryUtils.ParsePrefixes(expression);
 
             Debug.WriteLine(prefixMap.ToString());
 
@@ -57,14 +60,13 @@ public class QueryBasicTest
     [Arguments("?qm:blah", false)]
     public async Task BasicOrderByTest(string expression, bool shouldSucceed)
     {
-        var prefixes = "qm=<http://qm.example.com/ns/>," +
-                       "oslc=<http://open-services.net/ns/core#>";
+        var prefixes =
+            "qm=<http://qm.example.com/ns/>," + "oslc=<http://open-services.net/ns/core#>";
         var prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
         try
         {
-            var orderByClause =
-                QueryUtils.ParseOrderBy(expression, prefixMap);
+            var orderByClause = QueryUtils.ParseOrderBy(expression, prefixMap);
 
             Debug.WriteLine(orderByClause);
 
@@ -87,8 +89,7 @@ public class QueryBasicTest
     {
         try
         {
-            var searchTermsClause =
-                QueryUtils.ParseSearchTerms(expression);
+            var searchTermsClause = QueryUtils.ParseSearchTerms(expression);
 
             Debug.WriteLine(searchTermsClause);
 
@@ -114,14 +115,13 @@ public class QueryBasicTest
     [Arguments("XXX", false)]
     public async Task BasicSelectTest(string expression, bool shouldSucceed)
     {
-        var prefixes = "qm=<http://qm.example.com/ns/>," +
-                       "oslc=<http://open-services.net/ns/core#>";
+        var prefixes =
+            "qm=<http://qm.example.com/ns/>," + "oslc=<http://open-services.net/ns/core#>";
         var prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
         try
         {
-            var selectClause =
-                QueryUtils.ParseSelect(expression, prefixMap);
+            var selectClause = QueryUtils.ParseSelect(expression, prefixMap);
 
             Debug.WriteLine(selectClause);
 
@@ -140,21 +140,24 @@ public class QueryBasicTest
     [Arguments("qm:duration>=10.4", true)]
     [Arguments("oslc:create!=\"Bob\" and qm:verified!=true", true)]
     [Arguments("qm:state in [\"Done\",\"Open\"]", true)]
-    [Arguments("oslc:verified_by{oslc:owner=\"Steve\" and qm:duration=-47.0} and oslc:description=\"very hairy expression\"", true)]
+    [Arguments(
+        "oslc:verified_by{oslc:owner=\"Steve\" and qm:duration=-47.0} and oslc:description=\"very hairy expression\"",
+        true
+    )]
     [Arguments("qm:submitted<\"2011-10-10T07:00:00Z\"^^xs:dateTime", true)]
     [Arguments("oslc:label>\"The End\"@en-US", true)]
     [Arguments("XXX", false)]
     public async Task BasicWhereTest(string expression, bool shouldSucceed)
     {
-        var prefixes = "qm=<http://qm.example.com/ns/>," +
-                       "oslc=<http://open-services.net/ns/core#>," +
-                       "xs=<http://www.w3.org/2001/XMLSchema>";
+        var prefixes =
+            "qm=<http://qm.example.com/ns/>,"
+            + "oslc=<http://open-services.net/ns/core#>,"
+            + "xs=<http://www.w3.org/2001/XMLSchema>";
         var prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
         try
         {
-            var whereClause =
-                QueryUtils.ParseWhere(expression, prefixMap);
+            var whereClause = QueryUtils.ParseWhere(expression, prefixMap);
 
             Debug.WriteLine(whereClause);
 
@@ -179,14 +182,13 @@ public class QueryBasicTest
     [Arguments("*,qm:state{*}", true)]
     public async Task BasicInvertTest(string expression, bool shouldSucceed)
     {
-        const string prefixes = "qm=<http://qm.example.com/ns/>," +
-                                "oslc=<http://open-services.net/ns/core#>";
+        const string prefixes =
+            "qm=<http://qm.example.com/ns/>," + "oslc=<http://open-services.net/ns/core#>";
         var prefixMap = QueryUtils.ParsePrefixes(prefixes);
 
         try
         {
-            var selectClause =
-                QueryUtils.ParseSelect(expression, prefixMap);
+            var selectClause = QueryUtils.ParseSelect(expression, prefixMap);
 
             Debug.WriteLine(selectClause);
 
@@ -210,7 +212,8 @@ public class QueryBasicTest
         var prefixMap = QueryUtils.ParsePrefixes(prefixes);
         var selectClause = QueryUtils.ParseSelect(expression, prefixMap);
 
-        await Assert.That(() => QueryUtils.InvertSelectedProperties(selectClause))
+        await Assert
+            .That(() => QueryUtils.InvertSelectedProperties(selectClause))
             .Throws<ParseException>();
     }
 
@@ -222,7 +225,8 @@ public class QueryBasicTest
         var prefixMap = QueryUtils.ParsePrefixes(prefixes);
         var selectClause = QueryUtils.ParseSelect(expression, prefixMap);
 
-        await Assert.That(() => QueryUtils.InvertSelectedProperties(selectClause))
+        await Assert
+            .That(() => QueryUtils.InvertSelectedProperties(selectClause))
             .Throws<ParseException>();
     }
 
@@ -242,11 +246,11 @@ public class QueryBasicTest
     [Test]
     public async Task InvertDuplicateNestedSelectPropertiesDoesNotThrow()
     {
-        const string expression =
-            "qm:property{dcterms:title},qm:property{oslc:shortTitle}";
-        const string prefixes = "qm=<http://qm.example.com/ns/>," +
-                                "dcterms=<http://purl.org/dc/terms/>," +
-                                "oslc=<http://open-services.net/ns/core#>";
+        const string expression = "qm:property{dcterms:title},qm:property{oslc:shortTitle}";
+        const string prefixes =
+            "qm=<http://qm.example.com/ns/>,"
+            + "dcterms=<http://purl.org/dc/terms/>,"
+            + "oslc=<http://open-services.net/ns/core#>";
         var prefixMap = QueryUtils.ParsePrefixes(prefixes);
         var selectClause = QueryUtils.ParseSelect(expression, prefixMap);
 
@@ -255,15 +259,17 @@ public class QueryBasicTest
         await Assert.That(result).HasCount(1);
         var nested = (IDictionary<string, object>)result["http://qm.example.com/ns/property"];
         await Assert.That(nested.ContainsKey("http://purl.org/dc/terms/title")).IsTrue();
-        await Assert.That(nested.ContainsKey("http://open-services.net/ns/core#shortTitle")).IsTrue();
+        await Assert
+            .That(nested.ContainsKey("http://open-services.net/ns/core#shortTitle"))
+            .IsTrue();
     }
 
     [Test]
     public async Task InvertNestedWildcardWithSiblingPropertyDoesNotThrow()
     {
         const string expression = "qm:property,*{dcterms:title}";
-        const string prefixes = "qm=<http://qm.example.com/ns/>," +
-                                "dcterms=<http://purl.org/dc/terms/>";
+        const string prefixes =
+            "qm=<http://qm.example.com/ns/>," + "dcterms=<http://purl.org/dc/terms/>";
         var prefixMap = QueryUtils.ParsePrefixes(prefixes);
         var selectClause = QueryUtils.ParseSelect(expression, prefixMap);
 
@@ -277,8 +283,7 @@ public class QueryBasicTest
     public async Task TestUriRef()
     {
         var prefixMap = QueryUtils.ParsePrefixes(PREFIXES);
-        var where = QueryUtils.ParseWhere(
-            "qm:testCase=<http://example.org/tests/24>", prefixMap);
+        var where = QueryUtils.ParseWhere("qm:testCase=<http://example.org/tests/24>", prefixMap);
 
         var children = where.Children;
         // Where clause should only have one term

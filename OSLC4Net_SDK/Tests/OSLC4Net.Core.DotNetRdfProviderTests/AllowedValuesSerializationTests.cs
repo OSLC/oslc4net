@@ -21,11 +21,18 @@ public class AllowedValuesSerializationTests
         var mediaType = OslcMediaType.APPLICATION_RDF_XML_TYPE;
 
         var rdfXml = await RdfHelpers.SerializeAsync(formatter, allowedValues, mediaType);
-        var deserialized = await RdfHelpers.DeserializeAsync<AllowedValuesResource<string>>(formatter, rdfXml, mediaType);
+        var deserialized = await RdfHelpers.DeserializeAsync<AllowedValuesResource<string>>(
+            formatter,
+            rdfXml,
+            mediaType
+        );
 
         // Assert
         await Assert.That(deserialized).IsNotNull();
-        await Assert.That(deserialized.AllowedValues).HasCount().EqualTo(allowedValues.AllowedValues.Count);
+        await Assert
+            .That(deserialized.AllowedValues)
+            .HasCount()
+            .EqualTo(allowedValues.AllowedValues.Count);
 
         foreach (var val in allowedValues.AllowedValues)
         {

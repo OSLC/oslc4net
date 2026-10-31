@@ -34,12 +34,8 @@ public class QName
     /// </summary>
     /// <param name="namespaceUri"></param>
     /// <param name="localPart"></param>
-    public QName(
-        string namespaceUri,
-        string localPart
-    ) : this(namespaceUri, localPart, null)
-    {
-    }
+    public QName(string namespaceUri, string localPart)
+        : this(namespaceUri, localPart, null) { }
 
     /// <summary>
     ///     Constructor with namespace, local part and prefix/alias
@@ -47,11 +43,7 @@ public class QName
     /// <param name="namespaceUri"></param>
     /// <param name="localPart"></param>
     /// <param name="prefix"></param>
-    public QName(
-        string namespaceUri,
-        string localPart,
-        string? prefix
-    )
+    public QName(string namespaceUri, string localPart, string? prefix)
     {
         NamespaceUri = namespaceUri ?? throw new ArgumentNullException(nameof(namespaceUri));
         LocalPart = localPart ?? throw new ArgumentNullException(nameof(localPart));
@@ -114,7 +106,8 @@ public class QName
         {
             return $"{NamespaceUri}{LocalPart}".Equals(
                 $"{qNameOther.NamespaceUri}{qNameOther.LocalPart}",
-                StringComparison.InvariantCulture);
+                StringComparison.InvariantCulture
+            );
         }
 
         return false;
@@ -123,6 +116,6 @@ public class QName
     public override int GetHashCode()
     {
         return (NamespaceUri is null ? 0 : StringComparer.Ordinal.GetHashCode(NamespaceUri)) * 31
-               + StringComparer.Ordinal.GetHashCode(LocalPart);
+            + StringComparer.Ordinal.GetHashCode(LocalPart);
     }
 }

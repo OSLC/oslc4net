@@ -111,7 +111,8 @@ public class ResourcePreviewTests
             "http://example.com",
             "shapes",
             "compact",
-            typeof(Compact));
+            typeof(Compact)
+        );
 
         await Assert.That(shape).IsNotNull();
         var properties = shape.GetProperties();

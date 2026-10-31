@@ -33,8 +33,8 @@ public class JazzFormAuthClient : OslcClient
 
     private readonly ILogger _logger;
 
-    public JazzFormAuthClient(ILogger<OslcClient> logger) :
-        base(logger)
+    public JazzFormAuthClient(ILogger<OslcClient> logger)
+        : base(logger)
     {
         _logger = logger;
     }
@@ -46,11 +46,11 @@ public class JazzFormAuthClient : OslcClient
     /// <param name="user"></param>
     /// <param name="password"></param>
     /// <param name="logger"></param>
-    public JazzFormAuthClient(String url, String user, String password, ILogger<OslcClient> logger) :
-        this(logger)
+    public JazzFormAuthClient(String url, String user, String password, ILogger<OslcClient> logger)
+        : this(logger)
     {
         this.url = url;
-        this.authUrl = url;  //default to base URL
+        this.authUrl = url; //default to base URL
         this.user = user;
         this.password = password;
     }
@@ -65,8 +65,14 @@ public class JazzFormAuthClient : OslcClient
     /// <param name="user"></param>
     /// <param name="password"></param>
     /// <param name="logger"></param>
-    public JazzFormAuthClient(String url, String authUrl, String user, String password, ILogger<OslcClient> logger) :
-        this(url, user, password, logger)
+    public JazzFormAuthClient(
+        String url,
+        String authUrl,
+        String user,
+        String password,
+        ILogger<OslcClient> logger
+    )
+        : this(url, user, password, logger)
     {
         this.authUrl = authUrl;
     }
@@ -75,6 +81,7 @@ public class JazzFormAuthClient : OslcClient
     {
         return url;
     }
+
     public void SetUrl(String url)
     {
         this.url = url;
@@ -94,22 +101,27 @@ public class JazzFormAuthClient : OslcClient
     {
         return project;
     }
+
     public void SetProject(String project)
     {
         this.project = project;
     }
+
     public String GetUser()
     {
         return user;
     }
+
     public void SetUser(String user)
     {
         this.user = user;
     }
+
     public String GetPassword()
     {
         return password;
     }
+
     public void SetPassword(String password)
     {
         this.password = password;
@@ -125,8 +137,9 @@ public class JazzFormAuthClient : OslcClient
         HttpResponseMessage resp;
         try
         {
-
-            resp = await GetHttpClient().GetAsync(authUrl + "/authenticated/identity").ConfigureAwait(false);
+            resp = await GetHttpClient()
+                .GetAsync(authUrl + "/authenticated/identity")
+                .ConfigureAwait(false);
             statusCode = resp.StatusCode;
 
             string location;
@@ -138,20 +151,25 @@ public class JazzFormAuthClient : OslcClient
             }
 
             GetHttpClient().DefaultRequestHeaders.Clear();
-            GetHttpClient().DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+            GetHttpClient()
+                .DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
             GetHttpClient().DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
             GetHttpClient().DefaultRequestHeaders.Add("OSLC-Core-Version", "2.0");
 
             String securityCheckUrl = "j_username=" + this.user + "&j_password=" + this.password;
             StringContent content = new StringContent(securityCheckUrl, System.Text.Encoding.UTF8);
 
-            MediaTypeHeaderValue mediaTypeValue = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+            MediaTypeHeaderValue mediaTypeValue = new MediaTypeHeaderValue(
+                "application/x-www-form-urlencoded"
+            );
 
             mediaTypeValue.CharSet = "utf-8";
 
             content.Headers.ContentType = mediaTypeValue;
 
-            resp = await GetHttpClient().PostAsync(authUrl + "/j_security_check", content).ConfigureAwait(false);
+            resp = await GetHttpClient()
+                .PostAsync(authUrl + "/j_security_check", content)
+                .ConfigureAwait(false);
             statusCode = resp.StatusCode;
 
             String jazzAuthMessage = null;
@@ -162,7 +180,14 @@ public class JazzFormAuthClient : OslcClient
                 jazzAuthMessage = values.Last();
             }
 
-            if (jazzAuthMessage != null && String.Compare(jazzAuthMessage, JAZZ_AUTH_FAILED, StringComparison.OrdinalIgnoreCase) == 0)
+            if (
+                jazzAuthMessage != null
+                && String.Compare(
+                    jazzAuthMessage,
+                    JAZZ_AUTH_FAILED,
+                    StringComparison.OrdinalIgnoreCase
+                ) == 0
+            )
             {
                 resp.ConsumeContent();
                 throw new JazzAuthFailedException(this.user, this.url);
@@ -177,7 +202,6 @@ public class JazzFormAuthClient : OslcClient
                 location = resp.Headers.Location.AbsoluteUri;
                 resp.ConsumeContent();
                 statusCode = await FollowRedirectsAsync(statusCode, location).ConfigureAwait(false);
-
             }
         }
         catch (JazzAuthFailedException)
@@ -195,14 +219,18 @@ public class JazzFormAuthClient : OslcClient
         return statusCode;
     }
 
-    private async Task<HttpStatusCode> FollowRedirectsAsync(HttpStatusCode statusCode, String location)
+    private async Task<HttpStatusCode> FollowRedirectsAsync(
+        HttpStatusCode statusCode,
+        String location
+    )
     {
-
         while ((statusCode == HttpStatusCode.Found) && (location != null))
         {
             try
             {
-                HttpResponseMessage newResp = await GetHttpClient().GetAsync(location).ConfigureAwait(false);
+                HttpResponseMessage newResp = await GetHttpClient()
+                    .GetAsync(location)
+                    .ConfigureAwait(false);
                 statusCode = newResp.StatusCode;
                 location = newResp.Headers.Location?.AbsoluteUri;
                 newResp.ConsumeContent();
@@ -211,7 +239,6 @@ public class JazzFormAuthClient : OslcClient
             {
                 _logger.LogError(e, "Error following redirect");
             }
-
         }
         return statusCode;
     }

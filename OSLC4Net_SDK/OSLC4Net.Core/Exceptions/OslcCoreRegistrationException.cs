@@ -22,8 +22,8 @@ namespace OSLC4Net.Core.Exceptions;
 public class OslcCoreRegistrationException(
     ServiceProvider serviceProvider,
     HttpStatusCode? statusCode,
-    string responseMessage) : OslcCoreRequestException(
-    statusCode, responseMessage, serviceProvider)
+    string responseMessage
+) : OslcCoreRequestException(statusCode, responseMessage, serviceProvider)
 {
     public ServiceProvider ServiceProvider { get; } = serviceProvider;
 }

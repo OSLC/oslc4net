@@ -18,6 +18,4 @@ namespace OSLC4Net.Core.Query;
 /// <summary>
 /// Wildcard property from olsc.select of oslc.properties clause
 /// </summary>
-public interface Wildcard : Property
-{
-}
+public interface Wildcard : Property { }

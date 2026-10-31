@@ -20,7 +20,9 @@ public sealed class KerMLDomainTests
     public async Task GeneratedRecordsImplementInterfacesForAllDirectKerMLSuperclasses()
     {
         await Assert.That(typeof(IExtendedResource).IsAssignableFrom(typeof(IElement))).IsTrue();
-        await Assert.That(typeof(IExtendedResource).IsAssignableFrom(typeof(IAssociation))).IsTrue();
+        await Assert
+            .That(typeof(IExtendedResource).IsAssignableFrom(typeof(IAssociation)))
+            .IsTrue();
         await Assert.That(typeof(IAssociation).IsAssignableFrom(typeof(Association))).IsTrue();
         await Assert.That(typeof(IClassifier).IsAssignableFrom(typeof(Association))).IsTrue();
         await Assert.That(typeof(IRelationship).IsAssignableFrom(typeof(Association))).IsTrue();
@@ -37,9 +39,10 @@ public sealed class KerMLDomainTests
         var sourceProperties = typeof(AssociationStructure)
             .GetProperties()
             .Where(property =>
-                (Attribute.GetCustomAttribute(property, typeof(OslcPropertyDefinition))
-                    as OslcPropertyDefinition)
-                    ?.value == sourceProperty
+                (
+                    Attribute.GetCustomAttribute(property, typeof(OslcPropertyDefinition))
+                    as OslcPropertyDefinition
+                )?.value == sourceProperty
             )
             .ToArray();
 

@@ -19,8 +19,11 @@ namespace OSLC4Net.Core.Exceptions;
 public class OslcCoreInvalidPropertyDefinitionException(
     Type resourceType,
     MemberInfo? member,
-    OslcPropertyDefinition oslcPropertyDefinition) : OslcCoreApplicationException(
-    $"OSLC1004: Invalid property definition annotation {oslcPropertyDefinition.value} for method {member?.Name} of class {resourceType.Name}")
+    OslcPropertyDefinition oslcPropertyDefinition
+)
+    : OslcCoreApplicationException(
+        $"OSLC1004: Invalid property definition annotation {oslcPropertyDefinition.value} for method {member?.Name} of class {resourceType.Name}"
+    )
 {
     public Type ResourceType { get; } = resourceType;
     public MemberInfo? Member { get; } = member;

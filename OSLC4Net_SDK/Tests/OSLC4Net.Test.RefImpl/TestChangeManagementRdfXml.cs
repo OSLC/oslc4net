@@ -46,10 +46,12 @@ public class TestChangeManagementRdfXml : TestBase
         // act & assert
         await TestResourceShapeAsync(mediaType).ConfigureAwait(true);
         await TestCreateAsync(mediaType).ConfigureAwait(true);
-        await Task.WhenAll(TestRetrieveAsync(mediaType), TestRetrievesAsync(mediaType),
-            TestCompactAsync(
-                OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
-                mediaType)).ConfigureAwait(true);
+        await Task.WhenAll(
+                TestRetrieveAsync(mediaType),
+                TestRetrievesAsync(mediaType),
+                TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML, mediaType)
+            )
+            .ConfigureAwait(true);
         await TestUpdateAsync(mediaType).ConfigureAwait(true);
         await TestDeleteAsync(mediaType).ConfigureAwait(true);
 

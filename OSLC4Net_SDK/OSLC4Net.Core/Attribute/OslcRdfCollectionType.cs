@@ -18,8 +18,7 @@ using OSLC4Net.Core.Model;
 
 namespace OSLC4Net.Core.Attribute;
 
-[AttributeUsage(AttributeTargets.Method)
-]
+[AttributeUsage(AttributeTargets.Method)]
 public class OslcRdfCollectionType : System.Attribute
 {
     /**

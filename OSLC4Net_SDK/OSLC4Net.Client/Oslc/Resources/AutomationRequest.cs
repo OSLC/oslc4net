@@ -23,8 +23,10 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// https://archive.open-services.net/wiki/automation/OSLC-Automation-Specification-Version-2.0/index.html#Resource_AutomationRequest
 /// </summary>
-[OslcResourceShape(title = "Automation Request Resource Shape",
-    describes = new string[] { AutomationConstants.TYPE_AUTOMATION_REQUEST })]
+[OslcResourceShape(
+    title = "Automation Request Resource Shape",
+    describes = new string[] { AutomationConstants.TYPE_AUTOMATION_REQUEST }
+)]
 [OslcNamespace(AutomationConstants.AUTOMATION_NAMESPACE)]
 public class AutomationRequest : AbstractResource
 {
@@ -34,8 +36,7 @@ public class AutomationRequest : AbstractResource
     private readonly ISet<string> subjects = new HashSet<string>(StringComparer.Ordinal); // XXX - TreeSet<> in Java
     private readonly ISet<Uri> states = new HashSet<Uri>(); // XXX - TreeSet<> in Java
 
-    private readonly ISet<ParameterInstance>
-        inputParameters = new HashSet<ParameterInstance>(); // XXX - TreeSet<> in Java
+    private readonly ISet<ParameterInstance> inputParameters = new HashSet<ParameterInstance>(); // XXX - TreeSet<> in Java
 
     private DateTime? created;
     private string description;
@@ -47,12 +48,14 @@ public class AutomationRequest : AbstractResource
     private Uri desiredState;
     private Link executesAutomationPlan;
 
-    public AutomationRequest() : base()
+    public AutomationRequest()
+        : base()
     {
         AddType(new Uri(AutomationConstants.TYPE_AUTOMATION_REQUEST));
     }
 
-    public AutomationRequest(Uri about) : base(about)
+    public AutomationRequest(Uri about)
+        : base(about)
     {
         AddType(new Uri(AutomationConstants.TYPE_AUTOMATION_REQUEST));
     }
@@ -92,7 +95,9 @@ public class AutomationRequest : AbstractResource
         this.inputParameters.Add(parameter);
     }
 
-    [OslcDescription("The person(s) who are responsible for the work needed to complete the automation request.")]
+    [OslcDescription(
+        "The person(s) who are responsible for the work needed to complete the automation request."
+    )]
     [OslcName("contributor")]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "contributor")]
     [OslcRange(QmConstants.TYPE_PERSON)]
@@ -122,7 +127,8 @@ public class AutomationRequest : AbstractResource
     }
 
     [OslcDescription(
-        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
+        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content."
+    )]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "description")]
     [OslcTitle("Description")]
     [OslcValueType(ValueType.XMLLiteral)]
@@ -132,7 +138,8 @@ public class AutomationRequest : AbstractResource
     }
 
     [OslcDescription(
-        "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
+        "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display."
+    )]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "identifier")]
     [OslcReadOnly]
@@ -142,7 +149,9 @@ public class AutomationRequest : AbstractResource
         return identifier;
     }
 
-    [OslcDescription("Resource Shape that provides hints as to resource property value-types and allowed values. ")]
+    [OslcDescription(
+        "Resource Shape that provides hints as to resource property value-types and allowed values. "
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "instanceShape")]
     [OslcRange(OslcConstants.TYPE_RESOURCE_SHAPE)]
     [OslcTitle("Instance Shape")]
@@ -175,20 +184,23 @@ public class AutomationRequest : AbstractResource
     }
 
     [OslcDescription(
-        "Used to indicate the desired state of the Automation Request based on values defined by the service provider.")]
+        "Used to indicate the desired state of the Automation Request based on values defined by the service provider."
+    )]
     [OslcPropertyDefinition(AutomationConstants.AUTOMATION_NAMESPACE + "desiredState")]
     [OslcName("desiredState")]
     [OslcOccurs(Occurs.ZeroOrOne)]
     [OslcTitle("Desired State")]
-    [OslcAllowedValue(new string[]
-    {
-        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_NEW,
-        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_IN_PROGRESS,
-        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_QUEUED,
-        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELING,
-        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELED,
-        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_COMPLETE
-    })]
+    [OslcAllowedValue(
+        new string[]
+        {
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_NEW,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_IN_PROGRESS,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_QUEUED,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELING,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELED,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_COMPLETE,
+        }
+    )]
     public Uri GetDesiredState()
     {
         return desiredState;
@@ -205,7 +217,8 @@ public class AutomationRequest : AbstractResource
     }
 
     [OslcDescription(
-        "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
+        "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource."
+    )]
     [OslcName("subject")]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "subject")]
     [OslcReadOnly(false)]
@@ -216,7 +229,8 @@ public class AutomationRequest : AbstractResource
     }
 
     [OslcDescription(
-        "Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
+        "Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content."
+    )]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]
     [OslcTitle("Title")]
@@ -227,21 +241,24 @@ public class AutomationRequest : AbstractResource
     }
 
     [OslcDescription(
-        "Used to indicate the state of the automation request based on values defined by the service provider.")]
+        "Used to indicate the state of the automation request based on values defined by the service provider."
+    )]
     [OslcOccurs(Occurs.OneOrMany)]
     [OslcReadOnly(true)]
     [OslcName("state")]
     [OslcPropertyDefinition(AutomationConstants.AUTOMATION_NAMESPACE + "state")]
     [OslcTitle("States")]
-    [OslcAllowedValue(new string[]
-    {
-        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_NEW,
-        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_IN_PROGRESS,
-        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_QUEUED,
-        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELING,
-        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELED,
-        AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_COMPLETE
-    })]
+    [OslcAllowedValue(
+        new string[]
+        {
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_NEW,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_IN_PROGRESS,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_QUEUED,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELING,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_CANCELED,
+            AutomationConstants.AUTOMATION_NAMESPACE + AutomationConstants.STATE_COMPLETE,
+        }
+    )]
     public Uri[] GetStates()
     {
         return states.ToArray();

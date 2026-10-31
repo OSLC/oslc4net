@@ -24,7 +24,6 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// </summary>
 public abstract class QmResource : AbstractResource
 {
-
     private DateTime? created;
     private string identifier;
     private Uri instanceShape;
@@ -32,12 +31,14 @@ public abstract class QmResource : AbstractResource
     private Uri serviceProvider;
     private string title;
 
-    protected QmResource() : base()
+    protected QmResource()
+        : base()
     {
         AddType(GetRdfType());
     }
 
-    protected QmResource(Uri about) : base(about)
+    protected QmResource(Uri about)
+        : base(about)
     {
         AddType(GetRdfType());
     }
@@ -59,7 +60,8 @@ public abstract class QmResource : AbstractResource
     }
 
     [OslcDescription(
-        "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
+        "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display."
+    )]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "identifier")]
     [OslcReadOnly]
@@ -69,7 +71,9 @@ public abstract class QmResource : AbstractResource
         return identifier;
     }
 
-    [OslcDescription("Resource Shape that provides hints as to resource property value-types and allowed values. ")]
+    [OslcDescription(
+        "Resource Shape that provides hints as to resource property value-types and allowed values. "
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "instanceShape")]
     [OslcRange(OslcConstants.TYPE_RESOURCE_SHAPE)]
     [OslcTitle("Instance Shape")]
@@ -103,7 +107,8 @@ public abstract class QmResource : AbstractResource
     }
 
     [OslcDescription(
-        "Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
+        "Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content."
+    )]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]
     [OslcTitle("Title")]

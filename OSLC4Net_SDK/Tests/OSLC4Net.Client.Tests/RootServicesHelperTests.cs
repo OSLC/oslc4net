@@ -13,11 +13,11 @@ namespace OSLC4Net.Client.Tests
         private static string SampleRootServicesRdf(string catalogUri, string ns, string prop)
         {
             return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-                 + "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">"
-                 + "<rdf:Description rdf:about=\"http://example.com/rootservices\">"
-                 + $"<ns:{prop} xmlns:ns=\"{ns}\" rdf:resource=\"{catalogUri}\" />"
-                 + "</rdf:Description>"
-                 + "</rdf:RDF>";
+                + "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">"
+                + "<rdf:Description rdf:about=\"http://example.com/rootservices\">"
+                + $"<ns:{prop} xmlns:ns=\"{ns}\" rdf:resource=\"{catalogUri}\" />"
+                + "</rdf:Description>"
+                + "</rdf:RDF>";
         }
 
         [Test]
@@ -28,20 +28,30 @@ namespace OSLC4Net.Client.Tests
             var prop = "cmServiceProviders";
             var expectedCatalog = "https://example.com/cm/catalog";
 
-            var handler = new FakeHttpMessageHandler((req, ct) =>
-            {
-                var url = req.RequestUri!.ToString();
-                if (url == "https://example.com/.well-known/oslc/rootservices.xml")
+            var handler = new FakeHttpMessageHandler(
+                (req, ct) =>
                 {
-                    var xml = SampleRootServicesRdf(expectedCatalog, ns, prop);
-                    return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                    var url = req.RequestUri!.ToString();
+                    if (url == "https://example.com/.well-known/oslc/rootservices.xml")
                     {
-                        Content = new StringContent(xml, Encoding.UTF8, "application/rdf+xml"),
-                        RequestMessage = req
-                    });
+                        var xml = SampleRootServicesRdf(expectedCatalog, ns, prop);
+                        return Task.FromResult(
+                            new HttpResponseMessage(HttpStatusCode.OK)
+                            {
+                                Content = new StringContent(
+                                    xml,
+                                    Encoding.UTF8,
+                                    "application/rdf+xml"
+                                ),
+                                RequestMessage = req,
+                            }
+                        );
+                    }
+                    return Task.FromResult(
+                        new HttpResponseMessage(HttpStatusCode.NotFound) { RequestMessage = req }
+                    );
                 }
-                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.NotFound) { RequestMessage = req });
-            });
+            );
             var httpClient = new HttpClient(handler);
 
             var helper = new RootServicesHelper(baseUrl, ns, prop);
@@ -58,24 +68,39 @@ namespace OSLC4Net.Client.Tests
             var prop = "rmServiceProviders";
             var expectedCatalog = "https://example.com/rm/sp";
 
-            var handler = new FakeHttpMessageHandler((req, ct) =>
-            {
-                var url = req.RequestUri!.ToString();
-                if (url == "https://example.com/.well-known/oslc/rootservices.xml")
+            var handler = new FakeHttpMessageHandler(
+                (req, ct) =>
                 {
-                    return Task.FromResult(new HttpResponseMessage(HttpStatusCode.NotFound) { RequestMessage = req });
-                }
-                if (url == "https://example.com/services/rootservices")
-                {
-                    var xml = SampleRootServicesRdf(expectedCatalog, ns, prop);
-                    return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                    var url = req.RequestUri!.ToString();
+                    if (url == "https://example.com/.well-known/oslc/rootservices.xml")
                     {
-                        Content = new StringContent(xml, Encoding.UTF8, "application/rdf+xml"),
-                        RequestMessage = req
-                    });
+                        return Task.FromResult(
+                            new HttpResponseMessage(HttpStatusCode.NotFound)
+                            {
+                                RequestMessage = req,
+                            }
+                        );
+                    }
+                    if (url == "https://example.com/services/rootservices")
+                    {
+                        var xml = SampleRootServicesRdf(expectedCatalog, ns, prop);
+                        return Task.FromResult(
+                            new HttpResponseMessage(HttpStatusCode.OK)
+                            {
+                                Content = new StringContent(
+                                    xml,
+                                    Encoding.UTF8,
+                                    "application/rdf+xml"
+                                ),
+                                RequestMessage = req,
+                            }
+                        );
+                    }
+                    return Task.FromResult(
+                        new HttpResponseMessage(HttpStatusCode.NotFound) { RequestMessage = req }
+                    );
                 }
-                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.NotFound) { RequestMessage = req });
-            });
+            );
             var httpClient = new HttpClient(handler);
 
             var helper = new RootServicesHelper(baseUrl, ns, prop);

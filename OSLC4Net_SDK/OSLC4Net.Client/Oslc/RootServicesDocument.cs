@@ -26,9 +26,12 @@ public sealed class RootServicesDocument
     public RootServicesDocument(
         string serviceProviderCatalog,
         RootServicesOAuth10aDocument? oAuth = null,
-        string? title = null)
+        string? title = null
+    )
     {
-        ServiceProviderCatalog = serviceProviderCatalog ?? throw new ArgumentNullException(nameof(serviceProviderCatalog));
+        ServiceProviderCatalog =
+            serviceProviderCatalog
+            ?? throw new ArgumentNullException(nameof(serviceProviderCatalog));
         OAuth = oAuth;
         Title = title;
     }

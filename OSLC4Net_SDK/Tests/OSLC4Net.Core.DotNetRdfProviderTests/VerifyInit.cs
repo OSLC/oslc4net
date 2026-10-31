@@ -21,23 +21,22 @@ public static class VerifyInit
             (graph, _) =>
             {
                 return CanonicalizeAndSerializeGraph(graph);
-            });
+            }
+        );
         VerifierSettings.RegisterFileConverter<IResource>(
             (resource, _) =>
             {
                 var graph = DotNetRdfHelper.CreateDotNetRdfGraph([resource]);
                 return CanonicalizeAndSerializeGraph(graph);
-            });
+            }
+        );
     }
 
     private static ConversionResult CanonicalizeAndSerializeGraph(IGraph graph)
     {
         using var writer = new System.IO.StringWriter();
         var rdfc = new RdfCanonicalizer();
-        using var graphCollection = new GraphCollection
-        {
-            { graph, false }
-        };
+        using var graphCollection = new GraphCollection { { graph, false } };
         using var tripleStore = new TripleStore(graphCollection);
         var canonicalizedRdfDataset = rdfc.Canonicalize(tripleStore);
         var newGraph = canonicalizedRdfDataset.OutputDataset.Graphs.Single();
@@ -46,5 +45,4 @@ public static class VerifyInit
         ttlWriter.Save(newGraph, writer);
         return new ConversionResult(null, "ttl", writer.ToString());
     }
-
 }

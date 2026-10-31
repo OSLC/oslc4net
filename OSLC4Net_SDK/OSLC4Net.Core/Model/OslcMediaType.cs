@@ -31,26 +31,29 @@ public class OslcMediaType
     public const string X_OSLC_COMPACT_XML = "x-oslc-compact+xml";
     public const string APPLICATION_X_OSLC_COMPACT_XML = $"application/{X_OSLC_COMPACT_XML}";
 
-    public const string
-        X_OSLC_COMPACT_JSON =
-            "x-oslc-compact+json"; // TODO - Compact media type never defined in the OSLC spec for JSON
+    public const string X_OSLC_COMPACT_JSON = "x-oslc-compact+json"; // TODO - Compact media type never defined in the OSLC spec for JSON
 
     public const string APPLICATION_X_OSLC_COMPACT_JSON = "application" + "/" + X_OSLC_COMPACT_JSON;
     public static readonly MediaTypeHeaderValue APPLICATION_RDF_XML_TYPE = new(APPLICATION_RDF_XML);
     public static readonly MediaTypeHeaderValue APPLICATION_JSON_LD_TYPE = new(APPLICATION_JSON_LD);
     public static readonly MediaTypeHeaderValue TEXT_TURTLE_TYPE = new(TEXT_TURTLE);
 
-    public static readonly MediaTypeHeaderValue APPLICATION_X_OSLC_COMPACT_XML_TYPE =
-        new(APPLICATION_X_OSLC_COMPACT_XML);
+    public static readonly MediaTypeHeaderValue APPLICATION_X_OSLC_COMPACT_XML_TYPE = new(
+        APPLICATION_X_OSLC_COMPACT_XML
+    );
 
-    public static readonly MediaTypeHeaderValue APPLICATION_X_OSLC_COMPACT_JSON_TYPE =
-        new(APPLICATION_X_OSLC_COMPACT_JSON);
+    public static readonly MediaTypeHeaderValue APPLICATION_X_OSLC_COMPACT_JSON_TYPE = new(
+        APPLICATION_X_OSLC_COMPACT_JSON
+    );
 
-    [Obsolete] public const string APPLICATION_JSON = "application/json";
+    [Obsolete]
+    public const string APPLICATION_JSON = "application/json";
 
-    [Obsolete] public const string APPLICATION_XML = "application/xml";
+    [Obsolete]
+    public const string APPLICATION_XML = "application/xml";
 
-    [Obsolete] public const string TEXT_XML = "text/xml";
+    [Obsolete]
+    public const string TEXT_XML = "text/xml";
 
     [Obsolete]
     public static readonly MediaTypeHeaderValue APPLICATION_JSON_TYPE = new(APPLICATION_JSON);
@@ -58,6 +61,6 @@ public class OslcMediaType
     [Obsolete]
     public static readonly MediaTypeHeaderValue APPLICATION_XML_TYPE = new(APPLICATION_XML);
 
-    [Obsolete] public static readonly MediaTypeHeaderValue TEXT_XML_TYPE = new(TEXT_XML);
-
+    [Obsolete]
+    public static readonly MediaTypeHeaderValue TEXT_XML_TYPE = new(TEXT_XML);
 }

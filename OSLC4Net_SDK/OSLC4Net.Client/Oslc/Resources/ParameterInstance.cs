@@ -23,24 +23,27 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// https://archive.open-services.net/wiki/automation/OSLC-Automation-Specification-Version-2.0/index.html#Resource_ParameterInstance
 /// </summary>
-[OslcResourceShape(title = "Parameter Instance Resource Shape",
-    describes = new string[] { AutomationConstants.TYPE_PARAMETER_INSTANCE })]
+[OslcResourceShape(
+    title = "Parameter Instance Resource Shape",
+    describes = new string[] { AutomationConstants.TYPE_PARAMETER_INSTANCE }
+)]
 [OslcNamespace(AutomationConstants.AUTOMATION_NAMESPACE)]
 public class ParameterInstance : AbstractResource
 {
-
     private string name;
     private string value;
     private string description;
     private Uri instanceShape;
     private Uri serviceProvider;
 
-    public ParameterInstance() : base()
+    public ParameterInstance()
+        : base()
     {
         AddType(new Uri(AutomationConstants.TYPE_PARAMETER_INSTANCE));
     }
 
-    public ParameterInstance(Uri about) : base(about)
+    public ParameterInstance(Uri about)
+        : base(about)
     {
         AddType(new Uri(AutomationConstants.TYPE_PARAMETER_INSTANCE));
     }
@@ -56,7 +59,8 @@ public class ParameterInstance : AbstractResource
     }
 
     [OslcDescription(
-        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
+        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content."
+    )]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "description")]
     [OslcTitle("Description")]
     [OslcValueType(ValueType.XMLLiteral)]
@@ -83,7 +87,9 @@ public class ParameterInstance : AbstractResource
         return value;
     }
 
-    [OslcDescription("Resource Shape that provides hints as to resource property value-types and allowed values. ")]
+    [OslcDescription(
+        "Resource Shape that provides hints as to resource property value-types and allowed values. "
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "instanceShape")]
     [OslcRange(OslcConstants.TYPE_RESOURCE_SHAPE)]
     [OslcTitle("Instance Shape")]

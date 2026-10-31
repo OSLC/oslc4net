@@ -50,15 +50,17 @@ public class TestRequirementsManagementTurtle : TestBase
             Identifier = "REQ-001",
             Title = "Test requirement",
             Constrains =
-                [new Uri("http://example.com/REQ-002"), new Uri("http://example.com/REQ-003")],
+            [
+                new Uri("http://example.com/REQ-002"),
+                new Uri("http://example.com/REQ-003"),
+            ],
             Creator = [new Uri("https://github.com/berezovskyi")],
             ExtendedProperties =
             {
                 [DCTerms.Description] = "A sample description",
-                [PROV.AtLocation] =
-                    new Uri("http://dbpedia.org/resource/Stockholm"),
-                [DC.Language] = "en-GB"
-            }
+                [PROV.AtLocation] = new Uri("http://dbpedia.org/resource/Stockholm"),
+                [DC.Language] = "en-GB",
+            },
         };
 
         var creation = await GetCreationAsync(MediaType, Constants.TYPE_REQUIREMENT)
@@ -72,9 +74,15 @@ public class TestRequirementsManagementTurtle : TestBase
         await Assert.That(createdResource).IsNotNull();
         await Assert.That(createdResource?.Title).IsEqualTo(resource.Title);
         await Assert.That(createdResource?.Identifier).IsEqualTo(resource.Identifier);
-        await Assert.That(createdResource?.Description).IsEqualTo((string)resource.ExtendedProperties[DCTerms.Description]);
-        await Assert.That(createdResource?.ExtendedProperties[PROV.AtLocation]).IsEqualTo(resource.ExtendedProperties[PROV.AtLocation]);
-        await Assert.That(createdResource?.ExtendedProperties[DC.Language]).IsEqualTo(resource.ExtendedProperties[DC.Language]);
+        await Assert
+            .That(createdResource?.Description)
+            .IsEqualTo((string)resource.ExtendedProperties[DCTerms.Description]);
+        await Assert
+            .That(createdResource?.ExtendedProperties[PROV.AtLocation])
+            .IsEqualTo(resource.ExtendedProperties[PROV.AtLocation]);
+        await Assert
+            .That(createdResource?.ExtendedProperties[DC.Language])
+            .IsEqualTo(resource.ExtendedProperties[DC.Language]);
         await Assert.That(createdResource?.Constrains.Count).IsEqualTo(2);
     }
 }

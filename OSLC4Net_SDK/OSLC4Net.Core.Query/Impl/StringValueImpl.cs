@@ -22,10 +22,8 @@ namespace OSLC4Net.Core.Query.Impl;
 /// </summary>
 internal sealed class StringValueImpl : ValueImpl, StringValue
 {
-    public
-    StringValueImpl(CommonTree tree) : base(tree, ValueType.STRING)
-    {
-    }
+    public StringValueImpl(CommonTree tree)
+        : base(tree, ValueType.STRING) { }
 
     public string Value
     {

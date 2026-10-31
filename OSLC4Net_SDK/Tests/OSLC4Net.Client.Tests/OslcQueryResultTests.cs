@@ -27,11 +27,11 @@ public class OslcQueryResultTests
     public OslcQueryResultTests()
     {
         AppHost = Host.CreateDefaultBuilder()
-            .ConfigureLogging(
-                builder =>
-                {
-                    builder.AddConsole();
-                }).Build();
+            .ConfigureLogging(builder =>
+            {
+                builder.AddConsole();
+            })
+            .Build();
         LoggerFactory = AppHost.Services.GetRequiredService<ILoggerFactory>();
     }
 
@@ -43,7 +43,10 @@ public class OslcQueryResultTests
         await Assert.That(oslcQueryResult.GetMembersUrls().Length).IsEqualTo(20);
     }
 
-    [Test, Skip("TODO: figure out if .Current is supposed to work only if the next page is present")]
+    [
+        Test,
+        Skip("TODO: figure out if .Current is supposed to work only if the next page is present")
+    ]
     public async Task OslcQueryMultiResponsePagingTest()
     {
         var oslcQueryResult = await GetMockOslcQueryResultMulti();
@@ -99,18 +102,26 @@ public class OslcQueryResultTests
             capabilityUrl,
             0,
             new OslcQueryParameters(),
-            new Uri(OSLCConstants.QM_TEST_CASE));
+            new Uri(OSLCConstants.QM_TEST_CASE)
+        );
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(responseText)
+            Content = new StringContent(responseText),
         };
         var result = new OslcQueryResult(testQuery, response);
 
         await Assert.That(result.GetMembersUrls()).IsEquivalentTo([memberUrl]);
         var member = result.GetMembers<AnyResource>().Single();
-        await Assert.That(member.GetExtendedProperties().Keys.Any(key =>
-            key.NamespaceUri == "http://purl.org/dc/terms/" && key.LocalPart == "title")).IsTrue();
+        await Assert
+            .That(
+                member
+                    .GetExtendedProperties()
+                    .Keys.Any(key =>
+                        key.NamespaceUri == "http://purl.org/dc/terms/" && key.LocalPart == "title"
+                    )
+            )
+            .IsTrue();
     }
 
     [Test]
@@ -140,11 +151,12 @@ public class OslcQueryResultTests
             capabilityUrl,
             0,
             new OslcQueryParameters(),
-            new Uri("http://xmlns.com/foaf/0.1/maker"));
+            new Uri("http://xmlns.com/foaf/0.1/maker")
+        );
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(responseText)
+            Content = new StringContent(responseText),
         };
         var result = new OslcQueryResult(testQuery, response);
 
@@ -169,11 +181,12 @@ public class OslcQueryResultTests
             """;
         var testQuery = new OslcQuery(
             new OslcClient(LoggerFactory.CreateLogger<OslcClient>()),
-            capabilityUrl);
+            capabilityUrl
+        );
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(responseText)
+            Content = new StringContent(responseText),
         };
         var result = new OslcQueryResult(testQuery, response);
 
@@ -183,10 +196,8 @@ public class OslcQueryResultTests
     [Test]
     public async Task ResponseInfoReturnsMembersAndLiteralTotalCount()
     {
-        const string capabilityUrl =
-            "https://example.test/oslc/workitems/query/release";
-        const string memberUrl =
-            "https://example.test/oslc/workitems/REL-1";
+        const string capabilityUrl = "https://example.test/oslc/workitems/query/release";
+        const string memberUrl = "https://example.test/oslc/workitems/REL-1";
         var responseText = """
             <?xml version="1.0" encoding="UTF-8"?>
             <rdf:RDF
@@ -202,11 +213,12 @@ public class OslcQueryResultTests
             """;
         var testQuery = new OslcQuery(
             new OslcClient(LoggerFactory.CreateLogger<OslcClient>()),
-            capabilityUrl);
+            capabilityUrl
+        );
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(responseText)
+            Content = new StringContent(responseText),
         };
         var result = new OslcQueryResult(testQuery, response);
 
@@ -231,11 +243,12 @@ public class OslcQueryResultTests
             """;
         var testQuery = new OslcQuery(
             new OslcClient(LoggerFactory.CreateLogger<OslcClient>()),
-            capabilityUrl);
+            capabilityUrl
+        );
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(responseText)
+            Content = new StringContent(responseText),
         };
         var result = new OslcQueryResult(testQuery, response);
 
@@ -244,13 +257,16 @@ public class OslcQueryResultTests
 
     private async Task<OslcQueryResult> GetMockOslcQueryResultMulti()
     {
-        var responseText = await File.ReadAllTextAsync("data/multiResponseQuery.rdf").ConfigureAwait(false);
-        var testQuery = new OslcQuery(new OslcClient(LoggerFactory.CreateLogger<OslcClient>()),
-            "https://nordic.clm.ibmcloud.com/ccm/oslc/contexts/_2nC4UBNvEeutmoeSPr3-Ag/workitems");
+        var responseText = await File.ReadAllTextAsync("data/multiResponseQuery.rdf")
+            .ConfigureAwait(false);
+        var testQuery = new OslcQuery(
+            new OslcClient(LoggerFactory.CreateLogger<OslcClient>()),
+            "https://nordic.clm.ibmcloud.com/ccm/oslc/contexts/_2nC4UBNvEeutmoeSPr3-Ag/workitems"
+        );
         var httpResponseMessage = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(responseText)
+            Content = new StringContent(responseText),
         };
         var oslcQueryResult = new OslcQueryResult(testQuery, httpResponseMessage);
         return oslcQueryResult;

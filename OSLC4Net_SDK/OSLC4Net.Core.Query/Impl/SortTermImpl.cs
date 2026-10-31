@@ -19,31 +19,24 @@ namespace OSLC4Net.Core.Query.Impl;
 
 class SortTermImpl : SortTerm
 {
-    public SortTermImpl(
-        SortTermType type,
-        CommonTree tree,
-        IDictionary<string, string> prefixMap
-    )
+    public SortTermImpl(SortTermType type, CommonTree tree, IDictionary<string, string> prefixMap)
     {
         this.type = type;
         this.tree = tree;
         this.prefixMap = prefixMap;
     }
 
-    public SortTermType
-    Type
+    public SortTermType Type
     {
         get { return type; }
     }
 
-    public PName
-    Identifier
+    public PName Identifier
     {
         get
         {
             if (identifier == null)
             {
-
                 var rawProperty = tree.GetChild(0).Text;
 
                 identifier = new PName();

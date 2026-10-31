@@ -21,8 +21,10 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// https://docs.oasis-open-projects.org/oslc-op/qm/v2.1/os/quality-management-shapes.html#TestResultShape
 /// </summary>
-[OslcResourceShape(title = "Quality Management Resource Shape",
-    describes = new string[] { QmConstants.TYPE_TEST_RESULT })]
+[OslcResourceShape(
+    title = "Quality Management Resource Shape",
+    describes = new string[] { QmConstants.TYPE_TEST_RESULT }
+)]
 [OslcNamespace(QmConstants.QUALITY_MANAGEMENT_NAMESPACE)]
 public class TestResult : QmResource
 {
@@ -34,9 +36,8 @@ public class TestResult : QmResource
     private Link producedByTestExecutionRecord;
     private string status;
 
-    public TestResult() : base()
-    {
-    }
+    public TestResult()
+        : base() { }
 
     protected override Uri GetRdfType()
     {
@@ -91,7 +92,9 @@ public class TestResult : QmResource
 
     [OslcDescription("Test Execution Record that the Test Result was produced by.")]
     [OslcName("producedByTestExecutionRecord")]
-    [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "producedByTestExecutionRecord")]
+    [OslcPropertyDefinition(
+        QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "producedByTestExecutionRecord"
+    )]
     [OslcRange(QmConstants.TYPE_TEST_EXECUTION_RECORD)]
     [OslcReadOnly(false)]
     [OslcTitle("Produced By Test Execution Record")]
@@ -100,7 +103,9 @@ public class TestResult : QmResource
         return producedByTestExecutionRecord;
     }
 
-    [OslcDescription("Used to indicate the state of the Test Result based on values defined by the service provider.")]
+    [OslcDescription(
+        "Used to indicate the state of the Test Result based on values defined by the service provider."
+    )]
     [OslcOccurs(Occurs.ZeroOrOne)]
     [OslcPropertyDefinition(QmConstants.QUALITY_MANAGEMENT_NAMESPACE + "status")]
     [OslcTitle("Status")]

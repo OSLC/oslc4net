@@ -19,15 +19,10 @@ namespace OSLC4Net.Core.Query.Impl;
 
 sealed class SimpleSortTermImpl : SortTermImpl, SimpleSortTerm
 {
-    public SimpleSortTermImpl(
-        CommonTree tree,
-        IDictionary<string, string> prefixMap
-    ) : base(SortTermType.SIMPLE, tree, prefixMap)
-    {
-    }
+    public SimpleSortTermImpl(CommonTree tree, IDictionary<string, string> prefixMap)
+        : base(SortTermType.SIMPLE, tree, prefixMap) { }
 
-    public bool
-    Ascending
+    public bool Ascending
     {
         get
         {
@@ -40,8 +35,7 @@ sealed class SimpleSortTermImpl : SortTermImpl, SimpleSortTerm
         }
     }
 
-    public override string
-    ToString()
+    public override string ToString()
     {
         return Ascending + Identifier.ToString();
     }

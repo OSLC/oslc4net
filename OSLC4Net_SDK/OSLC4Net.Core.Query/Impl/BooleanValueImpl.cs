@@ -22,10 +22,8 @@ namespace OSLC4Net.Core.Query.Impl;
 /// </summary>
 internal sealed class BooleanValueImpl : ValueImpl, BooleanValue
 {
-    public
-    BooleanValueImpl(CommonTree tree) : base(tree, ValueType.BOOLEAN)
-    {
-    }
+    public BooleanValueImpl(CommonTree tree)
+        : base(tree, ValueType.BOOLEAN) { }
 
     public bool Value
     {

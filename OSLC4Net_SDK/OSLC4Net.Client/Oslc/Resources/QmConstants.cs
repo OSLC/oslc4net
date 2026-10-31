@@ -29,7 +29,8 @@ public static class QmConstants
     public const string QUALITY_MANAGEMENT_PREFIX = "oslc_qm";
     public const string REQUIREMENTS_MANAGEMENT_NAMESPACE = "http://open-services.net/ns/rm#";
     public const string REQUIREMENTS_MANAGEMENT_PREFIX = "oslc_rm";
-    public const string SOFTWARE_CONFIGURATION_MANAGEMENT_NAMESPACE = "http://open-services.net/ns/scm#";
+    public const string SOFTWARE_CONFIGURATION_MANAGEMENT_NAMESPACE =
+        "http://open-services.net/ns/scm#";
     public const string SOFTWARE_CONFIGURATION_MANAGEMENT_PREFIX = "oslc_scm";
 
     public const string TYPE_CHANGE_REQUEST = CHANGE_MANAGEMENT_NAMESPACE + "ChangeRequest";
@@ -37,9 +38,11 @@ public static class QmConstants
     public const string TYPE_DISCUSSION = OslcConstants.OSLC_CORE_NAMESPACE + "Discussion";
     public const string TYPE_PERSON = FOAF_NAMESPACE + "Person";
     public const string TYPE_REQUIREMENT = REQUIREMENTS_MANAGEMENT_NAMESPACE + "Requirement";
-    public const string TYPE_REQUIREMENT_COLLECTION = REQUIREMENTS_MANAGEMENT_NAMESPACE + "RequirementCollection";
+    public const string TYPE_REQUIREMENT_COLLECTION =
+        REQUIREMENTS_MANAGEMENT_NAMESPACE + "RequirementCollection";
     public const string TYPE_TEST_CASE = QUALITY_MANAGEMENT_NAMESPACE + "TestCase";
-    public const string TYPE_TEST_EXECUTION_RECORD = QUALITY_MANAGEMENT_NAMESPACE + "TestExecutionRecord";
+    public const string TYPE_TEST_EXECUTION_RECORD =
+        QUALITY_MANAGEMENT_NAMESPACE + "TestExecutionRecord";
     public const string TYPE_TEST_PLAN = QUALITY_MANAGEMENT_NAMESPACE + "TestPlan";
     public const string TYPE_TEST_RESULT = QUALITY_MANAGEMENT_NAMESPACE + "TestResult";
     public const string TYPE_TEST_SCRIPT = QUALITY_MANAGEMENT_NAMESPACE + "TestScript";

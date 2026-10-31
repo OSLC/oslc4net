@@ -22,8 +22,10 @@ namespace OSLC4Net.Client.Oslc.Resources;
 /// <summary>
 /// https://docs.oasis-open-projects.org/oslc-op/am/v3.0/os/architecture-management-spec.html
 /// </summary>
-[OslcResourceShape(title = "Architecture Management LinkType Resource Shape",
-    describes = new string[] { ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE })]
+[OslcResourceShape(
+    title = "Architecture Management LinkType Resource Shape",
+    describes = new string[] { ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE }
+)]
 [OslcNamespace(ArchitectureConstants.ARCHITECTURE_NAMESPACE)]
 public class ArchitectureLinkType : AbstractResource
 {
@@ -38,12 +40,14 @@ public class ArchitectureLinkType : AbstractResource
     private DateTime? modified;
     private Uri serviceProvider;
 
-    public ArchitectureLinkType() : base()
+    public ArchitectureLinkType()
+        : base()
     {
         AddType(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE));
     }
 
-    public ArchitectureLinkType(Uri about) : base(about)
+    public ArchitectureLinkType(Uri about)
+        : base(about)
     {
         AddType(new Uri(ArchitectureConstants.TYPE_ARCHITECTURE_LINK_TYPE));
     }
@@ -68,7 +72,9 @@ public class ArchitectureLinkType : AbstractResource
         AddType(rdfType);
     }
 
-    [OslcDescription("The person(s) who are responsible for the work needed to complete the automation plan.")]
+    [OslcDescription(
+        "The person(s) who are responsible for the work needed to complete the automation plan."
+    )]
     [OslcName("contributor")]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "contributor")]
     [OslcRange(QmConstants.TYPE_PERSON)]
@@ -116,7 +122,8 @@ public class ArchitectureLinkType : AbstractResource
     }
 
     [OslcDescription(
-        "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
+        "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display."
+    )]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "identifier")]
     [OslcReadOnly]
@@ -126,7 +133,9 @@ public class ArchitectureLinkType : AbstractResource
         return identifier;
     }
 
-    [OslcDescription("Resource Shape that provides hints as to resource property value-types and allowed values. ")]
+    [OslcDescription(
+        "Resource Shape that provides hints as to resource property value-types and allowed values. "
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "instanceShape")]
     [OslcRange(OslcConstants.TYPE_RESOURCE_SHAPE)]
     [OslcTitle("Instance Shape")]

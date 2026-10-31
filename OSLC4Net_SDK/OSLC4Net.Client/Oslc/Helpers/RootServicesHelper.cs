@@ -26,7 +26,11 @@ public class RootServicesHelper
     /// <param name="baseUrl">The base URL of the OSLC server.</param>
     /// <param name="catalogNamespace">The namespace of the OSLC domain.</param>
     /// <param name="catalogProperty">The property name for the catalog in the rootservices doc.</param>
-    public RootServicesHelper(string baseUrl, string catalogNamespace = "http://open-services.net/xmlns/oslc/", string catalogProperty = "serviceProviderCatalog")
+    public RootServicesHelper(
+        string baseUrl,
+        string catalogNamespace = "http://open-services.net/xmlns/oslc/",
+        string catalogProperty = "serviceProviderCatalog"
+    )
     {
         ArgumentNullException.ThrowIfNull(baseUrl);
         ArgumentNullException.ThrowIfNull(catalogNamespace);
@@ -53,8 +57,10 @@ public class RootServicesHelper
         var candidates = new List<string>();
 
         // 1. If URL already ends with /rootservices or /rootservices.xml, use as-is
-        if (_baseUrl.EndsWith("/rootservices", StringComparison.OrdinalIgnoreCase) ||
-            _baseUrl.EndsWith("/rootservices.xml", StringComparison.OrdinalIgnoreCase))
+        if (
+            _baseUrl.EndsWith("/rootservices", StringComparison.OrdinalIgnoreCase)
+            || _baseUrl.EndsWith("/rootservices.xml", StringComparison.OrdinalIgnoreCase)
+        )
         {
             candidates.Add(_baseUrl);
         }
@@ -82,7 +88,10 @@ public class RootServicesHelper
                 lastEx = ex;
             }
         }
-        throw new RootServicesException(_baseUrl, lastEx ?? new ResourceNotFoundException(_baseUrl, "rootservices"));
+        throw new RootServicesException(
+            _baseUrl,
+            lastEx ?? new ResourceNotFoundException(_baseUrl, "rootservices")
+        );
     }
 
     private static string GetWellKnownRootServicesUrl(string baseUrl)
@@ -92,7 +101,10 @@ public class RootServicesHelper
         return $"{host}/.well-known/oslc/rootservices.xml";
     }
 
-    private async Task<RootServicesDocument?> TryParseRootServicesAsync(HttpClient httpClient, string rootServicesUrl)
+    private async Task<RootServicesDocument?> TryParseRootServicesAsync(
+        HttpClient httpClient,
+        string rootServicesUrl
+    )
     {
         using var response = await httpClient.GetAsync(rootServicesUrl).ConfigureAwait(false);
         if (!response.IsSuccessStatusCode)
@@ -106,8 +118,13 @@ public class RootServicesHelper
         parser.Load(rdfGraph, streamReader);
 
         // Find catalog URL
-        var catalogUrl = TryGetPropertyValue(rdfGraph, _catalogNamespace, _catalogProperty)
-                      ?? TryGetPropertyValue(rdfGraph, "http://open-services.net/xmlns/oslc/", "serviceProviderCatalog");
+        var catalogUrl =
+            TryGetPropertyValue(rdfGraph, _catalogNamespace, _catalogProperty)
+            ?? TryGetPropertyValue(
+                rdfGraph,
+                "http://open-services.net/xmlns/oslc/",
+                "serviceProviderCatalog"
+            );
 
         if (catalogUrl == null)
         {
@@ -117,20 +134,30 @@ public class RootServicesHelper
         // Extract OAuth URLs (Jazz namespace)
         const string jfsNamespace = "http://jazz.net/xmlns/prod/jazz/jfs/1.0/";
         var oauthRequestToken = TryGetPropertyValue(rdfGraph, jfsNamespace, "oauthRequestTokenUrl");
-        var oauthAuthorization = TryGetPropertyValue(rdfGraph, jfsNamespace, "oauthUserAuthorizationUrl");
+        var oauthAuthorization = TryGetPropertyValue(
+            rdfGraph,
+            jfsNamespace,
+            "oauthUserAuthorizationUrl"
+        );
         var oauthAccessToken = TryGetPropertyValue(rdfGraph, jfsNamespace, "oauthAccessTokenUrl");
-        var oauthRequestConsumerKey = TryGetPropertyValue(rdfGraph, jfsNamespace, "oauthRequestConsumerKeyUrl");
+        var oauthRequestConsumerKey = TryGetPropertyValue(
+            rdfGraph,
+            jfsNamespace,
+            "oauthRequestConsumerKeyUrl"
+        );
         var oauthApproval = TryGetPropertyValue(rdfGraph, jfsNamespace, "oauthApprovalModuleUrl");
         var oauthRealm = TryGetPropertyValue(rdfGraph, jfsNamespace, "oauthRealmName");
 
         // Only create OAuth document if any OAuth properties are present
         RootServicesOAuth10aDocument? oauthDoc = null;
-        if (!string.IsNullOrEmpty(oauthRequestToken) ||
-            !string.IsNullOrEmpty(oauthAuthorization) ||
-            !string.IsNullOrEmpty(oauthAccessToken) ||
-            !string.IsNullOrEmpty(oauthRequestConsumerKey) ||
-            !string.IsNullOrEmpty(oauthApproval) ||
-            !string.IsNullOrEmpty(oauthRealm))
+        if (
+            !string.IsNullOrEmpty(oauthRequestToken)
+            || !string.IsNullOrEmpty(oauthAuthorization)
+            || !string.IsNullOrEmpty(oauthAccessToken)
+            || !string.IsNullOrEmpty(oauthRequestConsumerKey)
+            || !string.IsNullOrEmpty(oauthApproval)
+            || !string.IsNullOrEmpty(oauthRealm)
+        )
         {
             oauthDoc = new RootServicesOAuth10aDocument(
                 oauthRequestToken,
@@ -145,18 +172,17 @@ public class RootServicesHelper
         // Extract title
         var title = TryGetPropertyValue(rdfGraph, "http://purl.org/dc/terms/", "title");
 
-        return new RootServicesDocument(
-            catalogUrl,
-            oauthDoc,
-            title
-        );
+        return new RootServicesDocument(catalogUrl, oauthDoc, title);
     }
 
     private static string? TryGetPropertyValue(Graph rdfGraph, string ns, string property)
     {
         // Try with and without '#' separator
         var predicates = new List<Uri> { new Uri(ns + property) };
-        if (!ns.EndsWith("#", StringComparison.Ordinal) && !ns.EndsWith("/", StringComparison.Ordinal))
+        if (
+            !ns.EndsWith("#", StringComparison.Ordinal)
+            && !ns.EndsWith("/", StringComparison.Ordinal)
+        )
         {
             predicates.Add(new Uri(ns + "#" + property));
         }

@@ -11,8 +11,18 @@ namespace OSLC4NetExamples.Server.NetCoreApi.Controllers;
 /// <param name="logger"></param>
 [ApiController]
 [Route("/oslc/catalog")]
-[Produces(OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.TEXT_TURTLE, OslcMediaType.APPLICATION_JSON_LD, OslcMediaType.APPLICATION_NTRIPLES)]
-[Consumes(OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.TEXT_TURTLE, OslcMediaType.APPLICATION_JSON_LD, OslcMediaType.APPLICATION_NTRIPLES)]
+[Produces(
+    OslcMediaType.APPLICATION_RDF_XML,
+    OslcMediaType.TEXT_TURTLE,
+    OslcMediaType.APPLICATION_JSON_LD,
+    OslcMediaType.APPLICATION_NTRIPLES
+)]
+[Consumes(
+    OslcMediaType.APPLICATION_RDF_XML,
+    OslcMediaType.TEXT_TURTLE,
+    OslcMediaType.APPLICATION_JSON_LD,
+    OslcMediaType.APPLICATION_NTRIPLES
+)]
 public class CatalogController(ILogger<CatalogController> logger) : ControllerBase
 {
     [HttpGet]

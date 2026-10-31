@@ -5,19 +5,19 @@
     <RootNamespace>OSLC4Net.ChangeManagementTest</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\OSLC4Net.Core\OSLC4Net.Core.csproj"/>
-    <ProjectReference Include="..\..\OSLC4Net.Core.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj"/>
-    <ProjectReference Include="..\..\OSLC4Net.ChangeManagement\OSLC4Net.ChangeManagementCommon.csproj"/>
-    <ProjectReference Include="..\..\OSLC4Net.Client\OSLC4Net.Client.csproj"/>
-    <ProjectReference Include="..\..\OSLC4Net.Domains.RequirementsManagement\OSLC4Net.Domains.RequirementsManagement.csproj"/>
-    <ProjectReference Include="..\OSLC4Net.Test.AspireHost\OSLC4Net.Test.AspireHost.csproj"/>
+    <ProjectReference Include="..\..\OSLC4Net.Core\OSLC4Net.Core.csproj" />
+    <ProjectReference Include="..\..\OSLC4Net.Core.DotNetRdfProvider\OSLC4Net.Core.DotNetRdfProvider.csproj" />
+    <ProjectReference Include="..\..\OSLC4Net.ChangeManagement\OSLC4Net.ChangeManagementCommon.csproj" />
+    <ProjectReference Include="..\..\OSLC4Net.Client\OSLC4Net.Client.csproj" />
+    <ProjectReference Include="..\..\OSLC4Net.Domains.RequirementsManagement\OSLC4Net.Domains.RequirementsManagement.csproj" />
+    <ProjectReference Include="..\OSLC4Net.Test.AspireHost\OSLC4Net.Test.AspireHost.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Diagnostics"/>
-    <PackageReference Include="Aspire.Hosting.Testing"/>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json"/>
-    <PackageReference Include="Microsoft.AspNet.WebApi.Client"/>
-    <PackageReference Include="Microsoft.Extensions.Http.Resilience"/>
+    <PackageReference Include="CommunityToolkit.Diagnostics" />
+    <PackageReference Include="Aspire.Hosting.Testing" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" />
+    <PackageReference Include="Microsoft.Extensions.Http.Resilience" />
     <PackageReference Include="TUnit" />
   </ItemGroup>
 

@@ -41,10 +41,14 @@ public class OslcRdfTypeMismatchException : OslcCoreApplicationException
     /// <param name="resourceUri">The URI of the resource with the type mismatch.</param>
     /// <param name="expectedTypes">The expected RDF types.</param>
     /// <param name="actualTypes">The actual RDF types found.</param>
-    public OslcRdfTypeMismatchException(string resourceUri, string expectedTypes,
-        string actualTypes)
+    public OslcRdfTypeMismatchException(
+        string resourceUri,
+        string expectedTypes,
+        string actualTypes
+    )
         : base(
-            $"RDF type mismatch for resource <{resourceUri}>. Expected one of: [{expectedTypes}], but found: [{actualTypes}].")
+            $"RDF type mismatch for resource <{resourceUri}>. Expected one of: [{expectedTypes}], but found: [{actualTypes}]."
+        )
     {
         ResourceUri = resourceUri;
         ExpectedTypes = expectedTypes;
@@ -58,11 +62,16 @@ public class OslcRdfTypeMismatchException : OslcCoreApplicationException
     /// <param name="expectedTypes">The expected RDF types.</param>
     /// <param name="actualTypes">The actual RDF types found.</param>
     /// <param name="innerException">The exception that is the cause of the current exception.</param>
-    public OslcRdfTypeMismatchException(string resourceUri, string expectedTypes,
-        string actualTypes, Exception innerException)
+    public OslcRdfTypeMismatchException(
+        string resourceUri,
+        string expectedTypes,
+        string actualTypes,
+        Exception innerException
+    )
         : base(
             $"RDF type mismatch for resource <{resourceUri}>. Expected one of: [{expectedTypes}], but found: [{actualTypes}].",
-            innerException)
+            innerException
+        )
     {
         ResourceUri = resourceUri;
         ExpectedTypes = expectedTypes;

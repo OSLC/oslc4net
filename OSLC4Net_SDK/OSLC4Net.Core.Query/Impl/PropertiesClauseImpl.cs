@@ -22,12 +22,6 @@ namespace OSLC4Net.Core.Query.Impl;
 /// </summary>
 internal sealed class PropertiesClauseImpl : PropertiesImpl, PropertiesClause
 {
-    public
-    PropertiesClauseImpl(
-        CommonTree tree,
-        IDictionary<string, string> prefixMap
-    )
-        : base(tree, prefixMap)
-    {
-    }
+    public PropertiesClauseImpl(CommonTree tree, IDictionary<string, string> prefixMap)
+        : base(tree, prefixMap) { }
 }

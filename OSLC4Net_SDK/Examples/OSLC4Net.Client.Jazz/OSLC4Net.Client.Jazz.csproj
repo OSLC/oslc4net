@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>OSLC4Net.Client.Jazz</RootNamespace>
@@ -16,6 +15,4 @@
     <ProjectReference Include="..\..\OSLC4Net.Client\OSLC4Net.Client.csproj" />
     <ProjectReference Include="..\..\OSLC4Net.Core\OSLC4Net.Core.csproj" />
   </ItemGroup>
-
-
 </Project>

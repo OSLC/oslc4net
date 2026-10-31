@@ -17,5 +17,5 @@ public enum ValueType
     DECIMAL,
     STRING,
     TYPED_STRING,
-    LANGED_STRING
+    LANGED_STRING,
 }

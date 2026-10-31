@@ -56,13 +56,10 @@ public abstract class RequirementBase : AbstractResource
     // REVISIT: should it now be OSLC4Net.Core.Model.AbstractResource.SetTypes instead? (@berezovskyi 2025-02)
     protected readonly ISet<Uri> RdfTypes = new HashSet<Uri>();
 
-    protected RequirementBase()
-    {
-    }
+    protected RequirementBase() { }
 
-    protected RequirementBase(Uri about) : base(about)
-    {
-    }
+    protected RequirementBase(Uri about)
+        : base(about) { }
 
     public void AddSubject(string subject)
     {
@@ -155,7 +152,8 @@ public abstract class RequirementBase : AbstractResource
     }
 
     [OslcDescription(
-        "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
+        "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource."
+    )]
     [OslcName("subject")]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "subject")]
     [OslcReadOnly(false)]
@@ -319,7 +317,9 @@ public abstract class RequirementBase : AbstractResource
         return _constrains.ToArray();
     }
 
-    [OslcDescription("The person(s) who are responsible for the work needed to complete the change request.")]
+    [OslcDescription(
+        "The person(s) who are responsible for the work needed to complete the change request."
+    )]
     [OslcName("contributor")]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "contributor")]
     [OslcRange(RmConstants.TYPE_PERSON)]
@@ -349,7 +349,8 @@ public abstract class RequirementBase : AbstractResource
     }
 
     [OslcDescription(
-        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
+        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content."
+    )]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "description")]
     [OslcTitle("Description")]
     [OslcValueType(ValueType.XMLLiteral)]
@@ -359,7 +360,8 @@ public abstract class RequirementBase : AbstractResource
     }
 
     [OslcDescription(
-        "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
+        "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display."
+    )]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "identifier")]
     [OslcReadOnly]
@@ -369,7 +371,9 @@ public abstract class RequirementBase : AbstractResource
         return _identifier;
     }
 
-    [OslcDescription("Resource Shape that provides hints as to resource property value-types and allowed values. ")]
+    [OslcDescription(
+        "Resource Shape that provides hints as to resource property value-types and allowed values. "
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "instanceShape")]
     [OslcRange(OslcConstants.TYPE_RESOURCE_SHAPE)]
     [OslcTitle("Instance Shape")]
@@ -403,7 +407,8 @@ public abstract class RequirementBase : AbstractResource
     }
 
     [OslcDescription(
-        "Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users.")]
+        "Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users."
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "shortTitle")]
     [OslcTitle("Short Title")]
     [OslcValueType(ValueType.XMLLiteral)]
@@ -413,7 +418,8 @@ public abstract class RequirementBase : AbstractResource
     }
 
     [OslcDescription(
-        "Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
+        "Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content."
+    )]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]
     [OslcTitle("Title")]

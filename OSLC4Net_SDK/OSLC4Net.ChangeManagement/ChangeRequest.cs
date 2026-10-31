@@ -23,18 +23,23 @@ namespace OSLC4Net.ChangeManagement;
 /// OSLC Change Management resource
 /// </summary>
 [OslcNamespace(Constants.CHANGE_MANAGEMENT_NAMESPACE)]
-[OslcResourceShape(title = "Change Request Resource Shape", describes = new string[] { Constants.TYPE_CHANGE_REQUEST })]
+[OslcResourceShape(
+    title = "Change Request Resource Shape",
+    describes = new string[] { Constants.TYPE_CHANGE_REQUEST }
+)]
 public class ChangeRequest : AbstractResource
 {
     private Severity _severity = ChangeManagement.Severity.Unclassified; // TODO - Added severity for demo
     private readonly ISet<Type> _dctermsTypes = new HashSet<Type>(); // XXX - TreeSet<> in Java
 
-    public ChangeRequest() : base()
+    public ChangeRequest()
+        : base()
     {
         AddType(new Uri(Constants.TYPE_CHANGE_REQUEST));
     }
 
-    public ChangeRequest(Uri about) : base(about)
+    public ChangeRequest(Uri about)
+        : base(about)
     {
         AddType(new Uri(Constants.TYPE_CHANGE_REQUEST));
     }
@@ -265,7 +270,9 @@ public class ChangeRequest : AbstractResource
     [OslcTitle("Close DateTime?")]
     public DateTime? CloseDate { get; set; }
 
-    [OslcDescription("The person(s) who are responsible for the work needed to complete the change request.")]
+    [OslcDescription(
+        "The person(s) who are responsible for the work needed to complete the change request."
+    )]
     [OslcName("contributor")]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "contributor")]
     [OslcRange(Constants.TYPE_PERSON)]
@@ -347,7 +354,9 @@ public class ChangeRequest : AbstractResource
         }
     }
 
-    [OslcDescription("Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content.")]
+    [OslcDescription(
+        "Descriptive text (reference: Dublin Core) about resource represented as rich text in XHTML content."
+    )]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "description")]
     [OslcTitle("Description")]
     [OslcValueType(ValueType.XMLLiteral)]
@@ -359,7 +368,9 @@ public class ChangeRequest : AbstractResource
     [OslcTitle("Discussed By")]
     public Uri DiscussedBy { get; set; }
 
-    [OslcDescription("A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display.")]
+    [OslcDescription(
+        "A unique identifier for a resource. Assigned by the service provider when a resource is created. Not intended for end-user display."
+    )]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "identifier")]
     [OslcReadOnly]
@@ -390,7 +401,9 @@ public class ChangeRequest : AbstractResource
         }
     } = new HashSet<Link>();
 
-    [OslcDescription("Resource Shape that provides hints as to resource property value-types and allowed values. ")]
+    [OslcDescription(
+        "Resource Shape that provides hints as to resource property value-types and allowed values. "
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "instanceShape")]
     [OslcRange(OslcConstants.TYPE_RESOURCE_SHAPE)]
     [OslcTitle("Instance Shape")]
@@ -550,7 +563,9 @@ public class ChangeRequest : AbstractResource
     [OslcTitle("Service Provider")]
     public Uri ServiceProvider { get; set; }
 
-    [OslcAllowedValue(new string[] { "Unclassified", "Minor", "Normal", "Major", "Critical", "Blocker" })]
+    [OslcAllowedValue(
+        new string[] { "Unclassified", "Minor", "Normal", "Major", "Critical", "Blocker" }
+    )]
     [OslcDescription("Severity of change request.")]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "severity")]
@@ -561,18 +576,24 @@ public class ChangeRequest : AbstractResource
         set => _severity = SeverityExtension.FromString(value);
     }
 
-    [OslcDescription("Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users.")]
+    [OslcDescription(
+        "Short name identifying a resource, often used as an abbreviated identifier for presentation to end-users."
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "shortTitle")]
     [OslcTitle("Short Title")]
     [OslcValueType(ValueType.XMLLiteral)]
     public string ShortTitle { get; set; }
 
-    [OslcDescription("Used to indicate the status of the change request based on values defined by the service provider. Most often a read-only property. Some possible values may include: 'Submitted', 'Done', 'InProgress', etc.")]
+    [OslcDescription(
+        "Used to indicate the status of the change request based on values defined by the service provider. Most often a read-only property. Some possible values may include: 'Submitted', 'Done', 'InProgress', etc."
+    )]
     [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "status")]
     [OslcTitle("Status")]
     public string Status { get; set; }
 
-    [OslcDescription("Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource.")]
+    [OslcDescription(
+        "Tag or keyword for a resource. Each occurrence of a dcterms:subject property denotes an additional tag for the resource."
+    )]
     [OslcName("subject")]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "subject")]
     [OslcReadOnly(false)]
@@ -619,7 +640,9 @@ public class ChangeRequest : AbstractResource
         }
     } = new HashSet<Link>();
 
-    [OslcDescription("Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content.")]
+    [OslcDescription(
+        "Title (reference: Dublin Core) or often a single line summary of the resource represented as rich text in XHTML content."
+    )]
     [OslcOccurs(Occurs.ExactlyOne)]
     [OslcPropertyDefinition(OslcConstants.Domains.DCTerms.NS + "title")]
     [OslcTitle("Title")]
@@ -680,7 +703,9 @@ public class ChangeRequest : AbstractResource
     [OslcTitle("Approved")]
     public bool? Approved { get; set; }
 
-    [OslcDescription("Whether or not the Change Request is completely done, no further fixes or fix verification is needed.")]
+    [OslcDescription(
+        "Whether or not the Change Request is completely done, no further fixes or fix verification is needed."
+    )]
     [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "closed")]
     [OslcReadOnly]
     [OslcTitle("Closed")]
@@ -692,7 +717,9 @@ public class ChangeRequest : AbstractResource
     [OslcTitle("Fixed")]
     public bool? Fixed { get; set; }
 
-    [OslcDescription("Whether or not the Change Request in a state indicating that active work is occurring. If oslc_cm:inprogress is true, then oslc_cm:fixed and oslc_cm:closed must also be false.")]
+    [OslcDescription(
+        "Whether or not the Change Request in a state indicating that active work is occurring. If oslc_cm:inprogress is true, then oslc_cm:fixed and oslc_cm:closed must also be false."
+    )]
     [OslcName("inprogress")]
     [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "inprogress")]
     [OslcReadOnly]
@@ -705,7 +732,9 @@ public class ChangeRequest : AbstractResource
     [OslcTitle("Reviewed")]
     public bool? Reviewed { get; set; }
 
-    [OslcDescription("Whether or not the resolution or fix of the Change Request has been verified.")]
+    [OslcDescription(
+        "Whether or not the resolution or fix of the Change Request has been verified."
+    )]
     [OslcPropertyDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE + "verified")]
     [OslcReadOnly]
     [OslcTitle("Verified")]

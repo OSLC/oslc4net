@@ -15,14 +15,16 @@ namespace OSLC4Net.Fuzzing;
 
 internal static class Program
 {
-    private static readonly IDictionary<string, string> Prefixes = new Dictionary<string, string>(StringComparer.Ordinal)
+    private static readonly IDictionary<string, string> Prefixes = new Dictionary<string, string>(
+        StringComparer.Ordinal
+    )
     {
         ["dcterms"] = "http://purl.org/dc/terms/",
         ["oslc"] = "http://open-services.net/ns/core#",
         ["oslc_config"] = "http://open-services.net/ns/config#",
         ["qm"] = "http://qm.example.com/ns/",
         ["rdf"] = "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-        ["xs"] = "http://www.w3.org/2001/XMLSchema"
+        ["xs"] = "http://www.w3.org/2001/XMLSchema",
     };
 
     private static void Main()
@@ -41,7 +43,9 @@ internal static class Program
         TryParse(() => QueryUtils.parseProperties(expression, Prefixes));
         TryParse(() => QueryUtils.ParseOrderBy(expression, Prefixes));
         TryParse(() => QueryUtils.ParseSearchTerms(expression));
-        TryParse(() => QueryUtils.InvertSelectedProperties(QueryUtils.ParseSelect(expression, Prefixes)));
+        TryParse(() =>
+            QueryUtils.InvertSelectedProperties(QueryUtils.ParseSelect(expression, Prefixes))
+        );
     }
 
     private static void TryParse(Action parse)

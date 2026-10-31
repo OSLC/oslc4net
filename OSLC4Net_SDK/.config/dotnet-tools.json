@@ -2,6 +2,12 @@
   "version": 1,
   "isRoot": true,
   "tools": {
+    "csharpier": {
+      "version": "1.3.0",
+      "commands": [
+        "csharpier"
+      ]
+    },
     "dotnet-reportgenerator-globaltool": {
       "version": "5.5.11",
       "commands": [

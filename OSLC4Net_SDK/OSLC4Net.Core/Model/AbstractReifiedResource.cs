@@ -23,9 +23,7 @@ public abstract class AbstractReifiedResource<T> : IReifiedResource<T>
 {
     private T value;
 
-    protected AbstractReifiedResource()
-    {
-    }
+    protected AbstractReifiedResource() { }
 
     protected AbstractReifiedResource(T value)
     {

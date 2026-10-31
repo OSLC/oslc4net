@@ -50,9 +50,8 @@ public class OslcQuery
     /// </summary>
     /// <param name="oslcClient">the authenticated OSLC client</param>
     /// <param name="capabilityUrl">the URL that is the base </param>
-    public OslcQuery(OslcClient oslcClient, string capabilityUrl,
-        DotNetRdfHelper? rdfHelper = null) :
-        this(oslcClient, capabilityUrl, 0)
+    public OslcQuery(OslcClient oslcClient, string capabilityUrl, DotNetRdfHelper? rdfHelper = null)
+        : this(oslcClient, capabilityUrl, 0)
     {
         _rdfHelper = rdfHelper ?? Activator.CreateInstance<DotNetRdfHelper>();
     }
@@ -63,11 +62,12 @@ public class OslcQuery
     /// <param name="oslcClient">the authenticated OSLC client</param>
     /// <param name="capabilityUrl">capabilityUrl capabilityUrl the URL that is the base</param>
     /// <param name="oslcQueryParams">an OslcQueryParameters object</param>
-    public OslcQuery(OslcClient oslcClient, string capabilityUrl,
-        OslcQueryParameters oslcQueryParams) :
-        this(oslcClient, capabilityUrl, 0, oslcQueryParams)
-    {
-    }
+    public OslcQuery(
+        OslcClient oslcClient,
+        string capabilityUrl,
+        OslcQueryParameters oslcQueryParams
+    )
+        : this(oslcClient, capabilityUrl, 0, oslcQueryParams) { }
 
     /// <summary>
     ///     Create an OSLC query that uses the given page size
@@ -75,10 +75,8 @@ public class OslcQuery
     /// <param name="oslcClient">the authenticated OSLC client</param>
     /// <param name="capabilityUrl">the URL that is the base</param>
     /// <param name="pageSize">the number of results to include on each page (OslcQueryResult)</param>
-    public OslcQuery(OslcClient oslcClient, string capabilityUrl, int pageSize) :
-        this(oslcClient, capabilityUrl, pageSize, null)
-    {
-    }
+    public OslcQuery(OslcClient oslcClient, string capabilityUrl, int pageSize)
+        : this(oslcClient, capabilityUrl, pageSize, null) { }
 
     /// <summary>
     ///     Create an OSLC query that uses OSLC query parameters and the given page size
@@ -87,8 +85,12 @@ public class OslcQuery
     /// <param name="capabilityUrl">the URL that is the base</param>
     /// <param name="pageSize">the number of results to include on each page (OslcQueryResult)</param>
     /// <param name="oslcQueryParams">an OslcQueryParameters object</param>
-    public OslcQuery(OslcClient oslcClient, string capabilityUrl,
-        int pageSize, OslcQueryParameters oslcQueryParams)
+    public OslcQuery(
+        OslcClient oslcClient,
+        string capabilityUrl,
+        int pageSize,
+        OslcQueryParameters oslcQueryParams
+    )
     {
         this.oslcClient = oslcClient;
         this.capabilityUrl = capabilityUrl;
@@ -124,27 +126,32 @@ public class OslcQuery
     /// <param name="memberRelation">
     ///     the RDF property that relates the query result container to each result member
     /// </param>
-    public OslcQuery(OslcClient oslcClient, string capabilityUrl,
-        int pageSize, OslcQueryParameters oslcQueryParams, Uri memberRelation) :
-        this(oslcClient, capabilityUrl, pageSize, oslcQueryParams)
+    public OslcQuery(
+        OslcClient oslcClient,
+        string capabilityUrl,
+        int pageSize,
+        OslcQueryParameters oslcQueryParams,
+        Uri memberRelation
+    )
+        : this(oslcClient, capabilityUrl, pageSize, oslcQueryParams)
     {
         ArgumentNullException.ThrowIfNull(memberRelation);
         if (!memberRelation.IsAbsoluteUri)
         {
-            throw new ArgumentException("The member relation must be an absolute URI.",
-                nameof(memberRelation));
+            throw new ArgumentException(
+                "The member relation must be an absolute URI.",
+                nameof(memberRelation)
+            );
         }
 
         this.memberRelation = memberRelation;
     }
 
-    internal OslcQuery(OslcQueryResult previousResult) :
-        this(previousResult.GetQuery(), previousResult.GetNextPageUrl())
-    {
-    }
+    internal OslcQuery(OslcQueryResult previousResult)
+        : this(previousResult.GetQuery(), previousResult.GetNextPageUrl()) { }
 
-    private OslcQuery(OslcQuery previousQuery, string nextPageUrl) :
-        this(previousQuery.oslcClient, previousQuery.capabilityUrl, previousQuery.pageSize)
+    private OslcQuery(OslcQuery previousQuery, string nextPageUrl)
+        : this(previousQuery.oslcClient, previousQuery.capabilityUrl, previousQuery.pageSize)
     {
         memberRelation = previousQuery.memberRelation;
         queryUrl = nextPageUrl;
@@ -226,8 +233,11 @@ public class OslcQuery
 
     public async Task<OslcQueryResult> Submit()
     {
-        return new OslcQueryResult(this, await GetResponseRawAsync().ConfigureAwait(false),
-            _rdfHelper);
+        return new OslcQueryResult(
+            this,
+            await GetResponseRawAsync().ConfigureAwait(false),
+            _rdfHelper
+        );
     }
 
     /// <summary>
@@ -236,8 +246,11 @@ public class OslcQuery
     /// </summary>
     public async Task<OslcQueryResult> SubmitPost()
     {
-        return new OslcQueryResult(this, await GetPostResponseRawAsync().ConfigureAwait(false),
-            _rdfHelper);
+        return new OslcQueryResult(
+            this,
+            await GetPostResponseRawAsync().ConfigureAwait(false),
+            _rdfHelper
+        );
     }
 
     internal Task<HttpResponseMessage> GetResponseRawAsync()
@@ -253,7 +266,8 @@ public class OslcQuery
         request.Headers.TryAddWithoutValidation(OSLCConstants.OSLC_CORE_VERSION, "2.0");
         request.Content = new ByteArrayContent(Encoding.UTF8.GetBytes(query));
         request.Content.Headers.ContentType = new MediaTypeHeaderValue(
-            "application/x-www-form-urlencoded");
+            "application/x-www-form-urlencoded"
+        );
         return await oslcClient.GetHttpClient().SendAsync(request).ConfigureAwait(false);
     }
 

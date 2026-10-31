@@ -30,7 +30,8 @@ public class RootServicesHelperTests
         var helper = new RootServicesHelper(
             baseUrl,
             "http://open-services.net/xmlns/rm/1.0/",
-            "rmServiceProviders");
+            "rmServiceProviders"
+        );
         var doc = await helper.DiscoverAsync().ConfigureAwait(true);
         CommunityToolkit.Diagnostics.Guard.IsNotNull(doc);
         CommunityToolkit.Diagnostics.Guard.IsNotNull(doc.ServiceProviderCatalog);

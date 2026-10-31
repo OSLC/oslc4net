@@ -37,9 +37,7 @@ public abstract record AbstractResourceRecord : IExtendedResource
         About = about;
     }
 
-    protected AbstractResourceRecord()
-    {
-    }
+    protected AbstractResourceRecord() { }
 
     /// <inheritdoc cref="IResource.GetAbout" />
     public Uri GetAbout()

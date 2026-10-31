@@ -48,9 +48,8 @@ public class OslcClient : IDisposable
     /// <summary>
     /// Initialize a new OslcClient.
     /// </summary>
-    public OslcClient(ILogger<OslcClient> logger) : this(false, logger)
-    {
-    }
+    public OslcClient(ILogger<OslcClient> logger)
+        : this(false, logger) { }
 
     /// <summary>
     /// Initialize a new OslcClient using an externally managed HttpClient (e.g. with resilience policies).
@@ -70,11 +69,11 @@ public class OslcClient : IDisposable
     /// <param name="certCallback">optionally control SSL certificate management
     /// (null will not replace the default validation callback)</param>
     [Obsolete("Do not use HttpClient directly, use HttpClientFactory")]
-    public OslcClient(Func<HttpRequestMessage, X509Certificate2, X509Chain,
-        SslPolicyErrors, bool> certCallback, ILogger<OslcClient> logger) : this(certCallback, null,
-        logger)
-    {
-    }
+    public OslcClient(
+        Func<HttpRequestMessage, X509Certificate2, X509Chain, SslPolicyErrors, bool> certCallback,
+        ILogger<OslcClient> logger
+    )
+        : this(certCallback, null, logger) { }
 
     /// <summary>
     /// Initialize a new OslcClient
@@ -83,9 +82,11 @@ public class OslcClient : IDisposable
     /// (null will not replace the default validation callback)</param>
     /// <param name="userHttpMessageHandler">optionally use OAuth</param>
     [Obsolete("Do not use HttpClient directly, use HttpClientFactory")]
-    protected OslcClient(Func<HttpRequestMessage, X509Certificate2, X509Chain,
-            SslPolicyErrors, bool> certCallback, HttpMessageHandler userHttpMessageHandler,
-        ILogger<OslcClient> logger)
+    protected OslcClient(
+        Func<HttpRequestMessage, X509Certificate2, X509Chain, SslPolicyErrors, bool> certCallback,
+        HttpMessageHandler userHttpMessageHandler,
+        ILogger<OslcClient> logger
+    )
     {
         _logger = logger;
         this._formatters = new HashSet<MediaTypeFormatter>();
@@ -103,14 +104,16 @@ public class OslcClient : IDisposable
             if (handler is HttpClientHandler httpClientHandler)
             {
                 _logger.LogWarning(
-                    "TLS certificate validation may be compromised! DO NOT USE IN PRODUCTION");
+                    "TLS certificate validation may be compromised! DO NOT USE IN PRODUCTION"
+                );
                 httpClientHandler.ServerCertificateCustomValidationCallback = certCallback;
             }
             else
             {
                 throw new ArgumentException(
                     "Must be an instance of HttpClientHandler if the certCallback is provided",
-                    nameof(userHttpMessageHandler));
+                    nameof(userHttpMessageHandler)
+                );
             }
 #pragma warning restore MA0039
         }
@@ -118,10 +121,8 @@ public class OslcClient : IDisposable
         _client = HttpClientFactory.Create(handler);
     }
 
-    private OslcClient(HttpClientHandler customHandler, ILogger<OslcClient> logger) : this(null,
-        customHandler, logger)
-    {
-    }
+    private OslcClient(HttpClientHandler customHandler, ILogger<OslcClient> logger)
+        : this(null, customHandler, logger) { }
 
     private OslcClient(bool allowInvalidTlsCerts, ILogger<OslcClient> logger)
     {
@@ -130,12 +131,13 @@ public class OslcClient : IDisposable
         {
             AllowAutoRedirect = false,
             UseCookies = true,
-            CookieContainer = new CookieContainer()
+            CookieContainer = new CookieContainer(),
         };
         if (allowInvalidTlsCerts)
         {
             _logger.LogWarning(
-                "TLS certificate validation is compromised! DO NOT USE IN PRODUCTION");
+                "TLS certificate validation is compromised! DO NOT USE IN PRODUCTION"
+            );
 #pragma warning disable MA0039
             handler.ServerCertificateCustomValidationCallback =
                 HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
@@ -148,26 +150,38 @@ public class OslcClient : IDisposable
         _client = new HttpClient(handler);
     }
 
-    public static OslcClient ForBasicAuth(string username, string password,
+    public static OslcClient ForBasicAuth(
+        string username,
+        string password,
         ILogger<OslcClient> logger,
-        HttpClientHandler handler = null)
+        HttpClientHandler handler = null
+    )
     {
         var oslcClient = new OslcClient(handler, logger);
         var client = oslcClient.GetHttpClient();
         var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}"));
-        client.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue("Basic", credentials);
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+            "Basic",
+            credentials
+        );
         return oslcClient;
     }
 
     /// <summary>
     /// Create an OslcClient for Basic Auth using a pre-configured HttpClient (e.g. with resilience policies).
     /// </summary>
-    public static OslcClient ForBasicAuth(HttpClient httpClient, string username, string password,
-        ILogger<OslcClient> logger)
+    public static OslcClient ForBasicAuth(
+        HttpClient httpClient,
+        string username,
+        string password,
+        ILogger<OslcClient> logger
+    )
     {
         var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}"));
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+            "Basic",
+            credentials
+        );
         return new OslcClient(httpClient, logger);
     }
 
@@ -183,27 +197,36 @@ public class OslcClient : IDisposable
     public async Task<OslcResponse<T>> GetResourceAsync<T>(string resourceUri, string? mediaType)
         where T : IExtendedResource, new()
     {
-        var httpResponseMessage = await GetResourceRawAsync(resourceUri, mediaType).ConfigureAwait(false);
+        var httpResponseMessage = await GetResourceRawAsync(resourceUri, mediaType)
+            .ConfigureAwait(false);
         // REVISIT: according to the spec, non-success codes may also come with a RDF response - should, actually! (@berezovskyi 2024-10)
         // consider adding .ErrorResource to the OslcResponse
         if (httpResponseMessage.IsSuccessStatusCode && httpResponseMessage.Content is not null)
         {
-            httpResponseMessage.Content.Headers.Add(OSLC4NetConstants.INNER_URI_HEADER, resourceUri);
+            httpResponseMessage.Content.Headers.Add(
+                OSLC4NetConstants.INNER_URI_HEADER,
+                resourceUri
+            );
             await httpResponseMessage.Content.LoadIntoBufferAsync().ConfigureAwait(false);
 
             var dummy = Array.Empty<T>();
-            var resources = await httpResponseMessage.Content
-                .ReadAsAsync(dummy.GetType(), _formatters).ConfigureAwait(false) as T[];
+            var resources =
+                await httpResponseMessage
+                    .Content.ReadAsAsync(dummy.GetType(), _formatters)
+                    .ConfigureAwait(false) as T[];
 
-            var contentStream =
-                await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
+            var contentStream = await httpResponseMessage
+                .Content.ReadAsStreamAsync()
+                .ConfigureAwait(false);
             if (contentStream.CanSeek)
             {
                 contentStream.Seek(0, SeekOrigin.Begin);
             }
 
-            var graph = await httpResponseMessage.Content.ReadAsAsync(typeof(Graph), _formatters)
-                .ConfigureAwait(false) as Graph;
+            var graph =
+                await httpResponseMessage
+                    .Content.ReadAsAsync(typeof(Graph), _formatters)
+                    .ConfigureAwait(false) as Graph;
 
             return OslcResponse<T>.WithSuccess(resources?.ToList(), graph, httpResponseMessage);
         }
@@ -214,34 +237,39 @@ public class OslcClient : IDisposable
             {
                 try
                 {
-                    var g = await httpResponseMessage.Content.ReadAsAsync(typeof(Graph)).ConfigureAwait(false) as Graph;
+                    var g =
+                        await httpResponseMessage
+                            .Content.ReadAsAsync(typeof(Graph))
+                            .ConfigureAwait(false) as Graph;
                 }
-                catch
-                {
-                }
+                catch { }
 
-                Stream stream = await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                Stream stream = await httpResponseMessage
+                    .Content.ReadAsStreamAsync()
+                    .ConfigureAwait(false);
                 stream.Seek(0, SeekOrigin.Begin);
 
                 try
                 {
-                    resource = await httpResponseMessage.Content.ReadAsAsync<Error>(_formatters).ConfigureAwait(false);
+                    resource = await httpResponseMessage
+                        .Content.ReadAsAsync<Error>(_formatters)
+                        .ConfigureAwait(false);
                 }
-                catch
-                {
-                }
+                catch { }
             }
 
             return OslcResponse<T>.WithError(httpResponseMessage, resource);
         }
     }
 
-    public Task<OslcResponse<T>> GetResourceAsync<T>(string resourceUri) where T : IExtendedResource, new()
+    public Task<OslcResponse<T>> GetResourceAsync<T>(string resourceUri)
+        where T : IExtendedResource, new()
     {
         return GetResourceAsync<T>(resourceUri, null);
     }
 
-    public Task<OslcResponse<T>> GetResourceAsync<T>(Uri typeURI) where T : IExtendedResource, new()
+    public Task<OslcResponse<T>> GetResourceAsync<T>(Uri typeURI)
+        where T : IExtendedResource, new()
     {
         return GetResourceAsync<T>(typeURI.ToString(), null);
     }
@@ -264,30 +292,42 @@ public class OslcClient : IDisposable
         {
             response = await _client.GetAsync(requestUrl).ConfigureAwait(false);
 
-            if (response.StatusCode == HttpStatusCode.MovedPermanently ||
-                response.StatusCode == HttpStatusCode.Moved)
+            if (
+                response.StatusCode == HttpStatusCode.MovedPermanently
+                || response.StatusCode == HttpStatusCode.Moved
+            )
             {
-                _logger.LogTrace("Encountered redirect {code}: {from} -> {to}", response.StatusCode,
-                    requestUrl, response.Headers.Location?.AbsoluteUri);
+                _logger.LogTrace(
+                    "Encountered redirect {code}: {from} -> {to}",
+                    response.StatusCode,
+                    requestUrl,
+                    response.Headers.Location?.AbsoluteUri
+                );
                 requestUrl = response.Headers.Location?.AbsoluteUri;
                 response.ConsumeContent();
                 redirect = true;
                 if (++redirectCount > MAX_REDIRECTS)
                 {
                     // max redirects reached
-                    throw new OslcCoreRequestException(HttpStatusCode.LoopDetected,
-                        response.ReasonPhrase, null,
+                    throw new OslcCoreRequestException(
+                        HttpStatusCode.LoopDetected,
+                        response.ReasonPhrase,
+                        null,
                         new Error
                         {
-                            Message = $"Maximum redirects reached (allowed: {MAX_REDIRECTS})."
-                        });
+                            Message = $"Maximum redirects reached (allowed: {MAX_REDIRECTS}).",
+                        }
+                    );
                 }
             }
             else
             {
-                _logger.LogTrace("Encountered reponse {code}: {url} (for {origUrl})",
+                _logger.LogTrace(
+                    "Encountered reponse {code}: {url} (for {origUrl})",
                     response.StatusCode,
-                    requestUrl, url);
+                    requestUrl,
+                    url
+                );
                 redirect = false;
             }
         } while (redirect);
@@ -313,8 +353,10 @@ public class OslcClient : IDisposable
         {
             response = _client.DeleteAsync(url).Result;
 
-            if (response.StatusCode == HttpStatusCode.MovedPermanently ||
-                response.StatusCode == HttpStatusCode.Moved)
+            if (
+                response.StatusCode == HttpStatusCode.MovedPermanently
+                || response.StatusCode == HttpStatusCode.Moved
+            )
             {
                 var locationUrl = response.Headers.Location?.AbsoluteUri;
                 if (locationUrl is null)
@@ -352,7 +394,10 @@ public class OslcClient : IDisposable
     /// <param name="url"></param>
     /// <param name="ct">Cancellation token</param>
     /// <returns></returns>
-    public async Task<HttpResponseMessage> DeleteResourceAsync(string url, CancellationToken? ct = null)
+    public async Task<HttpResponseMessage> DeleteResourceAsync(
+        string url,
+        CancellationToken? ct = null
+    )
     {
         _client.DefaultRequestHeaders.Accept.Clear();
         _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
@@ -393,15 +438,21 @@ public class OslcClient : IDisposable
         return response;
     }
 
-    public async Task<OslcResponse<T>> CreateResourceAsync<T>(string url, T artifact, string? mediaType = null)
+    public async Task<OslcResponse<T>> CreateResourceAsync<T>(
+        string url,
+        T artifact,
+        string? mediaType = null
+    )
         where T : IExtendedResource, new()
     {
         var response = await CreateResourceRawAsync(url, artifact, mediaType).ConfigureAwait(false);
         // a bit outside the spec, but these should be success statuses
-        if (response.StatusCode == HttpStatusCode.OK
+        if (
+            response.StatusCode == HttpStatusCode.OK
             || response.StatusCode == HttpStatusCode.Created
             || response.StatusCode == HttpStatusCode.SeeOther
-            || response.StatusCode == HttpStatusCode.NoContent)
+            || response.StatusCode == HttpStatusCode.NoContent
+        )
         {
             // we have two options: the Location header points to a newly created resource or the resource is returned directly
             // I think OSLC mandates Location, so let's start with that
@@ -422,15 +473,29 @@ public class OslcClient : IDisposable
     /// <param name="artifact"></param>
     /// <param name="mediaType"></param>
     /// <returns></returns>
-    public async Task<HttpResponseMessage> CreateResourceRawAsync(string url, IResource artifact, string? mediaType)
+    public async Task<HttpResponseMessage> CreateResourceRawAsync(
+        string url,
+        IResource artifact,
+        string? mediaType
+    )
     {
-        return await CreateResourceRawAsync(url, artifact, mediaType ?? OSLCConstants.CT_RDF, AcceptHeader)
+        return await CreateResourceRawAsync(
+                url,
+                artifact,
+                mediaType ?? OSLCConstants.CT_RDF,
+                AcceptHeader
+            )
             .ConfigureAwait(false);
     }
 
-    public async Task<HttpResponseMessage> CreateResourceRawAsync(Uri uri, IResource artifact, string? mediaType)
+    public async Task<HttpResponseMessage> CreateResourceRawAsync(
+        Uri uri,
+        IResource artifact,
+        string? mediaType
+    )
     {
-        return await CreateResourceRawAsync(uri.ToString(), artifact, mediaType, AcceptHeader).ConfigureAwait(false);
+        return await CreateResourceRawAsync(uri.ToString(), artifact, mediaType, AcceptHeader)
+            .ConfigureAwait(false);
     }
 
     /// <summary>
@@ -441,22 +506,29 @@ public class OslcClient : IDisposable
     /// <param name="mediaType"></param>
     /// <param name="acceptType"></param>
     /// <returns></returns>
-    public async Task<HttpResponseMessage> CreateResourceRawAsync(string url, IResource artifact, string mediaType,
-        string acceptType)
+    public async Task<HttpResponseMessage> CreateResourceRawAsync(
+        string url,
+        IResource artifact,
+        string mediaType,
+        string acceptType
+    )
     {
         _client.DefaultRequestHeaders.Accept.Clear();
         foreach (var acceptSingle in acceptType.Split(','))
         {
-            _client.DefaultRequestHeaders.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(acceptSingle));
+            _client.DefaultRequestHeaders.Accept.Add(
+                MediaTypeWithQualityHeaderValue.Parse(acceptSingle)
+            );
         }
         //_client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptType));
         _client.DefaultRequestHeaders.Remove(OSLCConstants.OSLC_CORE_VERSION);
         _client.DefaultRequestHeaders.Add(OSLCConstants.OSLC_CORE_VERSION, "2.0");
 
         var mediaTypeValue = new MediaTypeHeaderValue(mediaType);
-        var formatter =
-            new MediaTypeFormatterCollection(_formatters).FindWriter(artifact.GetType(),
-                mediaTypeValue);
+        var formatter = new MediaTypeFormatterCollection(_formatters).FindWriter(
+            artifact.GetType(),
+            mediaTypeValue
+        );
         HttpResponseMessage response;
         bool redirect;
         do
@@ -488,22 +560,29 @@ public class OslcClient : IDisposable
         return response;
     }
 
-    public async Task<HttpResponseMessage> UpdateResourceRawAsync(Uri uri, IResource artifact,
-        string mediaType = OSLCConstants.CT_RDF, string? acceptType = null)
+    public async Task<HttpResponseMessage> UpdateResourceRawAsync(
+        Uri uri,
+        IResource artifact,
+        string mediaType = OSLCConstants.CT_RDF,
+        string? acceptType = null
+    )
     {
         _client.DefaultRequestHeaders.Accept.Clear();
         foreach (var acceptSingle in (acceptType ?? AcceptHeader).Split(','))
         {
-            _client.DefaultRequestHeaders.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(acceptSingle));
+            _client.DefaultRequestHeaders.Accept.Add(
+                MediaTypeWithQualityHeaderValue.Parse(acceptSingle)
+            );
         }
 
         _client.DefaultRequestHeaders.Remove(OSLCConstants.OSLC_CORE_VERSION);
         _client.DefaultRequestHeaders.Add(OSLCConstants.OSLC_CORE_VERSION, "2.0");
 
         var mediaTypeValue = new MediaTypeHeaderValue(mediaType);
-        var formatter =
-            new MediaTypeFormatterCollection(_formatters).FindWriter(artifact.GetType(),
-                mediaTypeValue);
+        var formatter = new MediaTypeFormatterCollection(_formatters).FindWriter(
+            artifact.GetType(),
+            mediaTypeValue
+        );
         HttpResponseMessage response;
         bool redirect;
         var url = uri.ToString();
@@ -558,8 +637,12 @@ public class OslcClient : IDisposable
     /// <param name="acceptType"></param>
     /// <returns></returns>
     [Obsolete("Do not use HttpClient directly, use HttpClientFactory")]
-    public HttpResponseMessage UpdateResource(string url, object artifact, string mediaType,
-        string acceptType)
+    public HttpResponseMessage UpdateResource(
+        string url,
+        object artifact,
+        string mediaType,
+        string acceptType
+    )
     {
         _client.DefaultRequestHeaders.Accept.Clear();
         _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptType));
@@ -567,9 +650,10 @@ public class OslcClient : IDisposable
         _client.DefaultRequestHeaders.Add(OSLCConstants.OSLC_CORE_VERSION, "2.0");
 
         var mediaTypeValue = new MediaTypeHeaderValue(mediaType);
-        var formatter =
-            new MediaTypeFormatterCollection(_formatters).FindWriter(artifact.GetType(),
-                mediaTypeValue);
+        var formatter = new MediaTypeFormatterCollection(_formatters).FindWriter(
+            artifact.GetType(),
+            mediaTypeValue
+        );
         HttpResponseMessage response;
         bool redirect;
         do
@@ -611,8 +695,13 @@ public class OslcClient : IDisposable
     /// <param name="ifMatch"></param>
     /// <returns></returns>
     [Obsolete("Do not use HttpClient directly, use HttpClientFactory")]
-    public HttpResponseMessage UpdateResource(string url, object artifact, string mediaType,
-        string acceptType, string ifMatch)
+    public HttpResponseMessage UpdateResource(
+        string url,
+        object artifact,
+        string mediaType,
+        string acceptType,
+        string ifMatch
+    )
     {
         _client.DefaultRequestHeaders.Accept.Clear();
         _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptType));
@@ -621,9 +710,10 @@ public class OslcClient : IDisposable
         _client.DefaultRequestHeaders.Add(HttpRequestHeader.IfMatch.ToString(), ifMatch);
 
         var mediaTypeValue = new MediaTypeHeaderValue(mediaType);
-        var formatter =
-            new MediaTypeFormatterCollection(_formatters).FindWriter(artifact.GetType(),
-                mediaTypeValue);
+        var formatter = new MediaTypeFormatterCollection(_formatters).FindWriter(
+            artifact.GetType(),
+            mediaTypeValue
+        );
         HttpResponseMessage response;
         bool redirect;
         do
@@ -661,10 +751,14 @@ public class OslcClient : IDisposable
     /// <param name="catalogUrl"></param>
     /// <param name="serviceProviderTitle"></param>
     /// <returns></returns>
-    public async Task<string> LookupServiceProviderUrl(string catalogUrl, string serviceProviderTitle)
+    public async Task<string> LookupServiceProviderUrl(
+        string catalogUrl,
+        string serviceProviderTitle
+    )
     {
         string? retval = null;
-        var response = await GetResourceAsync<ServiceProviderCatalog>(catalogUrl).ConfigureAwait(false);
+        var response = await GetResourceAsync<ServiceProviderCatalog>(catalogUrl)
+            .ConfigureAwait(false);
 
         if (response.StatusCode != HttpStatusCode.OK)
         {
@@ -677,9 +771,14 @@ public class OslcClient : IDisposable
         {
             foreach (var sp in catalog.GetServiceProviders())
             {
-                if (sp.GetTitle() != null &&
-                    string.Compare(sp.GetTitle(), serviceProviderTitle,
-                        StringComparison.OrdinalIgnoreCase) == 0)
+                if (
+                    sp.GetTitle() != null
+                    && string.Compare(
+                        sp.GetTitle(),
+                        serviceProviderTitle,
+                        StringComparison.OrdinalIgnoreCase
+                    ) == 0
+                )
                 {
                     retval = sp.GetAbout().ToString();
                     break;
@@ -703,13 +802,17 @@ public class OslcClient : IDisposable
     /// <param name="oslcDomain"></param>
     /// <param name="oslcResourceType">the resource type of the desired query capability.   This may differ from the OSLC artifact type.</param>
     /// <returns>URL of requested Query Capability or null if not found.</returns>
-    public async Task<string> LookupQueryCapabilityAsync(string serviceProviderUrl, string oslcDomain,
-        string oslcResourceType)
+    public async Task<string> LookupQueryCapabilityAsync(
+        string serviceProviderUrl,
+        string oslcDomain,
+        string oslcResourceType
+    )
     {
         QueryCapability? defaultQueryCapability = null;
         QueryCapability? firstQueryCapability = null;
 
-        var response = await GetResourceAsync<ServiceProvider>(serviceProviderUrl).ConfigureAwait(false);
+        var response = await GetResourceAsync<ServiceProvider>(serviceProviderUrl)
+            .ConfigureAwait(false);
 
         if (response.StatusCode != HttpStatusCode.OK)
         {
@@ -734,8 +837,10 @@ public class OslcClient : IDisposable
                             foreach (var resourceType in queryCapability.GetResourceTypes())
                             {
                                 //return as soon as domain + resource type are matched
-                                if (resourceType.ToString() != null &&
-                                    resourceType.ToString().Equals(oslcResourceType))
+                                if (
+                                    resourceType.ToString() != null
+                                    && resourceType.ToString().Equals(oslcResourceType)
+                                )
                                 {
                                     return queryCapability.GetQueryBase().OriginalString;
                                 }
@@ -744,8 +849,10 @@ public class OslcClient : IDisposable
                             //Check if this is the default capability
                             foreach (var usage in queryCapability.GetUsages())
                             {
-                                if (usage.ToString() != null && usage.ToString()
-                                        .Equals(OSLCConstants.USAGE_DEFAULT_URI))
+                                if (
+                                    usage.ToString() != null
+                                    && usage.ToString().Equals(OSLCConstants.USAGE_DEFAULT_URI)
+                                )
                                 {
                                     defaultQueryCapability = queryCapability;
                                 }
@@ -763,8 +870,7 @@ public class OslcClient : IDisposable
             return defaultQueryCapability.GetQueryBase().ToString();
         }
 
-        if (firstQueryCapability != null &&
-            firstQueryCapability.GetResourceTypes().Length == 0)
+        if (firstQueryCapability != null && firstQueryCapability.GetResourceTypes().Length == 0)
         {
             //return the first for the domain, if present
             return firstQueryCapability.GetQueryBase().ToString();
@@ -781,13 +887,17 @@ public class OslcClient : IDisposable
     /// <param name="oslcDomain"></param>
     /// <param name="oslcResourceType">the resource type of the desired query capability.   This may differ from the OSLC artifact type.</param>
     /// <returns>URL of requested Creation Factory or null if not found.</returns>
-    public async Task<string> LookupCreationFactoryAsync(string serviceProviderUrl, string oslcDomain,
-        string oslcResourceType)
+    public async Task<string> LookupCreationFactoryAsync(
+        string serviceProviderUrl,
+        string oslcDomain,
+        string oslcResourceType
+    )
     {
         CreationFactory? defaultCreationFactory = null;
         CreationFactory? firstCreationFactory = null;
 
-        var response = await GetResourceAsync<ServiceProvider>(serviceProviderUrl).ConfigureAwait(false);
+        var response = await GetResourceAsync<ServiceProvider>(serviceProviderUrl)
+            .ConfigureAwait(false);
 
         if (response.StatusCode != HttpStatusCode.OK)
         {
@@ -812,8 +922,10 @@ public class OslcClient : IDisposable
                             foreach (var resourceType in creationFactory.GetResourceTypes())
                             {
                                 //return as soon as domain + resource type are matched
-                                if (resourceType.ToString() != null &&
-                                    resourceType.ToString().Equals(oslcResourceType))
+                                if (
+                                    resourceType.ToString() != null
+                                    && resourceType.ToString().Equals(oslcResourceType)
+                                )
                                 {
                                     return creationFactory.GetCreation().ToString();
                                 }
@@ -822,8 +934,10 @@ public class OslcClient : IDisposable
                             //Check if this is the default factory
                             foreach (var usage in creationFactory.GetUsages())
                             {
-                                if (usage.ToString() != null && usage.ToString()
-                                        .Equals(OSLCConstants.USAGE_DEFAULT_URI))
+                                if (
+                                    usage.ToString() != null
+                                    && usage.ToString().Equals(OSLCConstants.USAGE_DEFAULT_URI)
+                                )
                                 {
                                     defaultCreationFactory = creationFactory;
                                 }
@@ -841,8 +955,7 @@ public class OslcClient : IDisposable
             return defaultCreationFactory.GetCreation().ToString();
         }
 
-        if (firstCreationFactory != null &&
-            firstCreationFactory.GetResourceTypes().Length == 0)
+        if (firstCreationFactory != null && firstCreationFactory.GetResourceTypes().Length == 0)
         {
             //return the first for the domain, if present
             return firstCreationFactory.GetCreation().ToString();
@@ -865,27 +978,31 @@ public class OslcClient : IDisposable
     /// <param name="errors"></param>
     /// <returns></returns>
     [Obsolete("Do not use HttpClient directly, use HttpClientFactory")]
-    public static bool AcceptAllServerCertificates(object sender, X509Certificate certificate,
-        X509Chain chain, SslPolicyErrors errors)
+    public static bool AcceptAllServerCertificates(
+        object sender,
+        X509Certificate certificate,
+        X509Chain chain,
+        SslPolicyErrors errors
+    )
     {
         return true;
     }
 
     private static bool ShallFollowRedirect(HttpResponseMessage response)
     {
-        return response.StatusCode == HttpStatusCode.MovedPermanently ||
-               response.StatusCode == HttpStatusCode.Found
-               || response.StatusCode == HttpStatusCode.RedirectKeepVerb
-               || response.StatusCode == HttpStatusCode.PermanentRedirect
-               || response.StatusCode == HttpStatusCode.SeeOther;
+        return response.StatusCode == HttpStatusCode.MovedPermanently
+            || response.StatusCode == HttpStatusCode.Found
+            || response.StatusCode == HttpStatusCode.RedirectKeepVerb
+            || response.StatusCode == HttpStatusCode.PermanentRedirect
+            || response.StatusCode == HttpStatusCode.SeeOther;
     }
 
     private static bool ShallFollowRedirectNonGet(HttpResponseMessage response)
     {
-        return response.StatusCode == HttpStatusCode.MovedPermanently ||
-               response.StatusCode == HttpStatusCode.Found
-               || response.StatusCode == HttpStatusCode.RedirectKeepVerb
-               || response.StatusCode == HttpStatusCode.PermanentRedirect;
+        return response.StatusCode == HttpStatusCode.MovedPermanently
+            || response.StatusCode == HttpStatusCode.Found
+            || response.StatusCode == HttpStatusCode.RedirectKeepVerb
+            || response.StatusCode == HttpStatusCode.PermanentRedirect;
     }
 
     public void Dispose()

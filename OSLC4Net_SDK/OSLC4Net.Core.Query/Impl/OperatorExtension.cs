@@ -12,8 +12,7 @@ namespace OSLC4Net.Core.Query.Impl;
 
 internal static class OperatorExtension
 {
-    public static string
-    ToString(Operator op)
+    public static string ToString(Operator op)
     {
         switch (op)
         {

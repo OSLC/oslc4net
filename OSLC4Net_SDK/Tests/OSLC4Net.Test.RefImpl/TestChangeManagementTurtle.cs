@@ -44,10 +44,11 @@ public class TestChangeManagementTurtle : TestBase
         const string mediaType = OslcMediaType.TEXT_TURTLE;
         await TestResourceShapeAsync(mediaType);
         await TestCreateAsync(mediaType);
-        await Task.WhenAll(TestRetrieveAsync(mediaType), TestRetrievesAsync(mediaType),
-            TestCompactAsync(
-                OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML,
-                mediaType));
+        await Task.WhenAll(
+            TestRetrieveAsync(mediaType),
+            TestRetrievesAsync(mediaType),
+            TestCompactAsync(OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML, mediaType)
+        );
         await TestUpdateAsync(mediaType);
         await TestDeleteAsync(mediaType);
     }

@@ -48,7 +48,8 @@ public sealed class RootServicesOAuth10aDocument
         string? accessTokenUrl = null,
         string? requestConsumerKeyUrl = null,
         string? approvalUrl = null,
-        string? realm = null)
+        string? realm = null
+    )
     {
         RequestTokenUrl = requestTokenUrl;
         AuthorizationUrl = authorizationUrl;

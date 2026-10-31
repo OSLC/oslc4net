@@ -21,7 +21,10 @@ namespace OSLC4Net.Client.Oslc.Resources;
 ///     OSLC shape for <c>oslc_rm:Requirement</c>
 /// </summary>
 [OslcNamespace(RmConstants.REQUIREMENTS_MANAGEMENT_NAMESPACE)]
-[OslcResourceShape(title = "Requirement Resource Shape", describes = new string[] { RmConstants.TYPE_REQUIREMENT })]
+[OslcResourceShape(
+    title = "Requirement Resource Shape",
+    describes = new string[] { RmConstants.TYPE_REQUIREMENT }
+)]
 [Obsolete("See OSLC4Net.Domains.RequirementsManagement")]
 public class Requirement : RequirementBase
 {
@@ -30,7 +33,8 @@ public class Requirement : RequirementBase
         AddType(new Uri(RmConstants.TYPE_REQUIREMENT));
     }
 
-    public Requirement(Uri about) : base(about)
+    public Requirement(Uri about)
+        : base(about)
     {
         AddType(new Uri(RmConstants.TYPE_REQUIREMENT));
     }

@@ -22,10 +22,8 @@ namespace OSLC4Net.Core.Query.Impl;
 /// </summary>
 internal sealed class DecimalValueImpl : ValueImpl, DecimalValue
 {
-    public
-    DecimalValueImpl(CommonTree tree) : base(tree, ValueType.DECIMAL)
-    {
-    }
+    public DecimalValueImpl(CommonTree tree)
+        : base(tree, ValueType.DECIMAL) { }
 
     public string Value
     {

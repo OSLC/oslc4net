@@ -27,10 +27,7 @@ namespace OSLC4Net.Core.Query.Impl;
 /// </summary>
 sealed class SortTermsImpl : OrderByClause
 {
-    public SortTermsImpl(
-        CommonTree tree,
-        IDictionary<string, string> prefixMap
-    )
+    public SortTermsImpl(CommonTree tree, IDictionary<string, string> prefixMap)
     {
         this.tree = tree;
         this.prefixMap = prefixMap;
@@ -58,7 +55,9 @@ sealed class SortTermsImpl : OrderByClause
                             term = new ScopedSortTermImpl(child, prefixMap);
                             break;
                         default:
-                            throw new InvalidOperationException("unimplemented type of sort term: " + child.Token.Text);
+                            throw new InvalidOperationException(
+                                "unimplemented type of sort term: " + child.Token.Text
+                            );
                     }
 
                     list.Add(term);

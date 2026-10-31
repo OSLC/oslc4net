@@ -33,12 +33,15 @@ public sealed class DateTimeOffsetRoundtripTests
         string rdfXml = await RdfHelpers.SerializeAsync(
             formatter,
             resource,
-            OslcMediaType.APPLICATION_RDF_XML_TYPE);
+            OslcMediaType.APPLICATION_RDF_XML_TYPE
+        );
 
-        ChangeRequest roundTripped = await RdfHelpers.DeserializeAsync<ChangeRequest>(
-            formatter,
-            rdfXml,
-            OslcMediaType.APPLICATION_RDF_XML_TYPE) ?? throw new InvalidOperationException();
+        ChangeRequest roundTripped =
+            await RdfHelpers.DeserializeAsync<ChangeRequest>(
+                formatter,
+                rdfXml,
+                OslcMediaType.APPLICATION_RDF_XML_TYPE
+            ) ?? throw new InvalidOperationException();
 
         await Assert.That(roundTripped.Created).IsNotNull();
         await Assert.That(roundTripped.Modified).IsNotNull();

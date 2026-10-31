@@ -273,12 +273,14 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         }
 
         hierarchy.Add(shape);
-        foreach (GenerationTarget baseTarget in GetDirectSuperTypes(
-            target,
-            shape,
-            graph,
-            resourceTypesByUri
-        ))
+        foreach (
+            GenerationTarget baseTarget in GetDirectSuperTypes(
+                target,
+                shape,
+                graph,
+                resourceTypesByUri
+            )
+        )
         {
             if (baseTarget.ShapeUri is not null)
             {
@@ -423,7 +425,8 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
     )
     {
         ExpressionSyntax? expression = attribute
-            .ArgumentList?.Arguments.Skip(index).FirstOrDefault()
+            .ArgumentList?.Arguments.Skip(index)
+            .FirstOrDefault()
             ?.Expression;
         if (expression is null)
         {
@@ -604,9 +607,10 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
     private static string DefaultPrefix(string typeName)
     {
         const string suffix = "Vocabulary";
-        string prefix = typeName.EndsWith(suffix, StringComparison.Ordinal) && typeName.Length > suffix.Length
-            ? typeName.Substring(0, typeName.Length - suffix.Length)
-            : typeName;
+        string prefix =
+            typeName.EndsWith(suffix, StringComparison.Ordinal) && typeName.Length > suffix.Length
+                ? typeName.Substring(0, typeName.Length - suffix.Length)
+                : typeName;
         return prefix.ToLowerInvariant();
     }
 
@@ -639,7 +643,9 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         );
         List<ShapePropertyBinding> propertyBindings = propertySurfaces.DeclaredClassProperties;
         var inheritedPropertyNames = new HashSet<string>(
-            propertySurfaces.InheritedClassProperties.Values.Select(static property => property.PropertyName),
+            propertySurfaces.InheritedClassProperties.Values.Select(static property =>
+                property.PropertyName
+            ),
             StringComparer.Ordinal
         );
 
@@ -953,10 +959,9 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
                     property.PropertyDefinition,
                     out inheritedProperty
                 );
-            string propertyName =
-                hasInheritedProperty
-                    ? inheritedProperty.PropertyName
-                    : GetPropertyName(property, usedPropertyNames, propertyNameCollisions);
+            string propertyName = hasInheritedProperty
+                ? inheritedProperty.PropertyName
+                : GetPropertyName(property, usedPropertyNames, propertyNameCollisions);
             usedPropertyNames[propertyName] = property.PropertyDefinition;
             bindings.Add(new ShapePropertyBinding(property, propertyName));
         }
@@ -1153,10 +1158,8 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
     {
         string baseName = ToIdentifier(property.Name);
         string propertyName =
-            propertyNameCollisions.TryGetValue(
-                baseName,
-                out HashSet<string>? propertyDefinitions
-            ) && propertyDefinitions.Count > 1
+            propertyNameCollisions.TryGetValue(baseName, out HashSet<string>? propertyDefinitions)
+            && propertyDefinitions.Count > 1
                 ? baseName + GetPropertyNamespaceSuffix(property.PropertyDefinition)
                 : baseName;
         int suffix = 2;
@@ -1182,12 +1185,15 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
             .Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries)
             .Select(static segment => segment.Trim())
             .ToArray();
-        string namespaceName =
-            segments.Length == 0 ? namespaceUri : segments[segments.Length - 1];
+        string namespaceName = segments.Length == 0 ? namespaceUri : segments[segments.Length - 1];
         if (
             string.Equals(namespaceName, "terms", StringComparison.OrdinalIgnoreCase)
             && segments.Length > 1
-            && string.Equals(segments[segments.Length - 2], "dc", StringComparison.OrdinalIgnoreCase)
+            && string.Equals(
+                segments[segments.Length - 2],
+                "dc",
+                StringComparison.OrdinalIgnoreCase
+            )
         )
         {
             namespaceName = "dcterms";
@@ -1510,11 +1516,7 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
             }
 
             int labelEnd = value.IndexOf(']', labelStart + 1);
-            if (
-                labelEnd < 0
-                || labelEnd + 1 >= value.Length
-                || value[labelEnd + 1] != '('
-            )
+            if (labelEnd < 0 || labelEnd + 1 >= value.Length || value[labelEnd + 1] != '(')
             {
                 builder.Append(value, position, labelStart - position + 1);
                 position = labelStart + 1;
@@ -1626,7 +1628,7 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
                 .Any(static node =>
                     node.Kind == NodeKind.Uri
                     && string.Equals(node.Value, Sh + "NodeShape", StringComparison.Ordinal)
-            );
+                );
             var shape = new Shape
             {
                 IsShaclNodeShape = isShaclNodeShape,
@@ -1782,9 +1784,7 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
         public static ShapeProperty? FromShaclGraph(Node node, Graph graph)
         {
             string? pathUri = FirstValue(
-                graph
-                .Objects(node, Sh + "path")
-                    .Where(static node => node.Kind == NodeKind.Uri)
+                graph.Objects(node, Sh + "path").Where(static node => node.Kind == NodeKind.Uri)
             );
             if (pathUri is null)
             {
@@ -1813,7 +1813,9 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
                 ValueType = ShaclValueType(
                     FirstValue(graph.Objects(node, Sh + "datatype")),
                     FirstValue(graph.Objects(node, Sh + "nodeKind")),
-                    graph.Objects(node, Sh + "class").Any(static range => range.Kind == NodeKind.Uri)
+                    graph
+                        .Objects(node, Sh + "class")
+                        .Any(static range => range.Kind == NodeKind.Uri)
                 ),
             };
 
@@ -1854,7 +1856,12 @@ public sealed class OslcDomainGenerator : IIncrementalGenerator
 
         private static int? ParseShaclCount(string? value)
         {
-            return int.TryParse(value, NumberStyles.None, CultureInfo.InvariantCulture, out int count)
+            return int.TryParse(
+                value,
+                NumberStyles.None,
+                CultureInfo.InvariantCulture,
+                out int count
+            )
                 ? count
                 : null;
         }

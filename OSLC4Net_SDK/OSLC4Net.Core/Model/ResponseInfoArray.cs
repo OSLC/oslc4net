@@ -28,15 +28,13 @@ public class ResponseInfoArray<T> : ResponseInfo<T[]>
     /// <param name="properties"></param>
     /// <param name="totalCount"></param>
     /// <param name="nextPage"></param>
-    public
-        ResponseInfoArray(
-            T[] array,
-            IDictionary<string, object> properties,
-            int totalCount,
-            string nextPage
-        ) : base(array, properties, totalCount, nextPage)
-    {
-    }
+    public ResponseInfoArray(
+        T[] array,
+        IDictionary<string, object> properties,
+        int totalCount,
+        string nextPage
+    )
+        : base(array, properties, totalCount, nextPage) { }
 
     /// <summary>
     /// </summary>
@@ -44,15 +42,13 @@ public class ResponseInfoArray<T> : ResponseInfo<T[]>
     /// <param name="properties"></param>
     /// <param name="totalCount"></param>
     /// <param name="nextPage"></param>
-    public
-        ResponseInfoArray(
-            T[] array,
-            IDictionary<string, object> properties,
-            int totalCount,
-            Uri nextPage
-        ) : base(array, properties, totalCount, nextPage)
-    {
-    }
+    public ResponseInfoArray(
+        T[] array,
+        IDictionary<string, object> properties,
+        int totalCount,
+        Uri nextPage
+    )
+        : base(array, properties, totalCount, nextPage) { }
 
     /**
      * Array of resources

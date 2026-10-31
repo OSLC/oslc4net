@@ -20,10 +20,8 @@ namespace OSLC4Net.Core.Query.Impl;
 /// </summary>
 internal sealed class WildcardImpl : PropertyImpl, Wildcard
 {
-    public
-    WildcardImpl() : base(null, PropertyType.IDENTIFIER, null, true)
-    {
-    }
+    public WildcardImpl()
+        : base(null, PropertyType.IDENTIFIER, null, true) { }
 
     public override string ToString()
     {

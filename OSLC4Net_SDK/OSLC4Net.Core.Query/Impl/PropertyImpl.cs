@@ -23,8 +23,7 @@ namespace OSLC4Net.Core.Query.Impl;
 /// </summary>
 internal class PropertyImpl : Property
 {
-    public
-    PropertyImpl(
+    public PropertyImpl(
         CommonTree tree,
         PropertyType type,
         IDictionary<string, string> prefixMap,
@@ -51,7 +50,6 @@ internal class PropertyImpl : Property
     {
         get
         {
-
             if (identifier != null)
             {
                 return identifier;

@@ -20,8 +20,11 @@ namespace OSLC4Net.Core.Exceptions;
 /// </summary>
 public class OslcCoreDuplicatePropertyDefinitionException(
     Type resourceType,
-    OslcPropertyDefinition oslcPropertyDefinition) : OslcCoreApplicationException(
-    $"OSLC1002: Duplicate property definition annotation {oslcPropertyDefinition.value} for class {resourceType.Name}")
+    OslcPropertyDefinition oslcPropertyDefinition
+)
+    : OslcCoreApplicationException(
+        $"OSLC1002: Duplicate property definition annotation {oslcPropertyDefinition.value} for class {resourceType.Name}"
+    )
 {
     public Type ResourceType { get; } = resourceType;
     public OslcPropertyDefinition OslcPropertyDefinition { get; } = oslcPropertyDefinition;

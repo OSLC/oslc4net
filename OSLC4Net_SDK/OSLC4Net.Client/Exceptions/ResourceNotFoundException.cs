@@ -17,7 +17,9 @@ namespace OSLC4Net.Client.Exceptions;
 /// Exception thrown when a requested resource could not be found.
 /// </summary>
 public class ResourceNotFoundException(string resource, string value)
-    : OslcClientApplicationException($"OSLC2004: The requested resource could not be found. Resource: {resource} Value: {value}.")
+    : OslcClientApplicationException(
+        $"OSLC2004: The requested resource could not be found. Resource: {resource} Value: {value}."
+    )
 {
     public string Resource { get; } = resource;
 

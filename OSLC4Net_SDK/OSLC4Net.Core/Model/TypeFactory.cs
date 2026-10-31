@@ -24,14 +24,13 @@ public static class TypeFactory
 {
     public static string GetQualifiedName(Type objectType)
     {
-        return GetNamespace(objectType) +
-               GetName(objectType);
+        return GetNamespace(objectType) + GetName(objectType);
     }
 
     public static string GetNamespace(Type objectType)
     {
-        var oslcNamespaceAnnotation =
-            (OslcNamespace[])objectType.GetCustomAttributes(typeof(OslcNamespace), false);
+        var oslcNamespaceAnnotation = (OslcNamespace[])
+            objectType.GetCustomAttributes(typeof(OslcNamespace), false);
 
         return oslcNamespaceAnnotation.Length > 0
             ? oslcNamespaceAnnotation[0].value
@@ -40,8 +39,8 @@ public static class TypeFactory
 
     public static string GetName(Type objectType)
     {
-        var oslcNameAnnotation =
-            (OslcName[])objectType.GetCustomAttributes(typeof(OslcName), false);
+        var oslcNameAnnotation = (OslcName[])
+            objectType.GetCustomAttributes(typeof(OslcName), false);
 
         if (oslcNameAnnotation.Length > 0)
         {

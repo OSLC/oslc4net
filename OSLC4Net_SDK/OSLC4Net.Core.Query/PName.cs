@@ -21,5 +21,8 @@ public class PName
     public string prefix;
     public string local;
 
-    public override string ToString() { return prefix + ':' + local; }
+    public override string ToString()
+    {
+        return prefix + ':' + local;
+    }
 }

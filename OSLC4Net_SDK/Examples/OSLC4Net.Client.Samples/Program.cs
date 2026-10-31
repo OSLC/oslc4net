@@ -23,7 +23,7 @@ sealed class Program
                 "ewm" => "EWMSample",
                 "erm" => "ERMSample",
                 "etm" => "ETMSample",
-                _ => "ETMSample"
+                _ => "ETMSample",
             };
             // Remove the sample name from args
             sampleArgs = new string[args.Length - 1];
@@ -35,13 +35,19 @@ sealed class Program
         if (sampleType == null)
         {
             Console.Error.WriteLine($"Sample '{sampleName}' not found");
-            Console.Error.WriteLine("Usage: dotnet run [ewm|erm|etm] -- --url ... --user ... --password ... --project ...");
+            Console.Error.WriteLine(
+                "Usage: dotnet run [ewm|erm|etm] -- --url ... --user ... --password ... --project ..."
+            );
             Environment.Exit(1);
         }
 
-        var mainMethod = sampleType.GetMethod("Run",
+        var mainMethod = sampleType.GetMethod(
+            "Run",
             BindingFlags.Static | BindingFlags.Public,
-            null, new[] { typeof(string[]) }, null);
+            null,
+            new[] { typeof(string[]) },
+            null
+        );
 
         if (mainMethod == null)
         {

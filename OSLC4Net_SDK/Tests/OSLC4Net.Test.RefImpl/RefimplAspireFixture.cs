@@ -32,7 +32,8 @@ public class RefimplAspireFixture : IAsyncDisposable
 
     public async Task EnsureInitializedAsync()
     {
-        if (DistributedApplication != null) return;
+        if (DistributedApplication != null)
+            return;
 
         await _initLock.WaitAsync().ConfigureAwait(false);
         try
@@ -53,7 +54,8 @@ public class RefimplAspireFixture : IAsyncDisposable
     protected async Task<DistributedApplication> SetupAspireAsync()
     {
         var builder = await DistributedApplicationTestingBuilder
-            .CreateAsync<OSLC4Net_Test_AspireHost>().ConfigureAwait(false);
+            .CreateAsync<OSLC4Net_Test_AspireHost>()
+            .ConfigureAwait(false);
 
         //builder.Services.ConfigureHttpClientDefaults(clientBuilder =>
         //{
@@ -68,14 +70,17 @@ public class RefimplAspireFixture : IAsyncDisposable
 
         await app.StartAsync().WaitAsync(TimeSpan.FromSeconds(300)).ConfigureAwait(false);
 
-        await app.ResourceNotifications.WaitForResourceHealthyAsync("refimpl-cm")
-            .WaitAsync(TimeSpan.FromSeconds(300)).ConfigureAwait(false);
-        await app.ResourceNotifications.WaitForResourceHealthyAsync("refimpl-rm")
-            .WaitAsync(TimeSpan.FromSeconds(300)).ConfigureAwait(false);
+        await app
+            .ResourceNotifications.WaitForResourceHealthyAsync("refimpl-cm")
+            .WaitAsync(TimeSpan.FromSeconds(300))
+            .ConfigureAwait(false);
+        await app
+            .ResourceNotifications.WaitForResourceHealthyAsync("refimpl-rm")
+            .WaitAsync(TimeSpan.FromSeconds(300))
+            .ConfigureAwait(false);
 
         var endpoint = app.GetEndpoint("refimpl-cm", "http");
-        ServiceProviderCatalogUriCM =
-            endpoint.AbsoluteUri + "services/catalog/singleton";
+        ServiceProviderCatalogUriCM = endpoint.AbsoluteUri + "services/catalog/singleton";
         ServiceProviderCatalogUriRM =
             app.GetEndpoint("refimpl-rm", "http").AbsoluteUri + "services/catalog/singleton";
 
@@ -92,12 +97,17 @@ public class RefimplAspireFixture : IAsyncDisposable
     /// Polls the catalog endpoint until it returns 200 OK.
     /// This ensures the service is fully initialized before tests run.
     /// </summary>
-    private static async Task WaitForCatalogReadyAsync(string catalogUri, int maxRetries = 30, int delayMs = 1000)
+    private static async Task WaitForCatalogReadyAsync(
+        string catalogUri,
+        int maxRetries = 30,
+        int delayMs = 1000
+    )
     {
         using var httpClient = new HttpClient();
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
             "Basic",
-            Convert.ToBase64String(Encoding.ASCII.GetBytes("admin:admin")));
+            Convert.ToBase64String(Encoding.ASCII.GetBytes("admin:admin"))
+        );
 
         for (var i = 0; i < maxRetries; i++)
         {
@@ -117,13 +127,16 @@ public class RefimplAspireFixture : IAsyncDisposable
                     i + 1,
                     maxRetries,
                     catalogUri,
-                    ex.Message);
+                    ex.Message
+                );
             }
 
             await Task.Delay(delayMs).ConfigureAwait(false);
         }
 
-        throw new TimeoutException($"Catalog endpoint {catalogUri} did not become ready within {maxRetries * delayMs / 1000} seconds");
+        throw new TimeoutException(
+            $"Catalog endpoint {catalogUri} did not become ready within {maxRetries * delayMs / 1000} seconds"
+        );
     }
 
     public string ServiceProviderCatalogUriRM { get; private set; } = null!;

@@ -15,5 +15,5 @@ public enum TermType
     COMPARISON,
     IN_TERM,
     NESTED,
-    TOP_LEVEL
+    TOP_LEVEL,
 }

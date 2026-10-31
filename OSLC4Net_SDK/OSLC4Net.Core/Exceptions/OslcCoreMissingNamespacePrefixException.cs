@@ -16,9 +16,10 @@ namespace OSLC4Net.Core.Exceptions;
 /// <summary>
 ///     Exception thrown when a required OSLC attribute definition is missing.
 /// </summary>
-public class OslcCoreMissingNamespacePrefixException(
-    string prefix) : OslcCoreApplicationException(
-    $"OSLC1010: Namespace declaration not defined for prefix {prefix}")
+public class OslcCoreMissingNamespacePrefixException(string prefix)
+    : OslcCoreApplicationException(
+        $"OSLC1010: Namespace declaration not defined for prefix {prefix}"
+    )
 {
     public string Prefix { get; } = prefix;
 }

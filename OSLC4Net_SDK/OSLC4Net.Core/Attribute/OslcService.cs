@@ -19,8 +19,7 @@ namespace OSLC4Net.Core.Attribute;
 /// <summary>
 ///     OSLC Service attribute
 /// </summary>
-[AttributeUsage(AttributeTargets.Class)
-]
+[AttributeUsage(AttributeTargets.Class)]
 public class OslcService : System.Attribute
 {
     /**

@@ -21,7 +21,8 @@ namespace OSLC4Net.Core.Model;
 /// <remarks>see https://docs.oasis-open-projects.org/oslc-op/core/v3.0/os/core-vocab.html</remarks>
 public enum Representation
 {
-    [URI("")] Unknown,
+    [URI("")]
+    Unknown,
 
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Reference")]
     Reference,
@@ -30,5 +31,5 @@ public enum Representation
     Inline,
 
     [URI(OslcConstants.OSLC_CORE_NAMESPACE + "Either")]
-    Either
+    Either,
 }

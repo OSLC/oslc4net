@@ -23,9 +23,15 @@ public static class RmUtil
 {
     public static async Task<ResourceShape?> LookupRequirementsInstanceShapesAsync(
         string serviceProviderUrl,
-        string oslcDomain, string oslcResourceType, OslcClient client, string requiredInstanceShape)
+        string oslcDomain,
+        string oslcResourceType,
+        OslcClient client,
+        string requiredInstanceShape
+    )
     {
-        var response = await client.GetResourceAsync<ServiceProvider>(serviceProviderUrl).ConfigureAwait(false);
+        var response = await client
+            .GetResourceAsync<ServiceProvider>(serviceProviderUrl)
+            .ConfigureAwait(false);
         //var formatters = client.GetFormatters();
         var serviceProvider = response.Resources?.SingleOrDefault();
 
@@ -52,8 +58,10 @@ public static class RmUtil
             {
                 foreach (var resourceType in creationFactory.GetResourceTypes())
                 {
-                    if (resourceType.ToString() == null ||
-                        !resourceType.ToString().Equals(oslcResourceType))
+                    if (
+                        resourceType.ToString() == null
+                        || !resourceType.ToString().Equals(oslcResourceType)
+                    )
                     {
                         continue;
                     }
@@ -66,13 +74,19 @@ public static class RmUtil
 
                     foreach (var typeURI in instanceShapes)
                     {
-                        var typeResponse = await client.GetResourceAsync<ResourceShape>(typeURI)
+                        var typeResponse = await client
+                            .GetResourceAsync<ResourceShape>(typeURI)
                             .ConfigureAwait(false);
-                        var resourceShape =
-                            typeResponse.Resources?.SingleOrDefault();
+                        var resourceShape = typeResponse.Resources?.SingleOrDefault();
                         var typeTitle = resourceShape?.GetTitle();
-                        if (typeTitle == null || string.Compare(typeTitle,
-                                requiredInstanceShape, StringComparison.OrdinalIgnoreCase) != 0)
+                        if (
+                            typeTitle == null
+                            || string.Compare(
+                                typeTitle,
+                                requiredInstanceShape,
+                                StringComparison.OrdinalIgnoreCase
+                            ) != 0
+                        )
                         {
                             continue;
                         }

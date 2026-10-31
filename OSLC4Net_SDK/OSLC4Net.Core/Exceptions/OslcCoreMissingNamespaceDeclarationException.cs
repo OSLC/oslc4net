@@ -16,9 +16,10 @@ namespace OSLC4Net.Core.Exceptions;
 /// <summary>
 ///     Exception thrown when a required OSLC attribute definition is missing.
 /// </summary>
-public class OslcCoreMissingNamespaceDeclarationException(
-    string ns) : OslcCoreApplicationException(
-    $"OSLC1009: Namespace declaration not defined for namespace {ns}")
+public class OslcCoreMissingNamespaceDeclarationException(string ns)
+    : OslcCoreApplicationException(
+        $"OSLC1009: Namespace declaration not defined for namespace {ns}"
+    )
 {
     public string Namespace { get; } = ns;
 }

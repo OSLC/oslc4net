@@ -13,8 +13,11 @@ public class OslcRdfOutputFormatterTests
 {
     private const string Path = "/oslc/service_provider/abc/requirements";
 
-    private static async Task<string> SerializeAsync(HostString host, string scheme,
-        ResponseInfoArray<ServiceProvider> responseInfo)
+    private static async Task<string> SerializeAsync(
+        HostString host,
+        string scheme,
+        ResponseInfoArray<ServiceProvider> responseInfo
+    )
     {
         var httpContext = new DefaultHttpContext();
         httpContext.Request.Scheme = scheme;
@@ -28,7 +31,8 @@ public class OslcRdfOutputFormatterTests
             httpContext,
             (stream, encoding) => new StreamWriter(stream, encoding),
             typeof(ResponseInfoArray<ServiceProvider>),
-            responseInfo)
+            responseInfo
+        )
         {
             ContentType = OslcMediaType.TEXT_TURTLE,
         };
@@ -48,8 +52,11 @@ public class OslcRdfOutputFormatterTests
     {
         // Regression: the formatter used to append the port to a HostString that already
         // carried it, producing "localhost:7000:7000" and throwing UriFormatException.
-        var turtle = await SerializeAsync(new HostString("localhost", 7000), "https",
-            EmptyContainer());
+        var turtle = await SerializeAsync(
+            new HostString("localhost", 7000),
+            "https",
+            EmptyContainer()
+        );
 
         await Assert.That(turtle).Contains("https://localhost:7000" + Path);
         await Assert.That(turtle).DoesNotContain("localhost:7000:7000");
@@ -60,8 +67,11 @@ public class OslcRdfOutputFormatterTests
     {
         // Regression: an empty ResponseInfo (a query that matched nothing) used to throw
         // because the oslc namespace prefix was never registered.
-        var turtle = await SerializeAsync(new HostString("localhost", 7000), "https",
-            EmptyContainer());
+        var turtle = await SerializeAsync(
+            new HostString("localhost", 7000),
+            "https",
+            EmptyContainer()
+        );
 
         await Assert.That(turtle).Contains("totalCount");
         await Assert.That(turtle).DoesNotContain("nextPage");

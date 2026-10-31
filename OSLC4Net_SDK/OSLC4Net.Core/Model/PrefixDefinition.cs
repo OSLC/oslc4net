@@ -21,18 +21,19 @@ namespace OSLC4Net.Core.Model;
 ///     OSLC PrefixDefinition resource
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Prefix Definition Resource Shape",
-    describes = new[] { OslcConstants.TYPE_PREFIX_DEFINITION })]
+[OslcResourceShape(
+    title = "OSLC Prefix Definition Resource Shape",
+    describes = new[] { OslcConstants.TYPE_PREFIX_DEFINITION }
+)]
 public class PrefixDefinition : AbstractResource
 {
     private string prefix;
     private Uri prefixBase;
 
-    public PrefixDefinition()
-    {
-    }
+    public PrefixDefinition() { }
 
-    public PrefixDefinition(string prefix, Uri prefixBase) : this()
+    public PrefixDefinition(string prefix, Uri prefixBase)
+        : this()
     {
         this.prefix = prefix;
         this.prefixBase = prefixBase;

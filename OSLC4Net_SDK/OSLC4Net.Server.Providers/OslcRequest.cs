@@ -27,12 +27,14 @@ public class OslcRequest
     public OslcRequest(
         IGraph graph,
         IReadOnlyDictionary<string, string[]>? headers = null,
-        DotNetRdfHelper? rdfHelper = null)
+        DotNetRdfHelper? rdfHelper = null
+    )
     {
         Graph = graph;
         Headers = new Dictionary<string, string[]>(
             headers ?? new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase),
-            StringComparer.OrdinalIgnoreCase);
+            StringComparer.OrdinalIgnoreCase
+        );
         _rdfHelper = rdfHelper ?? Activator.CreateInstance<DotNetRdfHelper>();
     }
 
@@ -68,9 +70,10 @@ public class OslcRequest
     ///     <see href="https://docs.oasis-open-projects.org/oslc-op/config/v1.0/config-resources.html#configcontext">
     ///     OSLC Configuration Management 1.0, section 4</see>.
     /// </remarks>
-    public Uri? ConfigurationContext => Uri.TryCreate(HeaderValue(ConfigurationContextHeader), UriKind.Absolute, out Uri? uri)
-        ? uri
-        : null;
+    public Uri? ConfigurationContext =>
+        Uri.TryCreate(HeaderValue(ConfigurationContextHeader), UriKind.Absolute, out Uri? uri)
+            ? uri
+            : null;
 
     /// <summary>
     ///     Gets the <c>Prefer</c> request header values.
@@ -92,7 +95,8 @@ public class OslcRequest
     /// </remarks>
     public string? Slug => HeaderValue(SlugHeader);
 
-    public IReadOnlyList<T> ResourcesOfType<T>() where T : IResource
+    public IReadOnlyList<T> ResourcesOfType<T>()
+        where T : IResource
     {
         Type requestedType = typeof(T);
         if (_resourcesByType.TryGetValue(requestedType, out object? resources))
@@ -100,12 +104,16 @@ public class OslcRequest
             return (IReadOnlyList<T>)resources;
         }
 
-        IReadOnlyList<T> typedResources = OslcResourceMaterializer.Materialize<T>(Graph, _rdfHelper);
+        IReadOnlyList<T> typedResources = OslcResourceMaterializer.Materialize<T>(
+            Graph,
+            _rdfHelper
+        );
         _resourcesByType.Add(requestedType, typedResources);
         return typedResources;
     }
 
-    public T? ResourceOfType<T>() where T : IResource
+    public T? ResourceOfType<T>()
+        where T : IResource
     {
         IReadOnlyList<T> resources = ResourcesOfType<T>();
         return resources.Count > 0 ? resources[0] : default;
@@ -120,21 +128,19 @@ public class OslcRequest
 
     public IReadOnlyList<string> HeaderValues(string name)
     {
-        return Headers.TryGetValue(name, out string[]? values)
-            ? values
-            : [];
+        return Headers.TryGetValue(name, out string[]? values) ? values : [];
     }
 }
 
-public sealed class OslcRequest<T> : OslcRequest where T : IResource
+public sealed class OslcRequest<T> : OslcRequest
+    where T : IResource
 {
     public OslcRequest(
         IGraph graph,
         IReadOnlyDictionary<string, string[]>? headers = null,
-        DotNetRdfHelper? rdfHelper = null)
-        : base(graph, headers, rdfHelper)
-    {
-    }
+        DotNetRdfHelper? rdfHelper = null
+    )
+        : base(graph, headers, rdfHelper) { }
 
     public new IReadOnlyList<T> Resources => ResourcesOfType<T>();
 

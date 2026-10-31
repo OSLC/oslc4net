@@ -22,10 +22,10 @@ namespace OSLC4Net.Core.Model;
 ///     OSLC ServiceProvider resource
 /// </summary>
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Service Provider Resource Shape", describes =
-[
-    OslcConstants.TYPE_SERVICE_PROVIDER
-])]
+[OslcResourceShape(
+    title = "OSLC Service Provider Resource Shape",
+    describes = [OslcConstants.TYPE_SERVICE_PROVIDER]
+)]
 public class ServiceProvider : AbstractResource
 {
     private readonly SortedSet<Uri> _details = new SortedUriSet();
@@ -74,7 +74,8 @@ public class ServiceProvider : AbstractResource
     /// URLs that may be used to retrieve web pages to determine additional details about the service provider
     /// </summary>
     [OslcDescription(
-        "URLs that may be used to retrieve web pages to determine additional details about the service provider")]
+        "URLs that may be used to retrieve web pages to determine additional details about the service provider"
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "details")]
     [OslcReadOnly]
     [OslcTitle("Details")]
@@ -99,14 +100,16 @@ public class ServiceProvider : AbstractResource
     /// Defines the three OAuth URIs required for a client to act as an OAuth consumer
     /// </summary>
     [OslcDescription(
-        "Defines the three OAuth URIs required for a client to act as an OAuth consumer")]
+        "Defines the three OAuth URIs required for a client to act as an OAuth consumer"
+    )]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "oauthConfiguration")]
     [OslcRange(OslcConstants.TYPE_O_AUTH_CONFIGURATION)]
     [OslcReadOnly]
     [OslcRepresentation(Representation.Inline)]
     [OslcTitle("OAuth Configuration")]
-    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" +
-                    OslcConstants.PATH_OAUTH_CONFIGURATION)]
+    [OslcValueShape(
+        OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_OAUTH_CONFIGURATION
+    )]
     [OslcValueType(ValueType.LocalResource)]
     public OAuthConfiguration GetOauthConfiguration()
     {
@@ -117,15 +120,17 @@ public class ServiceProvider : AbstractResource
     /// Defines namespace prefixes for use in JSON representations and in forming OSLC Query Syntax strings
     /// </summary>
     [OslcDescription(
-        "Defines namespace prefixes for use in JSON representations and in forming OSLC Query Syntax strings")]
+        "Defines namespace prefixes for use in JSON representations and in forming OSLC Query Syntax strings"
+    )]
     [OslcName("prefixDefinition")]
     [OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "prefixDefinition")]
     [OslcRange(OslcConstants.TYPE_PREFIX_DEFINITION)]
     [OslcReadOnly]
     [OslcRepresentation(Representation.Inline)]
     [OslcTitle("Prefix Definitions")]
-    [OslcValueShape(OslcConstants.PATH_RESOURCE_SHAPES + "/" +
-                    OslcConstants.PATH_PREFIX_DEFINITION)]
+    [OslcValueShape(
+        OslcConstants.PATH_RESOURCE_SHAPES + "/" + OslcConstants.PATH_PREFIX_DEFINITION
+    )]
     [OslcValueType(ValueType.LocalResource)]
     public PrefixDefinition[] GetPrefixDefinitions()
     {

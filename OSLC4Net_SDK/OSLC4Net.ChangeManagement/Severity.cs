@@ -22,5 +22,5 @@ public enum Severity
     Normal,
     Major,
     Critical,
-    Blocker
+    Blocker,
 }

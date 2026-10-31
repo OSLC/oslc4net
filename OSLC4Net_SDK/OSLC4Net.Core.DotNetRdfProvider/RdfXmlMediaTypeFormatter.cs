@@ -65,7 +65,8 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         IGraph graph,
         DotNetRdfHelper? rdfHelper,
         bool rebuildgraph = true
-    ) : this(rdfHelper, rebuildgraph)
+    )
+        : this(rdfHelper, rebuildgraph)
     {
         Graph = graph;
     }
@@ -80,8 +81,11 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     /// <param name="request"></param>
     /// <param name="mediaType"></param>
     /// <returns></returns>
-    public override MediaTypeFormatter GetPerRequestFormatterInstance(Type type,
-        HttpRequestMessage request, MediaTypeHeaderValue mediaType)
+    public override MediaTypeFormatter GetPerRequestFormatterInstance(
+        Type type,
+        HttpRequestMessage request,
+        MediaTypeHeaderValue mediaType
+    )
     {
         httpRequest = request;
         return base.GetPerRequestFormatterInstance(type, request, mediaType);
@@ -98,8 +102,10 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
 
         if (ImplementsGenericType(typeof(FilteredResource<>), type))
         {
-            var actualTypeArguments =
-                GetChildClassParameterArguments(typeof(FilteredResource<>), type);
+            var actualTypeArguments = GetChildClassParameterArguments(
+                typeof(FilteredResource<>),
+                type
+            );
 
             if (actualTypeArguments.Length != 1)
             {
@@ -159,14 +165,15 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         TransportContext transportContext
     )
     {
-
         if (Graph == null || Graph.IsEmpty || RebuildGraph)
         {
             if (ImplementsGenericType(typeof(FilteredResource<>), type))
             {
                 var resourceProp = value.GetType().GetProperty("Resource")!;
-                var actualTypeArguments =
-                    GetChildClassParameterArguments(typeof(FilteredResource<>), type);
+                var actualTypeArguments = GetChildClassParameterArguments(
+                    typeof(FilteredResource<>),
+                    type
+                );
                 var objects = resourceProp.GetValue(value, null);
                 var propertiesProp = value.GetType().GetProperty("Properties")!;
 
@@ -190,10 +197,12 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                         portString = $":{portNum}";
                     }
 
-                    var descriptionAbout = httpRequest.RequestUri.Scheme + "://" +
-                                           httpRequest.RequestUri.Host +
-                                           portString +
-                                           httpRequest.RequestUri.LocalPath;
+                    var descriptionAbout =
+                        httpRequest.RequestUri.Scheme
+                        + "://"
+                        + httpRequest.RequestUri.Host
+                        + portString
+                        + httpRequest.RequestUri.LocalPath;
 
                     //Subject URI for the responseInfo is the full request URI
                     var responseInfoAbout = httpRequest.RequestUri.ToString();
@@ -201,22 +210,33 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                     var totalCountProp = value.GetType().GetProperty("TotalCount")!;
                     var nextPageProp = value.GetType().GetProperty("NextPage")!;
 
-                    Graph = DotNetRdfHelper.CreateDotNetRdfGraph(descriptionAbout,
+                    Graph = DotNetRdfHelper.CreateDotNetRdfGraph(
+                        descriptionAbout,
                         responseInfoAbout,
                         (string?)nextPageProp.GetValue(value, null),
                         (long?)totalCountProp.GetValue(value, null),
                         objects as IEnumerable<object>,
-                        (IDictionary<string, object>?)propertiesProp.GetValue(value, null));
+                        (IDictionary<string, object>?)propertiesProp.GetValue(value, null)
+                    );
                 }
                 else
                 {
-                    Graph = DotNetRdfHelper.CreateDotNetRdfGraph(null, null, null, null,
+                    Graph = DotNetRdfHelper.CreateDotNetRdfGraph(
+                        null,
+                        null,
+                        null,
+                        null,
                         objects as IEnumerable<object>,
-                        (IDictionary<string, object>?)propertiesProp.GetValue(value, null));
+                        (IDictionary<string, object>?)propertiesProp.GetValue(value, null)
+                    );
                 }
             }
-            else if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(
-                         typeof(IEnumerable<>), value.GetType()))
+            else if (
+                InheritedGenericInterfacesHelper.ImplementsGenericInterface(
+                    typeof(IEnumerable<>),
+                    value.GetType()
+                )
+            )
             {
                 Graph = DotNetRdfHelper.CreateDotNetRdfGraph(value as IEnumerable<object>);
             }
@@ -233,41 +253,55 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         IRdfWriter? tripleWriter = null;
         IStoreWriter? quadWriter = null;
 
-        if (content?.Headers?.ContentType?.MediaType == null ||
-            content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_RDF_XML,
-                StringComparison.Ordinal))
+        if (
+            content?.Headers?.ContentType?.MediaType == null
+            || content.Headers.ContentType.MediaType.Equals(
+                OslcMediaType.APPLICATION_RDF_XML,
+                StringComparison.Ordinal
+            )
+        )
         {
             // REVISIT: make Turtle the default (@berezovskyi 2025-05)
             var rdfXmlWriter = new RdfXmlWriter
             {
                 UseDtd = false,
                 PrettyPrintMode = true,
-                CompressionLevel = 20
+                CompressionLevel = 20,
             };
 
             tripleWriter = rdfXmlWriter;
         }
-        else if (content.Headers.ContentType.MediaType.Equals(OslcMediaType.TEXT_TURTLE,
-                     StringComparison.Ordinal))
+        else if (
+            content.Headers.ContentType.MediaType.Equals(
+                OslcMediaType.TEXT_TURTLE,
+                StringComparison.Ordinal
+            )
+        )
         {
             var turtlelWriter = new CompressingTurtleWriter(TurtleSyntax.W3C)
             {
                 PrettyPrintMode = true,
-                CompressionLevel = 20
+                CompressionLevel = 20,
             };
 
             tripleWriter = turtlelWriter;
         }
-        else if (content.Headers.ContentType.MediaType.Equals(OslcMediaType.APPLICATION_JSON_LD,
-                     StringComparison.Ordinal))
+        else if (
+            content.Headers.ContentType.MediaType.Equals(
+                OslcMediaType.APPLICATION_JSON_LD,
+                StringComparison.Ordinal
+            )
+        )
         {
             // REVISIT: should be configurable to lower the overhead (@berezovskyi 2025-05)
-            var writer = new JsonLdWriter(new JsonLdWriterOptions
-            {
-                JsonFormatting = Formatting.Indented,
-                Ordered = true,
-                ProcessingMode = JsonLdProcessingMode.JsonLd11
-            });
+            var writer = new JsonLdWriter(
+                new JsonLdWriterOptions
+                {
+                    JsonFormatting = Formatting.Indented,
+                    Ordered = true,
+                    ProcessingMode = JsonLdProcessingMode.JsonLd11,
+                }
+            );
             quadWriter = writer;
         }
         else
@@ -278,7 +312,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             {
                 UseDtd = false,
                 PrettyPrintMode = false,
-                CompressionLevel = 20
+                CompressionLevel = 20,
             };
 
             tripleWriter = oslcXmlWriter;
@@ -297,7 +331,6 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             var quadStore = new TripleStore(graphCollection);
             quadWriter.Save(quadStore, streamWriter);
         }
-
     }
 
     /// <summary>
@@ -367,8 +400,10 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                 // TODO: make IRI validation configurable
                 tripleReader = new TurtleParser(TurtleSyntax.Rdf11Star, false);
             }
-            else if (OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML.Equals(mediaType)
-                     || OslcMediaType.APPLICATION_XML.Equals(mediaType))
+            else if (
+                OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML.Equals(mediaType)
+                || OslcMediaType.APPLICATION_XML.Equals(mediaType)
+            )
             {
                 //For now, use the dotNetRDF RdfXmlParser() for application/xml.  This could change
                 tripleReader = new RdfXmlParser();
@@ -376,22 +411,26 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             else if (OslcMediaType.APPLICATION_JSON_LD.Equals(mediaType))
             {
                 //For now, use the dotNetRDF RdfXmlParser() for application/xml.  This could change
-                quadReader = new JsonLdParser(new JsonLdProcessorOptions
-                {
-                    ProcessingMode = JsonLdProcessingMode.JsonLd11
-                });
+                quadReader = new JsonLdParser(
+                    new JsonLdProcessorOptions { ProcessingMode = JsonLdProcessingMode.JsonLd11 }
+                );
             }
             else
             {
                 throw new UnsupportedMediaTypeException(
                     $"Given type is not supported or is not valid RDF: ${content.Headers.ContentType?.MediaType}",
-                    content.Headers.ContentType!);
+                    content.Headers.ContentType!
+                );
             }
 
             IGraph graph = new Graph();
             // REVISIT: we need a more robust way to obtain request URI
-            content.Headers.TryGetValues(OSLC4NetConstants.INNER_URI_HEADER, out var shuttleRequestUri);
-            graph.BaseUri = shuttleRequestUri?.SingleOrDefault()?.ToSafeUri() ?? httpRequest?.RequestUri;
+            content.Headers.TryGetValues(
+                OSLC4NetConstants.INNER_URI_HEADER,
+                out var shuttleRequestUri
+            );
+            graph.BaseUri =
+                shuttleRequestUri?.SingleOrDefault()?.ToSafeUri() ?? httpRequest?.RequestUri;
             var encodingHeader = content.Headers.ContentEncoding.SingleOrDefault();
             var streamEncoding = Encoding.UTF8;
             if (encodingHeader is not null)
@@ -406,7 +445,13 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                 }
             }
             // do not close the stream after reading
-            var streamReader = new StreamReader(readStream, streamEncoding, false, STREAM_BUFFER_SIZE, true);
+            var streamReader = new StreamReader(
+                readStream,
+                streamEncoding,
+                false,
+                STREAM_BUFFER_SIZE,
+                true
+            );
 
             using (streamReader)
             {
@@ -414,7 +459,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                 var rdfString = streamReader.ReadToEnd();
                 //Debug.Write(rdfString);
                 readStream.Position = 0; // reset stream
-                                         //streamReader.DiscardBufferedData();
+                //streamReader.DiscardBufferedData();
 #endif
 
                 if (tripleReader is not null)
@@ -431,7 +476,8 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                 else
                 {
                     ThrowHelper.ThrowInvalidOperationException(
-                        "Either a quad or triple reader is required.");
+                        "Either a quad or triple reader is required."
+                    );
                 }
 
                 // REVISIT: make RDFS reasoning configurable (@berezovskyi 2025-05)
@@ -447,9 +493,10 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                 }
 
                 var isSingleton = IsOslcSingleton(type);
-                var output =
-                    _rdfHelper.FromDotNetRdfGraph(graph,
-                        isSingleton ? type : GetMemberType(type)!);
+                var output = _rdfHelper.FromDotNetRdfGraph(
+                    graph,
+                    isSingleton ? type : GetMemberType(type)!
+                );
 
                 if (isSingleton)
                 {
@@ -462,7 +509,9 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
                 }
                 else if (type.IsArray)
                 {
-                    return output.GetType().GetMethod("ToArray", Type.EmptyTypes)!
+                    return output
+                        .GetType()
+                        .GetMethod("ToArray", Type.EmptyTypes)!
                         .Invoke(output, null);
                 }
                 else
@@ -500,15 +549,19 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
             return type.GetElementType();
         }
 
-        if (InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IEnumerable<>),
-                type))
+        if (
+            InheritedGenericInterfacesHelper.ImplementsGenericInterface(typeof(IEnumerable<>), type)
+        )
         {
             var interfaces = type.GetInterfaces();
 
             foreach (var iface in interfaces)
             {
-                if (iface.IsGenericType && iface.GetGenericTypeDefinition() ==
-                    typeof(IEnumerable<object>).GetGenericTypeDefinition())
+                if (
+                    iface.IsGenericType
+                    && iface.GetGenericTypeDefinition()
+                        == typeof(IEnumerable<object>).GetGenericTypeDefinition()
+                )
                 {
                     var memberType = iface.GetGenericArguments()[0];
 
@@ -532,17 +585,21 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         return ImplementsGenericType(genericType, typeToTest, isParentGeneric);
     }
 
-    public static bool ImplementsGenericType(Type genericType, Type? typeToTest,
-        bool isParentGeneric)
+    public static bool ImplementsGenericType(
+        Type genericType,
+        Type? typeToTest,
+        bool isParentGeneric
+    )
     {
         if (typeToTest == null)
         {
             return false;
         }
 
-        typeToTest = isParentGeneric && typeToTest.IsGenericType
-            ? typeToTest.GetGenericTypeDefinition()
-            : typeToTest;
+        typeToTest =
+            isParentGeneric && typeToTest.IsGenericType
+                ? typeToTest.GetGenericTypeDefinition()
+                : typeToTest;
 
         if (typeToTest == genericType)
         {
@@ -559,9 +616,10 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
         while (true)
         {
             var parentType = typeToTest.BaseType!;
-            var parentToTest = isParentGeneric && parentType.IsGenericType
-                ? parentType.GetGenericTypeDefinition()
-                : parentType;
+            var parentToTest =
+                isParentGeneric && parentType.IsGenericType
+                    ? parentType.GetGenericTypeDefinition()
+                    : parentType;
 
             if (parentToTest == genericType)
             {
@@ -580,9 +638,7 @@ public class RdfXmlMediaTypeFormatter : MediaTypeFormatter
     public class NonClosingStreamWriter : StreamWriter
     {
         public NonClosingStreamWriter(Stream stream)
-            : base(stream)
-        {
-        }
+            : base(stream) { }
 
         public override void Close()
         {

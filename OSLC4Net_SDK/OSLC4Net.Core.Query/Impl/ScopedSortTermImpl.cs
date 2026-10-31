@@ -19,15 +19,10 @@ namespace OSLC4Net.Core.Query.Impl;
 
 sealed class ScopedSortTermImpl : SortTermImpl, ScopedSortTerm
 {
-    public ScopedSortTermImpl(
-        CommonTree tree,
-        IDictionary<string, string> prefixMap
-    ) : base(SortTermType.SCOPED, tree, prefixMap)
-    {
-    }
+    public ScopedSortTermImpl(CommonTree tree, IDictionary<string, string> prefixMap)
+        : base(SortTermType.SCOPED, tree, prefixMap) { }
 
-    public SortTerms
-    SortTerms
+    public SortTerms SortTerms
     {
         get
         {

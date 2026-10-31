@@ -3,8 +3,10 @@ using OSLC4Net.Core.Attribute;
 namespace OSLC4Net.Core.Model;
 
 [OslcNamespace(OslcConstants.OSLC_CORE_NAMESPACE)]
-[OslcResourceShape(title = "OSLC Error Resource Shape",
-    describes = new[] { OslcConstants.TYPE_ERROR })]
+[OslcResourceShape(
+    title = "OSLC Error Resource Shape",
+    describes = new[] { OslcConstants.TYPE_ERROR }
+)]
 public class Error
 {
     private ExtendedError extendedError;

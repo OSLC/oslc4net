@@ -19,8 +19,7 @@ namespace OSLC4Net.Core.Attribute;
 /// <summary>
 ///     OSLC CreationFactory attribute
 /// </summary>
-[AttributeUsage(AttributeTargets.Method)
-]
+[AttributeUsage(AttributeTargets.Method)]
 public class OslcCreationFactory : System.Attribute
 {
     /**

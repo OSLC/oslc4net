@@ -19,12 +19,6 @@ namespace OSLC4Net.Core.Query.Impl;
 
 sealed class WhereClauseImpl : CompoundTermImpl, WhereClause
 {
-    public
-    WhereClauseImpl(
-        CommonTree tree,
-        IDictionary<string, string> prefixMap
-    )
-        : base(tree, true, prefixMap)
-    {
-    }
+    public WhereClauseImpl(CommonTree tree, IDictionary<string, string> prefixMap)
+        : base(tree, true, prefixMap) { }
 }

@@ -19,14 +19,17 @@ public enum Type
 {
     [Description("Defect")]
     Defect,
+
     [Description("Task")]
     Task,
+
     [Description("Story")]
     Story,
 
     // REVISIT: remove underscore in the next major version (@berezovskyi 2025-02)
     [Description("Bug Report")]
     Bug_Report,
+
     [Description("Feature Request")]
-    Feature_Request
+    Feature_Request,
 }

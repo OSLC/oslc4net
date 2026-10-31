@@ -8,7 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers(options =>
 {
     options.InputFormatters.Insert(0, new OslcRdfInputFormatter());
-    options.OutputFormatters.Insert(0,
+    options.OutputFormatters.Insert(
+        0,
         new OslcRdfOutputFormatter(
             new OslcOutputFormatConfig
             {
@@ -17,9 +18,11 @@ builder.Services.AddControllers(options =>
                 CompressionLevel = WriterCompressionLevel.High,
                 PrettyPrint = true,
                 // UseDtd = true
-            }));
-
+            }
+        )
+    );
 });
+
 // Learn more about configuring OpenAPI at https://learn.microsoft.com/en-us/aspnet/core/fundamentals/openapi/overview?view=aspnetcore-10.0
 builder.Services.AddOpenApi();
 builder.WebHost.UseKestrel();

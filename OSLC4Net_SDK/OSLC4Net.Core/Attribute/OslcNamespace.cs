@@ -16,9 +16,7 @@
 
 namespace OSLC4Net.Core.Attribute;
 
-[AttributeUsage(AttributeTargets.Class |
-                AttributeTargets.Interface)
-]
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
 public class OslcNamespace : System.Attribute
 {
     /**

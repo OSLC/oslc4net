@@ -34,16 +34,22 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
 {
     private static readonly Uri _rdfsMemberUri = new("http://www.w3.org/2000/01/rdf-schema#member");
     private static readonly Uri _ldpContainsUri = new(
-        global::OSLC4Net.Core.Model.OslcConstants.Domains.LDP.P.Contains);
+        global::OSLC4Net.Core.Model.OslcConstants.Domains.LDP.P.Contains
+    );
     private static readonly Uri _ldpHasMemberRelationUri = new(
-        global::OSLC4Net.Core.Model.OslcConstants.Domains.LDP.P.HasMemberRelation);
+        global::OSLC4Net.Core.Model.OslcConstants.Domains.LDP.P.HasMemberRelation
+    );
     private static readonly Uri _ldpMembershipResourceUri = new(
-        global::OSLC4Net.Core.Model.OslcConstants.Domains.LDP.P.MembershipResource);
+        global::OSLC4Net.Core.Model.OslcConstants.Domains.LDP.P.MembershipResource
+    );
 
-    private static readonly Uri _responsePredicateUri = new(OslcConstants.OSLC_CORE_NAMESPACE +
-                                                            "ResponseInfo");
+    private static readonly Uri _responsePredicateUri = new(
+        OslcConstants.OSLC_CORE_NAMESPACE + "ResponseInfo"
+    );
 
-    private static readonly Uri _totalCountPredicateUri = new Uri("http://open-services.net/ns/core#totalCount");
+    private static readonly Uri _totalCountPredicateUri = new Uri(
+        "http://open-services.net/ns/core#totalCount"
+    );
 
     private readonly int _pageNumber;
     private readonly OslcQuery _query;
@@ -67,8 +73,11 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     private long? _totalCount;
     private readonly DotNetRdfHelper _rdfHelper;
 
-    public OslcQueryResult(OslcQuery query, HttpResponseMessage response,
-        DotNetRdfHelper? rdfHelper = null)
+    public OslcQueryResult(
+        OslcQuery query,
+        HttpResponseMessage response,
+        DotNetRdfHelper? rdfHelper = null
+    )
     {
         _query = query;
         _response = response;
@@ -126,9 +135,7 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     /// </summary>
     // TODO: remove with IEnumerator (@berezovskyi 2024-10)
     [Obsolete("May be removed in future versions.", false)]
-    void IDisposable.Dispose()
-    {
-    }
+    void IDisposable.Dispose() { }
 
     // TODO: remove with IEnumerator (@berezovskyi 2024-10)
     [Obsolete("May be removed in future versions.", false)]
@@ -146,9 +153,11 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
         }
 
         var predicateNode = _rdfGraph.CreateUriNode(_totalCountPredicateUri);
-        var totalCountObject = _rdfGraph
-            .GetTriplesWithSubjectPredicate(_infoResource, predicateNode)
-            .SingleOrDefault()?.Object as ILiteralNode;
+        var totalCountObject =
+            _rdfGraph
+                .GetTriplesWithSubjectPredicate(_infoResource, predicateNode)
+                .SingleOrDefault()
+                ?.Object as ILiteralNode;
 
         if (totalCountObject is null)
         {
@@ -156,7 +165,14 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
         }
 
         var countString = totalCountObject.Value;
-        return long.TryParse(countString, NumberStyles.Integer, CultureInfo.InvariantCulture, out var totalCount) ? totalCount : null;
+        return long.TryParse(
+            countString,
+            NumberStyles.Integer,
+            CultureInfo.InvariantCulture,
+            out var totalCount
+        )
+            ? totalCount
+            : null;
     }
 
     // REVISIT: I don't think the query result shall be thread-safe (@berezovskyi 2024-10)
@@ -180,9 +196,9 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
 
             //Find a resource with rdf:type of oslc:ResourceInfo
             _rdfType = _rdfGraph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
-            var responseInfo =
-                _rdfGraph.CreateUriNode(_responsePredicateUri);
-            var triples = _rdfGraph.GetTriplesWithPredicateObject(_rdfType, responseInfo)
+            var responseInfo = _rdfGraph.CreateUriNode(_responsePredicateUri);
+            var triples = _rdfGraph
+                .GetTriplesWithPredicateObject(_rdfType, responseInfo)
                 ?.ToArray();
 
             _infoResource ??= GetSingleInfoResource(triples);
@@ -213,9 +229,11 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
 
     private IUriNode? GetInfoResourceExactQueryMatch(Triple[]? triples)
     {
-        return triples?.SingleOrDefault(spo =>
-            spo.Subject is IUriNode node &&
-            node.Uri == _query.QueryUri)?.Subject as IUriNode;
+        return triples
+                ?.SingleOrDefault(spo =>
+                    spo.Subject is IUriNode node && node.Uri == _query.QueryUri
+                )
+                ?.Subject as IUriNode;
     }
 
     /// <summary>
@@ -225,18 +243,20 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
     private IUriNode? GetInfoResourceExactCapabilityMatch(IGraph graph)
     {
         var triples = graph.GetTriplesWithSubjectPredicate(
-            graph.CreateUriNode(new Uri(_query.CapabilityUrl)), graph.CreateUriNode("rdfs:member"));
-        return triples?.FirstOrDefault(spo =>
-            spo.Subject is IUriNode node &&
-            node.Uri.Equals(new Uri(_query.CapabilityUrl)))?.Subject as IUriNode;
+            graph.CreateUriNode(new Uri(_query.CapabilityUrl)),
+            graph.CreateUriNode("rdfs:member")
+        );
+        return triples
+                ?.FirstOrDefault(spo =>
+                    spo.Subject is IUriNode node && node.Uri.Equals(new Uri(_query.CapabilityUrl))
+                )
+                ?.Subject as IUriNode;
     }
 
     private IUriNode? GetExactCapabilityResource(IGraph graph)
     {
         var subject = graph.CreateUriNode(new Uri(_query.CapabilityUrl));
-        return graph.GetTriplesWithSubject(subject).Any()
-            ? subject
-            : null;
+        return graph.GetTriplesWithSubject(subject).Any() ? subject : null;
     }
 
     private void ResolveMembershipRelation()
@@ -246,9 +266,9 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
             return;
         }
 
-        _membershipResource = GetUriObject(
-            _resultsMemberContainer,
-            _ldpMembershipResourceUri) ?? _resultsMemberContainer;
+        _membershipResource =
+            GetUriObject(_resultsMemberContainer, _ldpMembershipResourceUri)
+            ?? _resultsMemberContainer;
 
         // A DirectContainer declaration describes the actual response representation and wins
         // over a client-supplied relation discovered from the query capability's resource shape.
@@ -282,16 +302,24 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
 
     private IUriNode? GetInfoResourceSubjectStartsWithQueryUri(Triple[]? triples)
     {
-        return triples?.SingleOrDefault(spo =>
-            spo.Subject is IUriNode node &&
-            node.Uri.ToString().StartsWith(_query.QueryUri.ToString(), StringComparison.Ordinal))?.Subject as IUriNode;
+        return triples
+                ?.SingleOrDefault(spo =>
+                    spo.Subject is IUriNode node
+                    && node.Uri.ToString()
+                        .StartsWith(_query.QueryUri.ToString(), StringComparison.Ordinal)
+                )
+                ?.Subject as IUriNode;
     }
 
     private IUriNode? GetInfoResourceSubjectStartsWithCapabilityUri(Triple[]? triples)
     {
-        return triples?.SingleOrDefault(spo =>
-            spo.Subject is IUriNode node &&
-            node.Uri.ToString().StartsWith(_query.CapabilityUrl, StringComparison.Ordinal))?.Subject as IUriNode;
+        return triples
+                ?.SingleOrDefault(spo =>
+                    spo.Subject is IUriNode node
+                    && node.Uri.ToString()
+                        .StartsWith(_query.CapabilityUrl, StringComparison.Ordinal)
+                )
+                ?.Subject as IUriNode;
     }
 
     internal string? GetNextPageUrl()
@@ -313,8 +341,9 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
             return null;
         }
 
-        var predicate =
-            _rdfGraph!.CreateUriNode(new Uri(OslcConstants.OSLC_CORE_NAMESPACE + "nextPage"));
+        var predicate = _rdfGraph!.CreateUriNode(
+            new Uri(OslcConstants.OSLC_CORE_NAMESPACE + "nextPage")
+        );
         var triples = _rdfGraph.GetTriplesWithSubjectPredicate(_infoResource, predicate);
         var triplesEnumerated = triples.ToList();
         if (triplesEnumerated.Count == 1 && triplesEnumerated.First().Object is IUriNode)
@@ -394,7 +423,11 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
 
         var memberTriples = GetMemberTriples();
 
-        IEnumerable<T> result = new TripleEnumerableWrapper<T>(memberTriples, _rdfGraph, _rdfHelper);
+        IEnumerable<T> result = new TripleEnumerableWrapper<T>(
+            memberTriples,
+            _rdfGraph,
+            _rdfHelper
+        );
 
         return result;
     }
@@ -418,16 +451,18 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
 
         private readonly IEnumerable<Triple> _triples;
 
-        public TripleEnumerableWrapper(IEnumerable<Triple> triples, IGraph? graph,
-            DotNetRdfHelper dotNetRdfHelper)
+        public TripleEnumerableWrapper(
+            IEnumerable<Triple> triples,
+            IGraph? graph,
+            DotNetRdfHelper dotNetRdfHelper
+        )
         {
             _triples = triples;
             _graph = graph;
             _dotNetRdfHelper = dotNetRdfHelper;
         }
 
-        IEnumerator
-            IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
@@ -444,8 +479,11 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
             private readonly IEnumerator<Triple> _triples;
             private readonly DotNetRdfHelper _dotNetRdfHelper;
 
-            public TripleEnumeratorWrapper(IEnumerator<Triple> triples, IGraph? graph,
-                DotNetRdfHelper dotNetRdfHelper)
+            public TripleEnumeratorWrapper(
+                IEnumerator<Triple> triples,
+                IGraph? graph,
+                DotNetRdfHelper dotNetRdfHelper
+            )
             {
                 _triples = triples;
                 _graph = graph;
@@ -458,10 +496,15 @@ public class OslcQueryResult : IEnumerator<OslcQueryResult>
             {
                 get
                 {
-                    var member = _triples.Current ??
-                                 throw new InvalidOperationException("Current element is null");
-                    return (T)_dotNetRdfHelper.FromDotNetRdfNode((IUriNode)member.Object, _graph,
-                        typeof(T));
+                    var member =
+                        _triples.Current
+                        ?? throw new InvalidOperationException("Current element is null");
+                    return (T)
+                        _dotNetRdfHelper.FromDotNetRdfNode(
+                            (IUriNode)member.Object,
+                            _graph,
+                            typeof(T)
+                        );
                 }
             }
 

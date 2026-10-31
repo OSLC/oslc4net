@@ -28,12 +28,27 @@ public class RootServicesController(ILogger<RootServicesController> logger) : Co
                 CmServiceProviders = new ResourceReference { Resource = catalogUrl },
                 OAuthRealmName = "OSLC",
                 OAuthDomain = $"{baseUrl}/",
-                OAuthRequestConsumerKeyUrl = new ResourceReference { Resource = $"{baseUrl}/services/oauth/requestKey" },
-                OAuthApprovalModuleUrl = new ResourceReference { Resource = $"{baseUrl}/services/oauth/approveKey" },
-                OAuthRequestTokenUrl = new ResourceReference { Resource = $"{baseUrl}/services/oauth/requestToken" },
-                OAuthUserAuthorizationUrl = new ResourceReference { Resource = $"{baseUrl}/services/oauth/authorize" },
-                OAuthAccessTokenUrl = new ResourceReference { Resource = $"{baseUrl}/services/oauth/accessToken" }
-            };            // Serialize to XML with proper formatting
+                OAuthRequestConsumerKeyUrl = new ResourceReference
+                {
+                    Resource = $"{baseUrl}/services/oauth/requestKey",
+                },
+                OAuthApprovalModuleUrl = new ResourceReference
+                {
+                    Resource = $"{baseUrl}/services/oauth/approveKey",
+                },
+                OAuthRequestTokenUrl = new ResourceReference
+                {
+                    Resource = $"{baseUrl}/services/oauth/requestToken",
+                },
+                OAuthUserAuthorizationUrl = new ResourceReference
+                {
+                    Resource = $"{baseUrl}/services/oauth/authorize",
+                },
+                OAuthAccessTokenUrl = new ResourceReference
+                {
+                    Resource = $"{baseUrl}/services/oauth/accessToken",
+                },
+            }; // Serialize to XML with proper formatting
             var xmlContent = rootServices.ToXml();
 
             logger.LogDebug("Generated root services XML for base URL: {BaseUrl}", baseUrl);

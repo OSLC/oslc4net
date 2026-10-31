@@ -17,7 +17,10 @@ namespace OSLC4Net.Client.Exceptions;
 /// Exception thrown when an error occurs processing the root services document.
 /// </summary>
 public class RootServicesException(string endpoint, Exception exception)
-    : OslcClientApplicationException($"OSLC2003: An error occurred processing the root services document. Server location: {endpoint}.", exception)
+    : OslcClientApplicationException(
+        $"OSLC2003: An error occurred processing the root services document. Server location: {endpoint}.",
+        exception
+    )
 {
     /// <summary>
     /// OSLC server URL.

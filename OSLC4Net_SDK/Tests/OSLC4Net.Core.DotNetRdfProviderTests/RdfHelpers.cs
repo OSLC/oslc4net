@@ -3,8 +3,11 @@ using System.Net.Http.Headers;
 
 public static class RdfHelpers
 {
-    internal static async Task<string> SerializeAsync<T>(MediaTypeFormatter formatter, T value,
-     MediaTypeHeaderValue mediaType)
+    internal static async Task<string> SerializeAsync<T>(
+        MediaTypeFormatter formatter,
+        T value,
+        MediaTypeHeaderValue mediaType
+    )
     {
         Stream stream = new MemoryStream();
         await using (stream.ConfigureAwait(false))
@@ -20,9 +23,12 @@ public static class RdfHelpers
         }
     }
 
-
-    internal static async Task<T?> DeserializeAsync<T>(MediaTypeFormatter formatter, string str,
-        MediaTypeHeaderValue mediaType) where T : class
+    internal static async Task<T?> DeserializeAsync<T>(
+        MediaTypeFormatter formatter,
+        string str,
+        MediaTypeHeaderValue mediaType
+    )
+        where T : class
     {
         Stream stream = new MemoryStream();
         await using (stream.ConfigureAwait(false))
@@ -40,8 +46,12 @@ public static class RdfHelpers
             return await formatter.ReadFromStreamAsync(typeof(T), stream, content, null) as T;
         }
     }
-    internal static async Task<string> SerializeCollectionAsync<T>(MediaTypeFormatter formatter,
-    IEnumerable<T> value, MediaTypeHeaderValue mediaType)
+
+    internal static async Task<string> SerializeCollectionAsync<T>(
+        MediaTypeFormatter formatter,
+        IEnumerable<T> value,
+        MediaTypeHeaderValue mediaType
+    )
     {
         Stream stream = new MemoryStream();
         await using (stream.ConfigureAwait(false))
@@ -57,11 +67,12 @@ public static class RdfHelpers
         }
     }
 
-
-
     internal static async Task<IEnumerable<T>?> DeserializeCollectionAsync<T>(
         MediaTypeFormatter formatter,
-        string str, MediaTypeHeaderValue mediaType) where T : class
+        string str,
+        MediaTypeHeaderValue mediaType
+    )
+        where T : class
     {
         Stream stream = new MemoryStream();
         await using (stream.ConfigureAwait(false))
@@ -76,8 +87,8 @@ public static class RdfHelpers
 
             stream.Position = 0;
 
-            return await formatter.ReadFromStreamAsync(typeof(List<T>), stream, content, null) as
-                IEnumerable<T>;
+            return await formatter.ReadFromStreamAsync(typeof(List<T>), stream, content, null)
+                as IEnumerable<T>;
         }
     }
 }

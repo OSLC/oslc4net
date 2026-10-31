@@ -16,11 +16,10 @@ namespace OSLC4Net.Core.Exceptions;
 /// <summary>
 ///     Exception thrown when relative URIs are encountered in an RDF model
 /// </summary>
-public class OslcCoreRelativeURIException(
-    Type resourceType,
-    string methodName,
-    Uri relativeURI) : OslcCoreApplicationException(
-    $"OSLC1014: Relative URI value {relativeURI} for method {methodName} of class {resourceType.Name}")
+public class OslcCoreRelativeURIException(Type resourceType, string methodName, Uri relativeURI)
+    : OslcCoreApplicationException(
+        $"OSLC1014: Relative URI value {relativeURI} for method {methodName} of class {resourceType.Name}"
+    )
 {
     public Type ResourceType { get; } = resourceType;
     public string MethodName { get; } = methodName;

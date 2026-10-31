@@ -25,8 +25,8 @@ public class OslcCoreRequestException(
     HttpStatusCode? statusCode,
     string responseMessage,
     IResource? requestResource = null,
-    Error? errorResource = null)
-    : Exception($"HTTP {ToErrorCode(statusCode, -1)} {responseMessage}")
+    Error? errorResource = null
+) : Exception($"HTTP {ToErrorCode(statusCode, -1)} {responseMessage}")
 {
     public HttpStatusCode? StatusCode { get; } = statusCode;
     public string ResponseMessage { get; } = responseMessage;
@@ -38,8 +38,7 @@ public class OslcCoreRequestException(
         return status switch
         {
             null => code.ToString(CultureInfo.InvariantCulture),
-            _ => ((int)status).ToString(CultureInfo.InvariantCulture)
+            _ => ((int)status).ToString(CultureInfo.InvariantCulture),
         };
     }
-
 }

@@ -12,10 +12,7 @@ namespace OSLC4Net.Core.Model;
 
 public static class AddAllExtension
 {
-    public static void AddAll<T>(
-        this ICollection<T> target,
-        IEnumerable<T> source
-    )
+    public static void AddAll<T>(this ICollection<T> target, IEnumerable<T> source)
     {
         foreach (var item in source)
         {

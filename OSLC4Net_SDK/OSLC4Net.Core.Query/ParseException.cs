@@ -19,11 +19,9 @@ namespace OSLC4Net.Core.Query;
 
 public class ParseException : Exception
 {
-    public ParseException(RecognitionException cause) : this(cause.Message)
-    {
-    }
+    public ParseException(RecognitionException cause)
+        : this(cause.Message) { }
 
-    public ParseException(string msg) : base(msg)
-    {
-    }
+    public ParseException(string msg)
+        : base(msg) { }
 }

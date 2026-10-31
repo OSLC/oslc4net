@@ -22,10 +22,8 @@ namespace OSLC4Net.Core.Query.Impl;
 /// </summary>
 internal sealed class LangedStringValueImpl : ValueImpl, LangedStringValue
 {
-    public
-    LangedStringValueImpl(CommonTree tree) : base(tree, ValueType.LANGED_STRING)
-    {
-    }
+    public LangedStringValueImpl(CommonTree tree)
+        : base(tree, ValueType.LANGED_STRING) { }
 
     public string Value
     {

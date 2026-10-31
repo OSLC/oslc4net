@@ -29,13 +29,22 @@ public class AllowedValuesDeserializationTests
         var mediaType = OslcMediaType.APPLICATION_RDF_XML_TYPE;
 
         // Act
-        var allowedValues = await RdfHelpers.DeserializeAsync<AllowedValuesResource<Uri>>(formatter, SamplePayload, mediaType);
+        var allowedValues = await RdfHelpers.DeserializeAsync<AllowedValuesResource<Uri>>(
+            formatter,
+            SamplePayload,
+            mediaType
+        );
 
         // Assert
         await Assert.That(allowedValues).IsNotNull();
         await Assert.That(allowedValues!.AllowedValues).HasCount().EqualTo(4);
 
-        await Assert.That(allowedValues.AllowedValues)
-            .Contains(new Uri("https://jazz.net/sandbox01-ccm/resource/itemOid/com.ibm.team.workitem.Category/_Kt2WgH3QEfC-rJM7pd93jg"));
+        await Assert
+            .That(allowedValues.AllowedValues)
+            .Contains(
+                new Uri(
+                    "https://jazz.net/sandbox01-ccm/resource/itemOid/com.ibm.team.workitem.Category/_Kt2WgH3QEfC-rJM7pd93jg"
+                )
+            );
     }
 }

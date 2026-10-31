@@ -23,12 +23,15 @@ public class ResourceShapeFactoryTests
             BaseUri,
             ResourceShapesPath,
             ResourceShapePath,
-            resourceType);
+            resourceType
+        );
 
         // Assert
         await Assert.That(resourceShape).IsNotNull();
         await Assert.That(resourceShape.GetAbout()).IsNotNull();
-        await Assert.That(resourceShape.GetAbout().ToString()).IsEqualTo($"{BaseUri}/{ResourceShapesPath}/{ResourceShapePath}");
+        await Assert
+            .That(resourceShape.GetAbout().ToString())
+            .IsEqualTo($"{BaseUri}/{ResourceShapesPath}/{ResourceShapePath}");
     }
 
     [Test]
@@ -42,7 +45,8 @@ public class ResourceShapeFactoryTests
             BaseUri,
             ResourceShapesPath,
             ResourceShapePath,
-            resourceType);
+            resourceType
+        );
 
         // Assert
         await Assert.That(resourceShape.GetTitle()).IsNotNull();
@@ -60,13 +64,21 @@ public class ResourceShapeFactoryTests
             BaseUri,
             ResourceShapesPath,
             ResourceShapePath,
-            resourceType);
+            resourceType
+        );
 
         // Assert
         var describes = resourceShape.GetDescribes();
         await Assert.That(describes).IsNotNull();
         await Assert.That(describes).IsNotEmpty();
-        await Assert.That(describes.Any(uri => uri.ToString().Equals(Constants.Domains.RM.Requirement, StringComparison.Ordinal))).IsTrue();
+        await Assert
+            .That(
+                describes.Any(uri =>
+                    uri.ToString()
+                        .Equals(Constants.Domains.RM.Requirement, StringComparison.Ordinal)
+                )
+            )
+            .IsTrue();
     }
 
     [Test]
@@ -80,7 +92,8 @@ public class ResourceShapeFactoryTests
             BaseUri,
             ResourceShapesPath,
             ResourceShapePath,
-            resourceType);
+            resourceType
+        );
 
         // Assert
         var properties = resourceShape.GetProperties();
@@ -102,7 +115,8 @@ public class ResourceShapeFactoryTests
             BaseUri,
             ResourceShapesPath,
             ResourceShapePath,
-            resourceType);
+            resourceType
+        );
 
         // Assert
         var properties = resourceShape.GetProperties();
@@ -112,7 +126,9 @@ public class ResourceShapeFactoryTests
         await Assert.That(typeProperty.GetName()).IsEqualTo("type");
         await Assert.That(typeProperty.GetValueType()).IsNotNull();
         await Assert.That(typeProperty.GetOccurs()).IsNotNull();
-        await Assert.That(typeProperty.GetPropertyDefinition().ToString()).IsEqualTo("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
+        await Assert
+            .That(typeProperty.GetPropertyDefinition().ToString())
+            .IsEqualTo("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
     }
 
     [Test]
@@ -126,7 +142,8 @@ public class ResourceShapeFactoryTests
             BaseUri,
             ResourceShapesPath,
             ResourceShapePath,
-            resourceType);
+            resourceType
+        );
 
         // Assert
         var properties = resourceShape.GetProperties();
@@ -148,7 +165,8 @@ public class ResourceShapeFactoryTests
             BaseUri,
             ResourceShapesPath,
             ResourceShapePath,
-            resourceType);
+            resourceType
+        );
 
         // Assert
         var properties = resourceShape.GetProperties();
@@ -158,7 +176,9 @@ public class ResourceShapeFactoryTests
         await Assert.That(uriCollectionProperty.GetName()).IsEqualTo("uriCollection");
         await Assert.That(uriCollectionProperty.GetValueType()).IsNotNull();
         await Assert.That(uriCollectionProperty.GetOccurs()).IsNotNull();
-        await Assert.That(uriCollectionProperty.GetPropertyDefinition().ToString()).IsEqualTo("http://example.com/uriCollection");
+        await Assert
+            .That(uriCollectionProperty.GetPropertyDefinition().ToString())
+            .IsEqualTo("http://example.com/uriCollection");
     }
 
     [Test]
@@ -172,7 +192,8 @@ public class ResourceShapeFactoryTests
             BaseUri,
             ResourceShapesPath,
             ResourceShapePath,
-            resourceType);
+            resourceType
+        );
 
         // Assert
         var properties = resourceShape.GetProperties();
@@ -188,12 +209,18 @@ public class ResourceShapeFactoryTests
         await Assert.That(actualOccurs).IsNotNull();
 
         // GetValueType() returns a URI, so we need to compare with the URI representation
-        var expectedValueTypeUri = new Uri(ValueTypeExtension.ToString(OSLC4Net.Core.Model.ValueType.Resource));
-        var expectedOccursUri = new Uri(OccursExtension.ToString(OSLC4Net.Core.Model.Occurs.ZeroOrMany));
+        var expectedValueTypeUri = new Uri(
+            ValueTypeExtension.ToString(OSLC4Net.Core.Model.ValueType.Resource)
+        );
+        var expectedOccursUri = new Uri(
+            OccursExtension.ToString(OSLC4Net.Core.Model.Occurs.ZeroOrMany)
+        );
 
         await Assert.That(actualValueType).IsEqualTo(expectedValueTypeUri);
         await Assert.That(actualOccurs).IsEqualTo(expectedOccursUri);
-        await Assert.That(uriListProperty.GetPropertyDefinition()?.ToString()).IsEqualTo("http://example.com/uriList");
+        await Assert
+            .That(uriListProperty.GetPropertyDefinition()?.ToString())
+            .IsEqualTo("http://example.com/uriList");
     }
 
     [Test]
@@ -207,7 +234,8 @@ public class ResourceShapeFactoryTests
             BaseUri,
             ResourceShapesPath,
             ResourceShapePath,
-            resourceType);
+            resourceType
+        );
 
         // Assert
         var properties = resourceShape.GetProperties();
@@ -222,12 +250,18 @@ public class ResourceShapeFactoryTests
         await Assert.That(actualValueType).IsNotNull();
         await Assert.That(actualOccurs).IsNotNull();
 
-        var expectedValueTypeUri = new Uri(ValueTypeExtension.ToString(OSLC4Net.Core.Model.ValueType.Resource));
-        var expectedOccursUri = new Uri(OccursExtension.ToString(OSLC4Net.Core.Model.Occurs.ZeroOrMany));
+        var expectedValueTypeUri = new Uri(
+            ValueTypeExtension.ToString(OSLC4Net.Core.Model.ValueType.Resource)
+        );
+        var expectedOccursUri = new Uri(
+            OccursExtension.ToString(OSLC4Net.Core.Model.Occurs.ZeroOrMany)
+        );
 
         await Assert.That(actualValueType).IsEqualTo(expectedValueTypeUri);
         await Assert.That(actualOccurs).IsEqualTo(expectedOccursUri);
-        await Assert.That(uriArrayProperty.GetPropertyDefinition()?.ToString()).IsEqualTo("http://example.com/uriArray");
+        await Assert
+            .That(uriArrayProperty.GetPropertyDefinition()?.ToString())
+            .IsEqualTo("http://example.com/uriArray");
     }
 
     [Test]
@@ -241,7 +275,8 @@ public class ResourceShapeFactoryTests
             BaseUri,
             ResourceShapesPath,
             ResourceShapePath,
-            resourceType);
+            resourceType
+        );
 
         // Assert
         var properties = resourceShape.GetProperties();
@@ -256,12 +291,18 @@ public class ResourceShapeFactoryTests
         await Assert.That(actualValueType).IsNotNull();
         await Assert.That(actualOccurs).IsNotNull();
 
-        var expectedValueTypeUri = new Uri(ValueTypeExtension.ToString(OSLC4Net.Core.Model.ValueType.Resource));
-        var expectedOccursUri = new Uri(OccursExtension.ToString(OSLC4Net.Core.Model.Occurs.ZeroOrMany));
+        var expectedValueTypeUri = new Uri(
+            ValueTypeExtension.ToString(OSLC4Net.Core.Model.ValueType.Resource)
+        );
+        var expectedOccursUri = new Uri(
+            OccursExtension.ToString(OSLC4Net.Core.Model.Occurs.ZeroOrMany)
+        );
 
         await Assert.That(actualValueType).IsEqualTo(expectedValueTypeUri);
         await Assert.That(actualOccurs).IsEqualTo(expectedOccursUri);
-        await Assert.That(uriHashSetProperty.GetPropertyDefinition()?.ToString()).IsEqualTo("http://example.com/uriHashSet");
+        await Assert
+            .That(uriHashSetProperty.GetPropertyDefinition()?.ToString())
+            .IsEqualTo("http://example.com/uriHashSet");
     }
 
     [Test]
@@ -275,7 +316,8 @@ public class ResourceShapeFactoryTests
             BaseUri,
             ResourceShapesPath,
             ResourceShapePath,
-            resourceType);
+            resourceType
+        );
 
         // Assert
         var properties = resourceShape.GetProperties();
@@ -290,12 +332,18 @@ public class ResourceShapeFactoryTests
         await Assert.That(actualValueType).IsNotNull();
         await Assert.That(actualOccurs).IsNotNull();
 
-        var expectedValueTypeUri = new Uri(ValueTypeExtension.ToString(OSLC4Net.Core.Model.ValueType.Resource));
-        var expectedOccursUri = new Uri(OccursExtension.ToString(OSLC4Net.Core.Model.Occurs.ZeroOrMany));
+        var expectedValueTypeUri = new Uri(
+            ValueTypeExtension.ToString(OSLC4Net.Core.Model.ValueType.Resource)
+        );
+        var expectedOccursUri = new Uri(
+            OccursExtension.ToString(OSLC4Net.Core.Model.Occurs.ZeroOrMany)
+        );
 
         await Assert.That(actualValueType).IsEqualTo(expectedValueTypeUri);
         await Assert.That(actualOccurs).IsEqualTo(expectedOccursUri);
-        await Assert.That(implementedByProperty.GetPropertyDefinition()?.ToString()).IsEqualTo("http://example.com/implementedBy");
+        await Assert
+            .That(implementedByProperty.GetPropertyDefinition()?.ToString())
+            .IsEqualTo("http://example.com/implementedBy");
     }
 
     // Note: ResourceShapeFactory only supports getter/setter methods, not direct properties
@@ -311,7 +359,8 @@ public class ResourceShapeFactoryTests
             BaseUri,
             ResourceShapesPath,
             ResourceShapePath,
-            resourceType);
+            resourceType
+        );
 
         // Assert
         var properties = resourceShape.GetProperties();
@@ -327,18 +376,27 @@ public class ResourceShapeFactoryTests
         await Assert.That(actualValueType).IsNotNull();
         await Assert.That(actualOccurs).IsNotNull();
 
-        var expectedValueTypeUri = new Uri(ValueTypeExtension.ToString(OSLC4Net.Core.Model.ValueType.Resource));
-        var expectedOccursUri = new Uri(OccursExtension.ToString(OSLC4Net.Core.Model.Occurs.ZeroOrMany));
+        var expectedValueTypeUri = new Uri(
+            ValueTypeExtension.ToString(OSLC4Net.Core.Model.ValueType.Resource)
+        );
+        var expectedOccursUri = new Uri(
+            OccursExtension.ToString(OSLC4Net.Core.Model.Occurs.ZeroOrMany)
+        );
 
         await Assert.That(actualValueType).IsEqualTo(expectedValueTypeUri);
         await Assert.That(actualOccurs).IsEqualTo(expectedOccursUri);
-        await Assert.That(uriSetProperty.GetPropertyDefinition()?.ToString()).IsEqualTo("http://example.com/uriSet");
+        await Assert
+            .That(uriSetProperty.GetPropertyDefinition()?.ToString())
+            .IsEqualTo("http://example.com/uriSet");
     }
 }
 
 // Test resource class for getter/setter pattern testing
 
-[OslcResourceShape(title = "Test Resource Shape", describes = new[] { "http://example.com/TestResource" })]
+[OslcResourceShape(
+    title = "Test Resource Shape",
+    describes = new[] { "http://example.com/TestResource" }
+)]
 public class TestResourceWithGetterSetterPattern
 {
     private readonly ISet<Uri> _implementedBy = new HashSet<Uri>();
@@ -366,7 +424,10 @@ public class TestResourceWithGetterSetterPattern
 }
 
 // Test resource class for ISet<Uri> testing
-[OslcResourceShape(title = "Test Resource Shape", describes = new[] { "http://example.com/TestResource" })]
+[OslcResourceShape(
+    title = "Test Resource Shape",
+    describes = new[] { "http://example.com/TestResource" }
+)]
 public class TestResourceWithISetUri
 {
     [OslcDescription("A set of URIs")]
@@ -377,7 +438,10 @@ public class TestResourceWithISetUri
 }
 
 // Test resource class for ICollection<Uri> testing
-[OslcResourceShape(title = "Test Resource Shape", describes = new[] { "http://example.com/TestResource" })]
+[OslcResourceShape(
+    title = "Test Resource Shape",
+    describes = new[] { "http://example.com/TestResource" }
+)]
 public class TestResourceWithICollectionUri
 {
     private ICollection<Uri> _uriCollection = new List<Uri>();
@@ -398,7 +462,10 @@ public class TestResourceWithICollectionUri
 }
 
 // Test resource class for List<Uri> testing
-[OslcResourceShape(title = "Test Resource Shape", describes = new[] { "http://example.com/TestResource" })]
+[OslcResourceShape(
+    title = "Test Resource Shape",
+    describes = new[] { "http://example.com/TestResource" }
+)]
 public class TestResourceWithListUri
 {
     private List<Uri> _uriList = new List<Uri>();
@@ -419,7 +486,10 @@ public class TestResourceWithListUri
 }
 
 // Test resource class for Uri[] testing
-[OslcResourceShape(title = "Test Resource Shape", describes = new[] { "http://example.com/TestResource" })]
+[OslcResourceShape(
+    title = "Test Resource Shape",
+    describes = new[] { "http://example.com/TestResource" }
+)]
 public class TestResourceWithUriArray
 {
     private Uri[] _uriArray = new Uri[0];
@@ -440,7 +510,10 @@ public class TestResourceWithUriArray
 }
 
 // Test resource class for HashSet<Uri> testing
-[OslcResourceShape(title = "Test Resource Shape", describes = new[] { "http://example.com/TestResource" })]
+[OslcResourceShape(
+    title = "Test Resource Shape",
+    describes = new[] { "http://example.com/TestResource" }
+)]
 public class TestResourceWithHashSetUri
 {
     private HashSet<Uri> _uriHashSet = new HashSet<Uri>();
